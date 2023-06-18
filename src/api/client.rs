@@ -258,15 +258,19 @@ impl SwClient {
             );
             match imp::SwClient::test_rb_server(hostname.to_string()).await {
                 Ok(_) => {
-                    info!(
-                        "Using {} ({}) as api sever",
+                    debug!(
+                        "Successfully connected to {} ({})",
                         hostname.to_string(),
                         ip.to_string()
                     );
                     return Some(format!("https://{hostname}/"));
                 }
                 Err(err) => {
-                    warn!("Unable to connect {}: {}", ip.to_string(), err.to_string());
+                    warn!(
+                        "Unable to connect to {}: {}",
+                        ip.to_string(),
+                        err.to_string()
+                    );
                 }
             }
         }

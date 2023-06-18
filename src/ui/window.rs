@@ -19,9 +19,8 @@ use std::rc::Rc;
 
 use adw::prelude::*;
 use adw::subclass::prelude::*;
-use glib::{clone, subclass, Enum, ParamSpec, ParamSpecEnum, Sender, ToValue};
+use glib::{clone, subclass, Enum, ParamSpec, Properties, Sender};
 use gtk::{gdk, gio, glib, CompositeTemplate};
-use once_cell::sync::Lazy;
 use once_cell::unsync::OnceCell;
 
 use crate::app::{Action, SwApplication};
@@ -47,7 +46,8 @@ pub enum SwView {
 mod imp {
     use super::*;
 
-    #[derive(Debug, Default, CompositeTemplate)]
+    #[derive(Debug, Properties, Default, CompositeTemplate)]
+    #[properties(wrapper_type = super::SwApplicationWindow)]
     #[template(resource = "/de/haeckerfelix/Shortwave/gtk/window.ui")]
     pub struct SwApplicationWindow {
         #[template_child]
@@ -87,9 +87,13 @@ mod imp {
         #[template_child]
         pub library_menu: TemplateChild<gio::MenuModel>,
 
+        #[property(get, set = Self::set_view, builder(SwView::Library))]
+        pub view: RefCell<SwView>,
+        #[property(get, set = Self::set_offline_mode)]
+        pub offline_mode: RefCell<bool>,
+
         pub window_animation_x: OnceCell<adw::TimedAnimation>,
         pub window_animation_y: OnceCell<adw::TimedAnimation>,
-        pub view: RefCell<SwView>,
     }
 
     #[glib::object_subclass]
@@ -109,24 +113,33 @@ mod imp {
 
     impl ObjectImpl for SwApplicationWindow {
         fn properties() -> &'static [ParamSpec] {
-            static PROPERTIES: Lazy<Vec<ParamSpec>> =
-                Lazy::new(|| vec![ParamSpecEnum::builder::<SwView>("view").build()]);
-
-            PROPERTIES.as_ref()
+            Self::derived_properties()
         }
 
-        fn property(&self, _id: usize, pspec: &ParamSpec) -> glib::Value {
-            match pspec.name() {
-                "view" => self.obj().view().to_value(),
-                _ => unimplemented!(),
-            }
+        fn property(&self, id: usize, pspec: &ParamSpec) -> glib::Value {
+            Self::derived_property(self, id, pspec)
         }
 
-        fn set_property(&self, _id: usize, value: &glib::Value, pspec: &ParamSpec) {
-            match pspec.name() {
-                "view" => self.obj().set_view(value.get().unwrap()),
-                _ => unimplemented!(),
-            }
+        fn set_property(&self, id: usize, value: &glib::Value, pspec: &ParamSpec) {
+            Self::derived_set_property(self, id, value, pspec)
+        }
+
+        fn constructed(&self) {
+            self.parent_constructed();
+            let app = SwApplication::default();
+
+            // Enable offline-mode when no radiobrowser server is available
+            app.property_expression("rb-server").watch(
+                glib::Object::NONE,
+                clone!(@weak self as this => move|| {
+                    let app = SwApplication::default();
+                    this.set_offline_mode(app.rb_server().is_none());
+
+                    if app.rb_server().is_none() {
+                        this.set_view(SwView::Library);
+                    }
+                }),
+            );
         }
     }
 
@@ -141,6 +154,51 @@ mod imp {
 
     // Implement Adw.ApplicationWindow for SwApplicationWindow
     impl AdwApplicationWindowImpl for SwApplicationWindow {}
+
+    impl SwApplicationWindow {
+        pub fn set_view(&self, view: SwView) {
+            *self.view.borrow_mut() = view;
+
+            // Delay updating the view, otherwise it could invalidate widgets if it gets
+            // called during an allocation and cause glitches (eg. short flickering)
+            glib::idle_add_local(
+                clone!(@weak self as this => @default-return glib::Continue(false), move||{
+                    this.obj().update_view(); glib::Continue(false)
+                }),
+            );
+        }
+
+        pub fn set_offline_mode(&self, enable: bool) {
+            *self.offline_mode.borrow_mut() = enable;
+
+            let obj = self.obj();
+            self.connection_infobar.set_revealed(enable);
+
+            if enable {
+                self.set_view(SwView::Library);
+            }
+
+            // Disable online related actions, since those are useless
+            // if there's no connectivity to radio-browser.info
+            let action: gio::SimpleAction = obj
+                .lookup_action("show-discover")
+                .unwrap()
+                .downcast()
+                .unwrap();
+            action.set_enabled(!enable);
+
+            let action: gio::SimpleAction = obj
+                .lookup_action("show-search")
+                .unwrap()
+                .downcast()
+                .unwrap();
+            action.set_enabled(!enable);
+
+            let action: gio::SimpleAction =
+                obj.lookup_action("show-map").unwrap().downcast().unwrap();
+            action.set_enabled(!enable);
+        }
+    }
 }
 
 // Wrap imp::SwApplicationWindow into a usable gtk-rs object
@@ -368,45 +426,6 @@ impl SwApplicationWindow {
             .library_page
             .get()
             .set_sorting(sorting, descending);
-    }
-
-    pub fn view(&self) -> SwView {
-        *self.imp().view.borrow()
-    }
-
-    pub fn set_view(&self, view: SwView) {
-        *self.imp().view.borrow_mut() = view;
-
-        // Delay updating the view, otherwise it could invalidate widgets if it gets
-        // called during an allocation and cause glitches (eg. short flickering)
-        glib::idle_add_local(
-            clone!(@weak self as this => @default-return glib::Continue(false), move||{
-                this.update_view(); glib::Continue(false)
-            }),
-        );
-    }
-
-    pub fn enable_offline_mode(&self, enable: bool) {
-        self.imp().connection_infobar.set_revealed(enable);
-
-        if enable {
-            self.set_view(SwView::Library);
-        }
-
-        // Disable discover/search since those are useless
-        // if there's no connectivity to radio-browser.info
-        let action: gio::SimpleAction = self
-            .lookup_action("show-discover")
-            .unwrap()
-            .downcast()
-            .unwrap();
-        action.set_enabled(!enable);
-        let action: gio::SimpleAction = self
-            .lookup_action("show-search")
-            .unwrap()
-            .downcast()
-            .unwrap();
-        action.set_enabled(!enable);
     }
 
     pub fn enable_mini_player(&self, enable: bool) {

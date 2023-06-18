@@ -40,6 +40,6 @@ pub enum Error {
     #[error("Unsupported url scheme")]
     UnsupportedUrlScheme,
 
-    #[error("No RadioBrowser server available")]
+    #[error("No radiobrowser server available")]
     NoServerAvailable,
 }
