@@ -1,5 +1,5 @@
 // Shortwave - library.rs
-// Copyright (C) 2021-2022  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2021-2023  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -23,10 +23,9 @@ use gtk::subclass::prelude::*;
 use gtk::{gdk_pixbuf, glib};
 use once_cell::sync::Lazy;
 use once_cell::unsync::OnceCell;
-use url::Url;
 
 use super::models::StationEntry;
-use crate::api::{Client, Error, SwStation};
+use crate::api::{Error, SwClient, SwStation};
 use crate::app::Action;
 use crate::database::{connection, queries};
 use crate::model::SwStationModel;
@@ -50,8 +49,8 @@ mod imp {
     pub struct SwLibrary {
         pub model: SwStationModel,
         pub status: RefCell<SwLibraryStatus>,
+        pub client: SwClient,
 
-        pub client: OnceCell<Client>,
         pub sender: OnceCell<Sender<Action>>,
     }
 
@@ -107,19 +106,29 @@ impl SwLibrary {
         *self.imp().status.borrow()
     }
 
-    pub fn refresh_data(&self, server: Option<&Url>) {
-        let imp = self.imp();
+    pub fn refresh_data(&self) {
+        // Load stations asynchronously from the sqlite database
+        let future = clone!(@strong self as this => async move {
+            // Clear previously loaded stations first
+            this.imp().model.clear();
 
-        if let Some(server) = server {
-            if let Some(client) = imp.client.get() {
-                client.set_server(server.clone())
-            } else {
-                let client = Client::new(server.clone());
-                imp.client.set(client).unwrap();
-            }
-        }
+            let entries = queries::stations().unwrap();
 
-        self.load_stations();
+            // Print database info
+            info!("Database Path: {}", connection::DB_PATH.to_str().unwrap());
+            info!("Stations: {}", entries.len());
+
+            // Set library status to loading
+            let imp = this.imp();
+            *imp.status.borrow_mut() = SwLibraryStatus::Loading;
+            this.notify("status");
+
+            let futures = entries.into_iter().map(|entry| this.load_station(entry));
+            join_all(futures).await;
+
+            this.update_library_status();
+        });
+        spawn!(future);
     }
 
     pub fn add_stations(&self, stations: Vec<SwStation>) {
@@ -160,35 +169,9 @@ impl SwLibrary {
         self.notify("status");
     }
 
-    fn load_stations(&self) {
-        // Load database async
-        let future = clone!(@strong self as this => async move {
-            // Clear previously loaded stations first
-            this.imp().model.clear();
-
-            let entries = queries::stations().unwrap();
-
-            // Print database info
-            info!("Database Path: {}", connection::DB_PATH.to_str().unwrap());
-            info!("Stations: {}", entries.len());
-
-            // Set library status to loading
-            let imp = this.imp();
-            *imp.status.borrow_mut() = SwLibraryStatus::Loading;
-            this.notify("status");
-
-            let futures = entries.into_iter().map(|entry| this.load_station(entry));
-            join_all(futures).await;
-
-            this.update_library_status();
-        });
-        spawn!(future);
-    }
-
     /// Try to add a station to the database.
     async fn load_station(&self, entry: StationEntry) {
         let imp = self.imp();
-        let client = imp.client.clone();
         let uuid = entry.uuid.clone();
 
         // Load custom favicon from database entry if available
@@ -229,29 +212,27 @@ impl SwLibrary {
         }
 
         // Try to update station metadata from radio-browser.info
-        let mut is_orphaned = false;
-        if let Some(client) = client.get() {
-            match client.clone().station_metadata_by_uuid(&uuid).await {
-                Ok(metadata) => {
-                    let station = SwStation::new(uuid, false, false, metadata, favicon);
+        let is_orphaned;
+        match imp.client.clone().station_metadata_by_uuid(&uuid).await {
+            Ok(metadata) => {
+                let station = SwStation::new(uuid, false, false, metadata, favicon);
 
-                    // Cache data for future use
-                    let entry = StationEntry::for_station(&station);
-                    queries::update_station(entry).unwrap();
+                // Cache data for future use
+                let entry = StationEntry::for_station(&station);
+                queries::update_station(entry).unwrap();
 
-                    // Add station to the library
-                    imp.model.add_station(&station);
+                // Add station to the library
+                imp.model.add_station(&station);
 
-                    return;
-                }
-                Err(err) => {
-                    is_orphaned = matches!(err, Error::InvalidStation(_));
-                    warn!(
-                        "Unable to receive data for station {}, trying to use cached data: {}",
-                        uuid,
-                        err.to_string()
-                    );
-                }
+                return;
+            }
+            Err(err) => {
+                is_orphaned = matches!(err, Error::InvalidStation(_));
+                warn!(
+                    "Unable to receive data for station {}, trying to use cached data: {}",
+                    uuid,
+                    err.to_string()
+                );
             }
         }
 

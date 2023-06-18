@@ -1,5 +1,5 @@
 // Shortwave - app.rs
-// Copyright (C) 2021-2022  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2021-2023  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -20,13 +20,13 @@ use std::str::FromStr;
 
 use adw::subclass::prelude::*;
 use gio::subclass::prelude::ApplicationImpl;
-use glib::{clone, ObjectExt, ParamSpec, ParamSpecObject, Receiver, Sender, ToValue};
+use glib::{clone, ObjectExt, ParamSpec, Properties, Receiver, Sender};
 use gtk::glib::WeakRef;
 use gtk::prelude::*;
 use gtk::{gio, glib};
-use once_cell::sync::{Lazy, OnceCell};
+use once_cell::sync::OnceCell;
 
-use crate::api::{Client, SwStation};
+use crate::api::{SwClient, SwStation};
 use crate::audio::{GCastDevice, PlaybackState, Player, Song};
 use crate::config;
 use crate::database::SwLibrary;
@@ -51,13 +51,19 @@ pub enum Action {
 mod imp {
     use super::*;
 
+    #[derive(Properties)]
+    #[properties(wrapper_type = super::SwApplication)]
     pub struct SwApplication {
+        #[property(get)]
+        pub library: SwLibrary,
+        #[property(get)]
+        pub rb_server: RefCell<Option<String>>,
+
         pub sender: Sender<Action>,
         pub receiver: RefCell<Option<Receiver<Action>>>,
 
         pub window: OnceCell<WeakRef<SwApplicationWindow>>,
         pub player: Rc<Player>,
-        pub library: SwLibrary,
 
         pub settings: gio::Settings,
     }
@@ -72,18 +78,21 @@ mod imp {
             let (sender, r) = glib::MainContext::channel(glib::PRIORITY_DEFAULT);
             let receiver = RefCell::new(Some(r));
 
+            let library = SwLibrary::new(sender.clone());
+            let rb_server = RefCell::default();
+
             let window = OnceCell::new();
             let player = Player::new(sender.clone());
-            let library = SwLibrary::new(sender.clone());
 
             let settings = settings_manager::settings();
 
             Self {
+                library,
+                rb_server,
                 sender,
                 receiver,
                 window,
                 player,
-                library,
                 settings,
             }
         }
@@ -92,20 +101,11 @@ mod imp {
     // Implement GLib.Object for SwApplication
     impl ObjectImpl for SwApplication {
         fn properties() -> &'static [ParamSpec] {
-            static PROPERTIES: Lazy<Vec<ParamSpec>> = Lazy::new(|| {
-                vec![ParamSpecObject::builder::<SwLibrary>("library")
-                    .read_only()
-                    .build()]
-            });
-
-            PROPERTIES.as_ref()
+            Self::derived_properties()
         }
 
-        fn property(&self, _id: usize, pspec: &ParamSpec) -> glib::Value {
-            match pspec.name() {
-                "library" => self.obj().library().to_value(),
-                _ => unimplemented!(),
-            }
+        fn property(&self, id: usize, pspec: &ParamSpec) -> glib::Value {
+            Self::derived_property(self, id, pspec)
         }
     }
 
@@ -233,10 +233,6 @@ impl SwApplication {
         self.set_accels_for_action("window.close", &["<primary>w"]);
     }
 
-    pub fn library(&self) -> SwLibrary {
-        self.imp().library.clone()
-    }
-
     fn process_action(&self, action: Action) -> glib::Continue {
         let imp = self.imp();
         if self.active_window().is_none() {
@@ -290,13 +286,15 @@ impl SwApplication {
             let imp = this.imp();
             let window = SwApplicationWindow::default();
 
-            if let Some(server) = Client::api_server().await{
-                imp.library.refresh_data(Some(&server));
-                window.refresh_data(&server);
-                window.enable_offline_mode(false);
-            }else{
-                imp.library.refresh_data(None);
-                window.enable_offline_mode(true);
+            let rb_server = SwClient::lookup_rb_server().await;
+            *imp.rb_server.borrow_mut() = rb_server.clone();
+            this.notify("rb-server");
+
+            window.enable_offline_mode(rb_server.is_none());
+            imp.library.refresh_data();
+
+            if rb_server.is_some(){
+                window.refresh_data();
             }
         });
         spawn!(fut);

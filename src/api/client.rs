@@ -1,5 +1,5 @@
 // Shortwave - client.rs
-// Copyright (C) 2021-2022  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2021-2023  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,12 +14,16 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use std::cell::RefCell;
 use std::net::IpAddr;
 use std::rc::Rc;
 use std::time::Duration;
 
 use async_std_resolver::{config as rconfig, resolver, resolver_from_system_conf};
+use glib::subclass::Signal;
+use glib::{clone, ParamSpec, Properties};
+use gtk::glib;
+use gtk::prelude::*;
+use gtk::subclass::prelude::*;
 use isahc::config::RedirectPolicy;
 use isahc::prelude::*;
 use once_cell::sync::Lazy;
@@ -28,11 +32,12 @@ use rand::thread_rng;
 use url::Url;
 
 use crate::api::*;
+use crate::app::SwApplication;
 use crate::config;
 use crate::model::SwStationModel;
 use crate::settings::{settings_manager, Key};
 
-pub static USER_AGENT: Lazy<String> = Lazy::new(|| {
+static USER_AGENT: Lazy<String> = Lazy::new(|| {
     format!(
         "{}/{}-{}",
         config::PKGNAME,
@@ -55,63 +60,141 @@ pub static HTTP_CLIENT: Lazy<isahc::HttpClient> = Lazy::new(|| {
         .unwrap()
 });
 
-#[derive(Clone, Debug)]
-pub struct Client {
-    pub model: Rc<SwStationModel>,
-    server: RefCell<Url>,
+mod imp {
+    use super::*;
+
+    #[derive(Debug, Default, Properties)]
+    #[properties(wrapper_type = super::SwClient)]
+    pub struct SwClient {
+        #[property(get)]
+        model: SwStationModel,
+    }
+
+    #[glib::object_subclass]
+    impl ObjectSubclass for SwClient {
+        const NAME: &'static str = "SwClient";
+        type Type = super::SwClient;
+    }
+
+    impl ObjectImpl for SwClient {
+        fn properties() -> &'static [ParamSpec] {
+            Self::derived_properties()
+        }
+
+        fn property(&self, id: usize, pspec: &ParamSpec) -> glib::Value {
+            Self::derived_property(self, id, pspec)
+        }
+
+        fn signals() -> &'static [Signal] {
+            static SIGNALS: Lazy<Vec<Signal>> = Lazy::new(|| {
+                vec![
+                    Signal::builder("ready").build(),
+                    Signal::builder("error")
+                        .param_types([Error::static_type()])
+                        .build(),
+                ]
+            });
+            SIGNALS.as_ref()
+        }
+    }
+
+    impl SwClient {
+        pub fn build_url(param: &str, options: Option<&str>) -> Result<Url, Error> {
+            let rb_server = SwApplication::default().rb_server();
+            if let None = rb_server {
+                return Err(Error::NoServerAvailable);
+            }
+
+            let mut url = Url::parse(&rb_server.unwrap())
+                .expect("Unable to parse server url")
+                .join(param)
+                .expect("Unable to join url");
+
+            if let Some(options) = options {
+                url.set_query(Some(options))
+            }
+
+            debug!("Retrieve data: {}", url);
+            Ok(url)
+        }
+
+        pub async fn test_rb_server(ip: String) -> Result<(), Error> {
+            let _stats: Option<Stats> = HTTP_CLIENT
+                .get_async(format!("https://{ip}/{STATS}"))
+                .await?
+                .json()
+                .await
+                .map_err(|e| Rc::new(e))?;
+            Ok(())
+        }
+    }
 }
 
-impl Client {
-    pub fn new(server: Url) -> Self {
-        Client {
-            model: Rc::new(SwStationModel::new()),
-            server: RefCell::new(server),
-        }
+glib::wrapper! {
+    pub struct SwClient(ObjectSubclass<imp::SwClient>);
+}
+
+impl SwClient {
+    pub fn new() -> Self {
+        glib::Object::new()
     }
 
-    pub fn set_server(&self, server: Url) {
-        *self.server.borrow_mut() = server;
-    }
+    /// Processes a [StationRequest], and load the results into the
+    /// [SwStationModel] property. Emits the `error` signal on failure, or
+    /// the `ready` signal when done.
+    pub fn send_station_request(&self, request: StationRequest) {
+        let fut = clone!(@weak self as this => async move {
+            let result = clone!(@weak this => @default-panic, async move {
+                let url = imp::SwClient::build_url(STATION_SEARCH, Some(&request.url_encode()))?;
 
-    pub async fn send_station_request(self, request: StationRequest) -> Result<(), Error> {
-        let url = self
-            .build_url(STATION_SEARCH, Some(&request.url_encode()))
-            .await?;
+                let response = HTTP_CLIENT.get_async(url.as_ref()).await?.text().await.map_err(|e| Rc::new(e))?;
+                let deserialized: Result<Vec<StationMetadata>, _> = serde_json::from_str(&response);
 
-        let response = HTTP_CLIENT.get_async(url.as_ref()).await?.text().await?;
-        let deserialized: Result<Vec<StationMetadata>, _> = serde_json::from_str(&response);
+                let stations_md = match deserialized {
+                    Ok(deserialized) => deserialized,
+                    Err(err) => {
+                        error!("Unable to deserialize data: {}", err.to_string());
+                        error!("Raw unserialized data: {}", response);
+                        return Err(Error::Deserializer(err.into()));
+                    }
+                };
 
-        let stations_md = match deserialized {
-            Ok(deserialized) => deserialized,
-            Err(err) => {
-                error!("Unable to deserialize data: {}", err.to_string());
-                error!("Raw unserialized data: {}", response);
-                return Err(Error::Deserializer(err));
+                let stations: Vec<SwStation> = stations_md
+                    .into_iter()
+                    .map(|metadata| {
+                        SwStation::new(metadata.stationuuid.clone(), false, false, metadata, None)
+                    })
+                    .collect();
+
+                debug!("Found {} station(s)!", stations.len());
+                this.model().clear();
+                for station in &stations {
+                    this.model().add_station(station);
+                }
+
+                Ok(())
+            });
+
+            if let Err(err) = result.await {
+                this.emit_by_name::<()>("error", &[&err]);
+            }else{
+                this.emit_by_name::<()>("ready", &[]);
             }
-        };
+        });
 
-        let stations: Vec<SwStation> = stations_md
-            .into_iter()
-            .map(|metadata| {
-                SwStation::new(metadata.stationuuid.clone(), false, false, metadata, None)
-            })
-            .collect();
-
-        debug!("Found {} station(s)!", stations.len());
-        self.model.clear();
-        for station in &stations {
-            self.model.add_station(station);
-        }
-
-        Ok(())
+        spawn!(fut);
     }
 
+    /// Directly returns a [StationMetadata] by using the station uuid.
     pub async fn station_metadata_by_uuid(self, uuid: &str) -> Result<StationMetadata, Error> {
-        let url = self
-            .build_url(&format!("{STATION_BY_UUID}{uuid}"), None)
-            .await?;
+        let url = imp::SwClient::build_url(&format!("{STATION_BY_UUID}{uuid}"), None)?;
 
-        let response = HTTP_CLIENT.get_async(url.as_ref()).await?.text().await?;
+        let response = HTTP_CLIENT
+            .get_async(url.as_ref())
+            .await?
+            .text()
+            .await
+            .map_err(|e| Rc::new(e))?;
         let deserialized: Result<Vec<StationMetadata>, _> = serde_json::from_str(&response);
 
         let mut metadata = match deserialized {
@@ -119,7 +202,7 @@ impl Client {
             Err(err) => {
                 error!("Unable to deserialize data: {}", err.to_string());
                 error!("Raw unserialized data: {}", response);
-                return Err(Error::Deserializer(err));
+                return Err(Error::Deserializer(err.into()));
             }
         };
 
@@ -132,21 +215,7 @@ impl Client {
         }
     }
 
-    async fn build_url(&self, param: &str, options: Option<&str>) -> Result<Url, Error> {
-        let mut url = self
-            .server
-            .borrow()
-            .join(param)
-            .expect("Unable to join url");
-        if let Some(options) = options {
-            url.set_query(Some(options))
-        }
-
-        debug!("Retrieve data: {}", url);
-        Ok(url)
-    }
-
-    pub async fn api_server() -> Option<Url> {
+    pub async fn lookup_rb_server() -> Option<String> {
         let lookup_domain = settings_manager::string(Key::ApiLookupDomain);
         let resolver = if let Ok(resolver) = resolver_from_system_conf().await {
             resolver
@@ -187,14 +256,14 @@ impl Client {
                 hostname.to_string(),
                 ip.to_string()
             );
-            match Self::test_api_server(hostname.to_string()).await {
+            match imp::SwClient::test_rb_server(hostname.to_string()).await {
                 Ok(_) => {
                     info!(
                         "Using {} ({}) as api sever",
                         hostname.to_string(),
                         ip.to_string()
                     );
-                    return Some(Url::parse(&format!("https://{hostname}/")).unwrap());
+                    return Some(format!("https://{hostname}/"));
                 }
                 Err(err) => {
                     warn!("Unable to connect {}: {}", ip.to_string(), err.to_string());
@@ -204,13 +273,10 @@ impl Client {
 
         None
     }
+}
 
-    async fn test_api_server(ip: String) -> Result<(), Error> {
-        let _stats: Option<Stats> = HTTP_CLIENT
-            .get_async(format!("https://{ip}/{STATS}"))
-            .await?
-            .json()
-            .await?;
-        Ok(())
+impl Default for SwClient {
+    fn default() -> Self {
+        Self::new()
     }
 }

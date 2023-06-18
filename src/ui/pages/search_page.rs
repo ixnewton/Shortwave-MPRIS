@@ -1,5 +1,5 @@
 // Shortwave - search_page.rs
-// Copyright (C) 2021-2022  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2021-2023  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,14 +18,12 @@ use std::cell::RefCell;
 use std::rc::Rc;
 
 use adw::subclass::prelude::*;
-use futures_util::FutureExt;
-use glib::{clone, subclass, Sender};
+use glib::{clone, closure, subclass, Sender};
 use gtk::prelude::*;
 use gtk::{gio, glib, CompositeTemplate};
 use once_cell::unsync::OnceCell;
-use url::Url;
 
-use crate::api::{Client, StationRequest};
+use crate::api::{Error, StationRequest, SwClient};
 use crate::app::Action;
 use crate::i18n::*;
 use crate::ui::{SwApplicationWindow, SwStationFlowBox};
@@ -52,9 +50,9 @@ mod imp {
         pub spinner: TemplateChild<gtk::Spinner>,
 
         pub search_action_group: gio::SimpleActionGroup,
+        pub client: SwClient,
 
         pub station_request: Rc<RefCell<StationRequest>>,
-        pub client: OnceCell<Client>,
         pub timeout_id: Rc<RefCell<Option<glib::source::SourceId>>>,
         pub sender: OnceCell<Sender<Action>>,
     }
@@ -68,7 +66,7 @@ mod imp {
         fn new() -> Self {
             let search_action_group = gio::SimpleActionGroup::new();
             let station_request = Rc::new(RefCell::new(StationRequest::search_for_name(None, 250)));
-            let client = OnceCell::default();
+            let client = SwClient::new();
             let timeout_id = Rc::new(RefCell::new(None));
 
             Self {
@@ -80,8 +78,8 @@ mod imp {
                 results_limit_label: TemplateChild::default(),
                 spinner: TemplateChild::default(),
                 search_action_group,
-                station_request,
                 client,
+                station_request,
                 timeout_id,
                 sender: OnceCell::default(),
             }
@@ -125,33 +123,21 @@ glib::wrapper! {
 impl SwSearchPage {
     pub fn init(&self, sender: Sender<Action>) {
         let imp = self.imp();
+        imp.flowbox.init(imp.client.model(), sender.clone());
         imp.sender.set(sender).unwrap();
 
         self.setup_signals();
         self.setup_gactions();
     }
 
-    pub fn refresh_data(&self, server: &Url) {
-        let imp = self.imp();
-
-        if let Some(client) = imp.client.get() {
-            client.set_server(server.clone())
-        } else {
-            let client = Client::new(server.clone());
-
-            let sender = imp.sender.get().unwrap();
-            let model = &*client.model.clone();
-            imp.flowbox.init(model.clone(), sender.clone());
-
-            imp.client.set(client).unwrap();
-        }
-
+    pub fn refresh_data(&self) {
         self.update_search();
     }
 
     fn setup_signals(&self) {
         let imp = self.imp();
 
+        // Seaerch result entry changed
         imp.search_entry
             .connect_search_changed(clone!(@weak self as this => move |entry| {
                 let imp = this.imp();
@@ -177,6 +163,39 @@ impl SwSearchPage {
             imp.search_entry.grab_focus();
             imp.search_entry.select_region(0, -1);
         });
+
+        // SwClient is ready / has search results
+        imp.client.connect_local(
+            "ready",
+            false,
+            clone!(@weak self as this => @default-return None, move |_|{
+                let imp = this.imp();
+
+                let max_results = imp.station_request.borrow().limit.unwrap();
+                let over_max_results = imp.client.model().n_items() >= max_results;
+                imp.results_limit_box.set_visible(over_max_results);
+
+                if imp.client.model().n_items() == 0 {
+                    imp.stack.set_visible_child_name("no-results");
+                } else {
+                    imp.stack.set_visible_child_name("results");
+                }
+
+                None
+            }),
+        );
+
+        // SwClient error
+        imp.client.connect_closure(
+            "error",
+            false,
+            closure!(|_: SwClient, err: Error| {
+                warn!("Station data could not be received: {}", err.to_string());
+
+                let text = i18n("Station data could not be received.");
+                SwApplicationWindow::default().show_notification(&text);
+            }),
+        );
     }
 
     fn setup_gactions(&self) {
@@ -268,35 +287,11 @@ impl SwSearchPage {
             clone!(@weak self as this => @default-return glib::Continue(false), move || {
                 let imp = this.imp();
                 *imp.timeout_id.borrow_mut() = None;
-                let client = imp.client.get().unwrap().clone();
 
                 let request = imp.station_request.borrow().clone();
                 debug!("Search for: {:?}", request);
+                imp.client.send_station_request(request);
 
-                let fut = client.clone().send_station_request(request).map(clone!(@weak this => move |result| {
-                    let imp = this.imp();
-
-                    let max_results = imp.station_request.borrow().limit.unwrap();
-                    let over_max_results = client.model.n_items() >= max_results;
-                    imp.results_limit_box.set_visible(over_max_results);
-
-                    if client.model.n_items() == 0{
-                        imp.stack.set_visible_child_name("no-results");
-                        imp.spinner.set_spinning(false);
-                    }else{
-                        imp.stack.set_visible_child_name("results");
-                        imp.spinner.set_spinning(false);
-                    }
-
-                    if let Err(err) = result {
-                        warn!("Station data could not be received: {}", err.to_string());
-
-                        let text = i18n("Station data could not be received.");
-                        SwApplicationWindow::default().show_notification(&text);
-                    }
-                }));
-
-                spawn!(fut);
                 glib::Continue(false)
             }),
         );

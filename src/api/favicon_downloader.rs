@@ -1,5 +1,5 @@
 // Shortwave - favicon_downloader.rs
-// Copyright (C) 2021-2022  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2021-2023  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,6 +16,7 @@
 
 use std::collections::hash_map::DefaultHasher;
 use std::hash::{Hash, Hasher};
+use std::rc::Rc;
 
 use async_std::io::ReadExt;
 use gdk_pixbuf::Pixbuf;
@@ -51,7 +52,8 @@ impl FaviconDownloader {
             .await?
             .into_body()
             .read_to_end(&mut bytes)
-            .await?;
+            .await
+            .map_err(|e| Rc::new(e))?;
 
         let input_stream = gio::MemoryInputStream::from_bytes(&glib::Bytes::from(&bytes));
         let pixbuf = Pixbuf::from_stream_at_scale_future(&input_stream, size, size, true).await?;
@@ -89,7 +91,7 @@ impl FaviconDownloader {
 
         let mut path = path::CACHE.clone();
         path.push("favicons");
-        std::fs::create_dir_all(path.as_path())?;
+        std::fs::create_dir_all(path.as_path()).map_err(|e| Rc::new(e))?;
 
         path.push(hash.to_string());
 
