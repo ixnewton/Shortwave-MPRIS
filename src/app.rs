@@ -138,8 +138,8 @@ mod imp {
                 clone!(@strong app => move |action| app.process_action(action)),
             );
 
-            // Retrieve station data
-            app.refresh_data();
+            // Connect with radiobrowser server and update library data
+            app.lookup_rb_server();
 
             // Setup settings signal (we get notified when a key gets changed)
             self.settings.connect_changed(
@@ -281,23 +281,24 @@ impl SwApplication {
         }
     }
 
-    pub fn refresh_data(&self) {
+    pub fn lookup_rb_server(&self) {
         let fut = clone!(@weak self as this => async move {
             let imp = this.imp();
-            let window = SwApplicationWindow::default();
 
+            // Try to find a working radiobrowser server
             let rb_server = SwClient::lookup_rb_server().await;
+            if let Some(rb_server) = &rb_server {
+                info!("Using radio-browser.info REST api: {rb_server}");
+            }else{
+                warn!("Unable to find radio-browser.info server.");
+            }
+
             *imp.rb_server.borrow_mut() = rb_server.clone();
             this.notify("rb-server");
 
-            imp.library.refresh_data();
-
-            if let Some(rb_server) = rb_server {
-                info!("Using radio-browser.info REST api: {rb_server}");
-                window.refresh_data();
-            }else{
-                warn!("Unable to find available radio-browser.info server.");
-            }
+            // Refresh library data either way, it'll fallback to
+            // local cached data if there's no radiobrowser server available.
+            imp.library.update_data();
         });
         spawn!(fut);
     }

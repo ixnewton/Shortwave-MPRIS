@@ -86,7 +86,7 @@ impl SwDiscoverPage {
 
     // TODO: THIS IS HORRIBLE
     // burn it with fire, and rewrite it from scratch
-    pub fn refresh_data(&self) {
+    pub fn update_data(&self) {
         let imp = self.imp();
 
         // Most voted stations (stations with the most votes)

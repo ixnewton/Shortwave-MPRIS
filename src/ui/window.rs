@@ -193,10 +193,6 @@ mod imp {
                 .downcast()
                 .unwrap();
             action.set_enabled(!enable);
-
-            let action: gio::SimpleAction =
-                obj.lookup_action("show-map").unwrap().downcast().unwrap();
-            action.set_enabled(!enable);
         }
     }
 }
@@ -378,10 +374,10 @@ impl SwApplicationWindow {
                     this.enable_mini_player(true);
                 }))
                 .build(),
-            // win.refresh-data
-            gio::ActionEntry::builder("refresh-data")
+            // win.lookup-rb-server
+            gio::ActionEntry::builder("lookup-rb-server")
                 .activate(|_, _, _| {
-                    SwApplication::default().refresh_data();
+                    SwApplication::default().lookup_rb_server();
                 })
                 .build(),
         ]);
@@ -390,7 +386,6 @@ impl SwApplicationWindow {
         app.set_accels_for_action("win.show-search", &["<primary>f"]);
         app.set_accels_for_action("win.show-library", &["<primary>l"]);
         app.set_accels_for_action("win.toggle-playback", &["<primary>space"]);
-        app.set_accels_for_action("win.refresh-data", &["<primary>r"]);
 
         // Sort / Order menu
         let sorting_action = settings_manager::create_action(Key::ViewSorting);
@@ -398,13 +393,6 @@ impl SwApplicationWindow {
 
         let order_action = settings_manager::create_action(Key::ViewOrder);
         self.add_action(&order_action);
-    }
-
-    pub fn refresh_data(&self) {
-        let imp = self.imp();
-
-        imp.discover_page.refresh_data();
-        imp.search_page.refresh_data();
     }
 
     pub fn show_player_widget(&self) {
@@ -537,15 +525,6 @@ impl SwApplicationWindow {
 
         // Show requested view / page
         match view {
-            SwView::Library => {
-                imp.window_leaflet
-                    .set_visible_child(&imp.library_page.get());
-                imp.appmenu_button
-                    .set_menu_model(Some(&imp.library_menu.get()));
-                imp.search_revealer.set_reveal_child(false);
-                imp.add_button.set_visible(true);
-                imp.back_button.set_visible(false);
-            }
             SwView::Discover => {
                 imp.window_leaflet
                     .set_visible_child(&imp.discover_page.get());
@@ -555,6 +534,17 @@ impl SwApplicationWindow {
                 imp.search_revealer.set_reveal_child(true);
                 imp.add_button.set_visible(false);
                 imp.back_button.set_visible(true);
+
+                imp.discover_page.update_data();
+            }
+            SwView::Library => {
+                imp.window_leaflet
+                    .set_visible_child(&imp.library_page.get());
+                imp.appmenu_button
+                    .set_menu_model(Some(&imp.library_menu.get()));
+                imp.search_revealer.set_reveal_child(false);
+                imp.add_button.set_visible(true);
+                imp.back_button.set_visible(false);
             }
             SwView::Search => {
                 imp.window_leaflet.set_visible_child(&imp.search_page.get());

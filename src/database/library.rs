@@ -26,7 +26,7 @@ use once_cell::unsync::OnceCell;
 
 use super::models::StationEntry;
 use crate::api::{Error, SwClient, SwStation};
-use crate::app::Action;
+use crate::app::{Action, SwApplication};
 use crate::database::{connection, queries};
 use crate::model::SwStationModel;
 
@@ -106,7 +106,7 @@ impl SwLibrary {
         *self.imp().status.borrow()
     }
 
-    pub fn refresh_data(&self) {
+    pub fn update_data(&self) {
         // Load stations asynchronously from the sqlite database
         let future = clone!(@strong self as this => async move {
             // Clear previously loaded stations first
@@ -123,7 +123,8 @@ impl SwLibrary {
             *imp.status.borrow_mut() = SwLibraryStatus::Loading;
             this.notify("status");
 
-            let futures = entries.into_iter().map(|entry| this.load_station(entry));
+            let offline_mode = SwApplication::default().rb_server().is_none();
+            let futures = entries.into_iter().map(|entry| this.load_station(entry, offline_mode));
             join_all(futures).await;
 
             this.update_library_status();
@@ -170,7 +171,7 @@ impl SwLibrary {
     }
 
     /// Try to add a station to the database.
-    async fn load_station(&self, entry: StationEntry) {
+    async fn load_station(&self, entry: StationEntry, skip_online_update: bool) {
         let imp = self.imp();
         let uuid = entry.uuid.clone();
 
@@ -212,27 +213,29 @@ impl SwLibrary {
         }
 
         // Try to update station metadata from radio-browser.info
-        let is_orphaned;
-        match imp.client.clone().station_metadata_by_uuid(&uuid).await {
-            Ok(metadata) => {
-                let station = SwStation::new(uuid, false, false, metadata, favicon);
+        let mut is_orphaned = false;
+        if !skip_online_update {
+            match imp.client.clone().station_metadata_by_uuid(&uuid).await {
+                Ok(metadata) => {
+                    let station = SwStation::new(uuid, false, false, metadata, favicon);
 
-                // Cache data for future use
-                let entry = StationEntry::for_station(&station);
-                queries::update_station(entry).unwrap();
+                    // Cache data for future use
+                    let entry = StationEntry::for_station(&station);
+                    queries::update_station(entry).unwrap();
 
-                // Add station to the library
-                imp.model.add_station(&station);
+                    // Add station to the library
+                    imp.model.add_station(&station);
 
-                return;
-            }
-            Err(err) => {
-                is_orphaned = matches!(err, Error::InvalidStation(_));
-                warn!(
-                    "Unable to receive data for station {}, trying to use cached data: {}",
-                    uuid,
-                    err.to_string()
-                );
+                    return;
+                }
+                Err(err) => {
+                    is_orphaned = matches!(err, Error::InvalidStation(_));
+                    warn!(
+                        "Unable to receive data for station {}, trying to use cached data: {}",
+                        uuid,
+                        err.to_string()
+                    );
+                }
             }
         }
 

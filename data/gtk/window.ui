@@ -90,15 +90,15 @@
                           </object>
                         </child>
                         <child>
-                          <object class="GtkButton" id="refresh_data_button">
+                          <object class="GtkButton" id="retry_lookup_button">
                             <property name="tooltip-text" translatable="yes">Try again</property>
                             <property name="icon_name">view-refresh-symbolic</property>
-                            <property name="action_name">win.refresh-data</property>
+                            <property name="action_name">win.lookup-rb-server</property>
                             <property name="valign">center</property>
                           </object>
                         </child>
                         <action-widgets>
-                          <action-widget response="0">refresh_data_button</action-widget>
+                          <action-widget response="0">retry_lookup_button</action-widget>
                         </action-widgets>
                       </object>
                     </child>
@@ -159,10 +159,6 @@
       <item>
         <attribute name="label" translatable="yes">_Enable Mini Player</attribute>
         <attribute name="action">win.enable-mini-player</attribute>
-      </item>
-      <item>
-        <attribute name="label" translatable="yes">_Refresh Station Data</attribute>
-        <attribute name="action">win.refresh-data</attribute>
       </item>
       <submenu>
         <attribute name="label" translatable="yes">_Sorting</attribute>
@@ -241,10 +237,6 @@
   </menu>
   <menu id="default_menu">
     <section>
-      <item>
-        <attribute name="label" translatable="yes">_Refresh Station Data</attribute>
-        <attribute name="action">win.refresh-data</attribute>
-      </item>
       <item>
         <attribute name="label" translatable="yes">_Enable Mini Player</attribute>
         <attribute name="action">win.enable-mini-player</attribute>

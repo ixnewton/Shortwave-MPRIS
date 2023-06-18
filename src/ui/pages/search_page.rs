@@ -130,10 +130,6 @@ impl SwSearchPage {
         self.setup_gactions();
     }
 
-    pub fn refresh_data(&self) {
-        self.update_search();
-    }
-
     fn setup_signals(&self) {
         let imp = self.imp();
 
