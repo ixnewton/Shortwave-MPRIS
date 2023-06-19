@@ -58,8 +58,6 @@ mod imp {
         pub search_page: TemplateChild<SwSearchPage>,
 
         #[template_child]
-        pub connection_infobar: TemplateChild<gtk::InfoBar>,
-        #[template_child]
         pub mini_controller_box: TemplateChild<gtk::Box>,
         #[template_child]
         pub toolbar_controller_box: TemplateChild<gtk::Box>,
@@ -89,8 +87,6 @@ mod imp {
 
         #[property(get, set = Self::set_view, builder(SwView::Library))]
         pub view: RefCell<SwView>,
-        #[property(get, set = Self::set_offline_mode)]
-        pub offline_mode: RefCell<bool>,
 
         pub window_animation_x: OnceCell<adw::TimedAnimation>,
         pub window_animation_y: OnceCell<adw::TimedAnimation>,
@@ -123,24 +119,6 @@ mod imp {
         fn set_property(&self, id: usize, value: &glib::Value, pspec: &ParamSpec) {
             Self::derived_set_property(self, id, value, pspec)
         }
-
-        fn constructed(&self) {
-            self.parent_constructed();
-            let app = SwApplication::default();
-
-            // Enable offline-mode when no radiobrowser server is available
-            app.property_expression("rb-server").watch(
-                glib::Object::NONE,
-                clone!(@weak self as this => move|| {
-                    let app = SwApplication::default();
-                    this.set_offline_mode(app.rb_server().is_none());
-
-                    if app.rb_server().is_none() {
-                        this.set_view(SwView::Library);
-                    }
-                }),
-            );
-        }
     }
 
     // Implement Gtk.Widget for SwApplicationWindow
@@ -166,33 +144,6 @@ mod imp {
                     this.obj().update_view(); glib::Continue(false)
                 }),
             );
-        }
-
-        pub fn set_offline_mode(&self, enable: bool) {
-            *self.offline_mode.borrow_mut() = enable;
-
-            let obj = self.obj();
-            self.connection_infobar.set_revealed(enable);
-
-            if enable {
-                self.set_view(SwView::Library);
-            }
-
-            // Disable online related actions, since those are useless
-            // if there's no connectivity to radio-browser.info
-            let action: gio::SimpleAction = obj
-                .lookup_action("show-discover")
-                .unwrap()
-                .downcast()
-                .unwrap();
-            action.set_enabled(!enable);
-
-            let action: gio::SimpleAction = obj
-                .lookup_action("show-search")
-                .unwrap()
-                .downcast()
-                .unwrap();
-            action.set_enabled(!enable);
         }
     }
 }

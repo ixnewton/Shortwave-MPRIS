@@ -61,48 +61,6 @@
                   <object class="GtkBox">
                     <property name="orientation">vertical</property>
                     <child>
-                      <object class="GtkInfoBar" id="connection_infobar">
-                        <property name="message_type">warning</property>
-                        <property name="revealed">False</property>
-                        <child>
-                          <object class="GtkBox">
-                            <property name="orientation">vertical</property>
-                            <property name="hexpand">True</property>
-                            <property name="spacing">6</property>
-                            <property name="margin_end">12</property>
-                            <child>
-                              <object class="GtkLabel">
-                                <property name="label" translatable="yes">Unable to connect to radio-browser.info</property>
-                                <property name="xalign">0</property>
-                                <property name="wrap">True</property>
-                                <style>
-                                  <class name="heading"/>
-                                </style>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkLabel">
-                                <property name="label" translatable="yes">Access to the public online station database is not available. Ensure that you are connected to the internet.</property>
-                                <property name="xalign">0</property>
-                                <property name="wrap">True</property>
-                              </object>
-                            </child>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="GtkButton" id="retry_lookup_button">
-                            <property name="tooltip-text" translatable="yes">Try again</property>
-                            <property name="icon_name">view-refresh-symbolic</property>
-                            <property name="action_name">win.lookup-rb-server</property>
-                            <property name="valign">center</property>
-                          </object>
-                        </child>
-                        <action-widgets>
-                          <action-widget response="0">retry_lookup_button</action-widget>
-                        </action-widgets>
-                      </object>
-                    </child>
-                    <child>
                       <object class="AdwFlap" id="window_flap">
                         <property name="reveal-flap">False</property>
                         <property name="locked">True</property>

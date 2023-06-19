@@ -4,7 +4,11 @@
     "runtime-version" : "master",
     "sdk" : "org.gnome.Sdk",
     "sdk-extensions" : [
+<<<<<<< HEAD
         "org.freedesktop.Sdk.Extension.rust-nightly",
+=======
+        "org.freedesktop.Sdk.Extension.rust-stable",
+>>>>>>> c946b6a (window: remove offline-mode property)
         "org.freedesktop.Sdk.Extension.llvm16"
     ],
     "command" : "shortwave",
@@ -23,7 +27,11 @@
         "--env=RUST_BACKTRACE=1"
     ],
     "build-options" : {
+<<<<<<< HEAD
         "append-path" : "/usr/lib/sdk/rust-nightly/bin:/usr/lib/sdk/llvm16/bin",
+=======
+        "append-path" : "/usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/llvm16/bin",
+>>>>>>> c946b6a (window: remove offline-mode property)
         "env": {
             "RUSTFLAGS": "-C force-frame-pointers=yes -C symbol-mangling-version=v0",
             "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER": "clang",
