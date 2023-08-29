@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2022-12-19 15:41+0000\n"
-"PO-Revision-Date: 2023-04-26 01:38+0200\n"
+"POT-Creation-Date: 2023-06-26 08:10+0000\n"
+"PO-Revision-Date: 2023-08-30 00:52+0200\n"
 "Last-Translator: Fran Dieguez <frandieguez@gnome.org>\n"
 "Language-Team: Galician <Proxecto Trasno <proxecto@trasno.gal>>\n"
 "Language: gl\n"
@@ -23,7 +23,7 @@ msgstr ""
 "X-DL-Branch: master\n"
 "X-DL-Domain: po\n"
 "X-DL-State: Translating\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #: data/gtk/create_station_dialog.ui:8
 msgid "Create new station"
@@ -57,7 +57,7 @@ msgstr "Crear emisora local"
 msgid "Change station image"
 msgstr "Cambiar a imaxe da emisora"
 
-#: data/gtk/create_station_dialog.ui:137 src/ui/pages/search_page.rs:192
+#: data/gtk/create_station_dialog.ui:137 src/ui/pages/search_page.rs:193
 msgid "Name"
 msgstr "Nome"
 
@@ -103,26 +103,14 @@ msgid "General"
 msgstr "Xeral"
 
 #: data/gtk/settings_window.ui:10
-msgid "Appearance"
-msgstr "Aparencia"
-
-#: data/gtk/settings_window.ui:14
-msgid "_Dark Mode"
-msgstr "Modo _escuro"
-
-#: data/gtk/settings_window.ui:16
-msgid "Whether the application should use a dark theme"
-msgstr "Indica se o aplicativo usa o tema escuro"
-
-#: data/gtk/settings_window.ui:29
 msgid "Features"
 msgstr "Características"
 
-#: data/gtk/settings_window.ui:32
+#: data/gtk/settings_window.ui:13
 msgid "_Notifications"
 msgstr "_Notificacións"
 
-#: data/gtk/settings_window.ui:34
+#: data/gtk/settings_window.ui:15
 msgid "Show desktop notifications when a new song gets played"
 msgstr ""
 "Mostrar notificacións do escritorio cando se reproduce unha nova canción"
@@ -190,8 +178,8 @@ msgctxt "shortcut window"
 msgid "Toggle playback"
 msgstr "Trocar reprodución"
 
-#: data/gtk/search_page.ui:31 data/gtk/station_dialog.ui:200
-#: src/ui/pages/search_page.rs:196
+#: data/gtk/search_page.ui:31 data/gtk/station_dialog.ui:185
+#: src/ui/pages/search_page.rs:197
 msgid "Votes"
 msgstr "Votos"
 
@@ -207,35 +195,35 @@ msgstr "Non hai resultados"
 msgid "Try using a different search term"
 msgstr "Tente usar un termo de busca distinto"
 
-#: data/gtk/search_page.ui:148 data/gtk/window.ui:170
+#: data/gtk/search_page.ui:148 data/gtk/window.ui:171
 msgid "_Name"
 msgstr "_Nome"
 
-#: data/gtk/search_page.ui:153 data/gtk/window.ui:175
+#: data/gtk/search_page.ui:153 data/gtk/window.ui:176
 msgid "_Language"
 msgstr "_Idioma"
 
-#: data/gtk/search_page.ui:158 data/gtk/window.ui:180
+#: data/gtk/search_page.ui:158 data/gtk/window.ui:181
 msgid "_Country"
 msgstr "_País"
 
-#: data/gtk/search_page.ui:163 data/gtk/window.ui:185
+#: data/gtk/search_page.ui:163 data/gtk/window.ui:186
 msgid "S_tate"
 msgstr "Es_tado"
 
-#: data/gtk/search_page.ui:168 data/gtk/window.ui:190
+#: data/gtk/search_page.ui:168 data/gtk/window.ui:191
 msgid "_Votes"
 msgstr "_Votos"
 
-#: data/gtk/search_page.ui:173 data/gtk/window.ui:195
+#: data/gtk/search_page.ui:173 data/gtk/window.ui:196
 msgid "_Bitrate"
 msgstr "_Bitrate"
 
-#: data/gtk/search_page.ui:180 data/gtk/window.ui:202
+#: data/gtk/search_page.ui:180 data/gtk/window.ui:203
 msgid "_Ascending"
 msgstr "_Ascendente"
 
-#: data/gtk/search_page.ui:185 data/gtk/window.ui:207
+#: data/gtk/search_page.ui:185 data/gtk/window.ui:208
 msgid "_Descending"
 msgstr "_Descendente"
 
@@ -321,40 +309,40 @@ msgstr ""
 msgid "Information"
 msgstr "Información"
 
-#: data/gtk/station_dialog.ui:165 src/ui/pages/search_page.rs:193
+#: data/gtk/station_dialog.ui:165 src/ui/pages/search_page.rs:194
 msgid "Language"
 msgstr "Idioma"
 
-#: data/gtk/station_dialog.ui:180
+#: data/gtk/station_dialog.ui:175
 msgid "Tags"
 msgstr "Etiquetas"
 
-#: data/gtk/station_dialog.ui:216
+#: data/gtk/station_dialog.ui:196
 msgid "Location"
 msgstr "Localización"
 
-#: data/gtk/station_dialog.ui:221 src/ui/pages/search_page.rs:194
+#: data/gtk/station_dialog.ui:201 src/ui/pages/search_page.rs:195
 msgid "Country"
 msgstr "País"
 
-#: data/gtk/station_dialog.ui:241 src/ui/pages/search_page.rs:195
+#: data/gtk/station_dialog.ui:211 src/ui/pages/search_page.rs:196
 msgid "State"
 msgstr "Estado"
 
-#: data/gtk/station_dialog.ui:285
+#: data/gtk/station_dialog.ui:245
 msgid "Audio"
 msgstr "Audio"
 
-#: data/gtk/station_dialog.ui:289 src/ui/pages/search_page.rs:197
+#: data/gtk/station_dialog.ui:249 src/ui/pages/search_page.rs:198
 msgid "Bitrate"
 msgstr "Bitrate"
 
-#: data/gtk/station_dialog.ui:304
+#: data/gtk/station_dialog.ui:259
 msgid "Codec"
 msgstr "Códec"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:319
+#: data/gtk/station_dialog.ui:269
 msgid "Stream"
 msgstr "Fluxo"
 
@@ -391,22 +379,22 @@ msgid "Add Stations"
 msgstr "Engadir emisoras"
 
 #: data/gtk/window.ui:34
-msgid "Go Back"
+msgid "Back"
 msgstr "Atrás"
 
 #: data/gtk/window.ui:41
-msgid "Open Application Menu"
-msgstr "Abrir menú de aplicación"
+msgid "Main Menu"
+msgstr "Menú principal"
 
-#: data/gtk/window.ui:50
-msgid "Open Search"
-msgstr "Abrir busca"
+#: data/gtk/window.ui:51
+msgid "Search"
+msgstr "Buscar"
 
-#: data/gtk/window.ui:74
+#: data/gtk/window.ui:75
 msgid "Unable to connect to radio-browser.info"
 msgstr "Non foi posíbel conetarse a radio-browser.info"
 
-#: data/gtk/window.ui:84
+#: data/gtk/window.ui:85
 msgid ""
 "Access to the public online station database is not available. Ensure that "
 "you are connected to the internet."
@@ -414,39 +402,39 @@ msgstr ""
 "Non está dispoñíbel o acceso á base de datos de emisoras en liña públicas. "
 "Asegúrese que está conectado a internet."
 
-#: data/gtk/window.ui:93
+#: data/gtk/window.ui:94
 msgid "Try again"
 msgstr "Tentar de novo"
 
-#: data/gtk/window.ui:159 data/gtk/window.ui:248
+#: data/gtk/window.ui:160 data/gtk/window.ui:249
 msgid "_Enable Mini Player"
 msgstr "_Activar minireprodutor"
 
-#: data/gtk/window.ui:163 data/gtk/window.ui:244
+#: data/gtk/window.ui:164 data/gtk/window.ui:245
 msgid "_Refresh Station Data"
 msgstr "_Actualizando datos da emisora"
 
-#: data/gtk/window.ui:167
+#: data/gtk/window.ui:168
 msgid "_Sorting"
 msgstr "_Ordenando"
 
-#: data/gtk/window.ui:216 data/gtk/window.ui:254
+#: data/gtk/window.ui:217 data/gtk/window.ui:255
 msgid "_Open radio-browser.info <sup>↗</sup>"
 msgstr "_Abrir radio-browser.info <sup>↗</sup>"
 
-#: data/gtk/window.ui:221 data/gtk/window.ui:259
+#: data/gtk/window.ui:222 data/gtk/window.ui:260
 msgid "_Create New Station"
 msgstr "_Crear nova emisora"
 
-#: data/gtk/window.ui:228 data/gtk/window.ui:266
+#: data/gtk/window.ui:229 data/gtk/window.ui:267
 msgid "_Preferences"
 msgstr "_Preferencias"
 
-#: data/gtk/window.ui:232 data/gtk/window.ui:270
+#: data/gtk/window.ui:233 data/gtk/window.ui:271
 msgid "_Keyboard Shortcuts"
 msgstr "Atallos de _teclado"
 
-#: data/gtk/window.ui:236 data/gtk/window.ui:274
+#: data/gtk/window.ui:237 data/gtk/window.ui:275
 msgid "_About Shortwave"
 msgstr "_Sobre Shortwave"
 
@@ -475,31 +463,31 @@ msgid "translator-credits"
 msgstr "Fran Diéguez <frandiguez@gnome.org>, 2021-2023"
 
 #. TODO: Implement show-server-stats action
-#: src/ui/pages/discover_page.rs:117
+#: src/ui/pages/discover_page.rs:116
 msgid "Show statistics"
 msgstr "Mostrar estatísticas"
 
-#: src/ui/pages/discover_page.rs:119
+#: src/ui/pages/discover_page.rs:118
 msgid "Browse over 30,000 stations"
 msgstr "Explorar máis de 30.000 emisoras"
 
-#: src/ui/pages/discover_page.rs:121
+#: src/ui/pages/discover_page.rs:120
 msgid "Add new station"
 msgstr "Engadir nova emisora"
 
-#: src/ui/pages/discover_page.rs:123
+#: src/ui/pages/discover_page.rs:122
 msgid "Your favorite station is missing?"
 msgstr "Falta a súa emisora favorita?"
 
-#: src/ui/pages/discover_page.rs:128
+#: src/ui/pages/discover_page.rs:127
 msgid "Open website"
 msgstr "Abrir sitio web"
 
-#: src/ui/pages/discover_page.rs:130
+#: src/ui/pages/discover_page.rs:129
 msgid "Powered by radio-browser.info"
 msgstr "Impulsado por radio-browser.info"
 
-#: src/ui/pages/discover_page.rs:149 src/ui/pages/search_page.rs:286
+#: src/ui/pages/discover_page.rs:148 src/ui/pages/search_page.rs:287
 msgid "Station data could not be received."
 msgstr "Datos da emisora non recibidos."
 
@@ -507,7 +495,7 @@ msgstr "Datos da emisora non recibidos."
 msgid "Welcome to {}"
 msgstr "Benvida a {}"
 
-#: src/ui/pages/search_page.rs:102
+#: src/ui/pages/search_page.rs:103
 msgid ""
 "The number of results is limited to {} item. Try using a more specific "
 "search term."
@@ -521,7 +509,7 @@ msgstr[1] ""
 "O número de resultados está limitado a {} elementos. Tente usar un termo de "
 "busca específico."
 
-#: src/ui/station_dialog.rs:286
+#: src/ui/station_dialog.rs:273
 msgid "{} kbit/s"
 msgstr "{} kbit/s"
 
@@ -582,6 +570,18 @@ msgstr "Integración sen problemas no ambiente de escritorio de GNOME"
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:12
 msgid "Gradio;Radio;Stream;Wave;"
 msgstr "Gradio;Radio;Stream;Fluxo;Retransmisión;Onda;Wave;"
+
+#~ msgid "Appearance"
+#~ msgstr "Aparencia"
+
+#~ msgid "_Dark Mode"
+#~ msgstr "Modo _escuro"
+
+#~ msgid "Whether the application should use a dark theme"
+#~ msgstr "Indica se o aplicativo usa o tema escuro"
+
+#~ msgid "Open Application Menu"
+#~ msgstr "Abrir menú de aplicación"
 
 #~ msgid "Detected songs will appear here."
 #~ msgstr "As cancións detectadas aparecerán todos."
