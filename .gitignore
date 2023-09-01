@@ -41,3 +41,4 @@ shortwave.db
 shortwave.pot
 .flatpak
 .vscode
+*.syscap
