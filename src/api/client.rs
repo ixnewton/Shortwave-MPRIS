@@ -101,7 +101,7 @@ mod imp {
     impl SwClient {
         pub fn build_url(param: &str, options: Option<&str>) -> Result<Url, Error> {
             let rb_server = SwApplication::default().rb_server();
-            if let None = rb_server {
+            if rb_server.is_none() {
                 return Err(Error::NoServerAvailable);
             }
 
@@ -124,7 +124,7 @@ mod imp {
                 .await?
                 .json()
                 .await
-                .map_err(|e| Rc::new(e))?;
+                .map_err(Rc::new)?;
             Ok(())
         }
     }
@@ -147,7 +147,7 @@ impl SwClient {
             let result = clone!(@weak this => @default-panic, async move {
                 let url = imp::SwClient::build_url(STATION_SEARCH, Some(&request.url_encode()))?;
 
-                let response = HTTP_CLIENT.get_async(url.as_ref()).await?.text().await.map_err(|e| Rc::new(e))?;
+                let response = HTTP_CLIENT.get_async(url.as_ref()).await?.text().await.map_err(Rc::new)?;
                 let deserialized: Result<Vec<StationMetadata>, _> = serde_json::from_str(&response);
 
                 let stations_md = match deserialized {
@@ -194,7 +194,7 @@ impl SwClient {
             .await?
             .text()
             .await
-            .map_err(|e| Rc::new(e))?;
+            .map_err(Rc::new)?;
         let deserialized: Result<Vec<StationMetadata>, _> = serde_json::from_str(&response);
 
         let mut metadata = match deserialized {

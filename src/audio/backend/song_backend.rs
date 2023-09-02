@@ -108,7 +108,7 @@ impl SongBackend {
             dest_path.push(song.path.file_name().unwrap());
         }
 
-        fs::copy(song.path, dest_path).map_err(|e| Rc::new(e))?;
+        fs::copy(song.path, dest_path).map_err(Rc::new)?;
         Ok(())
     }
 

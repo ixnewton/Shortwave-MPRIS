@@ -53,7 +53,7 @@ impl FaviconDownloader {
             .into_body()
             .read_to_end(&mut bytes)
             .await
-            .map_err(|e| Rc::new(e))?;
+            .map_err(Rc::new)?;
 
         let input_stream = gio::MemoryInputStream::from_bytes(&glib::Bytes::from(&bytes));
         let pixbuf = Pixbuf::from_stream_at_scale_future(&input_stream, size, size, true).await?;
@@ -91,7 +91,7 @@ impl FaviconDownloader {
 
         let mut path = path::CACHE.clone();
         path.push("favicons");
-        std::fs::create_dir_all(path.as_path()).map_err(|e| Rc::new(e))?;
+        std::fs::create_dir_all(path.as_path()).map_err(Rc::new)?;
 
         path.push(hash.to_string());
 

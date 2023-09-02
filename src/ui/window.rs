@@ -325,12 +325,6 @@ impl SwApplicationWindow {
                     this.enable_mini_player(true);
                 }))
                 .build(),
-            // win.lookup-rb-server
-            gio::ActionEntry::builder("lookup-rb-server")
-                .activate(|_, _, _| {
-                    SwApplication::default().lookup_rb_server();
-                })
-                .build(),
         ]);
         app.set_accels_for_action("win.go-back", &["Escape"]);
         app.set_accels_for_action("win.show-discover", &["<primary>d"]);
