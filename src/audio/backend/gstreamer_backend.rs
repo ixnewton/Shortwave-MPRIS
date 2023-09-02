@@ -1,5 +1,5 @@
 // Shortwave - gstreamer_backend.rs
-// Copyright (C) 2021-2022  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2021-2023  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@ use gstreamer::{Bin, Element, MessageView, PadProbeReturn, PadProbeType, Pipelin
 use gstreamer_audio::{StreamVolume, StreamVolumeFormat};
 use gtk::glib;
 use gtk::glib::Sender;
+use once_cell::unsync::OnceCell;
 
 use crate::app::Action;
 use crate::audio::PlaybackState;
@@ -61,6 +62,7 @@ pub struct GstreamerBackend {
     volume: Arc<Mutex<f64>>,
     volume_signal_id: Option<glib::signal::SignalHandlerId>,
     buffering_state: Arc<Mutex<BufferingState>>,
+    bus_watch_guard: OnceCell<gstreamer::bus::BusWatchGuard>,
     sender: Sender<GstreamerMessage>,
 }
 
@@ -103,8 +105,9 @@ impl GstreamerBackend {
             current_title,
             volume,
             volume_signal_id,
-            sender: gst_sender,
             buffering_state,
+            bus_watch_guard: OnceCell::default(),
+            sender: gst_sender,
         };
 
         gstreamer_backend.setup_signals(app_sender);
@@ -116,7 +119,7 @@ impl GstreamerBackend {
         if let Some(pulsesink) = self.pipeline.by_name("pulsesink") {
             // We have to update the volume if we get changes from pulseaudio (pulsesink).
             // The user is able to control the volume from g-c-c.
-            let (volume_sender, volume_receiver) = glib::MainContext::channel(glib::PRIORITY_LOW);
+            let (volume_sender, volume_receiver) = glib::MainContext::channel(glib::Priority::LOW);
 
             // We need to do message passing (sender/receiver) here, because gstreamer
             // messages are coming from a other thread (and app::Action enum is
@@ -125,7 +128,7 @@ impl GstreamerBackend {
                 None,
                 clone!(@strong app_sender => move |volume| {
                     send!(app_sender, Action::PlaybackSetVolume(volume));
-                    glib::Continue(true)
+                    glib::ControlFlow::Continue
                 }),
             );
 
@@ -186,13 +189,14 @@ impl GstreamerBackend {
 
         // listen for new pipeline / bus messages
         let bus = self.pipeline.bus().expect("Unable to get pipeline bus");
-        bus.add_watch_local(
+        let guard = bus.add_watch_local(
             clone!(@weak self.pipeline as pipeline, @strong self.sender as gst_sender, @strong self.buffering_state as buffering_state, @weak self.current_title as current_title => @default-panic, move |_, message|{
                 Self::parse_bus_message(pipeline, message, gst_sender.clone(), &buffering_state, current_title);
-                Continue(true)
+                glib::ControlFlow::Continue
             }),
         )
         .unwrap();
+        self.bus_watch_guard.set(guard).unwrap();
     }
 
     pub fn set_state(&mut self, state: gstreamer::State) {

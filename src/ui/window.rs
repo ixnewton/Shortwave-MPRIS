@@ -19,7 +19,7 @@ use std::rc::Rc;
 
 use adw::prelude::*;
 use adw::subclass::prelude::*;
-use glib::{clone, subclass, Enum, ParamSpec, Properties, Sender};
+use glib::{clone, subclass, Enum, Properties, Sender};
 use gtk::{gdk, gio, glib, CompositeTemplate};
 use once_cell::unsync::OnceCell;
 
@@ -107,17 +107,21 @@ mod imp {
         }
     }
 
+    #[glib::derived_properties]
     impl ObjectImpl for SwApplicationWindow {
-        fn properties() -> &'static [ParamSpec] {
-            Self::derived_properties()
-        }
+        fn constructed(&self) {
+            self.parent_constructed();
 
-        fn property(&self, id: usize, pspec: &ParamSpec) -> glib::Value {
-            Self::derived_property(self, id, pspec)
-        }
+            let app = SwApplication::default();
+            let sender = app.imp().sender.clone();
+            let player = app.imp().player.clone();
 
-        fn set_property(&self, id: usize, value: &glib::Value, pspec: &ParamSpec) {
-            Self::derived_set_property(self, id, value, pspec)
+            self.obj().setup_widgets(sender.clone(), player);
+            self.obj().setup_signals(sender.clone());
+            self.obj().setup_gactions(sender);
+
+            // Library is the default page
+            self.obj().set_view(SwView::Library);
         }
     }
 
@@ -125,7 +129,17 @@ mod imp {
     impl WidgetImpl for SwApplicationWindow {}
 
     // Implement Gtk.Window for SwApplicationWindow
-    impl WindowImpl for SwApplicationWindow {}
+    impl WindowImpl for SwApplicationWindow {
+        fn close_request(&self) -> glib::Propagation {
+            debug!("Saving window geometry.");
+            let width = self.obj().default_size().0;
+            let height = self.obj().default_size().1;
+
+            settings_manager::set_integer(Key::WindowWidth, width);
+            settings_manager::set_integer(Key::WindowHeight, height);
+            glib::Propagation::Proceed
+        }
+    }
 
     // Implement Gtk.ApplicationWindow for SwApplicationWindow
     impl ApplicationWindowImpl for SwApplicationWindow {}
@@ -139,11 +153,10 @@ mod imp {
 
             // Delay updating the view, otherwise it could invalidate widgets if it gets
             // called during an allocation and cause glitches (eg. short flickering)
-            glib::idle_add_local(
-                clone!(@weak self as this => @default-return glib::Continue(false), move||{
-                    this.obj().update_view(); glib::Continue(false)
-                }),
-            );
+            glib::idle_add_local(clone!(@weak self as this => @default-panic, move||{
+                this.obj().update_view();
+                glib::ControlFlow::Break
+            }));
         }
     }
 }
@@ -158,19 +171,8 @@ glib::wrapper! {
 
 // SwApplicationWindow implementation itself
 impl SwApplicationWindow {
-    pub fn new(sender: Sender<Action>, app: SwApplication, player: Rc<Player>) -> Self {
-        // Create new GObject and downcast it into SwApplicationWindow
-        let window = glib::Object::new::<Self>();
-        app.add_window(&window);
-
-        window.setup_widgets(sender.clone(), player);
-        window.setup_signals(sender.clone());
-        window.setup_gactions(sender);
-
-        // Library is the default page
-        window.set_view(SwView::Library);
-
-        window
+    pub fn new() -> Self {
+        glib::Object::new::<Self>()
     }
 
     pub fn setup_widgets(&self, sender: Sender<Action>, player: Rc<Player>) {
@@ -240,22 +242,11 @@ impl SwApplicationWindow {
                     this.set_view(SwView::Discover);
                 }
             }));
-
-        // window gets closed
-        self.connect_close_request(move |window| {
-            debug!("Saving window geometry.");
-            let width = window.default_size().0;
-            let height = window.default_size().1;
-
-            settings_manager::set_integer(Key::WindowWidth, width);
-            settings_manager::set_integer(Key::WindowHeight, height);
-            glib::signal::Inhibit(false)
-        });
     }
 
     fn setup_gactions(&self, sender: Sender<Action>) {
         let imp = self.imp();
-        let app = self.application().unwrap();
+        let app = SwApplication::default();
 
         self.add_action_entries([
             // win.open-radio-browser-info

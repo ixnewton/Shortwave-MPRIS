@@ -199,12 +199,12 @@ impl SwSearchPage {
         let variant_ty = Some(glib::VariantTy::new("s").unwrap());
 
         let sorting_action =
-            gio::SimpleAction::new_stateful("sorting", variant_ty, "Votes".to_variant());
+            gio::SimpleAction::new_stateful("sorting", variant_ty, &"Votes".to_variant());
         imp.search_action_group.add_action(&sorting_action);
         sorting_action.connect_change_state(clone!(@weak self as this => move |action, state|{
             let imp = this.imp();
             if let Some(state) = state {
-                action.set_state(state.clone());
+                action.set_state(state);
                 let order = state.str().unwrap();
 
                 let label = match order{
@@ -231,12 +231,12 @@ impl SwSearchPage {
         }));
 
         let order_action =
-            gio::SimpleAction::new_stateful("order", variant_ty, "Descending".to_variant());
+            gio::SimpleAction::new_stateful("order", variant_ty, &"Descending".to_variant());
         imp.search_action_group.add_action(&order_action);
         order_action.connect_change_state(clone!(@weak self as this => move |action, state|{
             let imp = this.imp();
             if let Some(state) = state {
-                action.set_state(state.clone());
+                action.set_state(state);
 
                 let reverse = if state.str().unwrap() == "Ascending" {
                     imp.sorting_button_content.set_icon_name("view-sort-ascending-symbolic");
@@ -280,7 +280,7 @@ impl SwSearchPage {
         // Start new timeout
         let id = glib::source::timeout_add_seconds_local(
             1,
-            clone!(@weak self as this => @default-return glib::Continue(false), move || {
+            clone!(@weak self as this => @default-panic, move || {
                 let imp = this.imp();
                 *imp.timeout_id.borrow_mut() = None;
 
@@ -288,7 +288,7 @@ impl SwSearchPage {
                 debug!("Search for: {:?}", request);
                 imp.client.send_station_request(request);
 
-                glib::Continue(false)
+                glib::ControlFlow::Break
             }),
         );
         *imp.timeout_id.borrow_mut() = Some(id);

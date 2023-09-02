@@ -71,7 +71,7 @@ impl FaviconDownloader {
         let file = Self::file(url).ok()?;
         if Self::exists(&file) {
             let ios = file
-                .open_readwrite_future(glib::PRIORITY_DEFAULT)
+                .open_readwrite_future(glib::Priority::DEFAULT)
                 .await
                 .expect("Could not open file");
             let data_input_stream = DataInputStream::new(&ios.input_stream());

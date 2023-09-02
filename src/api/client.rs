@@ -20,7 +20,7 @@ use std::time::Duration;
 
 use async_std_resolver::{config as rconfig, resolver, resolver_from_system_conf};
 use glib::subclass::Signal;
-use glib::{clone, ParamSpec, Properties};
+use glib::{clone, Properties};
 use gtk::glib;
 use gtk::prelude::*;
 use gtk::subclass::prelude::*;
@@ -76,15 +76,8 @@ mod imp {
         type Type = super::SwClient;
     }
 
+    #[glib::derived_properties]
     impl ObjectImpl for SwClient {
-        fn properties() -> &'static [ParamSpec] {
-            Self::derived_properties()
-        }
-
-        fn property(&self, id: usize, pspec: &ParamSpec) -> glib::Value {
-            Self::derived_property(self, id, pspec)
-        }
-
         fn signals() -> &'static [Signal] {
             static SIGNALS: Lazy<Vec<Signal>> = Lazy::new(|| {
                 vec![
@@ -162,7 +155,7 @@ impl SwClient {
                 let stations: Vec<SwStation> = stations_md
                     .into_iter()
                     .map(|metadata| {
-                        SwStation::new(metadata.stationuuid.clone(), false, false, metadata, None)
+                        SwStation::new(&metadata.stationuuid.clone(), false, false, metadata, None)
                     })
                     .collect();
 

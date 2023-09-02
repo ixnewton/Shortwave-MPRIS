@@ -20,7 +20,7 @@ use std::str::FromStr;
 
 use adw::subclass::prelude::*;
 use gio::subclass::prelude::ApplicationImpl;
-use glib::{clone, ObjectExt, ParamSpec, Properties, Receiver, Sender};
+use glib::{clone, ObjectExt, Properties, Receiver, Sender};
 use gtk::glib::WeakRef;
 use gtk::prelude::*;
 use gtk::{gio, glib};
@@ -32,7 +32,7 @@ use crate::config;
 use crate::database::SwLibrary;
 use crate::model::SwSorting;
 use crate::settings::{settings_manager, Key, SettingsWindow};
-use crate::ui::{about_window, SwApplicationWindow, SwView};
+use crate::ui::{about_window, SwApplicationWindow};
 
 #[derive(Debug, Clone)]
 pub enum Action {
@@ -75,7 +75,7 @@ mod imp {
         type Type = super::SwApplication;
 
         fn new() -> Self {
-            let (sender, r) = glib::MainContext::channel(glib::PRIORITY_DEFAULT);
+            let (sender, r) = glib::MainContext::channel(glib::Priority::DEFAULT);
             let receiver = RefCell::new(Some(r));
 
             let library = SwLibrary::new(sender.clone());
@@ -98,18 +98,9 @@ mod imp {
         }
     }
 
-    // Implement GLib.Object for SwApplication
-    impl ObjectImpl for SwApplication {
-        fn properties() -> &'static [ParamSpec] {
-            Self::derived_properties()
-        }
+    #[glib::derived_properties]
+    impl ObjectImpl for SwApplication {}
 
-        fn property(&self, id: usize, pspec: &ParamSpec) -> glib::Value {
-            Self::derived_property(self, id, pspec)
-        }
-    }
-
-    // Implement Gio.Application for SwApplication
     impl ApplicationImpl for SwApplication {
         fn activate(&self) {
             debug!("gio::Application -> activate()");
@@ -158,21 +149,17 @@ mod imp {
         }
     }
 
-    // Implement Gtk.Application for SwApplication
     impl GtkApplicationImpl for SwApplication {}
 
-    // Implement Adw.Application for SwApplication
     impl AdwApplicationImpl for SwApplication {}
 }
 
-// Wrap SwApplication into a usable gtk-rs object
 glib::wrapper! {
     pub struct SwApplication(ObjectSubclass<imp::SwApplication>)
         @extends gio::Application, gtk::Application, adw::Application,
         @implements gio::ActionMap, gio::ActionGroup;
 }
 
-// SwApplication implementation itself
 impl SwApplication {
     pub fn run() -> glib::ExitCode {
         debug!(
@@ -197,11 +184,8 @@ impl SwApplication {
     }
 
     fn create_window(&self) -> SwApplicationWindow {
-        let imp = self.imp();
-        let window = SwApplicationWindow::new(imp.sender.clone(), self.clone(), imp.player.clone());
-
-        // Set initial view
-        window.set_view(SwView::Library);
+        let window = SwApplicationWindow::new();
+        self.add_window(&window);
 
         window.present();
         window
@@ -236,10 +220,10 @@ impl SwApplication {
         self.set_accels_for_action("window.close", &["<primary>w"]);
     }
 
-    fn process_action(&self, action: Action) -> glib::Continue {
+    fn process_action(&self, action: Action) -> glib::ControlFlow {
         let imp = self.imp();
         if self.active_window().is_none() {
-            return glib::Continue(true);
+            return glib::ControlFlow::Continue;
         }
 
         let window = SwApplicationWindow::default();
@@ -260,7 +244,7 @@ impl SwApplication {
             Action::PlaybackSaveSong(song) => imp.player.save_song(song),
             Action::SettingsKeyChanged(key) => self.apply_settings_changes(key),
         }
-        glib::Continue(true)
+        glib::ControlFlow::Continue
     }
 
     fn apply_settings_changes(&self, key: Key) {

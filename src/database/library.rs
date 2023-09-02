@@ -17,11 +17,10 @@
 use std::cell::RefCell;
 
 use futures::future::join_all;
-use glib::{clone, Enum, ObjectExt, ParamSpec, ParamSpecEnum, ParamSpecObject, Sender, ToValue};
+use glib::{clone, Enum, ObjectExt, Properties, Sender};
 use gtk::prelude::*;
 use gtk::subclass::prelude::*;
 use gtk::{gdk_pixbuf, glib};
-use once_cell::sync::Lazy;
 use once_cell::unsync::OnceCell;
 
 use super::models::StationEntry;
@@ -45,12 +44,15 @@ pub enum SwLibraryStatus {
 mod imp {
     use super::*;
 
-    #[derive(Debug, Default)]
+    #[derive(Debug, Default, Properties)]
+    #[properties(wrapper_type = super::SwLibrary)]
     pub struct SwLibrary {
+        #[property(get)]
         pub model: SwStationModel,
+        #[property(get, builder(SwLibraryStatus::default()))]
         pub status: RefCell<SwLibraryStatus>,
-        pub client: SwClient,
 
+        pub client: SwClient,
         pub sender: OnceCell<Sender<Action>>,
     }
 
@@ -60,30 +62,8 @@ mod imp {
         type Type = super::SwLibrary;
     }
 
-    impl ObjectImpl for SwLibrary {
-        fn properties() -> &'static [ParamSpec] {
-            static PROPERTIES: Lazy<Vec<ParamSpec>> = Lazy::new(|| {
-                vec![
-                    ParamSpecObject::builder::<SwStationModel>("model")
-                        .read_only()
-                        .build(),
-                    ParamSpecEnum::builder::<SwLibraryStatus>("status")
-                        .read_only()
-                        .build(),
-                ]
-            });
-
-            PROPERTIES.as_ref()
-        }
-
-        fn property(&self, _id: usize, pspec: &ParamSpec) -> glib::Value {
-            match pspec.name() {
-                "model" => self.obj().model().to_value(),
-                "status" => self.obj().status().to_value(),
-                _ => unimplemented!(),
-            }
-        }
-    }
+    #[glib::derived_properties]
+    impl ObjectImpl for SwLibrary {}
 }
 
 glib::wrapper! {
@@ -96,14 +76,6 @@ impl SwLibrary {
         library.imp().sender.set(sender).unwrap();
 
         library
-    }
-
-    pub fn model(&self) -> SwStationModel {
-        self.imp().model.clone()
-    }
-
-    pub fn status(&self) -> SwLibraryStatus {
-        *self.imp().status.borrow()
     }
 
     pub fn update_data(&self) {
@@ -190,7 +162,7 @@ impl SwLibrary {
             if let Some(data) = &entry.data {
                 match serde_json::from_str(data) {
                     Ok(metadata) => {
-                        let station = SwStation::new(uuid, true, false, metadata, favicon.clone());
+                        let station = SwStation::new(&uuid, true, false, metadata, favicon.clone());
                         imp.model.add_station(&station);
                     }
                     Err(err) => {
@@ -217,7 +189,7 @@ impl SwLibrary {
         if !skip_online_update {
             match imp.client.clone().station_metadata_by_uuid(&uuid).await {
                 Ok(metadata) => {
-                    let station = SwStation::new(uuid, false, false, metadata, favicon);
+                    let station = SwStation::new(&uuid, false, false, metadata, favicon);
 
                     // Cache data for future use
                     let entry = StationEntry::for_station(&station);
@@ -243,7 +215,7 @@ impl SwLibrary {
         if let Some(data) = &entry.data {
             match serde_json::from_str(data) {
                 Ok(metadata) => {
-                    let s = SwStation::new(uuid, false, is_orphaned, metadata, favicon);
+                    let s = SwStation::new(&uuid, false, is_orphaned, metadata, favicon);
                     imp.model.add_station(&s);
                 }
                 Err(err) => {
