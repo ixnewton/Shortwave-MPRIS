@@ -111,7 +111,7 @@ impl SwStationFlowBox {
                 let row = child.clone().downcast::<SwStationRow>().unwrap();
                 let station = row.station();
 
-                let station_dialog = SwStationDialog::new(sender.clone(), station);
+                let station_dialog = SwStationDialog::new(&station);
                 station_dialog.show();
             }));
     }

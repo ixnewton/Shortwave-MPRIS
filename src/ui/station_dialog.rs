@@ -17,14 +17,14 @@
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use futures_util::future::FutureExt;
-use glib::{clone, subclass, Sender};
+use glib::{subclass, Properties};
 use gtk::{gdk, glib, CompositeTemplate};
 use inflector::Inflector;
 use once_cell::unsync::OnceCell;
 use shumate::prelude::*;
 
 use crate::api::{FaviconDownloader, SwStation};
-use crate::app::{Action, SwApplication};
+use crate::app::SwApplication;
 use crate::database::SwLibrary;
 use crate::i18n;
 use crate::ui::{FaviconSize, StationFavicon, SwApplicationWindow};
@@ -32,67 +32,54 @@ use crate::ui::{FaviconSize, StationFavicon, SwApplicationWindow};
 mod imp {
     use super::*;
 
-    #[derive(Debug, Default, CompositeTemplate)]
+    #[derive(Debug, Default, CompositeTemplate, Properties)]
     #[template(resource = "/de/haeckerfelix/Shortwave/gtk/station_dialog.ui")]
+    #[properties(wrapper_type = super::SwStationDialog)]
     pub struct SwStationDialog {
         #[template_child]
-        pub headerbar: TemplateChild<gtk::HeaderBar>,
+        favicon_box: TemplateChild<gtk::Box>,
         #[template_child]
-        pub dialog_title: TemplateChild<adw::WindowTitle>,
+        local_station_group: TemplateChild<adw::PreferencesGroup>,
         #[template_child]
-        pub scrolled_window: TemplateChild<gtk::ScrolledWindow>,
+        orphaned_station_group: TemplateChild<adw::PreferencesGroup>,
         #[template_child]
-        pub favicon_box: TemplateChild<gtk::Box>,
+        title_label: TemplateChild<gtk::Label>,
         #[template_child]
-        pub local_station_group: TemplateChild<adw::PreferencesGroup>,
+        homepage_label: TemplateChild<gtk::Label>,
         #[template_child]
-        pub orphaned_station_group: TemplateChild<adw::PreferencesGroup>,
+        library_add_child: TemplateChild<gtk::FlowBoxChild>,
         #[template_child]
-        pub title_label: TemplateChild<gtk::Label>,
+        library_remove_child: TemplateChild<gtk::FlowBoxChild>,
         #[template_child]
-        pub homepage_label: TemplateChild<gtk::Label>,
+        information_group: TemplateChild<adw::PreferencesGroup>,
         #[template_child]
-        pub library_add_button: TemplateChild<gtk::Button>,
+        language_row: TemplateChild<adw::ActionRow>,
         #[template_child]
-        pub library_add_child: TemplateChild<gtk::FlowBoxChild>,
+        tags_row: TemplateChild<adw::ActionRow>,
         #[template_child]
-        pub library_remove_button: TemplateChild<gtk::Button>,
+        codec_row: TemplateChild<adw::ActionRow>,
         #[template_child]
-        pub library_remove_child: TemplateChild<gtk::FlowBoxChild>,
+        bitrate_row: TemplateChild<adw::ActionRow>,
         #[template_child]
-        pub start_playback_button: TemplateChild<gtk::Button>,
+        votes_row: TemplateChild<adw::ActionRow>,
         #[template_child]
-        pub information_group: TemplateChild<adw::PreferencesGroup>,
+        stream_row: TemplateChild<adw::ActionRow>,
         #[template_child]
-        pub language_row: TemplateChild<adw::ActionRow>,
+        location_group: TemplateChild<adw::PreferencesGroup>,
         #[template_child]
-        pub tags_row: TemplateChild<adw::ActionRow>,
+        country_row: TemplateChild<adw::ActionRow>,
         #[template_child]
-        pub codec_row: TemplateChild<adw::ActionRow>,
+        state_row: TemplateChild<adw::ActionRow>,
         #[template_child]
-        pub bitrate_row: TemplateChild<adw::ActionRow>,
+        map_box: TemplateChild<gtk::Box>,
         #[template_child]
-        pub votes_row: TemplateChild<adw::ActionRow>,
+        map: TemplateChild<shumate::Map>,
         #[template_child]
-        pub stream_row: TemplateChild<adw::ActionRow>,
-        #[template_child]
-        pub copy_stream_button: TemplateChild<gtk::Button>,
-        #[template_child]
-        pub location_group: TemplateChild<adw::PreferencesGroup>,
-        #[template_child]
-        pub country_row: TemplateChild<adw::ActionRow>,
-        #[template_child]
-        pub state_row: TemplateChild<adw::ActionRow>,
-        #[template_child]
-        pub map_box: TemplateChild<gtk::Box>,
-        #[template_child]
-        pub map: TemplateChild<shumate::Map>,
-        #[template_child]
-        pub map_license: TemplateChild<shumate::License>,
-        pub marker: shumate::Marker,
+        map_license: TemplateChild<shumate::License>,
+        marker: shumate::Marker,
 
-        pub station: OnceCell<SwStation>,
-        pub sender: OnceCell<Sender<Action>>,
+        #[property(get, set, construct_only)]
+        station: OnceCell<SwStation>,
     }
 
     #[glib::object_subclass]
@@ -103,6 +90,7 @@ mod imp {
 
         fn class_init(klass: &mut Self::Class) {
             Self::bind_template(klass);
+            klass.bind_template_callbacks();
         }
 
         fn instance_init(obj: &subclass::InitializingObject<Self>) {
@@ -110,11 +98,144 @@ mod imp {
         }
     }
 
+    #[glib::derived_properties]
     impl ObjectImpl for SwStationDialog {
         fn constructed(&self) {
-            // Setup the libshumate map widget
-            // Based on ashpd-demo
-            // https://github.com/bilelmoussaoui/ashpd/blob/66d4dc0020181a7174451150ecc711344082b5ce/ashpd-demo/src/portals/desktop/location.rs
+            self.parent_constructed();
+
+            let window = SwApplicationWindow::default();
+            self.obj().set_transient_for(Some(&window));
+
+            self.setup_widgets();
+        }
+    }
+
+    impl WidgetImpl for SwStationDialog {}
+
+    impl WindowImpl for SwStationDialog {}
+
+    impl AdwWindowImpl for SwStationDialog {}
+
+    #[gtk::template_callbacks]
+    impl SwStationDialog {
+        fn setup_widgets(&self) {
+            let station = self.obj().station();
+            let metadata = station.metadata();
+
+            // Download & set station favicon
+            let station_favicon = StationFavicon::new(FaviconSize::Big);
+            self.favicon_box.append(&station_favicon.widget);
+
+            if let Some(pixbuf) = station.favicon() {
+                station_favicon.set_pixbuf(&pixbuf);
+            } else if let Some(favicon) = metadata.favicon.as_ref() {
+                let fut = FaviconDownloader::download(favicon.clone(), FaviconSize::Big as i32)
+                    .map(move |pixbuf| {
+                        if let Ok(pixbuf) = pixbuf {
+                            station_favicon.set_pixbuf(&pixbuf)
+                        }
+                    });
+                spawn!(fut);
+            }
+
+            // Title
+            self.obj().set_title(Some(&metadata.name));
+            self.title_label.set_text(&metadata.name);
+
+            // Homepage
+            if let Some(ref homepage) = metadata.homepage {
+                let url = homepage.to_string().replace('&', "&amp;");
+                let domain = homepage.domain().unwrap();
+                let markup = format!("<a href=\"{}\">{}</a>", &url, &domain);
+
+                self.homepage_label.set_visible(true);
+                self.homepage_label.set_markup(&markup);
+                self.homepage_label.set_tooltip_text(Some(&url));
+            }
+
+            // Action pill buttons
+            if SwLibrary::contains_station(&station) {
+                self.library_remove_child.set_visible(true);
+            } else {
+                self.library_add_child.set_visible(true);
+            }
+
+            // Local station info row
+            if self.station.get().unwrap().is_local() {
+                self.local_station_group.set_visible(true);
+                self.information_group.set_visible(false);
+            }
+
+            // Orphaned station info row
+            if self.station.get().unwrap().is_orphaned() {
+                self.orphaned_station_group.set_visible(true);
+            }
+
+            // Tags
+            if !metadata.tags.is_empty() {
+                self.tags_row.set_visible(true);
+                self.tags_row.set_subtitle(&metadata.formatted_tags());
+            }
+
+            // Language
+            if !metadata.language.is_empty() {
+                self.language_row.set_visible(true);
+                self.language_row
+                    .set_subtitle(&metadata.language.to_title_case());
+            }
+
+            // Votes
+            self.votes_row.set_subtitle(&metadata.votes.to_string());
+
+            // Location
+            if !metadata.country.is_empty() {
+                self.location_group.set_visible(true);
+                self.country_row.set_visible(true);
+                self.country_row.set_subtitle(&metadata.country);
+            }
+            if !metadata.state.is_empty() {
+                self.location_group.set_visible(true);
+                self.state_row.set_visible(true);
+                self.state_row.set_subtitle(&metadata.state);
+            }
+
+            // Map
+            let long: f64 = metadata.geo_long.unwrap_or(0.0).into();
+            let lat: f64 = metadata.geo_lat.unwrap_or(0.0).into();
+            if long != 0.0 || lat != 0.0 {
+                self.setup_map_widget();
+                self.map_box.set_visible(true);
+                self.marker.set_location(lat, long);
+                self.map.center_on(lat, long);
+            }
+
+            // Codec
+            if !metadata.codec.is_empty() {
+                self.codec_row.set_visible(true);
+                self.codec_row.set_subtitle(&metadata.codec);
+            }
+
+            // Bitrate
+            if metadata.bitrate != 0 {
+                self.bitrate_row.set_visible(true);
+                let bitrate = i18n::i18n_f("{} kbit/s", &[&metadata.bitrate.to_string()]);
+                self.bitrate_row.set_subtitle(&bitrate);
+            }
+
+            // Stream url
+            let url = if let Some(url_resolved) = metadata.url_resolved {
+                url_resolved.to_string()
+            } else {
+                metadata.url.map(|x| x.to_string()).unwrap_or_default()
+            };
+            let url = url.replace('&', "&amp;");
+            let subtitle = format!("<a href=\"{}\">{}</a>", &url, &url);
+
+            self.stream_row.set_subtitle(&subtitle);
+            self.stream_row.set_tooltip_text(Some(&url));
+        }
+
+        fn setup_map_widget(&self) {
             let registry = shumate::MapSourceRegistry::with_defaults();
 
             let source = registry.by_id(shumate::MAP_SOURCE_OSM_MAPNIK).unwrap();
@@ -137,15 +258,57 @@ mod imp {
             self.marker.set_child(Some(&marker_img));
 
             self.map_license.append_map_source(&source);
-            self.parent_constructed();
+        }
+
+        #[template_callback]
+        fn add_station(&self) {
+            let obj = self.obj();
+
+            let station = obj.station();
+            SwApplication::default()
+                .library()
+                .add_stations(vec![station]);
+
+            obj.hide();
+            obj.close();
+        }
+
+        #[template_callback]
+        fn remove_station(&self) {
+            let obj = self.obj();
+
+            let station = obj.station();
+            SwApplication::default()
+                .library()
+                .remove_stations(vec![station]);
+
+            obj.hide();
+            obj.close();
+        }
+
+        #[template_callback]
+        fn start_playback(&self) {
+            let obj = self.obj();
+            let station = obj.station();
+
+            let app = SwApplication::default();
+            app.imp().player.set_station(station);
+
+            obj.hide();
+            obj.close();
+        }
+
+        #[template_callback]
+        fn copy_stream_clipboard(&self) {
+            let metadata = self.obj().station().metadata();
+
+            if let Some(url_resolved) = metadata.url_resolved {
+                let display = gdk::Display::default().unwrap();
+                let clipboard = display.clipboard();
+                clipboard.set_text(url_resolved.as_ref());
+            }
         }
     }
-
-    impl WidgetImpl for SwStationDialog {}
-
-    impl WindowImpl for SwStationDialog {}
-
-    impl AdwWindowImpl for SwStationDialog {}
 }
 
 glib::wrapper! {
@@ -154,194 +317,7 @@ glib::wrapper! {
 }
 
 impl SwStationDialog {
-    pub fn new(sender: Sender<Action>, station: SwStation) -> Self {
-        let dialog: Self = glib::Object::new();
-
-        let imp = dialog.imp();
-        imp.station.set(station).unwrap();
-        imp.sender.set(sender).unwrap();
-
-        let window = SwApplicationWindow::default();
-        dialog.set_transient_for(Some(&window));
-
-        dialog.setup_widgets();
-        dialog.setup_signals();
-        dialog
-    }
-
-    fn setup_widgets(&self) {
-        let imp = self.imp();
-        let station = imp.station.get().unwrap();
-        let metadata = station.metadata();
-
-        // Download & set station favicon
-        let station_favicon = StationFavicon::new(FaviconSize::Big);
-        imp.favicon_box.append(&station_favicon.widget);
-
-        if let Some(pixbuf) = station.favicon() {
-            station_favicon.set_pixbuf(&pixbuf);
-        } else if let Some(favicon) = metadata.favicon.as_ref() {
-            let fut = FaviconDownloader::download(favicon.clone(), FaviconSize::Big as i32).map(
-                move |pixbuf| {
-                    if let Ok(pixbuf) = pixbuf {
-                        station_favicon.set_pixbuf(&pixbuf)
-                    }
-                },
-            );
-            spawn!(fut);
-        }
-
-        // Title
-        imp.title_label.set_text(&metadata.name);
-        imp.dialog_title.set_title(&metadata.name);
-
-        // Homepage
-        if let Some(ref homepage) = metadata.homepage {
-            let url = homepage.to_string().replace('&', "&amp;");
-            let domain = homepage.domain().unwrap();
-            let markup = format!("<a href=\"{}\">{}</a>", &url, &domain);
-
-            imp.homepage_label.set_visible(true);
-            imp.homepage_label.set_markup(&markup);
-            imp.homepage_label.set_tooltip_text(Some(&url));
-        }
-
-        // Action pill buttons
-        if SwLibrary::contains_station(imp.station.get().unwrap()) {
-            imp.library_remove_child.set_visible(true);
-        } else {
-            imp.library_add_child.set_visible(true);
-        }
-
-        // Local station info row
-        if imp.station.get().unwrap().is_local() {
-            imp.local_station_group.set_visible(true);
-            imp.information_group.set_visible(false);
-        }
-
-        // Orphaned station info row
-        if imp.station.get().unwrap().is_orphaned() {
-            imp.orphaned_station_group.set_visible(true);
-        }
-
-        // Tags
-        if !metadata.tags.is_empty() {
-            imp.tags_row.set_visible(true);
-            imp.tags_row.set_subtitle(&metadata.formatted_tags());
-        }
-
-        // Language
-        if !metadata.language.is_empty() {
-            imp.language_row.set_visible(true);
-            imp.language_row
-                .set_subtitle(&metadata.language.to_title_case());
-        }
-
-        // Votes
-        imp.votes_row.set_subtitle(&metadata.votes.to_string());
-
-        // Location
-        if !metadata.country.is_empty() {
-            imp.location_group.set_visible(true);
-            imp.country_row.set_visible(true);
-            imp.country_row.set_subtitle(&metadata.country);
-        }
-        if !metadata.state.is_empty() {
-            imp.location_group.set_visible(true);
-            imp.state_row.set_visible(true);
-            imp.state_row.set_subtitle(&metadata.state);
-        }
-
-        // Map
-        let long: f64 = metadata.geo_long.unwrap_or(0.0).into();
-        let lat: f64 = metadata.geo_lat.unwrap_or(0.0).into();
-        if long != 0.0 || lat != 0.0 {
-            imp.map_box.set_visible(true);
-            imp.marker.set_location(lat, long);
-            imp.map.center_on(lat, long);
-        }
-
-        // Codec
-        if !metadata.codec.is_empty() {
-            imp.codec_row.set_visible(true);
-            imp.codec_row.set_subtitle(&metadata.codec);
-        }
-
-        // Bitrate
-        if metadata.bitrate != 0 {
-            imp.bitrate_row.set_visible(true);
-            let bitrate = i18n::i18n_f("{} kbit/s", &[&metadata.bitrate.to_string()]);
-            imp.bitrate_row.set_subtitle(&bitrate);
-        }
-
-        // Stream url
-        let url = if let Some(url_resolved) = metadata.url_resolved {
-            url_resolved.to_string()
-        } else {
-            metadata.url.map(|x| x.to_string()).unwrap_or_default()
-        };
-        let url = url.replace('&', "&amp;");
-        let subtitle = format!("<a href=\"{}\">{}</a>", &url, &url);
-
-        imp.stream_row.set_subtitle(&subtitle);
-        imp.stream_row.set_tooltip_text(Some(&url));
-    }
-
-    fn setup_signals(&self) {
-        let imp = self.imp();
-
-        imp.scrolled_window.vadjustment().connect_value_notify(
-            clone!(@weak self as this => move |adj|{
-                let imp = this.imp();
-                if adj.value() < 210.0 {
-                    imp.headerbar.add_css_class("hidden");
-                    imp.dialog_title.set_visible(false);
-                }else {
-                    imp.headerbar.remove_css_class("hidden");
-                    imp.dialog_title.set_visible(true);
-                }
-            }),
-        );
-
-        imp.library_add_button
-            .connect_clicked(clone!(@weak self as this => move|_|
-                let imp = this.imp();
-                let station = imp.station.get().unwrap().clone();
-                SwApplication::default().library().add_stations(vec![station]);
-
-                this.hide();
-                this.close();
-            ));
-
-        imp.library_remove_button
-            .connect_clicked(clone!(@weak self as this => move|_|
-                let imp = this.imp();
-                let station = imp.station.get().unwrap().clone();
-                SwApplication::default().library().remove_stations(vec![station]);
-
-                this.hide();
-                this.close();
-            ));
-
-        imp.start_playback_button
-            .connect_clicked(clone!(@weak self as this => move|_|
-                let imp = this.imp();
-                let station = imp.station.get().unwrap().clone();
-
-                send!(imp.sender.get().unwrap(), Action::PlaybackSetStation(Box::new(station)));
-                this.hide();
-                this.close();
-            ));
-
-        imp.copy_stream_button
-            .connect_clicked(clone!(@weak self as this => move|_|
-                let metadata = this.imp().station.get().unwrap().clone().metadata();
-
-                if let Some(url_resolved) = metadata.url_resolved {
-                    let display = gdk::Display::default().unwrap();
-                    let clipboard = display.clipboard();
-                    clipboard.set_text(url_resolved.as_ref());
-                }
-            ));
+    pub fn new(station: &SwStation) -> Self {
+        glib::Object::builder().property("station", station).build()
     }
 }

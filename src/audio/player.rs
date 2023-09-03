@@ -164,6 +164,8 @@ impl Player {
         *self.current_station.borrow_mut() = Some(station.clone());
         self.set_playback(PlaybackState::Stopped);
 
+        SwApplicationWindow::default().show_player_widget();
+
         for con in &*self.controller {
             con.set_station(station.clone());
         }

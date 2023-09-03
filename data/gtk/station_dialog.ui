@@ -5,32 +5,16 @@
     <property name="height_request">500</property>
     <property name="default_width">500</property>
     <property name="default_height">575</property>
-    <property name="title" translatable="yes">Station details</property>
     <property name="modal">True</property>
-    <style>
-      <class name="station-dialog"/>
-    </style>
     <child>
-      <object class="GtkOverlay">
-        <child type="overlay">
-          <object class="GtkHeaderBar" id="headerbar">
-            <property name="valign">start</property>
-            <property name="title-widget">
-              <object class="AdwWindowTitle" id="dialog_title">
-                <property name="visible">False</property>
-              </object>
-            </property>
-            <style>
-              <class name="hidden"/>
-            </style>
+      <object class="AdwToolbarView">
+        <child type="top">
+          <object class="AdwHeaderBar" id="headerbar">
+            <property name="show-title">False</property>
           </object>
         </child>
-        <child>
-          <object class="GtkScrolledWindow" id="scrolled_window">
-            <property name="vexpand">True</property>
-            <style>
-              <class name="flat-headerbar"/>
-            </style>
+        <property name="content">
+          <object class="GtkScrolledWindow">
             <child>
               <object class="AdwClamp">
                 <child>
@@ -40,7 +24,7 @@
                     <property name="margin_start">12</property>
                     <property name="margin_end">12</property>
                     <property name="margin_bottom">18</property>
-                    <property name="margin_top">30</property>
+                    <property name="margin_top">6</property>
                     <child>
                       <object class="GtkBox" id="favicon_box">
                         <property name="halign">center</property>
@@ -83,9 +67,10 @@
                           <object class="GtkFlowBoxChild" id="start_playback_button_child">
                             <property name="focusable">False</property>
                             <child>
-                              <object class="GtkButton" id="start_playback_button">
+                              <object class="GtkButton">
                                 <property name="label" translatable="yes">_Play Station</property>
                                 <property name="use_underline">True</property>
+                                <signal name="clicked" handler="start_playback" swapped="true"/>
                                 <style>
                                   <class name="pill"/>
                                 </style>
@@ -97,9 +82,10 @@
                           <object class="GtkFlowBoxChild" id="library_add_child">
                             <property name="focusable">False</property>
                             <child>
-                              <object class="GtkButton" id="library_add_button">
+                              <object class="GtkButton">
                                 <property name="label" translatable="yes">_Add to Library</property>
                                 <property name="use_underline">True</property>
+                                <signal name="clicked" handler="add_station" swapped="true"/>
                                 <style>
                                   <class name="pill"/>
                                 </style>
@@ -112,9 +98,10 @@
                           <object class="GtkFlowBoxChild" id="library_remove_child">
                             <property name="focusable">False</property>
                             <child>
-                              <object class="GtkButton" id="library_remove_button">
+                              <object class="GtkButton">
                                 <property name="label" translatable="yes">_Remove From Library</property>
                                 <property name="use_underline">True</property>
+                                <signal name="clicked" handler="remove_station" swapped="true"/>
                                 <style>
                                   <class name="pill"/>
                                 </style>
@@ -272,9 +259,10 @@
                               <object class="GtkBox">
                                 <property name="spacing">6</property>
                                 <child>
-                                  <object class="GtkButton" id="copy_stream_button">
+                                  <object class="GtkButton">
                                     <property name="icon_name">edit-copy-symbolic</property>
                                     <property name="valign">center</property>
+                                    <signal name="clicked" handler="copy_stream_clipboard" swapped="true"/>
                                     <style>
                                       <class name="flat"/>
                                     </style>
@@ -294,7 +282,7 @@
               </object>
             </child>
           </object>
-        </child>
+        </property>
       </object>
     </child>
     <child>

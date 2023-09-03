@@ -26,7 +26,7 @@ use gtk::prelude::*;
 use gtk::{gio, glib};
 use once_cell::sync::OnceCell;
 
-use crate::api::{SwClient, SwStation};
+use crate::api::SwClient;
 use crate::audio::{GCastDevice, PlaybackState, Player, Song};
 use crate::config;
 use crate::database::SwLibrary;
@@ -39,7 +39,6 @@ pub enum Action {
     // Audio Playback
     PlaybackConnectGCastDevice(GCastDevice),
     PlaybackDisconnectGCastDevice,
-    PlaybackSetStation(Box<SwStation>),
     PlaybackSet(bool),
     PlaybackToggle,
     PlaybackSetVolume(f64),
@@ -226,17 +225,11 @@ impl SwApplication {
             return glib::ControlFlow::Continue;
         }
 
-        let window = SwApplicationWindow::default();
-
         match action {
             Action::PlaybackConnectGCastDevice(device) => {
                 imp.player.connect_to_gcast_device(device)
             }
             Action::PlaybackDisconnectGCastDevice => imp.player.disconnect_from_gcast_device(),
-            Action::PlaybackSetStation(station) => {
-                imp.player.set_station(*station);
-                window.show_player_widget();
-            }
             Action::PlaybackSet(true) => imp.player.set_playback(PlaybackState::Playing),
             Action::PlaybackSet(false) => imp.player.set_playback(PlaybackState::Stopped),
             Action::PlaybackToggle => imp.player.toggle_playback(),

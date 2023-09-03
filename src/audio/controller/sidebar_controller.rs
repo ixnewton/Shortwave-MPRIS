@@ -1,5 +1,5 @@
 // Shortwave - sidebar_controller.rs
-// Copyright (C) 2021-2022  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2021-2023  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -136,8 +136,8 @@ impl SidebarController {
         self.action_group.add_action_entries([
             gio::ActionEntry::builder("show-details")
                 .activate(clone!(@strong self.sender as sender, @strong self.station as station => move |_, _, _| {
-                    let s = station.borrow().clone().unwrap();
-                    let station_dialog = SwStationDialog::new(sender.clone(), s);
+                    let station = station.borrow().clone().unwrap();
+                    let station_dialog = SwStationDialog::new(&station);
                     station_dialog.show();
                 })).build(),
             // stream button
