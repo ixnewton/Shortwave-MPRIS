@@ -76,7 +76,7 @@ pub enum PlaybackState {
 }
 
 pub struct Player {
-    pub widget: gtk::Box,
+    pub widget: adw::NavigationPage,
     pub toolbar_controller_widget: gtk::Box,
     pub mini_controller_widget: gtk::Box,
     controller: Vec<Box<dyn Controller>>,
@@ -93,7 +93,7 @@ pub struct Player {
 impl Player {
     pub fn new(sender: Sender<Action>) -> Rc<Self> {
         let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/player.ui");
-        get_widget!(builder, gtk::Box, player);
+        get_widget!(builder, adw::NavigationPage, player);
         let mut controller: Vec<Box<dyn Controller>> = Vec::new();
 
         // Sidebar Controller
@@ -163,8 +163,6 @@ impl Player {
     pub fn set_station(&self, station: SwStation) {
         *self.current_station.borrow_mut() = Some(station.clone());
         self.set_playback(PlaybackState::Stopped);
-
-        SwApplicationWindow::default().show_player_widget();
 
         for con in &*self.controller {
             con.set_station(station.clone());

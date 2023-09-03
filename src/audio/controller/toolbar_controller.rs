@@ -1,5 +1,5 @@
 // Shortwave - toolbar_controller.rs
-// Copyright (C) 2021-2022  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2021-2023  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ use gtk::prelude::*;
 use crate::api::{FaviconDownloader, SwStation};
 use crate::app::Action;
 use crate::audio::{Controller, PlaybackState};
-use crate::ui::{FaviconSize, StationFavicon, SwApplicationWindow, SwView};
+use crate::ui::{FaviconSize, StationFavicon};
 
 pub struct ToolbarController {
     pub widget: gtk::Box,
@@ -111,8 +111,8 @@ impl ToolbarController {
 
         // show_player_button
         self.toolbox_gesture.connect_pressed(
-            clone!(@strong self.sender as sender => move |_, _, _, _| {
-                SwApplicationWindow::default().set_view(SwView::Player);
+            clone!(@weak self.widget as widget => move |_, _, _, _| {
+                widget.activate_action("win.show-player", None).unwrap();
             }),
         );
     }

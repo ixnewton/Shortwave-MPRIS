@@ -60,7 +60,7 @@ mod imp {
     #[glib::object_subclass]
     impl ObjectSubclass for SwSearchPage {
         const NAME: &'static str = "SwSearchPage";
-        type ParentType = adw::Bin;
+        type ParentType = adw::NavigationPage;
         type Type = super::SwSearchPage;
 
         fn new() -> Self {
@@ -112,12 +112,12 @@ mod imp {
 
     impl WidgetImpl for SwSearchPage {}
 
-    impl BinImpl for SwSearchPage {}
+    impl NavigationPageImpl for SwSearchPage {}
 }
 
 glib::wrapper! {
     pub struct SwSearchPage(ObjectSubclass<imp::SwSearchPage>)
-        @extends gtk::Widget, adw::Bin;
+        @extends gtk::Widget, adw::NavigationPage;
 }
 
 impl SwSearchPage {

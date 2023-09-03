@@ -77,7 +77,7 @@
         </child>
         <child>
           <object class="GtkBox">
-            <property name="height_request">90</property>
+            <property name="height_request">80</property>
             <property name="orientation">vertical</property>
             <property name="hexpand">True</property>
             <child>

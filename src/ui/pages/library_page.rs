@@ -1,5 +1,5 @@
 // Shortwave - search_page.rs
-// Copyright (C) 2021-2022  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2021-2023  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -49,7 +49,7 @@ mod imp {
     #[glib::object_subclass]
     impl ObjectSubclass for SwLibraryPage {
         const NAME: &'static str = "SwLibraryPage";
-        type ParentType = adw::Bin;
+        type ParentType = adw::NavigationPage;
         type Type = super::SwLibraryPage;
 
         fn new() -> Self {
@@ -89,12 +89,12 @@ mod imp {
 
     impl WidgetImpl for SwLibraryPage {}
 
-    impl BinImpl for SwLibraryPage {}
+    impl NavigationPageImpl for SwLibraryPage {}
 }
 
 glib::wrapper! {
     pub struct SwLibraryPage(ObjectSubclass<imp::SwLibraryPage>)
-        @extends gtk::Widget, adw::Bin;
+        @extends gtk::Widget, adw::NavigationPage;
 }
 
 impl SwLibraryPage {

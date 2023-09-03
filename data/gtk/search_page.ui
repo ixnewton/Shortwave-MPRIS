@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <template class="SwSearchPage" parent="AdwBin">
-    <child>
-      <object class="GtkBox">
-        <property name="orientation">vertical</property>
-        <child>
+  <template class="SwSearchPage" parent="AdwNavigationPage">
+    <property name="title" translatable="yes">Search</property>
+    <property name="tag">search</property>
+    <property name="child">
+      <object class="AdwToolbarView">
+        <child type="top">
+          <object class="AdwHeaderBar"/>
+        </child>
+        <child type="top">
           <object class="GtkSearchBar" id="search_bar">
             <property name="halign">fill</property>
             <property name="valign">start</property>
@@ -139,7 +143,7 @@
           </object>
         </child>
       </object>
-    </child>
+    </property>
   </template>
   <menu id="sorting_menu">
     <section>

@@ -50,7 +50,7 @@ mod imp {
     #[glib::object_subclass]
     impl ObjectSubclass for SwDiscoverPage {
         const NAME: &'static str = "SwDiscoverPage";
-        type ParentType = adw::Bin;
+        type ParentType = adw::NavigationPage;
         type Type = super::SwDiscoverPage;
 
         fn class_init(klass: &mut Self::Class) {
@@ -68,12 +68,55 @@ mod imp {
 
     impl WidgetImpl for SwDiscoverPage {}
 
-    impl BinImpl for SwDiscoverPage {}
+    impl NavigationPageImpl for SwDiscoverPage {
+        fn shown(&self) {
+            // TODO: THIS IS HORRIBLE
+            // burn it with fire, and rewrite it from scratch
+
+            // Most voted stations (stations with the most votes)
+            let votes_request = StationRequest {
+                order: Some("votes".to_string()),
+                limit: Some(12),
+                reverse: Some(true),
+                ..Default::default()
+            };
+            self.fill_flowbox(&self.client1, &self.votes_flowbox, votes_request);
+
+            // Trending (stations with the highest clicktrend)
+            let trending_request = StationRequest {
+                order: Some("clicktrend".to_string()),
+                limit: Some(12),
+                ..Default::default()
+            };
+            self.fill_flowbox(&self.client2, &self.trending_flowbox, trending_request);
+
+            // Other users are listening to... (stations which got recently clicked)
+            let clicked_request = StationRequest {
+                order: Some("clicktimestamp".to_string()),
+                limit: Some(12),
+                ..Default::default()
+            };
+            self.fill_flowbox(&self.client3, &self.clicked_flowbox, clicked_request);
+        }
+    }
+
+    impl SwDiscoverPage {
+        fn fill_flowbox(
+            &self,
+            client: &SwClient,
+            flowbox: &SwStationFlowBox,
+            request: StationRequest,
+        ) {
+            let sender = self.sender.get().unwrap().clone();
+            flowbox.init(client.model(), sender);
+            client.send_station_request(request);
+        }
+    }
 }
 
 glib::wrapper! {
     pub struct SwDiscoverPage(ObjectSubclass<imp::SwDiscoverPage>)
-        @extends gtk::Widget, adw::Bin;
+        @extends gtk::Widget, adw::NavigationPage;
 }
 
 impl SwDiscoverPage {
@@ -82,37 +125,6 @@ impl SwDiscoverPage {
         imp.sender.set(sender).unwrap();
 
         self.setup_widgets();
-    }
-
-    // TODO: THIS IS HORRIBLE
-    // burn it with fire, and rewrite it from scratch
-    pub fn update_data(&self) {
-        let imp = self.imp();
-
-        // Most voted stations (stations with the most votes)
-        let votes_request = StationRequest {
-            order: Some("votes".to_string()),
-            limit: Some(12),
-            reverse: Some(true),
-            ..Default::default()
-        };
-        self.fill_flowbox(&imp.client1, &imp.votes_flowbox, votes_request);
-
-        // Trending (stations with the highest clicktrend)
-        let trending_request = StationRequest {
-            order: Some("clicktrend".to_string()),
-            limit: Some(12),
-            ..Default::default()
-        };
-        self.fill_flowbox(&imp.client2, &imp.trending_flowbox, trending_request);
-
-        // Other users are listening to... (stations which got recently clicked)
-        let clicked_request = StationRequest {
-            order: Some("clicktimestamp".to_string()),
-            limit: Some(12),
-            ..Default::default()
-        };
-        self.fill_flowbox(&imp.client3, &imp.clicked_flowbox, clicked_request);
     }
 
     fn setup_widgets(&self) {
@@ -147,13 +159,5 @@ impl SwDiscoverPage {
                 SwApplicationWindow::default().show_notification(&text);
             }),
         );
-    }
-
-    fn fill_flowbox(&self, client: &SwClient, flowbox: &SwStationFlowBox, request: StationRequest) {
-        let imp = self.imp();
-
-        let sender = imp.sender.get().unwrap().clone();
-        flowbox.init(client.model(), sender);
-        client.send_station_request(request);
     }
 }
