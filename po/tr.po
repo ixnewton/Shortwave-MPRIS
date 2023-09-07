@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2023-05-16 12:59+0000\n"
-"PO-Revision-Date: 2022-12-19 19:31+0300\n"
+"POT-Creation-Date: 2023-09-03 19:24+0000\n"
+"PO-Revision-Date: 2023-09-05 22:48+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <takim@gnome.org.tr>\n"
 "Language: tr\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: data/gtk/create_station_dialog.ui:8
 msgid "Create new station"
@@ -53,7 +53,7 @@ msgstr "Yerel İstasyon Oluştur"
 msgid "Change station image"
 msgstr "İstasyon görselini değiştir"
 
-#: data/gtk/create_station_dialog.ui:137 src/ui/pages/search_page.rs:193
+#: data/gtk/create_station_dialog.ui:137 src/ui/pages/search_page.rs:211
 msgid "Name"
 msgstr "Ad"
 
@@ -65,31 +65,112 @@ msgstr "Akış Bağlantısı"
 msgid "Create Station"
 msgstr "İstasyon Oluştur"
 
-#: data/gtk/discover_page.ui:28
+#: data/gtk/discover_page.ui:4
+msgid "Discover"
+msgstr "Keşfet"
+
+#: data/gtk/discover_page.ui:15 data/gtk/search_page.ui:4
+msgid "Search"
+msgstr "Ara"
+
+#: data/gtk/discover_page.ui:44
 msgid "Most Voted Stations"
 msgstr "En Çok Oylanan İstasyonlar"
 
-#: data/gtk/discover_page.ui:43
+#: data/gtk/discover_page.ui:59
 msgid "Trending"
 msgstr "Gündemdekiler"
 
-#: data/gtk/discover_page.ui:58
+#: data/gtk/discover_page.ui:74
 msgid "Other Users Are Listening To…"
 msgstr "Diğer Kullanıcılar Dinliyor…"
 
-#: data/gtk/library_page.ui:60
+#: data/gtk/library_page.ui:4
+#| msgid "_About Shortwave"
+msgid "Shortwave"
+msgstr "Shortwave"
+
+#: data/gtk/library_page.ui:15
+msgid "Add Stations"
+msgstr "İstasyon Ekle"
+
+#: data/gtk/library_page.ui:22
+msgid "Main Menu"
+msgstr "Ana Menü"
+
+#: data/gtk/library_page.ui:83
 msgid "Receiving Station Data…"
 msgstr "İstasyon Verisi Alınıyor…"
 
-#: data/gtk/library_page.ui:87
+#: data/gtk/library_page.ui:110
 msgid "_Discover New Stations"
 msgstr "Yeni İstasyonları _Keşfet"
 
-#: data/gtk/mini_controller.ui:87
+#: data/gtk/library_page.ui:132
+msgid "_Enable Mini Player"
+msgstr "Küçük Çalıcıyı _Etkinleştir"
+
+#: data/gtk/library_page.ui:136
+msgid "_Sorting"
+msgstr "_Sıralama"
+
+#: data/gtk/library_page.ui:139 data/gtk/search_page.ui:151
+msgid "_Name"
+msgstr "_Ad"
+
+#: data/gtk/library_page.ui:144 data/gtk/search_page.ui:156
+msgid "_Language"
+msgstr "_Dil"
+
+#: data/gtk/library_page.ui:149 data/gtk/search_page.ui:161
+msgid "_Country"
+msgstr "_Ülke"
+
+#: data/gtk/library_page.ui:154 data/gtk/search_page.ui:166
+msgid "S_tate"
+msgstr "_Eyalet"
+
+#: data/gtk/library_page.ui:159 data/gtk/search_page.ui:171
+msgid "_Votes"
+msgstr "_Oylar"
+
+#: data/gtk/library_page.ui:164 data/gtk/search_page.ui:176
+msgid "_Bitrate"
+msgstr "_Bit oranı"
+
+#: data/gtk/library_page.ui:171 data/gtk/search_page.ui:183
+msgid "_Ascending"
+msgstr "_Artan"
+
+#: data/gtk/library_page.ui:176 data/gtk/search_page.ui:188
+msgid "_Descending"
+msgstr "_Azalan"
+
+#: data/gtk/library_page.ui:185
+msgid "_Open radio-browser.info <sup>↗</sup>"
+msgstr "radio-browser.info’yu _aç <sup>↗</sup>"
+
+#: data/gtk/library_page.ui:190
+msgid "_Create New Station"
+msgstr "_Yeni İstasyon Oluştur"
+
+#: data/gtk/library_page.ui:197
+msgid "_Preferences"
+msgstr "_Tercihler"
+
+#: data/gtk/library_page.ui:201
+msgid "_Keyboard Shortcuts"
+msgstr "_Klavye Kısayolları"
+
+#: data/gtk/library_page.ui:205
+msgid "_About Shortwave"
+msgstr "Shortwave _Hakkında"
+
+#: data/gtk/mini_controller.ui:85
 msgid "SHORTWAVE INTERNET RADIO"
 msgstr "SHORTWAVE İNTERNET RADYOSU"
 
-#: data/gtk/mini_controller.ui:109 data/gtk/sidebar_controller.ui:63
+#: data/gtk/mini_controller.ui:107 data/gtk/sidebar_controller.ui:63
 #: data/gtk/toolbar_controller.ui:38
 msgid "No Playback"
 msgstr "Kayıttan Yürütme Yok"
@@ -99,26 +180,14 @@ msgid "General"
 msgstr "Genel"
 
 #: data/gtk/settings_window.ui:10
-msgid "Appearance"
-msgstr "Görünüm"
-
-#: data/gtk/settings_window.ui:14
-msgid "_Dark Mode"
-msgstr "_Karanlık Kip"
-
-#: data/gtk/settings_window.ui:16
-msgid "Whether the application should use a dark theme"
-msgstr "Uygulamanın karanlık kipi kullanıp kullanmayacağı"
-
-#: data/gtk/settings_window.ui:29
 msgid "Features"
 msgstr "Özellikler"
 
-#: data/gtk/settings_window.ui:32
+#: data/gtk/settings_window.ui:13
 msgid "_Notifications"
 msgstr "_Bildirimler"
 
-#: data/gtk/settings_window.ui:34
+#: data/gtk/settings_window.ui:15
 msgid "Show desktop notifications when a new song gets played"
 msgstr "Yeni parça çalınırken masaüstü bildirimi göster"
 
@@ -147,102 +216,41 @@ msgctxt "shortcut window"
 msgid "Quit the application"
 msgstr "Uygulamadan çık"
 
-#: data/gtk/help_overlay.ui:46
-msgid "Window"
-msgstr "Pencere"
-
-#: data/gtk/help_overlay.ui:49
-msgctxt "shortcut window"
-msgid "Open library view"
-msgstr "Kitaplık görünümünü aç"
-
-#: data/gtk/help_overlay.ui:55
-msgctxt "shortcut window"
-msgid "Open discover view"
-msgstr "Keşif görünümünü aç"
-
-#: data/gtk/help_overlay.ui:61
-msgctxt "shortcut window"
-msgid "Open search view"
-msgstr "Arama görünümünü aç"
-
-#: data/gtk/help_overlay.ui:67
-msgctxt "shortcut window"
-msgid "Go back"
-msgstr "Geri git"
-
-#: data/gtk/help_overlay.ui:73
-msgctxt "shortcut window"
-msgid "Refresh station data"
-msgstr "İstasyon verisini tazele"
-
-#: data/gtk/help_overlay.ui:81
+#: data/gtk/help_overlay.ui:46 data/gtk/player.ui:5
 msgid "Playback"
 msgstr "Kayıttan Yürüt"
 
-#: data/gtk/help_overlay.ui:84
+#: data/gtk/help_overlay.ui:49
 msgctxt "shortcut window"
 msgid "Toggle playback"
 msgstr "Kayıttan yürütmeyi aç/kapat"
 
-#: data/gtk/search_page.ui:31 data/gtk/station_dialog.ui:200
-#: src/ui/pages/search_page.rs:197
+#: data/gtk/search_page.ui:35 data/gtk/station_dialog.ui:172
+#: src/ui/pages/search_page.rs:215
 msgid "Votes"
 msgstr "Oylar"
 
-#: data/gtk/search_page.ui:36
+#: data/gtk/search_page.ui:40
 msgid "Change the sorting of the search results"
 msgstr "Arama sonuçlarının sırasını değiştir"
 
-#: data/gtk/search_page.ui:63
+#: data/gtk/search_page.ui:67
 msgid "No Results"
 msgstr "Sonuç Yok"
 
-#: data/gtk/search_page.ui:64
+#: data/gtk/search_page.ui:68
 msgid "Try using a different search term"
 msgstr "Başka arama terimi kullanmayı deneyin"
-
-#: data/gtk/search_page.ui:148 data/gtk/window.ui:170
-msgid "_Name"
-msgstr "_Ad"
-
-#: data/gtk/search_page.ui:153 data/gtk/window.ui:175
-msgid "_Language"
-msgstr "_Dil"
-
-#: data/gtk/search_page.ui:158 data/gtk/window.ui:180
-msgid "_Country"
-msgstr "_Ülke"
-
-#: data/gtk/search_page.ui:163 data/gtk/window.ui:185
-msgid "S_tate"
-msgstr "_Eyalet"
-
-#: data/gtk/search_page.ui:168 data/gtk/window.ui:190
-msgid "_Votes"
-msgstr "_Oylar"
-
-#: data/gtk/search_page.ui:173 data/gtk/window.ui:195
-msgid "_Bitrate"
-msgstr "_Bit oranı"
-
-#: data/gtk/search_page.ui:180 data/gtk/window.ui:202
-msgid "_Ascending"
-msgstr "_Artan"
-
-#: data/gtk/search_page.ui:185 data/gtk/window.ui:207
-msgid "_Descending"
-msgstr "_Azalan"
 
 #: data/gtk/sidebar_controller.ui:22
 msgid "An error occurred"
 msgstr "Hata oluştu"
 
-#: data/gtk/sidebar_controller.ui:187
+#: data/gtk/sidebar_controller.ui:185
 msgid "_Show Station Details"
 msgstr "İstasyon Ayrıntılarını _Göster"
 
-#: data/gtk/sidebar_controller.ui:191
+#: data/gtk/sidebar_controller.ui:189
 msgid "Stream to a _Device"
 msgstr "_Aygıta Yayınla"
 
@@ -272,27 +280,23 @@ msgstr "_Aç"
 msgid "Save recorded song"
 msgstr "Kaydedilen şarkıyı sakla"
 
-#: data/gtk/station_dialog.ui:8
-msgid "Station details"
-msgstr "İstasyon ayrıntıları"
-
-#: data/gtk/station_dialog.ui:87
+#: data/gtk/station_dialog.ui:71
 msgid "_Play Station"
 msgstr "İstasyonu _Çal"
 
-#: data/gtk/station_dialog.ui:101
+#: data/gtk/station_dialog.ui:86
 msgid "_Add to Library"
 msgstr "Kitaplığa _Ekle"
 
-#: data/gtk/station_dialog.ui:116
+#: data/gtk/station_dialog.ui:102
 msgid "_Remove From Library"
 msgstr "Kitaplıktan _Kaldır"
 
-#: data/gtk/station_dialog.ui:133
+#: data/gtk/station_dialog.ui:120
 msgid "Local Station"
 msgstr "Yerel İstasyon"
 
-#: data/gtk/station_dialog.ui:134
+#: data/gtk/station_dialog.ui:121
 msgid ""
 "This station exists only in your library, and is not part of the public "
 "online station database."
@@ -300,11 +304,11 @@ msgstr ""
 "Bu istasyon yalnızca kitaplığınızda bulunur ve halka açık çevrim içi "
 "istasyon veri tabanının parçası değildir."
 
-#: data/gtk/station_dialog.ui:149
+#: data/gtk/station_dialog.ui:136
 msgid "Orphaned Station"
 msgstr "Yetim İstasyonlar"
 
-#: data/gtk/station_dialog.ui:150
+#: data/gtk/station_dialog.ui:137
 msgid ""
 "The information could not be updated, probably this station was removed from "
 "the public online station database."
@@ -312,44 +316,44 @@ msgstr ""
 "Bilgiler güncellenemedi, büyük olasılıkla bu istasyon halka açık çevrim içi "
 "istasyon veri tabanından kaldırıldı."
 
-#: data/gtk/station_dialog.ui:162
+#: data/gtk/station_dialog.ui:149
 msgid "Information"
 msgstr "Bilgi"
 
-#: data/gtk/station_dialog.ui:165 src/ui/pages/search_page.rs:194
+#: data/gtk/station_dialog.ui:152 src/ui/pages/search_page.rs:212
 msgid "Language"
 msgstr "Dil"
 
-#: data/gtk/station_dialog.ui:180
+#: data/gtk/station_dialog.ui:162
 msgid "Tags"
 msgstr "Etiketler"
 
-#: data/gtk/station_dialog.ui:216
+#: data/gtk/station_dialog.ui:183
 msgid "Location"
 msgstr "Konum"
 
-#: data/gtk/station_dialog.ui:221 src/ui/pages/search_page.rs:195
+#: data/gtk/station_dialog.ui:188 src/ui/pages/search_page.rs:213
 msgid "Country"
 msgstr "Ülke"
 
-#: data/gtk/station_dialog.ui:241 src/ui/pages/search_page.rs:196
+#: data/gtk/station_dialog.ui:198 src/ui/pages/search_page.rs:214
 msgid "State"
 msgstr "Eyalet"
 
-#: data/gtk/station_dialog.ui:285
+#: data/gtk/station_dialog.ui:232
 msgid "Audio"
 msgstr "Ses"
 
-#: data/gtk/station_dialog.ui:289 src/ui/pages/search_page.rs:198
+#: data/gtk/station_dialog.ui:236 src/ui/pages/search_page.rs:216
 msgid "Bitrate"
 msgstr "Bit oranı"
 
-#: data/gtk/station_dialog.ui:304
+#: data/gtk/station_dialog.ui:246
 msgid "Codec"
 msgstr "Kodlayıcı"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:319
+#: data/gtk/station_dialog.ui:256
 msgid "Stream"
 msgstr "Akış"
 
@@ -381,80 +385,16 @@ msgstr "Arama Tamamlandı"
 msgid "Searching for Devices…"
 msgstr "Aygıtlar Aranıyor…"
 
-#: data/gtk/window.ui:27
-msgid "Add Stations"
-msgstr "İstasyon Ekle"
-
-#: data/gtk/window.ui:34
-msgid "Back"
-msgstr "Geri"
-
-#: data/gtk/window.ui:41
-msgid "Main Menu"
-msgstr "Ana Menü"
-
-#: data/gtk/window.ui:50
-msgid "Search"
-msgstr "Ara"
-
-#: data/gtk/window.ui:74
-msgid "Unable to connect to radio-browser.info"
-msgstr "radio-browser.info’ya bağlanamadı"
-
-#: data/gtk/window.ui:84
-msgid ""
-"Access to the public online station database is not available. Ensure that "
-"you are connected to the internet."
-msgstr ""
-"Halka açık çevrimiçi istasyon veri tabanına erişim yok. İnternete "
-"bağlandığınızdan emin olun."
-
-#: data/gtk/window.ui:93
-msgid "Try again"
-msgstr "Yeniden dene"
-
-#: data/gtk/window.ui:159 data/gtk/window.ui:248
-msgid "_Enable Mini Player"
-msgstr "Küçük Çalıcıyı _Etkinleştir"
-
-#: data/gtk/window.ui:163 data/gtk/window.ui:244
-msgid "_Refresh Station Data"
-msgstr "İstasyon Verisini _Tazele"
-
-#: data/gtk/window.ui:167
-msgid "_Sorting"
-msgstr "_Sıralama"
-
-#: data/gtk/window.ui:216 data/gtk/window.ui:254
-msgid "_Open radio-browser.info <sup>↗</sup>"
-msgstr "radio-browser.info’yu _aç <sup>↗</sup>"
-
-#: data/gtk/window.ui:221 data/gtk/window.ui:259
-msgid "_Create New Station"
-msgstr "_Yeni İstasyon Oluştur"
-
-#: data/gtk/window.ui:228 data/gtk/window.ui:266
-msgid "_Preferences"
-msgstr "_Tercihler"
-
-#: data/gtk/window.ui:232 data/gtk/window.ui:270
-msgid "_Keyboard Shortcuts"
-msgstr "_Klavye Kısayolları"
-
-#: data/gtk/window.ui:236 data/gtk/window.ui:274
-msgid "_About Shortwave"
-msgstr "Shortwave _Hakkında"
-
 #. Fallback to xdg-home when xdg-music is not available
-#: src/audio/backend/song_backend.rs:96
+#: src/audio/backend/song_backend.rs:97
 msgid "Unable to access music directory. Saving song in home directory."
 msgstr "Müzik dizinine erişilemiyor. Şarkılar ev dizinine kaydediliyor."
 
-#: src/audio/player.rs:198
+#: src/audio/player.rs:190
 msgid "Station cannot be streamed. URL is not valid."
 msgstr "İstasyon yayını bulunamadı. Bağlantı geçersiz."
 
-#: src/audio/player.rs:253
+#: src/audio/player.rs:241
 msgid "Cannot save song."
 msgstr "Şarkı kaydedilemedi."
 
@@ -470,39 +410,39 @@ msgstr ""
 "Sabri Ünal <libreajans@gmail.com>, 2022"
 
 #. TODO: Implement show-server-stats action
-#: src/ui/pages/discover_page.rs:116
+#: src/ui/pages/discover_page.rs:134
 msgid "Show statistics"
 msgstr "İstatistikleri göster"
 
-#: src/ui/pages/discover_page.rs:118
+#: src/ui/pages/discover_page.rs:136
 msgid "Browse over 30,000 stations"
 msgstr "30.000’i aşkın istasyona göz at"
 
-#: src/ui/pages/discover_page.rs:120
+#: src/ui/pages/discover_page.rs:138
 msgid "Add new station"
 msgstr "Yeni istasyon ekle"
 
-#: src/ui/pages/discover_page.rs:122
+#: src/ui/pages/discover_page.rs:140
 msgid "Your favorite station is missing?"
 msgstr "Gözde istasyonunuz eksik mi?"
 
-#: src/ui/pages/discover_page.rs:127
+#: src/ui/pages/discover_page.rs:145
 msgid "Open website"
 msgstr "Web sitesini aç"
 
-#: src/ui/pages/discover_page.rs:129
+#: src/ui/pages/discover_page.rs:147
 msgid "Powered by radio-browser.info"
 msgstr "radio-browser.info ile güçlendirildi"
 
-#: src/ui/pages/discover_page.rs:148 src/ui/pages/search_page.rs:287
+#: src/ui/pages/discover_page.rs:158 src/ui/pages/search_page.rs:191
 msgid "Station data could not be received."
 msgstr "İstasyon verisi alınamadı."
 
-#: src/ui/pages/library_page.rs:117
+#: src/ui/pages/library_page.rs:121
 msgid "Welcome to {}"
 msgstr "{} uygulamasına hoş geldiniz"
 
-#: src/ui/pages/search_page.rs:103
+#: src/ui/pages/search_page.rs:104
 msgid ""
 "The number of results is limited to {} item. Try using a more specific "
 "search term."
@@ -513,7 +453,7 @@ msgstr[0] ""
 "Sonuç sayısı {} öge ile sınırlıdır. Daha belirgin arama terimi kullanmayı "
 "deneyin."
 
-#: src/ui/station_dialog.rs:286
+#: src/ui/station_dialog.rs:221
 msgid "{} kbit/s"
 msgstr "{} kbit/s"
 
@@ -568,3 +508,57 @@ msgstr "GNOME masaüstü ortamı ile kusursuz tümleşim"
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:12
 msgid "Gradio;Radio;Stream;Wave;"
 msgstr "Gradio;Radyo;Yayın;Akış;Dalga;Kısa Dalga;İstasyon;Shortwave;"
+
+#~ msgid "Appearance"
+#~ msgstr "Görünüm"
+
+#~ msgid "_Dark Mode"
+#~ msgstr "_Karanlık Kip"
+
+#~ msgid "Whether the application should use a dark theme"
+#~ msgstr "Uygulamanın karanlık kipi kullanıp kullanmayacağı"
+
+#~ msgid "Window"
+#~ msgstr "Pencere"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Open library view"
+#~ msgstr "Kitaplık görünümünü aç"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Open discover view"
+#~ msgstr "Keşif görünümünü aç"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Open search view"
+#~ msgstr "Arama görünümünü aç"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Go back"
+#~ msgstr "Geri git"
+
+#~ msgctxt "shortcut window"
+#~ msgid "Refresh station data"
+#~ msgstr "İstasyon verisini tazele"
+
+#~ msgid "Station details"
+#~ msgstr "İstasyon ayrıntıları"
+
+#~ msgid "Back"
+#~ msgstr "Geri"
+
+#~ msgid "Unable to connect to radio-browser.info"
+#~ msgstr "radio-browser.info’ya bağlanamadı"
+
+#~ msgid ""
+#~ "Access to the public online station database is not available. Ensure "
+#~ "that you are connected to the internet."
+#~ msgstr ""
+#~ "Halka açık çevrimiçi istasyon veri tabanına erişim yok. İnternete "
+#~ "bağlandığınızdan emin olun."
+
+#~ msgid "Try again"
+#~ msgstr "Yeniden dene"
+
+#~ msgid "_Refresh Station Data"
+#~ msgstr "İstasyon Verisini _Tazele"
