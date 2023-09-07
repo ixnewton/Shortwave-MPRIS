@@ -15,6 +15,7 @@
           <object class="GtkImage">
             <property name="icon_name">face-sad-symbolic</property>
             <property name="pixel_size">48</property>
+            <property name="accessible-role">presentation</property>
           </object>
         </child>
         <child>

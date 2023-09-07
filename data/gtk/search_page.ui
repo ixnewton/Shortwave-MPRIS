@@ -103,6 +103,7 @@
                                     <child>
                                       <object class="GtkImage">
                                         <property name="icon-name">dialog-information-symbolic</property>
+                                        <property name="accessible-role">presentation</property>
                                       </object>
                                     </child>
                                     <child>

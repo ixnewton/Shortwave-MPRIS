@@ -21,6 +21,7 @@
                   <object class="GtkImage">
                     <property name="pixel_size">64</property>
                     <property name="icon_name">dialog-information-symbolic</property>
+                    <property name="accessible-role">presentation</property>
                   </object>
                 </child>
                 <child>

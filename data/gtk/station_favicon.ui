@@ -13,6 +13,7 @@
               <object class="GtkImage" id="placeholder">
                 <property name="pixel_size">48</property>
                 <property name="icon_name">emblem-music-symbolic</property>
+                <property name="accessible-role">presentation</property>
                 <style>
                   <class name="dim-label"/>
                 </style>
@@ -25,6 +26,7 @@
             <property name="name">image</property>
             <property name="child">
               <object class="GtkImage" id="image">
+                <property name="accessible-role">presentation</property>
               </object>
             </property>
           </object>
