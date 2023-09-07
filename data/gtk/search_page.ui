@@ -25,6 +25,10 @@
                     <child>
                       <object class="GtkSearchEntry" id="search_entry">
                         <property name="hexpand">True</property>
+                        <property name="tooltip_text" translatable="yes">Search</property>
+                        <accessibility>
+                          <relation name="labelled-by">SwSearchPage</relation>
+                        </accessibility>
                       </object>
                     </child>
                     <child>
