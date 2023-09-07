@@ -28,18 +28,8 @@
             <property name="visible">False</property>
             <property name="halign">center</property>
             <property name="child">
-              <object class="GtkBox">
-                <property name="spacing">6</property>
-                <child>
-                  <object class="GtkImage">
-                    <property name="icon_name">go-next-symbolic</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="action_label">
-                    <property name="label">action label</property>
-                  </object>
-                </child>
+              <object class="AdwButtonContent" id="action_content">
+                <property name="icon_name">go-next-symbolic</property>
               </object>
             </property>
             <style>

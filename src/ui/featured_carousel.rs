@@ -111,7 +111,7 @@ impl SwFeaturedCarousel {
             gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/featured_carousel_page.ui");
         get_widget!(builder, gtk::Box, page_box);
         get_widget!(builder, gtk::Label, title_label);
-        get_widget!(builder, gtk::Label, action_label);
+        get_widget!(builder, adw::ButtonContent, action_content);
         get_widget!(builder, gtk::Button, action_button);
 
         title_label.set_text(title);
@@ -119,7 +119,7 @@ impl SwFeaturedCarousel {
         if let Some(a) = action {
             action_button.set_visible(true);
             action_button.set_action_name(Some(&a.name));
-            action_label.set_text(&a.label);
+            action_content.set_label(&a.label);
         }
 
         imp.carousel.append(&page_box);
