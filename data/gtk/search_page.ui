@@ -91,7 +91,9 @@
                               <object class="GtkBox">
                                 <property name="orientation">vertical</property>
                                 <child>
-                                  <object class="SwStationFlowBox" id="flowbox"/>
+                                  <object class="SwStationFlowBox" id="flowbox">
+                                    <property name="title" translatable="yes">Search Results</property>
+                                  </object>
                                 </child>
                                 <child>
                                   <object class="GtkBox" id="results_limit_box">

@@ -27,17 +27,30 @@ use crate::ui::{SwStationDialog, SwStationRow};
 mod imp {
     use super::*;
 
+    use std::cell::RefCell;
+
     #[derive(Debug, CompositeTemplate, Properties)]
     #[template(resource = "/de/haeckerfelix/Shortwave/gtk/station_flowbox.ui")]
     #[properties(wrapper_type = super::SwStationFlowBox)]
     pub struct SwStationFlowBox {
         #[property(get)]
         pub model: gtk::SortListModel,
+        #[property(get, set = Self::set_title)]
+        pub title: RefCell<Option<String>>,
 
         #[template_child]
         pub flowbox: TemplateChild<gtk::FlowBox>,
 
         pub sorter: SwStationSorter,
+    }
+
+    impl SwStationFlowBox {
+        fn set_title(&self, title: String) {
+            self.flowbox.update_property(&[
+                gtk::accessible::Property::Label(&title)
+            ]);
+            self.title.replace(Some(title));
+        }
     }
 
     #[glib::object_subclass]
@@ -54,6 +67,7 @@ mod imp {
                 flowbox: TemplateChild::default(),
                 sorter,
                 model,
+                title: RefCell::default(),
             }
         }
 

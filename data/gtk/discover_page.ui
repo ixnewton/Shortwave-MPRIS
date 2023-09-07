@@ -40,7 +40,7 @@
                           <object class="SwFeaturedCarousel" id="carousel"/>
                         </child>
                         <child>
-                          <object class="GtkLabel">
+                          <object class="GtkLabel" id="most_voted_title">
                             <property name="label" translatable="yes">Most Voted Stations</property>
                             <property name="wrap">True</property>
                             <property name="xalign">0</property>
@@ -51,10 +51,12 @@
                           </object>
                         </child>
                         <child>
-                          <object class="SwStationFlowBox" id="votes_flowbox"/>
+                          <object class="SwStationFlowBox" id="votes_flowbox">
+                            <property name="title" bind-source="most_voted_title" bind-property="label" bind-flags="sync-create"/>
+                          </object>
                         </child>
                         <child>
-                          <object class="GtkLabel">
+                          <object class="GtkLabel" id="trending_title">
                             <property name="margin_top">12</property>
                             <property name="label" translatable="yes">Trending</property>
                             <property name="wrap">True</property>
@@ -66,10 +68,12 @@
                           </object>
                         </child>
                         <child>
-                          <object class="SwStationFlowBox" id="trending_flowbox"/>
+                          <object class="SwStationFlowBox" id="trending_flowbox">
+                            <property name="title" bind-source="trending_title" bind-property="label" bind-flags="sync-create"/>
+                          </object>
                         </child>
                         <child>
-                          <object class="GtkLabel">
+                          <object class="GtkLabel" id="other_title">
                             <property name="margin_top">12</property>
                             <property name="label" translatable="yes">Other Users Are Listening To…</property>
                             <property name="wrap">True</property>
@@ -81,7 +85,9 @@
                           </object>
                         </child>
                         <child>
-                          <object class="SwStationFlowBox" id="clicked_flowbox"/>
+                          <object class="SwStationFlowBox" id="clicked_flowbox">
+                            <property name="title" bind-source="other_title" bind-property="label" bind-flags="sync-create"/>
+                          </object>
                         </child>
                       </object>
                     </child>
