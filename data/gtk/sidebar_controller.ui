@@ -112,6 +112,7 @@
                     <property name="name">stop_playback</property>
                     <property name="child">
                       <object class="GtkButton" id="stop_playback_button">
+                        <property name="tooltip_text" translatable="yes">Stop</property>
                         <property name="icon_name">media-playback-stop-symbolic</property>
                         <style>
                           <class name="pill"/>
@@ -126,7 +127,8 @@
                     <property name="child">
                       <object class="GtkButton" id="start_playback_button">
                         <property name="icon_name">media-playback-start-symbolic</property>
-                      <style>
+                        <property name="tooltip_text" translatable="yes">Play</property>
+                        <style>
                           <class name="pill"/>
                         </style>
                       </object>
@@ -172,6 +174,7 @@
                 <property name="has_frame">False</property>
                 <property name="icon_name">view-more-symbolic</property>
                 <property name="menu_model">player_menu</property>
+                <property name="tooltip_text" translatable="yes">Station Menu</property>
               </object>
             </child>
           </object>
