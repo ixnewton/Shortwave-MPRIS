@@ -172,10 +172,12 @@
               <object class="GtkMenuButton" id="playermenu_button">
                 <property name="halign">center</property>
                 <property name="valign">center</property>
-                <property name="has_frame">False</property>
                 <property name="icon_name">view-more-symbolic</property>
                 <property name="menu_model">player_menu</property>
                 <property name="tooltip_text" translatable="yes">Station Menu</property>
+                <style>
+                  <class name="flat"/>
+                </style>
               </object>
             </child>
           </object>
