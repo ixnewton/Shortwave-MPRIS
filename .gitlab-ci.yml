@@ -13,11 +13,11 @@ variables:
   CI_IMAGE_X86_64: "quay.io/gnome_infrastructure/gnome-runtime-images:gnome-master"
 
 flatpak@x86_64:
-  before_script: "flatpak install --user flathub-beta org.freedesktop.Sdk.Extension.rust-nightly//23.08beta -y"
+  before_script: "flatpak install --user flathub org.freedesktop.Sdk.Extension.rust-nightly//23.08 -y"
   extends: ".flatpak@x86_64"
 
 flatpak@aarch64:
-  before_script: "flatpak install --user flathub-beta org.freedesktop.Sdk.Extension.rust-nightly//23.08beta -y"
+  before_script: "flatpak install --user flathub org.freedesktop.Sdk.Extension.rust-nightly//23.08 -y"
   extends: ".flatpak@aarch64"
 
 # Configure and run code checks
@@ -32,7 +32,7 @@ checks:
 # Lint the code
 cargo-clippy:
   image: '${CI_IMAGE_X86_64}'
-  before_script: "flatpak install --user flathub-beta org.freedesktop.Sdk.Extension.rust-nightly//23.08beta -y"
+  before_script: "flatpak install --user flathub org.freedesktop.Sdk.Extension.rust-nightly//23.08 -y"
   stage: check
   tags:
     - flatpak
