@@ -3,20 +3,20 @@
 
 data/gtk/create_station_dialog.ui
 data/gtk/discover_page.ui
+data/gtk/featured_carousel.ui
+data/gtk/help_overlay.ui
 data/gtk/library_page.ui
 data/gtk/mini_controller.ui
-data/gtk/settings_window.ui
-data/gtk/help_overlay.ui
+data/gtk/player.ui
 data/gtk/search_page.ui
+data/gtk/settings_window.ui
 data/gtk/sidebar_controller.ui
 data/gtk/song_listbox.ui
 data/gtk/song_row.ui
 data/gtk/station_dialog.ui
+data/gtk/station_row.ui
 data/gtk/streaming_dialog.ui
 data/gtk/toolbar_controller.ui
-data/gtk/player.ui
-data/gtk/featured_carousel.ui
-data/gtk/station_row.ui
 data/gtk/window.ui
 
 src/audio/backend/song_backend.rs
@@ -28,5 +28,5 @@ src/ui/pages/library_page.rs
 src/ui/pages/search_page.rs
 src/ui/station_dialog.rs
 
-data/de.haeckerfelix.Shortwave.metainfo.xml.in.in
 data/de.haeckerfelix.Shortwave.desktop.in.in
+data/de.haeckerfelix.Shortwave.metainfo.xml.in.in
