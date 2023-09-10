@@ -24,6 +24,7 @@
                 <property name="halign">start</property>
                 <property name="valign">center</property>
                 <property name="icon_name">go-previous-symbolic</property>
+                <property name="tooltip_text" translatable="yes">Previous</property>
                 <style>
                   <class name="flat"/>
                   <class name="carousel-button"/>
@@ -36,6 +37,7 @@
                 <property name="halign">end</property>
                 <property name="valign">center</property>
                 <property name="icon_name">go-next-symbolic</property>
+                <property name="tooltip_text" translatable="yes">Next</property>
                 <style>
                   <class name="flat"/>
                   <class name="carousel-button"/>

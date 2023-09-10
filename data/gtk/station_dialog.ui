@@ -262,6 +262,7 @@
                                   <object class="GtkButton">
                                     <property name="icon_name">edit-copy-symbolic</property>
                                     <property name="valign">center</property>
+                                    <property name="tooltip_text" translatable="yes">Copy</property>
                                     <signal name="clicked" handler="copy_stream_clipboard" swapped="true"/>
                                     <style>
                                       <class name="flat"/>

@@ -47,7 +47,9 @@
                             <property name="margin_start">12</property>
                             <property name="margin_end">12</property>
                             <child>
-                              <object class="SwStationFlowBox" id="flowbox"/>
+                              <object class="SwStationFlowBox" id="flowbox">
+                                <property name="title" translatable="yes">Library</property>
+                              </object>
                             </child>
                           </object>
                         </child>

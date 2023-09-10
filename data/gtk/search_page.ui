@@ -25,6 +25,10 @@
                     <child>
                       <object class="GtkSearchEntry" id="search_entry">
                         <property name="hexpand">True</property>
+                        <property name="tooltip_text" translatable="yes">Search</property>
+                        <accessibility>
+                          <relation name="labelled-by">SwSearchPage</relation>
+                        </accessibility>
                       </object>
                     </child>
                     <child>
@@ -91,7 +95,9 @@
                               <object class="GtkBox">
                                 <property name="orientation">vertical</property>
                                 <child>
-                                  <object class="SwStationFlowBox" id="flowbox"/>
+                                  <object class="SwStationFlowBox" id="flowbox">
+                                    <property name="title" translatable="yes">Search Results</property>
+                                  </object>
                                 </child>
                                 <child>
                                   <object class="GtkBox" id="results_limit_box">
@@ -103,6 +109,7 @@
                                     <child>
                                       <object class="GtkImage">
                                         <property name="icon-name">dialog-information-symbolic</property>
+                                        <property name="accessible-role">presentation</property>
                                       </object>
                                     </child>
                                     <child>
