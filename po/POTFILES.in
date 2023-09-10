@@ -1,6 +1,9 @@
 # List of source files containing translatable strings.
 # Please keep this file sorted alphabetically.
 
+data/de.haeckerfelix.Shortwave.desktop.in.in
+data/de.haeckerfelix.Shortwave.metainfo.xml.in.in
+
 data/gtk/create_station_dialog.ui
 data/gtk/discover_page.ui
 data/gtk/featured_carousel.ui
