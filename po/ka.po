@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2023-09-03 19:24+0000\n"
-"PO-Revision-Date: 2023-09-04 05:01+0200\n"
+"POT-Creation-Date: 2023-09-10 10:08+0000\n"
+"PO-Revision-Date: 2023-09-10 12:43+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -67,6 +67,7 @@ msgid "Discover"
 msgstr "აღმოაჩინეთ"
 
 #: data/gtk/discover_page.ui:15 data/gtk/search_page.ui:4
+#: data/gtk/search_page.ui:28
 msgid "Search"
 msgstr "ძებნა"
 
@@ -74,16 +75,15 @@ msgstr "ძებნა"
 msgid "Most Voted Stations"
 msgstr "აქტუალური სადგურები"
 
-#: data/gtk/discover_page.ui:59
+#: data/gtk/discover_page.ui:61
 msgid "Trending"
 msgstr "ტრენდები"
 
-#: data/gtk/discover_page.ui:74
+#: data/gtk/discover_page.ui:78
 msgid "Other Users Are Listening To…"
 msgstr "სხვა მომხმარებლები უსმენენ…"
 
 #: data/gtk/library_page.ui:4
-#| msgid "_About Shortwave"
 msgid "Shortwave"
 msgstr "Shortwave"
 
@@ -95,82 +95,103 @@ msgstr "სადგურების დამატება"
 msgid "Main Menu"
 msgstr "მთავარი მენიუ"
 
-#: data/gtk/library_page.ui:83
+#: data/gtk/library_page.ui:51
+msgid "Library"
+msgstr "ბიბლიოთეკა"
+
+#: data/gtk/library_page.ui:85
 msgid "Receiving Station Data…"
 msgstr "სადგურის მონაცემების მიღება…"
 
-#: data/gtk/library_page.ui:110
+#: data/gtk/library_page.ui:112
 msgid "_Discover New Stations"
 msgstr "ახალი სადგურების აღმოჩენა"
 
-#: data/gtk/library_page.ui:132
+#: data/gtk/library_page.ui:134
 msgid "_Enable Mini Player"
 msgstr "_მინი დამკვრელის ჩართვა"
 
-#: data/gtk/library_page.ui:136
+#: data/gtk/library_page.ui:138
 msgid "_Sorting"
 msgstr "_დალაგება"
 
-#: data/gtk/library_page.ui:139 data/gtk/search_page.ui:151
+#: data/gtk/library_page.ui:141 data/gtk/search_page.ui:158
 msgid "_Name"
 msgstr "_სახელი"
 
-#: data/gtk/library_page.ui:144 data/gtk/search_page.ui:156
+#: data/gtk/library_page.ui:146 data/gtk/search_page.ui:163
 msgid "_Language"
 msgstr "ე_ნა"
 
-#: data/gtk/library_page.ui:149 data/gtk/search_page.ui:161
+#: data/gtk/library_page.ui:151 data/gtk/search_page.ui:168
 msgid "_Country"
 msgstr "ქვ_ეყანა"
 
-#: data/gtk/library_page.ui:154 data/gtk/search_page.ui:166
+#: data/gtk/library_page.ui:156 data/gtk/search_page.ui:173
 msgid "S_tate"
 msgstr "_შტატი"
 
-#: data/gtk/library_page.ui:159 data/gtk/search_page.ui:171
+#: data/gtk/library_page.ui:161 data/gtk/search_page.ui:178
 msgid "_Votes"
 msgstr "_ხმა"
 
-#: data/gtk/library_page.ui:164 data/gtk/search_page.ui:176
+#: data/gtk/library_page.ui:166 data/gtk/search_page.ui:183
 msgid "_Bitrate"
 msgstr "_სიჩქარე"
 
-#: data/gtk/library_page.ui:171 data/gtk/search_page.ui:183
+#: data/gtk/library_page.ui:173 data/gtk/search_page.ui:190
 msgid "_Ascending"
 msgstr "აღმავალი"
 
-#: data/gtk/library_page.ui:176 data/gtk/search_page.ui:188
+#: data/gtk/library_page.ui:178 data/gtk/search_page.ui:195
 msgid "_Descending"
 msgstr "დაღმავალი"
 
-#: data/gtk/library_page.ui:185
+#: data/gtk/library_page.ui:187
 msgid "_Open radio-browser.info <sup>↗</sup>"
 msgstr "_radio-browser.info-ის გახსნა <sup>↗</sup>"
 
-#: data/gtk/library_page.ui:190
+#: data/gtk/library_page.ui:192
 msgid "_Create New Station"
 msgstr "_ახალი სადგურის შექმნა"
 
-#: data/gtk/library_page.ui:197
+#: data/gtk/library_page.ui:199
 msgid "_Preferences"
 msgstr "_მორგება"
 
-#: data/gtk/library_page.ui:201
+#: data/gtk/library_page.ui:203
 msgid "_Keyboard Shortcuts"
 msgstr "კლავიატურის მალსახმობები"
 
-#: data/gtk/library_page.ui:205
+#: data/gtk/library_page.ui:207
 msgid "_About Shortwave"
 msgstr "Shortwave-ის შესახებ"
 
-#: data/gtk/mini_controller.ui:85
+#: data/gtk/mini_controller.ui:27 data/gtk/sidebar_controller.ui:116
+#: data/gtk/toolbar_controller.ui:79
+msgid "Stop"
+msgstr "შეჩერება"
+
+#: data/gtk/mini_controller.ui:42
+msgid "Start"
+msgstr "გაშვება"
+
+#: data/gtk/mini_controller.ui:87
 msgid "SHORTWAVE INTERNET RADIO"
 msgstr "SHORTWAVE INTERNET RADIO"
 
-#: data/gtk/mini_controller.ui:107 data/gtk/sidebar_controller.ui:63
+#: data/gtk/mini_controller.ui:109 data/gtk/sidebar_controller.ui:64
 #: data/gtk/toolbar_controller.ui:38
 msgid "No Playback"
 msgstr "არ ვუკრავ"
+
+#: data/gtk/mini_controller.ui:149
+msgid "Close"
+msgstr "დახურვა"
+
+#: data/gtk/mini_controller.ui:160
+msgid "Resize"
+msgstr "ზომის შეცვლა"
 
 #: data/gtk/settings_window.ui:7 data/gtk/help_overlay.ui:11
 msgid "General"
@@ -222,40 +243,52 @@ msgctxt "shortcut window"
 msgid "Toggle playback"
 msgstr "დაკვრის გადართვა"
 
-#: data/gtk/search_page.ui:35 data/gtk/station_dialog.ui:172
+#: data/gtk/search_page.ui:39 data/gtk/station_dialog.ui:172
 #: src/ui/pages/search_page.rs:215
 msgid "Votes"
 msgstr "ხმები"
 
-#: data/gtk/search_page.ui:40
+#: data/gtk/search_page.ui:44
 msgid "Change the sorting of the search results"
 msgstr "ძებნის შედეგების დალაგების შეცვლა"
 
-#: data/gtk/search_page.ui:67
+#: data/gtk/search_page.ui:71
 msgid "No Results"
 msgstr "შედეგების გარეშე"
 
-#: data/gtk/search_page.ui:68
+#: data/gtk/search_page.ui:72
 msgid "Try using a different search term"
 msgstr "სცადეთ სხვა ძებნა"
 
-#: data/gtk/sidebar_controller.ui:22
+#: data/gtk/search_page.ui:99
+msgid "Search Results"
+msgstr "ძებნის შედეგები"
+
+#: data/gtk/sidebar_controller.ui:23
 msgid "An error occurred"
 msgstr "შეცდომა"
 
-#: data/gtk/sidebar_controller.ui:185
+#: data/gtk/sidebar_controller.ui:131 data/gtk/toolbar_controller.ui:90
+msgid "Play"
+msgstr "დაკვრა"
+
+#: data/gtk/sidebar_controller.ui:177
+msgid "Station Menu"
+msgstr "სადგურის მენიუ"
+
+#: data/gtk/sidebar_controller.ui:191
 msgid "_Show Station Details"
 msgstr "_სადგურის დეტალების ჩვენება"
 
-#: data/gtk/sidebar_controller.ui:189
+#: data/gtk/sidebar_controller.ui:195
 msgid "Stream to a _Device"
 msgstr "_ნაკადის მოწყობილობაზე გაშვება"
 
-#: data/gtk/song_listbox.ui:28
+#: data/gtk/song_listbox.ui:29
 msgid "No Songs Detected"
 msgstr "სიმღერების გარეშე"
 
-#: data/gtk/song_listbox.ui:39
+#: data/gtk/song_listbox.ui:40
 msgid ""
 "Songs are automatically recognized using the stream metadata.\n"
 "\n"
@@ -265,11 +298,11 @@ msgstr ""
 "\n"
 "თუ სადგური მეტამონაცემებს არ აგზავნის, სიმღერებს ვერ ამოვიცნობ."
 
-#: data/gtk/song_listbox.ui:75
+#: data/gtk/song_listbox.ui:76
 msgid "Saved songs are located in your Music folder."
 msgstr "შენახული სიმღერები თქვენს მუსიკის საქაღალდეშია."
 
-#: data/gtk/song_listbox.ui:85
+#: data/gtk/song_listbox.ui:86
 msgid "_Open"
 msgstr "_გახსნა"
 
@@ -354,6 +387,10 @@ msgstr "კოდეკი"
 msgid "Stream"
 msgstr "ნაკადი"
 
+#: data/gtk/station_dialog.ui:265
+msgid "Copy"
+msgstr "კოპირება"
+
 #: data/gtk/streaming_dialog.ui:10
 msgid "Stream to a Device"
 msgstr "მოწყობილობაზე გაშვება"
@@ -381,6 +418,10 @@ msgstr "ძებნა დასრულდა"
 #: data/gtk/streaming_dialog.ui:87
 msgid "Searching for Devices…"
 msgstr "მოწყობილობების ძებნა…"
+
+#: data/gtk/player.ui:19
+msgid "Back"
+msgstr "უკან"
 
 #. Fallback to xdg-home when xdg-music is not available
 #: src/audio/backend/song_backend.rs:97
@@ -543,9 +584,6 @@ msgstr "Gradio;Radio;Stream;Wave;"
 
 #~ msgid "Station details"
 #~ msgstr "სადგურის დეტალები"
-
-#~ msgid "Back"
-#~ msgstr "უკან"
 
 #~ msgid "Unable to connect to radio-browser.info"
 #~ msgstr "Radio-browser.info -სთან მიერთების შეცდომა"
