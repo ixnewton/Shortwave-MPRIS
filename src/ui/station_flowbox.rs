@@ -25,9 +25,9 @@ use crate::model::{SwSorting, SwStationModel, SwStationSorter};
 use crate::ui::{SwStationDialog, SwStationRow};
 
 mod imp {
-    use super::*;
-
     use std::cell::RefCell;
+
+    use super::*;
 
     #[derive(Debug, CompositeTemplate, Properties)]
     #[template(resource = "/de/haeckerfelix/Shortwave/gtk/station_flowbox.ui")]
@@ -46,9 +46,8 @@ mod imp {
 
     impl SwStationFlowBox {
         fn set_title(&self, title: String) {
-            self.flowbox.update_property(&[
-                gtk::accessible::Property::Label(&title)
-            ]);
+            self.flowbox
+                .update_property(&[gtk::accessible::Property::Label(&title)]);
             self.title.replace(Some(title));
         }
     }
