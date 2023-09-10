@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2023-09-10 10:08+0000\n"
-"PO-Revision-Date: 2023-09-10 18:47+0300\n"
+"POT-Creation-Date: 2023-09-10 16:26+0000\n"
+"PO-Revision-Date: 2023-09-10 23:06+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -18,6 +18,67 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
 "%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Lokalize 20.12.0\n"
+
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:3
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
+msgid "@NAME@"
+msgstr "@NAME@"
+
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:12
+msgid "Gradio;Radio;Stream;Wave;"
+msgstr "Gradio;Radio;Stream;Wave;градіо;жрадіо;радіо;потік;трансляція;хвиля;"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:6
+#: src/ui/about_window.rs:35
+msgid "Listen to internet radio"
+msgstr "Прослуховування інтернет-радіо"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:8
+msgid "Felix Häcker"
+msgstr "Felix Häcker"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:16
+msgid ""
+"Shortwave is an internet radio player that provides access to a station "
+"database with over 30,000 stations."
+msgstr ""
+"«Коротка хвиля» — програвач інтернет-радіостанцій, який надає доступ до бази "
+"з понад 30000 станцій."
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:19
+msgid "Features:"
+msgstr "Можливості:"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:21
+msgid "Create your own library where you can add your favorite stations"
+msgstr ""
+"Створіть власну бібліотеку, до якої ви зможете додавати улюблені станції"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:22
+msgid "Easily search and discover new radio stations"
+msgstr "Простий пошук і виявлення нових радіостанцій"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:23
+msgid ""
+"Automatic recognition of songs, with the possibility to save them "
+"individually"
+msgstr "Автоматичне виявлення пісень із можливістю їхнього збереження окремо"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:24
+msgid "Responsive application layout, compatible for small and large screens"
+msgstr ""
+"Якісне компонування вікна програми, яке сумісне із малими і великими екранами"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:25
+msgid "Play audio on supported network devices (e.g. Google Chromecasts)"
+msgstr ""
+"Відтворення звукових даних на підтримуваних пристроях у мережі (наприклад, "
+"Google Chromecast)"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:26
+msgid "Seamless integration into the GNOME desktop environment"
+msgstr "Безшовна інтеграція до стільничного середовища GNOME"
 
 #: data/gtk/create_station_dialog.ui:8
 msgid "Create new station"
@@ -83,6 +144,52 @@ msgstr "Тренди"
 #: data/gtk/discover_page.ui:78
 msgid "Other Users Are Listening To…"
 msgstr "Інші користувачі слухають…"
+
+#: data/gtk/featured_carousel.ui:27
+msgid "Previous"
+msgstr "Назад"
+
+#: data/gtk/featured_carousel.ui:40
+msgid "Next"
+msgstr "Далі"
+
+#: data/gtk/help_overlay.ui:11 data/gtk/settings_window.ui:7
+msgid "General"
+msgstr "Загальні"
+
+#: data/gtk/help_overlay.ui:14
+msgctxt "shortcut window"
+msgid "Open shortcut window"
+msgstr "Відкрити вікно скорочень"
+
+#: data/gtk/help_overlay.ui:21
+msgctxt "shortcut window"
+msgid "Open application menu"
+msgstr "Відкрити меню програми"
+
+#: data/gtk/help_overlay.ui:26
+msgctxt "shortcut window"
+msgid "Open preferences"
+msgstr "Відкрити налаштування"
+
+#: data/gtk/help_overlay.ui:32
+msgctxt "shortcut window"
+msgid "Close the window"
+msgstr "Закрити вікно"
+
+#: data/gtk/help_overlay.ui:38
+msgctxt "shortcut window"
+msgid "Quit the application"
+msgstr "Вийти з програми"
+
+#: data/gtk/help_overlay.ui:46 data/gtk/player.ui:5
+msgid "Playback"
+msgstr "Відтворення"
+
+#: data/gtk/help_overlay.ui:49
+msgctxt "shortcut window"
+msgid "Toggle playback"
+msgstr "Перемкнути відтворення"
 
 #: data/gtk/library_page.ui:4
 msgid "Shortwave"
@@ -194,56 +301,9 @@ msgstr "Закрити"
 msgid "Resize"
 msgstr "Змінити розмір"
 
-#: data/gtk/settings_window.ui:7 data/gtk/help_overlay.ui:11
-msgid "General"
-msgstr "Загальні"
-
-#: data/gtk/settings_window.ui:10
-msgid "Features"
-msgstr "Можливості"
-
-#: data/gtk/settings_window.ui:13
-msgid "_Notifications"
-msgstr "_Сповіщення"
-
-#: data/gtk/settings_window.ui:15
-msgid "Show desktop notifications when a new song gets played"
-msgstr ""
-"Показувати сповіщення на стільниці при переході до наступної композиції"
-
-#: data/gtk/help_overlay.ui:14
-msgctxt "shortcut window"
-msgid "Open shortcut window"
-msgstr "Відкрити вікно скорочень"
-
-#: data/gtk/help_overlay.ui:21
-msgctxt "shortcut window"
-msgid "Open application menu"
-msgstr "Відкрити меню програми"
-
-#: data/gtk/help_overlay.ui:26
-msgctxt "shortcut window"
-msgid "Open preferences"
-msgstr "Відкрити налаштування"
-
-#: data/gtk/help_overlay.ui:32
-msgctxt "shortcut window"
-msgid "Close the window"
-msgstr "Закрити вікно"
-
-#: data/gtk/help_overlay.ui:38
-msgctxt "shortcut window"
-msgid "Quit the application"
-msgstr "Вийти з програми"
-
-#: data/gtk/help_overlay.ui:46 data/gtk/player.ui:5
-msgid "Playback"
-msgstr "Відтворення"
-
-#: data/gtk/help_overlay.ui:49
-msgctxt "shortcut window"
-msgid "Toggle playback"
-msgstr "Перемкнути відтворення"
+#: data/gtk/player.ui:19
+msgid "Back"
+msgstr "Назад"
 
 #: data/gtk/search_page.ui:39 data/gtk/station_dialog.ui:172
 #: src/ui/pages/search_page.rs:215
@@ -263,21 +323,32 @@ msgid "Try using a different search term"
 msgstr "Спробуйте інший критерій пошуку"
 
 #: data/gtk/search_page.ui:99
-#| msgid "No Results"
 msgid "Search Results"
 msgstr "Результати пошуку"
+
+#: data/gtk/settings_window.ui:10
+msgid "Features"
+msgstr "Можливості"
+
+#: data/gtk/settings_window.ui:13
+msgid "_Notifications"
+msgstr "_Сповіщення"
+
+#: data/gtk/settings_window.ui:15
+msgid "Show desktop notifications when a new song gets played"
+msgstr ""
+"Показувати сповіщення на стільниці при переході до наступної композиції"
 
 #: data/gtk/sidebar_controller.ui:23
 msgid "An error occurred"
 msgstr "Сталася помилка"
 
-#: data/gtk/sidebar_controller.ui:131 data/gtk/toolbar_controller.ui:90
-#| msgid "Playback"
+#: data/gtk/sidebar_controller.ui:131 data/gtk/station_row.ui:69
+#: data/gtk/toolbar_controller.ui:90
 msgid "Play"
 msgstr "Пуск"
 
 #: data/gtk/sidebar_controller.ui:177
-#| msgid "Main Menu"
 msgid "Station Menu"
 msgstr "Меню станцій"
 
@@ -424,9 +495,10 @@ msgstr "Пошук завершено"
 msgid "Searching for Devices…"
 msgstr "Пошук пристроїв…"
 
-#: data/gtk/player.ui:19
-msgid "Back"
-msgstr "Назад"
+#: data/gtk/window.ui:40
+#| msgid "Main Menu"
+msgid "Main View"
+msgstr "Головне вікно"
 
 #. Fallback to xdg-home when xdg-music is not available
 #: src/audio/backend/song_backend.rs:97
@@ -443,14 +515,13 @@ msgstr "Станцію не можна транслювати. Адреса є �
 msgid "Cannot save song."
 msgstr "Не вдалося зберегти композицію."
 
-#: src/ui/about_window.rs:35
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:6
-msgid "Listen to internet radio"
-msgstr "Прослуховування інтернет-радіо"
-
 #: src/ui/about_window.rs:46
 msgid "translator-credits"
 msgstr "Юрій Чорноіван <yurchor@ukr.net>, 2020"
+
+#: src/ui/create_station_dialog.rs:103
+msgid "Select station image"
+msgstr "Виберіть зображення для станції"
 
 #. TODO: Implement show-server-stats action
 #: src/ui/pages/discover_page.rs:134
@@ -508,62 +579,6 @@ msgstr[3] ""
 #: src/ui/station_dialog.rs:221
 msgid "{} kbit/s"
 msgstr "{} кбіт/с"
-
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
-#: data/de.haeckerfelix.Shortwave.desktop.in.in:3
-msgid "@NAME@"
-msgstr "@NAME@"
-
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:8
-msgid "Felix Häcker"
-msgstr "Felix Häcker"
-
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:16
-msgid ""
-"Shortwave is an internet radio player that provides access to a station "
-"database with over 30,000 stations."
-msgstr ""
-"«Коротка хвиля» — програвач інтернет-радіостанцій, який надає доступ до бази "
-"з понад 30000 станцій."
-
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:19
-msgid "Features:"
-msgstr "Можливості:"
-
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:21
-msgid "Create your own library where you can add your favorite stations"
-msgstr ""
-"Створіть власну бібліотеку, до якої ви зможете додавати улюблені станції"
-
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:22
-msgid "Easily search and discover new radio stations"
-msgstr "Простий пошук і виявлення нових радіостанцій"
-
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:23
-msgid ""
-"Automatic recognition of songs, with the possibility to save them "
-"individually"
-msgstr "Автоматичне виявлення пісень із можливістю їхнього збереження окремо"
-
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:24
-msgid "Responsive application layout, compatible for small and large screens"
-msgstr ""
-"Якісне компонування вікна програми, яке сумісне із малими і великими екранами"
-
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:25
-msgid "Play audio on supported network devices (e.g. Google Chromecasts)"
-msgstr ""
-"Відтворення звукових даних на підтримуваних пристроях у мережі (наприклад, "
-"Google Chromecast)"
-
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:26
-msgid "Seamless integration into the GNOME desktop environment"
-msgstr "Безшовна інтеграція до стільничного середовища GNOME"
-
-#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: data/de.haeckerfelix.Shortwave.desktop.in.in:12
-msgid "Gradio;Radio;Stream;Wave;"
-msgstr "Gradio;Radio;Stream;Wave;градіо;жрадіо;радіо;потік;трансляція;хвиля;"
 
 #~ msgid "Appearance"
 #~ msgstr "Вигляд"
@@ -624,9 +639,6 @@ msgstr "Gradio;Radio;Stream;Wave;градіо;жрадіо;радіо;потік
 
 #~ msgid "_How does this work?"
 #~ msgstr "_Як це працює?"
-
-#~ msgid "Select station image"
-#~ msgstr "Виберіть зображення для станції"
 
 #~ msgid "Error details"
 #~ msgstr "Подробиці щодо помилки"
