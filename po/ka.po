@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2023-09-10 10:08+0000\n"
-"PO-Revision-Date: 2023-09-10 12:43+0200\n"
+"POT-Creation-Date: 2023-09-10 16:26+0000\n"
+"PO-Revision-Date: 2023-09-11 05:47+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -17,6 +17,67 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Poedit 3.3.2\n"
+
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:3
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
+msgid "@NAME@"
+msgstr "@სახელი@"
+
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:12
+msgid "Gradio;Radio;Stream;Wave;"
+msgstr "Gradio;Radio;Stream;Wave;"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:6
+#: src/ui/about_window.rs:35
+msgid "Listen to internet radio"
+msgstr "ინტერნეტ რადიოს მოსმენა"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:8
+msgid "Felix Häcker"
+msgstr "Felix Häcker"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:16
+msgid ""
+"Shortwave is an internet radio player that provides access to a station "
+"database with over 30,000 stations."
+msgstr ""
+"Shortwave ინტერნეტ-რადიოს დამკვრელია, რომელიც საშუალებას გაძლევთ 30, 000-ზე "
+"მეტ სადგურს მოუსმინოთ."
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:19
+msgid "Features:"
+msgstr "თვისებები:"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:21
+msgid "Create your own library where you can add your favorite stations"
+msgstr ""
+"შექმენით თქვენი საკუთარი ბიბლიოთეკა, სადაც შეგიძლიათ თქვენი საყვარელი "
+"სადგურები დაამატოთ"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:22
+msgid "Easily search and discover new radio stations"
+msgstr "მარტივად მოძებნეთ და აღმოაჩინეთ ახალი რადიოსადგურები"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:23
+msgid ""
+"Automatic recognition of songs, with the possibility to save them "
+"individually"
+msgstr ""
+"სიმღერების ავტომატური ამოცნობა, მათი ინდივიდუალურად შენახვის შესაძლებლობით"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:24
+msgid "Responsive application layout, compatible for small and large screens"
+msgstr "აპლიკაციის მოხერხებული განლაგება, თავსებადი მცირე და დიდ ეკრანებთან"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:25
+msgid "Play audio on supported network devices (e.g. Google Chromecasts)"
+msgstr ""
+"აუდიოს დაკვრა მხარდაჭერილ ქსელურ მოწყობილობებზე (მაგ. Google Chromecast)"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:26
+msgid "Seamless integration into the GNOME desktop environment"
+msgstr "შეუმჩნეველი ინტეგრაცია GNOME-ს გარემოში"
 
 #: data/gtk/create_station_dialog.ui:8
 msgid "Create new station"
@@ -82,6 +143,52 @@ msgstr "ტრენდები"
 #: data/gtk/discover_page.ui:78
 msgid "Other Users Are Listening To…"
 msgstr "სხვა მომხმარებლები უსმენენ…"
+
+#: data/gtk/featured_carousel.ui:27
+msgid "Previous"
+msgstr "წინა"
+
+#: data/gtk/featured_carousel.ui:40
+msgid "Next"
+msgstr "შემდეგი"
+
+#: data/gtk/help_overlay.ui:11 data/gtk/settings_window.ui:7
+msgid "General"
+msgstr "მთავარი"
+
+#: data/gtk/help_overlay.ui:14
+msgctxt "shortcut window"
+msgid "Open shortcut window"
+msgstr "მალსახმობის ფანჯრის გახსნა"
+
+#: data/gtk/help_overlay.ui:21
+msgctxt "shortcut window"
+msgid "Open application menu"
+msgstr "აპლიკაციის მენიუს გახსნა"
+
+#: data/gtk/help_overlay.ui:26
+msgctxt "shortcut window"
+msgid "Open preferences"
+msgstr "მორგების ფანჯრის გახსნა"
+
+#: data/gtk/help_overlay.ui:32
+msgctxt "shortcut window"
+msgid "Close the window"
+msgstr "ფანჯრის დახურვა"
+
+#: data/gtk/help_overlay.ui:38
+msgctxt "shortcut window"
+msgid "Quit the application"
+msgstr "აპლიკაციიდან გასვლა"
+
+#: data/gtk/help_overlay.ui:46 data/gtk/player.ui:5
+msgid "Playback"
+msgstr "დაკვრა"
+
+#: data/gtk/help_overlay.ui:49
+msgctxt "shortcut window"
+msgid "Toggle playback"
+msgstr "დაკვრის გადართვა"
 
 #: data/gtk/library_page.ui:4
 msgid "Shortwave"
@@ -193,55 +300,9 @@ msgstr "დახურვა"
 msgid "Resize"
 msgstr "ზომის შეცვლა"
 
-#: data/gtk/settings_window.ui:7 data/gtk/help_overlay.ui:11
-msgid "General"
-msgstr "მთავარი"
-
-#: data/gtk/settings_window.ui:10
-msgid "Features"
-msgstr "თვისებები"
-
-#: data/gtk/settings_window.ui:13
-msgid "_Notifications"
-msgstr "შეტყობინებები"
-
-#: data/gtk/settings_window.ui:15
-msgid "Show desktop notifications when a new song gets played"
-msgstr "ახალ სიმღერაზე გადართვისას სამუშაო მაგიდაზე შეტყობინების ჩვენება"
-
-#: data/gtk/help_overlay.ui:14
-msgctxt "shortcut window"
-msgid "Open shortcut window"
-msgstr "მალსახმობის ფანჯრის გახსნა"
-
-#: data/gtk/help_overlay.ui:21
-msgctxt "shortcut window"
-msgid "Open application menu"
-msgstr "აპლიკაციის მენიუს გახსნა"
-
-#: data/gtk/help_overlay.ui:26
-msgctxt "shortcut window"
-msgid "Open preferences"
-msgstr "მორგების ფანჯრის გახსნა"
-
-#: data/gtk/help_overlay.ui:32
-msgctxt "shortcut window"
-msgid "Close the window"
-msgstr "ფანჯრის დახურვა"
-
-#: data/gtk/help_overlay.ui:38
-msgctxt "shortcut window"
-msgid "Quit the application"
-msgstr "აპლიკაციიდან გასვლა"
-
-#: data/gtk/help_overlay.ui:46 data/gtk/player.ui:5
-msgid "Playback"
-msgstr "დაკვრა"
-
-#: data/gtk/help_overlay.ui:49
-msgctxt "shortcut window"
-msgid "Toggle playback"
-msgstr "დაკვრის გადართვა"
+#: data/gtk/player.ui:19
+msgid "Back"
+msgstr "უკან"
 
 #: data/gtk/search_page.ui:39 data/gtk/station_dialog.ui:172
 #: src/ui/pages/search_page.rs:215
@@ -264,11 +325,24 @@ msgstr "სცადეთ სხვა ძებნა"
 msgid "Search Results"
 msgstr "ძებნის შედეგები"
 
+#: data/gtk/settings_window.ui:10
+msgid "Features"
+msgstr "თვისებები"
+
+#: data/gtk/settings_window.ui:13
+msgid "_Notifications"
+msgstr "შეტყობინებები"
+
+#: data/gtk/settings_window.ui:15
+msgid "Show desktop notifications when a new song gets played"
+msgstr "ახალ სიმღერაზე გადართვისას სამუშაო მაგიდაზე შეტყობინების ჩვენება"
+
 #: data/gtk/sidebar_controller.ui:23
 msgid "An error occurred"
 msgstr "შეცდომა"
 
-#: data/gtk/sidebar_controller.ui:131 data/gtk/toolbar_controller.ui:90
+#: data/gtk/sidebar_controller.ui:131 data/gtk/station_row.ui:69
+#: data/gtk/toolbar_controller.ui:90
 msgid "Play"
 msgstr "დაკვრა"
 
@@ -419,9 +493,9 @@ msgstr "ძებნა დასრულდა"
 msgid "Searching for Devices…"
 msgstr "მოწყობილობების ძებნა…"
 
-#: data/gtk/player.ui:19
-msgid "Back"
-msgstr "უკან"
+#: data/gtk/window.ui:40
+msgid "Main View"
+msgstr "მთავარი ხედი"
 
 #. Fallback to xdg-home when xdg-music is not available
 #: src/audio/backend/song_backend.rs:97
@@ -438,14 +512,13 @@ msgstr "სადგურის ნაკადის შეცდომა. UR
 msgid "Cannot save song."
 msgstr "სიმღერის შენახვა შეუძლებელია."
 
-#: src/ui/about_window.rs:35
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:6
-msgid "Listen to internet radio"
-msgstr "ინტერნეტ რადიოს მოსმენა"
-
 #: src/ui/about_window.rs:46
 msgid "translator-credits"
 msgstr "მთარგმნელის შესახებ"
+
+#: src/ui/create_station_dialog.rs:103
+msgid "Select station image"
+msgstr "აირჩიეთ სადგურის სურათი"
 
 #. TODO: Implement show-server-stats action
 #: src/ui/pages/discover_page.rs:134
@@ -493,62 +566,6 @@ msgstr[0] ""
 #: src/ui/station_dialog.rs:221
 msgid "{} kbit/s"
 msgstr "{} კბიტ/წმ"
-
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
-#: data/de.haeckerfelix.Shortwave.desktop.in.in:3
-msgid "@NAME@"
-msgstr "@სახელი@"
-
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:8
-msgid "Felix Häcker"
-msgstr "Felix Häcker"
-
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:16
-msgid ""
-"Shortwave is an internet radio player that provides access to a station "
-"database with over 30,000 stations."
-msgstr ""
-"Shortwave ინტერნეტ-რადიოს დამკვრელია, რომელიც საშუალებას გაძლევთ 30, 000-ზე "
-"მეტ სადგურს მოუსმინოთ."
-
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:19
-msgid "Features:"
-msgstr "თვისებები:"
-
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:21
-msgid "Create your own library where you can add your favorite stations"
-msgstr ""
-"შექმენით თქვენი საკუთარი ბიბლიოთეკა, სადაც შეგიძლიათ თქვენი საყვარელი "
-"სადგურები დაამატოთ"
-
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:22
-msgid "Easily search and discover new radio stations"
-msgstr "მარტივად მოძებნეთ და აღმოაჩინეთ ახალი რადიოსადგურები"
-
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:23
-msgid ""
-"Automatic recognition of songs, with the possibility to save them "
-"individually"
-msgstr ""
-"სიმღერების ავტომატური ამოცნობა, მათი ინდივიდუალურად შენახვის შესაძლებლობით"
-
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:24
-msgid "Responsive application layout, compatible for small and large screens"
-msgstr "აპლიკაციის მოხერხებული განლაგება, თავსებადი მცირე და დიდ ეკრანებთან"
-
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:25
-msgid "Play audio on supported network devices (e.g. Google Chromecasts)"
-msgstr ""
-"აუდიოს დაკვრა მხარდაჭერილ ქსელურ მოწყობილობებზე (მაგ. Google Chromecast)"
-
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:26
-msgid "Seamless integration into the GNOME desktop environment"
-msgstr "შეუმჩნეველი ინტეგრაცია GNOME-ს გარემოში"
-
-#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: data/de.haeckerfelix.Shortwave.desktop.in.in:12
-msgid "Gradio;Radio;Stream;Wave;"
-msgstr "Gradio;Radio;Stream;Wave;"
 
 #~ msgid "Appearance"
 #~ msgstr "გარეგნობა"
