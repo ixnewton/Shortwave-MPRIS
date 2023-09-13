@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2023-09-03 19:24+0000\n"
-"PO-Revision-Date: 2023-09-05 22:48+0300\n"
+"POT-Creation-Date: 2023-09-10 16:26+0000\n"
+"PO-Revision-Date: 2023-09-11 01:47+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <takim@gnome.org.tr>\n"
 "Language: tr\n"
@@ -20,6 +20,63 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Poedit 3.2.2\n"
+
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:3
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
+msgid "@NAME@"
+msgstr "@NAME@"
+
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:12
+msgid "Gradio;Radio;Stream;Wave;"
+msgstr "Gradio;Radyo;Yayın;Akış;Dalga;Kısa Dalga;İstasyon;Shortwave;"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:6
+#: src/ui/about_window.rs:35
+msgid "Listen to internet radio"
+msgstr "İnternet radyolarını dinle"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:8
+msgid "Felix Häcker"
+msgstr "Felix Häcker"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:16
+msgid ""
+"Shortwave is an internet radio player that provides access to a station "
+"database with over 30,000 stations."
+msgstr ""
+"Shortwave, 30.000’i aşkın istasyon barındıran veri tabanına erişmenizi "
+"sağlayan internet radyo oynatıcısıdır."
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:19
+msgid "Features:"
+msgstr "Özellikler:"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:21
+msgid "Create your own library where you can add your favorite stations"
+msgstr "Beğendiğiniz istasyonları ekleyerek kendi kitaplığınızı oluşturun"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:22
+msgid "Easily search and discover new radio stations"
+msgstr "Yeni radyo istasyonlarını kolayca arayın ve keşfedin"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:23
+msgid ""
+"Automatic recognition of songs, with the possibility to save them "
+"individually"
+msgstr "Şarkıları kendiliğinden tanıma, ayrı ayrı kaydetme özelliği"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:24
+msgid "Responsive application layout, compatible for small and large screens"
+msgstr "Küçük ve büyük ekranlarla uyumlu, duyarlı uygulama düzeni"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:25
+msgid "Play audio on supported network devices (e.g. Google Chromecasts)"
+msgstr "Desteklenen ağ aygıtlarında ses çalma (ör. Google Chromecast)"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:26
+msgid "Seamless integration into the GNOME desktop environment"
+msgstr "GNOME masaüstü ortamı ile kusursuz tümleşim"
 
 #: data/gtk/create_station_dialog.ui:8
 msgid "Create new station"
@@ -70,6 +127,7 @@ msgid "Discover"
 msgstr "Keşfet"
 
 #: data/gtk/discover_page.ui:15 data/gtk/search_page.ui:4
+#: data/gtk/search_page.ui:28
 msgid "Search"
 msgstr "Ara"
 
@@ -77,119 +135,25 @@ msgstr "Ara"
 msgid "Most Voted Stations"
 msgstr "En Çok Oylanan İstasyonlar"
 
-#: data/gtk/discover_page.ui:59
+#: data/gtk/discover_page.ui:61
 msgid "Trending"
 msgstr "Gündemdekiler"
 
-#: data/gtk/discover_page.ui:74
+#: data/gtk/discover_page.ui:78
 msgid "Other Users Are Listening To…"
 msgstr "Diğer Kullanıcılar Dinliyor…"
 
-#: data/gtk/library_page.ui:4
-#| msgid "_About Shortwave"
-msgid "Shortwave"
-msgstr "Shortwave"
+#: data/gtk/featured_carousel.ui:27
+msgid "Previous"
+msgstr "Önceki"
 
-#: data/gtk/library_page.ui:15
-msgid "Add Stations"
-msgstr "İstasyon Ekle"
+#: data/gtk/featured_carousel.ui:40
+msgid "Next"
+msgstr "Sonraki"
 
-#: data/gtk/library_page.ui:22
-msgid "Main Menu"
-msgstr "Ana Menü"
-
-#: data/gtk/library_page.ui:83
-msgid "Receiving Station Data…"
-msgstr "İstasyon Verisi Alınıyor…"
-
-#: data/gtk/library_page.ui:110
-msgid "_Discover New Stations"
-msgstr "Yeni İstasyonları _Keşfet"
-
-#: data/gtk/library_page.ui:132
-msgid "_Enable Mini Player"
-msgstr "Küçük Çalıcıyı _Etkinleştir"
-
-#: data/gtk/library_page.ui:136
-msgid "_Sorting"
-msgstr "_Sıralama"
-
-#: data/gtk/library_page.ui:139 data/gtk/search_page.ui:151
-msgid "_Name"
-msgstr "_Ad"
-
-#: data/gtk/library_page.ui:144 data/gtk/search_page.ui:156
-msgid "_Language"
-msgstr "_Dil"
-
-#: data/gtk/library_page.ui:149 data/gtk/search_page.ui:161
-msgid "_Country"
-msgstr "_Ülke"
-
-#: data/gtk/library_page.ui:154 data/gtk/search_page.ui:166
-msgid "S_tate"
-msgstr "_Eyalet"
-
-#: data/gtk/library_page.ui:159 data/gtk/search_page.ui:171
-msgid "_Votes"
-msgstr "_Oylar"
-
-#: data/gtk/library_page.ui:164 data/gtk/search_page.ui:176
-msgid "_Bitrate"
-msgstr "_Bit oranı"
-
-#: data/gtk/library_page.ui:171 data/gtk/search_page.ui:183
-msgid "_Ascending"
-msgstr "_Artan"
-
-#: data/gtk/library_page.ui:176 data/gtk/search_page.ui:188
-msgid "_Descending"
-msgstr "_Azalan"
-
-#: data/gtk/library_page.ui:185
-msgid "_Open radio-browser.info <sup>↗</sup>"
-msgstr "radio-browser.info’yu _aç <sup>↗</sup>"
-
-#: data/gtk/library_page.ui:190
-msgid "_Create New Station"
-msgstr "_Yeni İstasyon Oluştur"
-
-#: data/gtk/library_page.ui:197
-msgid "_Preferences"
-msgstr "_Tercihler"
-
-#: data/gtk/library_page.ui:201
-msgid "_Keyboard Shortcuts"
-msgstr "_Klavye Kısayolları"
-
-#: data/gtk/library_page.ui:205
-msgid "_About Shortwave"
-msgstr "Shortwave _Hakkında"
-
-#: data/gtk/mini_controller.ui:85
-msgid "SHORTWAVE INTERNET RADIO"
-msgstr "SHORTWAVE İNTERNET RADYOSU"
-
-#: data/gtk/mini_controller.ui:107 data/gtk/sidebar_controller.ui:63
-#: data/gtk/toolbar_controller.ui:38
-msgid "No Playback"
-msgstr "Kayıttan Yürütme Yok"
-
-#: data/gtk/settings_window.ui:7 data/gtk/help_overlay.ui:11
+#: data/gtk/help_overlay.ui:11 data/gtk/settings_window.ui:7
 msgid "General"
 msgstr "Genel"
-
-#: data/gtk/settings_window.ui:10
-msgid "Features"
-msgstr "Özellikler"
-
-#: data/gtk/settings_window.ui:13
-msgid "_Notifications"
-msgstr "_Bildirimler"
-
-#: data/gtk/settings_window.ui:15
-msgid "Show desktop notifications when a new song gets played"
-msgstr "Yeni parça çalınırken masaüstü bildirimi göster"
 
 #: data/gtk/help_overlay.ui:14
 msgctxt "shortcut window"
@@ -225,40 +189,179 @@ msgctxt "shortcut window"
 msgid "Toggle playback"
 msgstr "Kayıttan yürütmeyi aç/kapat"
 
-#: data/gtk/search_page.ui:35 data/gtk/station_dialog.ui:172
+#: data/gtk/library_page.ui:4
+msgid "Shortwave"
+msgstr "Shortwave"
+
+#: data/gtk/library_page.ui:15
+msgid "Add Stations"
+msgstr "İstasyon Ekle"
+
+#: data/gtk/library_page.ui:22
+msgid "Main Menu"
+msgstr "Ana Menü"
+
+#: data/gtk/library_page.ui:51
+msgid "Library"
+msgstr "Kitaplık"
+
+#: data/gtk/library_page.ui:85
+msgid "Receiving Station Data…"
+msgstr "İstasyon Verisi Alınıyor…"
+
+#: data/gtk/library_page.ui:112
+msgid "_Discover New Stations"
+msgstr "Yeni İstasyonları _Keşfet"
+
+#: data/gtk/library_page.ui:134
+msgid "_Enable Mini Player"
+msgstr "Küçük Çalıcıyı _Etkinleştir"
+
+#: data/gtk/library_page.ui:138
+msgid "_Sorting"
+msgstr "_Sıralama"
+
+#: data/gtk/library_page.ui:141 data/gtk/search_page.ui:158
+msgid "_Name"
+msgstr "_Ad"
+
+#: data/gtk/library_page.ui:146 data/gtk/search_page.ui:163
+msgid "_Language"
+msgstr "_Dil"
+
+#: data/gtk/library_page.ui:151 data/gtk/search_page.ui:168
+msgid "_Country"
+msgstr "_Ülke"
+
+#: data/gtk/library_page.ui:156 data/gtk/search_page.ui:173
+msgid "S_tate"
+msgstr "_Eyalet"
+
+#: data/gtk/library_page.ui:161 data/gtk/search_page.ui:178
+msgid "_Votes"
+msgstr "_Oylar"
+
+#: data/gtk/library_page.ui:166 data/gtk/search_page.ui:183
+msgid "_Bitrate"
+msgstr "_Bit oranı"
+
+#: data/gtk/library_page.ui:173 data/gtk/search_page.ui:190
+msgid "_Ascending"
+msgstr "_Artan"
+
+#: data/gtk/library_page.ui:178 data/gtk/search_page.ui:195
+msgid "_Descending"
+msgstr "_Azalan"
+
+#: data/gtk/library_page.ui:187
+msgid "_Open radio-browser.info <sup>↗</sup>"
+msgstr "radio-browser.info’yu _aç <sup>↗</sup>"
+
+#: data/gtk/library_page.ui:192
+msgid "_Create New Station"
+msgstr "_Yeni İstasyon Oluştur"
+
+#: data/gtk/library_page.ui:199
+msgid "_Preferences"
+msgstr "_Tercihler"
+
+#: data/gtk/library_page.ui:203
+msgid "_Keyboard Shortcuts"
+msgstr "_Klavye Kısayolları"
+
+#: data/gtk/library_page.ui:207
+msgid "_About Shortwave"
+msgstr "Shortwave _Hakkında"
+
+#: data/gtk/mini_controller.ui:27 data/gtk/sidebar_controller.ui:116
+#: data/gtk/toolbar_controller.ui:79
+msgid "Stop"
+msgstr "Durdur"
+
+#: data/gtk/mini_controller.ui:42
+msgid "Start"
+msgstr "Başlat"
+
+#: data/gtk/mini_controller.ui:87
+msgid "SHORTWAVE INTERNET RADIO"
+msgstr "SHORTWAVE İNTERNET RADYOSU"
+
+#: data/gtk/mini_controller.ui:109 data/gtk/sidebar_controller.ui:64
+#: data/gtk/toolbar_controller.ui:38
+msgid "No Playback"
+msgstr "Kayıttan Yürütme Yok"
+
+#: data/gtk/mini_controller.ui:149
+msgid "Close"
+msgstr "Kapat"
+
+#: data/gtk/mini_controller.ui:160
+msgid "Resize"
+msgstr "Yeniden Boyutlandır"
+
+#: data/gtk/player.ui:19
+msgid "Back"
+msgstr "Geri"
+
+#: data/gtk/search_page.ui:39 data/gtk/station_dialog.ui:172
 #: src/ui/pages/search_page.rs:215
 msgid "Votes"
 msgstr "Oylar"
 
-#: data/gtk/search_page.ui:40
+#: data/gtk/search_page.ui:44
 msgid "Change the sorting of the search results"
 msgstr "Arama sonuçlarının sırasını değiştir"
 
-#: data/gtk/search_page.ui:67
+#: data/gtk/search_page.ui:71
 msgid "No Results"
 msgstr "Sonuç Yok"
 
-#: data/gtk/search_page.ui:68
+#: data/gtk/search_page.ui:72
 msgid "Try using a different search term"
 msgstr "Başka arama terimi kullanmayı deneyin"
 
-#: data/gtk/sidebar_controller.ui:22
+#: data/gtk/search_page.ui:99
+msgid "Search Results"
+msgstr "Arama Sonuçları"
+
+#: data/gtk/settings_window.ui:10
+msgid "Features"
+msgstr "Özellikler"
+
+#: data/gtk/settings_window.ui:13
+msgid "_Notifications"
+msgstr "_Bildirimler"
+
+#: data/gtk/settings_window.ui:15
+msgid "Show desktop notifications when a new song gets played"
+msgstr "Yeni parça çalınırken masaüstü bildirimi göster"
+
+#: data/gtk/sidebar_controller.ui:23
 msgid "An error occurred"
 msgstr "Hata oluştu"
 
-#: data/gtk/sidebar_controller.ui:185
+#: data/gtk/sidebar_controller.ui:131 data/gtk/station_row.ui:69
+#: data/gtk/toolbar_controller.ui:90
+msgid "Play"
+msgstr "Oynat"
+
+#: data/gtk/sidebar_controller.ui:177
+msgid "Station Menu"
+msgstr "İstasyon Menüsü"
+
+#: data/gtk/sidebar_controller.ui:191
 msgid "_Show Station Details"
 msgstr "İstasyon Ayrıntılarını _Göster"
 
-#: data/gtk/sidebar_controller.ui:189
+#: data/gtk/sidebar_controller.ui:195
 msgid "Stream to a _Device"
 msgstr "_Aygıta Yayınla"
 
-#: data/gtk/song_listbox.ui:28
+#: data/gtk/song_listbox.ui:29
 msgid "No Songs Detected"
 msgstr "Şarkı Algılanamadı"
 
-#: data/gtk/song_listbox.ui:39
+#: data/gtk/song_listbox.ui:40
 msgid ""
 "Songs are automatically recognized using the stream metadata.\n"
 "\n"
@@ -268,11 +371,11 @@ msgstr ""
 "\n"
 "Eğer istasyon herhangi bir üst veri göndermiyorsa, şarkılar saptanamaz."
 
-#: data/gtk/song_listbox.ui:75
+#: data/gtk/song_listbox.ui:76
 msgid "Saved songs are located in your Music folder."
 msgstr "Kaydedilen şarkılar Müzik klasörünüzde konumlanır."
 
-#: data/gtk/song_listbox.ui:85
+#: data/gtk/song_listbox.ui:86
 msgid "_Open"
 msgstr "_Aç"
 
@@ -357,6 +460,10 @@ msgstr "Kodlayıcı"
 msgid "Stream"
 msgstr "Akış"
 
+#: data/gtk/station_dialog.ui:265
+msgid "Copy"
+msgstr "Kopyala"
+
 #: data/gtk/streaming_dialog.ui:10
 msgid "Stream to a Device"
 msgstr "Aygıta Yayınla"
@@ -385,6 +492,10 @@ msgstr "Arama Tamamlandı"
 msgid "Searching for Devices…"
 msgstr "Aygıtlar Aranıyor…"
 
+#: data/gtk/window.ui:40
+msgid "Main View"
+msgstr "Ana Görünüm"
+
 #. Fallback to xdg-home when xdg-music is not available
 #: src/audio/backend/song_backend.rs:97
 msgid "Unable to access music directory. Saving song in home directory."
@@ -398,16 +509,15 @@ msgstr "İstasyon yayını bulunamadı. Bağlantı geçersiz."
 msgid "Cannot save song."
 msgstr "Şarkı kaydedilemedi."
 
-#: src/ui/about_window.rs:35
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:6
-msgid "Listen to internet radio"
-msgstr "İnternet radyolarını dinle"
-
 #: src/ui/about_window.rs:46
 msgid "translator-credits"
 msgstr ""
-"Emin Tufan Çetin <etcetin@gmail.com>, 2022\n"
-"Sabri Ünal <libreajans@gmail.com>, 2022"
+"Emin Tufan Çetin <etcetin@gmail.com>\n"
+"Sabri Ünal <libreajans@gmail.com>"
+
+#: src/ui/create_station_dialog.rs:103
+msgid "Select station image"
+msgstr "İstasyon görselini seç"
 
 #. TODO: Implement show-server-stats action
 #: src/ui/pages/discover_page.rs:134
@@ -457,58 +567,6 @@ msgstr[0] ""
 msgid "{} kbit/s"
 msgstr "{} kbit/s"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
-#: data/de.haeckerfelix.Shortwave.desktop.in.in:3
-msgid "@NAME@"
-msgstr "@NAME@"
-
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:8
-msgid "Felix Häcker"
-msgstr "Felix Häcker"
-
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:16
-msgid ""
-"Shortwave is an internet radio player that provides access to a station "
-"database with over 30,000 stations."
-msgstr ""
-"Shortwave, 30.000’i aşkın istasyon barındıran veri tabanına erişmenizi "
-"sağlayan internet radyo oynatıcısıdır."
-
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:19
-msgid "Features:"
-msgstr "Özellikler:"
-
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:21
-msgid "Create your own library where you can add your favorite stations"
-msgstr "Beğendiğiniz istasyonları ekleyerek kendi kitaplığınızı oluşturun"
-
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:22
-msgid "Easily search and discover new radio stations"
-msgstr "Yeni radyo istasyonlarını kolayca arayın ve keşfedin"
-
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:23
-msgid ""
-"Automatic recognition of songs, with the possibility to save them "
-"individually"
-msgstr "Şarkıları kendiliğinden tanıma, ayrı ayrı kaydetme özelliği"
-
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:24
-msgid "Responsive application layout, compatible for small and large screens"
-msgstr "Küçük ve büyük ekranlarla uyumlu, duyarlı uygulama düzeni"
-
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:25
-msgid "Play audio on supported network devices (e.g. Google Chromecasts)"
-msgstr "Desteklenen ağ aygıtlarında ses çalma (ör. Google Chromecast)"
-
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:26
-msgid "Seamless integration into the GNOME desktop environment"
-msgstr "GNOME masaüstü ortamı ile kusursuz tümleşim"
-
-#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: data/de.haeckerfelix.Shortwave.desktop.in.in:12
-msgid "Gradio;Radio;Stream;Wave;"
-msgstr "Gradio;Radyo;Yayın;Akış;Dalga;Kısa Dalga;İstasyon;Shortwave;"
-
 #~ msgid "Appearance"
 #~ msgstr "Görünüm"
 
@@ -543,9 +601,6 @@ msgstr "Gradio;Radyo;Yayın;Akış;Dalga;Kısa Dalga;İstasyon;Shortwave;"
 
 #~ msgid "Station details"
 #~ msgstr "İstasyon ayrıntıları"
-
-#~ msgid "Back"
-#~ msgstr "Geri"
 
 #~ msgid "Unable to connect to radio-browser.info"
 #~ msgstr "radio-browser.info’ya bağlanamadı"
