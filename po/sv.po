@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2023-09-03 19:24+0000\n"
-"PO-Revision-Date: 2023-09-03 22:10+0200\n"
+"POT-Creation-Date: 2023-09-10 16:26+0000\n"
+"PO-Revision-Date: 2023-09-10 18:59+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -18,6 +18,64 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.3.2\n"
+
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:3
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
+msgid "@NAME@"
+msgstr "@NAME@"
+
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:12
+msgid "Gradio;Radio;Stream;Wave;"
+msgstr "Gradio;Radio;Ström;Stream;Wave;"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:6
+#: src/ui/about_window.rs:35
+msgid "Listen to internet radio"
+msgstr "Lyssna på internetradio"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:8
+msgid "Felix Häcker"
+msgstr "Felix Häcker"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:16
+msgid ""
+"Shortwave is an internet radio player that provides access to a station "
+"database with over 30,000 stations."
+msgstr ""
+"Shortwave är en internetradiospelare som ger tillgång till en "
+"stationsdatabas med över 30000 stationer."
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:19
+msgid "Features:"
+msgstr "Funktioner:"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:21
+msgid "Create your own library where you can add your favorite stations"
+msgstr "Skapa ditt eget bibliotek där du kan lägga till dina favoritstationer"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:22
+msgid "Easily search and discover new radio stations"
+msgstr "Sök och upptäck enkelt nya radiostationer"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:23
+msgid ""
+"Automatic recognition of songs, with the possibility to save them "
+"individually"
+msgstr ""
+"Automatisk igenkänning av låtar, med möjligheten att spara dem individuellt"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:24
+msgid "Responsive application layout, compatible for small and large screens"
+msgstr "Kvickt reagerande programlayout, kompatibel med små och stora skärmar"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:25
+msgid "Play audio on supported network devices (e.g. Google Chromecasts)"
+msgstr "Spela ljud på nätverksenheter som stöds (t.ex. Google Chromecast)"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:26
+msgid "Seamless integration into the GNOME desktop environment"
+msgstr "Sömlös integration med skrivbordsmiljön GNOME"
 
 #: data/gtk/create_station_dialog.ui:8
 msgid "Create new station"
@@ -68,6 +126,7 @@ msgid "Discover"
 msgstr "Upptäck"
 
 #: data/gtk/discover_page.ui:15 data/gtk/search_page.ui:4
+#: data/gtk/search_page.ui:28
 msgid "Search"
 msgstr "Sök"
 
@@ -75,118 +134,25 @@ msgstr "Sök"
 msgid "Most Voted Stations"
 msgstr "Stationer med flest röster"
 
-#: data/gtk/discover_page.ui:59
+#: data/gtk/discover_page.ui:61
 msgid "Trending"
 msgstr "Populärt just nu"
 
-#: data/gtk/discover_page.ui:74
+#: data/gtk/discover_page.ui:78
 msgid "Other Users Are Listening To…"
 msgstr "Andra användare lyssnar på…"
 
-#: data/gtk/library_page.ui:4
-msgid "Shortwave"
-msgstr "Shortwave"
+#: data/gtk/featured_carousel.ui:27
+msgid "Previous"
+msgstr "Föregående"
 
-#: data/gtk/library_page.ui:15
-msgid "Add Stations"
-msgstr "Lägg till stationer"
+#: data/gtk/featured_carousel.ui:40
+msgid "Next"
+msgstr "Nästa"
 
-#: data/gtk/library_page.ui:22
-msgid "Main Menu"
-msgstr "Huvudmeny"
-
-#: data/gtk/library_page.ui:83
-msgid "Receiving Station Data…"
-msgstr "Erhåller stationsdata…"
-
-#: data/gtk/library_page.ui:110
-msgid "_Discover New Stations"
-msgstr "_Upptäck nya stationer"
-
-#: data/gtk/library_page.ui:132
-msgid "_Enable Mini Player"
-msgstr "_Aktivera minispelare"
-
-#: data/gtk/library_page.ui:136
-msgid "_Sorting"
-msgstr "_Sortering"
-
-#: data/gtk/library_page.ui:139 data/gtk/search_page.ui:151
-msgid "_Name"
-msgstr "_Namn"
-
-#: data/gtk/library_page.ui:144 data/gtk/search_page.ui:156
-msgid "_Language"
-msgstr "S_pråk"
-
-#: data/gtk/library_page.ui:149 data/gtk/search_page.ui:161
-msgid "_Country"
-msgstr "_Land"
-
-#: data/gtk/library_page.ui:154 data/gtk/search_page.ui:166
-msgid "S_tate"
-msgstr "Lä_n"
-
-#: data/gtk/library_page.ui:159 data/gtk/search_page.ui:171
-msgid "_Votes"
-msgstr "_Röster"
-
-#: data/gtk/library_page.ui:164 data/gtk/search_page.ui:176
-msgid "_Bitrate"
-msgstr "_Bithastighet"
-
-#: data/gtk/library_page.ui:171 data/gtk/search_page.ui:183
-msgid "_Ascending"
-msgstr "S_tigande"
-
-#: data/gtk/library_page.ui:176 data/gtk/search_page.ui:188
-msgid "_Descending"
-msgstr "_Fallande"
-
-#: data/gtk/library_page.ui:185
-msgid "_Open radio-browser.info <sup>↗</sup>"
-msgstr "Ö_ppna radio-browser.info <sup>↗</sup>"
-
-#: data/gtk/library_page.ui:190
-msgid "_Create New Station"
-msgstr "S_kapa ny station"
-
-#: data/gtk/library_page.ui:197
-msgid "_Preferences"
-msgstr "_Inställningar"
-
-#: data/gtk/library_page.ui:201
-msgid "_Keyboard Shortcuts"
-msgstr "_Tangentbordsgenvägar"
-
-#: data/gtk/library_page.ui:205
-msgid "_About Shortwave"
-msgstr "_Om Shortwave"
-
-#: data/gtk/mini_controller.ui:85
-msgid "SHORTWAVE INTERNET RADIO"
-msgstr "SHORTWAVE INTERNETRADIO"
-
-#: data/gtk/mini_controller.ui:107 data/gtk/sidebar_controller.ui:63
-#: data/gtk/toolbar_controller.ui:38
-msgid "No Playback"
-msgstr "Ingen uppspelning"
-
-#: data/gtk/settings_window.ui:7 data/gtk/help_overlay.ui:11
+#: data/gtk/help_overlay.ui:11 data/gtk/settings_window.ui:7
 msgid "General"
 msgstr "Allmänt"
-
-#: data/gtk/settings_window.ui:10
-msgid "Features"
-msgstr "Funktioner"
-
-#: data/gtk/settings_window.ui:13
-msgid "_Notifications"
-msgstr "_Aviseringar"
-
-#: data/gtk/settings_window.ui:15
-msgid "Show desktop notifications when a new song gets played"
-msgstr "Visa skrivbordsaviseringar när en ny låt spelas"
 
 #: data/gtk/help_overlay.ui:14
 msgctxt "shortcut window"
@@ -222,40 +188,179 @@ msgctxt "shortcut window"
 msgid "Toggle playback"
 msgstr "Starta/stoppa uppspelning"
 
-#: data/gtk/search_page.ui:35 data/gtk/station_dialog.ui:172
+#: data/gtk/library_page.ui:4
+msgid "Shortwave"
+msgstr "Shortwave"
+
+#: data/gtk/library_page.ui:15
+msgid "Add Stations"
+msgstr "Lägg till stationer"
+
+#: data/gtk/library_page.ui:22
+msgid "Main Menu"
+msgstr "Huvudmeny"
+
+#: data/gtk/library_page.ui:51
+msgid "Library"
+msgstr "Bibliotek"
+
+#: data/gtk/library_page.ui:85
+msgid "Receiving Station Data…"
+msgstr "Erhåller stationsdata…"
+
+#: data/gtk/library_page.ui:112
+msgid "_Discover New Stations"
+msgstr "_Upptäck nya stationer"
+
+#: data/gtk/library_page.ui:134
+msgid "_Enable Mini Player"
+msgstr "_Aktivera minispelare"
+
+#: data/gtk/library_page.ui:138
+msgid "_Sorting"
+msgstr "_Sortering"
+
+#: data/gtk/library_page.ui:141 data/gtk/search_page.ui:158
+msgid "_Name"
+msgstr "_Namn"
+
+#: data/gtk/library_page.ui:146 data/gtk/search_page.ui:163
+msgid "_Language"
+msgstr "S_pråk"
+
+#: data/gtk/library_page.ui:151 data/gtk/search_page.ui:168
+msgid "_Country"
+msgstr "_Land"
+
+#: data/gtk/library_page.ui:156 data/gtk/search_page.ui:173
+msgid "S_tate"
+msgstr "Lä_n"
+
+#: data/gtk/library_page.ui:161 data/gtk/search_page.ui:178
+msgid "_Votes"
+msgstr "_Röster"
+
+#: data/gtk/library_page.ui:166 data/gtk/search_page.ui:183
+msgid "_Bitrate"
+msgstr "_Bithastighet"
+
+#: data/gtk/library_page.ui:173 data/gtk/search_page.ui:190
+msgid "_Ascending"
+msgstr "S_tigande"
+
+#: data/gtk/library_page.ui:178 data/gtk/search_page.ui:195
+msgid "_Descending"
+msgstr "_Fallande"
+
+#: data/gtk/library_page.ui:187
+msgid "_Open radio-browser.info <sup>↗</sup>"
+msgstr "Ö_ppna radio-browser.info <sup>↗</sup>"
+
+#: data/gtk/library_page.ui:192
+msgid "_Create New Station"
+msgstr "S_kapa ny station"
+
+#: data/gtk/library_page.ui:199
+msgid "_Preferences"
+msgstr "_Inställningar"
+
+#: data/gtk/library_page.ui:203
+msgid "_Keyboard Shortcuts"
+msgstr "_Tangentbordsgenvägar"
+
+#: data/gtk/library_page.ui:207
+msgid "_About Shortwave"
+msgstr "_Om Shortwave"
+
+#: data/gtk/mini_controller.ui:27 data/gtk/sidebar_controller.ui:116
+#: data/gtk/toolbar_controller.ui:79
+msgid "Stop"
+msgstr "Stoppa"
+
+#: data/gtk/mini_controller.ui:42
+msgid "Start"
+msgstr "Starta"
+
+#: data/gtk/mini_controller.ui:87
+msgid "SHORTWAVE INTERNET RADIO"
+msgstr "SHORTWAVE INTERNETRADIO"
+
+#: data/gtk/mini_controller.ui:109 data/gtk/sidebar_controller.ui:64
+#: data/gtk/toolbar_controller.ui:38
+msgid "No Playback"
+msgstr "Ingen uppspelning"
+
+#: data/gtk/mini_controller.ui:149
+msgid "Close"
+msgstr "Stäng"
+
+#: data/gtk/mini_controller.ui:160
+msgid "Resize"
+msgstr "Ändra storlek"
+
+#: data/gtk/player.ui:19
+msgid "Back"
+msgstr "Bakåt"
+
+#: data/gtk/search_page.ui:39 data/gtk/station_dialog.ui:172
 #: src/ui/pages/search_page.rs:215
 msgid "Votes"
 msgstr "Röster"
 
-#: data/gtk/search_page.ui:40
+#: data/gtk/search_page.ui:44
 msgid "Change the sorting of the search results"
 msgstr "Ändra sorteringen av sökresultaten"
 
-#: data/gtk/search_page.ui:67
+#: data/gtk/search_page.ui:71
 msgid "No Results"
 msgstr "Inga resultat"
 
-#: data/gtk/search_page.ui:68
+#: data/gtk/search_page.ui:72
 msgid "Try using a different search term"
 msgstr "Försök använda en annan sökterm"
 
-#: data/gtk/sidebar_controller.ui:22
+#: data/gtk/search_page.ui:99
+msgid "Search Results"
+msgstr "Sökresultat"
+
+#: data/gtk/settings_window.ui:10
+msgid "Features"
+msgstr "Funktioner"
+
+#: data/gtk/settings_window.ui:13
+msgid "_Notifications"
+msgstr "_Aviseringar"
+
+#: data/gtk/settings_window.ui:15
+msgid "Show desktop notifications when a new song gets played"
+msgstr "Visa skrivbordsaviseringar när en ny låt spelas"
+
+#: data/gtk/sidebar_controller.ui:23
 msgid "An error occurred"
 msgstr "Ett fel uppstod"
 
-#: data/gtk/sidebar_controller.ui:185
+#: data/gtk/sidebar_controller.ui:131 data/gtk/station_row.ui:69
+#: data/gtk/toolbar_controller.ui:90
+msgid "Play"
+msgstr "Spela upp"
+
+#: data/gtk/sidebar_controller.ui:177
+msgid "Station Menu"
+msgstr "Stationsmeny"
+
+#: data/gtk/sidebar_controller.ui:191
 msgid "_Show Station Details"
 msgstr "_Visa stationsdetaljer"
 
-#: data/gtk/sidebar_controller.ui:189
+#: data/gtk/sidebar_controller.ui:195
 msgid "Stream to a _Device"
 msgstr "Strömma till en _enhet"
 
-#: data/gtk/song_listbox.ui:28
+#: data/gtk/song_listbox.ui:29
 msgid "No Songs Detected"
 msgstr "Inga låtar upptäcktes"
 
-#: data/gtk/song_listbox.ui:39
+#: data/gtk/song_listbox.ui:40
 msgid ""
 "Songs are automatically recognized using the stream metadata.\n"
 "\n"
@@ -265,11 +370,11 @@ msgstr ""
 "\n"
 "Om stationen inte sänder några metadata så kan inga låtar kännas igen."
 
-#: data/gtk/song_listbox.ui:75
+#: data/gtk/song_listbox.ui:76
 msgid "Saved songs are located in your Music folder."
 msgstr "Sparade låtar finns i din mapp Musik."
 
-#: data/gtk/song_listbox.ui:85
+#: data/gtk/song_listbox.ui:86
 msgid "_Open"
 msgstr "Ö_ppna"
 
@@ -354,6 +459,10 @@ msgstr "Kodek"
 msgid "Stream"
 msgstr "Ström"
 
+#: data/gtk/station_dialog.ui:265
+msgid "Copy"
+msgstr "Kopiera"
+
 #: data/gtk/streaming_dialog.ui:10
 msgid "Stream to a Device"
 msgstr "Strömma till en enhet"
@@ -382,6 +491,10 @@ msgstr "Sökningen är färdig"
 msgid "Searching for Devices…"
 msgstr "Söker efter enheter…"
 
+#: data/gtk/window.ui:40
+msgid "Main View"
+msgstr "Huvudvy"
+
 #. Fallback to xdg-home when xdg-music is not available
 #: src/audio/backend/song_backend.rs:97
 msgid "Unable to access music directory. Saving song in home directory."
@@ -395,11 +508,6 @@ msgstr "Stationen kan inte strömmas. Ogiltig URL."
 msgid "Cannot save song."
 msgstr "Det går inte att spara låt."
 
-#: src/ui/about_window.rs:35
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:6
-msgid "Listen to internet radio"
-msgstr "Lyssna på internetradio"
-
 #: src/ui/about_window.rs:46
 msgid "translator-credits"
 msgstr ""
@@ -408,6 +516,10 @@ msgstr ""
 "\n"
 "Skicka synpunkter på översättningen till\n"
 "<tp-sv@listor.tp-sv.se>"
+
+#: src/ui/create_station_dialog.rs:103
+msgid "Select station image"
+msgstr "Välj bild för station"
 
 #. TODO: Implement show-server-stats action
 #: src/ui/pages/discover_page.rs:134
@@ -460,59 +572,6 @@ msgstr[1] ""
 msgid "{} kbit/s"
 msgstr "{} kbit/s"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
-#: data/de.haeckerfelix.Shortwave.desktop.in.in:3
-msgid "@NAME@"
-msgstr "@NAME@"
-
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:8
-msgid "Felix Häcker"
-msgstr "Felix Häcker"
-
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:16
-msgid ""
-"Shortwave is an internet radio player that provides access to a station "
-"database with over 30,000 stations."
-msgstr ""
-"Shortwave är en internetradiospelare som ger tillgång till en "
-"stationsdatabas med över 30000 stationer."
-
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:19
-msgid "Features:"
-msgstr "Funktioner:"
-
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:21
-msgid "Create your own library where you can add your favorite stations"
-msgstr "Skapa ditt eget bibliotek där du kan lägga till dina favoritstationer"
-
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:22
-msgid "Easily search and discover new radio stations"
-msgstr "Sök och upptäck enkelt nya radiostationer"
-
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:23
-msgid ""
-"Automatic recognition of songs, with the possibility to save them "
-"individually"
-msgstr ""
-"Automatisk igenkänning av låtar, med möjligheten att spara dem individuellt"
-
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:24
-msgid "Responsive application layout, compatible for small and large screens"
-msgstr "Kvickt reagerande programlayout, kompatibel med små och stora skärmar"
-
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:25
-msgid "Play audio on supported network devices (e.g. Google Chromecasts)"
-msgstr "Spela ljud på nätverksenheter som stöds (t.ex. Google Chromecast)"
-
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:26
-msgid "Seamless integration into the GNOME desktop environment"
-msgstr "Sömlös integration med skrivbordsmiljön GNOME"
-
-#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: data/de.haeckerfelix.Shortwave.desktop.in.in:12
-msgid "Gradio;Radio;Stream;Wave;"
-msgstr "Gradio;Radio;Ström;Stream;Wave;"
-
 #~ msgid "Appearance"
 #~ msgstr "Utseende"
 
@@ -548,9 +607,6 @@ msgstr "Gradio;Radio;Ström;Stream;Wave;"
 #~ msgid "Station details"
 #~ msgstr "Stationsdetaljer"
 
-#~ msgid "Back"
-#~ msgstr "Bakåt"
-
 #~ msgid "Unable to connect to radio-browser.info"
 #~ msgstr "Kunde inte ansluta till radio-browser.info"
 
@@ -575,9 +631,6 @@ msgstr "Gradio;Radio;Ström;Stream;Wave;"
 
 #~ msgid "_How does this work?"
 #~ msgstr "_Hur fungerar detta?"
-
-#~ msgid "Select station image"
-#~ msgstr "Välj bild för station"
 
 #~ msgid "Error details"
 #~ msgstr "Feldetaljer"
