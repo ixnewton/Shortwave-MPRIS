@@ -18,6 +18,15 @@ Or by clicking this button:
 
 <a href="https://flathub.org/apps/details/de.haeckerfelix.Shortwave"><img src="https://flathub.org/assets/badges/flathub-badge-en.png" width="200"/></a>
 
+#### Nightly Builds
+
+Development builds of Shortwave are available from the `gnome-nightly` Flatpak repository: 
+
+```
+flatpak remote-add --if-not-exists gnome-nightly https://nightly.gnome.org/gnome-nightly.flatpakrepo
+flatpak install gnome-nightly de.haeckerfelix.Shortwave.Devel
+```
+
 ## FAQ
 - **Why is it called 'Shortwave'?**
 
