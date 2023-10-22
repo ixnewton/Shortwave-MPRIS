@@ -188,15 +188,15 @@ impl SwApplicationWindow {
                 .build(),
             // win.show-player
             gio::ActionEntry::builder("show-player")
-                .activate(clone!(@weak self as this => move |_, _, _| {
-                    this.imp().split_view.set_show_sidebar(true);
-                }))
+                .activate(|window: &Self, _, _| {
+                    window.imp().split_view.set_show_sidebar(true);
+                })
                 .build(),
             // win.hide-player
             gio::ActionEntry::builder("hide-player")
-                .activate(clone!(@weak self as this => move |_, _, _| {
-                    this.imp().split_view.set_show_sidebar(false);
-                }))
+                .activate(|window: &Self, _, _| {
+                    window.imp().split_view.set_show_sidebar(false);
+                })
                 .build(),
             // win.toggle-playback
             gio::ActionEntry::builder("toggle-playback")
@@ -206,15 +206,15 @@ impl SwApplicationWindow {
                 .build(),
             // win.disable-mini-player
             gio::ActionEntry::builder("disable-mini-player")
-                .activate(clone!(@weak self as this => move |_, _, _| {
-                    this.enable_mini_player(false);
-                }))
+                .activate(move |window: &Self, _, _| {
+                    window.enable_mini_player(false);
+                })
                 .build(),
             // win.enable-mini-player
             gio::ActionEntry::builder("enable-mini-player")
-                .activate(clone!(@weak self as this => move |_, _, _| {
-                    this.enable_mini_player(true);
-                }))
+                .activate(move |window: &Self, _, _| {
+                    window.enable_mini_player(true);
+                })
                 .build(),
         ]);
         app.set_accels_for_action("win.toggle-playback", &["<primary>space"]);
