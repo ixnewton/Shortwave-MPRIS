@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2023-09-10 16:26+0000\n"
-"PO-Revision-Date: 2023-09-11 01:47+0300\n"
+"POT-Creation-Date: 2023-10-08 15:35+0000\n"
+"PO-Revision-Date: 2023-10-24 02:16+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <takim@gnome.org.tr>\n"
 "Language: tr\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.4\n"
 
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:3
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
@@ -515,10 +515,6 @@ msgstr ""
 "Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Sabri Ünal <libreajans@gmail.com>"
 
-#: src/ui/create_station_dialog.rs:103
-msgid "Select station image"
-msgstr "İstasyon görselini seç"
-
 #. TODO: Implement show-server-stats action
 #: src/ui/pages/discover_page.rs:134
 msgid "Show statistics"
@@ -566,54 +562,3 @@ msgstr[0] ""
 #: src/ui/station_dialog.rs:221
 msgid "{} kbit/s"
 msgstr "{} kbit/s"
-
-#~ msgid "Appearance"
-#~ msgstr "Görünüm"
-
-#~ msgid "_Dark Mode"
-#~ msgstr "_Karanlık Kip"
-
-#~ msgid "Whether the application should use a dark theme"
-#~ msgstr "Uygulamanın karanlık kipi kullanıp kullanmayacağı"
-
-#~ msgid "Window"
-#~ msgstr "Pencere"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Open library view"
-#~ msgstr "Kitaplık görünümünü aç"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Open discover view"
-#~ msgstr "Keşif görünümünü aç"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Open search view"
-#~ msgstr "Arama görünümünü aç"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Go back"
-#~ msgstr "Geri git"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Refresh station data"
-#~ msgstr "İstasyon verisini tazele"
-
-#~ msgid "Station details"
-#~ msgstr "İstasyon ayrıntıları"
-
-#~ msgid "Unable to connect to radio-browser.info"
-#~ msgstr "radio-browser.info’ya bağlanamadı"
-
-#~ msgid ""
-#~ "Access to the public online station database is not available. Ensure "
-#~ "that you are connected to the internet."
-#~ msgstr ""
-#~ "Halka açık çevrimiçi istasyon veri tabanına erişim yok. İnternete "
-#~ "bağlandığınızdan emin olun."
-
-#~ msgid "Try again"
-#~ msgstr "Yeniden dene"
-
-#~ msgid "_Refresh Station Data"
-#~ msgstr "İstasyon Verisini _Tazele"
