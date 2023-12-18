@@ -1,0 +1,561 @@
+# Persian translation for shortwave.
+# Copyright (C) 2023 shortwave's COPYRIGHT HOLDER
+# This file is distributed under the same license as the shortwave package.
+# Danial Behzadi <dani.behzi@ubuntu.com>, 2023.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: shortwave main\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
+"POT-Creation-Date: 2023-12-15 11:46+0000\n"
+"PO-Revision-Date: 2023-12-18 14:17+0330\n"
+"Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
+"Language-Team: Persian <fa@li.org>\n"
+"Language: fa\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 3.4.1\n"
+
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:3
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
+msgid "@NAME@"
+msgstr "هم‌رسانی صدا"
+
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:12
+msgid "Gradio;Radio;Stream;Wave;"
+msgstr "Gradio;Radio;Stream;Wave;رادیو;پخش;جریان;موج;"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:6
+#: src/ui/about_window.rs:35
+msgid "Listen to internet radio"
+msgstr "شنیدن رادیوهای اینترنتی"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:8
+msgid "Felix Häcker"
+msgstr "فلیکس هکر"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:16
+msgid ""
+"Shortwave is an internet radio player that provides access to a station "
+"database with over 30,000 stations."
+msgstr ""
+"موج کوتاه پخش‌کنندهٔ رادیو اینترنتی‌ای است که دسترسی به پایگاه داده‌ای با بیش از "
+"۳۰٫۰۰۰ ایستگاه را فراهم می‌کند."
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:19
+msgid "Features:"
+msgstr "ویژگی‌ها:"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:21
+msgid "Create your own library where you can add your favorite stations"
+msgstr "ایجاد کتاب‌خانهٔ خودتان با توانایی افزودن ایستگاه‌های محبوبتان"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:22
+msgid "Easily search and discover new radio stations"
+msgstr "جست‌وجو و کشف آسان ایستگاه‌های رادیویی جدید"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:23
+msgid ""
+"Automatic recognition of songs, with the possibility to save them "
+"individually"
+msgstr "بازشناسی خودکار آوازها با امکان ذخیرهٔ جداگانه‌شان"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:24
+msgid "Responsive application layout, compatible for small and large screens"
+msgstr "چینش واکنشگرای برنامه،‌سازگار با صفحه‌های بزرگ و کوچک"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:25
+msgid "Play audio on supported network devices (e.g. Google Chromecasts)"
+msgstr "پخش صدا روی افزاره‌های شبکه‌ای پشتیبانی شده (مانند پخش کروم‌های گوگل)"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:26
+msgid "Seamless integration into the GNOME desktop environment"
+msgstr "یکپارچگی با محیط میزکار گنوم"
+
+#: data/gtk/create_station_dialog.ui:8
+msgid "Create new station"
+msgstr "ایجاد ایستگاه جدید"
+
+#: data/gtk/create_station_dialog.ui:32
+msgid "Create New Station"
+msgstr "ایجاد ایستگاه جدید"
+
+#: data/gtk/create_station_dialog.ui:33
+msgid ""
+"You can decide if you want the new station to be visible for all users "
+"worldwide or if you want to create a local station."
+msgstr ""
+"می‌توانید تصمیم بگیرید که می‌خواهید ایستگاه جدید برای همهٔ کاربران نمایان بوده "
+"یا تنها می‌خواهید ایستگاهی محلّی ایجاد کنید."
+
+#: data/gtk/create_station_dialog.ui:43
+msgid "Create _Public Station"
+msgstr "ایجاد ایستگاه _همگانی"
+
+#: data/gtk/create_station_dialog.ui:54
+msgid "Create _Local Station"
+msgstr "ایجاد ایستگاه _محلّی"
+
+#: data/gtk/create_station_dialog.ui:80
+msgid "Create Local Station"
+msgstr "ایجاد ایستگاه محلّی"
+
+#: data/gtk/create_station_dialog.ui:113
+msgid "Change station image"
+msgstr "تغییر تصویر ایستگاه"
+
+#: data/gtk/create_station_dialog.ui:137 src/ui/pages/search_page.rs:211
+msgid "Name"
+msgstr "نام"
+
+#: data/gtk/create_station_dialog.ui:145
+msgid "Stream URL"
+msgstr "نشانی جریان"
+
+#: data/gtk/create_station_dialog.ui:153
+msgid "Create Station"
+msgstr "ایجاد ایستگاه"
+
+#: data/gtk/discover_page.ui:4
+msgid "Discover"
+msgstr "کشف"
+
+#: data/gtk/discover_page.ui:15 data/gtk/search_page.ui:4
+#: data/gtk/search_page.ui:28
+msgid "Search"
+msgstr "جست‌وجو"
+
+#: data/gtk/discover_page.ui:44
+msgid "Most Voted Stations"
+msgstr "ایستگاه‌های با رأی بالا"
+
+#: data/gtk/discover_page.ui:61
+msgid "Trending"
+msgstr "داغ"
+
+#: data/gtk/discover_page.ui:78
+msgid "Other Users Are Listening To…"
+msgstr "دیگر کاربران می‌شنوند…"
+
+#: data/gtk/featured_carousel.ui:27
+msgid "Previous"
+msgstr "پیشین"
+
+#: data/gtk/featured_carousel.ui:40
+msgid "Next"
+msgstr "بعدی"
+
+#: data/gtk/help_overlay.ui:11 data/gtk/settings_window.ui:7
+msgid "General"
+msgstr "عمومی"
+
+#: data/gtk/help_overlay.ui:14
+msgctxt "shortcut window"
+msgid "Open shortcut window"
+msgstr "گشودن پنجرهٔ میان‌برها"
+
+#: data/gtk/help_overlay.ui:21
+msgctxt "shortcut window"
+msgid "Open application menu"
+msgstr "گشودن فهرست برنامه"
+
+#: data/gtk/help_overlay.ui:26
+msgctxt "shortcut window"
+msgid "Open preferences"
+msgstr "گشودن ترجیحات"
+
+#: data/gtk/help_overlay.ui:32
+msgctxt "shortcut window"
+msgid "Close the window"
+msgstr "بستن پنجره"
+
+#: data/gtk/help_overlay.ui:38
+msgctxt "shortcut window"
+msgid "Quit the application"
+msgstr "ترک برنامه"
+
+#: data/gtk/help_overlay.ui:46 data/gtk/player.ui:5
+msgid "Playback"
+msgstr "پخش"
+
+#: data/gtk/help_overlay.ui:49
+msgctxt "shortcut window"
+msgid "Toggle playback"
+msgstr "تغییر وضعیت پخش"
+
+#: data/gtk/library_page.ui:4
+msgid "Shortwave"
+msgstr "موج کوتاه"
+
+#: data/gtk/library_page.ui:15
+msgid "Add Stations"
+msgstr "افزودن ایستگاه"
+
+#: data/gtk/library_page.ui:22
+msgid "Main Menu"
+msgstr "فهرست اصلی"
+
+#: data/gtk/library_page.ui:51
+msgid "Library"
+msgstr "کتاب‌خانه"
+
+#: data/gtk/library_page.ui:85
+msgid "Receiving Station Data…"
+msgstr "گرفتن داده‌های ایستگاه…"
+
+#: data/gtk/library_page.ui:112
+msgid "_Discover New Stations"
+msgstr "_کشف ایستگاه‌های جدید"
+
+#: data/gtk/library_page.ui:134
+msgid "_Enable Mini Player"
+msgstr "_به کار انداختن پخش‌کنندهٔ کوچک"
+
+#: data/gtk/library_page.ui:138
+msgid "_Sorting"
+msgstr "_چینش"
+
+#: data/gtk/library_page.ui:141 data/gtk/search_page.ui:158
+msgid "_Name"
+msgstr "_نام"
+
+#: data/gtk/library_page.ui:146 data/gtk/search_page.ui:163
+msgid "_Language"
+msgstr "_زبان"
+
+#: data/gtk/library_page.ui:151 data/gtk/search_page.ui:168
+msgid "_Country"
+msgstr "_کشور"
+
+#: data/gtk/library_page.ui:156 data/gtk/search_page.ui:173
+msgid "S_tate"
+msgstr "ا_یالت"
+
+#: data/gtk/library_page.ui:161 data/gtk/search_page.ui:178
+msgid "_Votes"
+msgstr "_رأی‌ها"
+
+#: data/gtk/library_page.ui:166 data/gtk/search_page.ui:183
+msgid "_Bitrate"
+msgstr "_نرخ بیت"
+
+#: data/gtk/library_page.ui:173 data/gtk/search_page.ui:190
+msgid "_Ascending"
+msgstr "پیش‌رونده"
+
+#: data/gtk/library_page.ui:178 data/gtk/search_page.ui:195
+msgid "_Descending"
+msgstr "پس‌رونده"
+
+#: data/gtk/library_page.ui:187
+msgid "_Open radio-browser.info <sup>↗</sup>"
+msgstr "−گشودن radio-browser.info ‏<sup>↖</sup>"
+
+#: data/gtk/library_page.ui:192
+msgid "_Create New Station"
+msgstr "ایجاد ایستگاه _جدید"
+
+#: data/gtk/library_page.ui:199
+msgid "_Preferences"
+msgstr "_ترجیحات"
+
+#: data/gtk/library_page.ui:203
+msgid "_Keyboard Shortcuts"
+msgstr "_میان‌برهای صفحه‌کلید"
+
+#: data/gtk/library_page.ui:207
+msgid "_About Shortwave"
+msgstr "_دربارهٔ موج کوتاه"
+
+#: data/gtk/mini_controller.ui:27 data/gtk/sidebar_controller.ui:116
+#: data/gtk/toolbar_controller.ui:79
+msgid "Stop"
+msgstr "توقّف"
+
+#: data/gtk/mini_controller.ui:42
+msgid "Start"
+msgstr "آغاز"
+
+#: data/gtk/mini_controller.ui:87
+msgid "SHORTWAVE INTERNET RADIO"
+msgstr "رادیوهای اینترنتی موج کوتاه"
+
+#: data/gtk/mini_controller.ui:109 data/gtk/sidebar_controller.ui:64
+#: data/gtk/toolbar_controller.ui:38
+msgid "No Playback"
+msgstr "بدون پخش"
+
+#: data/gtk/mini_controller.ui:149
+msgid "Close"
+msgstr "بستن"
+
+#: data/gtk/mini_controller.ui:160
+msgid "Resize"
+msgstr "تغییر اندازه"
+
+#: data/gtk/player.ui:19
+msgid "Back"
+msgstr "بازگشت"
+
+#: data/gtk/search_page.ui:39 data/gtk/station_dialog.ui:172
+#: src/ui/pages/search_page.rs:215
+msgid "Votes"
+msgstr "رأی‌ها"
+
+#: data/gtk/search_page.ui:44
+msgid "Change the sorting of the search results"
+msgstr "تغییر چینش نتیجه‌های جست‌وجو"
+
+#: data/gtk/search_page.ui:71
+msgid "No Results"
+msgstr "بدون نتیجه"
+
+#: data/gtk/search_page.ui:72
+msgid "Try using a different search term"
+msgstr "تلاش با استفاده از عبارت جست‌وجویی دیگر"
+
+#: data/gtk/search_page.ui:99
+msgid "Search Results"
+msgstr "نتایج جست‌وجو"
+
+#: data/gtk/settings_window.ui:10
+msgid "Features"
+msgstr "امکانات"
+
+#: data/gtk/settings_window.ui:13
+msgid "_Notifications"
+msgstr "_آگاهی‌ها"
+
+#: data/gtk/settings_window.ui:15
+msgid "Show desktop notifications when a new song gets played"
+msgstr "نمایش آگاهی‌های میزکار هنگام آغاز به پخش آوازی جدید"
+
+#: data/gtk/sidebar_controller.ui:23
+msgid "An error occurred"
+msgstr "خطایی پیش آمد"
+
+#: data/gtk/sidebar_controller.ui:131 data/gtk/station_row.ui:69
+#: data/gtk/toolbar_controller.ui:90
+msgid "Play"
+msgstr "پخش"
+
+#: data/gtk/sidebar_controller.ui:177
+msgid "Station Menu"
+msgstr "فهرست ایستگاه"
+
+#: data/gtk/sidebar_controller.ui:191
+msgid "_Show Station Details"
+msgstr "_نمایش جزییات ایستگاه"
+
+#: data/gtk/sidebar_controller.ui:195
+msgid "Stream to a _Device"
+msgstr "_جریان به افزاره"
+
+#: data/gtk/song_listbox.ui:29
+msgid "No Songs Detected"
+msgstr "آوازی تشخیص داده نشد"
+
+#: data/gtk/song_listbox.ui:40
+msgid ""
+"Songs are automatically recognized using the stream metadata.\n"
+"\n"
+"If the station does not send any metadata, no songs can be recognized."
+msgstr ""
+"آوازها به صورت خودکار با استفاده از فرادادهٔ جریان بازشناسی می‌شوند.\n"
+"\n"
+"اگر ایستگاه هیچ فراداده‌ای نفرستد، آوازها نمی‌توانند بازشناخته شوند."
+
+#: data/gtk/song_listbox.ui:76
+msgid "Saved songs are located in your Music folder."
+msgstr "آوازهای ذخیره شده در شاخهٔ آهنگ‌هایتان قرار دارند."
+
+#: data/gtk/song_listbox.ui:86
+msgid "_Open"
+msgstr "_گشودن"
+
+#: data/gtk/song_row.ui:16
+msgid "Save recorded song"
+msgstr "ذخیرهٔ آواز ضبط شده"
+
+#: data/gtk/station_dialog.ui:71
+msgid "_Play Station"
+msgstr "_پخش ایستگاه"
+
+#: data/gtk/station_dialog.ui:86
+msgid "_Add to Library"
+msgstr "_افزودن به کتاب‌خانه"
+
+#: data/gtk/station_dialog.ui:102
+msgid "_Remove From Library"
+msgstr "_برداشتن از کتاب‌خانه"
+
+#: data/gtk/station_dialog.ui:120
+msgid "Local Station"
+msgstr "ایستگاه محلّی"
+
+#: data/gtk/station_dialog.ui:121
+msgid ""
+"This station exists only in your library, and is not part of the public "
+"online station database."
+msgstr ""
+"ایستگاه فقط در کتاب‌خانه‌تان وجود داشته و بخشی از پایگاه دادهٔ همگانی "
+"ایستگاه‌های برخط نیست."
+
+#: data/gtk/station_dialog.ui:136
+msgid "Orphaned Station"
+msgstr "ایستگاه یتیم"
+
+#: data/gtk/station_dialog.ui:137
+msgid ""
+"The information could not be updated, probably this station was removed from "
+"the public online station database."
+msgstr ""
+"اطّلاعات نتوانستند به‌روز شوند. احتمالاً این ایستگاه از پایگاه دادهٔ همگانی "
+"ایستگاه‌های برخط برداشته شده."
+
+#: data/gtk/station_dialog.ui:149
+msgid "Information"
+msgstr "اطّلاعات"
+
+#: data/gtk/station_dialog.ui:152 src/ui/pages/search_page.rs:212
+msgid "Language"
+msgstr "زبان"
+
+#: data/gtk/station_dialog.ui:162
+msgid "Tags"
+msgstr "برچسب‌ها"
+
+#: data/gtk/station_dialog.ui:183
+msgid "Location"
+msgstr "مکان"
+
+#: data/gtk/station_dialog.ui:188 src/ui/pages/search_page.rs:213
+msgid "Country"
+msgstr "کشور"
+
+#: data/gtk/station_dialog.ui:198 src/ui/pages/search_page.rs:214
+msgid "State"
+msgstr "ایالت"
+
+#: data/gtk/station_dialog.ui:232
+msgid "Audio"
+msgstr "صدا"
+
+#: data/gtk/station_dialog.ui:236 src/ui/pages/search_page.rs:216
+msgid "Bitrate"
+msgstr "نرخ بیت"
+
+#: data/gtk/station_dialog.ui:246
+msgid "Codec"
+msgstr "رمزینه"
+
+#. This is a noun/label for the station stream url
+#: data/gtk/station_dialog.ui:256
+msgid "Stream"
+msgstr "جریان"
+
+#: data/gtk/station_dialog.ui:265
+msgid "Copy"
+msgstr "رونوشت"
+
+#: data/gtk/streaming_dialog.ui:10
+msgid "Stream to a Device"
+msgstr "جریان به افزاره"
+
+#: data/gtk/streaming_dialog.ui:26
+msgid ""
+"Audio playback can be streamed to a network device (requires Google Cast "
+"support)."
+msgstr ""
+"پخش صدا می‌تواند به افزارهٔ شبکه‌ای جریان یابد (نیازمند پشتیبانی پخش گوگل)."
+
+#: data/gtk/streaming_dialog.ui:41
+msgid "No Devices Found"
+msgstr "هیچ افزاره‌ای پیدا نشد"
+
+#: data/gtk/streaming_dialog.ui:47 data/gtk/streaming_dialog.ui:70
+msgid "Search again"
+msgstr "جست‌وجوی دوباره"
+
+#: data/gtk/streaming_dialog.ui:64
+msgid "Search Completed"
+msgstr "جست‌وجو کمل شد"
+
+#: data/gtk/streaming_dialog.ui:87
+msgid "Searching for Devices…"
+msgstr "جست‌وجوی افزاره‌ها…"
+
+#: data/gtk/window.ui:40
+msgid "Main View"
+msgstr "نمای اصلی"
+
+#. Fallback to xdg-home when xdg-music is not available
+#: src/audio/backend/song_backend.rs:97
+msgid "Unable to access music directory. Saving song in home directory."
+msgstr "ناتوان در دسترسی به شاخهٔ آهنگ‌ها. ذخیره کردن آواز در شاخهٔ خانگی."
+
+#: src/audio/player.rs:190
+msgid "Station cannot be streamed. URL is not valid."
+msgstr "ایستگاه نمی‌تواند جریان یابد. نشانی معتبر نیست."
+
+#: src/audio/player.rs:241
+msgid "Cannot save song."
+msgstr "نمی‌توان آواز را ذخیره کرد."
+
+#: src/ui/about_window.rs:46
+msgid "translator-credits"
+msgstr "دانیال بهزادی <dani.behzi@ubuntu.com>"
+
+#. TODO: Implement show-server-stats action
+#: src/ui/pages/discover_page.rs:134
+msgid "Show statistics"
+msgstr "نمایش آمار"
+
+#: src/ui/pages/discover_page.rs:136
+msgid "Browse over 30,000 stations"
+msgstr "مرور بیش از ۳۰٫۰۰۰ ایستگاه"
+
+#: src/ui/pages/discover_page.rs:138
+msgid "Add new station"
+msgstr "افزودن ایستگاه جدید"
+
+#: src/ui/pages/discover_page.rs:140
+msgid "Your favorite station is missing?"
+msgstr "ایستگاه محبوبتان وجود ندارد؟"
+
+#: src/ui/pages/discover_page.rs:145
+msgid "Open website"
+msgstr "گشودن پایگاه وب"
+
+#: src/ui/pages/discover_page.rs:147
+msgid "Powered by radio-browser.info"
+msgstr "قدرت گرفته از radio-browser.info"
+
+#: src/ui/pages/discover_page.rs:158 src/ui/pages/search_page.rs:191
+msgid "Station data could not be received."
+msgstr "داده‌های ایستگاه نتوانستند دریافت شوند."
+
+#: src/ui/pages/library_page.rs:121
+msgid "Welcome to {}"
+msgstr "به {} خوش‌آمدید"
+
+#: src/ui/pages/search_page.rs:104
+msgid ""
+"The number of results is limited to {} item. Try using a more specific "
+"search term."
+msgid_plural ""
+"The number of results is limited to {} items. Try using a more specific "
+"search term."
+msgstr[0] ""
+"تعداد نتیجه‌ها محدود به {} مورد است. استفاده از عبارت جست‌وجویی دقیق‌تر را "
+"بیازمایید."
+msgstr[1] ""
+"تعداد نتیجه‌ها محدود به {} مورد است. استفاده از عبارت جست‌وجویی دقیق‌تر را "
+"بیازمایید."
+
+#: src/ui/station_dialog.rs:221
+msgid "{} kbit/s"
+msgstr "{} ک‌بی/ث"
