@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+use std::cell::OnceCell;
 use std::net::IpAddr;
 use std::rc::Rc;
 use std::str::FromStr;
@@ -22,7 +23,6 @@ use adw::prelude::*;
 use adw::subclass::prelude::*;
 use glib::{clone, subclass, Receiver, Sender};
 use gtk::{gdk, glib, CompositeTemplate};
-use once_cell::unsync::OnceCell;
 
 use crate::app::Action;
 use crate::audio::{GCastDiscoverer, GCastDiscovererMessage};
@@ -54,12 +54,7 @@ mod imp {
         fn class_init(klass: &mut Self::Class) {
             Self::bind_template(klass);
             Self::Type::bind_template_callbacks(klass);
-            klass.add_binding_action(
-                gdk::Key::Escape,
-                gdk::ModifierType::empty(),
-                "window.close",
-                None,
-            );
+            klass.add_binding_action(gdk::Key::Escape, gdk::ModifierType::empty(), "window.close");
         }
 
         fn instance_init(obj: &subclass::InitializingObject<Self>) {

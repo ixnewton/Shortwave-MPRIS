@@ -14,14 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use std::cell::RefCell;
+use std::cell::{OnceCell, RefCell};
 
 use futures::future::join_all;
 use glib::{clone, Enum, Properties, Sender};
 use gtk::prelude::*;
 use gtk::subclass::prelude::*;
 use gtk::{gdk_pixbuf, glib};
-use once_cell::unsync::OnceCell;
 
 use super::models::StationEntry;
 use crate::api::{Error, SwClient, SwStation};

@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+use std::cell::OnceCell;
 use std::path::PathBuf;
 use std::sync::{Arc, Mutex};
 
@@ -23,7 +24,6 @@ use gstreamer::{Bin, Element, MessageView, PadProbeReturn, PadProbeType, Pipelin
 use gstreamer_audio::{StreamVolume, StreamVolumeFormat};
 use gtk::glib;
 use gtk::glib::Sender;
-use once_cell::unsync::OnceCell;
 
 use crate::app::Action;
 use crate::audio::PlaybackState;
@@ -81,7 +81,7 @@ impl GstreamerBackend {
         let pipeline_launch = format!(
             "uridecodebin name=uridecodebin use-buffering=true buffer-duration=6000000000 ! audioconvert name=audioconvert ! tee name=tee ! queue ! {audiosink} name={audiosink}"
         );
-        let pipeline = gstreamer::parse_launch(&pipeline_launch).unwrap();
+        let pipeline = gstreamer::parse::launch(&pipeline_launch).unwrap();
         let pipeline = pipeline.downcast::<gstreamer::Pipeline>().unwrap();
         pipeline.set_message_forward(true);
 
@@ -312,7 +312,7 @@ impl GstreamerBackend {
         // Create actual recorderbin
         let description =
             "queue name=queue ! vorbisenc ! oggmux  ! filesink name=filesink async=false";
-        let recorderbin = gstreamer::parse_bin_from_description(description, true)
+        let recorderbin = gstreamer::parse::bin_from_description(description, true)
             .expect("Unable to create recorderbin");
         recorderbin.set_property("message-forward", true);
 

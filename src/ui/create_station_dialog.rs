@@ -14,13 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use std::cell::RefCell;
+use std::cell::{OnceCell, RefCell};
 
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use glib::{clone, subclass, Sender};
 use gtk::{gdk_pixbuf, gio, glib, CompositeTemplate};
-use once_cell::unsync::OnceCell;
 use url::Url;
 use uuid::Uuid;
 

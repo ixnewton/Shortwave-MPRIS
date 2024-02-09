@@ -14,11 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+use std::cell::OnceCell;
+
 use adw::subclass::prelude::*;
 use glib::{clone, subclass, Sender};
 use gtk::prelude::*;
 use gtk::{gio, glib, CompositeTemplate};
-use once_cell::unsync::OnceCell;
 
 use crate::app::{Action, SwApplication};
 use crate::config;

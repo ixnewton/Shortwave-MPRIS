@@ -14,13 +14,14 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+use std::cell::OnceCell;
+
 use futures_util::future::FutureExt;
 use glib::{clone, Sender};
 use gtk::prelude::*;
 use gtk::subclass::prelude::*;
 use gtk::{glib, CompositeTemplate};
 use inflector::Inflector;
-use once_cell::unsync::OnceCell;
 
 use crate::api::{FaviconDownloader, SwStation};
 use crate::app::Action;
