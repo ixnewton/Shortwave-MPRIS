@@ -142,7 +142,7 @@ impl SwStationRow {
                     }
                 },
             );
-            spawn!(fut);
+            glib::spawn_future_local(fut);
         }
     }
 

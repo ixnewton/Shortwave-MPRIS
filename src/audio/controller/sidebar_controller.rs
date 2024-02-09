@@ -170,7 +170,7 @@ impl Controller for SidebarController {
                         station_favicon.set_pixbuf(&pixbuf)
                     }
                 });
-            spawn!(fut);
+            glib::spawn_future_local(fut);
         } else {
             self.station_favicon.reset();
         }

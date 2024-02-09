@@ -131,7 +131,7 @@ mod imp {
             let fut = clone!(@weak app => async move {
                 app.lookup_rb_server().await;
             });
-            spawn!(fut);
+            glib::spawn_future_local(fut);
 
             // Setup settings signal (we get notified when a key gets changed)
             self.settings.connect_changed(

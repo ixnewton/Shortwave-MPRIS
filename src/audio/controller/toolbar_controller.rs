@@ -139,7 +139,7 @@ impl Controller for ToolbarController {
                         station_favicon.set_pixbuf(&pixbuf)
                     }
                 });
-            spawn!(fut);
+            glib::spawn_future_local(fut);
         }
 
         // reset everything else

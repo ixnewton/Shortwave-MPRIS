@@ -100,7 +100,7 @@ impl SwLibrary {
 
             this.update_library_status();
         });
-        spawn!(future);
+        glib::spawn_future_local(future);
     }
 
     pub fn add_stations(&self, stations: Vec<SwStation>) {

@@ -175,7 +175,7 @@ impl SwClient {
             }
         });
 
-        spawn!(fut);
+        glib::spawn_future_local(fut);
     }
 
     /// Directly returns a [StationMetadata] by using the station uuid.
