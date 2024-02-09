@@ -17,8 +17,6 @@
 mod gstreamer_backend;
 mod song_backend;
 
-use std::convert::TryInto;
-
 use async_channel::{Receiver, Sender};
 use gstreamer_backend::GstreamerBackend;
 pub use gstreamer_backend::GstreamerMessage;
