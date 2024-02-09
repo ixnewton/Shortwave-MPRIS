@@ -17,7 +17,8 @@
 use std::cell::RefCell;
 use std::rc::Rc;
 
-use glib::{clone, Sender};
+use async_channel::Sender;
+use glib::clone;
 use gtk::glib;
 use gtk::prelude::*;
 
@@ -60,7 +61,7 @@ impl MiniController {
         // volume_button | We need the volume_signal_id later to block the signal
         let volume_signal_id =
             volume_button.connect_value_changed(clone!(@strong sender => move |_, value| {
-                send!(sender, Action::PlaybackSetVolume(value));
+                crate::utils::send(&sender, Action::PlaybackSetVolume(value));
             }));
 
         let station = Rc::new(RefCell::new(None));
@@ -89,21 +90,21 @@ impl MiniController {
         // start_playback_button
         self.start_playback_button.connect_clicked(
             clone!(@strong self.sender as sender => move |_| {
-                send!(sender, Action::PlaybackSet(true));
+                crate::utils::send(&sender, Action::PlaybackSet(true));
             }),
         );
 
         // stop_playback_button
         self.stop_playback_button.connect_clicked(
             clone!(@strong self.sender as sender => move |_| {
-                send!(sender, Action::PlaybackSet(false));
+                crate::utils::send(&sender, Action::PlaybackSet(false));
             }),
         );
 
         // loading_button
         self.loading_button
             .connect_clicked(clone!(@strong self.sender as sender => move |_| {
-                send!(sender, Action::PlaybackSet(false));
+                crate::utils::send(&sender, Action::PlaybackSet(false));
             }));
     }
 }

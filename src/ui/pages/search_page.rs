@@ -18,7 +18,8 @@ use std::cell::{OnceCell, RefCell};
 use std::rc::Rc;
 
 use adw::subclass::prelude::*;
-use glib::{clone, closure, subclass, Sender};
+use async_channel::Sender;
+use glib::{clone, closure, subclass};
 use gtk::prelude::*;
 use gtk::{gio, glib, CompositeTemplate};
 

@@ -32,6 +32,7 @@ mod database;
 mod model;
 mod settings;
 mod ui;
+mod utils;
 
 mod app;
 #[rustfmt::skip]

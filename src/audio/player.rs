@@ -21,7 +21,8 @@ use std::rc::Rc;
 use std::time::Duration;
 
 use adw::prelude::*;
-use glib::{clone, Sender};
+use async_channel::Sender;
+use glib::clone;
 use gtk::{gio, glib};
 
 use crate::api::SwStation;
@@ -271,12 +272,16 @@ impl Player {
             .gstreamer_receiver
             .take()
             .unwrap();
-        receiver.attach(None, clone!(@strong self as this => move |message| this.clone().process_gst_message(message)));
+        glib::spawn_future_local(clone!(@weak self as this => async move {
+            while let Ok(message) = receiver.recv().await {
+                this.clone().process_gst_message(message);
+            }
+        }));
 
         // Disconnect from gcast device
         get_widget!(self.builder, gtk::Button, disconnect_button);
         disconnect_button.connect_clicked(clone!(@strong self.sender as sender => move |_| {
-            send!(sender, Action::PlaybackDisconnectGCastDevice);
+            crate::utils::send(&sender, Action::PlaybackDisconnectGCastDevice);
         }));
     }
 

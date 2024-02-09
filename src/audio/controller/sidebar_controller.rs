@@ -17,8 +17,9 @@
 use std::cell::RefCell;
 use std::rc::Rc;
 
+use async_channel::Sender;
 use futures_util::future::FutureExt;
-use glib::{clone, Sender};
+use glib::clone;
 use gtk::prelude::*;
 use gtk::{gio, glib};
 
@@ -76,7 +77,7 @@ impl SidebarController {
         // volume_button | We need the volume_signal_id later to block the signal
         let volume_signal_id =
             volume_button.connect_value_changed(clone!(@strong sender => move |_, value| {
-                send!(sender, Action::PlaybackSetVolume(value));
+                crate::utils::send(&sender, Action::PlaybackSetVolume(value));
             }));
 
         // action group
@@ -115,21 +116,21 @@ impl SidebarController {
         // start_playback_button
         self.start_playback_button.connect_clicked(
             clone!(@strong self.sender as sender => move |_| {
-                send!(sender, Action::PlaybackSet(true));
+                crate::utils::send(&sender, Action::PlaybackSet(true));
             }),
         );
 
         // stop_playback_button
         self.stop_playback_button.connect_clicked(
             clone!(@strong self.sender as sender => move |_| {
-                send!(sender, Action::PlaybackSet(false));
+                crate::utils::send(&sender, Action::PlaybackSet(false));
             }),
         );
 
         // stop_playback_button
         self.loading_button
             .connect_clicked(clone!(@strong self.sender as sender => move |_| {
-                send!(sender, Action::PlaybackSet(false));
+                crate::utils::send(&sender, Action::PlaybackSet(false));
             }));
 
         // details button

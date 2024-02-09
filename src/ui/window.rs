@@ -19,7 +19,8 @@ use std::rc::Rc;
 
 use adw::prelude::*;
 use adw::subclass::prelude::*;
-use glib::{clone, subclass, Sender};
+use async_channel::Sender;
+use glib::{clone, subclass};
 use gtk::{gio, glib, CompositeTemplate};
 
 use crate::app::{Action, SwApplication};
@@ -197,7 +198,7 @@ impl SwApplicationWindow {
             // win.toggle-playback
             gio::ActionEntry::builder("toggle-playback")
                 .activate(clone!(@strong sender => move |_, _, _| {
-                    send!(sender, Action::PlaybackToggle);
+                    crate::utils::send(&sender, Action::PlaybackToggle);
                 }))
                 .build(),
             // win.disable-mini-player

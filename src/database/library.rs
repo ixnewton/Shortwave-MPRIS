@@ -16,8 +16,9 @@
 
 use std::cell::{OnceCell, RefCell};
 
+use async_channel::Sender;
 use futures::future::join_all;
-use glib::{clone, Enum, Properties, Sender};
+use glib::{clone, Enum, Properties};
 use gtk::prelude::*;
 use gtk::subclass::prelude::*;
 use gtk::{gdk_pixbuf, glib};

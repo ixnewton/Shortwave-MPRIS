@@ -17,10 +17,11 @@
 mod gstreamer_backend;
 mod song_backend;
 
-use glib::{Receiver, Sender};
+use std::convert::TryInto;
+
+use async_channel::{Receiver, Sender};
 use gstreamer_backend::GstreamerBackend;
 pub use gstreamer_backend::GstreamerMessage;
-use gtk::glib;
 use song_backend::SongBackend;
 
 use crate::app::Action;
@@ -43,8 +44,7 @@ impl Backend {
         song.delete_songs(); // Delete old songs
 
         // Gstreamer backend
-        let (gstreamer_sender, gstreamer_receiver) =
-            glib::MainContext::channel(glib::Priority::DEFAULT);
+        let (gstreamer_sender, gstreamer_receiver) = async_channel::bounded(10);
         let gstreamer_receiver = Some(gstreamer_receiver);
         let gstreamer = GstreamerBackend::new(gstreamer_sender, sender);
 

@@ -21,7 +21,8 @@ use std::str::FromStr;
 
 use adw::prelude::*;
 use adw::subclass::prelude::*;
-use glib::{clone, subclass, Receiver, Sender};
+use async_channel::{Receiver, Sender};
+use glib::{clone, subclass};
 use gtk::{gdk, glib, CompositeTemplate};
 
 use crate::app::Action;
@@ -96,9 +97,8 @@ impl SwStreamingDialog {
     }
 
     fn setup_signals(&self, gcd_receiver: Receiver<GCastDiscovererMessage>) {
-        gcd_receiver.attach(
-            None,
-            clone!(@weak self as this => @default-panic, move |message| {
+        glib::spawn_future_local(clone!(@weak self as this => async move {
+            while let Ok(message) = gcd_receiver.recv().await {
                 let imp = this.imp();
 
                 match message {
@@ -131,10 +131,8 @@ impl SwStreamingDialog {
                         imp.spinner.set_spinning(false);
                     }
                 }
-
-                glib::ControlFlow::Continue
-            }),
-        );
+            }
+        }));
 
         self.imp().devices_listbox.connect_row_activated(
             clone!(@weak self as this => move |_, row|{
@@ -144,7 +142,7 @@ impl SwStreamingDialog {
 
                 // Get GCastDevice
                 let device = imp.gcd.get().unwrap().device_by_ip_addr(ip_addr).unwrap();
-                send!(imp.sender.get().unwrap(), Action::PlaybackConnectGCastDevice(device));
+                crate::utils::send(imp.sender.get().unwrap(), Action::PlaybackConnectGCastDevice(device));
                 this.set_visible(false);
             }),
         );

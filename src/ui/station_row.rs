@@ -16,8 +16,9 @@
 
 use std::cell::OnceCell;
 
+use async_channel::Sender;
 use futures_util::future::FutureExt;
-use glib::{clone, Sender};
+use glib::clone;
 use gtk::prelude::*;
 use gtk::subclass::prelude::*;
 use gtk::{glib, CompositeTemplate};

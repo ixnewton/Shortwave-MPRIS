@@ -17,7 +17,8 @@
 use std::cell::OnceCell;
 
 use adw::subclass::prelude::*;
-use glib::{clone, subclass, Sender};
+use async_channel::Sender;
+use glib::{clone, subclass};
 use gtk::prelude::*;
 use gtk::{gio, glib, CompositeTemplate};
 

@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use glib::Sender;
+use async_channel::Sender;
 use gtk::prelude::*;
 use gtk::{gio, glib};
 

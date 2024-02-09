@@ -18,7 +18,8 @@ use std::cell::{OnceCell, RefCell};
 
 use adw::prelude::*;
 use adw::subclass::prelude::*;
-use glib::{clone, subclass, Sender};
+use async_channel::Sender;
+use glib::{clone, subclass};
 use gtk::{gdk_pixbuf, gio, glib, CompositeTemplate};
 use url::Url;
 use uuid::Uuid;

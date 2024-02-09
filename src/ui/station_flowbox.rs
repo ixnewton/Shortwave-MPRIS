@@ -15,7 +15,8 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 use adw::subclass::prelude::*;
-use glib::{clone, subclass, Properties, Sender};
+use async_channel::Sender;
+use glib::{clone, subclass, Properties};
 use gtk::prelude::*;
 use gtk::{glib, CompositeTemplate};
 
