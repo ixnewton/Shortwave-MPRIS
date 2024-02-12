@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <template class="SwCreateStationDialog" parent="AdwWindow">
+  <template class="SwCreateStationDialog" parent="AdwDialog">
     <property name="width_request">325</property>
     <property name="height_request">294</property>
-    <property name="default_width">500</property>
-    <property name="default_height">575</property>
+    <property name="content_width">500</property>
+    <property name="content_height">575</property>
     <property name="title" translatable="yes">Create new station</property>
-    <property name="modal">True</property>
     <child>
       <object class="GtkStack" id="stack">
         <property name="transition_type">crossfade</property>
@@ -161,17 +160,6 @@
                 </child>
               </object>
             </property>
-          </object>
-        </child>
-      </object>
-    </child>
-    <child>
-      <object class="GtkShortcutController">
-        <property name="scope">local</property>
-        <child>
-          <object class="GtkShortcut">
-            <property name="trigger">Escape</property>
-            <property name="action">action(window.close)</property>
           </object>
         </child>
       </object>

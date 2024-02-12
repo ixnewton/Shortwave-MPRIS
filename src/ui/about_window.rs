@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use gtk::prelude::*;
+use adw::prelude::*;
 
 use crate::config;
 use crate::i18n::*;
@@ -27,25 +27,24 @@ pub fn show(parent: &SwApplicationWindow) {
         _ => config::VERSION.to_string(),
     };
 
-    let window = adw::AboutWindow::new();
-    window.set_transient_for(Some(parent));
-    window.set_application_icon(config::APP_ID);
-    window.set_application_name(config::NAME);
-    window.set_designers(&["Tobias Bernard"]);
-    window.set_comments(&i18n("Listen to internet radio"));
-    window.set_copyright("© 2019-2023 Felix Häcker");
-    window.set_debug_info(&vcs_tag);
-    window.set_developer_name("Felix Häcker");
-    window.set_developers(&[
-        "Felix Häcker <haeckerfelix@gnome.org>",
-        "Maximiliano Sandoval <msandova@gnome.org>",
-        "Elias Projahn",
-    ]);
-    window.set_issue_url("https://gitlab.gnome.org/World/Shortwave/-/issues");
-    window.set_license_type(gtk::License::Gpl30);
-    window.set_translator_credits(&i18n("translator-credits"));
-    window.set_version(&version);
-    window.set_website("https://gitlab.gnome.org/World/Shortwave");
-
-    window.present();
+    adw::AboutDialog::builder()
+        .application_icon(config::APP_ID)
+        .application_name(config::NAME)
+        .designers(["Tobias Bernard"])
+        .comments(i18n("Listen to internet radio"))
+        .copyright("© 2019-2023 Felix Häcker")
+        .debug_info(vcs_tag)
+        .developer_name("Felix Häcker")
+        .developers([
+            "Felix Häcker <haeckerfelix@gnome.org>",
+            "Maximiliano Sandoval <msandova@gnome.org>",
+            "Elias Projahn",
+        ])
+        .issue_url("https://gitlab.gnome.org/World/Shortwave/-/issues")
+        .license_type(gtk::License::Gpl30)
+        .translator_credits(i18n("translator-credits"))
+        .version(version)
+        .website("https://gitlab.gnome.org/World/Shortwave")
+        .build()
+        .present(parent);
 }

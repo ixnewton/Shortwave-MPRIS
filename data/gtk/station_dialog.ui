@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <template class="SwStationDialog" parent="AdwWindow">
+  <template class="SwStationDialog" parent="AdwDialog">
     <property name="width_request">325</property>
     <property name="height_request">294</property>
-    <property name="default_width">500</property>
-    <property name="default_height">575</property>
-    <property name="modal">True</property>
+    <property name="content_width">500</property>
+    <property name="content_height">575</property>
     <child>
       <object class="AdwToolbarView">
         <child type="top">
@@ -215,7 +214,7 @@
                             <property name="child">
                               <object class="ShumateMap" id="map">
                                 <property name="sensitive">False</property>
-                                <property name="height_request">300</property>
+                                <property name="height_request">294</property>
                               </object>
                             </property>
                           </object>
@@ -286,17 +285,5 @@
         </property>
       </object>
     </child>
-    <child>
-      <object class="GtkShortcutController">
-        <property name="scope">local</property>
-        <child>
-          <object class="GtkShortcut">
-            <property name="trigger">Escape</property>
-            <property name="action">action(window.close)</property>
-          </object>
-        </child>
-      </object>
-    </child>
   </template>
 </interface>
-

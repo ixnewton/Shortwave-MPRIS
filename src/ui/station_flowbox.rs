@@ -14,10 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+use adw::prelude::*;
 use adw::subclass::prelude::*;
 use async_channel::Sender;
 use glib::{clone, subclass, Properties};
-use gtk::prelude::*;
 use gtk::{glib, CompositeTemplate};
 
 use crate::api::SwStation;
@@ -121,12 +121,12 @@ impl SwStationFlowBox {
 
         // Show StationDialog when row gets clicked
         imp.flowbox
-            .connect_child_activated(clone!(@strong sender => move |_, child| {
-                let row = child.clone().downcast::<SwStationRow>().unwrap();
+            .connect_child_activated(clone!(@strong sender => move |flowbox, child| {
+                let row = child.downcast_ref::<SwStationRow>().unwrap();
                 let station = row.station();
 
                 let station_dialog = SwStationDialog::new(&station);
-                station_dialog.present();
+                station_dialog.present(flowbox);
             }));
     }
 }

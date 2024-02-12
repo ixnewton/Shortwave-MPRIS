@@ -28,7 +28,7 @@ use crate::api::{FaviconDownloader, SwStation};
 use crate::app::SwApplication;
 use crate::database::SwLibrary;
 use crate::i18n;
-use crate::ui::{FaviconSize, StationFavicon, SwApplicationWindow};
+use crate::ui::{FaviconSize, StationFavicon};
 
 mod imp {
     use super::*;
@@ -86,7 +86,7 @@ mod imp {
     #[glib::object_subclass]
     impl ObjectSubclass for SwStationDialog {
         const NAME: &'static str = "SwStationDialog";
-        type ParentType = adw::Window;
+        type ParentType = adw::Dialog;
         type Type = super::SwStationDialog;
 
         fn class_init(klass: &mut Self::Class) {
@@ -104,18 +104,13 @@ mod imp {
         fn constructed(&self) {
             self.parent_constructed();
 
-            let window = SwApplicationWindow::default();
-            self.obj().set_transient_for(Some(&window));
-
             self.setup_widgets();
         }
     }
 
     impl WidgetImpl for SwStationDialog {}
 
-    impl WindowImpl for SwStationDialog {}
-
-    impl AdwWindowImpl for SwStationDialog {}
+    impl AdwDialogImpl for SwStationDialog {}
 
     #[gtk::template_callbacks]
     impl SwStationDialog {
@@ -140,7 +135,7 @@ mod imp {
             }
 
             // Title
-            self.obj().set_title(Some(&metadata.name));
+            self.obj().set_title(&metadata.name);
             self.title_label.set_text(&metadata.name);
 
             // Homepage
@@ -311,7 +306,7 @@ mod imp {
 
 glib::wrapper! {
     pub struct SwStationDialog(ObjectSubclass<imp::SwStationDialog>)
-        @extends gtk::Widget, gtk::Window, adw::Window;
+        @extends gtk::Widget, adw::Dialog;
 }
 
 impl SwStationDialog {

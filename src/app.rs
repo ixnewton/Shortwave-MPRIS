@@ -18,12 +18,12 @@ use std::cell::{OnceCell, RefCell};
 use std::rc::Rc;
 use std::str::FromStr;
 
+use adw::prelude::*;
 use adw::subclass::prelude::*;
 use async_channel::{Receiver, Sender};
 use gio::subclass::prelude::ApplicationImpl;
 use glib::{clone, Properties};
 use gtk::glib::WeakRef;
-use gtk::prelude::*;
 use gtk::{gio, glib};
 
 use crate::api::SwClient;
@@ -198,8 +198,8 @@ impl SwApplication {
             // app.show-preferences
             gio::ActionEntry::builder("show-preferences")
                 .activate(clone!(@weak window => move |_, _, _| {
-                    let settings_window = SettingsWindow::new(&window.upcast());
-                    settings_window.show();
+                    let settings_window = SettingsWindow::new();
+                    settings_window.present(&window);
                 }))
                 .build(),
             // app.quit

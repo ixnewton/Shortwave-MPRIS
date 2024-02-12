@@ -27,7 +27,6 @@ use gtk::{gdk, glib, CompositeTemplate};
 
 use crate::app::Action;
 use crate::audio::{GCastDiscoverer, GCastDiscovererMessage};
-use crate::ui::SwApplicationWindow;
 
 mod imp {
     use super::*;
@@ -49,7 +48,7 @@ mod imp {
     #[glib::object_subclass]
     impl ObjectSubclass for SwStreamingDialog {
         const NAME: &'static str = "SwStreamingDialog";
-        type ParentType = adw::Window;
+        type ParentType = adw::Dialog;
         type Type = super::SwStreamingDialog;
 
         fn class_init(klass: &mut Self::Class) {
@@ -67,14 +66,12 @@ mod imp {
 
     impl WidgetImpl for SwStreamingDialog {}
 
-    impl WindowImpl for SwStreamingDialog {}
-
-    impl AdwWindowImpl for SwStreamingDialog {}
+    impl AdwDialogImpl for SwStreamingDialog {}
 }
 
 glib::wrapper! {
     pub struct SwStreamingDialog(ObjectSubclass<imp::SwStreamingDialog>)
-        @extends gtk::Widget, gtk::Window, adw::Window;
+        @extends gtk::Widget, adw::Dialog;
 }
 
 #[gtk::template_callbacks]
@@ -143,15 +140,9 @@ impl SwStreamingDialog {
                 // Get GCastDevice
                 let device = imp.gcd.get().unwrap().device_by_ip_addr(ip_addr).unwrap();
                 crate::utils::send(imp.sender.get().unwrap(), Action::PlaybackConnectGCastDevice(device));
-                this.set_visible(false);
+                this.close();
             }),
         );
-
-        self.connect_show(clone!(@weak self as this => move |_|{
-            let window = SwApplicationWindow::default();
-            this.set_transient_for(Some(&window));
-            this.set_modal(true);
-        }));
     }
 
     #[template_callback]

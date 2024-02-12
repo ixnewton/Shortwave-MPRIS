@@ -14,24 +14,22 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use adw::PreferencesWindow;
-use gtk::prelude::*;
+use adw::prelude::*;
+use adw::PreferencesDialog;
 
 use crate::settings::{settings_manager, Key};
 
 pub struct SettingsWindow {
-    pub widget: PreferencesWindow,
+    pub widget: PreferencesDialog,
 
     builder: gtk::Builder,
 }
 
 impl SettingsWindow {
-    pub fn new(window: &gtk::Window) -> Self {
+    pub fn new() -> Self {
         let builder =
             gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/settings_window.ui");
-        get_widget!(builder, PreferencesWindow, settings_window);
-
-        settings_window.set_transient_for(Some(window));
+        get_widget!(builder, PreferencesDialog, settings_window);
 
         let window = Self {
             widget: settings_window,
@@ -42,8 +40,8 @@ impl SettingsWindow {
         window
     }
 
-    pub fn show(&self) {
-        self.widget.present();
+    pub fn present(&self, window: &impl IsA<gtk::Widget>) {
+        self.widget.present(window);
     }
 
     fn setup_signals(&self) {

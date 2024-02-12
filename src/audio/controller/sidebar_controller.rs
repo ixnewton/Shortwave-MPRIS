@@ -17,10 +17,10 @@
 use std::cell::RefCell;
 use std::rc::Rc;
 
+use adw::prelude::*;
 use async_channel::Sender;
 use futures_util::future::FutureExt;
 use glib::clone;
-use gtk::prelude::*;
 use gtk::{gio, glib};
 
 use crate::api::{FaviconDownloader, SwStation};
@@ -136,15 +136,15 @@ impl SidebarController {
         // details button
         self.action_group.add_action_entries([
             gio::ActionEntry::builder("show-details")
-                .activate(clone!(@strong self.sender as sender, @strong self.station as station => move |_, _, _| {
+                .activate(clone!(@strong self.sender as sender, @strong self.station as station, @weak self.widget as widget => move |_, _, _| {
                     let station = station.borrow().clone().unwrap();
                     let station_dialog = SwStationDialog::new(&station);
-                    station_dialog.present();
+                    station_dialog.present(&widget);
                 })).build(),
             // stream button
             gio::ActionEntry::builder("stream-audio")
-                .activate(clone!(@weak self.streaming_dialog as streaming_dialog => move |_, _, _| {
-                    streaming_dialog.present();
+                .activate(clone!(@weak self.streaming_dialog as streaming_dialog, @weak self.widget as widget => move |_, _, _| {
+                    streaming_dialog.present(&widget);
                 })).build(),
         ]);
     }
