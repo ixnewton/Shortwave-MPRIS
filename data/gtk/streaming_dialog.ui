@@ -46,8 +46,11 @@
                                   <object class="GtkButton">
                                     <property name="icon_name">view-refresh-symbolic</property>
                                     <property name="valign">center</property>
-                                    <property name="tooltip_text" translatable="yes">Search again</property>
+                                    <property name="tooltip_text" translatable="yes">Search Again</property>
                                     <signal name="clicked" handler="search_again" swapped="true"/>
+                                    <style>
+                                      <class name="flat"/>
+                                    </style>
                                   </object>
                                 </child>
                               </object>
@@ -69,8 +72,11 @@
                                   <object class="GtkButton">
                                     <property name="icon_name">view-refresh-symbolic</property>
                                     <property name="valign">center</property>
-                                    <property name="tooltip_text" translatable="yes">Search again</property>
+                                    <property name="tooltip_text" translatable="yes">Search Again</property>
                                     <signal name="clicked" handler="search_again" swapped="true"/>
+                                    <style>
+                                      <class name="flat"/>
+                                    </style>
                                   </object>
                                 </child>
                               </object>
