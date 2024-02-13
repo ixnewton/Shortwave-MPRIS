@@ -18,7 +18,6 @@ use std::cell::RefCell;
 
 use adw::prelude::*;
 use adw::subclass::prelude::*;
-use gettextrs::gettext;
 use glib::{clone, subclass, Sender};
 use gtk::{gdk, gdk_pixbuf, gio, glib, CompositeTemplate};
 use once_cell::unsync::OnceCell;
@@ -27,6 +26,7 @@ use uuid::Uuid;
 
 use crate::api::{StationMetadata, SwStation};
 use crate::app::{Action, SwApplication};
+use crate::i18n::i18n;
 use crate::ui::{FaviconSize, StationFavicon, SwApplicationWindow};
 
 mod imp {
@@ -100,7 +100,7 @@ impl SwCreateStationDialog {
         let file_chooser = gtk::FileChooserNative::builder()
             .transient_for(&dialog)
             .modal(true)
-            .title(gettext("Select station image"))
+            .title(i18n("Select station image"))
             .build();
 
         imp.favicon_widget.set(favicon_widget).unwrap();
