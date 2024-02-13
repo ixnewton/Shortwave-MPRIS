@@ -56,7 +56,6 @@ mod imp {
 
         pub favicon: RefCell<Option<gdk_pixbuf::Pixbuf>>,
         pub favicon_widget: OnceCell<StationFavicon>,
-        pub file_chooser: OnceCell<gtk::FileChooserNative>,
         pub sender: OnceCell<Sender<Action>>,
     }
 
@@ -97,16 +96,10 @@ impl SwCreateStationDialog {
 
         let imp = dialog.imp();
         let favicon_widget = StationFavicon::new(FaviconSize::Big);
-        let file_chooser = gtk::FileChooserNative::builder()
-            .transient_for(&dialog)
-            .modal(true)
-            .title(i18n("Select station image"))
-            .build();
 
         imp.favicon_widget.set(favicon_widget).unwrap();
         imp.favicon_box
             .append(&imp.favicon_widget.get().unwrap().widget);
-        imp.file_chooser.set(file_chooser).unwrap();
         imp.sender.set(sender).unwrap();
 
         let window = SwApplicationWindow::default();
@@ -114,6 +107,22 @@ impl SwCreateStationDialog {
 
         dialog.setup_signals();
         dialog
+    }
+
+    fn show_filechooser(&self) {
+        let file_chooser = gtk::FileDialog::builder()
+            .title(i18n("Select station image"))
+            .build();
+        file_chooser.open(
+            Some(self),
+            gio::Cancellable::NONE,
+            clone!(@weak self as this => move |res| {
+                match res {
+                    Ok(file) => this.set_favicon(file),
+                    Err(err) => error!("Could not get file {err}"),
+                }
+            }),
+        );
     }
 
     fn setup_signals(&self) {
@@ -126,18 +135,8 @@ impl SwCreateStationDialog {
 
         imp.favicon_button
             .connect_clicked(clone!(@weak self as this => move |_| {
-                this.imp().file_chooser.get().unwrap().show();
+                this.show_filechooser();
             }));
-
-        imp.file_chooser.get().unwrap().connect_response(
-            clone!(@weak self as this => move |file_chooser, response| {
-                if response == gtk::ResponseType::Accept {
-                    if let Some(file) = file_chooser.file() {
-                        this.set_favicon(file);
-                    }
-                }
-            }),
-        );
     }
 
     #[template_callback]
