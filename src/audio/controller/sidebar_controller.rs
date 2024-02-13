@@ -138,12 +138,12 @@ impl SidebarController {
                 .activate(clone!(@strong self.sender as sender, @strong self.station as station => move |_, _, _| {
                     let station = station.borrow().clone().unwrap();
                     let station_dialog = SwStationDialog::new(&station);
-                    station_dialog.show();
+                    station_dialog.present();
                 })).build(),
             // stream button
             gio::ActionEntry::builder("stream-audio")
                 .activate(clone!(@weak self.streaming_dialog as streaming_dialog => move |_, _, _| {
-                    streaming_dialog.show();
+                    streaming_dialog.present();
                 })).build(),
         ]);
     }

@@ -183,7 +183,7 @@ impl SwApplicationWindow {
             gio::ActionEntry::builder("create-new-station")
                 .activate(clone!(@strong sender => move |_, _, _| {
                     let dialog = SwCreateStationDialog::new(sender.clone());
-                    dialog.show();
+                    dialog.present();
                 }))
                 .build(),
             // win.show-player

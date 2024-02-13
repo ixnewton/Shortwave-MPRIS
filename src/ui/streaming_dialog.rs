@@ -146,7 +146,7 @@ impl SwStreamingDialog {
                 // Get GCastDevice
                 let device = imp.gcd.get().unwrap().device_by_ip_addr(ip_addr).unwrap();
                 send!(imp.sender.get().unwrap(), Action::PlaybackConnectGCastDevice(device));
-                this.hide();
+                this.set_visible(false);
             }),
         );
 
