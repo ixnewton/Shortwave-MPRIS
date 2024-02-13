@@ -19,7 +19,7 @@ use std::cell::RefCell;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use glib::{clone, subclass, Sender};
-use gtk::{gdk, gdk_pixbuf, gio, glib, CompositeTemplate};
+use gtk::{gdk_pixbuf, gio, glib, CompositeTemplate};
 use once_cell::unsync::OnceCell;
 use url::Url;
 use uuid::Uuid;
@@ -141,11 +141,7 @@ impl SwCreateStationDialog {
 
     #[template_callback]
     fn create_public_station(&self) {
-        gtk::show_uri(
-            Some(&SwApplicationWindow::default()),
-            "https://www.radio-browser.info/add",
-            gdk::CURRENT_TIME,
-        );
+        SwApplicationWindow::default().show_uri("https://www.radio-browser.info/add");
         self.close();
     }
 
