@@ -99,7 +99,7 @@ mod imp {
 
             settings_manager::set_integer(Key::WindowWidth, width);
             settings_manager::set_integer(Key::WindowHeight, height);
-            glib::Propagation::Proceed
+            self.parent_close_request()
         }
     }
 
