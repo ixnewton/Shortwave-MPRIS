@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <template class="SwStreamingDialog" parent="GtkDialog">
+  <template class="SwStreamingDialog" parent="AdwWindow">
     <property name="width_request">325</property>
-    <property name="height_request">400</property>
+    <property name="height_request">294</property>
     <property name="default_width">500</property>
     <property name="default_height">400</property>
     <property name="destroy_with_parent">True</property>
     <property name="hide_on_close">True</property>
     <property name="title" translatable="yes">Stream to a Device</property>
     <child>
-      <object class="GtkScrolledWindow">
+      <object class="AdwToolbarView">
+        <child type="top">
+          <object class="AdwHeaderBar"/>
+        </child>
         <child>
-          <object class="GtkViewport">
-            <property name="vexpand">True</property>
-            <property name="scroll-to-focus">True</property>
+          <object class="GtkScrolledWindow">
+            <property name="hscrollbar_policy">never</property>
             <child>
               <object class="GtkBox">
                 <property name="orientation">vertical</property>

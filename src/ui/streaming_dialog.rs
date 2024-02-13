@@ -19,9 +19,9 @@ use std::rc::Rc;
 use std::str::FromStr;
 
 use adw::prelude::*;
+use adw::subclass::prelude::*;
 use glib::{clone, subclass, Receiver, Sender};
-use gtk::subclass::prelude::*;
-use gtk::{glib, CompositeTemplate};
+use gtk::{gdk, glib, CompositeTemplate};
 use once_cell::unsync::OnceCell;
 
 use crate::app::Action;
@@ -48,12 +48,18 @@ mod imp {
     #[glib::object_subclass]
     impl ObjectSubclass for SwStreamingDialog {
         const NAME: &'static str = "SwStreamingDialog";
-        type ParentType = gtk::Dialog;
+        type ParentType = adw::Window;
         type Type = super::SwStreamingDialog;
 
         fn class_init(klass: &mut Self::Class) {
             Self::bind_template(klass);
             Self::Type::bind_template_callbacks(klass);
+            klass.add_binding_action(
+                gdk::Key::Escape,
+                gdk::ModifierType::empty(),
+                "window.close",
+                None,
+            );
         }
 
         fn instance_init(obj: &subclass::InitializingObject<Self>) {
@@ -67,20 +73,18 @@ mod imp {
 
     impl WindowImpl for SwStreamingDialog {}
 
-    impl DialogImpl for SwStreamingDialog {}
+    impl AdwWindowImpl for SwStreamingDialog {}
 }
 
 glib::wrapper! {
     pub struct SwStreamingDialog(ObjectSubclass<imp::SwStreamingDialog>)
-        @extends gtk::Widget, gtk::Window, gtk::Dialog;
+        @extends gtk::Widget, gtk::Window, adw::Window;
 }
 
 #[gtk::template_callbacks]
 impl SwStreamingDialog {
     pub fn new(sender: Sender<Action>) -> Self {
-        let dialog = glib::Object::builder::<Self>()
-            .property("use-header-bar", 1)
-            .build();
+        let dialog = glib::Object::new::<Self>();
 
         // Setup Google Cast discoverer
         let gcd_t = GCastDiscoverer::new();
