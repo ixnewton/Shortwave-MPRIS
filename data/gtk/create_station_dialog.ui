@@ -2,7 +2,7 @@
 <interface>
   <template class="SwCreateStationDialog" parent="AdwWindow">
     <property name="width_request">325</property>
-    <property name="height_request">500</property>
+    <property name="height_request">294</property>
     <property name="default_width">500</property>
     <property name="default_height">575</property>
     <property name="title" translatable="yes">Create new station</property>
@@ -31,7 +31,6 @@
                     <property name="icon-name">list-add-symbolic</property>
                     <property name="title" translatable="yes">Create New Station</property>
                     <property name="description" translatable="yes">You can decide if you want the new station to be visible for all users worldwide or if you want to create a local station.</property>
-                    <property name="height-request">400</property>
                     <property name="child">
                       <object class="GtkBox">
                         <property name="halign">center</property>

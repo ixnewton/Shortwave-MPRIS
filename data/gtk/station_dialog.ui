@@ -2,7 +2,7 @@
 <interface>
   <template class="SwStationDialog" parent="AdwWindow">
     <property name="width_request">325</property>
-    <property name="height_request">500</property>
+    <property name="height_request">294</property>
     <property name="default_width">500</property>
     <property name="default_height">575</property>
     <property name="modal">True</property>
