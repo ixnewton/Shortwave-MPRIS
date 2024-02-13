@@ -14,12 +14,6 @@
     </child>
     <child>
       <object class="AdwBreakpoint">
-        <condition>min-width: 625px</condition>
-        <setter object="split_view" property="show_sidebar">True</setter>
-      </object>
-    </child>
-    <child>
-      <object class="AdwBreakpoint">
         <condition>max-height: 150px</condition>
         <setter object="stack" property="visible-child">mini_controller_handle</setter>
       </object>
