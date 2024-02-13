@@ -32,8 +32,7 @@
                   <object class="AdwNavigationPage">
                     <property name="title" translatable="yes">Main View</property>
                     <child>
-                      <object class="GtkBox">
-                        <property name="orientation">vertical</property>
+                      <object class="AdwToolbarView" id="main_view_toolbarview">
                         <child>
                           <object class="AdwNavigationView" id="navigation_view">
                             <child>
@@ -47,7 +46,7 @@
                             </child>
                           </object>
                         </child>
-                        <child>
+                        <child type="bottom">
                           <object class="GtkRevealer" id="toolbar_controller_revealer">
                             <property name="transition_type">slide-up</property>
                             <child>
