@@ -17,8 +17,6 @@
 mod gstreamer_backend;
 mod song_backend;
 
-use std::convert::TryInto;
-
 use glib::{Receiver, Sender};
 use gstreamer_backend::GstreamerBackend;
 pub use gstreamer_backend::GstreamerMessage;

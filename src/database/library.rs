@@ -17,7 +17,7 @@
 use std::cell::RefCell;
 
 use futures::future::join_all;
-use glib::{clone, Enum, ObjectExt, Properties, Sender};
+use glib::{clone, Enum, Properties, Sender};
 use gtk::prelude::*;
 use gtk::subclass::prelude::*;
 use gtk::{gdk_pixbuf, glib};

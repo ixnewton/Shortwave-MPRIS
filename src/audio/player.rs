@@ -15,7 +15,6 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 use std::cell::RefCell;
-use std::convert::TryInto;
 use std::fs;
 use std::path::PathBuf;
 use std::rc::Rc;
@@ -290,9 +289,7 @@ impl Player {
                 // If we're already recording something, we need to stop it first.
                 if backend.gstreamer.is_recording() {
                     let threshold: i64 =
-                        settings_manager::integer(Key::RecorderSongDurationThreshold)
-                            .try_into()
-                            .unwrap();
+                        settings_manager::integer(Key::RecorderSongDurationThreshold).into();
                     let duration: i64 = backend.gstreamer.current_recording_duration();
                     if duration > threshold {
                         backend.gstreamer.stop_recording(false);

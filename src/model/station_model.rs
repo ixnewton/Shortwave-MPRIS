@@ -15,7 +15,6 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 use std::cell::RefCell;
-use std::convert::TryInto;
 
 use gtk::prelude::*;
 use gtk::subclass::prelude::*;

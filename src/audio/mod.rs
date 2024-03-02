@@ -17,7 +17,7 @@
 mod backend;
 mod controller;
 
-pub use controller::{Controller, GCastController};
+pub use controller::Controller;
 
 mod gcast_discoverer;
 mod player;

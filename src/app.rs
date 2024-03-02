@@ -20,7 +20,7 @@ use std::str::FromStr;
 
 use adw::subclass::prelude::*;
 use gio::subclass::prelude::ApplicationImpl;
-use glib::{clone, ObjectExt, Properties, Receiver, Sender};
+use glib::{clone, Properties, Receiver, Sender};
 use gtk::glib::WeakRef;
 use gtk::prelude::*;
 use gtk::{gio, glib};
