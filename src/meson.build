@@ -34,7 +34,7 @@ if get_option('profile') == 'default'
   rust_target = 'release'
   message('Building in release mode')
 else
-  host_triple = run_command('sh', '-c', 'rustc -Vv | grep -Po "\w*-\w*-\w*-\w*"').stdout().strip()
+  host_triple = run_command('sh', '-c', 'rustc -Vv | grep -Po "\w*-\w*-\w*-\w*"', check: true).stdout().strip()
   cargo_options += [ '-Zbuild-std', '--target=' + host_triple ]
   rust_target = join_paths(host_triple, 'debug')
   message('Building in debug mode')

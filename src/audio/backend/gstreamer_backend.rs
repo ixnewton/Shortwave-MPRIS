@@ -512,7 +512,7 @@ impl GstreamerBackend {
                     // only send message if song title really have changed.
                     let mut current_title_locked = current_title.lock().unwrap();
                     if *current_title_locked != new_title {
-                        *current_title_locked = new_title.clone();
+                        current_title_locked.clone_from(&new_title);
                         send!(sender, GstreamerMessage::SongTitleChanged(new_title));
                     }
                 }
