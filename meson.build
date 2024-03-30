@@ -31,7 +31,7 @@ name       = 'Shortwave'
 base_id    = 'de.haeckerfelix.Shortwave'
 path_id    = '/de/haeckerfelix/Shortwave'
 app_id     = base_id
-vcs_tag    = run_command('git', 'rev-parse', '--short', 'HEAD').stdout().strip()
+vcs_tag    = run_command('git', 'rev-parse', '--short', 'HEAD', check: true).stdout().strip()
 profile    = get_option('profile')
 datadir    = join_paths(get_option('prefix'), get_option('datadir'))
 localedir  = join_paths(get_option('prefix'), get_option('localedir'))
@@ -45,8 +45,8 @@ endif
 # Setup pre-commit hook to run checks before changes are getting committed
 if profile == 'development'
   message('Setting up git pre-commit hook..')
-  run_command('mkdir', '.git/hooks/')
-  run_command('cp', '-f', 'build-aux/pre-commit.hook', '.git/hooks/pre-commit')
+  run_command('mkdir', '.git/hooks/', check: false)
+  run_command('cp', '-f', 'build-aux/pre-commit.hook', '.git/hooks/pre-commit', check: false)
 endif
 
 # Vendor all Rust dependencies for release tarballs
