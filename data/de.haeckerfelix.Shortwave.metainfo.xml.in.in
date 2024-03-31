@@ -69,6 +69,12 @@
     <control>touch</control>
   </recommends>
 
+  <branding>
+    <!-- Yellow 4 and Brown 4 -->
+    <color type="primary" scheme_preference="light">#f5c211</color>
+    <color type="primary" scheme_preference="dark">#865e3c</color>
+  </branding>
+
   <releases>
     <release version="3.2.0" date="2023-02-07">
       <description>
