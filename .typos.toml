@@ -1,3 +1,2 @@
-[type.po]
-extend-glob = ["*.po"]
-check-file = false
+[files]
+extend-exclude = ["po/*", "build-aux/checks.sh"]
