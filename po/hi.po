@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2024-03-02 15:17+0000\n"
-"PO-Revision-Date: 2024-03-29 22:38+0530\n"
+"POT-Creation-Date: 2024-04-12 07:38+0000\n"
+"PO-Revision-Date: 2024-04-12 20:40+0530\n"
 "Last-Translator: Scrambled777 <weblate.scrambled777@simplelogin.com>\n"
 "Language-Team: Hindi\n"
 "Language: hi\n"
@@ -28,12 +28,13 @@ msgstr "@NAME@"
 msgid "Gradio;Radio;Stream;Wave;"
 msgstr "Gradio;Radio;Stream;Wave;ग्रैडियो;रेडियो;स्ट्रीम;वेव;"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:6
+#. General
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:10
 #: src/ui/about_window.rs:35
 msgid "Listen to internet radio"
 msgstr "इंटरनेट रेडियो सुनें"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:20
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:12
 msgid ""
 "Shortwave is an internet radio player that provides access to a station "
 "database with over 30,000 stations."
@@ -41,35 +42,40 @@ msgstr ""
 "Shortwave एक इंटरनेट रेडियो प्लेयर है जो 30,000 से अधिक स्टेशनों वाले स्टेशन डेटाबेस तक पहुंच "
 "प्रदान करता है।"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:23
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:15
 msgid "Features:"
 msgstr "विशेषताएँ:"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:25
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:17
 msgid "Create your own library where you can add your favorite stations"
 msgstr "अपनी खुद की लाइब्रेरी बनाएं जहां आप अपने पसंदीदा स्टेशन जोड़ सकें"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:26
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:18
 msgid "Easily search and discover new radio stations"
 msgstr "नए रेडियो स्टेशन आसानी से खोजें और ढूंढें"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:27
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:19
 msgid ""
 "Automatic recognition of songs, with the possibility to save them "
 "individually"
 msgstr "गानों की स्वचालित पहचान, उन्हें व्यक्तिगत रूप से सहेजने की संभावना के साथ"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:28
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:20
 msgid "Responsive application layout, compatible for small and large screens"
 msgstr "उत्तरदायी एप्लिकेशन लेआउट, छोटी और बड़ी स्क्रीन के लिए संगत"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:29
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:21
 msgid "Play audio on supported network devices (e.g. Google Chromecasts)"
 msgstr "समर्थित नेटवर्क उपकरणो पर ऑडियो चलाएं (जैसे Google Chromecasts)"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:30
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:22
 msgid "Seamless integration into the GNOME desktop environment"
 msgstr "GNOME डेस्कटॉप वातावरण में सहज एकीकरण"
+
+#. Branding
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:28
+msgid "Felix Häcker"
+msgstr "फेलिक्स हैकर"
 
 #: data/gtk/create_station_dialog.ui:8
 msgid "Create new station"
