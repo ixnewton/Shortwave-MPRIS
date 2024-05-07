@@ -55,6 +55,17 @@ struct BufferingState {
     is_live: Option<bool>,
 }
 
+impl BufferingState {
+    fn reset(&mut self) {
+        self.buffering = false;
+        if let Some((pad, probe_id)) = self.buffering_probe.take() {
+            debug!("Removing extra buffering probe");
+            pad.remove_probe(probe_id);
+        }
+        self.is_live = None;
+    }
+}
+
 pub struct GstreamerBackend {
     pipeline: Pipeline,
     recorderbin: Arc<Mutex<Option<Bin>>>,
@@ -282,7 +293,7 @@ impl GstreamerBackend {
 
         debug!("Start pipeline...");
         let mut buffering_state = self.buffering_state.lock().unwrap();
-        *buffering_state = BufferingState::default();
+        buffering_state.reset();
         let res = self.pipeline.set_state(State::Playing);
 
         if res.is_err() {
