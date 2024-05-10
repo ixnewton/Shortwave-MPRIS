@@ -36,7 +36,7 @@ impl FaviconDownloader {
         if let Some(pixbuf) = Self::cached_pixbuf(&url, size).await {
             return Ok(pixbuf);
         } else {
-            debug!("No cached favicon available for {:?}", url);
+            debug!("No cached favicon available for {:?}", url.as_str());
         }
 
         // We currently don't support "data:image/png" urls

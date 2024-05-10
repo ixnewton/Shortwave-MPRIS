@@ -166,8 +166,12 @@ impl Controller for SidebarController {
         } else if let Some(favicon) = station.metadata().favicon {
             let fut =
                 FaviconDownloader::download(favicon, FaviconSize::Big as i32).map(move |pixbuf| {
-                    if let Ok(pixbuf) = pixbuf {
-                        station_favicon.set_pixbuf(&pixbuf)
+                    match pixbuf {
+                        Ok(pixbuf) => station_favicon.set_pixbuf(&pixbuf),
+                        Err(error) => {
+                            debug!("Could not load favicon: {}", error);
+                            station_favicon.reset()
+                        }
                     }
                 });
             spawn!(fut);
