@@ -14,19 +14,19 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+use std::cell::OnceCell;
 use std::net::IpAddr;
 use std::rc::Rc;
 use std::str::FromStr;
 
 use adw::prelude::*;
 use adw::subclass::prelude::*;
-use glib::{clone, subclass, Receiver, Sender};
+use async_channel::{Receiver, Sender};
+use glib::{clone, subclass};
 use gtk::{gdk, glib, CompositeTemplate};
-use once_cell::unsync::OnceCell;
 
 use crate::app::Action;
 use crate::audio::{GCastDiscoverer, GCastDiscovererMessage};
-use crate::ui::SwApplicationWindow;
 
 mod imp {
     use super::*;
@@ -48,18 +48,13 @@ mod imp {
     #[glib::object_subclass]
     impl ObjectSubclass for SwStreamingDialog {
         const NAME: &'static str = "SwStreamingDialog";
-        type ParentType = adw::Window;
+        type ParentType = adw::Dialog;
         type Type = super::SwStreamingDialog;
 
         fn class_init(klass: &mut Self::Class) {
             Self::bind_template(klass);
             Self::Type::bind_template_callbacks(klass);
-            klass.add_binding_action(
-                gdk::Key::Escape,
-                gdk::ModifierType::empty(),
-                "window.close",
-                None,
-            );
+            klass.add_binding_action(gdk::Key::Escape, gdk::ModifierType::empty(), "window.close");
         }
 
         fn instance_init(obj: &subclass::InitializingObject<Self>) {
@@ -71,14 +66,12 @@ mod imp {
 
     impl WidgetImpl for SwStreamingDialog {}
 
-    impl WindowImpl for SwStreamingDialog {}
-
-    impl AdwWindowImpl for SwStreamingDialog {}
+    impl AdwDialogImpl for SwStreamingDialog {}
 }
 
 glib::wrapper! {
     pub struct SwStreamingDialog(ObjectSubclass<imp::SwStreamingDialog>)
-        @extends gtk::Widget, gtk::Window, adw::Window;
+        @extends gtk::Widget, adw::Dialog;
 }
 
 #[gtk::template_callbacks]
@@ -101,9 +94,8 @@ impl SwStreamingDialog {
     }
 
     fn setup_signals(&self, gcd_receiver: Receiver<GCastDiscovererMessage>) {
-        gcd_receiver.attach(
-            None,
-            clone!(@weak self as this => @default-panic, move |message| {
+        glib::spawn_future_local(clone!(@weak self as this => async move {
+            while let Ok(message) = gcd_receiver.recv().await {
                 let imp = this.imp();
 
                 match message {
@@ -136,10 +128,8 @@ impl SwStreamingDialog {
                         imp.spinner.set_spinning(false);
                     }
                 }
-
-                glib::ControlFlow::Continue
-            }),
-        );
+            }
+        }));
 
         self.imp().devices_listbox.connect_row_activated(
             clone!(@weak self as this => move |_, row|{
@@ -149,16 +139,10 @@ impl SwStreamingDialog {
 
                 // Get GCastDevice
                 let device = imp.gcd.get().unwrap().device_by_ip_addr(ip_addr).unwrap();
-                send!(imp.sender.get().unwrap(), Action::PlaybackConnectGCastDevice(device));
-                this.set_visible(false);
+                crate::utils::send(imp.sender.get().unwrap(), Action::PlaybackConnectGCastDevice(device));
+                this.close();
             }),
         );
-
-        self.connect_show(clone!(@weak self as this => move |_|{
-            let window = SwApplicationWindow::default();
-            this.set_transient_for(Some(&window));
-            this.set_modal(true);
-        }));
     }
 
     #[template_callback]

@@ -17,9 +17,10 @@
 use std::cell::RefCell;
 use std::rc::Rc;
 
+use adw::prelude::*;
+use async_channel::Sender;
 use futures_util::future::FutureExt;
-use glib::{clone, Sender};
-use gtk::prelude::*;
+use glib::clone;
 use gtk::{gio, glib};
 
 use crate::api::{FaviconDownloader, SwStation};
@@ -76,7 +77,7 @@ impl SidebarController {
         // volume_button | We need the volume_signal_id later to block the signal
         let volume_signal_id =
             volume_button.connect_value_changed(clone!(@strong sender => move |_, value| {
-                send!(sender, Action::PlaybackSetVolume(value));
+                crate::utils::send(&sender, Action::PlaybackSetVolume(value));
             }));
 
         // action group
@@ -115,35 +116,35 @@ impl SidebarController {
         // start_playback_button
         self.start_playback_button.connect_clicked(
             clone!(@strong self.sender as sender => move |_| {
-                send!(sender, Action::PlaybackSet(true));
+                crate::utils::send(&sender, Action::PlaybackSet(true));
             }),
         );
 
         // stop_playback_button
         self.stop_playback_button.connect_clicked(
             clone!(@strong self.sender as sender => move |_| {
-                send!(sender, Action::PlaybackSet(false));
+                crate::utils::send(&sender, Action::PlaybackSet(false));
             }),
         );
 
         // stop_playback_button
         self.loading_button
             .connect_clicked(clone!(@strong self.sender as sender => move |_| {
-                send!(sender, Action::PlaybackSet(false));
+                crate::utils::send(&sender, Action::PlaybackSet(false));
             }));
 
         // details button
         self.action_group.add_action_entries([
             gio::ActionEntry::builder("show-details")
-                .activate(clone!(@strong self.sender as sender, @strong self.station as station => move |_, _, _| {
+                .activate(clone!(@strong self.sender as sender, @strong self.station as station, @weak self.widget as widget => move |_, _, _| {
                     let station = station.borrow().clone().unwrap();
                     let station_dialog = SwStationDialog::new(&station);
-                    station_dialog.present();
+                    station_dialog.present(&widget);
                 })).build(),
             // stream button
             gio::ActionEntry::builder("stream-audio")
-                .activate(clone!(@weak self.streaming_dialog as streaming_dialog => move |_, _, _| {
-                    streaming_dialog.present();
+                .activate(clone!(@weak self.streaming_dialog as streaming_dialog, @weak self.widget as widget => move |_, _, _| {
+                    streaming_dialog.present(&widget);
                 })).build(),
         ]);
     }
@@ -174,7 +175,7 @@ impl Controller for SidebarController {
                         }
                     }
                 });
-            spawn!(fut);
+            glib::spawn_future_local(fut);
         } else {
             self.station_favicon.reset();
         }

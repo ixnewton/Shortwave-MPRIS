@@ -22,8 +22,8 @@ use std::net::IpAddr;
 use std::sync::{Arc, Mutex};
 use std::thread;
 
-use glib::{Receiver, Sender};
-use gtk::glib;
+use async_channel::{Receiver, Sender};
+use gtk::glib::clone;
 use mdns::{Record, RecordKind};
 
 #[derive(Debug, Clone, Eq, PartialEq)]
@@ -47,7 +47,7 @@ pub struct GCastDiscoverer {
 
 impl GCastDiscoverer {
     pub fn new() -> (Self, Receiver<GCastDiscovererMessage>) {
-        let (sender, receiver) = glib::MainContext::channel(glib::Priority::DEFAULT);
+        let (sender, receiver) = async_channel::bounded(10);
         let known_devices = Arc::new(Mutex::new(Vec::new()));
 
         let gcd = Self {
@@ -66,7 +66,9 @@ impl GCastDiscoverer {
             known_devices.lock().unwrap().clear();
 
             debug!("Start discovering for google cast devices...");
-            send!(sender, GCastDiscovererMessage::DiscoverStarted);
+            gtk::glib::source::idle_add_once(clone!(@strong sender => move || {
+                crate::utils::send(&sender, GCastDiscovererMessage::DiscoverStarted);
+            }));
 
             let discovery = mdns::discover::all("_googlecast._tcp.local").unwrap();
             let discovery = discovery.timeout(std::time::Duration::from_secs(10));
@@ -85,12 +87,16 @@ impl GCastDiscoverer {
                         debug!("Found new google cast device!");
                         debug!("{:?}", device);
                         known_devices.lock().unwrap().insert(0, device.clone());
-                        send!(sender, GCastDiscovererMessage::FoundDevice(device));
+                        gtk::glib::source::idle_add_once(clone!(@strong sender => move || {
+                            crate::utils::send(&sender, GCastDiscovererMessage::FoundDevice(device));
+                        }));
                     }
                 }
             }
 
-            send!(sender, GCastDiscovererMessage::DiscoverEnded);
+            gtk::glib::source::idle_add_once(clone!(@strong sender => move || {
+                crate::utils::send(&sender, GCastDiscovererMessage::DiscoverEnded);
+            }));
             debug!("GCast discovery ended.")
         });
     }

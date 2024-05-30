@@ -17,8 +17,9 @@
 use std::cell::RefCell;
 use std::rc::Rc;
 
+use async_channel::Sender;
 use futures_util::future::FutureExt;
-use glib::{clone, Sender};
+use glib::clone;
 use gtk::glib;
 use gtk::prelude::*;
 
@@ -92,21 +93,21 @@ impl ToolbarController {
         // start_playback_button
         self.start_playback_button.connect_clicked(
             clone!(@strong self.sender as sender => move |_| {
-                send!(sender, Action::PlaybackSet(true));
+                crate::utils::send(&sender, Action::PlaybackSet(true));
             }),
         );
 
         // stop_playback_button
         self.stop_playback_button.connect_clicked(
             clone!(@strong self.sender as sender => move |_| {
-                send!(sender, Action::PlaybackSet(false));
+                crate::utils::send(&sender, Action::PlaybackSet(false));
             }),
         );
 
         // loading_button
         self.loading_button
             .connect_clicked(clone!(@strong self.sender as sender => move |_| {
-                send!(sender, Action::PlaybackSet(false));
+                crate::utils::send(&sender, Action::PlaybackSet(false));
             }));
 
         // show_player_button
@@ -139,7 +140,7 @@ impl Controller for ToolbarController {
                         station_favicon.set_pixbuf(&pixbuf)
                     }
                 });
-            spawn!(fut);
+            glib::spawn_future_local(fut);
         }
 
         // reset everything else

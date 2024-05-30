@@ -14,13 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use std::cell::RefCell;
+use std::cell::{OnceCell, RefCell};
 
 use adw::prelude::*;
 use adw::subclass::prelude::*;
-use glib::{clone, subclass, Sender};
+use async_channel::Sender;
+use glib::{clone, subclass};
 use gtk::{gdk_pixbuf, gio, glib, CompositeTemplate};
-use once_cell::unsync::OnceCell;
 use url::Url;
 use uuid::Uuid;
 
@@ -62,7 +62,7 @@ mod imp {
     #[glib::object_subclass]
     impl ObjectSubclass for SwCreateStationDialog {
         const NAME: &'static str = "SwCreateStationDialog";
-        type ParentType = adw::Window;
+        type ParentType = adw::Dialog;
         type Type = super::SwCreateStationDialog;
 
         fn class_init(klass: &mut Self::Class) {
@@ -79,14 +79,12 @@ mod imp {
 
     impl WidgetImpl for SwCreateStationDialog {}
 
-    impl WindowImpl for SwCreateStationDialog {}
-
-    impl AdwWindowImpl for SwCreateStationDialog {}
+    impl AdwDialogImpl for SwCreateStationDialog {}
 }
 
 glib::wrapper! {
     pub struct SwCreateStationDialog(ObjectSubclass<imp::SwCreateStationDialog>)
-        @extends gtk::Widget, gtk::Window, adw::Window;
+        @extends gtk::Widget, adw::Dialog;
 }
 
 #[gtk::template_callbacks]
@@ -102,9 +100,6 @@ impl SwCreateStationDialog {
             .append(&imp.favicon_widget.get().unwrap().widget);
         imp.sender.set(sender).unwrap();
 
-        let window = SwApplicationWindow::default();
-        dialog.set_transient_for(Some(&window));
-
         dialog.setup_signals();
         dialog
     }
@@ -114,7 +109,7 @@ impl SwCreateStationDialog {
             .title(i18n("Select station image"))
             .build();
         file_chooser.open(
-            Some(self),
+            Some(&SwApplicationWindow::default()),
             gio::Cancellable::NONE,
             clone!(@weak self as this => move |res| {
                 match res {

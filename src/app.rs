@@ -14,17 +14,17 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use std::cell::RefCell;
+use std::cell::{OnceCell, RefCell};
 use std::rc::Rc;
 use std::str::FromStr;
 
+use adw::prelude::*;
 use adw::subclass::prelude::*;
+use async_channel::{Receiver, Sender};
 use gio::subclass::prelude::ApplicationImpl;
-use glib::{clone, Properties, Receiver, Sender};
+use glib::{clone, Properties};
 use gtk::glib::WeakRef;
-use gtk::prelude::*;
 use gtk::{gio, glib};
-use once_cell::sync::OnceCell;
 
 use crate::api::SwClient;
 use crate::audio::{GCastDevice, PlaybackState, Player, Song};
@@ -74,7 +74,7 @@ mod imp {
         type Type = super::SwApplication;
 
         fn new() -> Self {
-            let (sender, r) = glib::MainContext::channel(glib::Priority::DEFAULT);
+            let (sender, r) = async_channel::bounded(10);
             let receiver = RefCell::new(Some(r));
 
             let library = SwLibrary::new(sender.clone());
@@ -123,28 +123,29 @@ mod imp {
 
             // Setup action channel
             let receiver = self.receiver.borrow_mut().take().unwrap();
-            receiver.attach(
-                None,
-                clone!(@strong app => move |action| app.process_action(action)),
-            );
+            glib::spawn_future_local(clone!(@weak app => async move {
+                while let Ok(action) = receiver.recv().await {
+                    app.process_action(action);
+                }
+            }));
 
             // Connect with radiobrowser server and update library data
             let fut = clone!(@weak app => async move {
                 app.lookup_rb_server().await;
             });
-            spawn!(fut);
+            glib::spawn_future_local(fut);
 
             // Setup settings signal (we get notified when a key gets changed)
             self.settings.connect_changed(
                 None,
                 clone!(@strong self.sender as sender => move |_, key_str| {
                     let key: Key = Key::from_str(key_str).unwrap();
-                    send!(sender, Action::SettingsKeyChanged(key));
+                    crate::utils::send(&sender, Action::SettingsKeyChanged(key));
                 }),
             );
 
             // Small workaround to update every view to the correct sorting/order.
-            send!(self.sender, Action::SettingsKeyChanged(Key::ViewSorting));
+            crate::utils::send(&self.sender, Action::SettingsKeyChanged(Key::ViewSorting));
         }
     }
 
@@ -197,8 +198,8 @@ impl SwApplication {
             // app.show-preferences
             gio::ActionEntry::builder("show-preferences")
                 .activate(clone!(@weak window => move |_, _, _| {
-                    let settings_window = SettingsWindow::new(&window.upcast());
-                    settings_window.show();
+                    let settings_window = SettingsWindow::new();
+                    settings_window.present(&window);
                 }))
                 .build(),
             // app.quit

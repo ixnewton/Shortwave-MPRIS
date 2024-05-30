@@ -20,7 +20,6 @@ use std::sync::mpsc::{channel, Receiver, Sender};
 use std::sync::{Arc, Mutex};
 use std::thread;
 
-use gtk::glib;
 use rust_cast::channels::connection::ConnectionResponse;
 use rust_cast::channels::heartbeat::HeartbeatResponse;
 use rust_cast::channels::media::{GenericMediaMetadata, Image, Media, StreamType};
@@ -42,14 +41,14 @@ pub struct GCastController {
     station_metadata: Arc<Mutex<Option<StationMetadata>>>,
     device_ip: Arc<Mutex<String>>,
     gcast_sender: Sender<GCastAction>,
-    app_sender: glib::Sender<Action>,
+    app_sender: async_channel::Sender<Action>,
 }
 
 // TODO: Re-structure this mess. Code cleanup is necessary.
 // Even clippy starts to complain: "warning: the function has a cognitive
 // complexity of (36/25)" Oops.
 impl GCastController {
-    pub fn new(app_sender: glib::Sender<Action>) -> Rc<Self> {
+    pub fn new(app_sender: async_channel::Sender<Action>) -> Rc<Self> {
         let station_metadata = Arc::new(Mutex::new(None));
         let device_ip = Arc::new(Mutex::new("".to_string()));
 
@@ -213,7 +212,7 @@ impl GCastController {
         send!(self.gcast_sender, GCastAction::Connect);
 
         // Stop audio playback
-        send!(self.app_sender, Action::PlaybackSet(false));
+        crate::utils::send(&self.app_sender, Action::PlaybackSet(false));
     }
 
     pub fn disconnect_from_device(&self) {
@@ -232,7 +231,7 @@ impl Controller for Rc<GCastController> {
             send!(self.gcast_sender, GCastAction::SetStation);
 
             // Stop audio playback
-            send!(self.app_sender, Action::PlaybackSet(false));
+            crate::utils::send(&self.app_sender, Action::PlaybackSet(false));
         } else {
             debug!("No device ip available, don't set station. ")
         }
@@ -249,4 +248,17 @@ impl Controller for Rc<GCastController> {
     fn set_song_title(&self, _title: &str) {
         // Ignore
     }
+}
+
+#[macro_export]
+macro_rules! send {
+    ($sender:expr, $action:expr) => {
+        if let Err(err) = $sender.send($action) {
+            error!(
+                "Failed to send \"{}\" action due to {}",
+                stringify!($action),
+                err
+            );
+        }
+    };
 }

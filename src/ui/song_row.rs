@@ -14,12 +14,14 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+use std::cell::OnceCell;
+
 use adw::prelude::*;
 use adw::subclass::prelude::*;
+use async_channel::Sender;
 use chrono::NaiveTime;
-use glib::{clone, subclass, Sender};
+use glib::{clone, subclass};
 use gtk::{gio, glib, CompositeTemplate};
-use once_cell::unsync::OnceCell;
 
 use crate::app::Action;
 use crate::audio::Song;
@@ -101,7 +103,7 @@ impl SwSongRow {
                 // Save the song
                 let sender = imp.sender.get().unwrap();
                 let song = imp.song.get().unwrap();
-                send!(sender, Action::PlaybackSaveSong(song.clone()));
+                crate::utils::send(sender, Action::PlaybackSaveSong(song.clone()));
 
                 // Display play button instead of save button
                 imp.button_stack.set_visible_child_name("open");
