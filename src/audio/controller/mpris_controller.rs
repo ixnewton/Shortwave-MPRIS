@@ -133,7 +133,7 @@ impl MprisController {
         // mpris volume
         self.mpris.connect_volume(clone!(@strong self.sender as sender, @weak self.volume as old_volume => move |new_volume| {
             // if *old_volume.borrow() != new_volume {
-            if (*old_volume.borrow() - new_volume).abs() > std::f64::EPSILON {
+            if (*old_volume.borrow() - new_volume).abs() > f64::EPSILON {
                 crate::utils::send(&sender, Action::PlaybackSetVolume(new_volume));
                 *old_volume.borrow_mut() = new_volume;
             }
