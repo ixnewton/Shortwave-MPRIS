@@ -43,7 +43,7 @@ impl SettingsWindow {
     }
 
     pub fn show(&self) {
-        self.widget.set_visible(true);
+        self.widget.present();
     }
 
     fn setup_signals(&self) {

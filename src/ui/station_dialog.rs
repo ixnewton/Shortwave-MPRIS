@@ -269,7 +269,6 @@ mod imp {
                 .library()
                 .add_stations(vec![station]);
 
-            obj.hide();
             obj.close();
         }
 
@@ -282,7 +281,6 @@ mod imp {
                 .library()
                 .remove_stations(vec![station]);
 
-            obj.hide();
             obj.close();
         }
 
@@ -294,7 +292,6 @@ mod imp {
             let app = SwApplication::default();
             app.imp().player.set_station(station);
 
-            obj.hide();
             obj.close();
         }
 

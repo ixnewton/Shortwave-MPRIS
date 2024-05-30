@@ -18,7 +18,7 @@ use adw::prelude::*;
 use adw::subclass::prelude::*;
 use chrono::NaiveTime;
 use glib::{clone, subclass, Sender};
-use gtk::{gdk, glib, CompositeTemplate};
+use gtk::{gio, glib, CompositeTemplate};
 use once_cell::unsync::OnceCell;
 
 use crate::app::Action;
@@ -111,13 +111,14 @@ impl SwSongRow {
         imp.open_button
             .connect_clicked(clone!(@strong self as this => move |_| {
                 let song = this.imp().song.get().unwrap();
-                let path = format!("file://{}", song.path.as_os_str().to_str().unwrap());
-
-                gtk::show_uri(
-                    Some(&SwApplicationWindow::default()),
-                    &path,
-                    gdk::CURRENT_TIME,
-                );
+                let file = gio::File::for_path(&song.path);
+                let launcher = gtk::FileLauncher::new(Some(&file));
+                let window = SwApplicationWindow::default();
+                launcher.launch(Some(&window), gio::Cancellable::NONE, |res| {
+                    if let Err(err) = res {
+                        error!("Could not open dir: {err}");
+                    }
+                })
             }));
     }
 

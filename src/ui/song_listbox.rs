@@ -16,7 +16,7 @@
 
 use glib::Sender;
 use gtk::prelude::*;
-use gtk::{gdk, glib};
+use gtk::{gio, glib};
 
 use crate::app::Action;
 use crate::audio::Song;
@@ -54,12 +54,14 @@ impl SongListBox {
         get_widget!(self.builder, gtk::Button, open_music_folder_button);
         open_music_folder_button.connect_clicked(|_| {
             if let Some(dir) = glib::user_special_dir(glib::UserDirectory::Music) {
-                let path = format!("file://{}", dir.as_os_str().to_str().unwrap());
-                gtk::show_uri(
-                    Some(&SwApplicationWindow::default()),
-                    &path,
-                    gdk::CURRENT_TIME,
-                );
+                let file = gio::File::for_path(dir);
+                let launcher = gtk::FileLauncher::new(Some(&file));
+                let window = SwApplicationWindow::default();
+                launcher.launch(Some(&window), gio::Cancellable::NONE, |res| {
+                    if let Err(err) = res {
+                        error!("Could not open dir: {err}");
+                    }
+                })
             }
         });
     }

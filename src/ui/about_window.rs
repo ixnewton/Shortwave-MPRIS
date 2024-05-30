@@ -47,5 +47,5 @@ pub fn show(parent: &SwApplicationWindow) {
     window.set_version(&version);
     window.set_website("https://gitlab.gnome.org/World/Shortwave");
 
-    window.show();
+    window.present();
 }

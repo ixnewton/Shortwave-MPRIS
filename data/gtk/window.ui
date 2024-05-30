@@ -14,12 +14,6 @@
     </child>
     <child>
       <object class="AdwBreakpoint">
-        <condition>min-width: 625px</condition>
-        <setter object="split_view" property="show_sidebar">True</setter>
-      </object>
-    </child>
-    <child>
-      <object class="AdwBreakpoint">
         <condition>max-height: 150px</condition>
         <setter object="stack" property="visible-child">mini_controller_handle</setter>
       </object>
@@ -33,14 +27,12 @@
             <child>
               <object class="AdwOverlaySplitView" id="split_view">
                 <property name="sidebar-position">end</property>
-                <property name="pin-sidebar">True</property>
                 <property name="min-sidebar-width">300</property>
                 <property name="content">
                   <object class="AdwNavigationPage">
                     <property name="title" translatable="yes">Main View</property>
                     <child>
-                      <object class="GtkBox">
-                        <property name="orientation">vertical</property>
+                      <object class="AdwToolbarView" id="main_view_toolbarview">
                         <child>
                           <object class="AdwNavigationView" id="navigation_view">
                             <child>
@@ -54,7 +46,7 @@
                             </child>
                           </object>
                         </child>
-                        <child>
+                        <child type="bottom">
                           <object class="GtkRevealer" id="toolbar_controller_revealer">
                             <property name="transition_type">slide-up</property>
                             <child>

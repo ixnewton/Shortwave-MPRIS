@@ -125,7 +125,7 @@ impl SwStationFlowBox {
                 let station = row.station();
 
                 let station_dialog = SwStationDialog::new(&station);
-                station_dialog.show();
+                station_dialog.present();
             }));
     }
 }

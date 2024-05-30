@@ -19,7 +19,7 @@ use std::rc::Rc;
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use glib::{clone, subclass, Sender};
-use gtk::{gdk, gio, glib, CompositeTemplate};
+use gtk::{gio, glib, CompositeTemplate};
 use once_cell::unsync::OnceCell;
 
 use crate::app::{Action, SwApplication};
@@ -99,7 +99,7 @@ mod imp {
 
             settings_manager::set_integer(Key::WindowWidth, width);
             settings_manager::set_integer(Key::WindowHeight, height);
-            glib::Propagation::Proceed
+            self.parent_close_request()
         }
     }
 
@@ -171,19 +171,15 @@ impl SwApplicationWindow {
         self.add_action_entries([
             // win.open-radio-browser-info
             gio::ActionEntry::builder("open-radio-browser-info")
-                .activate(|_, _, _| {
-                    gtk::show_uri(
-                        Some(&SwApplicationWindow::default()),
-                        "https://www.radio-browser.info/",
-                        gdk::CURRENT_TIME,
-                    );
+                .activate(|window: &Self, _, _| {
+                    window.show_uri("https://www.radio-browser.info/");
                 })
                 .build(),
             // win.create-new-station
             gio::ActionEntry::builder("create-new-station")
                 .activate(clone!(@strong sender => move |_, _, _| {
                     let dialog = SwCreateStationDialog::new(sender.clone());
-                    dialog.show();
+                    dialog.present();
                 }))
                 .build(),
             // win.show-player
@@ -284,6 +280,15 @@ impl SwApplicationWindow {
 
         x_animation.play();
         y_animation.play();
+    }
+
+    pub fn show_uri(&self, uri: &str) {
+        let launcher = gtk::UriLauncher::new(uri);
+        launcher.launch(Some(self), gio::Cancellable::NONE, |res| {
+            if let Err(err) = res {
+                error!("Could not launch uri: {err}");
+            }
+        });
     }
 }
 
