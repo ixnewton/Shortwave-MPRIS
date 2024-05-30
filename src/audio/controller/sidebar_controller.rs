@@ -43,7 +43,7 @@ pub struct SidebarController {
     stop_playback_button: gtk::Button,
     loading_button: gtk::Button,
     error_label: gtk::Label,
-    volume_button: gtk::VolumeButton,
+    volume_button: gtk::ScaleButton,
     spinner: gtk::Spinner,
     volume_signal_id: glib::signal::SignalHandlerId,
 
@@ -65,7 +65,7 @@ impl SidebarController {
         get_widget!(builder, gtk::Button, stop_playback_button);
         get_widget!(builder, gtk::Button, loading_button);
         get_widget!(builder, gtk::Label, error_label);
-        get_widget!(builder, gtk::VolumeButton, volume_button);
+        get_widget!(builder, gtk::ScaleButton, volume_button);
         get_widget!(builder, gtk::Spinner, spinner);
 
         let station = Rc::new(RefCell::new(None));

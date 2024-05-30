@@ -38,7 +38,7 @@ pub struct MiniController {
     start_playback_button: gtk::Button,
     stop_playback_button: gtk::Button,
     loading_button: gtk::Button,
-    volume_button: gtk::VolumeButton,
+    volume_button: gtk::ScaleButton,
     spinner: gtk::Spinner,
     volume_signal_id: glib::signal::SignalHandlerId,
 }
@@ -55,7 +55,7 @@ impl MiniController {
         get_widget!(builder, gtk::Button, start_playback_button);
         get_widget!(builder, gtk::Button, stop_playback_button);
         get_widget!(builder, gtk::Button, loading_button);
-        get_widget!(builder, gtk::VolumeButton, volume_button);
+        get_widget!(builder, gtk::ScaleButton, volume_button);
         get_widget!(builder, gtk::Spinner, spinner);
 
         // volume_button | We need the volume_signal_id later to block the signal

@@ -22,7 +22,7 @@
           <object class="GtkLabel">
             <property name="label" translatable="yes">An error occurred</property>
             <attributes>
-              <attribute name="weight" value="bold"/>
+              <attribute name="weight" value="bold" />
             </attributes>
           </object>
         </child>
@@ -33,10 +33,10 @@
             <property name="wrap">True</property>
             <property name="max_width_chars">30</property>
             <attributes>
-              <attribute name="style" value="italic"/>
+              <attribute name="style" value="italic" />
             </attributes>
             <style>
-              <class name="dim-label"/>
+              <class name="dim-label" />
             </style>
           </object>
         </child>
@@ -54,7 +54,7 @@
         <property name="orientation">vertical</property>
         <property name="overflow">hidden</property>
         <style>
-          <class name="card"/>
+          <class name="card" />
         </style>
       </object>
     </child>
@@ -69,7 +69,7 @@
         <property name="ellipsize">end</property>
         <property name="lines">3</property>
         <style>
-          <class name="title-2"/>
+          <class name="title-2" />
         </style>
       </object>
     </child>
@@ -98,10 +98,14 @@
             <property name="margin_bottom">6</property>
             <property name="spacing">12</property>
             <child>
-              <object class="GtkVolumeButton" id="volume_button">
+              <object class="GtkScaleButton" id="volume_button">
                 <property name="halign">center</property>
                 <property name="valign">center</property>
                 <property name="value">1</property>
+                <property name="icons">audio-volume-muted-symbolic
+audio-volume-high-symbolic
+audio-volume-low-symbolic
+audio-volume-medium-symbolic</property>
               </object>
             </child>
             <child>
@@ -176,7 +180,7 @@
                 <property name="menu_model">player_menu</property>
                 <property name="tooltip_text" translatable="yes">Station Menu</property>
                 <style>
-                  <class name="flat"/>
+                  <class name="flat" />
                 </style>
               </object>
             </child>
@@ -198,4 +202,3 @@
     </section>
   </menu>
 </interface>
-

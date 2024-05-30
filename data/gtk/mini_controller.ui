@@ -26,8 +26,8 @@
                         <property name="icon_name">media-playback-stop-symbolic</property>
                         <property name="tooltip_text" translatable="yes">Stop</property>
                         <style>
-                          <class name="mini-controller-button"/>
-                          <class name="circular"/>
+                          <class name="mini-controller-button" />
+                          <class name="circular" />
                         </style>
                       </object>
                     </property>
@@ -41,8 +41,8 @@
                         <property name="icon_name">media-playback-start-symbolic</property>
                         <property name="tooltip_text" translatable="yes">Start</property>
                         <style>
-                          <class name="mini-controller-button"/>
-                          <class name="circular"/>
+                          <class name="mini-controller-button" />
+                          <class name="circular" />
                         </style>
                       </object>
                     </property>
@@ -54,11 +54,11 @@
                     <property name="child">
                       <object class="GtkButton" id="loading_button">
                         <child>
-                          <object class="GtkSpinner" id="spinner"/>
+                          <object class="GtkSpinner" id="spinner" />
                         </child>
                         <style>
-                          <class name="mini-controller-button"/>
-                          <class name="circular"/>
+                          <class name="mini-controller-button" />
+                          <class name="circular" />
                         </style>
                       </object>
                     </property>
@@ -67,11 +67,15 @@
               </object>
             </child>
             <child>
-              <object class="GtkVolumeButton" id="volume_button">
+              <object class="GtkScaleButton" id="volume_button">
                 <property name="halign">center</property>
                 <property name="valign">center</property>
+                <property name="icons">audio-volume-muted-symbolic
+audio-volume-high-symbolic
+audio-volume-low-symbolic
+audio-volume-medium-symbolic</property>
                 <style>
-                  <class name="mini-controller-volume-button"/>
+                  <class name="mini-controller-volume-button" />
                 </style>
               </object>
             </child>
@@ -86,11 +90,11 @@
               <object class="GtkLabel">
                 <property name="label" translatable="yes">SHORTWAVE INTERNET RADIO</property>
                 <attributes>
-                  <attribute name="font-desc" value="Cantarell Bold 9"/>
-                  <attribute name="style" value="italic"/>
+                  <attribute name="font-desc" value="Cantarell Bold 9" />
+                  <attribute name="style" value="italic" />
                 </attributes>
                 <style>
-                  <class name="dim-label"/>
+                  <class name="dim-label" />
                 </style>
               </object>
             </child>
@@ -109,7 +113,7 @@
                     <property name="label" translatable="yes">No Playback</property>
                     <property name="ellipsize">end</property>
                     <attributes>
-                      <attribute name="font-desc" value="Nimbus Mono PS Bold 14"/>
+                      <attribute name="font-desc" value="Nimbus Mono PS Bold 14" />
                     </attributes>
                   </object>
                 </child>
@@ -122,7 +126,7 @@
                         <property name="ellipsize">end</property>
                         <property name="xalign">0</property>
                         <attributes>
-                          <attribute name="font-desc" value="Nimbus Mono PS Bold 12"/>
+                          <attribute name="font-desc" value="Nimbus Mono PS Bold 12" />
                         </attributes>
                       </object>
                     </child>
@@ -131,8 +135,8 @@
               </object>
             </child>
             <style>
-              <class name="frame"/>
-              <class name="mini-controller-display"/>
+              <class name="frame" />
+              <class name="mini-controller-display" />
             </style>
           </object>
         </child>
@@ -148,8 +152,8 @@
                 <property name="icon_name">window-close-symbolic</property>
                 <property name="tooltip_text" translatable="yes">Close</property>
                 <style>
-                  <class name="circular"/>
-                  <class name="mini-controller-button"/>
+                  <class name="circular" />
+                  <class name="mini-controller-button" />
                 </style>
               </object>
             </child>
@@ -159,8 +163,8 @@
                 <property name="icon_name">restore-window-symbolic</property>
                 <property name="tooltip_text" translatable="yes">Resize</property>
                 <style>
-                  <class name="circular"/>
-                  <class name="mini-controller-button"/>
+                  <class name="circular" />
+                  <class name="mini-controller-button" />
                 </style>
               </object>
             </child>
@@ -169,8 +173,7 @@
       </object>
     </child>
     <style>
-      <class name="mini-controller"/>
+      <class name="mini-controller" />
     </style>
   </object>
 </interface>
-
