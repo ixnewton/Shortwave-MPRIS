@@ -98,7 +98,7 @@ impl MprisController {
         // mpris raise
         self.mpris.connect_raise(move || {
             let window = SwApplicationWindow::default();
-            window.present_with_time((glib::monotonic_time() / 1000) as u32);
+            window.present();
         });
 
         // mpris play / pause
