@@ -82,7 +82,9 @@ impl SwStreamingDialog {
         // Setup Google Cast discoverer
         let gcd_t = GCastDiscoverer::new();
         let gcd = Rc::new(gcd_t.0);
-        gcd.start_discover();
+        spawn!(clone!(@weak gcd => async move {
+            let _ = gcd.discover().await;
+        }));
         let gcd_receiver = gcd_t.1;
 
         let imp = dialog.imp();
@@ -146,7 +148,7 @@ impl SwStreamingDialog {
     }
 
     #[template_callback]
-    fn search_again(&self) {
-        self.imp().gcd.get().unwrap().start_discover();
+    async fn search_again(&self) {
+        let _ = self.imp().gcd.get().unwrap().discover().await;
     }
 }

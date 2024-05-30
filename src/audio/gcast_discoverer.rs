@@ -1,5 +1,5 @@
 // Shortwave - gcast_discoverer.rs
-// Copyright (C) 2021-2023  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2021-2024  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,17 +14,15 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-// TODO: Update this to the latest version
-// https://crates.io/crates/mdns
-
 use std::collections::HashMap;
 use std::net::IpAddr;
 use std::sync::{Arc, Mutex};
-use std::thread;
 
 use async_channel::{Receiver, Sender};
+use futures_util::pin_mut;
+use futures_util::stream::StreamExt;
 use gtk::glib::clone;
-use mdns::{Record, RecordKind};
+use mdns::{Error, Record, RecordKind};
 
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct GCastDevice {
@@ -57,48 +55,45 @@ impl GCastDiscoverer {
         (gcd, receiver)
     }
 
-    pub fn start_discover(&self) {
+    // TODO: Refactor this, and get rid of the message passing
+    pub async fn discover(&self) -> Result<(), Error> {
         let known_devices = self.known_devices.clone();
         let sender = self.sender.clone();
 
-        thread::spawn(move || {
-            // Reset previous found devices
-            known_devices.lock().unwrap().clear();
+        // Reset previous found devices
+        known_devices.lock().unwrap().clear();
 
-            debug!("Start discovering for google cast devices...");
-            gtk::glib::source::idle_add_once(clone!(@strong sender => move || {
-                crate::utils::send(&sender, GCastDiscovererMessage::DiscoverStarted);
-            }));
+        debug!("Start discovering for google cast devices...");
+        gtk::glib::source::idle_add_once(clone!(@strong sender => move || {
+            crate::utils::send(&sender, GCastDiscovererMessage::DiscoverStarted);
+        }));
 
-            let discovery = mdns::discover::all("_googlecast._tcp.local").unwrap();
-            let discovery = discovery.timeout(std::time::Duration::from_secs(10));
+        let stream =
+            mdns::discover::all("_googlecast._tcp.local", std::time::Duration::from_secs(15))?
+                .listen();
+        pin_mut!(stream);
 
-            for response in discovery {
-                if let Err(err) = response {
-                    warn!("Could not discover devices: {}", err.to_string());
-                    break;
-                }
-                let response = response.unwrap();
-
-                let known_devices = known_devices.clone();
-                let sender = sender.clone();
-                if let Some(device) = Self::device(response) {
-                    if !known_devices.lock().unwrap().contains(&device) {
-                        debug!("Found new google cast device!");
-                        debug!("{:?}", device);
-                        known_devices.lock().unwrap().insert(0, device.clone());
-                        gtk::glib::source::idle_add_once(clone!(@strong sender => move || {
-                            crate::utils::send(&sender, GCastDiscovererMessage::FoundDevice(device));
-                        }));
-                    }
+        while let Some(Ok(response)) = stream.next().await {
+            let known_devices = known_devices.clone();
+            let sender = sender.clone();
+            if let Some(device) = Self::device(response) {
+                if !known_devices.lock().unwrap().contains(&device) {
+                    debug!("Found new google cast device!");
+                    debug!("{:?}", device);
+                    known_devices.lock().unwrap().insert(0, device.clone());
+                    gtk::glib::source::idle_add_once(clone!(@strong sender => move || {
+                        crate::utils::send(&sender, GCastDiscovererMessage::FoundDevice(device));
+                    }));
                 }
             }
+        }
 
-            gtk::glib::source::idle_add_once(clone!(@strong sender => move || {
-                crate::utils::send(&sender, GCastDiscovererMessage::DiscoverEnded);
-            }));
-            debug!("GCast discovery ended.")
-        });
+        gtk::glib::source::idle_add_once(clone!(@strong sender => move || {
+            crate::utils::send(&sender, GCastDiscovererMessage::DiscoverEnded);
+        }));
+        debug!("GCast discovery ended.");
+
+        Ok(())
     }
 
     pub fn device_by_ip_addr(&self, ip: IpAddr) -> Option<GCastDevice> {
