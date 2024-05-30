@@ -1,5 +1,5 @@
 // Shortwave - featured_carousel.rs
-// Copyright (C) 2021-2022  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2021-2024  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -95,12 +95,11 @@ glib::wrapper! {
 }
 
 impl SwFeaturedCarousel {
+    // add_provider_for_display method is not deprecated, issue with annotations
+    #[allow(deprecated)]
     pub fn init(&self) {
         let imp = self.imp();
-
-        let style_ctx = imp.carousel.style_context();
-        style_ctx.add_provider(&imp.css_provider, 600);
-
+        gtk::StyleContext::add_provider_for_display(&self.display(), &imp.css_provider, 600);
         self.setup_signals();
     }
 
@@ -221,7 +220,7 @@ impl SwFeaturedCarousel {
     fn set_color(&self, color: &gdk::RGBA) {
         let imp = self.imp();
 
-        imp.css_provider.load_from_data(&format!(
+        imp.css_provider.load_from_string(&format!(
             "carousel {{
                   background-color: {};
                 }}",
