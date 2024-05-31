@@ -5,22 +5,22 @@
 # Dingzhong Chen <wsxy162@gmail.com>, 2020.
 # Junping Sun <junping@nfschina.com>, 2021.
 # Liu Tao <lyuutau@outlook.com>, 2021.
-# lumingzh <lumingzh@qq.com>, 2022-2023.
+# lumingzh <lumingzh@qq.com>, 2022-2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2023-09-10 16:26+0000\n"
-"PO-Revision-Date: 2023-09-11 16:35+0800\n"
+"POT-Creation-Date: 2024-05-30 15:41+0000\n"
+"PO-Revision-Date: 2024-06-01 07:40+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
-"Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
+"Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0\n"
-"X-Generator: Gtranslator 42.0\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Gtranslator 46.1\n"
 "X-DL-Team: zh_CN\n"
 "X-DL-Module: shortwave\n"
 "X-DL-Branch: master\n"
@@ -37,91 +37,93 @@ msgstr "@NAME@"
 msgid "Gradio;Radio;Stream;Wave;"
 msgstr "Gradio;Radio;Stream;Wave;收音机;流;波;"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:6
+#. General
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:10
 #: src/ui/about_window.rs:35
 msgid "Listen to internet radio"
 msgstr "收听互联网广播"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:8
-msgid "Felix Häcker"
-msgstr "Felix Häcker"
-
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:16
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:12
 msgid ""
 "Shortwave is an internet radio player that provides access to a station "
 "database with over 30,000 stations."
 msgstr ""
 "短波是个提供对具有超过 30000 个电台的电台数据库访问的互联网广播播放器。"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:19
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:15
 msgid "Features:"
 msgstr "特性："
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:21
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:17
 msgid "Create your own library where you can add your favorite stations"
 msgstr "创建您自己的媒体库，可以在其中添加最喜欢的电台"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:22
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:18
 msgid "Easily search and discover new radio stations"
 msgstr "轻松搜索并发现新电台"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:23
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:19
 msgid ""
 "Automatic recognition of songs, with the possibility to save them "
 "individually"
 msgstr "自动识别歌曲，并可以将其分别保存"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:24
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:20
 msgid "Responsive application layout, compatible for small and large screens"
 msgstr "响应式应用程序布局，兼容小型屏幕和大型屏幕"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:25
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:21
 msgid "Play audio on supported network devices (e.g. Google Chromecasts)"
 msgstr "在受支持的网络设备（例如 Google Chromecasts）上播放音频"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:26
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:22
 msgid "Seamless integration into the GNOME desktop environment"
 msgstr "与 GNOME 桌面环境无缝集成"
+
+#. Branding
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:28
+msgid "Felix Häcker"
+msgstr "Felix Häcker"
 
 #: data/gtk/create_station_dialog.ui:8
 msgid "Create new station"
 msgstr "创建新电台"
 
-#: data/gtk/create_station_dialog.ui:32
+#: data/gtk/create_station_dialog.ui:26
 msgid "Create New Station"
 msgstr "创建新电台"
 
-#: data/gtk/create_station_dialog.ui:33
+#: data/gtk/create_station_dialog.ui:27
 msgid ""
 "You can decide if you want the new station to be visible for all users "
 "worldwide or if you want to create a local station."
 msgstr "您可以决定新电台是否对全球所有用户可见或创建本地电台。"
 
-#: data/gtk/create_station_dialog.ui:43
+#: data/gtk/create_station_dialog.ui:36
 msgid "Create _Public Station"
 msgstr "创建公共电台(_P)"
 
-#: data/gtk/create_station_dialog.ui:54
+#: data/gtk/create_station_dialog.ui:47
 msgid "Create _Local Station"
 msgstr "创建本地电台(_L)"
 
-#: data/gtk/create_station_dialog.ui:80
+#: data/gtk/create_station_dialog.ui:72
 msgid "Create Local Station"
 msgstr "创建本地电台"
 
-#: data/gtk/create_station_dialog.ui:113
+#: data/gtk/create_station_dialog.ui:105
 msgid "Change station image"
 msgstr "修改电台图像"
 
-#: data/gtk/create_station_dialog.ui:137 src/ui/pages/search_page.rs:211
+#: data/gtk/create_station_dialog.ui:129 src/ui/pages/search_page.rs:211
 msgid "Name"
 msgstr "名称"
 
-#: data/gtk/create_station_dialog.ui:145
+#: data/gtk/create_station_dialog.ui:137
 msgid "Stream URL"
 msgstr "媒体流 URL"
 
-#: data/gtk/create_station_dialog.ui:153
+#: data/gtk/create_station_dialog.ui:145
 msgid "Create Station"
 msgstr "创建电台"
 
@@ -277,7 +279,7 @@ msgid "_About Shortwave"
 msgstr "关于短波(_A)"
 
 #: data/gtk/mini_controller.ui:27 data/gtk/sidebar_controller.ui:116
-#: data/gtk/toolbar_controller.ui:79
+#: data/gtk/toolbar_controller.ui:70
 msgid "Stop"
 msgstr "停止"
 
@@ -290,7 +292,7 @@ msgid "SHORTWAVE INTERNET RADIO"
 msgstr "短波互联网电台"
 
 #: data/gtk/mini_controller.ui:109 data/gtk/sidebar_controller.ui:64
-#: data/gtk/toolbar_controller.ui:38
+#: data/gtk/toolbar_controller.ui:29
 msgid "No Playback"
 msgstr "无回放"
 
@@ -344,7 +346,7 @@ msgid "An error occurred"
 msgstr "发生了错误"
 
 #: data/gtk/sidebar_controller.ui:131 data/gtk/station_row.ui:69
-#: data/gtk/toolbar_controller.ui:90
+#: data/gtk/toolbar_controller.ui:81
 msgid "Play"
 msgstr "播放"
 
@@ -467,29 +469,29 @@ msgstr "复制"
 msgid "Stream to a Device"
 msgstr "串流到设备"
 
-#: data/gtk/streaming_dialog.ui:26
+#: data/gtk/streaming_dialog.ui:28
 msgid ""
 "Audio playback can be streamed to a network device (requires Google Cast "
 "support)."
 msgstr "音频播放可以串流至网络设备（需要 Google Cast 支持）。"
 
-#: data/gtk/streaming_dialog.ui:41
+#: data/gtk/streaming_dialog.ui:43
 msgid "No Devices Found"
 msgstr "未找到设备"
 
-#: data/gtk/streaming_dialog.ui:47 data/gtk/streaming_dialog.ui:70
-msgid "Search again"
+#: data/gtk/streaming_dialog.ui:49 data/gtk/streaming_dialog.ui:75
+msgid "Search Again"
 msgstr "再次搜索"
 
-#: data/gtk/streaming_dialog.ui:64
+#: data/gtk/streaming_dialog.ui:69
 msgid "Search Completed"
 msgstr "搜索已完成"
 
-#: data/gtk/streaming_dialog.ui:87
+#: data/gtk/streaming_dialog.ui:95
 msgid "Searching for Devices…"
 msgstr "正在搜索设备…"
 
-#: data/gtk/window.ui:40
+#: data/gtk/window.ui:33
 msgid "Main View"
 msgstr "主视图"
 
@@ -498,11 +500,11 @@ msgstr "主视图"
 msgid "Unable to access music directory. Saving song in home directory."
 msgstr "无法访问音乐目录。在主目录保存歌曲。"
 
-#: src/audio/player.rs:190
+#: src/audio/player.rs:189
 msgid "Station cannot be streamed. URL is not valid."
 msgstr "电台无法串流。网址无效。"
 
-#: src/audio/player.rs:241
+#: src/audio/player.rs:240
 msgid "Cannot save song."
 msgstr "无法保存歌曲。"
 
@@ -511,9 +513,9 @@ msgid "translator-credits"
 msgstr ""
 "Damned <damnedlies@163.com>, 2020.\n"
 "Dingzhong Chen <wsxy162@gmail.com>, 2020.\n"
-"lumingzh <lumingzh@qq.com>, 2022-2023."
+"lumingzh <lumingzh@qq.com>, 2022-2024."
 
-#: src/ui/create_station_dialog.rs:103
+#: src/ui/create_station_dialog.rs:114
 msgid "Select station image"
 msgstr "选择电台图像"
 
