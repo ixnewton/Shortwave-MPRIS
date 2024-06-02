@@ -1,5 +1,5 @@
 // Shortwave - library.rs
-// Copyright (C) 2021-2023  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2021-2024  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,9 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use std::cell::{OnceCell, RefCell};
+use std::cell::RefCell;
 
-use async_channel::Sender;
 use futures_util::future::join_all;
 use glib::{clone, Enum, Properties};
 use gtk::glib;
@@ -25,7 +24,7 @@ use gtk::subclass::prelude::*;
 
 use super::models::StationEntry;
 use crate::api::{Error, SwClient, SwStation};
-use crate::app::{Action, SwApplication};
+use crate::app::SwApplication;
 use crate::database::{connection, queries};
 use crate::model::SwStationModel;
 
@@ -53,7 +52,6 @@ mod imp {
         pub status: RefCell<SwLibraryStatus>,
 
         pub client: SwClient,
-        pub sender: OnceCell<Sender<Action>>,
     }
 
     #[glib::object_subclass]
@@ -71,13 +69,6 @@ glib::wrapper! {
 }
 
 impl SwLibrary {
-    pub fn new(sender: Sender<Action>) -> Self {
-        let library = glib::Object::new::<Self>();
-        library.imp().sender.set(sender).unwrap();
-
-        library
-    }
-
     pub fn update_data(&self) {
         // Load stations asynchronously from the sqlite database
         let future = clone!(@strong self as this => async move {
@@ -236,5 +227,11 @@ impl SwLibrary {
         } else {
             warn!("Unable to load station {}, no cached data available.", uuid);
         }
+    }
+}
+
+impl Default for SwLibrary {
+    fn default() -> Self {
+        glib::Object::new()
     }
 }

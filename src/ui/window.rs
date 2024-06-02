@@ -1,5 +1,5 @@
 // Shortwave - window.rs
-// Copyright (C) 2021-2023  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2021-2024  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -85,7 +85,7 @@ mod imp {
             let sender = app.imp().sender.clone();
             let player = app.imp().player.clone();
 
-            self.obj().setup_widgets(sender.clone(), player);
+            self.obj().setup_widgets(player);
             self.obj().setup_gactions(sender);
         }
     }
@@ -123,13 +123,13 @@ impl SwApplicationWindow {
         glib::Object::new::<Self>()
     }
 
-    pub fn setup_widgets(&self, sender: Sender<Action>, player: Rc<Player>) {
+    pub fn setup_widgets(&self, player: Rc<Player>) {
         let imp = self.imp();
 
         // Init pages
-        imp.library_page.init(sender.clone());
-        imp.discover_page.init(sender.clone());
-        imp.search_page.init(sender);
+        imp.library_page.init();
+        imp.discover_page.init();
+        imp.search_page.init();
 
         // Wire everything up
         imp.mini_controller_box
@@ -178,10 +178,10 @@ impl SwApplicationWindow {
                 .build(),
             // win.create-new-station
             gio::ActionEntry::builder("create-new-station")
-                .activate(clone!(@strong sender => move |_, _, _| {
-                    let dialog = SwCreateStationDialog::new(sender.clone());
+                .activate(move |_, _, _| {
+                    let dialog = SwCreateStationDialog::new();
                     dialog.present(&SwApplicationWindow::default());
-                }))
+                })
                 .build(),
             // win.show-player
             gio::ActionEntry::builder("show-player")

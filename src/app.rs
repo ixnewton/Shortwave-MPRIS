@@ -77,7 +77,7 @@ mod imp {
             let (sender, r) = async_channel::bounded(10);
             let receiver = RefCell::new(Some(r));
 
-            let library = SwLibrary::new(sender.clone());
+            let library = SwLibrary::default();
             let rb_server = RefCell::default();
 
             let window = OnceCell::new();

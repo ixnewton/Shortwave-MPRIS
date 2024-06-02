@@ -1,5 +1,5 @@
 // Shortwave - search_page.rs
-// Copyright (C) 2021-2023  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2021-2024  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,17 +14,15 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use std::cell::{OnceCell, RefCell};
+use std::cell::RefCell;
 use std::rc::Rc;
 
 use adw::subclass::prelude::*;
-use async_channel::Sender;
 use glib::{clone, closure, subclass};
 use gtk::prelude::*;
 use gtk::{gio, glib, CompositeTemplate};
 
 use crate::api::{Error, StationRequest, SwClient};
-use crate::app::Action;
 use crate::i18n::*;
 use crate::ui::{SwApplicationWindow, SwStationFlowBox};
 
@@ -54,7 +52,6 @@ mod imp {
 
         pub station_request: Rc<RefCell<StationRequest>>,
         pub timeout_id: Rc<RefCell<Option<glib::source::SourceId>>>,
-        pub sender: OnceCell<Sender<Action>>,
     }
 
     #[glib::object_subclass]
@@ -81,7 +78,6 @@ mod imp {
                 client,
                 station_request,
                 timeout_id,
-                sender: OnceCell::default(),
             }
         }
 
@@ -121,10 +117,9 @@ glib::wrapper! {
 }
 
 impl SwSearchPage {
-    pub fn init(&self, sender: Sender<Action>) {
+    pub fn init(&self) {
         let imp = self.imp();
-        imp.flowbox.init(imp.client.model(), sender.clone());
-        imp.sender.set(sender).unwrap();
+        imp.flowbox.init(imp.client.model());
 
         self.setup_signals();
         self.setup_gactions();

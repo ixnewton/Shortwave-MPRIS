@@ -18,14 +18,13 @@ use std::cell::{OnceCell, RefCell};
 
 use adw::prelude::*;
 use adw::subclass::prelude::*;
-use async_channel::Sender;
 use glib::{clone, subclass};
 use gtk::{gdk, gio, glib, CompositeTemplate};
 use url::Url;
 use uuid::Uuid;
 
 use crate::api::{StationMetadata, SwStation};
-use crate::app::{Action, SwApplication};
+use crate::app::SwApplication;
 use crate::i18n::i18n;
 use crate::ui::{FaviconSize, StationFavicon, SwApplicationWindow};
 
@@ -56,7 +55,6 @@ mod imp {
 
         pub favicon: RefCell<Option<gtk::gdk::Texture>>,
         pub favicon_widget: OnceCell<StationFavicon>,
-        pub sender: OnceCell<Sender<Action>>,
     }
 
     #[glib::object_subclass]
@@ -89,7 +87,7 @@ glib::wrapper! {
 
 #[gtk::template_callbacks]
 impl SwCreateStationDialog {
-    pub fn new(sender: Sender<Action>) -> Self {
+    pub fn new() -> Self {
         let dialog: Self = glib::Object::new();
 
         let imp = dialog.imp();
@@ -98,7 +96,6 @@ impl SwCreateStationDialog {
         imp.favicon_widget.set(favicon_widget).unwrap();
         imp.favicon_box
             .append(&imp.favicon_widget.get().unwrap().widget);
-        imp.sender.set(sender).unwrap();
 
         dialog.setup_signals();
         dialog
@@ -194,5 +191,11 @@ impl SwCreateStationDialog {
                 .set_paintable(&texture.clone().upcast());
             self.imp().favicon.replace(Some(texture));
         }
+    }
+}
+
+impl Default for SwCreateStationDialog {
+    fn default() -> Self {
+        Self::new()
     }
 }

@@ -1,5 +1,5 @@
 // Shortwave - discover_page.rs
-// Copyright (C) 2021-2023  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2021-2024  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,16 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use std::cell::OnceCell;
-
 use adw::subclass::prelude::*;
-use async_channel::Sender;
 use glib::{closure, subclass};
 use gtk::prelude::*;
 use gtk::{glib, CompositeTemplate};
 
 use crate::api::{Error, StationRequest, SwClient};
-use crate::app;
 use crate::i18n::*;
 use crate::ui::featured_carousel::Action;
 use crate::ui::{SwApplicationWindow, SwFeaturedCarousel, SwStationFlowBox};
@@ -46,7 +42,6 @@ mod imp {
         pub client1: SwClient,
         pub client2: SwClient,
         pub client3: SwClient,
-        pub sender: OnceCell<Sender<app::Action>>,
     }
 
     #[glib::object_subclass]
@@ -109,8 +104,7 @@ mod imp {
             flowbox: &SwStationFlowBox,
             request: StationRequest,
         ) {
-            let sender = self.sender.get().unwrap().clone();
-            flowbox.init(client.model(), sender);
+            flowbox.init(client.model());
             client.send_station_request(request);
         }
     }
@@ -122,10 +116,7 @@ glib::wrapper! {
 }
 
 impl SwDiscoverPage {
-    pub fn init(&self, sender: Sender<app::Action>) {
-        let imp = self.imp();
-        imp.sender.set(sender).unwrap();
-
+    pub fn init(&self) {
         self.setup_widgets();
     }
 
