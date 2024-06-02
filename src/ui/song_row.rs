@@ -14,12 +14,14 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+use std::cell::OnceCell;
+
 use adw::prelude::*;
 use adw::subclass::prelude::*;
+use async_channel::Sender;
 use chrono::NaiveTime;
-use glib::{clone, subclass, Sender};
-use gtk::{gdk, glib, CompositeTemplate};
-use once_cell::unsync::OnceCell;
+use glib::{clone, subclass};
+use gtk::{gio, glib, CompositeTemplate};
 
 use crate::app::Action;
 use crate::audio::Song;
@@ -101,7 +103,7 @@ impl SwSongRow {
                 // Save the song
                 let sender = imp.sender.get().unwrap();
                 let song = imp.song.get().unwrap();
-                send!(sender, Action::PlaybackSaveSong(song.clone()));
+                crate::utils::send(sender, Action::PlaybackSaveSong(song.clone()));
 
                 // Display play button instead of save button
                 imp.button_stack.set_visible_child_name("open");
@@ -111,13 +113,14 @@ impl SwSongRow {
         imp.open_button
             .connect_clicked(clone!(@strong self as this => move |_| {
                 let song = this.imp().song.get().unwrap();
-                let path = format!("file://{}", song.path.as_os_str().to_str().unwrap());
-
-                gtk::show_uri(
-                    Some(&SwApplicationWindow::default()),
-                    &path,
-                    gdk::CURRENT_TIME,
-                );
+                let file = gio::File::for_path(&song.path);
+                let launcher = gtk::FileLauncher::new(Some(&file));
+                let window = SwApplicationWindow::default();
+                launcher.launch(Some(&window), gio::Cancellable::NONE, |res| {
+                    if let Err(err) = res {
+                        error!("Could not open dir: {err}");
+                    }
+                })
             }));
     }
 

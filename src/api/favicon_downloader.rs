@@ -1,5 +1,5 @@
 // Shortwave - favicon_downloader.rs
-// Copyright (C) 2021-2023  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2021-2024  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -19,10 +19,9 @@ use std::hash::{Hash, Hasher};
 use std::rc::Rc;
 
 use async_std::io::ReadExt;
-use gdk_pixbuf::Pixbuf;
+use gdk::{Paintable, Texture};
 use gio::prelude::*;
-use gio::DataInputStream;
-use gtk::{gdk_pixbuf, gio, glib};
+use gtk::{gdk, gio, glib};
 use url::Url;
 
 use crate::api::client::HTTP_CLIENT;
@@ -32,11 +31,11 @@ use crate::path;
 pub struct FaviconDownloader {}
 
 impl FaviconDownloader {
-    pub async fn download(url: Url, size: i32) -> Result<Pixbuf, Error> {
-        if let Some(pixbuf) = Self::cached_pixbuf(&url, size).await {
-            return Ok(pixbuf);
+    pub async fn download(url: Url) -> Result<Paintable, Error> {
+        if let Some(texture) = Self::cached_texture(&url).await {
+            return Ok(texture.upcast());
         } else {
-            debug!("No cached favicon available for {:?}", url);
+            debug!("No cached favicon available for {:?}", url.as_str());
         }
 
         // We currently don't support "data:image/png" urls
@@ -55,8 +54,7 @@ impl FaviconDownloader {
             .await
             .map_err(Rc::new)?;
 
-        let input_stream = gio::MemoryInputStream::from_bytes(&glib::Bytes::from(&bytes));
-        let pixbuf = Pixbuf::from_stream_at_scale_future(&input_stream, size, size, true).await?;
+        let texture = Texture::from_bytes(&glib::Bytes::from(&bytes))?;
 
         // Write downloaded bytes into file
         let file = Self::file(&url)?;
@@ -64,24 +62,12 @@ impl FaviconDownloader {
             .await
             .expect("Could not write favicon data");
 
-        Ok(pixbuf)
+        Ok(texture.upcast())
     }
 
-    async fn cached_pixbuf(url: &Url, size: i32) -> Option<Pixbuf> {
+    async fn cached_texture(url: &Url) -> Option<Texture> {
         let file = Self::file(url).ok()?;
-        if Self::exists(&file) {
-            let ios = file
-                .open_readwrite_future(glib::Priority::DEFAULT)
-                .await
-                .expect("Could not open file");
-            let data_input_stream = DataInputStream::new(&ios.input_stream());
-
-            return Pixbuf::from_stream_at_scale_future(&data_input_stream, size, size, true)
-                .await
-                .ok();
-        }
-
-        None
+        Texture::from_file(&file).ok().and_upcast()
     }
 
     pub fn file(url: &Url) -> Result<gio::File, Error> {
@@ -96,10 +82,5 @@ impl FaviconDownloader {
         path.push(hash.to_string());
 
         Ok(gio::File::for_path(&path))
-    }
-
-    fn exists(file: &gio::File) -> bool {
-        let path = file.path().unwrap();
-        path.exists()
     }
 }

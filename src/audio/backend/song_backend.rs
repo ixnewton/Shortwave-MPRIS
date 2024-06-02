@@ -17,7 +17,7 @@
 use std::fs;
 use std::rc::Rc;
 
-use glib::Sender;
+use async_channel::Sender;
 use gtk::glib;
 use indexmap::IndexMap;
 

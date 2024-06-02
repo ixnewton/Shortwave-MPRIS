@@ -1,5 +1,5 @@
 // Shortwave - window.rs
-// Copyright (C) 2021-2023  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2021-2024  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,13 +14,14 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+use std::cell::OnceCell;
 use std::rc::Rc;
 
 use adw::prelude::*;
 use adw::subclass::prelude::*;
-use glib::{clone, subclass, Sender};
-use gtk::{gdk, gio, glib, CompositeTemplate};
-use once_cell::unsync::OnceCell;
+use async_channel::Sender;
+use glib::{clone, subclass};
+use gtk::{gio, glib, CompositeTemplate};
 
 use crate::app::{Action, SwApplication};
 use crate::audio::Player;
@@ -84,7 +85,7 @@ mod imp {
             let sender = app.imp().sender.clone();
             let player = app.imp().player.clone();
 
-            self.obj().setup_widgets(sender.clone(), player);
+            self.obj().setup_widgets(player);
             self.obj().setup_gactions(sender);
         }
     }
@@ -99,7 +100,7 @@ mod imp {
 
             settings_manager::set_integer(Key::WindowWidth, width);
             settings_manager::set_integer(Key::WindowHeight, height);
-            glib::Propagation::Proceed
+            self.parent_close_request()
         }
     }
 
@@ -122,13 +123,13 @@ impl SwApplicationWindow {
         glib::Object::new::<Self>()
     }
 
-    pub fn setup_widgets(&self, sender: Sender<Action>, player: Rc<Player>) {
+    pub fn setup_widgets(&self, player: Rc<Player>) {
         let imp = self.imp();
 
         // Init pages
-        imp.library_page.init(sender.clone());
-        imp.discover_page.init(sender.clone());
-        imp.search_page.init(sender);
+        imp.library_page.init();
+        imp.discover_page.init();
+        imp.search_page.init();
 
         // Wire everything up
         imp.mini_controller_box
@@ -171,20 +172,16 @@ impl SwApplicationWindow {
         self.add_action_entries([
             // win.open-radio-browser-info
             gio::ActionEntry::builder("open-radio-browser-info")
-                .activate(|_, _, _| {
-                    gtk::show_uri(
-                        Some(&SwApplicationWindow::default()),
-                        "https://www.radio-browser.info/",
-                        gdk::CURRENT_TIME,
-                    );
+                .activate(|window: &Self, _, _| {
+                    window.show_uri("https://www.radio-browser.info/");
                 })
                 .build(),
             // win.create-new-station
             gio::ActionEntry::builder("create-new-station")
-                .activate(clone!(@strong sender => move |_, _, _| {
-                    let dialog = SwCreateStationDialog::new(sender.clone());
-                    dialog.show();
-                }))
+                .activate(move |_, _, _| {
+                    let dialog = SwCreateStationDialog::new();
+                    dialog.present(&SwApplicationWindow::default());
+                })
                 .build(),
             // win.show-player
             gio::ActionEntry::builder("show-player")
@@ -201,7 +198,7 @@ impl SwApplicationWindow {
             // win.toggle-playback
             gio::ActionEntry::builder("toggle-playback")
                 .activate(clone!(@strong sender => move |_, _, _| {
-                    send!(sender, Action::PlaybackToggle);
+                    crate::utils::send(&sender, Action::PlaybackToggle);
                 }))
                 .build(),
             // win.disable-mini-player
@@ -284,6 +281,15 @@ impl SwApplicationWindow {
 
         x_animation.play();
         y_animation.play();
+    }
+
+    pub fn show_uri(&self, uri: &str) {
+        let launcher = gtk::UriLauncher::new(uri);
+        launcher.launch(Some(self), gio::Cancellable::NONE, |res| {
+            if let Err(err) = res {
+                error!("Could not launch uri: {err}");
+            }
+        });
     }
 }
 

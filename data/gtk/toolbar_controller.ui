@@ -3,10 +3,6 @@
   <object class="GtkBox" id="toolbar_controller">
     <property name="orientation">vertical</property>
     <child>
-      <object class="GtkSeparator">
-      </object>
-    </child>
-    <child>
       <object class="GtkBox">
         <child>
           <object class="GtkBox">
@@ -18,11 +14,6 @@
             <child>
               <object class="GtkBox" id="favicon_box">
                 <property name="halign">center</property>
-                <property name="orientation">vertical</property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkSeparator">
                 <property name="orientation">vertical</property>
               </object>
             </child>

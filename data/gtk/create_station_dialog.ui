@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <template class="SwCreateStationDialog" parent="AdwWindow">
+  <template class="SwCreateStationDialog" parent="AdwDialog">
     <property name="width_request">325</property>
-    <property name="height_request">500</property>
-    <property name="default_width">500</property>
-    <property name="default_height">575</property>
+    <property name="height_request">294</property>
+    <property name="content_width">500</property>
+    <property name="content_height">575</property>
     <property name="title" translatable="yes">Create new station</property>
-    <property name="modal">True</property>
     <child>
       <object class="GtkStack" id="stack">
         <property name="transition_type">crossfade</property>
@@ -14,16 +13,10 @@
           <object class="GtkStackPage">
             <property name="name">start</property>
             <property name="child">
-              <object class="GtkOverlay">
-                <child type="overlay">
-                  <object class="GtkHeaderBar">
-                    <property name="valign">start</property>
-                    <property name="title-widget">
-                      <object class="GtkBox"/>
-                    </property>
-                    <style>
-                      <class name="flat"/>
-                    </style>
+              <object class="AdwToolbarView">
+                <child type="top">
+                  <object class="AdwHeaderBar">
+                    <property name="show-title">False</property>
                   </object>
                 </child>
                 <child>
@@ -31,7 +24,6 @@
                     <property name="icon-name">list-add-symbolic</property>
                     <property name="title" translatable="yes">Create New Station</property>
                     <property name="description" translatable="yes">You can decide if you want the new station to be visible for all users worldwide or if you want to create a local station.</property>
-                    <property name="height-request">400</property>
                     <property name="child">
                       <object class="GtkBox">
                         <property name="halign">center</property>
@@ -71,10 +63,9 @@
           <object class="GtkStackPage">
             <property name="name">local-station</property>
             <property name="child">
-              <object class="GtkBox">
-                <property name="orientation">vertical</property>
-                <child>
-                  <object class="GtkHeaderBar">
+              <object class="AdwToolbarView">
+                <child type="top">
+                  <object class="AdwHeaderBar">
                     <property name="title-widget">
                       <object class="AdwWindowTitle">
                         <property name="title" translatable="yes">Create Local Station</property>
@@ -169,17 +160,6 @@
                 </child>
               </object>
             </property>
-          </object>
-        </child>
-      </object>
-    </child>
-    <child>
-      <object class="GtkShortcutController">
-        <property name="scope">local</property>
-        <child>
-          <object class="GtkShortcut">
-            <property name="trigger">Escape</property>
-            <property name="action">action(window.close)</property>
           </object>
         </child>
       </object>

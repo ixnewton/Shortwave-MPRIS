@@ -18,7 +18,8 @@ use std::cell::{Cell, RefCell};
 use std::rc::Rc;
 use std::sync::Arc;
 
-use glib::{clone, Sender};
+use async_channel::Sender;
+use glib::clone;
 use gtk::glib;
 use gtk::prelude::*;
 use mpris_player::{Metadata, MprisPlayer, OrgMprisMediaPlayer2Player, PlaybackStatus};
@@ -97,16 +98,16 @@ impl MprisController {
         // mpris raise
         self.mpris.connect_raise(move || {
             let window = SwApplicationWindow::default();
-            window.present_with_time((glib::monotonic_time() / 1000) as u32);
+            window.present();
         });
 
         // mpris play / pause
         self.mpris.connect_play_pause(
             clone!(@weak self.mpris as mpris, @strong self.sender as sender => move || {
                 match mpris.get_playback_status().unwrap().as_ref() {
-                    "Paused" => send!(sender, Action::PlaybackSet(true)),
-                    "Stopped" => send!(sender, Action::PlaybackSet(true)),
-                    _ => send!(sender, Action::PlaybackSet(false)),
+                    "Paused" => crate::utils::send(&sender, Action::PlaybackSet(true)),
+                    "Stopped" => crate::utils::send(&sender, Action::PlaybackSet(true)),
+                    _ => crate::utils::send(&sender, Action::PlaybackSet(false)),
                 };
             }),
         );
@@ -114,25 +115,25 @@ impl MprisController {
         // mpris play
         self.mpris
             .connect_play(clone!(@strong self.sender as sender => move || {
-                send!(sender, Action::PlaybackSet(true));
+                crate::utils::send(&sender, Action::PlaybackSet(true));
             }));
 
         // mpris stop
         self.mpris
             .connect_stop(clone!(@strong self.sender as sender => move || {
-                send!(sender, Action::PlaybackSet(false));
+                crate::utils::send(&sender, Action::PlaybackSet(false));
             }));
 
         // mpris pause
         self.mpris
             .connect_pause(clone!(@strong self.sender as sender => move || {
-                send!(sender, Action::PlaybackSet(false));
+                crate::utils::send(&sender, Action::PlaybackSet(false));
             }));
 
         // mpris volume
         self.mpris.connect_volume(clone!(@strong self.sender as sender, @weak self.volume as old_volume => move |new_volume| {
             if (*old_volume.borrow() - new_volume).abs() > f64::EPSILON {
-                send!(sender, Action::PlaybackSetVolume(new_volume));
+                crate::utils::send(&sender, Action::PlaybackSetVolume(new_volume));
                 *old_volume.borrow_mut() = new_volume;
             }
         }));

@@ -17,9 +17,10 @@
 use std::cell::RefCell;
 use std::rc::Rc;
 
+use adw::prelude::*;
+use async_channel::Sender;
 use futures_util::future::FutureExt;
-use glib::{clone, Sender};
-use gtk::prelude::*;
+use glib::clone;
 use gtk::{gio, glib};
 
 use crate::api::{FaviconDownloader, SwStation};
@@ -42,7 +43,7 @@ pub struct SidebarController {
     stop_playback_button: gtk::Button,
     loading_button: gtk::Button,
     error_label: gtk::Label,
-    volume_button: gtk::VolumeButton,
+    volume_button: gtk::ScaleButton,
     spinner: gtk::Spinner,
     volume_signal_id: glib::signal::SignalHandlerId,
 
@@ -64,7 +65,7 @@ impl SidebarController {
         get_widget!(builder, gtk::Button, stop_playback_button);
         get_widget!(builder, gtk::Button, loading_button);
         get_widget!(builder, gtk::Label, error_label);
-        get_widget!(builder, gtk::VolumeButton, volume_button);
+        get_widget!(builder, gtk::ScaleButton, volume_button);
         get_widget!(builder, gtk::Spinner, spinner);
 
         let station = Rc::new(RefCell::new(None));
@@ -76,7 +77,7 @@ impl SidebarController {
         // volume_button | We need the volume_signal_id later to block the signal
         let volume_signal_id =
             volume_button.connect_value_changed(clone!(@strong sender => move |_, value| {
-                send!(sender, Action::PlaybackSetVolume(value));
+                crate::utils::send(&sender, Action::PlaybackSetVolume(value));
             }));
 
         // action group
@@ -115,35 +116,35 @@ impl SidebarController {
         // start_playback_button
         self.start_playback_button.connect_clicked(
             clone!(@strong self.sender as sender => move |_| {
-                send!(sender, Action::PlaybackSet(true));
+                crate::utils::send(&sender, Action::PlaybackSet(true));
             }),
         );
 
         // stop_playback_button
         self.stop_playback_button.connect_clicked(
             clone!(@strong self.sender as sender => move |_| {
-                send!(sender, Action::PlaybackSet(false));
+                crate::utils::send(&sender, Action::PlaybackSet(false));
             }),
         );
 
         // stop_playback_button
         self.loading_button
             .connect_clicked(clone!(@strong self.sender as sender => move |_| {
-                send!(sender, Action::PlaybackSet(false));
+                crate::utils::send(&sender, Action::PlaybackSet(false));
             }));
 
         // details button
         self.action_group.add_action_entries([
             gio::ActionEntry::builder("show-details")
-                .activate(clone!(@strong self.sender as sender, @strong self.station as station => move |_, _, _| {
+                .activate(clone!(@strong self.sender as sender, @strong self.station as station, @weak self.widget as widget => move |_, _, _| {
                     let station = station.borrow().clone().unwrap();
                     let station_dialog = SwStationDialog::new(&station);
-                    station_dialog.show();
+                    station_dialog.present(&widget);
                 })).build(),
             // stream button
             gio::ActionEntry::builder("stream-audio")
-                .activate(clone!(@weak self.streaming_dialog as streaming_dialog => move |_, _, _| {
-                    streaming_dialog.show();
+                .activate(clone!(@weak self.streaming_dialog as streaming_dialog, @weak self.widget as widget => move |_, _, _| {
+                    streaming_dialog.present(&widget);
                 })).build(),
         ]);
     }
@@ -161,16 +162,17 @@ impl Controller for SidebarController {
 
         let station_favicon = self.station_favicon.clone();
 
-        if let Some(pixbuf) = station.favicon() {
-            station_favicon.set_pixbuf(&pixbuf);
+        if let Some(texture) = station.favicon() {
+            station_favicon.set_paintable(&texture.upcast());
         } else if let Some(favicon) = station.metadata().favicon {
-            let fut =
-                FaviconDownloader::download(favicon, FaviconSize::Big as i32).map(move |pixbuf| {
-                    if let Ok(pixbuf) = pixbuf {
-                        station_favicon.set_pixbuf(&pixbuf)
-                    }
-                });
-            spawn!(fut);
+            let fut = FaviconDownloader::download(favicon).map(move |paintable| match paintable {
+                Ok(paintable) => station_favicon.set_paintable(&paintable),
+                Err(error) => {
+                    debug!("Could not load favicon: {}", error);
+                    station_favicon.reset()
+                }
+            });
+            glib::spawn_future_local(fut);
         } else {
             self.station_favicon.reset();
         }

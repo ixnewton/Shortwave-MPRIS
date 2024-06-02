@@ -14,16 +14,16 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+use std::cell::OnceCell;
 use std::path::PathBuf;
 use std::sync::{Arc, Mutex};
 
+use async_channel::Sender;
 use glib::clone;
 use gstreamer::prelude::*;
 use gstreamer::{Bin, Element, MessageView, PadProbeReturn, PadProbeType, Pipeline, State};
 use gstreamer_audio::{StreamVolume, StreamVolumeFormat};
 use gtk::glib;
-use gtk::glib::Sender;
-use once_cell::unsync::OnceCell;
 
 use crate::app::Action;
 use crate::audio::PlaybackState;
@@ -92,7 +92,7 @@ impl GstreamerBackend {
         let pipeline_launch = format!(
             "uridecodebin name=uridecodebin use-buffering=true buffer-duration=6000000000 ! audioconvert name=audioconvert ! tee name=tee ! queue ! {audiosink} name={audiosink}"
         );
-        let pipeline = gstreamer::parse_launch(&pipeline_launch).unwrap();
+        let pipeline = gstreamer::parse::launch(&pipeline_launch).unwrap();
         let pipeline = pipeline.downcast::<gstreamer::Pipeline>().unwrap();
         pipeline.set_message_forward(true);
 
@@ -130,18 +130,16 @@ impl GstreamerBackend {
         if let Some(pulsesink) = self.pipeline.by_name("pulsesink") {
             // We have to update the volume if we get changes from pulseaudio (pulsesink).
             // The user is able to control the volume from g-c-c.
-            let (volume_sender, volume_receiver) = glib::MainContext::channel(glib::Priority::LOW);
+            let (volume_sender, volume_receiver) = async_channel::bounded(10);
 
             // We need to do message passing (sender/receiver) here, because gstreamer
             // messages are coming from a other thread (and app::Action enum is
             // not thread safe).
-            volume_receiver.attach(
-                None,
-                clone!(@strong app_sender => move |volume| {
-                    send!(app_sender, Action::PlaybackSetVolume(volume));
-                    glib::ControlFlow::Continue
-                }),
-            );
+            glib::spawn_future_local(clone!(@strong app_sender => async move {
+                while let Ok(volume) = volume_receiver.recv().await {
+                    crate::utils::send(&app_sender, Action::PlaybackSetVolume(volume));
+                }
+            }));
 
             // Update volume coming from pulseaudio / pulsesink
             self.volume_signal_id = Some(pulsesink.connect_notify(
@@ -158,7 +156,7 @@ impl GstreamerBackend {
                     let old_val = format!("{old_volume_locked:.2}");
 
                     if new_val != old_val {
-                        send!(volume_sender, new_volume);
+                        crate::utils::send(&volume_sender, new_volume);
                         *old_volume_locked = new_volume;
                     }
                 }),
@@ -172,7 +170,7 @@ impl GstreamerBackend {
                     let mute: bool = element.property("mute");
                     let mut old_volume_locked = old_volume.lock().unwrap();
                     if mute && *old_volume_locked != 0.0 {
-                        send!(volume_sender, 0.0);
+                        crate::utils::send(&volume_sender, 0.0);
                         *old_volume_locked = 0.0;
                     }
                 }),
@@ -214,9 +212,9 @@ impl GstreamerBackend {
         debug!("Set playback state: {:?}", state);
 
         if state == gstreamer::State::Null {
-            send!(
-                self.sender,
-                GstreamerMessage::PlaybackStateChanged(PlaybackState::Stopped)
+            crate::utils::send(
+                &self.sender,
+                GstreamerMessage::PlaybackStateChanged(PlaybackState::Stopped),
             );
         }
 
@@ -224,11 +222,11 @@ impl GstreamerBackend {
 
         if state > gstreamer::State::Null && res.is_err() {
             warn!("Failed to set pipeline to playing");
-            send!(
-                self.sender,
+            crate::utils::send(
+                &self.sender,
                 GstreamerMessage::PlaybackStateChanged(PlaybackState::Failure(String::from(
-                    "Failed to set pipeline to playing"
-                )))
+                    "Failed to set pipeline to playing",
+                ))),
             );
             let _ = self.pipeline.set_state(gstreamer::State::Null);
             return;
@@ -298,11 +296,11 @@ impl GstreamerBackend {
 
         if res.is_err() {
             warn!("Failed to set pipeline to playing");
-            send!(
-                self.sender,
+            crate::utils::send(
+                &self.sender,
                 GstreamerMessage::PlaybackStateChanged(PlaybackState::Failure(String::from(
-                    "Failed to set pipeline to playing"
-                )))
+                    "Failed to set pipeline to playing",
+                ))),
             );
             let _ = self.pipeline.set_state(gstreamer::State::Null);
             return;
@@ -323,7 +321,7 @@ impl GstreamerBackend {
         // Create actual recorderbin
         let description =
             "queue name=queue ! vorbisenc ! oggmux  ! filesink name=filesink async=false";
-        let recorderbin = gstreamer::parse_bin_from_description(description, true)
+        let recorderbin = gstreamer::parse::bin_from_description(description, true)
             .expect("Unable to create recorderbin");
         recorderbin.set_property("message-forward", true);
 
@@ -524,7 +522,7 @@ impl GstreamerBackend {
                     let mut current_title_locked = current_title.lock().unwrap();
                     if *current_title_locked != new_title {
                         current_title_locked.clone_from(&new_title);
-                        send!(sender, GstreamerMessage::SongTitleChanged(new_title));
+                        crate::utils::send(&sender, GstreamerMessage::SongTitleChanged(new_title));
                     }
                 }
             }
@@ -540,9 +538,9 @@ impl GstreamerBackend {
                         _ => PlaybackState::Stopped,
                     };
 
-                    send!(
-                        sender,
-                        GstreamerMessage::PlaybackStateChanged(playback_state)
+                    crate::utils::send(
+                        &sender,
+                        GstreamerMessage::PlaybackStateChanged(playback_state),
                     );
                 }
             }
@@ -555,9 +553,9 @@ impl GstreamerBackend {
                 if percent < 100 {
                     if !buffering_state.buffering {
                         buffering_state.buffering = true;
-                        send!(
-                            sender,
-                            GstreamerMessage::PlaybackStateChanged(PlaybackState::Loading)
+                        crate::utils::send(
+                            &sender,
+                            GstreamerMessage::PlaybackStateChanged(PlaybackState::Loading),
                         );
 
                         if buffering_state.is_live == Some(false) {
@@ -582,9 +580,9 @@ impl GstreamerBackend {
                     }
                 } else if buffering_state.buffering {
                     buffering_state.buffering = false;
-                    send!(
-                        sender,
-                        GstreamerMessage::PlaybackStateChanged(PlaybackState::Playing)
+                    crate::utils::send(
+                        &sender,
+                        GstreamerMessage::PlaybackStateChanged(PlaybackState::Playing),
                     );
 
                     if buffering_state.is_live == Some(false) {
@@ -626,9 +624,9 @@ impl GstreamerBackend {
                 } else {
                     warn!("Gstreamer Error: {}", msg);
                 }
-                send!(
-                    sender,
-                    GstreamerMessage::PlaybackStateChanged(PlaybackState::Failure(msg))
+                crate::utils::send(
+                    &sender,
+                    GstreamerMessage::PlaybackStateChanged(PlaybackState::Failure(msg)),
                 );
             }
             _ => (),

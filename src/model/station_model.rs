@@ -1,5 +1,5 @@
 // Shortwave - station_model.rs
-// Copyright (C) 2021-2022  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2021-2024  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -90,7 +90,7 @@ impl SwStationModel {
 
         match map.get_index_of(&station.uuid()) {
             Some(pos) => {
-                map.remove(&station.uuid());
+                map.shift_remove_full(&station.uuid());
                 self.items_changed(pos.try_into().unwrap(), 1, 0);
             }
             None => warn!("Station {:?} not found in model", station.metadata().name),

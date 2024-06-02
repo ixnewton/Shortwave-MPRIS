@@ -1,5 +1,5 @@
 // Shortwave - station.rs
-// Copyright (C) 2021-2023  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2021-2024  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,11 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+use std::cell::OnceCell;
+
 use glib::Properties;
 use gtk::prelude::*;
 use gtk::subclass::prelude::*;
-use gtk::{gdk_pixbuf, glib};
-use once_cell::unsync::OnceCell;
+use gtk::{gdk, glib};
 
 use crate::api::StationMetadata;
 
@@ -37,7 +38,7 @@ mod imp {
         #[property(get, set, construct_only)]
         pub metadata: OnceCell<StationMetadata>,
         #[property(get, set, construct_only)]
-        pub favicon: OnceCell<Option<gdk_pixbuf::Pixbuf>>,
+        pub favicon: OnceCell<Option<gdk::Texture>>,
     }
 
     #[glib::object_subclass]
@@ -60,7 +61,7 @@ impl SwStation {
         is_local: bool,
         is_orphaned: bool,
         metadata: StationMetadata,
-        favicon: Option<gdk_pixbuf::Pixbuf>,
+        favicon: Option<gdk::Texture>,
     ) -> Self {
         glib::Object::builder()
             .property("uuid", uuid)

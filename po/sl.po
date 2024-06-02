@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2023-09-10 16:26+0000\n"
-"PO-Revision-Date: 2023-09-11 16:58+0200\n"
+"POT-Creation-Date: 2024-05-30 15:41+0000\n"
+"PO-Revision-Date: 2024-05-30 18:47+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl_SI\n"
@@ -32,16 +32,13 @@ msgstr "@IME@"
 msgid "Gradio;Radio;Stream;Wave;"
 msgstr "Gradio;Radio;Stream;Wave;Pretok;glasba;"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:6
+#. General
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:10
 #: src/ui/about_window.rs:35
 msgid "Listen to internet radio"
 msgstr "Poslušanje spletnih radijskih postaj"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:8
-msgid "Felix Häcker"
-msgstr "Felix Häcker"
-
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:16
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:12
 msgid ""
 "Shortwave is an internet radio player that provides access to a station "
 "database with over 30,000 stations."
@@ -49,46 +46,51 @@ msgstr ""
 "Program Shortwave je internetni radijski predvajalnik, ki omogoča dostop do "
 "podatkovne zbirke več kot 30 000 postaj."
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:19
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:15
 msgid "Features:"
 msgstr "Zmožnosti:"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:21
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:17
 msgid "Create your own library where you can add your favorite stations"
 msgstr "Ustvarite svojo zbirko, v katero lahko dodate vse priljubljene postaje"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:22
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:18
 msgid "Easily search and discover new radio stations"
 msgstr "Enostavno iskanje in odkrivanje novih radijskih postaj"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:23
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:19
 msgid ""
 "Automatic recognition of songs, with the possibility to save them "
 "individually"
 msgstr "Samodejno prepoznavanje skladb z možnostjo posamičnega shranjevanja"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:24
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:20
 msgid "Responsive application layout, compatible for small and large screens"
 msgstr ""
 "Odzivno prilagajanje programa je skladno z velikimi in majhnimi zasloni"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:25
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:21
 msgid "Play audio on supported network devices (e.g. Google Chromecasts)"
 msgstr "Predvajanje glasbe na podprtih napravah (na primer Google Chromecast)"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:26
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:22
 msgid "Seamless integration into the GNOME desktop environment"
 msgstr "Popolna povezava programa z namiznim okoljem GNOME"
+
+#. Branding
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:28
+msgid "Felix Häcker"
+msgstr "Felix Häcker"
 
 #: data/gtk/create_station_dialog.ui:8
 msgid "Create new station"
 msgstr "Ustvari novo postajo"
 
-#: data/gtk/create_station_dialog.ui:32
+#: data/gtk/create_station_dialog.ui:26
 msgid "Create New Station"
 msgstr "Ustvari novo postajo"
 
-#: data/gtk/create_station_dialog.ui:33
+#: data/gtk/create_station_dialog.ui:27
 msgid ""
 "You can decide if you want the new station to be visible for all users "
 "worldwide or if you want to create a local station."
@@ -96,31 +98,31 @@ msgstr ""
 "Mogoče je izbirati med javno objavo nove postaje za vse uporabnike na svetu, "
 "oziroma krajevno postajo po povezavi."
 
-#: data/gtk/create_station_dialog.ui:43
+#: data/gtk/create_station_dialog.ui:36
 msgid "Create _Public Station"
 msgstr "Ustvari _javno postajo"
 
-#: data/gtk/create_station_dialog.ui:54
+#: data/gtk/create_station_dialog.ui:47
 msgid "Create _Local Station"
 msgstr "Ustvari _krajevno postajo"
 
-#: data/gtk/create_station_dialog.ui:80
+#: data/gtk/create_station_dialog.ui:72
 msgid "Create Local Station"
 msgstr "Ustvari krajevno postajo"
 
-#: data/gtk/create_station_dialog.ui:113
+#: data/gtk/create_station_dialog.ui:105
 msgid "Change station image"
 msgstr "Spremeni sliko postaje"
 
-#: data/gtk/create_station_dialog.ui:137 src/ui/pages/search_page.rs:211
+#: data/gtk/create_station_dialog.ui:129 src/ui/pages/search_page.rs:211
 msgid "Name"
 msgstr "Naziv"
 
-#: data/gtk/create_station_dialog.ui:145
+#: data/gtk/create_station_dialog.ui:137
 msgid "Stream URL"
 msgstr "Naslov URL za pretakanje"
 
-#: data/gtk/create_station_dialog.ui:153
+#: data/gtk/create_station_dialog.ui:145
 msgid "Create Station"
 msgstr "Ustvari postajo"
 
@@ -276,7 +278,7 @@ msgid "_About Shortwave"
 msgstr "_O programu"
 
 #: data/gtk/mini_controller.ui:27 data/gtk/sidebar_controller.ui:116
-#: data/gtk/toolbar_controller.ui:79
+#: data/gtk/toolbar_controller.ui:70
 msgid "Stop"
 msgstr "Ustavi"
 
@@ -289,7 +291,7 @@ msgid "SHORTWAVE INTERNET RADIO"
 msgstr "INTERNETNI RADIO SHORTWAVE"
 
 #: data/gtk/mini_controller.ui:109 data/gtk/sidebar_controller.ui:64
-#: data/gtk/toolbar_controller.ui:38
+#: data/gtk/toolbar_controller.ui:29
 msgid "No Playback"
 msgstr "Nič se ne predvajanja"
 
@@ -343,7 +345,7 @@ msgid "An error occurred"
 msgstr "Prišlo je do napake"
 
 #: data/gtk/sidebar_controller.ui:131 data/gtk/station_row.ui:69
-#: data/gtk/toolbar_controller.ui:90
+#: data/gtk/toolbar_controller.ui:81
 msgid "Play"
 msgstr "Predvajaj"
 
@@ -469,7 +471,7 @@ msgstr "Kopiraj"
 msgid "Stream to a Device"
 msgstr "Pošlji pretok na napravo"
 
-#: data/gtk/streaming_dialog.ui:26
+#: data/gtk/streaming_dialog.ui:28
 msgid ""
 "Audio playback can be streamed to a network device (requires Google Cast "
 "support)."
@@ -477,23 +479,23 @@ msgstr ""
 "Predvajanje zvoka je mogoče pretočiti v omrežno napravo (zahteva podporo za "
 "Google Cast)."
 
-#: data/gtk/streaming_dialog.ui:41
+#: data/gtk/streaming_dialog.ui:43
 msgid "No Devices Found"
 msgstr "Ni najdenih naprav"
 
-#: data/gtk/streaming_dialog.ui:47 data/gtk/streaming_dialog.ui:70
-msgid "Search again"
-msgstr "Išči znova"
+#: data/gtk/streaming_dialog.ui:49 data/gtk/streaming_dialog.ui:75
+msgid "Search Again"
+msgstr "Poišči znova"
 
-#: data/gtk/streaming_dialog.ui:64
+#: data/gtk/streaming_dialog.ui:69
 msgid "Search Completed"
 msgstr "Iskanje končano"
 
-#: data/gtk/streaming_dialog.ui:87
+#: data/gtk/streaming_dialog.ui:95
 msgid "Searching for Devices…"
 msgstr "Poteka iskanje naprav …"
 
-#: data/gtk/window.ui:40
+#: data/gtk/window.ui:33
 msgid "Main View"
 msgstr "Glavni pogled"
 
@@ -502,11 +504,11 @@ msgstr "Glavni pogled"
 msgid "Unable to access music directory. Saving song in home directory."
 msgstr "Do mape glasbe ni mogoče dostopati. Shranjevanje pesmi v domačo mapo."
 
-#: src/audio/player.rs:190
+#: src/audio/player.rs:189
 msgid "Station cannot be streamed. URL is not valid."
 msgstr "Postaje ni mogoče pretakati. URL ni veljaven."
 
-#: src/audio/player.rs:241
+#: src/audio/player.rs:240
 msgid "Cannot save song."
 msgstr "Pesmi ni mogoče shraniti."
 
@@ -514,7 +516,7 @@ msgstr "Pesmi ni mogoče shraniti."
 msgid "translator-credits"
 msgstr "Matej Urbančič <mateju@src.gnome.org>"
 
-#: src/ui/create_station_dialog.rs:103
+#: src/ui/create_station_dialog.rs:114
 msgid "Select station image"
 msgstr "Izberite sliko postaje"
 

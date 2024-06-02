@@ -107,8 +107,8 @@
                         <property name="hexpand">True</property>
                         <child>
                           <object class="GtkButton" id="discover_button">
-                            <property name="action_name">win.show-discover</property>
-                            <property name="halign">center</property>
+                            <property name="action-name">navigation.push</property>
+                            <property name="action-target">'discover'</property>                            <property name="halign">center</property>
                             <property name="label" translatable="yes">_Discover New Stations</property>
                             <property name="use_underline">True</property>
                             <style>

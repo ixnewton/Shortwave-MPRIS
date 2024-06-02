@@ -17,8 +17,9 @@
 use std::cell::RefCell;
 use std::rc::Rc;
 
+use async_channel::Sender;
 use futures_util::future::FutureExt;
-use glib::{clone, Sender};
+use glib::clone;
 use gtk::glib;
 use gtk::prelude::*;
 
@@ -92,21 +93,21 @@ impl ToolbarController {
         // start_playback_button
         self.start_playback_button.connect_clicked(
             clone!(@strong self.sender as sender => move |_| {
-                send!(sender, Action::PlaybackSet(true));
+                crate::utils::send(&sender, Action::PlaybackSet(true));
             }),
         );
 
         // stop_playback_button
         self.stop_playback_button.connect_clicked(
             clone!(@strong self.sender as sender => move |_| {
-                send!(sender, Action::PlaybackSet(false));
+                crate::utils::send(&sender, Action::PlaybackSet(false));
             }),
         );
 
         // loading_button
         self.loading_button
             .connect_clicked(clone!(@strong self.sender as sender => move |_| {
-                send!(sender, Action::PlaybackSet(false));
+                crate::utils::send(&sender, Action::PlaybackSet(false));
             }));
 
         // show_player_button
@@ -130,16 +131,15 @@ impl Controller for ToolbarController {
 
         let station_favicon = self.station_favicon.clone();
 
-        if let Some(pixbuf) = station.favicon() {
-            station_favicon.set_pixbuf(&pixbuf);
+        if let Some(texture) = station.favicon() {
+            station_favicon.set_paintable(&texture.upcast());
         } else if let Some(favicon) = station.metadata().favicon {
-            let fut =
-                FaviconDownloader::download(favicon, FaviconSize::Mini as i32).map(move |pixbuf| {
-                    if let Ok(pixbuf) = pixbuf {
-                        station_favicon.set_pixbuf(&pixbuf)
-                    }
-                });
-            spawn!(fut);
+            let fut = FaviconDownloader::download(favicon).map(move |paintable| {
+                if let Ok(paintable) = paintable {
+                    station_favicon.set_paintable(&paintable)
+                }
+            });
+            glib::spawn_future_local(fut);
         }
 
         // reset everything else

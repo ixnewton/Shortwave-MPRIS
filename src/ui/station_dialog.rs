@@ -14,20 +14,21 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+use std::cell::OnceCell;
+
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use futures_util::future::FutureExt;
 use glib::{subclass, Properties};
 use gtk::{gdk, glib, CompositeTemplate};
 use inflector::Inflector;
-use once_cell::unsync::OnceCell;
 use shumate::prelude::*;
 
 use crate::api::{FaviconDownloader, SwStation};
 use crate::app::SwApplication;
 use crate::database::SwLibrary;
 use crate::i18n;
-use crate::ui::{FaviconSize, StationFavicon, SwApplicationWindow};
+use crate::ui::{FaviconSize, StationFavicon};
 
 mod imp {
     use super::*;
@@ -85,7 +86,7 @@ mod imp {
     #[glib::object_subclass]
     impl ObjectSubclass for SwStationDialog {
         const NAME: &'static str = "SwStationDialog";
-        type ParentType = adw::Window;
+        type ParentType = adw::Dialog;
         type Type = super::SwStationDialog;
 
         fn class_init(klass: &mut Self::Class) {
@@ -103,18 +104,13 @@ mod imp {
         fn constructed(&self) {
             self.parent_constructed();
 
-            let window = SwApplicationWindow::default();
-            self.obj().set_transient_for(Some(&window));
-
             self.setup_widgets();
         }
     }
 
     impl WidgetImpl for SwStationDialog {}
 
-    impl WindowImpl for SwStationDialog {}
-
-    impl AdwWindowImpl for SwStationDialog {}
+    impl AdwDialogImpl for SwStationDialog {}
 
     #[gtk::template_callbacks]
     impl SwStationDialog {
@@ -126,20 +122,19 @@ mod imp {
             let station_favicon = StationFavicon::new(FaviconSize::Big);
             self.favicon_box.append(&station_favicon.widget);
 
-            if let Some(pixbuf) = station.favicon() {
-                station_favicon.set_pixbuf(&pixbuf);
+            if let Some(texture) = station.favicon() {
+                station_favicon.set_paintable(&texture.upcast());
             } else if let Some(favicon) = metadata.favicon.as_ref() {
-                let fut = FaviconDownloader::download(favicon.clone(), FaviconSize::Big as i32)
-                    .map(move |pixbuf| {
-                        if let Ok(pixbuf) = pixbuf {
-                            station_favicon.set_pixbuf(&pixbuf)
-                        }
-                    });
-                spawn!(fut);
+                let fut = FaviconDownloader::download(favicon.clone()).map(move |paintable| {
+                    if let Ok(paintable) = paintable {
+                        station_favicon.set_paintable(&paintable)
+                    }
+                });
+                glib::spawn_future_local(fut);
             }
 
             // Title
-            self.obj().set_title(Some(&metadata.name));
+            self.obj().set_title(&metadata.name);
             self.title_label.set_text(&metadata.name);
 
             // Homepage
@@ -269,7 +264,6 @@ mod imp {
                 .library()
                 .add_stations(vec![station]);
 
-            obj.hide();
             obj.close();
         }
 
@@ -282,7 +276,6 @@ mod imp {
                 .library()
                 .remove_stations(vec![station]);
 
-            obj.hide();
             obj.close();
         }
 
@@ -294,7 +287,6 @@ mod imp {
             let app = SwApplication::default();
             app.imp().player.set_station(station);
 
-            obj.hide();
             obj.close();
         }
 
@@ -313,7 +305,7 @@ mod imp {
 
 glib::wrapper! {
     pub struct SwStationDialog(ObjectSubclass<imp::SwStationDialog>)
-        @extends gtk::Widget, gtk::Window, adw::Window;
+        @extends gtk::Widget, adw::Dialog;
 }
 
 impl SwStationDialog {

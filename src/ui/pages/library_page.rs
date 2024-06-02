@@ -1,5 +1,5 @@
 // Shortwave - search_page.rs
-// Copyright (C) 2021-2023  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2021-2024  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,12 +15,11 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 use adw::subclass::prelude::*;
-use glib::{clone, subclass, Sender};
+use glib::{clone, subclass};
 use gtk::prelude::*;
 use gtk::{gio, glib, CompositeTemplate};
-use once_cell::unsync::OnceCell;
 
-use crate::app::{Action, SwApplication};
+use crate::app::SwApplication;
 use crate::config;
 use crate::database::{SwLibrary, SwLibraryStatus};
 use crate::i18n::*;
@@ -43,7 +42,6 @@ mod imp {
         pub spinner: TemplateChild<gtk::Spinner>,
 
         pub library: SwLibrary,
-        pub sender: OnceCell<Sender<Action>>,
     }
 
     #[glib::object_subclass]
@@ -64,15 +62,12 @@ mod imp {
                 .unwrap();
             let library = app.library();
 
-            let sender = OnceCell::default();
-
             Self {
                 status_page,
                 stack,
                 spinner,
                 flowbox,
                 library,
-                sender,
             }
         }
 
@@ -98,9 +93,7 @@ glib::wrapper! {
 }
 
 impl SwLibraryPage {
-    pub fn init(&self, sender: Sender<Action>) {
-        self.imp().sender.set(sender).unwrap();
-
+    pub fn init(&self) {
         self.setup_widgets();
         self.setup_signals();
     }
@@ -121,8 +114,7 @@ impl SwLibraryPage {
             .set_title(&i18n_f("Welcome to {}", &[config::NAME]));
 
         // Station flowbox
-        imp.flowbox
-            .init(imp.library.model(), imp.sender.get().unwrap().clone());
+        imp.flowbox.init(imp.library.model());
 
         // Set initial stack page
         self.update_stack_page();

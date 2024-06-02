@@ -1,5 +1,5 @@
 // Shortwave - client.rs
-// Copyright (C) 2021-2023  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2021-2024  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -175,7 +175,7 @@ impl SwClient {
             }
         });
 
-        spawn!(fut);
+        glib::spawn_future_local(fut);
     }
 
     /// Directly returns a [StationMetadata] by using the station uuid.
@@ -217,9 +217,7 @@ impl SwClient {
 
             let config = rconfig::ResolverConfig::default();
             let opts = rconfig::ResolverOpts::default();
-            resolver(config, opts)
-                .await
-                .expect("failed to connect resolver")
+            resolver(config, opts).await
         };
 
         // Do forward lookup to receive a list with the api servers

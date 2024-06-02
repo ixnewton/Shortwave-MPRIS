@@ -1,5 +1,5 @@
 // Shortwave - station_flowbox.rs
-// Copyright (C) 2021-2023  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2021-2024  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,13 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+use adw::prelude::*;
 use adw::subclass::prelude::*;
-use glib::{clone, subclass, Properties, Sender};
-use gtk::prelude::*;
+use glib::{subclass, Properties};
 use gtk::{glib, CompositeTemplate};
 
 use crate::api::SwStation;
-use crate::app::Action;
 use crate::model::{SwSorting, SwStationModel, SwStationSorter};
 use crate::ui::{SwStationDialog, SwStationRow};
 
@@ -80,7 +79,26 @@ mod imp {
     }
 
     #[glib::derived_properties]
-    impl ObjectImpl for SwStationFlowBox {}
+    impl ObjectImpl for SwStationFlowBox {
+        fn constructed(&self) {
+            self.flowbox
+                .get()
+                .bind_model(Some(&self.model), move |station| {
+                    let station = station.downcast_ref::<SwStation>().unwrap();
+                    let row = SwStationRow::new(station.clone());
+                    row.upcast()
+                });
+
+            // Show StationDialog when row gets clicked
+            self.flowbox.connect_child_activated(move |flowbox, child| {
+                let row = child.downcast_ref::<SwStationRow>().unwrap();
+                let station = row.station();
+
+                let station_dialog = SwStationDialog::new(&station);
+                station_dialog.present(flowbox);
+            });
+        }
+    }
 
     impl WidgetImpl for SwStationFlowBox {}
 
@@ -93,39 +111,14 @@ glib::wrapper! {
 }
 
 impl SwStationFlowBox {
-    pub fn init(&self, model: SwStationModel, sender: Sender<Action>) {
+    pub fn init(&self, model: SwStationModel) {
         let imp = self.imp();
         imp.model.set_model(Some(&model));
-
-        self.setup_signals(sender);
     }
 
     pub fn set_sorting(&self, sorting: SwSorting, descending: bool) {
         let imp = self.imp();
         imp.sorter.set_sorting(sorting);
         imp.sorter.set_descending(descending);
-    }
-
-    fn setup_signals(&self, sender: Sender<Action>) {
-        let imp = self.imp();
-
-        imp.flowbox.get().bind_model(
-            Some(&self.imp().model),
-            clone!(@strong sender => move |station|{
-                let station = station.downcast_ref::<SwStation>().unwrap();
-                let row = SwStationRow::new(sender.clone(), station.clone());
-                row.upcast()
-            }),
-        );
-
-        // Show StationDialog when row gets clicked
-        imp.flowbox
-            .connect_child_activated(clone!(@strong sender => move |_, child| {
-                let row = child.clone().downcast::<SwStationRow>().unwrap();
-                let station = row.station();
-
-                let station_dialog = SwStationDialog::new(&station);
-                station_dialog.show();
-            }));
     }
 }

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <object class="AdwPreferencesWindow" id="settings_window">
+  <template class="SwSettingsDialog" parent="AdwPreferencesDialog">
+    <property name="content_height">400</property>
+    <property name="content_width">500</property>
     <child>
       <object class="AdwPreferencesPage">
         <property name="icon_name">preferences-system-symbolic</property>
@@ -25,6 +27,5 @@
         </child>
       </object>
     </child>
-  </object>
+  </template>
 </interface>
-
