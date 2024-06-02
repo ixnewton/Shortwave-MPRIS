@@ -31,7 +31,7 @@ use crate::audio::{GCastDevice, PlaybackState, Player, Song};
 use crate::config;
 use crate::database::SwLibrary;
 use crate::model::SwSorting;
-use crate::settings::{settings_manager, Key, SettingsWindow};
+use crate::settings::{settings_manager, Key, SwSettingsDialog};
 use crate::ui::{about_window, SwApplicationWindow};
 
 #[derive(Debug, Clone)]
@@ -198,7 +198,7 @@ impl SwApplication {
             // app.show-preferences
             gio::ActionEntry::builder("show-preferences")
                 .activate(clone!(@weak window => move |_, _, _| {
-                    let settings_window = SettingsWindow::new();
+                    let settings_window = SwSettingsDialog::default();
                     settings_window.present(&window);
                 }))
                 .build(),
