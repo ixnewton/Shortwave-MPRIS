@@ -126,7 +126,7 @@ impl SwDiscoverPage {
         // TODO: Implement show-server-stats action
         let _action = Action::new("win.show-server-stats", &i18n("Show statistics"));
         imp.carousel
-            .add_page(&i18n("Browse over 30,000 stations"), "#1a5fb4", None);
+            .add_page(&i18n("Browse over 50,000 stations"), "#1a5fb4", None);
 
         let action = Action::new("win.create-new-station", &i18n("Add new station"));
         imp.carousel.add_page(
