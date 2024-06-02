@@ -1,5 +1,5 @@
 // Shortwave - app.rs
-// Copyright (C) 2021-2023  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2021-2024  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ use crate::config;
 use crate::database::SwLibrary;
 use crate::model::SwSorting;
 use crate::settings::{settings_manager, Key, SwSettingsDialog};
-use crate::ui::{about_window, SwApplicationWindow};
+use crate::ui::{about_dialog, SwApplicationWindow};
 
 #[derive(Debug, Clone)]
 pub enum Action {
@@ -211,7 +211,7 @@ impl SwApplication {
             // app.about
             gio::ActionEntry::builder("about")
                 .activate(clone!(@weak window => move |_, _, _| {
-                    about_window::show(&window);
+                    about_dialog::show(&window);
                 }))
                 .build(),
         ]);

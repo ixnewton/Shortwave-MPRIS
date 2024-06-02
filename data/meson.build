@@ -94,6 +94,7 @@ configure_file(
 # Resources
 conf = configuration_data()
 conf.set('PATH_ID', path_id)
+conf.set('APP_ID', app_id)
 configure_file(
   input: '@0@.gresource.xml.in'.format(base_id),
   output: '@0@.gresource.xml'.format(app_id),
@@ -105,7 +106,8 @@ gnome.compile_resources(
   gresource_bundle: true,
   source_dir: join_paths(meson.project_build_root(), 'data'),
   install: true,
-  install_dir: join_paths(datadir, meson.project_name())
+  install_dir: join_paths(datadir, meson.project_name()),
+  dependencies: appdata_file,
 )
 
 # Run required post-install steps

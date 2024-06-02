@@ -22,7 +22,7 @@
       <li>Seamless integration into the GNOME desktop environment</li>
     </ul>
   </description>
-  <content_rating type="oars-1.1"/>
+  <content_rating type="oars-1.1" />
 
   <!-- Branding -->
   <developer_name>Felix Häcker</developer_name>
@@ -62,12 +62,15 @@
   <screenshots>
     <screenshot type="default">
       <image>https://gitlab.gnome.org/World/Shortwave/raw/main/data/screenshots/1.png</image>
+      <caption>Create your own library where you can add your favorite stations</caption>
     </screenshot>
     <screenshot>
       <image>https://gitlab.gnome.org/World/Shortwave/raw/main/data/screenshots/2.png</image>
+      <caption>Easily search and discover new radio stations</caption>
     </screenshot>
     <screenshot>
       <image>https://gitlab.gnome.org/World/Shortwave/raw/main/data/screenshots/3.png</image>
+      <caption>Responsive application layout, compatible for small and large screens</caption>
     </screenshot>
   </screenshots>
 

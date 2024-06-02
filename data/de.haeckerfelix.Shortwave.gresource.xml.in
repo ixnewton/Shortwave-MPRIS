@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
   <gresource prefix="@PATH_ID@">
+    <file compressed="true" preprocess="xml-stripblanks" alias="metainfo.xml">@APP_ID@.metainfo.xml</file>
     <file compressed="true" preprocess="xml-stripblanks">gtk/create_station_dialog.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">gtk/discover_page.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">gtk/featured_carousel.ui</file>
