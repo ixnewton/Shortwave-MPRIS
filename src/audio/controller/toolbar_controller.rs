@@ -131,15 +131,14 @@ impl Controller for ToolbarController {
 
         let station_favicon = self.station_favicon.clone();
 
-        if let Some(pixbuf) = station.favicon() {
-            station_favicon.set_pixbuf(&pixbuf);
+        if let Some(texture) = station.favicon() {
+            station_favicon.set_paintable(&texture.upcast());
         } else if let Some(favicon) = station.metadata().favicon {
-            let fut =
-                FaviconDownloader::download(favicon, FaviconSize::Mini as i32).map(move |pixbuf| {
-                    if let Ok(pixbuf) = pixbuf {
-                        station_favicon.set_pixbuf(&pixbuf)
-                    }
-                });
+            let fut = FaviconDownloader::download(favicon).map(move |paintable| {
+                if let Ok(paintable) = paintable {
+                    station_favicon.set_paintable(&paintable)
+                }
+            });
             glib::spawn_future_local(fut);
         }
 

@@ -122,15 +122,14 @@ mod imp {
             let station_favicon = StationFavicon::new(FaviconSize::Big);
             self.favicon_box.append(&station_favicon.widget);
 
-            if let Some(pixbuf) = station.favicon() {
-                station_favicon.set_pixbuf(&pixbuf);
+            if let Some(texture) = station.favicon() {
+                station_favicon.set_paintable(&texture.upcast());
             } else if let Some(favicon) = metadata.favicon.as_ref() {
-                let fut = FaviconDownloader::download(favicon.clone(), FaviconSize::Big as i32)
-                    .map(move |pixbuf| {
-                        if let Ok(pixbuf) = pixbuf {
-                            station_favicon.set_pixbuf(&pixbuf)
-                        }
-                    });
+                let fut = FaviconDownloader::download(favicon.clone()).map(move |paintable| {
+                    if let Ok(paintable) = paintable {
+                        station_favicon.set_paintable(&paintable)
+                    }
+                });
                 glib::spawn_future_local(fut);
             }
 

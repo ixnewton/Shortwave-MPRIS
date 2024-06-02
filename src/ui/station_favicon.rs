@@ -1,5 +1,5 @@
 // Shortwave - station_favicon.rs
-// Copyright (C) 2021-2022  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2021-2024  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,8 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use gdk_pixbuf::Pixbuf;
-use gtk::gdk_pixbuf;
+use gtk::gdk;
 use gtk::prelude::*;
 
 #[derive(Clone, Copy, Eq, PartialEq)]
@@ -51,8 +50,8 @@ impl StationFavicon {
         }
     }
 
-    pub fn set_pixbuf(&self, pixbuf: &Pixbuf) {
-        self.image.set_from_pixbuf(Some(pixbuf));
+    pub fn set_paintable(&self, paintable: &gdk::Paintable) {
+        self.image.set_from_paintable(Some(paintable));
         self.stack.set_visible_child_name("image");
     }
 

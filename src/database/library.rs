@@ -19,9 +19,9 @@ use std::cell::{OnceCell, RefCell};
 use async_channel::Sender;
 use futures_util::future::join_all;
 use glib::{clone, Enum, Properties};
+use gtk::glib;
 use gtk::prelude::*;
 use gtk::subclass::prelude::*;
-use gtk::{gdk_pixbuf, glib};
 
 use super::models::StationEntry;
 use crate::api::{Error, SwClient, SwStation};
@@ -150,9 +150,8 @@ impl SwLibrary {
         // Load custom favicon from database entry if available
         let mut favicon = None;
         if let Some(data) = entry.favicon {
-            let loader = gdk_pixbuf::PixbufLoader::new();
-            if loader.write(&data).is_ok() && loader.close().is_ok() {
-                favicon = loader.pixbuf()
+            if let Ok(texture) = gtk::gdk::Texture::from_bytes(&glib::Bytes::from_owned(data)) {
+                favicon = Some(texture)
             }
         }
 
@@ -162,7 +161,13 @@ impl SwLibrary {
             if let Some(data) = &entry.data {
                 match serde_json::from_str(data) {
                     Ok(metadata) => {
-                        let station = SwStation::new(&uuid, true, false, metadata, favicon.clone());
+                        let station = SwStation::new(
+                            &uuid,
+                            true,
+                            false,
+                            metadata,
+                            favicon.clone().and_upcast(),
+                        );
                         imp.model.add_station(&station);
                     }
                     Err(err) => {
@@ -189,7 +194,8 @@ impl SwLibrary {
         if !skip_online_update {
             match imp.client.clone().station_metadata_by_uuid(&uuid).await {
                 Ok(metadata) => {
-                    let station = SwStation::new(&uuid, false, false, metadata, favicon);
+                    let station =
+                        SwStation::new(&uuid, false, false, metadata, favicon.and_upcast());
 
                     // Cache data for future use
                     let entry = StationEntry::for_station(&station);
@@ -215,7 +221,8 @@ impl SwLibrary {
         if let Some(data) = &entry.data {
             match serde_json::from_str(data) {
                 Ok(metadata) => {
-                    let s = SwStation::new(&uuid, false, is_orphaned, metadata, favicon);
+                    let s =
+                        SwStation::new(&uuid, false, is_orphaned, metadata, favicon.and_upcast());
                     imp.model.add_station(&s);
                 }
                 Err(err) => {

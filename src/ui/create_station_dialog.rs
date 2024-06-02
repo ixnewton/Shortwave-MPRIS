@@ -20,7 +20,7 @@ use adw::prelude::*;
 use adw::subclass::prelude::*;
 use async_channel::Sender;
 use glib::{clone, subclass};
-use gtk::{gdk_pixbuf, gio, glib, CompositeTemplate};
+use gtk::{gdk, gio, glib, CompositeTemplate};
 use url::Url;
 use uuid::Uuid;
 
@@ -54,7 +54,7 @@ mod imp {
         #[template_child]
         pub url_row: TemplateChild<adw::EntryRow>,
 
-        pub favicon: RefCell<Option<gdk_pixbuf::Pixbuf>>,
+        pub favicon: RefCell<Option<gtk::gdk::Texture>>,
         pub favicon_widget: OnceCell<StationFavicon>,
         pub sender: OnceCell<Sender<Action>>,
     }
@@ -113,7 +113,7 @@ impl SwCreateStationDialog {
             gio::Cancellable::NONE,
             clone!(@weak self as this => move |res| {
                 match res {
-                    Ok(file) => this.set_favicon(file),
+                    Ok(file) => this.set_favicon(&file),
                     Err(err) => error!("Could not get file {err}"),
                 }
             }),
@@ -153,7 +153,13 @@ impl SwCreateStationDialog {
         let url = Url::parse(&imp.url_row.text()).unwrap();
         let favicon = imp.favicon.borrow().clone();
 
-        let station = SwStation::new(&uuid, true, false, StationMetadata::new(name, url), favicon);
+        let station = SwStation::new(
+            &uuid,
+            true,
+            false,
+            StationMetadata::new(name, url),
+            favicon.and_upcast(),
+        );
         SwApplication::default()
             .library()
             .add_stations(vec![station]);
@@ -179,12 +185,14 @@ impl SwCreateStationDialog {
         }
     }
 
-    fn set_favicon(&self, file: gio::File) {
-        if let Some(path) = file.path() {
-            if let Ok(pixbuf) = gdk_pixbuf::Pixbuf::from_file(path) {
-                self.imp().favicon_widget.get().unwrap().set_pixbuf(&pixbuf);
-                self.imp().favicon.replace(Some(pixbuf));
-            }
+    fn set_favicon(&self, file: &gio::File) {
+        if let Ok(texture) = gdk::Texture::from_file(file) {
+            self.imp()
+                .favicon_widget
+                .get()
+                .unwrap()
+                .set_paintable(&texture.clone().upcast());
+            self.imp().favicon.replace(Some(texture));
         }
     }
 }

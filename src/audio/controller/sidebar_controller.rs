@@ -162,19 +162,16 @@ impl Controller for SidebarController {
 
         let station_favicon = self.station_favicon.clone();
 
-        if let Some(pixbuf) = station.favicon() {
-            station_favicon.set_pixbuf(&pixbuf);
+        if let Some(texture) = station.favicon() {
+            station_favicon.set_paintable(&texture.upcast());
         } else if let Some(favicon) = station.metadata().favicon {
-            let fut =
-                FaviconDownloader::download(favicon, FaviconSize::Big as i32).map(move |pixbuf| {
-                    match pixbuf {
-                        Ok(pixbuf) => station_favicon.set_pixbuf(&pixbuf),
-                        Err(error) => {
-                            debug!("Could not load favicon: {}", error);
-                            station_favicon.reset()
-                        }
-                    }
-                });
+            let fut = FaviconDownloader::download(favicon).map(move |paintable| match paintable {
+                Ok(paintable) => station_favicon.set_paintable(&paintable),
+                Err(error) => {
+                    debug!("Could not load favicon: {}", error);
+                    station_favicon.reset()
+                }
+            });
             glib::spawn_future_local(fut);
         } else {
             self.station_favicon.reset();

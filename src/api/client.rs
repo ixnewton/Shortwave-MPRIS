@@ -217,8 +217,7 @@ impl SwClient {
 
             let config = rconfig::ResolverConfig::default();
             let opts = rconfig::ResolverOpts::default();
-            resolver(config, opts)
-                .await
+            resolver(config, opts).await
         };
 
         // Do forward lookup to receive a list with the api servers
