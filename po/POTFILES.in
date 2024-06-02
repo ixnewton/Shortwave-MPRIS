@@ -12,7 +12,7 @@ data/gtk/library_page.ui
 data/gtk/mini_controller.ui
 data/gtk/player.ui
 data/gtk/search_page.ui
-data/gtk/settings_window.ui
+data/gtk/settings_dialog.ui
 data/gtk/sidebar_controller.ui
 data/gtk/song_listbox.ui
 data/gtk/song_row.ui
@@ -24,7 +24,7 @@ data/gtk/window.ui
 
 src/audio/backend/song_backend.rs
 src/audio/player.rs
-src/ui/about_window.rs
+src/ui/about_dialog.rs
 src/ui/create_station_dialog.rs
 src/ui/pages/discover_page.rs
 src/ui/pages/library_page.rs
