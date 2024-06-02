@@ -249,16 +249,3 @@ impl Controller for Rc<GCastController> {
         // Ignore
     }
 }
-
-#[macro_export]
-macro_rules! send {
-    ($sender:expr, $action:expr) => {
-        if let Err(err) = $sender.send($action) {
-            error!(
-                "Failed to send \"{}\" action due to {}",
-                stringify!($action),
-                err
-            );
-        }
-    };
-}
