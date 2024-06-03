@@ -25,7 +25,9 @@
                     <child>
                       <object class="GtkSearchEntry" id="search_entry">
                         <property name="hexpand">True</property>
+                        <property name="search_delay">750</property>
                         <property name="tooltip_text" translatable="yes">Search</property>
+                        <signal name="search_changed" handler="search_changed" swapped="true"/>
                         <accessibility>
                           <relation name="labelled-by">SwSearchPage</relation>
                         </accessibility>
@@ -199,4 +201,3 @@
     </section>
   </menu>
 </interface>
-

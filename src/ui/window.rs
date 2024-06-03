@@ -129,7 +129,6 @@ impl SwApplicationWindow {
         // Init pages
         imp.library_page.init();
         imp.discover_page.init();
-        imp.search_page.init();
 
         // Wire everything up
         imp.mini_controller_box
