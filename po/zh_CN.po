@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2024-05-30 15:41+0000\n"
-"PO-Revision-Date: 2024-06-01 07:40+0800\n"
+"POT-Creation-Date: 2024-06-03 19:52+0000\n"
+"PO-Revision-Date: 2024-06-04 18:42+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -39,7 +39,6 @@ msgstr "Gradio;Radio;Stream;Wave;收音机;流;波;"
 
 #. General
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:10
-#: src/ui/about_window.rs:35
 msgid "Listen to internet radio"
 msgstr "收听互联网广播"
 
@@ -55,10 +54,12 @@ msgid "Features:"
 msgstr "特性："
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:17
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:65
 msgid "Create your own library where you can add your favorite stations"
 msgstr "创建您自己的媒体库，可以在其中添加最喜欢的电台"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:18
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:69
 msgid "Easily search and discover new radio stations"
 msgstr "轻松搜索并发现新电台"
 
@@ -69,6 +70,7 @@ msgid ""
 msgstr "自动识别歌曲，并可以将其分别保存"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:20
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:73
 msgid "Responsive application layout, compatible for small and large screens"
 msgstr "响应式应用程序布局，兼容小型屏幕和大型屏幕"
 
@@ -89,41 +91,41 @@ msgstr "Felix Häcker"
 msgid "Create new station"
 msgstr "创建新电台"
 
-#: data/gtk/create_station_dialog.ui:26
+#: data/gtk/create_station_dialog.ui:25
 msgid "Create New Station"
 msgstr "创建新电台"
 
-#: data/gtk/create_station_dialog.ui:27
+#: data/gtk/create_station_dialog.ui:26
 msgid ""
 "You can decide if you want the new station to be visible for all users "
 "worldwide or if you want to create a local station."
 msgstr "您可以决定新电台是否对全球所有用户可见或创建本地电台。"
 
-#: data/gtk/create_station_dialog.ui:36
+#: data/gtk/create_station_dialog.ui:35
 msgid "Create _Public Station"
 msgstr "创建公共电台(_P)"
 
-#: data/gtk/create_station_dialog.ui:47
+#: data/gtk/create_station_dialog.ui:46
 msgid "Create _Local Station"
 msgstr "创建本地电台(_L)"
 
-#: data/gtk/create_station_dialog.ui:72
+#: data/gtk/create_station_dialog.ui:71
 msgid "Create Local Station"
 msgstr "创建本地电台"
 
-#: data/gtk/create_station_dialog.ui:105
+#: data/gtk/create_station_dialog.ui:104
 msgid "Change station image"
 msgstr "修改电台图像"
 
-#: data/gtk/create_station_dialog.ui:129 src/ui/pages/search_page.rs:211
+#: data/gtk/create_station_dialog.ui:128 src/ui/pages/search_page.rs:107
 msgid "Name"
 msgstr "名称"
 
-#: data/gtk/create_station_dialog.ui:137
+#: data/gtk/create_station_dialog.ui:136
 msgid "Stream URL"
 msgstr "媒体流 URL"
 
-#: data/gtk/create_station_dialog.ui:145
+#: data/gtk/create_station_dialog.ui:144
 msgid "Create Station"
 msgstr "创建电台"
 
@@ -132,7 +134,7 @@ msgid "Discover"
 msgstr "发现"
 
 #: data/gtk/discover_page.ui:15 data/gtk/search_page.ui:4
-#: data/gtk/search_page.ui:28
+#: data/gtk/search_page.ui:29
 msgid "Search"
 msgstr "搜索"
 
@@ -156,7 +158,7 @@ msgstr "上一个"
 msgid "Next"
 msgstr "下一个"
 
-#: data/gtk/help_overlay.ui:11 data/gtk/settings_window.ui:7
+#: data/gtk/help_overlay.ui:11 data/gtk/settings_dialog.ui:9
 msgid "General"
 msgstr "常规"
 
@@ -226,35 +228,35 @@ msgstr "启用迷你播放器(_E)"
 msgid "_Sorting"
 msgstr "排序(_S)"
 
-#: data/gtk/library_page.ui:141 data/gtk/search_page.ui:158
+#: data/gtk/library_page.ui:141 data/gtk/search_page.ui:160
 msgid "_Name"
 msgstr "名称(_N)"
 
-#: data/gtk/library_page.ui:146 data/gtk/search_page.ui:163
+#: data/gtk/library_page.ui:146 data/gtk/search_page.ui:165
 msgid "_Language"
 msgstr "语言(_L)"
 
-#: data/gtk/library_page.ui:151 data/gtk/search_page.ui:168
+#: data/gtk/library_page.ui:151 data/gtk/search_page.ui:170
 msgid "_Country"
 msgstr "国家(_C)"
 
-#: data/gtk/library_page.ui:156 data/gtk/search_page.ui:173
+#: data/gtk/library_page.ui:156 data/gtk/search_page.ui:175
 msgid "S_tate"
 msgstr "州省(_T)"
 
-#: data/gtk/library_page.ui:161 data/gtk/search_page.ui:178
+#: data/gtk/library_page.ui:161 data/gtk/search_page.ui:180
 msgid "_Votes"
 msgstr "票数(_V)"
 
-#: data/gtk/library_page.ui:166 data/gtk/search_page.ui:183
+#: data/gtk/library_page.ui:166 data/gtk/search_page.ui:185
 msgid "_Bitrate"
 msgstr "位速率(_B)"
 
-#: data/gtk/library_page.ui:173 data/gtk/search_page.ui:190
+#: data/gtk/library_page.ui:173 data/gtk/search_page.ui:192
 msgid "_Ascending"
 msgstr "升序(_A)"
 
-#: data/gtk/library_page.ui:178 data/gtk/search_page.ui:195
+#: data/gtk/library_page.ui:178 data/gtk/search_page.ui:197
 msgid "_Descending"
 msgstr "降序(_D)"
 
@@ -278,7 +280,7 @@ msgstr "键盘快捷键(_K)"
 msgid "_About Shortwave"
 msgstr "关于短波(_A)"
 
-#: data/gtk/mini_controller.ui:27 data/gtk/sidebar_controller.ui:116
+#: data/gtk/mini_controller.ui:27 data/gtk/sidebar_controller.ui:127
 #: data/gtk/toolbar_controller.ui:70
 msgid "Stop"
 msgstr "停止"
@@ -287,20 +289,20 @@ msgstr "停止"
 msgid "Start"
 msgstr "开始"
 
-#: data/gtk/mini_controller.ui:87
+#: data/gtk/mini_controller.ui:98
 msgid "SHORTWAVE INTERNET RADIO"
 msgstr "短波互联网电台"
 
-#: data/gtk/mini_controller.ui:109 data/gtk/sidebar_controller.ui:64
+#: data/gtk/mini_controller.ui:120 data/gtk/sidebar_controller.ui:64
 #: data/gtk/toolbar_controller.ui:29
 msgid "No Playback"
 msgstr "无回放"
 
-#: data/gtk/mini_controller.ui:149
+#: data/gtk/mini_controller.ui:160
 msgid "Close"
 msgstr "关闭"
 
-#: data/gtk/mini_controller.ui:160
+#: data/gtk/mini_controller.ui:171
 msgid "Resize"
 msgstr "改变大小"
 
@@ -308,36 +310,36 @@ msgstr "改变大小"
 msgid "Back"
 msgstr "返回"
 
-#: data/gtk/search_page.ui:39 data/gtk/station_dialog.ui:172
-#: src/ui/pages/search_page.rs:215
+#: data/gtk/search_page.ui:41 data/gtk/station_dialog.ui:171
+#: src/ui/pages/search_page.rs:111
 msgid "Votes"
 msgstr "票数"
 
-#: data/gtk/search_page.ui:44
+#: data/gtk/search_page.ui:46
 msgid "Change the sorting of the search results"
 msgstr "更改搜索结果的排序"
 
-#: data/gtk/search_page.ui:71
+#: data/gtk/search_page.ui:73
 msgid "No Results"
 msgstr "无结果"
 
-#: data/gtk/search_page.ui:72
+#: data/gtk/search_page.ui:74
 msgid "Try using a different search term"
 msgstr "尝试使用不同的搜索关键字"
 
-#: data/gtk/search_page.ui:99
+#: data/gtk/search_page.ui:101
 msgid "Search Results"
 msgstr "搜索结果"
 
-#: data/gtk/settings_window.ui:10
+#: data/gtk/settings_dialog.ui:12
 msgid "Features"
 msgstr "特性"
 
-#: data/gtk/settings_window.ui:13
+#: data/gtk/settings_dialog.ui:15
 msgid "_Notifications"
 msgstr "通知(_N)"
 
-#: data/gtk/settings_window.ui:15
+#: data/gtk/settings_dialog.ui:17
 msgid "Show desktop notifications when a new song gets played"
 msgstr "当播放新歌曲时显示桌面通知"
 
@@ -345,20 +347,20 @@ msgstr "当播放新歌曲时显示桌面通知"
 msgid "An error occurred"
 msgstr "发生了错误"
 
-#: data/gtk/sidebar_controller.ui:131 data/gtk/station_row.ui:69
+#: data/gtk/sidebar_controller.ui:142 data/gtk/station_row.ui:69
 #: data/gtk/toolbar_controller.ui:81
 msgid "Play"
 msgstr "播放"
 
-#: data/gtk/sidebar_controller.ui:177
+#: data/gtk/sidebar_controller.ui:188
 msgid "Station Menu"
 msgstr "电台菜单"
 
-#: data/gtk/sidebar_controller.ui:191
+#: data/gtk/sidebar_controller.ui:202
 msgid "_Show Station Details"
 msgstr "显示电台详情(_S)"
 
-#: data/gtk/sidebar_controller.ui:195
+#: data/gtk/sidebar_controller.ui:206
 msgid "Stream to a _Device"
 msgstr "串流到设备(_D)"
 
@@ -388,106 +390,106 @@ msgstr "打开(_O)"
 msgid "Save recorded song"
 msgstr "保存录制的歌曲"
 
-#: data/gtk/station_dialog.ui:71
+#: data/gtk/station_dialog.ui:70
 msgid "_Play Station"
 msgstr "播放电台(_P)"
 
-#: data/gtk/station_dialog.ui:86
+#: data/gtk/station_dialog.ui:85
 msgid "_Add to Library"
 msgstr "添加到库(_A)"
 
-#: data/gtk/station_dialog.ui:102
+#: data/gtk/station_dialog.ui:101
 msgid "_Remove From Library"
 msgstr "从库移除(_R)"
 
-#: data/gtk/station_dialog.ui:120
+#: data/gtk/station_dialog.ui:119
 msgid "Local Station"
 msgstr "本地电台"
 
-#: data/gtk/station_dialog.ui:121
+#: data/gtk/station_dialog.ui:120
 msgid ""
 "This station exists only in your library, and is not part of the public "
 "online station database."
 msgstr "该电台仅存在于您的库中，且不是公共在线电台数据库的一部分。"
 
-#: data/gtk/station_dialog.ui:136
+#: data/gtk/station_dialog.ui:135
 msgid "Orphaned Station"
 msgstr "孤立电台"
 
-#: data/gtk/station_dialog.ui:137
+#: data/gtk/station_dialog.ui:136
 msgid ""
 "The information could not be updated, probably this station was removed from "
 "the public online station database."
 msgstr "信息无法更新，可能是因为该电台已从公共在线电台数据库移除。"
 
-#: data/gtk/station_dialog.ui:149
+#: data/gtk/station_dialog.ui:148
 msgid "Information"
 msgstr "信息"
 
-#: data/gtk/station_dialog.ui:152 src/ui/pages/search_page.rs:212
+#: data/gtk/station_dialog.ui:151 src/ui/pages/search_page.rs:108
 msgid "Language"
 msgstr "语言"
 
-#: data/gtk/station_dialog.ui:162
+#: data/gtk/station_dialog.ui:161
 msgid "Tags"
 msgstr "标签"
 
-#: data/gtk/station_dialog.ui:183
+#: data/gtk/station_dialog.ui:182
 msgid "Location"
 msgstr "位置"
 
-#: data/gtk/station_dialog.ui:188 src/ui/pages/search_page.rs:213
+#: data/gtk/station_dialog.ui:187 src/ui/pages/search_page.rs:109
 msgid "Country"
 msgstr "国家"
 
-#: data/gtk/station_dialog.ui:198 src/ui/pages/search_page.rs:214
+#: data/gtk/station_dialog.ui:197 src/ui/pages/search_page.rs:110
 msgid "State"
 msgstr "州省"
 
-#: data/gtk/station_dialog.ui:232
+#: data/gtk/station_dialog.ui:231
 msgid "Audio"
 msgstr "音频"
 
-#: data/gtk/station_dialog.ui:236 src/ui/pages/search_page.rs:216
+#: data/gtk/station_dialog.ui:235 src/ui/pages/search_page.rs:112
 msgid "Bitrate"
 msgstr "位速率"
 
-#: data/gtk/station_dialog.ui:246
+#: data/gtk/station_dialog.ui:245
 msgid "Codec"
 msgstr "编解码器"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:256
+#: data/gtk/station_dialog.ui:255
 msgid "Stream"
 msgstr "流"
 
-#: data/gtk/station_dialog.ui:265
+#: data/gtk/station_dialog.ui:264
 msgid "Copy"
 msgstr "复制"
 
-#: data/gtk/streaming_dialog.ui:10
+#: data/gtk/streaming_dialog.ui:8
 msgid "Stream to a Device"
 msgstr "串流到设备"
 
-#: data/gtk/streaming_dialog.ui:28
+#: data/gtk/streaming_dialog.ui:26
 msgid ""
 "Audio playback can be streamed to a network device (requires Google Cast "
 "support)."
 msgstr "音频播放可以串流至网络设备（需要 Google Cast 支持）。"
 
-#: data/gtk/streaming_dialog.ui:43
+#: data/gtk/streaming_dialog.ui:41
 msgid "No Devices Found"
 msgstr "未找到设备"
 
-#: data/gtk/streaming_dialog.ui:49 data/gtk/streaming_dialog.ui:75
+#: data/gtk/streaming_dialog.ui:47 data/gtk/streaming_dialog.ui:73
 msgid "Search Again"
 msgstr "再次搜索"
 
-#: data/gtk/streaming_dialog.ui:69
+#: data/gtk/streaming_dialog.ui:67
 msgid "Search Completed"
 msgstr "搜索已完成"
 
-#: data/gtk/streaming_dialog.ui:95
+#: data/gtk/streaming_dialog.ui:93
 msgid "Searching for Devices…"
 msgstr "正在搜索设备…"
 
@@ -500,59 +502,59 @@ msgstr "主视图"
 msgid "Unable to access music directory. Saving song in home directory."
 msgstr "无法访问音乐目录。在主目录保存歌曲。"
 
-#: src/audio/player.rs:189
+#: src/audio/player.rs:190
 msgid "Station cannot be streamed. URL is not valid."
 msgstr "电台无法串流。网址无效。"
 
-#: src/audio/player.rs:240
+#: src/audio/player.rs:241
 msgid "Cannot save song."
 msgstr "无法保存歌曲。"
 
-#: src/ui/about_window.rs:46
+#: src/ui/about_dialog.rs:44
 msgid "translator-credits"
 msgstr ""
 "Damned <damnedlies@163.com>, 2020.\n"
 "Dingzhong Chen <wsxy162@gmail.com>, 2020.\n"
 "lumingzh <lumingzh@qq.com>, 2022-2024."
 
-#: src/ui/create_station_dialog.rs:114
+#: src/ui/create_station_dialog.rs:106
 msgid "Select station image"
 msgstr "选择电台图像"
 
 #. TODO: Implement show-server-stats action
-#: src/ui/pages/discover_page.rs:134
+#: src/ui/pages/discover_page.rs:127
 msgid "Show statistics"
 msgstr "显示统计信息"
 
-#: src/ui/pages/discover_page.rs:136
-msgid "Browse over 30,000 stations"
-msgstr "浏览 30000 多个电台"
+#: src/ui/pages/discover_page.rs:129
+msgid "Browse over 50,000 stations"
+msgstr "浏览 50000 多个电台"
 
-#: src/ui/pages/discover_page.rs:138
+#: src/ui/pages/discover_page.rs:131
 msgid "Add new station"
 msgstr "添加新电台"
 
-#: src/ui/pages/discover_page.rs:140
+#: src/ui/pages/discover_page.rs:133
 msgid "Your favorite station is missing?"
 msgstr "没有找到您最喜欢的电台？"
 
-#: src/ui/pages/discover_page.rs:145
+#: src/ui/pages/discover_page.rs:138
 msgid "Open website"
 msgstr "打开网站"
 
-#: src/ui/pages/discover_page.rs:147
+#: src/ui/pages/discover_page.rs:140
 msgid "Powered by radio-browser.info"
 msgstr "由 radio-browser.info 提供支持"
 
-#: src/ui/pages/discover_page.rs:158 src/ui/pages/search_page.rs:191
+#: src/ui/pages/discover_page.rs:151 src/ui/pages/search_page.rs:193
 msgid "Station data could not be received."
 msgstr "无法接收电台数据。"
 
-#: src/ui/pages/library_page.rs:121
+#: src/ui/pages/library_page.rs:114
 msgid "Welcome to {}"
 msgstr "欢迎使用 {}"
 
-#: src/ui/pages/search_page.rs:104
+#: src/ui/pages/search_page.rs:200
 msgid ""
 "The number of results is limited to {} item. Try using a more specific "
 "search term."
@@ -561,7 +563,7 @@ msgid_plural ""
 "search term."
 msgstr[0] "结果数量已限制为 {} 项。请尝试使用更明确的搜索词语。"
 
-#: src/ui/station_dialog.rs:221
+#: src/ui/station_dialog.rs:216
 msgid "{} kbit/s"
 msgstr "{} kbit/s"
 
