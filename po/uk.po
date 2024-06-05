@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2024-05-30 15:41+0000\n"
-"PO-Revision-Date: 2024-05-31 20:21+0300\n"
+"POT-Creation-Date: 2024-06-03 19:52+0000\n"
+"PO-Revision-Date: 2024-06-05 09:17+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian\n"
 "Language: uk\n"
@@ -31,7 +31,6 @@ msgstr "Gradio;Radio;Stream;Wave;градіо;жрадіо;радіо;потік
 
 #. General
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:10
-#: src/ui/about_window.rs:35
 msgid "Listen to internet radio"
 msgstr "Прослуховування інтернет-радіо"
 
@@ -48,11 +47,13 @@ msgid "Features:"
 msgstr "Можливості:"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:17
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:65
 msgid "Create your own library where you can add your favorite stations"
 msgstr ""
 "Створіть власну бібліотеку, до якої ви зможете додавати улюблені станції"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:18
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:69
 msgid "Easily search and discover new radio stations"
 msgstr "Простий пошук і виявлення нових радіостанцій"
 
@@ -63,6 +64,7 @@ msgid ""
 msgstr "Автоматичне виявлення пісень із можливістю їхнього збереження окремо"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:20
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:73
 msgid "Responsive application layout, compatible for small and large screens"
 msgstr ""
 "Якісне компонування вікна програми, яке сумісне із малими і великими екранами"
@@ -86,11 +88,11 @@ msgstr "Felix Häcker"
 msgid "Create new station"
 msgstr "Створити станцію"
 
-#: data/gtk/create_station_dialog.ui:26
+#: data/gtk/create_station_dialog.ui:25
 msgid "Create New Station"
 msgstr "Створення станції"
 
-#: data/gtk/create_station_dialog.ui:27
+#: data/gtk/create_station_dialog.ui:26
 msgid ""
 "You can decide if you want the new station to be visible for all users "
 "worldwide or if you want to create a local station."
@@ -98,31 +100,31 @@ msgstr ""
 "Ви можете визначити, хочете ви, щоб нову станцію змогли побачити користувачі "
 "з усього світу, чи ви хочете створити локальну станцію."
 
-#: data/gtk/create_station_dialog.ui:36
+#: data/gtk/create_station_dialog.ui:35
 msgid "Create _Public Station"
 msgstr "Створити з_агальнодоступу станцію"
 
-#: data/gtk/create_station_dialog.ui:47
+#: data/gtk/create_station_dialog.ui:46
 msgid "Create _Local Station"
 msgstr "Створити _локальну станцію"
 
-#: data/gtk/create_station_dialog.ui:72
+#: data/gtk/create_station_dialog.ui:71
 msgid "Create Local Station"
 msgstr "Створити локальну станцію"
 
-#: data/gtk/create_station_dialog.ui:105
+#: data/gtk/create_station_dialog.ui:104
 msgid "Change station image"
 msgstr "Змінити зображення для станції"
 
-#: data/gtk/create_station_dialog.ui:129 src/ui/pages/search_page.rs:211
+#: data/gtk/create_station_dialog.ui:128 src/ui/pages/search_page.rs:107
 msgid "Name"
 msgstr "Назва"
 
-#: data/gtk/create_station_dialog.ui:137
+#: data/gtk/create_station_dialog.ui:136
 msgid "Stream URL"
 msgstr "Адреса трансляції"
 
-#: data/gtk/create_station_dialog.ui:145
+#: data/gtk/create_station_dialog.ui:144
 msgid "Create Station"
 msgstr "Створити станцію"
 
@@ -131,7 +133,7 @@ msgid "Discover"
 msgstr "Виявлення"
 
 #: data/gtk/discover_page.ui:15 data/gtk/search_page.ui:4
-#: data/gtk/search_page.ui:28
+#: data/gtk/search_page.ui:29
 msgid "Search"
 msgstr "Пошук"
 
@@ -155,7 +157,7 @@ msgstr "Назад"
 msgid "Next"
 msgstr "Далі"
 
-#: data/gtk/help_overlay.ui:11 data/gtk/settings_window.ui:7
+#: data/gtk/help_overlay.ui:11 data/gtk/settings_dialog.ui:9
 msgid "General"
 msgstr "Загальні"
 
@@ -225,35 +227,35 @@ msgstr "Увімкнути _мініпрогравач"
 msgid "_Sorting"
 msgstr "Вп_орядкування"
 
-#: data/gtk/library_page.ui:141 data/gtk/search_page.ui:158
+#: data/gtk/library_page.ui:141 data/gtk/search_page.ui:160
 msgid "_Name"
 msgstr "_Назва"
 
-#: data/gtk/library_page.ui:146 data/gtk/search_page.ui:163
+#: data/gtk/library_page.ui:146 data/gtk/search_page.ui:165
 msgid "_Language"
 msgstr "_Мова"
 
-#: data/gtk/library_page.ui:151 data/gtk/search_page.ui:168
+#: data/gtk/library_page.ui:151 data/gtk/search_page.ui:170
 msgid "_Country"
 msgstr "К_раїна"
 
-#: data/gtk/library_page.ui:156 data/gtk/search_page.ui:173
+#: data/gtk/library_page.ui:156 data/gtk/search_page.ui:175
 msgid "S_tate"
 msgstr "_Штат"
 
-#: data/gtk/library_page.ui:161 data/gtk/search_page.ui:178
+#: data/gtk/library_page.ui:161 data/gtk/search_page.ui:180
 msgid "_Votes"
 msgstr "_Голоси"
 
-#: data/gtk/library_page.ui:166 data/gtk/search_page.ui:183
+#: data/gtk/library_page.ui:166 data/gtk/search_page.ui:185
 msgid "_Bitrate"
 msgstr "_Бітова швидкість"
 
-#: data/gtk/library_page.ui:173 data/gtk/search_page.ui:190
+#: data/gtk/library_page.ui:173 data/gtk/search_page.ui:192
 msgid "_Ascending"
 msgstr "За з_ростанням"
 
-#: data/gtk/library_page.ui:178 data/gtk/search_page.ui:195
+#: data/gtk/library_page.ui:178 data/gtk/search_page.ui:197
 msgid "_Descending"
 msgstr "За с_паданням"
 
@@ -277,7 +279,7 @@ msgstr "_Клавіатурні скорочення"
 msgid "_About Shortwave"
 msgstr "П_ро «Shortwave»"
 
-#: data/gtk/mini_controller.ui:27 data/gtk/sidebar_controller.ui:116
+#: data/gtk/mini_controller.ui:27 data/gtk/sidebar_controller.ui:127
 #: data/gtk/toolbar_controller.ui:70
 msgid "Stop"
 msgstr "Зупинити"
@@ -286,20 +288,20 @@ msgstr "Зупинити"
 msgid "Start"
 msgstr "Почати"
 
-#: data/gtk/mini_controller.ui:87
+#: data/gtk/mini_controller.ui:98
 msgid "SHORTWAVE INTERNET RADIO"
 msgstr "КОРОТКОХВИЛЬОВЕ ІНТЕРНЕТ-РАДІО"
 
-#: data/gtk/mini_controller.ui:109 data/gtk/sidebar_controller.ui:64
+#: data/gtk/mini_controller.ui:120 data/gtk/sidebar_controller.ui:64
 #: data/gtk/toolbar_controller.ui:29
 msgid "No Playback"
 msgstr "Немає відтворення"
 
-#: data/gtk/mini_controller.ui:149
+#: data/gtk/mini_controller.ui:160
 msgid "Close"
 msgstr "Закрити"
 
-#: data/gtk/mini_controller.ui:160
+#: data/gtk/mini_controller.ui:171
 msgid "Resize"
 msgstr "Змінити розмір"
 
@@ -307,36 +309,36 @@ msgstr "Змінити розмір"
 msgid "Back"
 msgstr "Назад"
 
-#: data/gtk/search_page.ui:39 data/gtk/station_dialog.ui:172
-#: src/ui/pages/search_page.rs:215
+#: data/gtk/search_page.ui:41 data/gtk/station_dialog.ui:171
+#: src/ui/pages/search_page.rs:111
 msgid "Votes"
 msgstr "Голоси"
 
-#: data/gtk/search_page.ui:44
+#: data/gtk/search_page.ui:46
 msgid "Change the sorting of the search results"
 msgstr "Змінити упорядкування результатів пошуку"
 
-#: data/gtk/search_page.ui:71
+#: data/gtk/search_page.ui:73
 msgid "No Results"
 msgstr "Нічого не знайдено"
 
-#: data/gtk/search_page.ui:72
+#: data/gtk/search_page.ui:74
 msgid "Try using a different search term"
 msgstr "Спробуйте інший критерій пошуку"
 
-#: data/gtk/search_page.ui:99
+#: data/gtk/search_page.ui:101
 msgid "Search Results"
 msgstr "Результати пошуку"
 
-#: data/gtk/settings_window.ui:10
+#: data/gtk/settings_dialog.ui:12
 msgid "Features"
 msgstr "Можливості"
 
-#: data/gtk/settings_window.ui:13
+#: data/gtk/settings_dialog.ui:15
 msgid "_Notifications"
 msgstr "_Сповіщення"
 
-#: data/gtk/settings_window.ui:15
+#: data/gtk/settings_dialog.ui:17
 msgid "Show desktop notifications when a new song gets played"
 msgstr ""
 "Показувати сповіщення на стільниці при переході до наступної композиції"
@@ -345,20 +347,20 @@ msgstr ""
 msgid "An error occurred"
 msgstr "Сталася помилка"
 
-#: data/gtk/sidebar_controller.ui:131 data/gtk/station_row.ui:69
+#: data/gtk/sidebar_controller.ui:142 data/gtk/station_row.ui:69
 #: data/gtk/toolbar_controller.ui:81
 msgid "Play"
 msgstr "Пуск"
 
-#: data/gtk/sidebar_controller.ui:177
+#: data/gtk/sidebar_controller.ui:188
 msgid "Station Menu"
 msgstr "Меню станцій"
 
-#: data/gtk/sidebar_controller.ui:191
+#: data/gtk/sidebar_controller.ui:202
 msgid "_Show Station Details"
 msgstr "По_казати параметри станції"
 
-#: data/gtk/sidebar_controller.ui:195
+#: data/gtk/sidebar_controller.ui:206
 msgid "Stream to a _Device"
 msgstr "Трансляція на пр_истрій"
 
@@ -388,23 +390,23 @@ msgstr "_Відкрити"
 msgid "Save recorded song"
 msgstr "Зберегти записану пісню"
 
-#: data/gtk/station_dialog.ui:71
+#: data/gtk/station_dialog.ui:70
 msgid "_Play Station"
 msgstr "_Відтворити станцію"
 
-#: data/gtk/station_dialog.ui:86
+#: data/gtk/station_dialog.ui:85
 msgid "_Add to Library"
 msgstr "Д_одати до бібліотеки"
 
-#: data/gtk/station_dialog.ui:102
+#: data/gtk/station_dialog.ui:101
 msgid "_Remove From Library"
 msgstr "Ви_лучити з бібліотеки"
 
-#: data/gtk/station_dialog.ui:120
+#: data/gtk/station_dialog.ui:119
 msgid "Local Station"
 msgstr "Локальна станція"
 
-#: data/gtk/station_dialog.ui:121
+#: data/gtk/station_dialog.ui:120
 msgid ""
 "This station exists only in your library, and is not part of the public "
 "online station database."
@@ -412,11 +414,11 @@ msgstr ""
 "Запис станції є лише у вашій бібліотеці — він не є частиною "
 "загальнодоступної бази даних станцій в інтернеті."
 
-#: data/gtk/station_dialog.ui:136
+#: data/gtk/station_dialog.ui:135
 msgid "Orphaned Station"
 msgstr "Осиротіла станція"
 
-#: data/gtk/station_dialog.ui:137
+#: data/gtk/station_dialog.ui:136
 msgid ""
 "The information could not be updated, probably this station was removed from "
 "the public online station database."
@@ -424,56 +426,56 @@ msgstr ""
 "Не вдалося оновити відомості. Ймовірно, станцію було вилучено з бази даних "
 "загальнодоступних інтернет-станцій."
 
-#: data/gtk/station_dialog.ui:149
+#: data/gtk/station_dialog.ui:148
 msgid "Information"
 msgstr "Відомості"
 
-#: data/gtk/station_dialog.ui:152 src/ui/pages/search_page.rs:212
+#: data/gtk/station_dialog.ui:151 src/ui/pages/search_page.rs:108
 msgid "Language"
 msgstr "Мова"
 
-#: data/gtk/station_dialog.ui:162
+#: data/gtk/station_dialog.ui:161
 msgid "Tags"
 msgstr "Мітки"
 
-#: data/gtk/station_dialog.ui:183
+#: data/gtk/station_dialog.ui:182
 msgid "Location"
 msgstr "Місце"
 
-#: data/gtk/station_dialog.ui:188 src/ui/pages/search_page.rs:213
+#: data/gtk/station_dialog.ui:187 src/ui/pages/search_page.rs:109
 msgid "Country"
 msgstr "Країна"
 
-#: data/gtk/station_dialog.ui:198 src/ui/pages/search_page.rs:214
+#: data/gtk/station_dialog.ui:197 src/ui/pages/search_page.rs:110
 msgid "State"
 msgstr "Штат"
 
-#: data/gtk/station_dialog.ui:232
+#: data/gtk/station_dialog.ui:231
 msgid "Audio"
 msgstr "Звук"
 
-#: data/gtk/station_dialog.ui:236 src/ui/pages/search_page.rs:216
+#: data/gtk/station_dialog.ui:235 src/ui/pages/search_page.rs:112
 msgid "Bitrate"
 msgstr "Бітова швидкість"
 
-#: data/gtk/station_dialog.ui:246
+#: data/gtk/station_dialog.ui:245
 msgid "Codec"
 msgstr "Кодек"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:256
+#: data/gtk/station_dialog.ui:255
 msgid "Stream"
 msgstr "Трансляція"
 
-#: data/gtk/station_dialog.ui:265
+#: data/gtk/station_dialog.ui:264
 msgid "Copy"
 msgstr "Копіювати"
 
-#: data/gtk/streaming_dialog.ui:10
+#: data/gtk/streaming_dialog.ui:8
 msgid "Stream to a Device"
 msgstr "Трансляція на пристрій"
 
-#: data/gtk/streaming_dialog.ui:28
+#: data/gtk/streaming_dialog.ui:26
 msgid ""
 "Audio playback can be streamed to a network device (requires Google Cast "
 "support)."
@@ -481,20 +483,19 @@ msgstr ""
 "Відтворені звукові дані може бути переспрямовано на мережевий пристрій "
 "(потребує підтримки Google Cast)"
 
-#: data/gtk/streaming_dialog.ui:43
+#: data/gtk/streaming_dialog.ui:41
 msgid "No Devices Found"
 msgstr "Пристроїв не виявлено"
 
-#: data/gtk/streaming_dialog.ui:49 data/gtk/streaming_dialog.ui:75
-#| msgid "Search again"
+#: data/gtk/streaming_dialog.ui:47 data/gtk/streaming_dialog.ui:73
 msgid "Search Again"
 msgstr "Шукати ще"
 
-#: data/gtk/streaming_dialog.ui:69
+#: data/gtk/streaming_dialog.ui:67
 msgid "Search Completed"
 msgstr "Пошук завершено"
 
-#: data/gtk/streaming_dialog.ui:95
+#: data/gtk/streaming_dialog.ui:93
 msgid "Searching for Devices…"
 msgstr "Пошук пристроїв…"
 
@@ -509,56 +510,57 @@ msgstr ""
 "Не вдалося отримати доступ до каталогу з музикою. Зберігаємо композицію у "
 "домашньому каталозі."
 
-#: src/audio/player.rs:189
+#: src/audio/player.rs:190
 msgid "Station cannot be streamed. URL is not valid."
 msgstr "Станцію не можна транслювати. Адреса є некоректною."
 
-#: src/audio/player.rs:240
+#: src/audio/player.rs:241
 msgid "Cannot save song."
 msgstr "Не вдалося зберегти композицію."
 
-#: src/ui/about_window.rs:46
+#: src/ui/about_dialog.rs:44
 msgid "translator-credits"
 msgstr "Юрій Чорноіван <yurchor@ukr.net>, 2020"
 
-#: src/ui/create_station_dialog.rs:114
+#: src/ui/create_station_dialog.rs:106
 msgid "Select station image"
 msgstr "Виберіть зображення для станції"
 
 #. TODO: Implement show-server-stats action
-#: src/ui/pages/discover_page.rs:134
+#: src/ui/pages/discover_page.rs:127
 msgid "Show statistics"
 msgstr "Показати статистику"
 
-#: src/ui/pages/discover_page.rs:136
-msgid "Browse over 30,000 stations"
-msgstr "Навігація списком із понад 30000 станцій"
+#: src/ui/pages/discover_page.rs:129
+#| msgid "Browse over 30,000 stations"
+msgid "Browse over 50,000 stations"
+msgstr "Навігація списком із понад 50000 станцій"
 
-#: src/ui/pages/discover_page.rs:138
+#: src/ui/pages/discover_page.rs:131
 msgid "Add new station"
 msgstr "Додати нову станцію"
 
-#: src/ui/pages/discover_page.rs:140
+#: src/ui/pages/discover_page.rs:133
 msgid "Your favorite station is missing?"
 msgstr "Немає вашої улюбленої радіостанції?"
 
-#: src/ui/pages/discover_page.rs:145
+#: src/ui/pages/discover_page.rs:138
 msgid "Open website"
 msgstr "Відкрити сайт"
 
-#: src/ui/pages/discover_page.rs:147
+#: src/ui/pages/discover_page.rs:140
 msgid "Powered by radio-browser.info"
 msgstr "На основі radio-browser.info"
 
-#: src/ui/pages/discover_page.rs:158 src/ui/pages/search_page.rs:191
+#: src/ui/pages/discover_page.rs:151 src/ui/pages/search_page.rs:193
 msgid "Station data could not be received."
 msgstr "Не вдалося отримати дані станції."
 
-#: src/ui/pages/library_page.rs:121
+#: src/ui/pages/library_page.rs:114
 msgid "Welcome to {}"
 msgstr "Вітаємо у {}"
 
-#: src/ui/pages/search_page.rs:104
+#: src/ui/pages/search_page.rs:200
 msgid ""
 "The number of results is limited to {} item. Try using a more specific "
 "search term."
@@ -578,7 +580,7 @@ msgstr[3] ""
 "Кількість результатів обмежено {} записом. Спробуйте точніше визначити "
 "критерії пошуку."
 
-#: src/ui/station_dialog.rs:221
+#: src/ui/station_dialog.rs:216
 msgid "{} kbit/s"
 msgstr "{} кбіт/с"
 
