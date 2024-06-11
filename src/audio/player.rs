@@ -76,9 +76,10 @@ pub enum PlaybackState {
 }
 
 pub struct Player {
-    pub widget: adw::NavigationPage,
+    pub widget: adw::Bin,
     pub toolbar_controller_widget: gtk::Box,
     pub mini_controller_widget: gtk::Box,
+    pub headerbar: adw::HeaderBar,
     controller: Vec<Box<dyn Controller>>,
     gcast_controller: Rc<GCastController>,
 
@@ -93,8 +94,10 @@ pub struct Player {
 impl Player {
     pub fn new(sender: Sender<Action>) -> Rc<Self> {
         let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/player.ui");
-        get_widget!(builder, adw::NavigationPage, player);
+        get_widget!(builder, adw::Bin, player);
         let mut controller: Vec<Box<dyn Controller>> = Vec::new();
+
+        get_widget!(builder, adw::HeaderBar, headerbar);
 
         // Sidebar Controller
         let sidebar_controller = SidebarController::new(sender.clone());
@@ -143,6 +146,7 @@ impl Player {
             widget: player,
             toolbar_controller_widget,
             mini_controller_widget,
+            headerbar,
             controller,
             gcast_controller,
             backend,
