@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2024-04-12 07:38+0000\n"
-"PO-Revision-Date: 2024-04-12 20:40+0530\n"
+"POT-Creation-Date: 2024-06-12 11:10+0000\n"
+"PO-Revision-Date: 2024-06-13 11:30+0530\n"
 "Last-Translator: Scrambled777 <weblate.scrambled777@simplelogin.com>\n"
-"Language-Team: Hindi\n"
+"Language-Team: Hindi <indlinux-hindi@lists.sourceforge.net>\n"
 "Language: hi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Gtranslator 46.0\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Gtranslator 46.1\n"
 
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:3
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
@@ -26,11 +26,10 @@ msgstr "@NAME@"
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:12
 msgid "Gradio;Radio;Stream;Wave;"
-msgstr "Gradio;Radio;Stream;Wave;ग्रैडियो;रेडियो;स्ट्रीम;वेव;"
+msgstr "ग्रैडियो;रेडियो;स्ट्रीम;वेव;"
 
 #. General
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:10
-#: src/ui/about_window.rs:35
 msgid "Listen to internet radio"
 msgstr "इंटरनेट रेडियो सुनें"
 
@@ -39,18 +38,20 @@ msgid ""
 "Shortwave is an internet radio player that provides access to a station "
 "database with over 30,000 stations."
 msgstr ""
-"Shortwave एक इंटरनेट रेडियो प्लेयर है जो 30,000 से अधिक स्टेशनों वाले स्टेशन डेटाबेस तक पहुंच "
+"शॉर्टवेव एक इंटरनेट रेडियो प्लेयर है जो 30,000 से अधिक स्टेशनों वाले स्टेशन डेटाबेस तक पहुंच "
 "प्रदान करता है।"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:15
 msgid "Features:"
-msgstr "विशेषताएँ:"
+msgstr "विशेषताएं:"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:17
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:65
 msgid "Create your own library where you can add your favorite stations"
 msgstr "अपनी खुद की लाइब्रेरी बनाएं जहां आप अपने पसंदीदा स्टेशन जोड़ सकें"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:18
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:69
 msgid "Easily search and discover new radio stations"
 msgstr "नए रेडियो स्टेशन आसानी से खोजें और ढूंढें"
 
@@ -61,8 +62,9 @@ msgid ""
 msgstr "गानों की स्वचालित पहचान, उन्हें व्यक्तिगत रूप से सहेजने की संभावना के साथ"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:20
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:73
 msgid "Responsive application layout, compatible for small and large screens"
-msgstr "उत्तरदायी एप्लिकेशन लेआउट, छोटी और बड़ी स्क्रीन के लिए संगत"
+msgstr "उत्तरदायी अनुप्रयोग अभिन्यास, छोटी और बड़ी स्क्रीन के लिए संगत"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:21
 msgid "Play audio on supported network devices (e.g. Google Chromecasts)"
@@ -81,11 +83,11 @@ msgstr "फेलिक्स हैकर"
 msgid "Create new station"
 msgstr "नया स्टेशन बनाएं"
 
-#: data/gtk/create_station_dialog.ui:32
+#: data/gtk/create_station_dialog.ui:25
 msgid "Create New Station"
 msgstr "नया स्टेशन बनाएं"
 
-#: data/gtk/create_station_dialog.ui:33
+#: data/gtk/create_station_dialog.ui:26
 msgid ""
 "You can decide if you want the new station to be visible for all users "
 "worldwide or if you want to create a local station."
@@ -93,31 +95,31 @@ msgstr ""
 "आप यह तय कर सकते हैं कि क्या आप चाहते हैं कि नया स्टेशन दुनिया भर के सभी उपयोगकर्ताओं के "
 "लिए दृश्यमान हो या आप एक स्थानीय स्टेशन बनाना चाहते हैं।"
 
-#: data/gtk/create_station_dialog.ui:43
+#: data/gtk/create_station_dialog.ui:35
 msgid "Create _Public Station"
-msgstr "सार्वजनिक स्टेशन बनाएँ (_P)"
+msgstr "सार्वजनिक स्टेशन बनाएं (_P)"
 
-#: data/gtk/create_station_dialog.ui:54
+#: data/gtk/create_station_dialog.ui:46
 msgid "Create _Local Station"
 msgstr "स्थानीय स्टेशन बनाएं (_L)"
 
-#: data/gtk/create_station_dialog.ui:80
+#: data/gtk/create_station_dialog.ui:71
 msgid "Create Local Station"
 msgstr "स्थानीय स्टेशन बनाएं"
 
-#: data/gtk/create_station_dialog.ui:113
+#: data/gtk/create_station_dialog.ui:104
 msgid "Change station image"
 msgstr "स्टेशन की छवि बदलें"
 
-#: data/gtk/create_station_dialog.ui:137 src/ui/pages/search_page.rs:211
+#: data/gtk/create_station_dialog.ui:128 src/ui/pages/search_page.rs:107
 msgid "Name"
 msgstr "नाम"
 
-#: data/gtk/create_station_dialog.ui:145
+#: data/gtk/create_station_dialog.ui:136
 msgid "Stream URL"
 msgstr "स्ट्रीम URL"
 
-#: data/gtk/create_station_dialog.ui:153
+#: data/gtk/create_station_dialog.ui:144
 msgid "Create Station"
 msgstr "स्टेशन बनाएं"
 
@@ -126,7 +128,7 @@ msgid "Discover"
 msgstr "खोजें"
 
 #: data/gtk/discover_page.ui:15 data/gtk/search_page.ui:4
-#: data/gtk/search_page.ui:28
+#: data/gtk/search_page.ui:29
 msgid "Search"
 msgstr "खोजें"
 
@@ -136,11 +138,11 @@ msgstr "सर्वाधिक मतदान वाले स्टेशन
 
 #: data/gtk/discover_page.ui:61
 msgid "Trending"
-msgstr "रुझान में है"
+msgstr "रुझान"
 
 #: data/gtk/discover_page.ui:78
 msgid "Other Users Are Listening To…"
-msgstr "अन्य उपयोगकर्ता सुन रहे हैं..."
+msgstr "अन्य उपयोगकर्ता सुन रहे हैं…"
 
 #: data/gtk/featured_carousel.ui:27
 msgid "Previous"
@@ -150,9 +152,9 @@ msgstr "पिछला"
 msgid "Next"
 msgstr "अगला"
 
-#: data/gtk/help_overlay.ui:11 data/gtk/settings_window.ui:7
+#: data/gtk/help_overlay.ui:11 data/gtk/settings_dialog.ui:9
 msgid "General"
-msgstr "जनरल"
+msgstr "सामान्य"
 
 #: data/gtk/help_overlay.ui:14
 msgctxt "shortcut window"
@@ -162,12 +164,12 @@ msgstr "शॉर्टकट विंडो खोलें"
 #: data/gtk/help_overlay.ui:21
 msgctxt "shortcut window"
 msgid "Open application menu"
-msgstr "एप्लिकेशन मेनू खोलें"
+msgstr "अनुप्रयोग मेनू खोलें"
 
 #: data/gtk/help_overlay.ui:26
 msgctxt "shortcut window"
 msgid "Open preferences"
-msgstr "प्राथमिकताएँ खोलें"
+msgstr "प्राथमिकताएं खोलें"
 
 #: data/gtk/help_overlay.ui:32
 msgctxt "shortcut window"
@@ -177,7 +179,7 @@ msgstr "विंडो बंद करें"
 #: data/gtk/help_overlay.ui:38
 msgctxt "shortcut window"
 msgid "Quit the application"
-msgstr "एप्लिकेशन छोड़ें"
+msgstr "अनुप्रयोग छोड़ें"
 
 #: data/gtk/help_overlay.ui:46 data/gtk/player.ui:5
 msgid "Playback"
@@ -206,7 +208,7 @@ msgstr "लाइब्रेरी"
 
 #: data/gtk/library_page.ui:85
 msgid "Receiving Station Data…"
-msgstr "स्टेशन डेटा प्राप्त हो रहा है..."
+msgstr "स्टेशन डेटा प्राप्त हो रहा है…"
 
 #: data/gtk/library_page.ui:112
 msgid "_Discover New Stations"
@@ -218,37 +220,37 @@ msgstr "मिनी प्लेयर सक्षम करें (_E)"
 
 #: data/gtk/library_page.ui:138
 msgid "_Sorting"
-msgstr "छँटाई (_S)"
+msgstr "छंटाई (_S)"
 
-#: data/gtk/library_page.ui:141 data/gtk/search_page.ui:158
+#: data/gtk/library_page.ui:141 data/gtk/search_page.ui:160
 msgid "_Name"
 msgstr "नाम (_N)"
 
-#: data/gtk/library_page.ui:146 data/gtk/search_page.ui:163
+#: data/gtk/library_page.ui:146 data/gtk/search_page.ui:165
 msgid "_Language"
 msgstr "भाषा (_L)"
 
-#: data/gtk/library_page.ui:151 data/gtk/search_page.ui:168
+#: data/gtk/library_page.ui:151 data/gtk/search_page.ui:170
 msgid "_Country"
 msgstr "देश (_C)"
 
-#: data/gtk/library_page.ui:156 data/gtk/search_page.ui:173
+#: data/gtk/library_page.ui:156 data/gtk/search_page.ui:175
 msgid "S_tate"
 msgstr "राज्य (_t)"
 
-#: data/gtk/library_page.ui:161 data/gtk/search_page.ui:178
+#: data/gtk/library_page.ui:161 data/gtk/search_page.ui:180
 msgid "_Votes"
 msgstr "मत (_V)"
 
-#: data/gtk/library_page.ui:166 data/gtk/search_page.ui:183
+#: data/gtk/library_page.ui:166 data/gtk/search_page.ui:185
 msgid "_Bitrate"
 msgstr "बिटरेट (_B)"
 
-#: data/gtk/library_page.ui:173 data/gtk/search_page.ui:190
+#: data/gtk/library_page.ui:173 data/gtk/search_page.ui:192
 msgid "_Ascending"
 msgstr "आरोही (_A)"
 
-#: data/gtk/library_page.ui:178 data/gtk/search_page.ui:195
+#: data/gtk/library_page.ui:178 data/gtk/search_page.ui:197
 msgid "_Descending"
 msgstr "अवरोही (_D)"
 
@@ -262,7 +264,7 @@ msgstr "नया स्टेशन बनाएं (_C)"
 
 #: data/gtk/library_page.ui:199
 msgid "_Preferences"
-msgstr "प्राथमिकताएँ (_P)"
+msgstr "प्राथमिकताएं (_P)"
 
 #: data/gtk/library_page.ui:203
 msgid "_Keyboard Shortcuts"
@@ -270,10 +272,10 @@ msgstr "कीबोर्ड शॉर्टकट (_K)"
 
 #: data/gtk/library_page.ui:207
 msgid "_About Shortwave"
-msgstr "Shortwave के बारे में (_A)"
+msgstr "शॉर्टवेव के बारे में (_A)"
 
-#: data/gtk/mini_controller.ui:27 data/gtk/sidebar_controller.ui:116
-#: data/gtk/toolbar_controller.ui:79
+#: data/gtk/mini_controller.ui:27 data/gtk/sidebar_controller.ui:127
+#: data/gtk/toolbar_controller.ui:70
 msgid "Stop"
 msgstr "रोकें"
 
@@ -281,20 +283,20 @@ msgstr "रोकें"
 msgid "Start"
 msgstr "प्रारंभ"
 
-#: data/gtk/mini_controller.ui:87
+#: data/gtk/mini_controller.ui:98
 msgid "SHORTWAVE INTERNET RADIO"
 msgstr "शॉर्टवेव इंटरनेट रेडियो"
 
-#: data/gtk/mini_controller.ui:109 data/gtk/sidebar_controller.ui:64
-#: data/gtk/toolbar_controller.ui:38
+#: data/gtk/mini_controller.ui:120 data/gtk/sidebar_controller.ui:64
+#: data/gtk/toolbar_controller.ui:29
 msgid "No Playback"
 msgstr "कोई प्लेबैक नहीं"
 
-#: data/gtk/mini_controller.ui:149
+#: data/gtk/mini_controller.ui:160
 msgid "Close"
 msgstr "बंद"
 
-#: data/gtk/mini_controller.ui:160
+#: data/gtk/mini_controller.ui:171
 msgid "Resize"
 msgstr "पुनर्कार"
 
@@ -302,36 +304,36 @@ msgstr "पुनर्कार"
 msgid "Back"
 msgstr "पीछे"
 
-#: data/gtk/search_page.ui:39 data/gtk/station_dialog.ui:172
-#: src/ui/pages/search_page.rs:215
+#: data/gtk/search_page.ui:41 data/gtk/station_dialog.ui:171
+#: src/ui/pages/search_page.rs:111
 msgid "Votes"
 msgstr "मत"
 
-#: data/gtk/search_page.ui:44
+#: data/gtk/search_page.ui:46
 msgid "Change the sorting of the search results"
 msgstr "खोज परिणामों का क्रम बदलें"
 
-#: data/gtk/search_page.ui:71
+#: data/gtk/search_page.ui:73
 msgid "No Results"
 msgstr "कोई परिणाम नहीं"
 
-#: data/gtk/search_page.ui:72
+#: data/gtk/search_page.ui:74
 msgid "Try using a different search term"
 msgstr "किसी भिन्न खोज शब्द का उपयोग करने का प्रयास करें"
 
-#: data/gtk/search_page.ui:99
+#: data/gtk/search_page.ui:101
 msgid "Search Results"
 msgstr "खोज के परिणाम"
 
-#: data/gtk/settings_window.ui:10
+#: data/gtk/settings_dialog.ui:12
 msgid "Features"
-msgstr "विशेषताएँ"
+msgstr "विशेषताएं"
 
-#: data/gtk/settings_window.ui:13
+#: data/gtk/settings_dialog.ui:15
 msgid "_Notifications"
 msgstr "सूचनाएं (_N)"
 
-#: data/gtk/settings_window.ui:15
+#: data/gtk/settings_dialog.ui:17
 msgid "Show desktop notifications when a new song gets played"
 msgstr "कोई नया गाना बजने पर डेस्कटॉप सूचनाएं दिखाएं"
 
@@ -339,20 +341,20 @@ msgstr "कोई नया गाना बजने पर डेस्कट�
 msgid "An error occurred"
 msgstr "एक त्रुटि हुई"
 
-#: data/gtk/sidebar_controller.ui:131 data/gtk/station_row.ui:69
-#: data/gtk/toolbar_controller.ui:90
+#: data/gtk/sidebar_controller.ui:142 data/gtk/station_row.ui:69
+#: data/gtk/toolbar_controller.ui:81
 msgid "Play"
-msgstr "चलाएँ"
+msgstr "चलाएं"
 
-#: data/gtk/sidebar_controller.ui:177
+#: data/gtk/sidebar_controller.ui:188
 msgid "Station Menu"
 msgstr "स्टेशन मेनू"
 
-#: data/gtk/sidebar_controller.ui:191
+#: data/gtk/sidebar_controller.ui:202
 msgid "_Show Station Details"
 msgstr "स्टेशन विवरण दिखाएं (_S)"
 
-#: data/gtk/sidebar_controller.ui:195
+#: data/gtk/sidebar_controller.ui:206
 msgid "Stream to a _Device"
 msgstr "उपकरण पर स्ट्रीम करें (_D)"
 
@@ -382,23 +384,23 @@ msgstr "खोलें (_O)"
 msgid "Save recorded song"
 msgstr "रिकॉर्ड किया गया गाना सहेजें"
 
-#: data/gtk/station_dialog.ui:71
+#: data/gtk/station_dialog.ui:70
 msgid "_Play Station"
 msgstr "स्टेशन चलाएं (_P)"
 
-#: data/gtk/station_dialog.ui:86
+#: data/gtk/station_dialog.ui:85
 msgid "_Add to Library"
 msgstr "लाइब्रेरी में जोड़ें (_A)"
 
-#: data/gtk/station_dialog.ui:102
+#: data/gtk/station_dialog.ui:101
 msgid "_Remove From Library"
-msgstr "लाइब्रेरी से हटाएँ (_R)"
+msgstr "लाइब्रेरी से हटाएं (_R)"
 
-#: data/gtk/station_dialog.ui:120
+#: data/gtk/station_dialog.ui:119
 msgid "Local Station"
 msgstr "स्थानीय स्टेशन"
 
-#: data/gtk/station_dialog.ui:121
+#: data/gtk/station_dialog.ui:120
 msgid ""
 "This station exists only in your library, and is not part of the public "
 "online station database."
@@ -406,64 +408,64 @@ msgstr ""
 "यह स्टेशन केवल आपकी लाइब्रेरी में मौजूद है, और सार्वजनिक ऑनलाइन स्टेशन डेटाबेस का हिस्सा "
 "नहीं है।"
 
-#: data/gtk/station_dialog.ui:136
+#: data/gtk/station_dialog.ui:135
 msgid "Orphaned Station"
 msgstr "अनाथ स्टेशन"
 
-#: data/gtk/station_dialog.ui:137
+#: data/gtk/station_dialog.ui:136
 msgid ""
 "The information could not be updated, probably this station was removed from "
 "the public online station database."
 msgstr ""
-"जानकारी अपडेट नहीं की जा सकी, शायद इस स्टेशन को सार्वजनिक ऑनलाइन स्टेशन डेटाबेस से हटा "
-"दिया गया था।"
+"जानकारी अद्यतित नहीं की जा सकी, शायद इस स्टेशन को सार्वजनिक ऑनलाइन स्टेशन डेटाबेस से "
+"हटा दिया गया था।"
 
-#: data/gtk/station_dialog.ui:149
+#: data/gtk/station_dialog.ui:148
 msgid "Information"
 msgstr "जानकारी"
 
-#: data/gtk/station_dialog.ui:152 src/ui/pages/search_page.rs:212
+#: data/gtk/station_dialog.ui:151 src/ui/pages/search_page.rs:108
 msgid "Language"
 msgstr "भाषा"
 
-#: data/gtk/station_dialog.ui:162
+#: data/gtk/station_dialog.ui:161
 msgid "Tags"
 msgstr "टैग्स"
 
-#: data/gtk/station_dialog.ui:183
+#: data/gtk/station_dialog.ui:182
 msgid "Location"
 msgstr "स्थान"
 
-#: data/gtk/station_dialog.ui:188 src/ui/pages/search_page.rs:213
+#: data/gtk/station_dialog.ui:187 src/ui/pages/search_page.rs:109
 msgid "Country"
 msgstr "देश"
 
-#: data/gtk/station_dialog.ui:198 src/ui/pages/search_page.rs:214
+#: data/gtk/station_dialog.ui:197 src/ui/pages/search_page.rs:110
 msgid "State"
 msgstr "राज्य"
 
-#: data/gtk/station_dialog.ui:232
+#: data/gtk/station_dialog.ui:231
 msgid "Audio"
 msgstr "ऑडियो"
 
-#: data/gtk/station_dialog.ui:236 src/ui/pages/search_page.rs:216
+#: data/gtk/station_dialog.ui:235 src/ui/pages/search_page.rs:112
 msgid "Bitrate"
 msgstr "बिटरेट"
 
-#: data/gtk/station_dialog.ui:246
+#: data/gtk/station_dialog.ui:245
 msgid "Codec"
 msgstr "कोडेक"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:256
+#: data/gtk/station_dialog.ui:255
 msgid "Stream"
 msgstr "स्ट्रीम"
 
-#: data/gtk/station_dialog.ui:265
+#: data/gtk/station_dialog.ui:264
 msgid "Copy"
 msgstr "कॉपी"
 
-#: data/gtk/streaming_dialog.ui:10
+#: data/gtk/streaming_dialog.ui:8
 msgid "Stream to a Device"
 msgstr "किसी उपकरण पर स्ट्रीम करें"
 
@@ -479,73 +481,77 @@ msgstr ""
 msgid "No Devices Found"
 msgstr "कोई उपकरण नहीं मिला"
 
-#: data/gtk/streaming_dialog.ui:47 data/gtk/streaming_dialog.ui:70
-msgid "Search again"
+#: data/gtk/streaming_dialog.ui:47 data/gtk/streaming_dialog.ui:73
+msgid "Search Again"
 msgstr "पुनः खोजें"
 
-#: data/gtk/streaming_dialog.ui:64
+#: data/gtk/streaming_dialog.ui:67
 msgid "Search Completed"
 msgstr "खोज पूरी हुई"
 
-#: data/gtk/streaming_dialog.ui:87
+#: data/gtk/streaming_dialog.ui:93
 msgid "Searching for Devices…"
 msgstr "उपकरण खोजे जा रहे हैं…"
 
-#: data/gtk/window.ui:40
+#: data/gtk/window.ui:33
 msgid "Main View"
 msgstr "मुख्य दृश्य"
 
 #. Fallback to xdg-home when xdg-music is not available
 #: src/audio/backend/song_backend.rs:97
 msgid "Unable to access music directory. Saving song in home directory."
-msgstr "संगीत निर्देशिका तक पहुँचने में असमर्थ. होम निर्देशिका में गाना सहेजा जा रहा है।"
+msgstr "संगीत निर्देशिका तक पहुंचने में असमर्थ। होम निर्देशिका में गाना सहेजा जा रहा है।"
 
-#: src/audio/player.rs:189
+#: src/audio/player.rs:190
 msgid "Station cannot be streamed. URL is not valid."
 msgstr "स्टेशन को स्ट्रीम नहीं किया जा सकता। URL मान्य नहीं है।"
 
-#: src/audio/player.rs:240
+#: src/audio/player.rs:241
 msgid "Cannot save song."
 msgstr "गाना सहेजा नहीं जा सका।"
 
-#: src/ui/about_window.rs:46
+#: src/ui/about_dialog.rs:44
 msgid "translator-credits"
 msgstr "Scrambled777 <weblate.scrambled777@simplelogin.com>"
 
+#: src/ui/create_station_dialog.rs:106
+msgid "Select station image"
+msgstr "स्टेशन छवि चुनें"
+
 #. TODO: Implement show-server-stats action
-#: src/ui/pages/discover_page.rs:134
+#: src/ui/pages/discover_page.rs:127
 msgid "Show statistics"
-msgstr "आँकड़े दिखाएँ"
+msgstr "आंकड़े दिखाएं"
 
-#: src/ui/pages/discover_page.rs:136
-msgid "Browse over 30,000 stations"
-msgstr "30,000 से अधिक स्टेशन ब्राउज़ करें"
+#: src/ui/pages/discover_page.rs:129
+msgid "Browse over 50,000 stations"
+msgstr "50,000 से अधिक स्टेशन देखें"
 
-#: src/ui/pages/discover_page.rs:138
+#: src/ui/pages/discover_page.rs:131
 msgid "Add new station"
 msgstr "नया स्टेशन जोड़ें"
 
-#: src/ui/pages/discover_page.rs:140
+#: src/ui/pages/discover_page.rs:133
 msgid "Your favorite station is missing?"
 msgstr "आपका पसंदीदा स्टेशन गायब है?"
 
-#: src/ui/pages/discover_page.rs:145
+#: src/ui/pages/discover_page.rs:138
 msgid "Open website"
 msgstr "वेबसाइट खोलें"
 
-#: src/ui/pages/discover_page.rs:147
+#: src/ui/pages/discover_page.rs:140
 msgid "Powered by radio-browser.info"
 msgstr "radio-browser.info द्वारा संचालित"
 
-#: src/ui/pages/discover_page.rs:158 src/ui/pages/search_page.rs:191
+#: src/ui/pages/discover_page.rs:151 src/ui/pages/search_page.rs:193
 msgid "Station data could not be received."
 msgstr "स्टेशन डेटा प्राप्त नहीं किया जा सका।"
 
-#: src/ui/pages/library_page.rs:121
+#: src/ui/pages/library_page.rs:114
 msgid "Welcome to {}"
 msgstr "आपका स्वागत है {}"
 
-#: src/ui/pages/search_page.rs:104
+#: src/ui/pages/search_page.rs:200
 msgid ""
 "The number of results is limited to {} item. Try using a more specific "
 "search term."
@@ -559,6 +565,6 @@ msgstr[1] ""
 "परिणामों की संख्या {} आइटम तक सीमित है। अधिक विशिष्ट खोज शब्द का उपयोग करने का "
 "प्रयास करें।"
 
-#: src/ui/station_dialog.rs:221
+#: src/ui/station_dialog.rs:216
 msgid "{} kbit/s"
 msgstr "{} kbit/s"
