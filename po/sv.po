@@ -1,15 +1,15 @@
 # Swedish translation for shortwave.
-# Copyright © 2020-2023 shortwave's COPYRIGHT HOLDER
+# Copyright © 2020-2024 shortwave's COPYRIGHT HOLDER
 # This file is distributed under the same license as the shortwave package.
-# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2020, 2021, 2022, 2023.
+# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2020, 2021, 2022, 2023, 2024.
 # Luna Jernberg <droidbittin@gmail.com>, 2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2023-09-10 16:26+0000\n"
-"PO-Revision-Date: 2023-09-10 18:59+0200\n"
+"POT-Creation-Date: 2024-06-03 19:52+0000\n"
+"PO-Revision-Date: 2024-06-04 00:30+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:3
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
@@ -29,16 +29,12 @@ msgstr "@NAME@"
 msgid "Gradio;Radio;Stream;Wave;"
 msgstr "Gradio;Radio;Ström;Stream;Wave;"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:6
-#: src/ui/about_window.rs:35
+#. General
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:10
 msgid "Listen to internet radio"
 msgstr "Lyssna på internetradio"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:8
-msgid "Felix Häcker"
-msgstr "Felix Häcker"
-
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:16
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:12
 msgid ""
 "Shortwave is an internet radio player that provides access to a station "
 "database with over 30,000 stations."
@@ -46,46 +42,54 @@ msgstr ""
 "Shortwave är en internetradiospelare som ger tillgång till en "
 "stationsdatabas med över 30000 stationer."
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:19
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:15
 msgid "Features:"
 msgstr "Funktioner:"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:21
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:17
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:65
 msgid "Create your own library where you can add your favorite stations"
 msgstr "Skapa ditt eget bibliotek där du kan lägga till dina favoritstationer"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:22
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:18
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:69
 msgid "Easily search and discover new radio stations"
 msgstr "Sök och upptäck enkelt nya radiostationer"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:23
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:19
 msgid ""
 "Automatic recognition of songs, with the possibility to save them "
 "individually"
 msgstr ""
 "Automatisk igenkänning av låtar, med möjligheten att spara dem individuellt"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:24
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:20
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:73
 msgid "Responsive application layout, compatible for small and large screens"
 msgstr "Kvickt reagerande programlayout, kompatibel med små och stora skärmar"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:25
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:21
 msgid "Play audio on supported network devices (e.g. Google Chromecasts)"
 msgstr "Spela ljud på nätverksenheter som stöds (t.ex. Google Chromecast)"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:26
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:22
 msgid "Seamless integration into the GNOME desktop environment"
 msgstr "Sömlös integration med skrivbordsmiljön GNOME"
+
+#. Branding
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:28
+msgid "Felix Häcker"
+msgstr "Felix Häcker"
 
 #: data/gtk/create_station_dialog.ui:8
 msgid "Create new station"
 msgstr "Skapa ny station"
 
-#: data/gtk/create_station_dialog.ui:32
+#: data/gtk/create_station_dialog.ui:25
 msgid "Create New Station"
 msgstr "Skapa ny station"
 
-#: data/gtk/create_station_dialog.ui:33
+#: data/gtk/create_station_dialog.ui:26
 msgid ""
 "You can decide if you want the new station to be visible for all users "
 "worldwide or if you want to create a local station."
@@ -93,31 +97,31 @@ msgstr ""
 "Du kan välja om du vill att den nya stationen ska vara synlig för alla "
 "användare i världen eller om du vill skapa en lokal station."
 
-#: data/gtk/create_station_dialog.ui:43
+#: data/gtk/create_station_dialog.ui:35
 msgid "Create _Public Station"
 msgstr "Skapa _offentlig station"
 
-#: data/gtk/create_station_dialog.ui:54
+#: data/gtk/create_station_dialog.ui:46
 msgid "Create _Local Station"
 msgstr "Skapa _lokal station"
 
-#: data/gtk/create_station_dialog.ui:80
+#: data/gtk/create_station_dialog.ui:71
 msgid "Create Local Station"
 msgstr "Skapa lokal station"
 
-#: data/gtk/create_station_dialog.ui:113
+#: data/gtk/create_station_dialog.ui:104
 msgid "Change station image"
 msgstr "Ändra bild för station"
 
-#: data/gtk/create_station_dialog.ui:137 src/ui/pages/search_page.rs:211
+#: data/gtk/create_station_dialog.ui:128 src/ui/pages/search_page.rs:107
 msgid "Name"
 msgstr "Namn"
 
-#: data/gtk/create_station_dialog.ui:145
+#: data/gtk/create_station_dialog.ui:136
 msgid "Stream URL"
 msgstr "Ström-URL"
 
-#: data/gtk/create_station_dialog.ui:153
+#: data/gtk/create_station_dialog.ui:144
 msgid "Create Station"
 msgstr "Skapa station"
 
@@ -126,7 +130,7 @@ msgid "Discover"
 msgstr "Upptäck"
 
 #: data/gtk/discover_page.ui:15 data/gtk/search_page.ui:4
-#: data/gtk/search_page.ui:28
+#: data/gtk/search_page.ui:29
 msgid "Search"
 msgstr "Sök"
 
@@ -150,7 +154,7 @@ msgstr "Föregående"
 msgid "Next"
 msgstr "Nästa"
 
-#: data/gtk/help_overlay.ui:11 data/gtk/settings_window.ui:7
+#: data/gtk/help_overlay.ui:11 data/gtk/settings_dialog.ui:9
 msgid "General"
 msgstr "Allmänt"
 
@@ -220,35 +224,35 @@ msgstr "_Aktivera minispelare"
 msgid "_Sorting"
 msgstr "_Sortering"
 
-#: data/gtk/library_page.ui:141 data/gtk/search_page.ui:158
+#: data/gtk/library_page.ui:141 data/gtk/search_page.ui:160
 msgid "_Name"
 msgstr "_Namn"
 
-#: data/gtk/library_page.ui:146 data/gtk/search_page.ui:163
+#: data/gtk/library_page.ui:146 data/gtk/search_page.ui:165
 msgid "_Language"
 msgstr "S_pråk"
 
-#: data/gtk/library_page.ui:151 data/gtk/search_page.ui:168
+#: data/gtk/library_page.ui:151 data/gtk/search_page.ui:170
 msgid "_Country"
 msgstr "_Land"
 
-#: data/gtk/library_page.ui:156 data/gtk/search_page.ui:173
+#: data/gtk/library_page.ui:156 data/gtk/search_page.ui:175
 msgid "S_tate"
 msgstr "Lä_n"
 
-#: data/gtk/library_page.ui:161 data/gtk/search_page.ui:178
+#: data/gtk/library_page.ui:161 data/gtk/search_page.ui:180
 msgid "_Votes"
 msgstr "_Röster"
 
-#: data/gtk/library_page.ui:166 data/gtk/search_page.ui:183
+#: data/gtk/library_page.ui:166 data/gtk/search_page.ui:185
 msgid "_Bitrate"
 msgstr "_Bithastighet"
 
-#: data/gtk/library_page.ui:173 data/gtk/search_page.ui:190
+#: data/gtk/library_page.ui:173 data/gtk/search_page.ui:192
 msgid "_Ascending"
 msgstr "S_tigande"
 
-#: data/gtk/library_page.ui:178 data/gtk/search_page.ui:195
+#: data/gtk/library_page.ui:178 data/gtk/search_page.ui:197
 msgid "_Descending"
 msgstr "_Fallande"
 
@@ -272,8 +276,8 @@ msgstr "_Tangentbordsgenvägar"
 msgid "_About Shortwave"
 msgstr "_Om Shortwave"
 
-#: data/gtk/mini_controller.ui:27 data/gtk/sidebar_controller.ui:116
-#: data/gtk/toolbar_controller.ui:79
+#: data/gtk/mini_controller.ui:27 data/gtk/sidebar_controller.ui:127
+#: data/gtk/toolbar_controller.ui:70
 msgid "Stop"
 msgstr "Stoppa"
 
@@ -281,20 +285,20 @@ msgstr "Stoppa"
 msgid "Start"
 msgstr "Starta"
 
-#: data/gtk/mini_controller.ui:87
+#: data/gtk/mini_controller.ui:98
 msgid "SHORTWAVE INTERNET RADIO"
 msgstr "SHORTWAVE INTERNETRADIO"
 
-#: data/gtk/mini_controller.ui:109 data/gtk/sidebar_controller.ui:64
-#: data/gtk/toolbar_controller.ui:38
+#: data/gtk/mini_controller.ui:120 data/gtk/sidebar_controller.ui:64
+#: data/gtk/toolbar_controller.ui:29
 msgid "No Playback"
 msgstr "Ingen uppspelning"
 
-#: data/gtk/mini_controller.ui:149
+#: data/gtk/mini_controller.ui:160
 msgid "Close"
 msgstr "Stäng"
 
-#: data/gtk/mini_controller.ui:160
+#: data/gtk/mini_controller.ui:171
 msgid "Resize"
 msgstr "Ändra storlek"
 
@@ -302,36 +306,36 @@ msgstr "Ändra storlek"
 msgid "Back"
 msgstr "Bakåt"
 
-#: data/gtk/search_page.ui:39 data/gtk/station_dialog.ui:172
-#: src/ui/pages/search_page.rs:215
+#: data/gtk/search_page.ui:41 data/gtk/station_dialog.ui:171
+#: src/ui/pages/search_page.rs:111
 msgid "Votes"
 msgstr "Röster"
 
-#: data/gtk/search_page.ui:44
+#: data/gtk/search_page.ui:46
 msgid "Change the sorting of the search results"
 msgstr "Ändra sorteringen av sökresultaten"
 
-#: data/gtk/search_page.ui:71
+#: data/gtk/search_page.ui:73
 msgid "No Results"
 msgstr "Inga resultat"
 
-#: data/gtk/search_page.ui:72
+#: data/gtk/search_page.ui:74
 msgid "Try using a different search term"
 msgstr "Försök använda en annan sökterm"
 
-#: data/gtk/search_page.ui:99
+#: data/gtk/search_page.ui:101
 msgid "Search Results"
 msgstr "Sökresultat"
 
-#: data/gtk/settings_window.ui:10
+#: data/gtk/settings_dialog.ui:12
 msgid "Features"
 msgstr "Funktioner"
 
-#: data/gtk/settings_window.ui:13
+#: data/gtk/settings_dialog.ui:15
 msgid "_Notifications"
 msgstr "_Aviseringar"
 
-#: data/gtk/settings_window.ui:15
+#: data/gtk/settings_dialog.ui:17
 msgid "Show desktop notifications when a new song gets played"
 msgstr "Visa skrivbordsaviseringar när en ny låt spelas"
 
@@ -339,20 +343,20 @@ msgstr "Visa skrivbordsaviseringar när en ny låt spelas"
 msgid "An error occurred"
 msgstr "Ett fel uppstod"
 
-#: data/gtk/sidebar_controller.ui:131 data/gtk/station_row.ui:69
-#: data/gtk/toolbar_controller.ui:90
+#: data/gtk/sidebar_controller.ui:142 data/gtk/station_row.ui:69
+#: data/gtk/toolbar_controller.ui:81
 msgid "Play"
 msgstr "Spela upp"
 
-#: data/gtk/sidebar_controller.ui:177
+#: data/gtk/sidebar_controller.ui:188
 msgid "Station Menu"
 msgstr "Stationsmeny"
 
-#: data/gtk/sidebar_controller.ui:191
+#: data/gtk/sidebar_controller.ui:202
 msgid "_Show Station Details"
 msgstr "_Visa stationsdetaljer"
 
-#: data/gtk/sidebar_controller.ui:195
+#: data/gtk/sidebar_controller.ui:206
 msgid "Stream to a _Device"
 msgstr "Strömma till en _enhet"
 
@@ -382,23 +386,23 @@ msgstr "Ö_ppna"
 msgid "Save recorded song"
 msgstr "Spara inspelad låt"
 
-#: data/gtk/station_dialog.ui:71
+#: data/gtk/station_dialog.ui:70
 msgid "_Play Station"
 msgstr "_Spela upp station"
 
-#: data/gtk/station_dialog.ui:86
+#: data/gtk/station_dialog.ui:85
 msgid "_Add to Library"
 msgstr "_Lägg till i bibliotek"
 
-#: data/gtk/station_dialog.ui:102
+#: data/gtk/station_dialog.ui:101
 msgid "_Remove From Library"
 msgstr "_Ta bort från bibliotek"
 
-#: data/gtk/station_dialog.ui:120
+#: data/gtk/station_dialog.ui:119
 msgid "Local Station"
 msgstr "Lokal station"
 
-#: data/gtk/station_dialog.ui:121
+#: data/gtk/station_dialog.ui:120
 msgid ""
 "This station exists only in your library, and is not part of the public "
 "online station database."
@@ -406,11 +410,11 @@ msgstr ""
 "Denna station finns endast i ditt bibliotek och är inte del av den "
 "offentliga stationsdatabasen på internet."
 
-#: data/gtk/station_dialog.ui:136
+#: data/gtk/station_dialog.ui:135
 msgid "Orphaned Station"
 msgstr "Övergiven station"
 
-#: data/gtk/station_dialog.ui:137
+#: data/gtk/station_dialog.ui:136
 msgid ""
 "The information could not be updated, probably this station was removed from "
 "the public online station database."
@@ -418,52 +422,52 @@ msgstr ""
 "Informationen kunde inte uppdateras, troligen har denna station tagits bort "
 "från den offentliga stationsdatabasen på internet."
 
-#: data/gtk/station_dialog.ui:149
+#: data/gtk/station_dialog.ui:148
 msgid "Information"
 msgstr "Information"
 
-#: data/gtk/station_dialog.ui:152 src/ui/pages/search_page.rs:212
+#: data/gtk/station_dialog.ui:151 src/ui/pages/search_page.rs:108
 msgid "Language"
 msgstr "Språk"
 
-#: data/gtk/station_dialog.ui:162
+#: data/gtk/station_dialog.ui:161
 msgid "Tags"
 msgstr "Taggar"
 
-#: data/gtk/station_dialog.ui:183
+#: data/gtk/station_dialog.ui:182
 msgid "Location"
 msgstr "Plats"
 
-#: data/gtk/station_dialog.ui:188 src/ui/pages/search_page.rs:213
+#: data/gtk/station_dialog.ui:187 src/ui/pages/search_page.rs:109
 msgid "Country"
 msgstr "Land"
 
-#: data/gtk/station_dialog.ui:198 src/ui/pages/search_page.rs:214
+#: data/gtk/station_dialog.ui:197 src/ui/pages/search_page.rs:110
 msgid "State"
 msgstr "Län"
 
-#: data/gtk/station_dialog.ui:232
+#: data/gtk/station_dialog.ui:231
 msgid "Audio"
 msgstr "Ljud"
 
-#: data/gtk/station_dialog.ui:236 src/ui/pages/search_page.rs:216
+#: data/gtk/station_dialog.ui:235 src/ui/pages/search_page.rs:112
 msgid "Bitrate"
 msgstr "Bithastighet"
 
-#: data/gtk/station_dialog.ui:246
+#: data/gtk/station_dialog.ui:245
 msgid "Codec"
 msgstr "Kodek"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:256
+#: data/gtk/station_dialog.ui:255
 msgid "Stream"
 msgstr "Ström"
 
-#: data/gtk/station_dialog.ui:265
+#: data/gtk/station_dialog.ui:264
 msgid "Copy"
 msgstr "Kopiera"
 
-#: data/gtk/streaming_dialog.ui:10
+#: data/gtk/streaming_dialog.ui:8
 msgid "Stream to a Device"
 msgstr "Strömma till en enhet"
 
@@ -479,19 +483,19 @@ msgstr ""
 msgid "No Devices Found"
 msgstr "Inga enheter hittades"
 
-#: data/gtk/streaming_dialog.ui:47 data/gtk/streaming_dialog.ui:70
-msgid "Search again"
+#: data/gtk/streaming_dialog.ui:47 data/gtk/streaming_dialog.ui:73
+msgid "Search Again"
 msgstr "Sök igen"
 
-#: data/gtk/streaming_dialog.ui:64
+#: data/gtk/streaming_dialog.ui:67
 msgid "Search Completed"
 msgstr "Sökningen är färdig"
 
-#: data/gtk/streaming_dialog.ui:87
+#: data/gtk/streaming_dialog.ui:93
 msgid "Searching for Devices…"
 msgstr "Söker efter enheter…"
 
-#: data/gtk/window.ui:40
+#: data/gtk/window.ui:33
 msgid "Main View"
 msgstr "Huvudvy"
 
@@ -508,7 +512,7 @@ msgstr "Stationen kan inte strömmas. Ogiltig URL."
 msgid "Cannot save song."
 msgstr "Det går inte att spara låt."
 
-#: src/ui/about_window.rs:46
+#: src/ui/about_dialog.rs:44
 msgid "translator-credits"
 msgstr ""
 "Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
@@ -517,44 +521,44 @@ msgstr ""
 "Skicka synpunkter på översättningen till\n"
 "<tp-sv@listor.tp-sv.se>"
 
-#: src/ui/create_station_dialog.rs:103
+#: src/ui/create_station_dialog.rs:106
 msgid "Select station image"
 msgstr "Välj bild för station"
 
 #. TODO: Implement show-server-stats action
-#: src/ui/pages/discover_page.rs:134
+#: src/ui/pages/discover_page.rs:127
 msgid "Show statistics"
 msgstr "Visa statistik"
 
-#: src/ui/pages/discover_page.rs:136
-msgid "Browse over 30,000 stations"
-msgstr "Bläddra bland över 30 000 stationer"
+#: src/ui/pages/discover_page.rs:129
+msgid "Browse over 50,000 stations"
+msgstr "Bläddra bland över 50 000 stationer"
 
-#: src/ui/pages/discover_page.rs:138
+#: src/ui/pages/discover_page.rs:131
 msgid "Add new station"
 msgstr "Lägg till ny station"
 
-#: src/ui/pages/discover_page.rs:140
+#: src/ui/pages/discover_page.rs:133
 msgid "Your favorite station is missing?"
 msgstr "Saknas din favoritstation?"
 
-#: src/ui/pages/discover_page.rs:145
+#: src/ui/pages/discover_page.rs:138
 msgid "Open website"
 msgstr "Öppna webbplats"
 
-#: src/ui/pages/discover_page.rs:147
+#: src/ui/pages/discover_page.rs:140
 msgid "Powered by radio-browser.info"
 msgstr "Driftas av radio-browser.info"
 
-#: src/ui/pages/discover_page.rs:158 src/ui/pages/search_page.rs:191
+#: src/ui/pages/discover_page.rs:151 src/ui/pages/search_page.rs:193
 msgid "Station data could not be received."
 msgstr "Kunde inte erhålla stationsdata."
 
-#: src/ui/pages/library_page.rs:121
+#: src/ui/pages/library_page.rs:114
 msgid "Welcome to {}"
 msgstr "Välkommen till {}"
 
-#: src/ui/pages/search_page.rs:104
+#: src/ui/pages/search_page.rs:200
 msgid ""
 "The number of results is limited to {} item. Try using a more specific "
 "search term."
@@ -568,7 +572,7 @@ msgstr[1] ""
 "Antalet resultat är begränsat till {} objekt. Försök använda en mer specifik "
 "sökterm."
 
-#: src/ui/station_dialog.rs:221
+#: src/ui/station_dialog.rs:216
 msgid "{} kbit/s"
 msgstr "{} kbit/s"
 
