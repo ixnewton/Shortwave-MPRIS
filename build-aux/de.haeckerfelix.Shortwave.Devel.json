@@ -60,9 +60,8 @@
             ],
             "sources": [
                 {
-                    "type": "git",
-                    "url": "https://gitlab.gnome.org/World/Shortwave.git",
-                    "branch": "main"
+                    "type": "dir",
+                    "path": "../"
                 }
             ]
         }
