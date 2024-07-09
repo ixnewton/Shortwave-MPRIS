@@ -44,7 +44,6 @@ pub struct SidebarController {
     loading_button: gtk::Button,
     error_label: gtk::Label,
     volume_button: gtk::ScaleButton,
-    spinner: gtk::Spinner,
     volume_signal_id: glib::signal::SignalHandlerId,
 
     action_group: gio::SimpleActionGroup,
@@ -66,7 +65,6 @@ impl SidebarController {
         get_widget!(builder, gtk::Button, loading_button);
         get_widget!(builder, gtk::Label, error_label);
         get_widget!(builder, gtk::ScaleButton, volume_button);
-        get_widget!(builder, gtk::Spinner, spinner);
 
         let station = Rc::new(RefCell::new(None));
 
@@ -108,7 +106,6 @@ impl SidebarController {
             volume_signal_id,
             action_group,
             streaming_dialog,
-            spinner,
         };
 
         controller.setup_signals();
@@ -220,8 +217,6 @@ impl Controller for SidebarController {
         };
         self.playback_button_stack
             .set_visible_child_name(child_name);
-        self.spinner
-            .set_spinning(matches!(playback_state, PlaybackState::Loading));
     }
 
     fn set_volume(&self, volume: f64) {

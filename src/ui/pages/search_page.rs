@@ -45,8 +45,6 @@ mod imp {
         results_limit_box: TemplateChild<gtk::Box>,
         #[template_child]
         results_limit_label: TemplateChild<gtk::Label>,
-        #[template_child]
-        spinner: TemplateChild<gtk::Spinner>,
 
         search_action_group: gio::SimpleActionGroup,
         client: SwClient,
@@ -72,7 +70,6 @@ mod imp {
                 sorting_button_content: TemplateChild::default(),
                 results_limit_box: TemplateChild::default(),
                 results_limit_label: TemplateChild::default(),
-                spinner: TemplateChild::default(),
                 search_action_group,
                 client,
                 station_request,
@@ -257,12 +254,10 @@ mod imp {
             // Don't search if search entry is empty
             if self.station_request.borrow().name.is_none() {
                 self.stack.set_visible_child_name("empty");
-                self.spinner.set_spinning(false);
                 return;
             }
 
             self.stack.set_visible_child_name("spinner");
-            self.spinner.set_spinning(true);
 
             let request = self.station_request.borrow().clone();
             debug!("Search for: {:?}", request);

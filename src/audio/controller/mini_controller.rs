@@ -39,7 +39,6 @@ pub struct MiniController {
     stop_playback_button: gtk::Button,
     loading_button: gtk::Button,
     volume_button: gtk::ScaleButton,
-    spinner: gtk::Spinner,
     volume_signal_id: glib::signal::SignalHandlerId,
 }
 
@@ -56,7 +55,6 @@ impl MiniController {
         get_widget!(builder, gtk::Button, stop_playback_button);
         get_widget!(builder, gtk::Button, loading_button);
         get_widget!(builder, gtk::ScaleButton, volume_button);
-        get_widget!(builder, gtk::Spinner, spinner);
 
         // volume_button | We need the volume_signal_id later to block the signal
         let volume_signal_id = volume_button.connect_value_changed(clone!(
@@ -82,7 +80,6 @@ impl MiniController {
             loading_button,
             volume_button,
             volume_signal_id,
-            spinner,
         };
 
         controller.setup_signals();
@@ -138,8 +135,6 @@ impl Controller for MiniController {
         };
         self.playback_button_stack
             .set_visible_child_name(child_name);
-        self.spinner
-            .set_spinning(matches!(playback_state, PlaybackState::Loading));
     }
 
     fn set_volume(&self, volume: f64) {

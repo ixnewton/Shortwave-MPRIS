@@ -153,7 +153,7 @@ audio-volume-medium-symbolic</property>
                     <property name="child">
                       <object class="GtkButton" id="loading_button">
                         <child>
-                          <object class="GtkSpinner" id="spinner"/>
+                          <object class="AdwSpinner" />
                         </child>
                         <style>
                           <class name="pill"/>
