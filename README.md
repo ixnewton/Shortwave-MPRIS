@@ -16,7 +16,7 @@ The recommended way of installing Shortwave is using the Flatpak package. If you
 
 Or by clicking this button:
 
-<a href="https://flathub.org/apps/details/de.haeckerfelix.Shortwave"><img src="https://flathub.org/assets/badges/flathub-badge-en.png" width="200"/></a>
+<a href="https://flathub.org/apps/details/de.haeckerfelix.Shortwave"><img src="https://flathub.org/api/badge?svg&locale=en" width="240"/></a>
 
 #### Nightly Builds
 
