@@ -132,7 +132,7 @@ mod imp {
                                 this.update_search().await;
                             }
                         );
-                        glib::MainContext::default().spawn_local(fut);
+                        glib::spawn_future_local(fut);
                     }
                 }
             ));
@@ -171,7 +171,7 @@ mod imp {
                                 this.update_search().await;
                             }
                         );
-                        glib::MainContext::default().spawn_local(fut);
+                        glib::spawn_future_local(fut);
                     }
                 }
             ));
