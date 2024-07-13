@@ -81,9 +81,6 @@ fn main() -> glib::ExitCode {
     let res = gio::Resource::load(path).expect("Could not load resources");
     gio::resources_register(&res);
 
-    let ctx = glib::MainContext::default();
-    let _guard = ctx.acquire().unwrap();
-
     // Run app itself
     SwApplication::run()
 }
