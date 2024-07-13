@@ -75,10 +75,13 @@ impl SidebarController {
         favicon_box.append(&station_favicon.widget);
 
         // volume_button | We need the volume_signal_id later to block the signal
-        let volume_signal_id =
-            volume_button.connect_value_changed(clone!(@strong sender => move |_, value| {
+        let volume_signal_id = volume_button.connect_value_changed(clone!(
+            #[strong]
+            sender,
+            move |_, value| {
                 crate::utils::send(&sender, Action::PlaybackSetVolume(value));
-            }));
+            }
+        ));
 
         // action group
         let action_group = gio::SimpleActionGroup::new();
@@ -114,38 +117,59 @@ impl SidebarController {
 
     fn setup_signals(&self) {
         // start_playback_button
-        self.start_playback_button.connect_clicked(
-            clone!(@strong self.sender as sender => move |_| {
+        self.start_playback_button.connect_clicked(clone!(
+            #[strong(rename_to = sender)]
+            self.sender,
+            move |_| {
                 crate::utils::send(&sender, Action::PlaybackSet(true));
-            }),
-        );
+            }
+        ));
 
         // stop_playback_button
-        self.stop_playback_button.connect_clicked(
-            clone!(@strong self.sender as sender => move |_| {
+        self.stop_playback_button.connect_clicked(clone!(
+            #[strong(rename_to = sender)]
+            self.sender,
+            move |_| {
                 crate::utils::send(&sender, Action::PlaybackSet(false));
-            }),
-        );
+            }
+        ));
 
         // stop_playback_button
-        self.loading_button
-            .connect_clicked(clone!(@strong self.sender as sender => move |_| {
+        self.loading_button.connect_clicked(clone!(
+            #[strong(rename_to = sender)]
+            self.sender,
+            move |_| {
                 crate::utils::send(&sender, Action::PlaybackSet(false));
-            }));
+            }
+        ));
 
         // details button
         self.action_group.add_action_entries([
             gio::ActionEntry::builder("show-details")
-                .activate(clone!(@strong self.sender as sender, @strong self.station as station, @weak self.widget as widget => move |_, _, _| {
-                    let station = station.borrow().clone().unwrap();
-                    let station_dialog = SwStationDialog::new(&station);
-                    station_dialog.present(Some(&widget));
-                })).build(),
+                .activate(clone!(
+                    #[strong(rename_to = station)]
+                    self.station,
+                    #[weak(rename_to = widget)]
+                    self.widget,
+                    move |_, _, _| {
+                        let station = station.borrow().clone().unwrap();
+                        let station_dialog = SwStationDialog::new(&station);
+                        station_dialog.present(Some(&widget));
+                    }
+                ))
+                .build(),
             // stream button
             gio::ActionEntry::builder("stream-audio")
-                .activate(clone!(@weak self.streaming_dialog as streaming_dialog, @weak self.widget as widget => move |_, _, _| {
-                    streaming_dialog.present(Some(&widget));
-                })).build(),
+                .activate(clone!(
+                    #[weak(rename_to = streaming_dialog)]
+                    self.streaming_dialog,
+                    #[weak(rename_to = widget)]
+                    self.widget,
+                    move |_, _, _| {
+                        streaming_dialog.present(Some(&widget));
+                    }
+                ))
+                .build(),
         ]);
     }
 }

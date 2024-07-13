@@ -138,18 +138,24 @@ impl SwApplicationWindow {
         imp.split_view.set_sidebar(Some(&player.widget));
 
         // Animations for smooth mini player transitions
-        let x_callback =
-            adw::CallbackAnimationTarget::new(clone!(@weak self as this => move |val|{
+        let x_callback = adw::CallbackAnimationTarget::new(clone!(
+            #[weak(rename_to = this)]
+            self,
+            move |val| {
                 this.set_default_width(val as i32);
-            }));
+            }
+        ));
         let x_animation = adw::TimedAnimation::new(self, 0.0, 0.0, 500, x_callback);
         x_animation.set_easing(adw::Easing::EaseOutCubic);
         imp.window_animation_x.set(x_animation).unwrap();
 
-        let y_callback =
-            adw::CallbackAnimationTarget::new(clone!(@weak self as this => move |val|{
+        let y_callback = adw::CallbackAnimationTarget::new(clone!(
+            #[weak(rename_to = this)]
+            self,
+            move |val| {
                 this.set_default_height(val as i32);
-            }));
+            }
+        ));
         let y_animation = adw::TimedAnimation::new(self, 0.0, 0.0, 500, y_callback);
         y_animation.set_easing(adw::Easing::EaseOutCubic);
         imp.window_animation_y.set(y_animation).unwrap();
@@ -196,9 +202,13 @@ impl SwApplicationWindow {
                 .build(),
             // win.toggle-playback
             gio::ActionEntry::builder("toggle-playback")
-                .activate(clone!(@strong sender => move |_, _, _| {
-                    crate::utils::send(&sender, Action::PlaybackToggle);
-                }))
+                .activate(clone!(
+                    #[strong]
+                    sender,
+                    move |_, _, _| {
+                        crate::utils::send(&sender, Action::PlaybackToggle);
+                    }
+                ))
                 .build(),
             // win.disable-mini-player
             gio::ActionEntry::builder("disable-mini-player")

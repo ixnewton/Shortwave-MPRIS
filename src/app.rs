@@ -123,25 +123,37 @@ mod imp {
 
             // Setup action channel
             let receiver = self.receiver.borrow_mut().take().unwrap();
-            glib::spawn_future_local(clone!(@weak app => async move {
-                while let Ok(action) = receiver.recv().await {
-                    app.process_action(action);
+            glib::spawn_future_local(clone!(
+                #[weak]
+                app,
+                async move {
+                    while let Ok(action) = receiver.recv().await {
+                        app.process_action(action);
+                    }
                 }
-            }));
+            ));
 
             // Connect with radiobrowser server and update library data
-            let fut = clone!(@weak app => async move {
-                app.lookup_rb_server().await;
-            });
+            let fut = clone!(
+                #[weak]
+                app,
+                async move {
+                    app.lookup_rb_server().await;
+                }
+            );
             glib::spawn_future_local(fut);
 
             // Setup settings signal (we get notified when a key gets changed)
             self.settings.connect_changed(
                 None,
-                clone!(@strong self.sender as sender => move |_, key_str| {
-                    let key: Key = Key::from_str(key_str).unwrap();
-                    crate::utils::send(&sender, Action::SettingsKeyChanged(key));
-                }),
+                clone!(
+                    #[strong(rename_to = sender)]
+                    self.sender,
+                    move |_, key_str| {
+                        let key: Key = Key::from_str(key_str).unwrap();
+                        crate::utils::send(&sender, Action::SettingsKeyChanged(key));
+                    }
+                ),
             );
 
             // Small workaround to update every view to the correct sorting/order.
@@ -197,22 +209,34 @@ impl SwApplication {
         self.add_action_entries([
             // app.show-preferences
             gio::ActionEntry::builder("show-preferences")
-                .activate(clone!(@weak window => move |_, _, _| {
-                    let settings_window = SwSettingsDialog::default();
-                    settings_window.present(Some(&window));
-                }))
+                .activate(clone!(
+                    #[weak]
+                    window,
+                    move |_, _, _| {
+                        let settings_window = SwSettingsDialog::default();
+                        settings_window.present(Some(&window));
+                    }
+                ))
                 .build(),
             // app.quit
             gio::ActionEntry::builder("quit")
-                .activate(clone!(@weak window => move |_, _, _| {
-                    window.close();
-                }))
+                .activate(clone!(
+                    #[weak]
+                    window,
+                    move |_, _, _| {
+                        window.close();
+                    }
+                ))
                 .build(),
             // app.about
             gio::ActionEntry::builder("about")
-                .activate(clone!(@weak window => move |_, _, _| {
-                    about_dialog::show(&window);
-                }))
+                .activate(clone!(
+                    #[weak]
+                    window,
+                    move |_, _, _| {
+                        about_dialog::show(&window);
+                    }
+                ))
                 .build(),
         ]);
         self.set_accels_for_action("app.show-preferences", &["<primary>comma"]);

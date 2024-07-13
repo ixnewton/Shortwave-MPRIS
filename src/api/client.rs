@@ -136,44 +136,66 @@ impl SwClient {
     /// [SwStationModel] property. Emits the `error` signal on failure, or
     /// the `ready` signal when done.
     pub fn send_station_request(&self, request: StationRequest) {
-        let fut = clone!(@weak self as this => async move {
-            let result = clone!(@weak this => @default-panic, async move {
-                let url = imp::SwClient::build_url(STATION_SEARCH, Some(&request.url_encode()))?;
+        let fut = clone!(
+            #[weak(rename_to = this)]
+            self,
+            async move {
+                let result = clone!(
+                    #[weak]
+                    this,
+                    #[upgrade_or_panic]
+                    async move {
+                        let url =
+                            imp::SwClient::build_url(STATION_SEARCH, Some(&request.url_encode()))?;
 
-                let response = HTTP_CLIENT.get_async(url.as_ref()).await?.text().await.map_err(Rc::new)?;
-                let deserialized: Result<Vec<StationMetadata>, _> = serde_json::from_str(&response);
+                        let response = HTTP_CLIENT
+                            .get_async(url.as_ref())
+                            .await?
+                            .text()
+                            .await
+                            .map_err(Rc::new)?;
+                        let deserialized: Result<Vec<StationMetadata>, _> =
+                            serde_json::from_str(&response);
 
-                let stations_md = match deserialized {
-                    Ok(deserialized) => deserialized,
-                    Err(err) => {
-                        error!("Unable to deserialize data: {}", err.to_string());
-                        error!("Raw unserialized data: {}", response);
-                        return Err(Error::Deserializer(err.into()));
+                        let stations_md = match deserialized {
+                            Ok(deserialized) => deserialized,
+                            Err(err) => {
+                                error!("Unable to deserialize data: {}", err.to_string());
+                                error!("Raw unserialized data: {}", response);
+                                return Err(Error::Deserializer(err.into()));
+                            }
+                        };
+
+                        let stations: Vec<SwStation> = stations_md
+                            .into_iter()
+                            .map(|metadata| {
+                                SwStation::new(
+                                    &metadata.stationuuid.clone(),
+                                    false,
+                                    false,
+                                    metadata,
+                                    None,
+                                )
+                            })
+                            .collect();
+
+                        debug!("Found {} station(s)!", stations.len());
+                        this.model().clear();
+                        for station in &stations {
+                            this.model().add_station(station);
+                        }
+
+                        Ok(())
                     }
-                };
+                );
 
-                let stations: Vec<SwStation> = stations_md
-                    .into_iter()
-                    .map(|metadata| {
-                        SwStation::new(&metadata.stationuuid.clone(), false, false, metadata, None)
-                    })
-                    .collect();
-
-                debug!("Found {} station(s)!", stations.len());
-                this.model().clear();
-                for station in &stations {
-                    this.model().add_station(station);
+                if let Err(err) = result.await {
+                    this.emit_by_name::<()>("error", &[&err]);
+                } else {
+                    this.emit_by_name::<()>("ready", &[]);
                 }
-
-                Ok(())
-            });
-
-            if let Err(err) = result.await {
-                this.emit_by_name::<()>("error", &[&err]);
-            }else{
-                this.emit_by_name::<()>("ready", &[]);
             }
-        });
+        );
 
         glib::spawn_future_local(fut);
     }

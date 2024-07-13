@@ -82,9 +82,13 @@ impl SwStreamingDialog {
         // Setup Google Cast discoverer
         let gcd_t = GCastDiscoverer::new();
         let gcd = Rc::new(gcd_t.0);
-        spawn!(clone!(@weak gcd => async move {
-            let _ = gcd.discover().await;
-        }));
+        spawn!(clone!(
+            #[weak]
+            gcd,
+            async move {
+                let _ = gcd.discover().await;
+            }
+        ));
         let gcd_receiver = gcd_t.1;
 
         let imp = dialog.imp();
@@ -96,55 +100,64 @@ impl SwStreamingDialog {
     }
 
     fn setup_signals(&self, gcd_receiver: Receiver<GCastDiscovererMessage>) {
-        glib::spawn_future_local(clone!(@weak self as this => async move {
-            while let Ok(message) = gcd_receiver.recv().await {
-                let imp = this.imp();
+        glib::spawn_future_local(clone!(
+            #[weak(rename_to = this)]
+            self,
+            async move {
+                while let Ok(message) = gcd_receiver.recv().await {
+                    let imp = this.imp();
 
-                match message {
-                    GCastDiscovererMessage::DiscoverStarted => {
-                        while let Some(child) = imp.devices_listbox.first_child() {
-                            imp.devices_listbox.remove(&child);
+                    match message {
+                        GCastDiscovererMessage::DiscoverStarted => {
+                            while let Some(child) = imp.devices_listbox.first_child() {
+                                imp.devices_listbox.remove(&child);
+                            }
+                            imp.devices_listbox.set_visible(false);
+                            imp.row_stack.set_visible_child_name("loading");
+                            imp.spinner.set_spinning(true);
                         }
-                        imp.devices_listbox.set_visible(false);
-                        imp.row_stack.set_visible_child_name("loading");
-                        imp.spinner.set_spinning(true);
-                    }
-                    GCastDiscovererMessage::DiscoverEnded => {
-                        if imp.devices_listbox.last_child().is_none() {
-                            imp.row_stack.set_visible_child_name("no-devices");
-                        } else {
+                        GCastDiscovererMessage::DiscoverEnded => {
+                            if imp.devices_listbox.last_child().is_none() {
+                                imp.row_stack.set_visible_child_name("no-devices");
+                            } else {
+                                imp.row_stack.set_visible_child_name("ready");
+                            }
+                            imp.spinner.set_spinning(false);
+                        }
+                        GCastDiscovererMessage::FoundDevice(device) => {
                             imp.row_stack.set_visible_child_name("ready");
+
+                            let row = adw::ActionRow::new();
+                            row.set_title(&device.name);
+                            row.set_subtitle(&device.ip.to_string());
+                            row.set_activatable(true);
+
+                            imp.devices_listbox.append(&row);
+                            imp.devices_listbox.set_visible(true);
+                            imp.spinner.set_spinning(false);
                         }
-                        imp.spinner.set_spinning(false);
-                    }
-                    GCastDiscovererMessage::FoundDevice(device) => {
-                        imp.row_stack.set_visible_child_name("ready");
-
-                        let row = adw::ActionRow::new();
-                        row.set_title(&device.name);
-                        row.set_subtitle(&device.ip.to_string());
-                        row.set_activatable(true);
-
-                        imp.devices_listbox.append(&row);
-                        imp.devices_listbox.set_visible(true);
-                        imp.spinner.set_spinning(false);
                     }
                 }
             }
-        }));
+        ));
 
-        self.imp().devices_listbox.connect_row_activated(
-            clone!(@weak self as this => move |_, row|{
+        self.imp().devices_listbox.connect_row_activated(clone!(
+            #[weak(rename_to = this)]
+            self,
+            move |_, row| {
                 let imp = this.imp();
                 let row: adw::ActionRow = row.clone().downcast().unwrap();
                 let ip_addr: IpAddr = IpAddr::from_str(row.subtitle().unwrap().as_str()).unwrap();
 
                 // Get GCastDevice
                 let device = imp.gcd.get().unwrap().device_by_ip_addr(ip_addr).unwrap();
-                crate::utils::send(imp.sender.get().unwrap(), Action::PlaybackConnectGCastDevice(device));
+                crate::utils::send(
+                    imp.sender.get().unwrap(),
+                    Action::PlaybackConnectGCastDevice(device),
+                );
                 this.close();
-            }),
-        );
+            }
+        ));
     }
 
     #[template_callback]

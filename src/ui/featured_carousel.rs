@@ -141,34 +141,47 @@ impl SwFeaturedCarousel {
     fn setup_signals(&self) {
         let imp = self.imp();
 
-        imp.previous_button
-            .connect_clicked(clone!(@weak self as this => move |_|{
+        imp.previous_button.connect_clicked(clone!(
+            #[weak(rename_to = this)]
+            self,
+            move |_| {
                 let imp = this.imp();
                 let position = imp.carousel.position().round() as usize;
 
                 if position > 0 {
-                    imp.carousel.scroll_to(&imp.pages.borrow()[position - 1].page, true);
-                }else{
+                    imp.carousel
+                        .scroll_to(&imp.pages.borrow()[position - 1].page, true);
+                } else {
                     imp.carousel.scroll_to(&imp.pages.borrow()[0].page, true);
                 }
-            }));
-
-        imp.next_button.connect_clicked(clone!(@weak self as this => move |_|{
-            let imp = this.imp();
-            let position = imp.carousel.position().round() as usize;
-
-            if position < imp.pages.borrow().len() - 1 {
-                imp.carousel.scroll_to(&imp.pages.borrow()[position + 1].page, true);
-            }else{
-                imp.carousel.scroll_to(&imp.pages.borrow()[imp.pages.borrow().len() - 1].page, true);
             }
-        }));
+        ));
 
-        imp.carousel
-            .connect_position_notify(clone!(@weak self as this => move |_|{
+        imp.next_button.connect_clicked(clone!(
+            #[weak(rename_to = this)]
+            self,
+            move |_| {
+                let imp = this.imp();
+                let position = imp.carousel.position().round() as usize;
+
+                if position < imp.pages.borrow().len() - 1 {
+                    imp.carousel
+                        .scroll_to(&imp.pages.borrow()[position + 1].page, true);
+                } else {
+                    imp.carousel
+                        .scroll_to(&imp.pages.borrow()[imp.pages.borrow().len() - 1].page, true);
+                }
+            }
+        ));
+
+        imp.carousel.connect_position_notify(clone!(
+            #[weak(rename_to = this)]
+            self,
+            move |_| {
                 this.update_buttons();
                 this.update_style();
-            }));
+            }
+        ));
     }
 
     fn update_buttons(&self) {

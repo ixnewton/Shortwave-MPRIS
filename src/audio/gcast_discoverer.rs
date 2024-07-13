@@ -64,9 +64,13 @@ impl GCastDiscoverer {
         known_devices.lock().unwrap().clear();
 
         debug!("Start discovering for google cast devices...");
-        gtk::glib::source::idle_add_once(clone!(@strong sender => move || {
-            crate::utils::send(&sender, GCastDiscovererMessage::DiscoverStarted);
-        }));
+        gtk::glib::source::idle_add_once(clone!(
+            #[strong]
+            sender,
+            move || {
+                crate::utils::send(&sender, GCastDiscovererMessage::DiscoverStarted);
+            }
+        ));
 
         let stream =
             mdns::discover::all("_googlecast._tcp.local", std::time::Duration::from_secs(15))?
@@ -81,16 +85,27 @@ impl GCastDiscoverer {
                     debug!("Found new google cast device!");
                     debug!("{:?}", device);
                     known_devices.lock().unwrap().insert(0, device.clone());
-                    gtk::glib::source::idle_add_once(clone!(@strong sender => move || {
-                        crate::utils::send(&sender, GCastDiscovererMessage::FoundDevice(device));
-                    }));
+                    gtk::glib::source::idle_add_once(clone!(
+                        #[strong]
+                        sender,
+                        move || {
+                            crate::utils::send(
+                                &sender,
+                                GCastDiscovererMessage::FoundDevice(device),
+                            );
+                        }
+                    ));
                 }
             }
         }
 
-        gtk::glib::source::idle_add_once(clone!(@strong sender => move || {
-            crate::utils::send(&sender, GCastDiscovererMessage::DiscoverEnded);
-        }));
+        gtk::glib::source::idle_add_once(clone!(
+            #[strong]
+            sender,
+            move || {
+                crate::utils::send(&sender, GCastDiscovererMessage::DiscoverEnded);
+            }
+        ));
         debug!("GCast discovery ended.");
 
         Ok(())

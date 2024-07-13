@@ -272,17 +272,25 @@ impl Player {
             .gstreamer_receiver
             .take()
             .unwrap();
-        glib::spawn_future_local(clone!(@weak self as this => async move {
-            while let Ok(message) = receiver.recv().await {
-                this.clone().process_gst_message(message);
+        glib::spawn_future_local(clone!(
+            #[weak(rename_to = this)]
+            self,
+            async move {
+                while let Ok(message) = receiver.recv().await {
+                    this.clone().process_gst_message(message);
+                }
             }
-        }));
+        ));
 
         // Disconnect from gcast device
         get_widget!(self.builder, gtk::Button, disconnect_button);
-        disconnect_button.connect_clicked(clone!(@strong self.sender as sender => move |_| {
-            crate::utils::send(&sender, Action::PlaybackDisconnectGCastDevice);
-        }));
+        disconnect_button.connect_clicked(clone!(
+            #[strong(rename_to = sender)]
+            self.sender,
+            move |_| {
+                crate::utils::send(&sender, Action::PlaybackDisconnectGCastDevice);
+            }
+        ));
     }
 
     fn process_gst_message(&self, message: GstreamerMessage) -> glib::ControlFlow {
