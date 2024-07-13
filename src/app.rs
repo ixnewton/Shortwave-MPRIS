@@ -199,7 +199,7 @@ impl SwApplication {
             gio::ActionEntry::builder("show-preferences")
                 .activate(clone!(@weak window => move |_, _, _| {
                     let settings_window = SwSettingsDialog::default();
-                    settings_window.present(&window);
+                    settings_window.present(Some(&window));
                 }))
                 .build(),
             // app.quit

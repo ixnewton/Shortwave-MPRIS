@@ -177,9 +177,9 @@ impl SwApplicationWindow {
                 .build(),
             // win.create-new-station
             gio::ActionEntry::builder("create-new-station")
-                .activate(move |_, _, _| {
+                .activate(move |window: &Self, _, _| {
                     let dialog = SwCreateStationDialog::new();
-                    dialog.present(&SwApplicationWindow::default());
+                    dialog.present(Some(window));
                 })
                 .build(),
             // win.show-player

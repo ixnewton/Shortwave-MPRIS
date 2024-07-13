@@ -95,7 +95,7 @@ mod imp {
                 let station = row.station();
 
                 let station_dialog = SwStationDialog::new(&station);
-                station_dialog.present(flowbox);
+                station_dialog.present(Some(flowbox));
             });
         }
     }

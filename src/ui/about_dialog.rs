@@ -43,5 +43,5 @@ pub fn show(parent: &SwApplicationWindow) {
     dialog.set_designers(&["Tobias Bernard"]);
     dialog.set_translator_credits(&i18n("translator-credits"));
 
-    dialog.present(parent);
+    dialog.present(Some(parent));
 }
