@@ -108,27 +108,37 @@ impl SwCreateStationDialog {
         file_chooser.open(
             Some(&SwApplicationWindow::default()),
             gio::Cancellable::NONE,
-            clone!(@weak self as this => move |res| {
-                match res {
-                    Ok(file) => this.set_favicon(&file),
-                    Err(err) => error!("Could not get file {err}"),
+            clone!(
+                #[weak(rename_to = this)]
+                self,
+                move |res| {
+                    match res {
+                        Ok(file) => this.set_favicon(&file),
+                        Err(err) => error!("Could not get file {err}"),
+                    }
                 }
-            }),
+            ),
         );
     }
 
     fn setup_signals(&self) {
         let imp = self.imp();
 
-        imp.back_button
-            .connect_clicked(clone!(@weak self as this => move |_| {
+        imp.back_button.connect_clicked(clone!(
+            #[weak(rename_to = this)]
+            self,
+            move |_| {
                 this.imp().stack.set_visible_child_name("start");
-            }));
+            }
+        ));
 
-        imp.favicon_button
-            .connect_clicked(clone!(@weak self as this => move |_| {
+        imp.favicon_button.connect_clicked(clone!(
+            #[weak(rename_to = this)]
+            self,
+            move |_| {
                 this.show_filechooser();
-            }));
+            }
+        ));
     }
 
     #[template_callback]

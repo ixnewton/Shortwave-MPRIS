@@ -71,27 +71,33 @@ glib::wrapper! {
 impl SwLibrary {
     pub fn update_data(&self) {
         // Load stations asynchronously from the sqlite database
-        let future = clone!(@strong self as this => async move {
-            // Clear previously loaded stations first
-            this.imp().model.clear();
+        let future = clone!(
+            #[strong(rename_to = this)]
+            self,
+            async move {
+                // Clear previously loaded stations first
+                this.imp().model.clear();
 
-            let entries = queries::stations().unwrap();
+                let entries = queries::stations().unwrap();
 
-            // Print database info
-            info!("Database Path: {}", connection::DB_PATH.to_str().unwrap());
-            info!("Stations: {}", entries.len());
+                // Print database info
+                info!("Database Path: {}", connection::DB_PATH.to_str().unwrap());
+                info!("Stations: {}", entries.len());
 
-            // Set library status to loading
-            let imp = this.imp();
-            *imp.status.borrow_mut() = SwLibraryStatus::Loading;
-            this.notify("status");
+                // Set library status to loading
+                let imp = this.imp();
+                *imp.status.borrow_mut() = SwLibraryStatus::Loading;
+                this.notify("status");
 
-            let offline_mode = SwApplication::default().rb_server().is_none();
-            let futures = entries.into_iter().map(|entry| this.load_station(entry, offline_mode));
-            join_all(futures).await;
+                let offline_mode = SwApplication::default().rb_server().is_none();
+                let futures = entries
+                    .into_iter()
+                    .map(|entry| this.load_station(entry, offline_mode));
+                join_all(futures).await;
 
-            this.update_library_status();
-        });
+                this.update_library_status();
+            }
+        );
         glib::spawn_future_local(future);
     }
 

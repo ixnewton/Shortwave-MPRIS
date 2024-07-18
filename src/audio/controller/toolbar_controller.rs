@@ -91,31 +91,40 @@ impl ToolbarController {
 
     fn setup_signals(&self) {
         // start_playback_button
-        self.start_playback_button.connect_clicked(
-            clone!(@strong self.sender as sender => move |_| {
+        self.start_playback_button.connect_clicked(clone!(
+            #[strong(rename_to = sender)]
+            self.sender,
+            move |_| {
                 crate::utils::send(&sender, Action::PlaybackSet(true));
-            }),
-        );
+            }
+        ));
 
         // stop_playback_button
-        self.stop_playback_button.connect_clicked(
-            clone!(@strong self.sender as sender => move |_| {
+        self.stop_playback_button.connect_clicked(clone!(
+            #[strong(rename_to = sender)]
+            self.sender,
+            move |_| {
                 crate::utils::send(&sender, Action::PlaybackSet(false));
-            }),
-        );
+            }
+        ));
 
         // loading_button
-        self.loading_button
-            .connect_clicked(clone!(@strong self.sender as sender => move |_| {
+        self.loading_button.connect_clicked(clone!(
+            #[strong(rename_to = sender)]
+            self.sender,
+            move |_| {
                 crate::utils::send(&sender, Action::PlaybackSet(false));
-            }));
+            }
+        ));
 
         // show_player_button
-        self.toolbox_gesture.connect_pressed(
-            clone!(@weak self.widget as widget => move |_, _, _, _| {
+        self.toolbox_gesture.connect_pressed(clone!(
+            #[weak(rename_to = widget)]
+            self.widget,
+            move |_, _, _, _| {
                 widget.activate_action("win.show-player", None).unwrap();
-            }),
-        );
+            }
+        ));
     }
 }
 

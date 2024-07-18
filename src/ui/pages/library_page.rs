@@ -123,7 +123,11 @@ impl SwLibraryPage {
     fn setup_signals(&self) {
         self.imp().library.connect_notify_local(
             Some("status"),
-            clone!(@weak self as this => move |_, _|this.update_stack_page()),
+            clone!(
+                #[weak(rename_to = this)]
+                self,
+                move |_, _| this.update_stack_page()
+            ),
         );
     }
 

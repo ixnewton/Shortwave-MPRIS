@@ -95,10 +95,16 @@ impl SwStationRow {
         let imp = self.imp();
 
         // play_button
-        imp.play_button
-            .connect_clicked(clone!(@strong imp.station as station => move |_| {
-                SwApplication::default().imp().player.set_station(station.get().unwrap().clone());
-            }));
+        imp.play_button.connect_clicked(clone!(
+            #[strong(rename_to = station)]
+            imp.station,
+            move |_| {
+                SwApplication::default()
+                    .imp()
+                    .player
+                    .set_station(station.get().unwrap().clone());
+            }
+        ));
     }
 
     fn setup_widgets(&self) {

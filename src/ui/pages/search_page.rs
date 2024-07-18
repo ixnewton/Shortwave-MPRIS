@@ -98,64 +98,83 @@ mod imp {
 
             let action = SimpleAction::new_stateful("sorting", variant, &"Votes".to_variant());
             self.search_action_group.add_action(&action);
-            action.connect_change_state(clone!(@weak self as this => move |action, state|{
-                if let Some(state) = state {
-                    action.set_state(state);
-                    let order = state.str().unwrap();
+            action.connect_change_state(clone!(
+                #[weak(rename_to = this)]
+                self,
+                move |action, state| {
+                    if let Some(state) = state {
+                        action.set_state(state);
+                        let order = state.str().unwrap();
 
-                    let label = match order{
-                        "Name" => i18n("Name"),
-                        "Language" => i18n("Language"),
-                        "Country" => i18n("Country"),
-                        "State" => i18n("State"),
-                        "Votes" => i18n("Votes"),
-                        "Bitrate" => i18n("Bitrate"),
-                        _ => panic!("unknown sorting state change"),
-                    };
+                        let label = match order {
+                            "Name" => i18n("Name"),
+                            "Language" => i18n("Language"),
+                            "Country" => i18n("Country"),
+                            "State" => i18n("State"),
+                            "Votes" => i18n("Votes"),
+                            "Bitrate" => i18n("Bitrate"),
+                            _ => panic!("unknown sorting state change"),
+                        };
 
-                    this.sorting_button_content.set_label(&label);
+                        this.sorting_button_content.set_label(&label);
 
-                    // Update station request and redo search
-                    let station_request = StationRequest{
-                        order: Some(order.to_lowercase()),
-                        ..this.station_request.borrow().clone()
-                    };
-                    *this.station_request.borrow_mut() = station_request;
+                        // Update station request and redo search
+                        let station_request = StationRequest {
+                            order: Some(order.to_lowercase()),
+                            ..this.station_request.borrow().clone()
+                        };
+                        *this.station_request.borrow_mut() = station_request;
 
-                    let fut = clone!(@weak this => async move {
-                        this.update_search().await;
-                    });
-                    glib::MainContext::default().spawn_local(fut);
+                        let fut = clone!(
+                            #[weak]
+                            this,
+                            async move {
+                                this.update_search().await;
+                            }
+                        );
+                        glib::spawn_future_local(fut);
+                    }
                 }
-            }));
+            ));
 
             let action = SimpleAction::new_stateful("order", variant, &"Descending".to_variant());
 
             self.search_action_group.add_action(&action);
-            action.connect_change_state(clone!(@weak self as this => move |action, state|{
-                if let Some(state) = state {
-                    action.set_state(state);
+            action.connect_change_state(clone!(
+                #[weak(rename_to = this)]
+                self,
+                move |action, state| {
+                    if let Some(state) = state {
+                        action.set_state(state);
 
-                    let reverse = if state.str().unwrap() == "Ascending" {
-                        this.sorting_button_content.set_icon_name("view-sort-ascending-symbolic");
-                        false
-                    }else{
-                        this.sorting_button_content.set_icon_name("view-sort-descending-symbolic");
-                        true
-                    };
+                        let reverse = if state.str().unwrap() == "Ascending" {
+                            this.sorting_button_content
+                                .set_icon_name("view-sort-ascending-symbolic");
+                            false
+                        } else {
+                            this.sorting_button_content
+                                .set_icon_name("view-sort-descending-symbolic");
+                            true
+                        };
 
-                    // Update station request and redo search
-                    let station_request = StationRequest{
-                        reverse: Some(reverse),
-                        ..this.station_request.borrow().clone()
-                    };
-                    *this.station_request.borrow_mut() = station_request;
+                        // Update station request and redo search
+                        let station_request = StationRequest {
+                            reverse: Some(reverse),
+                            ..this.station_request.borrow().clone()
+                        };
+                        *this.station_request.borrow_mut() = station_request;
 
-                    let fut = clone!(@weak this => async move {
-                        this.update_search().await;
-                    });
-                    glib::MainContext::default().spawn_local(fut);                }
-            }));
+                        let fut = clone!(
+                            #[weak]
+                            this,
+                            async move {
+                                this.update_search().await;
+                            }
+                        );
+                        glib::spawn_future_local(fut);
+                    }
+                }
+            ));
 
             // Automatically focus search entry
             obj.connect_map(|this| {
@@ -168,19 +187,25 @@ mod imp {
             self.client.connect_local(
                 "ready",
                 false,
-                clone!(@weak self as this => @default-return None, move |_|{
-                    let max_results = this.station_request.borrow().limit.unwrap();
-                    let over_max_results = this.client.model().n_items() >= max_results;
-                    this.results_limit_box.set_visible(over_max_results);
+                clone!(
+                    #[weak(rename_to = this)]
+                    self,
+                    #[upgrade_or]
+                    None,
+                    move |_| {
+                        let max_results = this.station_request.borrow().limit.unwrap();
+                        let over_max_results = this.client.model().n_items() >= max_results;
+                        this.results_limit_box.set_visible(over_max_results);
 
-                    if this.client.model().n_items() == 0 {
-                        this.stack.set_visible_child_name("no-results");
-                    } else {
-                        this.stack.set_visible_child_name("results");
+                        if this.client.model().n_items() == 0 {
+                            this.stack.set_visible_child_name("no-results");
+                        } else {
+                            this.stack.set_visible_child_name("results");
+                        }
+
+                        None
                     }
-
-                    None
-                }),
+                ),
             );
 
             // SwClient error

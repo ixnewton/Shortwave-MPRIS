@@ -135,76 +135,122 @@ impl GstreamerBackend {
             // We need to do message passing (sender/receiver) here, because gstreamer
             // messages are coming from a other thread (and app::Action enum is
             // not thread safe).
-            glib::spawn_future_local(clone!(@strong app_sender => async move {
-                while let Ok(volume) = volume_receiver.recv().await {
-                    crate::utils::send(&app_sender, Action::PlaybackSetVolume(volume));
+            glib::spawn_future_local(clone!(
+                #[strong]
+                app_sender,
+                async move {
+                    while let Ok(volume) = volume_receiver.recv().await {
+                        crate::utils::send(&app_sender, Action::PlaybackSetVolume(volume));
+                    }
                 }
-            }));
+            ));
 
             // Update volume coming from pulseaudio / pulsesink
             self.volume_signal_id = Some(pulsesink.connect_notify(
                 Some("volume"),
-                clone!(@weak self.volume as old_volume, @strong volume_sender => move |element, _| {
-                    let pa_volume: f64 = element.property("volume");
-                    let new_volume = StreamVolume::convert_volume(StreamVolumeFormat::Linear, StreamVolumeFormat::Cubic, pa_volume);
+                clone!(
+                    #[weak(rename_to = old_volume)]
+                    self.volume,
+                    #[strong]
+                    volume_sender,
+                    move |element, _| {
+                        let pa_volume: f64 = element.property("volume");
+                        let new_volume = StreamVolume::convert_volume(
+                            StreamVolumeFormat::Linear,
+                            StreamVolumeFormat::Cubic,
+                            pa_volume,
+                        );
 
-                    // We have to check if the values are the same. For some reason gstreamer sends us
-                    // slightly different floats, so we round up here (only the the first two digits are
-                    // important for use here).
-                    let mut old_volume_locked = old_volume.lock().unwrap();
-                    let new_val = format!("{new_volume:.2}");
-                    let old_val = format!("{old_volume_locked:.2}");
+                        // We have to check if the values are the same. For some reason gstreamer sends us
+                        // slightly different floats, so we round up here (only the the first two digits are
+                        // important for use here).
+                        let mut old_volume_locked = old_volume.lock().unwrap();
+                        let new_val = format!("{new_volume:.2}");
+                        let old_val = format!("{old_volume_locked:.2}");
 
-                    if new_val != old_val {
-                        crate::utils::send(&volume_sender, new_volume);
-                        *old_volume_locked = new_volume;
+                        if new_val != old_val {
+                            crate::utils::send(&volume_sender, new_volume);
+                            *old_volume_locked = new_volume;
+                        }
                     }
-                }),
+                ),
             ));
 
             // It's possible to mute the audio (!= 0.0) from pulseaudio side, so we should
             // handle this too by setting the volume to 0.0
             pulsesink.connect_notify(
                 Some("mute"),
-                clone!(@weak self.volume as old_volume, @strong volume_sender => move |element, _| {
-                    let mute: bool = element.property("mute");
-                    let mut old_volume_locked = old_volume.lock().unwrap();
-                    if mute && *old_volume_locked != 0.0 {
-                        crate::utils::send(&volume_sender, 0.0);
-                        *old_volume_locked = 0.0;
+                clone!(
+                    #[weak(rename_to = old_volume)]
+                    self.volume,
+                    #[strong]
+                    volume_sender,
+                    move |element, _| {
+                        let mute: bool = element.property("mute");
+                        let mut old_volume_locked = old_volume.lock().unwrap();
+                        if mute && *old_volume_locked != 0.0 {
+                            crate::utils::send(&volume_sender, 0.0);
+                            *old_volume_locked = 0.0;
+                        }
                     }
-                }),
+                ),
             );
         }
 
         // dynamically link uridecodebin element with audioconvert element
         let uridecodebin = self.pipeline.by_name("uridecodebin").unwrap();
         let audioconvert = self.pipeline.by_name("audioconvert").unwrap();
-        uridecodebin.connect_pad_added(clone!(@weak audioconvert => move |_, src_pad| {
-            let sink_pad = audioconvert.static_pad("sink").expect("Failed to get static sink pad from audioconvert");
-            if sink_pad.is_linked() {
-                return; // We are already linked. Ignoring.
-            }
+        uridecodebin.connect_pad_added(clone!(
+            #[weak]
+            audioconvert,
+            move |_, src_pad| {
+                let sink_pad = audioconvert
+                    .static_pad("sink")
+                    .expect("Failed to get static sink pad from audioconvert");
+                if sink_pad.is_linked() {
+                    return; // We are already linked. Ignoring.
+                }
 
-            let new_pad_caps = src_pad.current_caps().expect("Failed to get caps of new pad.");
-            let new_pad_struct = new_pad_caps.structure(0).expect("Failed to get first structure of caps.");
-            let new_pad_type = new_pad_struct.name();
+                let new_pad_caps = src_pad
+                    .current_caps()
+                    .expect("Failed to get caps of new pad.");
+                let new_pad_struct = new_pad_caps
+                    .structure(0)
+                    .expect("Failed to get first structure of caps.");
+                let new_pad_type = new_pad_struct.name();
 
-            if new_pad_type.starts_with("audio/x-raw") {
-                // check if new_pad is audio
-                let _ = src_pad.link(&sink_pad);
+                if new_pad_type.starts_with("audio/x-raw") {
+                    // check if new_pad is audio
+                    let _ = src_pad.link(&sink_pad);
+                }
             }
-        }));
+        ));
 
         // listen for new pipeline / bus messages
         let bus = self.pipeline.bus().expect("Unable to get pipeline bus");
-        let guard = bus.add_watch_local(
-            clone!(@weak self.pipeline as pipeline, @strong self.sender as gst_sender, @strong self.buffering_state as buffering_state, @weak self.current_title as current_title => @default-panic, move |_, message|{
-                Self::parse_bus_message(pipeline, message, gst_sender.clone(), &buffering_state, current_title);
-                glib::ControlFlow::Continue
-            }),
-        )
-        .unwrap();
+        let guard = bus
+            .add_watch_local(clone!(
+                #[weak(rename_to = pipeline)]
+                self.pipeline,
+                #[strong(rename_to = gst_sender)]
+                self.sender,
+                #[strong(rename_to = buffering_state)]
+                self.buffering_state,
+                #[weak(rename_to = current_title)]
+                self.current_title,
+                #[upgrade_or_panic]
+                move |_, message| {
+                    Self::parse_bus_message(
+                        pipeline,
+                        message,
+                        gst_sender.clone(),
+                        &buffering_state,
+                        current_title,
+                    );
+                    glib::ControlFlow::Continue
+                }
+            ))
+            .unwrap();
         self.bus_watch_guard.set(guard).unwrap();
     }
 
@@ -402,34 +448,39 @@ impl GstreamerBackend {
         // recording bin and remove it from the pipeline
         tee_srcpad.add_probe(
             PadProbeType::IDLE,
-            clone!(@weak self.pipeline as pipeline => @default-panic, move |tee_srcpad, _| {
-                // Get the parent of the tee source pad, i.e. the tee itself
-                let tee = tee_srcpad
-                    .parent()
-                    .and_then(|parent| parent.downcast::<Element>().ok())
-                    .expect("Failed to get tee source pad parent");
+            clone!(
+                #[weak(rename_to = pipeline)]
+                self.pipeline,
+                #[upgrade_or_panic]
+                move |tee_srcpad, _| {
+                    // Get the parent of the tee source pad, i.e. the tee itself
+                    let tee = tee_srcpad
+                        .parent()
+                        .and_then(|parent| parent.downcast::<Element>().ok())
+                        .expect("Failed to get tee source pad parent");
 
-                // Unlink the tee source pad and then release it
-                let _ = tee_srcpad.unlink(&recorderbin_sinkpad);
-                tee.release_request_pad(tee_srcpad);
+                    // Unlink the tee source pad and then release it
+                    let _ = tee_srcpad.unlink(&recorderbin_sinkpad);
+                    tee.release_request_pad(tee_srcpad);
 
-                if !discard_data {
-                    // Asynchronously send the end-of-stream event to the sinkpad as this might block for a
-                    // while and our closure here might've been called from the main UI thread
-                    let recorderbin_sinkpad = recorderbin_sinkpad.clone();
-                    recorderbin.call_async(move |_| {
-                        recorderbin_sinkpad.send_event(gstreamer::event::Eos::new());
-                        debug!("Sent EOS event to recorderbin sinkpad");
-                    });
-                }else{
-                    Self::destroy_recorderbin(pipeline, recorderbin.clone());
-                    debug!("Stopped recording.");
+                    if !discard_data {
+                        // Asynchronously send the end-of-stream event to the sinkpad as this might block for a
+                        // while and our closure here might've been called from the main UI thread
+                        let recorderbin_sinkpad = recorderbin_sinkpad.clone();
+                        recorderbin.call_async(move |_| {
+                            recorderbin_sinkpad.send_event(gstreamer::event::Eos::new());
+                            debug!("Sent EOS event to recorderbin sinkpad");
+                        });
+                    } else {
+                        Self::destroy_recorderbin(pipeline, recorderbin.clone());
+                        debug!("Stopped recording.");
+                    }
+
+                    // Don't block the pad but remove the probe to let everything
+                    // continue as normal
+                    PadProbeReturn::Remove
                 }
-
-                // Don't block the pad but remove the probe to let everything
-                // continue as normal
-                PadProbeReturn::Remove
-            }),
+            ),
         );
     }
 

@@ -96,8 +96,10 @@ impl SwSongRow {
     fn setup_signals(&self) {
         let imp = self.imp();
 
-        imp.save_button
-            .connect_clicked(clone!(@weak self as this => move |_| {
+        imp.save_button.connect_clicked(clone!(
+            #[weak(rename_to = this)]
+            self,
+            move |_| {
                 let imp = this.imp();
 
                 // Save the song
@@ -108,10 +110,13 @@ impl SwSongRow {
                 // Display play button instead of save button
                 imp.button_stack.set_visible_child_name("open");
                 this.set_activatable_widget(Some(&imp.open_button.get()));
-            }));
+            }
+        ));
 
-        imp.open_button
-            .connect_clicked(clone!(@strong self as this => move |_| {
+        imp.open_button.connect_clicked(clone!(
+            #[strong(rename_to = this)]
+            self,
+            move |_| {
                 let song = this.imp().song.get().unwrap();
                 let file = gio::File::for_path(&song.path);
                 let launcher = gtk::FileLauncher::new(Some(&file));
@@ -121,7 +126,8 @@ impl SwSongRow {
                         error!("Could not open dir: {err}");
                     }
                 })
-            }));
+            }
+        ));
     }
 
     // stolen from gnome-podcasts

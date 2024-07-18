@@ -51,7 +51,7 @@ impl StationFavicon {
     }
 
     pub fn set_paintable(&self, paintable: &gdk::Paintable) {
-        self.image.set_from_paintable(Some(paintable));
+        self.image.set_paintable(Some(paintable));
         self.stack.set_visible_child_name("image");
     }
 

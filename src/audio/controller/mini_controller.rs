@@ -59,10 +59,13 @@ impl MiniController {
         get_widget!(builder, gtk::Spinner, spinner);
 
         // volume_button | We need the volume_signal_id later to block the signal
-        let volume_signal_id =
-            volume_button.connect_value_changed(clone!(@strong sender => move |_, value| {
+        let volume_signal_id = volume_button.connect_value_changed(clone!(
+            #[strong]
+            sender,
+            move |_, value| {
                 crate::utils::send(&sender, Action::PlaybackSetVolume(value));
-            }));
+            }
+        ));
 
         let station = Rc::new(RefCell::new(None));
 
@@ -88,24 +91,31 @@ impl MiniController {
 
     fn setup_signals(&self) {
         // start_playback_button
-        self.start_playback_button.connect_clicked(
-            clone!(@strong self.sender as sender => move |_| {
+        self.start_playback_button.connect_clicked(clone!(
+            #[strong(rename_to = sender)]
+            self.sender,
+            move |_| {
                 crate::utils::send(&sender, Action::PlaybackSet(true));
-            }),
-        );
+            }
+        ));
 
         // stop_playback_button
-        self.stop_playback_button.connect_clicked(
-            clone!(@strong self.sender as sender => move |_| {
+        self.stop_playback_button.connect_clicked(clone!(
+            #[strong(rename_to = sender)]
+            self.sender,
+            move |_| {
                 crate::utils::send(&sender, Action::PlaybackSet(false));
-            }),
-        );
+            }
+        ));
 
         // loading_button
-        self.loading_button
-            .connect_clicked(clone!(@strong self.sender as sender => move |_| {
+        self.loading_button.connect_clicked(clone!(
+            #[strong(rename_to = sender)]
+            self.sender,
+            move |_| {
                 crate::utils::send(&sender, Action::PlaybackSet(false));
-            }));
+            }
+        ));
     }
 }
 
