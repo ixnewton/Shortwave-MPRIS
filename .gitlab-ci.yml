@@ -19,7 +19,6 @@ checks:
 # Lint the code
 cargo-clippy:
   image: '${CI_IMAGE_X86_64}'
-  before_script: "flatpak install --user flathub org.freedesktop.Sdk.Extension.rust-nightly//23.08 -y"
   tags:
     - flatpak
   script:
@@ -27,11 +26,9 @@ cargo-clippy:
     - echo "cargo clippy -- -D warnings" | flatpak-builder --disable-rofiles-fuse --build-shell=${FLATPAK_MODULE} flatpak_app ${MANIFEST_PATH}
 
 flatpak@x86_64:
-  before_script: "flatpak install --user flathub org.freedesktop.Sdk.Extension.rust-nightly//23.08 -y"
   extends: ".flatpak@x86_64"
 
 flatpak@aarch64:
-  before_script: "flatpak install --user flathub org.freedesktop.Sdk.Extension.rust-nightly//23.08 -y"
   extends: ".flatpak@aarch64"
 
 nightly@x86_64:
