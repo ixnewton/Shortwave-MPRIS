@@ -34,9 +34,6 @@ pub enum Error {
     #[error("Network error: {0}")]
     Network(#[from] isahc::Error),
 
-    #[error("Invalid station UUID: {0}")]
-    InvalidStation(String),
-
     #[error("Unsupported url scheme")]
     UnsupportedUrlScheme,
 

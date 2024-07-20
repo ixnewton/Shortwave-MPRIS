@@ -1,5 +1,5 @@
 // Shortwave - mod.rs
-// Copyright (C) 2021-2023  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2021-2024  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,7 +15,7 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 static STATION_SEARCH: &str = "json/stations/search";
-static STATION_BY_UUID: &str = "json/stations/byuuid/";
+static STATION_BY_UUID: &str = "json/stations/byuuid";
 static STATS: &str = "json/stats";
 
 mod client;

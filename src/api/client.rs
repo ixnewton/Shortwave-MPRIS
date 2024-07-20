@@ -55,6 +55,7 @@ pub static HTTP_CLIENT: Lazy<isahc::HttpClient> = Lazy::new(|| {
         .connection_cache_size(8)
         .timeout(Duration::from_secs(15))
         .redirect_policy(RedirectPolicy::Follow)
+        .default_header("content-type", "application/json")
         .default_header("User-Agent", USER_AGENT.as_str())
         .build()
         .unwrap()
@@ -169,13 +170,7 @@ impl SwClient {
                         let stations: Vec<SwStation> = stations_md
                             .into_iter()
                             .map(|metadata| {
-                                SwStation::new(
-                                    &metadata.stationuuid.clone(),
-                                    false,
-                                    false,
-                                    metadata,
-                                    None,
-                                )
+                                SwStation::new(&metadata.stationuuid.clone(), false, metadata, None)
                             })
                             .collect();
 
@@ -201,31 +196,32 @@ impl SwClient {
     }
 
     /// Directly returns a [StationMetadata] by using the station uuid.
-    pub async fn station_metadata_by_uuid(self, uuid: &str) -> Result<StationMetadata, Error> {
-        let url = imp::SwClient::build_url(&format!("{STATION_BY_UUID}{uuid}"), None)?;
+    pub async fn station_metadata_by_uuid(
+        self,
+        uuids: Vec<String>,
+    ) -> Result<Vec<StationMetadata>, Error> {
+        let url = imp::SwClient::build_url(STATION_BY_UUID, None)?;
+
+        let uuids = format!(
+            r#"{{"uuids":{}}}"#,
+            serde_json::to_string(&uuids).unwrap_or_default()
+        );
+        debug!("Post body: {}", uuids);
 
         let response = HTTP_CLIENT
-            .get_async(url.as_ref())
+            .post_async(url.as_ref(), uuids)
             .await?
             .text()
             .await
             .map_err(Rc::new)?;
         let deserialized: Result<Vec<StationMetadata>, _> = serde_json::from_str(&response);
 
-        let mut metadata = match deserialized {
-            Ok(deserialized) => deserialized,
+        match deserialized {
+            Ok(deserialized) => Ok(deserialized),
             Err(err) => {
                 error!("Unable to deserialize data: {}", err.to_string());
                 error!("Raw unserialized data: {}", response);
-                return Err(Error::Deserializer(err.into()));
-            }
-        };
-
-        match metadata.pop() {
-            Some(data) => Ok(data),
-            None => {
-                warn!("API: No station for identifier \"{}\" found", uuid);
-                Err(Error::InvalidStation(uuid.to_owned()))
+                Err(Error::Deserializer(err.into()))
             }
         }
     }

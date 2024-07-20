@@ -14,7 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+use std::cell::Cell;
 use std::cell::OnceCell;
+use std::cell::RefCell;
 
 use glib::Properties;
 use gtk::prelude::*;
@@ -30,15 +32,16 @@ mod imp {
     #[properties(wrapper_type = super::SwStation)]
     pub struct SwStation {
         #[property(get, set, construct_only)]
-        pub uuid: OnceCell<String>,
+        uuid: OnceCell<String>,
         #[property(get, set, construct_only)]
-        pub is_local: OnceCell<bool>,
-        #[property(get, set, construct_only)]
-        pub is_orphaned: OnceCell<bool>,
-        #[property(get, set, construct_only)]
-        pub metadata: OnceCell<StationMetadata>,
-        #[property(get, set, construct_only)]
-        pub favicon: OnceCell<Option<gdk::Texture>>,
+        is_local: OnceCell<bool>,
+
+        #[property(get, set)]
+        metadata: RefCell<StationMetadata>,
+        #[property(get, set, nullable)]
+        favicon: OnceCell<Option<gdk::Texture>>,
+        #[property(get, set)]
+        is_orphaned: Cell<bool>,
     }
 
     #[glib::object_subclass]
@@ -59,14 +62,12 @@ impl SwStation {
     pub fn new(
         uuid: &str,
         is_local: bool,
-        is_orphaned: bool,
         metadata: StationMetadata,
         favicon: Option<gdk::Texture>,
     ) -> Self {
         glib::Object::builder()
             .property("uuid", uuid)
             .property("is-local", is_local)
-            .property("is-orphaned", is_orphaned)
             .property("metadata", metadata)
             .property("favicon", favicon)
             .build()

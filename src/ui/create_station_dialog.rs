@@ -163,7 +163,6 @@ impl SwCreateStationDialog {
         let station = SwStation::new(
             &uuid,
             true,
-            false,
             StationMetadata::new(name, url),
             favicon.and_upcast(),
         );

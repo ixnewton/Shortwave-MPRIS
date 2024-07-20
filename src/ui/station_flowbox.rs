@@ -85,7 +85,7 @@ mod imp {
                 .get()
                 .bind_model(Some(&self.model), move |station| {
                     let station = station.downcast_ref::<SwStation>().unwrap();
-                    let row = SwStationRow::new(station.clone());
+                    let row = SwStationRow::new(station);
                     row.upcast()
                 });
 

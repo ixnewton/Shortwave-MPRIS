@@ -133,7 +133,7 @@ mod imp {
                 }
             ));
 
-            // Connect with radiobrowser server and update library data
+            // Find radiobrowser server and update library data
             let fut = clone!(
                 #[weak]
                 app,
@@ -289,20 +289,19 @@ impl SwApplication {
     async fn lookup_rb_server(&self) {
         let imp = self.imp();
 
-        // Try to find a working radiobrowser server
+        // Try to find a working radio-browser server
         let rb_server = SwClient::lookup_rb_server().await;
+
+        imp.rb_server.borrow_mut().clone_from(&rb_server);
+        self.notify("rb-server");
+
         if let Some(rb_server) = &rb_server {
             info!("Using radio-browser.info REST api: {rb_server}");
+            // Refresh library data
+            let _ = imp.library.update_data().await;
         } else {
             warn!("Unable to find radio-browser.info server.");
         }
-
-        *imp.rb_server.borrow_mut() = rb_server;
-        self.notify("rb-server");
-
-        // Refresh library data either way, it'll fallback to
-        // local cached data if there's no radiobrowser server available.
-        imp.library.update_data();
     }
 }
 
