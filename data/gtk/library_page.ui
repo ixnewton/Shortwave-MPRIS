@@ -63,31 +63,13 @@
               <object class="GtkStackPage">
                 <property name="name">loading</property>
                 <property name="child">
-                  <object class="GtkBox" id="loading_box">
-                    <property name="orientation">vertical</property>
-                    <child>
-                      <object class="GtkBox">
-                        <property name="halign">center</property>
-                        <property name="valign">center</property>
-                        <property name="vexpand">True</property>
-                        <property name="orientation">vertical</property>
-                        <property name="spacing">12</property>
-                        <child>
-                          <object class="AdwSpinner" />
-                        </child>
-                        <child>
-                          <object class="GtkLabel">
-                            <property name="label" translatable="yes">Receiving Station Data…</property>
-                            <style>
-                              <class name="title-4"/>
-                            </style>
-                          </object>
-                        </child>
-                        <style>
-                          <class name="dim-label"/>
-                        </style>
-                      </object>
-                    </child>
+                  <object class="AdwStatusPage" id="loading_status_page">
+                    <property name="title" translatable="yes">Receiving Station Data…</property>
+                    <property name="paintable">
+                      <object class="AdwSpinnerPaintable">
+                        <property name="widget">loading_status_page</property>
+                      </object> 
+                    </property>
                   </object>
                 </property>
               </object>
