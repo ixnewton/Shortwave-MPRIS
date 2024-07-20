@@ -132,7 +132,6 @@ impl SwLibraryPage {
         let status = imp.library.status();
 
         match status {
-            SwLibraryStatus::Loading => imp.stack.set_visible_child_name("loading"),
             SwLibraryStatus::Empty => imp.stack.set_visible_child_name("empty"),
             SwLibraryStatus::Content => imp.stack.set_visible_child_name("content"),
             _ => (),
