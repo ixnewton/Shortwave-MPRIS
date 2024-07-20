@@ -18,6 +18,7 @@ use std::cell::OnceCell;
 
 use futures_util::future::FutureExt;
 use glib::clone;
+use glib::Properties;
 use gtk::prelude::*;
 use gtk::subclass::prelude::*;
 use gtk::{glib, CompositeTemplate};
@@ -32,23 +33,25 @@ mod imp {
 
     use super::*;
 
-    #[derive(Debug, Default, CompositeTemplate)]
+    #[derive(Debug, Default, CompositeTemplate, Properties)]
     #[template(resource = "/de/haeckerfelix/Shortwave/gtk/station_row.ui")]
+    #[properties(wrapper_type = super::SwStationRow)]
     pub struct SwStationRow {
         #[template_child]
-        pub station_label: TemplateChild<gtk::Label>,
+        station_label: TemplateChild<gtk::Label>,
         #[template_child]
-        pub subtitle_label: TemplateChild<gtk::Label>,
+        subtitle_label: TemplateChild<gtk::Label>,
         #[template_child]
-        pub favicon_box: TemplateChild<gtk::Box>,
+        favicon_box: TemplateChild<gtk::Box>,
         #[template_child]
-        pub local_image: TemplateChild<gtk::Image>,
+        local_image: TemplateChild<gtk::Image>,
         #[template_child]
-        pub orphaned_image: TemplateChild<gtk::Image>,
+        orphaned_image: TemplateChild<gtk::Image>,
         #[template_child]
-        pub play_button: TemplateChild<gtk::Button>,
+        play_button: TemplateChild<gtk::Button>,
 
-        pub station: OnceCell<SwStation>,
+        #[property(get, set, construct_only)]
+        station: OnceCell<SwStation>,
     }
 
     #[glib::object_subclass]
@@ -66,11 +69,81 @@ mod imp {
         }
     }
 
-    impl ObjectImpl for SwStationRow {}
+    #[glib::derived_properties]
+    impl ObjectImpl for SwStationRow {
+        fn constructed(&self) {
+            self.parent_constructed();
+            let station = self.obj().station();
+
+            // Download & set station favicon
+            let station_favicon = StationFavicon::new(FaviconSize::Small);
+            self.favicon_box.append(&station_favicon.widget);
+
+            if let Some(texture) = station.favicon() {
+                station_favicon.set_paintable(&texture.upcast());
+            } else if let Some(favicon) = station.metadata().favicon.as_ref() {
+                let fut = FaviconDownloader::download(favicon.clone()).map(move |paintable| {
+                    if let Ok(paintable) = paintable {
+                        station_favicon.set_paintable(&paintable)
+                    }
+                });
+                glib::spawn_future_local(fut);
+            }
+
+            station
+                .bind_property("is-local", &*self.local_image, "visible")
+                .sync_create()
+                .build();
+
+            station
+                .bind_property("is-orphaned", &*self.orphaned_image, "visible")
+                .sync_create()
+                .build();
+
+            station.connect_metadata_notify(clone!(
+                #[weak(rename_to = this)]
+                self,
+                move |_| {
+                    this.set_metadata();
+                }
+            ));
+            self.set_metadata();
+
+            self.play_button.connect_clicked(clone!(
+                #[strong(rename_to = station)]
+                self.station,
+                move |_| {
+                    SwApplication::default()
+                        .imp()
+                        .player
+                        .set_station(station.get().unwrap().clone());
+                }
+            ));
+        }
+    }
 
     impl WidgetImpl for SwStationRow {}
 
     impl FlowBoxChildImpl for SwStationRow {}
+
+    impl SwStationRow {
+        fn set_metadata(&self) {
+            let station = self.obj().station();
+            let metadata = station.metadata();
+
+            self.station_label.set_text(&metadata.name);
+            let mut subtitle = metadata.country.to_title_case();
+
+            if subtitle.is_empty() {
+                subtitle = metadata.tags;
+            } else if !metadata.tags.is_empty() {
+                subtitle = format!("{} · {}", subtitle, metadata.formatted_tags());
+            }
+
+            self.subtitle_label.set_text(&subtitle);
+            self.subtitle_label.set_visible(!subtitle.is_empty());
+        }
+    }
 }
 
 glib::wrapper! {
@@ -79,74 +152,7 @@ glib::wrapper! {
 }
 
 impl SwStationRow {
-    pub fn new(station: SwStation) -> Self {
-        let row = glib::Object::new::<Self>();
-
-        let imp = row.imp();
-        imp.station.set(station).unwrap();
-
-        row.setup_widgets();
-        row.setup_signals();
-
-        row
-    }
-
-    fn setup_signals(&self) {
-        let imp = self.imp();
-
-        // play_button
-        imp.play_button.connect_clicked(clone!(
-            #[strong(rename_to = station)]
-            imp.station,
-            move |_| {
-                SwApplication::default()
-                    .imp()
-                    .player
-                    .set_station(station.get().unwrap().clone());
-            }
-        ));
-    }
-
-    fn setup_widgets(&self) {
-        let imp = self.imp();
-
-        // Set row information
-        let station = imp.station.get().unwrap();
-        imp.station_label.set_text(&station.metadata().name);
-
-        // Set subtitle
-        let metadata = station.metadata();
-        let mut subtitle = metadata.country.to_title_case();
-
-        if subtitle.is_empty() {
-            subtitle = metadata.tags;
-        } else if !metadata.tags.is_empty() {
-            subtitle = format!("{} · {}", subtitle, metadata.formatted_tags());
-        }
-
-        imp.subtitle_label.set_text(&subtitle);
-        imp.subtitle_label.set_visible(!subtitle.is_empty());
-
-        imp.local_image.set_visible(station.is_local());
-        imp.orphaned_image.set_visible(station.is_orphaned());
-
-        // Download & set station favicon
-        let station_favicon = StationFavicon::new(FaviconSize::Small);
-        imp.favicon_box.append(&station_favicon.widget);
-
-        if let Some(texture) = station.favicon() {
-            station_favicon.set_paintable(&texture.upcast());
-        } else if let Some(favicon) = station.metadata().favicon.as_ref() {
-            let fut = FaviconDownloader::download(favicon.clone()).map(move |paintable| {
-                if let Ok(paintable) = paintable {
-                    station_favicon.set_paintable(&paintable)
-                }
-            });
-            glib::spawn_future_local(fut);
-        }
-    }
-
-    pub fn station(&self) -> SwStation {
-        self.imp().station.get().unwrap().clone()
+    pub fn new(station: &SwStation) -> Self {
+        glib::Object::builder().property("station", station).build()
     }
 }
