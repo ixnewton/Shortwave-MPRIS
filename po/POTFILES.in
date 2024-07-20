@@ -8,7 +8,6 @@ data/gtk/featured_carousel_page.ui
 data/gtk/help_overlay.ui
 data/gtk/library_page.ui
 data/gtk/mini_controller.ui
-data/gtk/player.ui
 data/gtk/search_page.ui
 data/gtk/settings_dialog.ui
 data/gtk/sidebar_controller.ui

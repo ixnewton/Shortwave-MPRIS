@@ -43,6 +43,9 @@ mod imp {
         pub navigation_view: TemplateChild<adw::NavigationView>,
 
         #[template_child]
+        pub narrow_breakpoint: TemplateChild<adw::Breakpoint>,
+
+        #[template_child]
         pub library_page: TemplateChild<SwLibraryPage>,
         #[template_child]
         pub discover_page: TemplateChild<SwDiscoverPage>,
@@ -54,7 +57,7 @@ mod imp {
         #[template_child]
         pub toolbar_controller_box: TemplateChild<gtk::Box>,
         #[template_child]
-        pub toolbar_controller_revealer: TemplateChild<gtk::Revealer>,
+        pub player_bin: TemplateChild<adw::Bin>,
         #[template_child]
         pub toast_overlay: TemplateChild<adw::ToastOverlay>,
 
@@ -135,7 +138,7 @@ impl SwApplicationWindow {
             .append(&player.mini_controller_widget);
         imp.toolbar_controller_box
             .append(&player.toolbar_controller_widget);
-        imp.split_view.set_sidebar(Some(&player.widget));
+        imp.player_bin.set_child(Some(&player.widget));
 
         // Animations for smooth mini player transitions
         let x_callback = adw::CallbackAnimationTarget::new(clone!(
