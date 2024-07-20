@@ -1,5 +1,5 @@
 // Shortwave - station_dialog.rs
-// Copyright (C) 2021-2023  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2021-2024  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -38,8 +38,6 @@ mod imp {
         pub row_stack: TemplateChild<gtk::Stack>,
         #[template_child]
         pub devices_listbox: TemplateChild<gtk::ListBox>,
-        #[template_child]
-        pub spinner: TemplateChild<gtk::Spinner>,
 
         pub gcd: OnceCell<Rc<GCastDiscoverer>>,
         pub sender: OnceCell<Sender<Action>>,
@@ -114,7 +112,6 @@ impl SwStreamingDialog {
                             }
                             imp.devices_listbox.set_visible(false);
                             imp.row_stack.set_visible_child_name("loading");
-                            imp.spinner.set_spinning(true);
                         }
                         GCastDiscovererMessage::DiscoverEnded => {
                             if imp.devices_listbox.last_child().is_none() {
@@ -122,7 +119,6 @@ impl SwStreamingDialog {
                             } else {
                                 imp.row_stack.set_visible_child_name("ready");
                             }
-                            imp.spinner.set_spinning(false);
                         }
                         GCastDiscovererMessage::FoundDevice(device) => {
                             imp.row_stack.set_visible_child_name("ready");
@@ -134,7 +130,6 @@ impl SwStreamingDialog {
 
                             imp.devices_listbox.append(&row);
                             imp.devices_listbox.set_visible(true);
-                            imp.spinner.set_spinning(false);
                         }
                     }
                 }

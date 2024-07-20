@@ -73,12 +73,7 @@
                         <property name="orientation">vertical</property>
                         <property name="spacing">12</property>
                         <child>
-                          <object class="GtkSpinner" id="spinner">
-                            <property name="width_request">40</property>
-                            <property name="height_request">40</property>
-                            <property name="halign">center</property>
-                            <property name="valign">center</property>
-                          </object>
+                          <object class="AdwSpinner" />
                         </child>
                         <child>
                           <object class="GtkLabel">

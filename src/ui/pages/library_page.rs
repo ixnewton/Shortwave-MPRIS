@@ -38,8 +38,6 @@ mod imp {
         pub stack: TemplateChild<gtk::Stack>,
         #[template_child]
         pub flowbox: TemplateChild<SwStationFlowBox>,
-        #[template_child]
-        pub spinner: TemplateChild<gtk::Spinner>,
 
         pub library: SwLibrary,
     }
@@ -54,7 +52,6 @@ mod imp {
             let status_page = TemplateChild::default();
             let stack = TemplateChild::default();
             let flowbox = TemplateChild::default();
-            let spinner = TemplateChild::default();
 
             let app = gio::Application::default()
                 .unwrap()
@@ -65,7 +62,6 @@ mod imp {
             Self {
                 status_page,
                 stack,
-                spinner,
                 flowbox,
                 library,
             }
@@ -141,8 +137,5 @@ impl SwLibraryPage {
             SwLibraryStatus::Content => imp.stack.set_visible_child_name("content"),
             _ => (),
         }
-
-        imp.spinner
-            .set_spinning(matches!(status, SwLibraryStatus::Loading));
     }
 }
