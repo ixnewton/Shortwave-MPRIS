@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2024-06-03 19:52+0000\n"
-"PO-Revision-Date: 2024-06-04 18:42+0800\n"
+"POT-Creation-Date: 2024-07-20 21:40+0000\n"
+"PO-Revision-Date: 2024-07-21 19:45+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -187,7 +187,7 @@ msgctxt "shortcut window"
 msgid "Quit the application"
 msgstr "退出应用程序"
 
-#: data/gtk/help_overlay.ui:46 data/gtk/player.ui:5
+#: data/gtk/help_overlay.ui:46
 msgid "Playback"
 msgstr "回放"
 
@@ -212,71 +212,67 @@ msgstr "主菜单"
 msgid "Library"
 msgstr "电台库"
 
-#: data/gtk/library_page.ui:85
-msgid "Receiving Station Data…"
-msgstr "正在接收电台数据…"
-
-#: data/gtk/library_page.ui:112
+#: data/gtk/library_page.ui:75
 msgid "_Discover New Stations"
 msgstr "探索新电台(_D)"
 
-#: data/gtk/library_page.ui:134
+#: data/gtk/library_page.ui:97
 msgid "_Enable Mini Player"
 msgstr "启用迷你播放器(_E)"
 
-#: data/gtk/library_page.ui:138
+#: data/gtk/library_page.ui:101
 msgid "_Sorting"
 msgstr "排序(_S)"
 
-#: data/gtk/library_page.ui:141 data/gtk/search_page.ui:160
+#: data/gtk/library_page.ui:104 data/gtk/search_page.ui:161
 msgid "_Name"
 msgstr "名称(_N)"
 
-#: data/gtk/library_page.ui:146 data/gtk/search_page.ui:165
+#: data/gtk/library_page.ui:109 data/gtk/search_page.ui:166
 msgid "_Language"
 msgstr "语言(_L)"
 
-#: data/gtk/library_page.ui:151 data/gtk/search_page.ui:170
+#: data/gtk/library_page.ui:114 data/gtk/search_page.ui:171
 msgid "_Country"
 msgstr "国家(_C)"
 
-#: data/gtk/library_page.ui:156 data/gtk/search_page.ui:175
+#: data/gtk/library_page.ui:119 data/gtk/search_page.ui:176
 msgid "S_tate"
 msgstr "州省(_T)"
 
-#: data/gtk/library_page.ui:161 data/gtk/search_page.ui:180
+#: data/gtk/library_page.ui:124 data/gtk/search_page.ui:181
 msgid "_Votes"
 msgstr "票数(_V)"
 
-#: data/gtk/library_page.ui:166 data/gtk/search_page.ui:185
+#: data/gtk/library_page.ui:129 data/gtk/search_page.ui:186
 msgid "_Bitrate"
 msgstr "位速率(_B)"
 
-#: data/gtk/library_page.ui:173 data/gtk/search_page.ui:192
+#: data/gtk/library_page.ui:136 data/gtk/search_page.ui:193
 msgid "_Ascending"
 msgstr "升序(_A)"
 
-#: data/gtk/library_page.ui:178 data/gtk/search_page.ui:197
+#: data/gtk/library_page.ui:141 data/gtk/search_page.ui:198
 msgid "_Descending"
 msgstr "降序(_D)"
 
-#: data/gtk/library_page.ui:187
+#: data/gtk/library_page.ui:150
 msgid "_Open radio-browser.info <sup>↗</sup>"
 msgstr "打开 radio-browser.info(_O) <sup>↗</sup>"
 
-#: data/gtk/library_page.ui:192
+#: data/gtk/library_page.ui:155
 msgid "_Create New Station"
 msgstr "创建新电台(_C)"
 
-#: data/gtk/library_page.ui:199
+#: data/gtk/library_page.ui:162
 msgid "_Preferences"
 msgstr "首选项(_P)"
 
-#: data/gtk/library_page.ui:203
+#: data/gtk/library_page.ui:166
 msgid "_Keyboard Shortcuts"
 msgstr "键盘快捷键(_K)"
 
-#: data/gtk/library_page.ui:207
+#: data/gtk/library_page.ui:170
 msgid "_About Shortwave"
 msgstr "关于短波(_A)"
 
@@ -306,10 +302,6 @@ msgstr "关闭"
 msgid "Resize"
 msgstr "改变大小"
 
-#: data/gtk/player.ui:19
-msgid "Back"
-msgstr "返回"
-
 #: data/gtk/search_page.ui:41 data/gtk/station_dialog.ui:171
 #: src/ui/pages/search_page.rs:111
 msgid "Votes"
@@ -330,6 +322,10 @@ msgstr "尝试使用不同的搜索关键字"
 #: data/gtk/search_page.ui:101
 msgid "Search Results"
 msgstr "搜索结果"
+
+#: data/gtk/search_page.ui:143
+msgid "Searching…"
+msgstr "正在搜索…"
 
 #: data/gtk/settings_dialog.ui:12
 msgid "Features"
@@ -493,7 +489,7 @@ msgstr "搜索已完成"
 msgid "Searching for Devices…"
 msgstr "正在搜索设备…"
 
-#: data/gtk/window.ui:33
+#: data/gtk/window.ui:36
 msgid "Main View"
 msgstr "主视图"
 
@@ -502,11 +498,11 @@ msgstr "主视图"
 msgid "Unable to access music directory. Saving song in home directory."
 msgstr "无法访问音乐目录。在主目录保存歌曲。"
 
-#: src/audio/player.rs:190
+#: src/audio/player.rs:194
 msgid "Station cannot be streamed. URL is not valid."
 msgstr "电台无法串流。网址无效。"
 
-#: src/audio/player.rs:241
+#: src/audio/player.rs:245
 msgid "Cannot save song."
 msgstr "无法保存歌曲。"
 
@@ -546,15 +542,15 @@ msgstr "打开网站"
 msgid "Powered by radio-browser.info"
 msgstr "由 radio-browser.info 提供支持"
 
-#: src/ui/pages/discover_page.rs:151 src/ui/pages/search_page.rs:193
+#: src/ui/pages/discover_page.rs:151 src/ui/pages/search_page.rs:215
 msgid "Station data could not be received."
 msgstr "无法接收电台数据。"
 
-#: src/ui/pages/library_page.rs:114
+#: src/ui/pages/library_page.rs:110
 msgid "Welcome to {}"
 msgstr "欢迎使用 {}"
 
-#: src/ui/pages/search_page.rs:200
+#: src/ui/pages/search_page.rs:222
 msgid ""
 "The number of results is limited to {} item. Try using a more specific "
 "search term."
@@ -566,6 +562,12 @@ msgstr[0] "结果数量已限制为 {} 项。请尝试使用更明确的搜索�
 #: src/ui/station_dialog.rs:216
 msgid "{} kbit/s"
 msgstr "{} kbit/s"
+
+#~ msgid "Receiving Station Data…"
+#~ msgstr "正在接收电台数据…"
+
+#~ msgid "Back"
+#~ msgstr "返回"
 
 #~ msgid "Window"
 #~ msgstr "窗口"
