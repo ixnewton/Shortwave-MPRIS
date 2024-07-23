@@ -30,7 +30,6 @@
     <name>Felix Häcker</name>
   </developer>
   <branding>
-    <!-- Yellow 4 and Brown 4 -->
     <color type="primary" scheme_preference="light">#f5c211</color>
     <color type="primary" scheme_preference="dark">#865e3c</color>
   </branding>
