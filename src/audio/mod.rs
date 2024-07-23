@@ -1,5 +1,5 @@
 // Shortwave - mod.rs
-// Copyright (C) 2021  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2021-2024  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -21,8 +21,10 @@ pub use controller::Controller;
 
 mod gcast_discoverer;
 mod player;
+mod player2;
 mod song;
 
 pub use gcast_discoverer::{GCastDevice, GCastDiscoverer, GCastDiscovererMessage};
 pub use player::{PlaybackState, Player};
+pub use player2::{SwPlaybackState, SwPlayer};
 pub use song::Song;

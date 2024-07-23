@@ -1,5 +1,5 @@
 // Shortwave - mod.rs
-// Copyright (C) 2021-2023  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2021-2024  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -22,9 +22,9 @@ use gstreamer_backend::GstreamerBackend;
 pub use gstreamer_backend::GstreamerMessage;
 use song_backend::SongBackend;
 
-use crate::app::Action;
 use crate::settings::{settings_manager, Key};
 
+#[derive(Debug)]
 pub struct Backend {
     pub gstreamer: GstreamerBackend,
     pub gstreamer_receiver: Option<Receiver<GstreamerMessage>>,
@@ -32,19 +32,19 @@ pub struct Backend {
     pub song: SongBackend,
 }
 
-impl Backend {
-    pub fn new(sender: Sender<Action>) -> Self {
+impl Default for Backend {
+    fn default() -> Self {
         // Song backend
         let save_count: usize = settings_manager::integer(Key::RecorderSaveCount)
             .try_into()
             .unwrap();
-        let song = SongBackend::new(sender.clone(), save_count);
+        let song = SongBackend::new(save_count);
         song.delete_songs(); // Delete old songs
 
         // Gstreamer backend
         let (gstreamer_sender, gstreamer_receiver) = async_channel::bounded(10);
         let gstreamer_receiver = Some(gstreamer_receiver);
-        let gstreamer = GstreamerBackend::new(gstreamer_sender, sender);
+        let gstreamer = GstreamerBackend::new(gstreamer_sender);
 
         Self {
             gstreamer,

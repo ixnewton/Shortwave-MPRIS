@@ -1,5 +1,5 @@
 // Shortwave - song_row.rs
-// Copyright (C) 2021-2022  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2021-2024  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,12 +18,10 @@ use std::cell::OnceCell;
 
 use adw::prelude::*;
 use adw::subclass::prelude::*;
-use async_channel::Sender;
 use chrono::NaiveTime;
 use glib::{clone, subclass};
 use gtk::{gio, glib, CompositeTemplate};
 
-use crate::app::Action;
 use crate::audio::Song;
 use crate::ui::SwApplicationWindow;
 
@@ -41,7 +39,6 @@ mod imp {
         pub button_stack: TemplateChild<gtk::Stack>,
 
         pub song: OnceCell<Song>,
-        pub sender: OnceCell<Sender<Action>>,
     }
 
     #[glib::object_subclass]
@@ -76,7 +73,7 @@ glib::wrapper! {
 }
 
 impl SwSongRow {
-    pub fn new(sender: Sender<Action>, song: Song) -> Self {
+    pub fn new(song: Song) -> Self {
         let row = glib::Object::new::<Self>();
 
         // Set information
@@ -86,7 +83,6 @@ impl SwSongRow {
         row.set_subtitle(&duration);
 
         let imp = row.imp();
-        imp.sender.set(sender).unwrap();
         imp.song.set(song).unwrap();
 
         row.setup_signals();
@@ -103,9 +99,9 @@ impl SwSongRow {
                 let imp = this.imp();
 
                 // Save the song
-                let sender = imp.sender.get().unwrap();
+                // TODO: let sender = imp.sender.get().unwrap();
                 let song = imp.song.get().unwrap();
-                crate::utils::send(sender, Action::PlaybackSaveSong(song.clone()));
+                //crate::utils::send(sender, Action::PlaybackSaveSong(song.clone()));
 
                 // Display play button instead of save button
                 imp.button_stack.set_visible_child_name("open");

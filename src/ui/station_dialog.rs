@@ -1,5 +1,5 @@
 // Shortwave - station_dialog.rs
-// Copyright (C) 2021-2023  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2021-2024  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -285,7 +285,7 @@ mod imp {
             let station = obj.station();
 
             let app = SwApplication::default();
-            app.imp().player.set_station(station);
+            app.imp().legacy_player.set_station(station);
 
             obj.close();
         }

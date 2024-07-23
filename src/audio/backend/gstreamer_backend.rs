@@ -1,5 +1,5 @@
 // Shortwave - gstreamer_backend.rs
-// Copyright (C) 2021-2023  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2021-2024  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -48,7 +48,7 @@ pub enum GstreamerMessage {
     PlaybackStateChanged(PlaybackState),
 }
 
-#[derive(Default)]
+#[derive(Default, Debug)]
 struct BufferingState {
     buffering: bool,
     buffering_probe: Option<(gstreamer::Pad, gstreamer::PadProbeId)>,
@@ -66,6 +66,7 @@ impl BufferingState {
     }
 }
 
+#[derive(Debug)]
 pub struct GstreamerBackend {
     pipeline: Pipeline,
     recorderbin: Arc<Mutex<Option<Bin>>>,
@@ -78,7 +79,7 @@ pub struct GstreamerBackend {
 }
 
 impl GstreamerBackend {
-    pub fn new(gst_sender: Sender<GstreamerMessage>, app_sender: Sender<Action>) -> Self {
+    pub fn new(gst_sender: Sender<GstreamerMessage>) -> Self {
         // Determine if env supports pulseaudio
         let audiosink = if Self::check_pulse_support() {
             "pulsesink"
@@ -121,11 +122,11 @@ impl GstreamerBackend {
             sender: gst_sender,
         };
 
-        gstreamer_backend.setup_signals(app_sender);
+        gstreamer_backend.setup_signals();
         gstreamer_backend
     }
 
-    fn setup_signals(&mut self, app_sender: Sender<Action>) {
+    fn setup_signals(&mut self) {
         // There's no volume support for non pulseaudio systems
         if let Some(pulsesink) = self.pipeline.by_name("pulsesink") {
             // We have to update the volume if we get changes from pulseaudio (pulsesink).
@@ -135,6 +136,8 @@ impl GstreamerBackend {
             // We need to do message passing (sender/receiver) here, because gstreamer
             // messages are coming from a other thread (and app::Action enum is
             // not thread safe).
+            // TODO
+            /*
             glib::spawn_future_local(clone!(
                 #[strong]
                 app_sender,
@@ -144,6 +147,7 @@ impl GstreamerBackend {
                     }
                 }
             ));
+             */
 
             // Update volume coming from pulseaudio / pulsesink
             self.volume_signal_id = Some(pulsesink.connect_notify(

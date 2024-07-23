@@ -43,6 +43,7 @@ src/audio/controller/toolbar_controller.rs
 src/audio/gcast_discoverer.rs
 src/audio/mod.rs
 src/audio/player.rs
+src/audio/player2.rs
 src/audio/song.rs
 src/database/connection.rs
 src/database/library.rs

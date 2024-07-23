@@ -27,6 +27,7 @@ use gtk::glib::WeakRef;
 use gtk::{gio, glib};
 
 use crate::api::SwClient;
+use crate::audio::SwPlayer;
 use crate::audio::{GCastDevice, PlaybackState, Player, Song};
 use crate::config;
 use crate::database::SwLibrary;
@@ -56,13 +57,15 @@ mod imp {
         #[property(get)]
         pub library: SwLibrary,
         #[property(get)]
+        pub player: SwPlayer,
+        #[property(get)]
         pub rb_server: RefCell<Option<String>>,
 
         pub sender: Sender<Action>,
         pub receiver: RefCell<Option<Receiver<Action>>>,
 
         pub window: OnceCell<WeakRef<SwApplicationWindow>>,
-        pub player: Rc<Player>,
+        pub legacy_player: Rc<Player>,
 
         pub settings: gio::Settings,
     }
@@ -78,20 +81,22 @@ mod imp {
             let receiver = RefCell::new(Some(r));
 
             let library = SwLibrary::default();
+            let player = SwPlayer::default();
             let rb_server = RefCell::default();
 
             let window = OnceCell::new();
-            let player = Player::new(sender.clone());
+            let legacy_player = Player::new(sender.clone());
 
             let settings = settings_manager::settings();
 
             Self {
                 library,
+                player,
                 rb_server,
                 sender,
                 receiver,
                 window,
-                player,
+                legacy_player,
                 settings,
             }
         }
@@ -252,14 +257,16 @@ impl SwApplication {
 
         match action {
             Action::PlaybackConnectGCastDevice(device) => {
-                imp.player.connect_to_gcast_device(device)
+                imp.legacy_player.connect_to_gcast_device(device)
             }
-            Action::PlaybackDisconnectGCastDevice => imp.player.disconnect_from_gcast_device(),
-            Action::PlaybackSet(true) => imp.player.set_playback(PlaybackState::Playing),
-            Action::PlaybackSet(false) => imp.player.set_playback(PlaybackState::Stopped),
-            Action::PlaybackToggle => imp.player.toggle_playback(),
-            Action::PlaybackSetVolume(volume) => imp.player.set_volume(volume),
-            Action::PlaybackSaveSong(song) => imp.player.save_song(song),
+            Action::PlaybackDisconnectGCastDevice => {
+                imp.legacy_player.disconnect_from_gcast_device()
+            }
+            Action::PlaybackSet(true) => imp.legacy_player.set_playback(PlaybackState::Playing),
+            Action::PlaybackSet(false) => imp.legacy_player.set_playback(PlaybackState::Stopped),
+            Action::PlaybackToggle => imp.legacy_player.toggle_playback(),
+            Action::PlaybackSetVolume(volume) => imp.legacy_player.set_volume(volume),
+            Action::PlaybackSaveSong(song) => imp.legacy_player.save_song(song),
             Action::SettingsKeyChanged(key) => self.apply_settings_changes(key),
         }
         glib::ControlFlow::Continue

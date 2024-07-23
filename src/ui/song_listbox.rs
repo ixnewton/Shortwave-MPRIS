@@ -1,5 +1,5 @@
 // Shortwave - song_listbox.rs
-// Copyright (C) 2021-2022  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2021-2024  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,25 +14,23 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use async_channel::Sender;
 use gtk::prelude::*;
 use gtk::{gio, glib};
 
-use crate::app::Action;
 use crate::audio::Song;
 use crate::ui::{SwApplicationWindow, SwSongRow};
 
+#[derive(Debug)]
 pub struct SongListBox {
     pub widget: gtk::Box,
     listbox: gtk::ListBox,
     stack: gtk::Stack,
 
     builder: gtk::Builder,
-    sender: Sender<Action>,
 }
 
 impl SongListBox {
-    pub fn new(sender: Sender<Action>) -> Self {
+    pub fn new() -> Self {
         let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/song_listbox.ui");
         get_widget!(builder, gtk::Box, song_listbox);
         get_widget!(builder, gtk::ListBox, listbox);
@@ -43,7 +41,6 @@ impl SongListBox {
             listbox,
             stack,
             builder,
-            sender,
         };
 
         listbox.setup_signals();
@@ -67,7 +64,7 @@ impl SongListBox {
     }
 
     pub fn add_song(&mut self, song: Song) {
-        let row = SwSongRow::new(self.sender.clone(), song);
+        let row = SwSongRow::new(song);
         self.listbox.insert(&row, 0);
 
         self.update_stack();

@@ -86,7 +86,7 @@ mod imp {
 
             let app = SwApplication::default();
             let sender = app.imp().sender.clone();
-            let player = app.imp().player.clone();
+            let player = app.imp().legacy_player.clone();
 
             self.obj().setup_widgets(player);
             self.obj().setup_gactions(sender);
