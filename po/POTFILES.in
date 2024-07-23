@@ -9,6 +9,7 @@ data/gtk/help_overlay.ui
 data/gtk/library_page.ui
 data/gtk/mini_controller.ui
 data/gtk/player.ui
+data/gtk/player_view.ui
 data/gtk/search_page.ui
 data/gtk/settings_dialog.ui
 data/gtk/sidebar_controller.ui
@@ -69,6 +70,7 @@ src/ui/pages/discover_page.rs
 src/ui/pages/library_page.rs
 src/ui/pages/mod.rs
 src/ui/pages/search_page.rs
+src/ui/player/player_view.rs
 src/ui/song_listbox.rs
 src/ui/song_row.rs
 src/ui/station_dialog.rs

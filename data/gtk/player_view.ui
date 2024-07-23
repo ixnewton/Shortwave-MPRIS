@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <template class="SwPlayerView" parent="AdwBin">
+    <property name="child">
+      <object class="AdwToolbarView">
+        <child type="top">
+          <object class="AdwHeaderBar" id="headerbar">
+            <property name="show-title">False</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkScrolledWindow">
+            <property name="propagate-natural-height">True</property>
+            <property name="hscrollbar_policy">never</property>
+            <child>
+              <object class="AdwClamp">
+                <property name="width_request">275</property>
+                <property name="margin_start">6</property>
+                <property name="margin_end">6</property>
+                <property name="maximum_size">400</property>
+                <property name="tightening_threshold">0</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </property>
+  </template>
+</interface>

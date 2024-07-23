@@ -15,6 +15,7 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 pub mod pages;
+pub mod player;
 
 pub mod about_dialog;
 mod create_station_dialog;
