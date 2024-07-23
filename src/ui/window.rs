@@ -29,6 +29,7 @@ use crate::config;
 use crate::model::SwSorting;
 use crate::settings::{settings_manager, Key};
 use crate::ui::pages::*;
+use crate::ui::player::SwPlayerView;
 use crate::ui::SwCreateStationDialog;
 
 mod imp {
@@ -37,14 +38,6 @@ mod imp {
     #[derive(Debug, Default, CompositeTemplate)]
     #[template(resource = "/de/haeckerfelix/Shortwave/gtk/window.ui")]
     pub struct SwApplicationWindow {
-        #[template_child]
-        pub split_view: TemplateChild<adw::OverlaySplitView>,
-        #[template_child]
-        pub navigation_view: TemplateChild<adw::NavigationView>,
-
-        #[template_child]
-        pub narrow_breakpoint: TemplateChild<adw::Breakpoint>,
-
         #[template_child]
         pub library_page: TemplateChild<SwLibraryPage>,
         #[template_child]
@@ -57,7 +50,7 @@ mod imp {
         #[template_child]
         pub toolbar_controller_box: TemplateChild<gtk::Box>,
         #[template_child]
-        pub player_bin: TemplateChild<adw::Bin>,
+        pub player_view: TemplateChild<SwPlayerView>,
         #[template_child]
         pub toast_overlay: TemplateChild<adw::ToastOverlay>,
 
@@ -138,7 +131,6 @@ impl SwApplicationWindow {
             .append(&player.mini_controller_widget);
         imp.toolbar_controller_box
             .append(&player.toolbar_controller_widget);
-        imp.player_bin.set_child(Some(&player.widget));
 
         // Animations for smooth mini player transitions
         let x_callback = adw::CallbackAnimationTarget::new(clone!(
@@ -189,18 +181,6 @@ impl SwApplicationWindow {
                 .activate(move |window: &Self, _, _| {
                     let dialog = SwCreateStationDialog::new();
                     dialog.present(Some(window));
-                })
-                .build(),
-            // win.show-player
-            gio::ActionEntry::builder("show-player")
-                .activate(|window: &Self, _, _| {
-                    window.imp().split_view.set_show_sidebar(true);
-                })
-                .build(),
-            // win.hide-player
-            gio::ActionEntry::builder("hide-player")
-                .activate(|window: &Self, _, _| {
-                    window.imp().split_view.set_show_sidebar(false);
                 })
                 .build(),
             // win.toggle-playback

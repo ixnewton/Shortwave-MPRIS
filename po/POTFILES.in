@@ -70,6 +70,7 @@ src/ui/pages/discover_page.rs
 src/ui/pages/library_page.rs
 src/ui/pages/mod.rs
 src/ui/pages/search_page.rs
+src/ui/player/mod.rs
 src/ui/player/player_view.rs
 src/ui/song_listbox.rs
 src/ui/song_row.rs

@@ -31,23 +31,17 @@
                       <object class="AdwOverlaySplitView" id="split_view">
                         <property name="sidebar-position">end</property>
                         <property name="min-sidebar-width">300</property>
+                        <property name="max-sidebar-width">300</property>
+                        <property name="enable-hide-gesture">False</property>
+                        <property name="enable-show-gesture">False</property>
                         <property name="content">
-                          <object class="AdwNavigationPage">
-                            <property name="title" translatable="yes">Main View</property>
-                            <child>
-                              <object class="AdwToolbarView" id="main_view_toolbarview">
-                                <child>
-                                  <object class="AdwLayoutSlot">
-                                    <property name="id">main_view</property>
-                                  </object>
-                                </child>
-                              </object>
-                            </child>
+                          <object class="AdwLayoutSlot">
+                            <property name="id">main_view</property>
                           </object>
                         </property>
                         <property name="sidebar">
                           <object class="AdwLayoutSlot">
-                            <property name="id">player</property>
+                            <property name="id">player_view</property>
                           </object>
                         </property>
                       </object>
@@ -70,7 +64,7 @@
                         </property>
                         <property name="sheet">
                           <object class="AdwLayoutSlot">
-                            <property name="id">player</property>
+                            <property name="id">player_view</property>
                           </object>
                         </property>
                       </object>
@@ -80,18 +74,18 @@
                 <child type="main_view">
                   <object class="AdwNavigationView" id="navigation_view">
                     <child>
-                      <object class="SwLibraryPage" id="library_page"/>
+                      <object class="SwLibraryPage" id="library_page" />
                     </child>
                     <child>
-                      <object class="SwDiscoverPage" id="discover_page"/>
+                      <object class="SwDiscoverPage" id="discover_page" />
                     </child>
                     <child>
-                      <object class="SwSearchPage" id="search_page"/>
+                      <object class="SwSearchPage" id="search_page" />
                     </child>
                   </object>
                 </child>
-                <child type="player">
-                  <object class="AdwBin" id="player_bin"/>
+                <child type="player_view">
+                  <object class="SwPlayerView" id="player_view" />
                 </child>
               </object>
             </child>

@@ -8,10 +8,6 @@
           <object class="GtkBox">
             <property name="hexpand">True</property>
             <child>
-              <object class="GtkGestureClick" id="toolbox_gesture">
-              </object>
-            </child>
-            <child>
               <object class="GtkBox" id="favicon_box">
                 <property name="halign">center</property>
                 <property name="orientation">vertical</property>
@@ -32,7 +28,7 @@
                     <property name="ellipsize">end</property>
                     <property name="xalign">0</property>
                     <attributes>
-                      <attribute name="weight" value="bold"/>
+                      <attribute name="weight" value="bold" />
                     </attributes>
                   </object>
                 </child>

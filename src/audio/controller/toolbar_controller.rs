@@ -42,7 +42,6 @@ pub struct ToolbarController {
     start_playback_button: gtk::Button,
     stop_playback_button: gtk::Button,
     loading_button: gtk::Button,
-    toolbox_gesture: gtk::GestureClick,
 }
 
 impl ToolbarController {
@@ -58,7 +57,6 @@ impl ToolbarController {
         get_widget!(builder, gtk::Button, start_playback_button);
         get_widget!(builder, gtk::Button, stop_playback_button);
         get_widget!(builder, gtk::Button, loading_button);
-        get_widget!(builder, gtk::GestureClick, toolbox_gesture);
 
         let station = Rc::new(RefCell::new(None));
 
@@ -79,7 +77,6 @@ impl ToolbarController {
             start_playback_button,
             stop_playback_button,
             loading_button,
-            toolbox_gesture,
         };
 
         controller.setup_signals();
@@ -111,15 +108,6 @@ impl ToolbarController {
             self.sender,
             move |_| {
                 crate::utils::send(&sender, Action::PlaybackSet(false));
-            }
-        ));
-
-        // show_player_button
-        self.toolbox_gesture.connect_pressed(clone!(
-            #[weak(rename_to = widget)]
-            self.widget,
-            move |_, _, _, _| {
-                widget.activate_action("win.show-player", None).unwrap();
             }
         ));
     }
