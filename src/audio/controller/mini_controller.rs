@@ -21,9 +21,11 @@ use async_channel::Sender;
 use glib::clone;
 use gtk::glib;
 use gtk::prelude::*;
+use gtk::subclass::prelude::ObjectSubclassIsExt;
 
 use crate::api::SwStation;
 use crate::app::Action;
+use crate::app::SwApplication;
 use crate::audio::{Controller, PlaybackState};
 
 pub struct MiniController {
@@ -57,13 +59,9 @@ impl MiniController {
         get_widget!(builder, gtk::ScaleButton, volume_button);
 
         // volume_button | We need the volume_signal_id later to block the signal
-        let volume_signal_id = volume_button.connect_value_changed(clone!(
-            #[strong]
-            sender,
-            move |_, value| {
-                crate::utils::send(&sender, Action::PlaybackSetVolume(value));
-            }
-        ));
+        let volume_signal_id = volume_button.connect_value_changed(move |_, value| {
+            SwApplication::default().player().set_volume(value);
+        });
 
         let station = Rc::new(RefCell::new(None));
 

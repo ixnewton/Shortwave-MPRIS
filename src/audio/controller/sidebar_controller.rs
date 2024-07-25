@@ -24,7 +24,7 @@ use glib::clone;
 use gtk::{gio, glib};
 
 use crate::api::{FaviconDownloader, SwStation};
-use crate::app::Action;
+use crate::app::{Action, SwApplication};
 use crate::audio::{Controller, PlaybackState};
 use crate::ui::{FaviconSize, StationFavicon, SwStationDialog, SwStreamingDialog};
 
@@ -77,7 +77,7 @@ impl SidebarController {
             #[strong]
             sender,
             move |_, value| {
-                crate::utils::send(&sender, Action::PlaybackSetVolume(value));
+                SwApplication::default().player().set_volume(value);
             }
         ));
 

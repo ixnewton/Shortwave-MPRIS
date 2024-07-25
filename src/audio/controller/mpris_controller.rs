@@ -25,7 +25,7 @@ use gtk::prelude::*;
 use mpris_player::{Metadata, MprisPlayer, OrgMprisMediaPlayer2Player, PlaybackStatus};
 
 use crate::api::{FaviconDownloader, SwStation};
-use crate::app::Action;
+use crate::app::{Action, SwApplication};
 use crate::audio::{Controller, PlaybackState};
 use crate::config;
 use crate::ui::SwApplicationWindow;
@@ -151,7 +151,7 @@ impl MprisController {
             self.volume,
             move |new_volume| {
                 if (*old_volume.borrow() - new_volume).abs() > f64::EPSILON {
-                    crate::utils::send(&sender, Action::PlaybackSetVolume(new_volume));
+                    SwApplication::default().player().set_volume(new_volume);
                     *old_volume.borrow_mut() = new_volume;
                 }
             }
