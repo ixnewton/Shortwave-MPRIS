@@ -22,7 +22,7 @@
 
 .featured-carousel.dark-foreground {
   color: rgba(0, 0, 0, .75);
- }
+}
 
 .carousel-banner {
   padding: 0px;
@@ -53,20 +53,20 @@
   border: 1px solid alpha(black, 1);
   padding-top: 3px;
   box-shadow: inset 0px 1px 8px 0px alpha(black, 0.5),
-              inset 0px 0px 2px 1px alpha(black, 0.5),
-              0px 1px 0px 0px alpha(white, 0.3),
-              0px -1px 0px 0px alpha(black, 0.15);
+    inset 0px 0px 2px 1px alpha(black, 0.5),
+    0px 1px 0px 0px alpha(white, 0.3),
+    0px -1px 0px 0px alpha(black, 0.15);
 }
 
 .mini-controller-button,
-.mini-controller-volume-button > button {
+.mini-controller-volume-button>button {
   background-image: url('resource://de/haeckerfelix/Shortwave/assets/images/metal.png');
   background-size: cover;
   color: black;
   border: 1px solid alpha(black, 1);
 }
 
-.mini-controller-volume-button > button {
+.mini-controller-volume-button>button {
   border-radius: 100%;
   padding: 0;
   min-width: 34px;
@@ -87,4 +87,22 @@
   background: alpha(@error_color, .3);
   font-weight: bold;
   box-shadow: none;
+}
+
+
+volume>scale {
+  color: @dimmed_color;
+}
+
+volume:hover>scale {
+  color: inherit;
+}
+
+volume>scale trough highlight {
+  min-height: 12px;
+  min-width: 12px;
+}
+
+volume>scale trough slider {
+  opacity: 0;
 }

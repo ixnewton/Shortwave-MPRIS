@@ -23,6 +23,7 @@
     <file compressed="true" preprocess="xml-stripblanks">gtk/streaming_dialog.ui</file>
     <file compressed="true" alias="style.css">gtk/style.css</file>
     <file compressed="true" preprocess="xml-stripblanks">gtk/toolbar_controller.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">gtk/volume_control.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">gtk/window.ui</file>
   </gresource>
   <gresource prefix="@PATH_ID@/icons/16x16/status/">

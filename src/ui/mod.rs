@@ -27,6 +27,7 @@ mod station_favicon;
 mod station_flowbox;
 mod station_row;
 mod streaming_dialog;
+mod volume_control;
 mod window;
 
 pub use create_station_dialog::SwCreateStationDialog;
@@ -38,4 +39,5 @@ pub use station_favicon::{FaviconSize, StationFavicon};
 pub use station_flowbox::SwStationFlowBox;
 pub use station_row::SwStationRow;
 pub use streaming_dialog::SwStreamingDialog;
+pub use volume_control::SwVolumeControl;
 pub use window::SwApplicationWindow;

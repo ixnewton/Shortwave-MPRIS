@@ -21,6 +21,7 @@ data/gtk/station_flowbox.ui
 data/gtk/station_row.ui
 data/gtk/streaming_dialog.ui
 data/gtk/toolbar_controller.ui
+data/gtk/volume_control.ui
 data/gtk/window.ui
 src/api/client.rs
 src/api/error.rs
@@ -79,5 +80,6 @@ src/ui/station_favicon.rs
 src/ui/station_flowbox.rs
 src/ui/station_row.rs
 src/ui/streaming_dialog.rs
+src/ui/volume_control.rs
 src/ui/window.rs
 src/utils.rs
