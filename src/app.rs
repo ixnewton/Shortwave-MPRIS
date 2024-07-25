@@ -42,7 +42,6 @@ pub enum Action {
     PlaybackDisconnectGCastDevice,
     PlaybackSet(bool),
     PlaybackToggle,
-    PlaybackSetVolume(f64),
     PlaybackSaveSong(Song),
 
     SettingsKeyChanged(Key),
@@ -265,7 +264,6 @@ impl SwApplication {
             Action::PlaybackSet(true) => imp.legacy_player.set_playback(PlaybackState::Playing),
             Action::PlaybackSet(false) => imp.legacy_player.set_playback(PlaybackState::Stopped),
             Action::PlaybackToggle => imp.legacy_player.toggle_playback(),
-            Action::PlaybackSetVolume(volume) => imp.legacy_player.set_volume(volume),
             Action::PlaybackSaveSong(song) => imp.legacy_player.save_song(song),
             Action::SettingsKeyChanged(key) => self.apply_settings_changes(key),
         }

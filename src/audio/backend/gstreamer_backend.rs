@@ -25,7 +25,6 @@ use gstreamer::{Bin, Element, MessageView, PadProbeReturn, PadProbeType, Pipelin
 use gstreamer_audio::{StreamVolume, StreamVolumeFormat};
 use gtk::glib;
 
-use crate::app::Action;
 use crate::audio::PlaybackState;
 
 #[rustfmt::skip]
@@ -46,6 +45,7 @@ use crate::audio::PlaybackState;
 pub enum GstreamerMessage {
     SongTitleChanged(String),
     PlaybackStateChanged(PlaybackState),
+    VolumeChanged(f64),
 }
 
 #[derive(Default, Debug)]
@@ -71,8 +71,6 @@ pub struct GstreamerBackend {
     pipeline: Pipeline,
     recorderbin: Arc<Mutex<Option<Bin>>>,
     current_title: Arc<Mutex<String>>,
-    volume: Arc<Mutex<f64>>,
-    volume_signal_id: Option<glib::signal::SignalHandlerId>,
     buffering_state: Arc<Mutex<BufferingState>>,
     bus_watch_guard: OnceCell<gstreamer::bus::BusWatchGuard>,
     sender: Sender<GstreamerMessage>,
@@ -104,10 +102,6 @@ impl GstreamerBackend {
         // We need this variable to check if the title have changed.
         let current_title = Arc::new(Mutex::new(String::new()));
 
-        // Playback volume
-        let volume = Arc::new(Mutex::new(1.0));
-        let volume_signal_id = None;
-
         // Buffering state
         let buffering_state = Arc::new(Mutex::new(BufferingState::default()));
 
@@ -115,8 +109,6 @@ impl GstreamerBackend {
             pipeline,
             recorderbin,
             current_title,
-            volume,
-            volume_signal_id,
             buffering_state,
             bus_watch_guard: OnceCell::default(),
             sender: gst_sender,
@@ -129,34 +121,12 @@ impl GstreamerBackend {
     fn setup_signals(&mut self) {
         // There's no volume support for non pulseaudio systems
         if let Some(pulsesink) = self.pipeline.by_name("pulsesink") {
-            // We have to update the volume if we get changes from pulseaudio (pulsesink).
-            // The user is able to control the volume from g-c-c.
-            let (volume_sender, volume_receiver) = async_channel::bounded(10);
-
-            // We need to do message passing (sender/receiver) here, because gstreamer
-            // messages are coming from a other thread (and app::Action enum is
-            // not thread safe).
-            // TODO
-            /*
-            glib::spawn_future_local(clone!(
-                #[strong]
-                app_sender,
-                async move {
-                    while let Ok(volume) = volume_receiver.recv().await {
-                        crate::utils::send(&app_sender, Action::PlaybackSetVolume(volume));
-                    }
-                }
-            ));
-             */
-
             // Update volume coming from pulseaudio / pulsesink
-            self.volume_signal_id = Some(pulsesink.connect_notify(
+            pulsesink.connect_notify(
                 Some("volume"),
                 clone!(
-                    #[weak(rename_to = old_volume)]
-                    self.volume,
-                    #[strong]
-                    volume_sender,
+                    #[strong(rename_to = sender)]
+                    self.sender,
                     move |element, _| {
                         let pa_volume: f64 = element.property("volume");
                         let new_volume = StreamVolume::convert_volume(
@@ -165,36 +135,26 @@ impl GstreamerBackend {
                             pa_volume,
                         );
 
-                        // We have to check if the values are the same. For some reason gstreamer sends us
-                        // slightly different floats, so we round up here (only the the first two digits are
-                        // important for use here).
-                        let mut old_volume_locked = old_volume.lock().unwrap();
-                        let new_val = format!("{new_volume:.2}");
-                        let old_val = format!("{old_volume_locked:.2}");
-
-                        if new_val != old_val {
-                            crate::utils::send(&volume_sender, new_volume);
-                            *old_volume_locked = new_volume;
-                        }
+                        sender
+                            .send_blocking(GstreamerMessage::VolumeChanged(new_volume))
+                            .unwrap();
                     }
                 ),
-            ));
+            );
 
             // It's possible to mute the audio (!= 0.0) from pulseaudio side, so we should
             // handle this too by setting the volume to 0.0
             pulsesink.connect_notify(
                 Some("mute"),
                 clone!(
-                    #[weak(rename_to = old_volume)]
-                    self.volume,
-                    #[strong]
-                    volume_sender,
+                    #[strong(rename_to = sender)]
+                    self.sender,
                     move |element, _| {
                         let mute: bool = element.property("mute");
-                        let mut old_volume_locked = old_volume.lock().unwrap();
-                        if mute && *old_volume_locked != 0.0 {
-                            crate::utils::send(&volume_sender, 0.0);
-                            *old_volume_locked = 0.0;
+                        if mute {
+                            sender
+                                .send_blocking(GstreamerMessage::VolumeChanged(0.0))
+                                .unwrap();
                         }
                     }
                 ),
@@ -305,9 +265,6 @@ impl GstreamerBackend {
 
     pub fn set_volume(&self, volume: f64) {
         if let Some(pulsesink) = self.pipeline.by_name("pulsesink") {
-            // We need to block the signal, otherwise we risk creating a endless loop
-            glib::signal::signal_handler_block(&pulsesink, self.volume_signal_id.as_ref().unwrap());
-
             if volume != 0.0 {
                 pulsesink.set_property("mute", false);
             }
@@ -318,14 +275,6 @@ impl GstreamerBackend {
                 volume,
             );
             pulsesink.set_property("volume", pa_volume);
-
-            *self.volume.lock().unwrap() = volume;
-
-            // Unblock the signal again
-            glib::signal::signal_handler_unblock(
-                &pulsesink,
-                self.volume_signal_id.as_ref().unwrap(),
-            );
         } else {
             warn!("PulseAudio is required for changing the volume.")
         }

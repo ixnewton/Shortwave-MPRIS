@@ -99,6 +99,10 @@ mod imp {
                     }
                 }
             ));
+
+            // Restore volume
+            let volume = settings_manager::double(Key::PlaybackVolume);
+            self.obj().set_volume(volume);
         }
     }
 
@@ -133,12 +137,11 @@ mod imp {
             }
         }
 
-        fn set_volume(&self, value: f64) {
-            debug!("Set volume: {}", &value);
-            self.volume.set(value);
-
-            self.backend.borrow().gstreamer.set_volume(value);
-            settings_manager::set_double(Key::PlaybackVolume, value);
+        fn set_volume(&self, volume: f64) {
+            debug!("Set volume: {}", &volume);
+            self.backend.borrow().gstreamer.set_volume(volume);
+            self.volume.set(volume);
+            settings_manager::set_double(Key::PlaybackVolume, volume);
         }
 
         fn process_gst_message(&self, message: GstreamerMessage) -> glib::ControlFlow {
@@ -214,6 +217,10 @@ mod imp {
                         // TODO
                         self.backend.borrow_mut().gstreamer.stop_recording(true);
                     }
+                }
+                GstreamerMessage::VolumeChanged(volume) => {
+                    self.volume.set(volume);
+                    self.obj().notify_volume();
                 }
             }
             glib::ControlFlow::Continue

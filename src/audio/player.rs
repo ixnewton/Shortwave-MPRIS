@@ -365,6 +365,7 @@ impl Player {
                     self.backend.borrow_mut().gstreamer.stop_recording(true);
                 }
             }
+            _ => (),
         }
         glib::ControlFlow::Continue
     }
