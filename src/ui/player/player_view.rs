@@ -26,7 +26,7 @@ use uuid::Uuid;
 use crate::api::{StationMetadata, SwStation};
 use crate::app::SwApplication;
 use crate::i18n::i18n;
-use crate::ui::{FaviconSize, StationFavicon, SwApplicationWindow};
+use crate::ui::{FaviconSize, StationFavicon, SwApplicationWindow, SwVolumeControl};
 
 mod imp {
     use super::*;
@@ -34,8 +34,8 @@ mod imp {
     #[derive(Debug, Default, CompositeTemplate)]
     #[template(resource = "/de/haeckerfelix/Shortwave/gtk/player_view.ui")]
     pub struct SwPlayerView {
-        //#[template_child]
-        //pub stack: TemplateChild<gtk::Stack>,
+        #[template_child]
+        pub volume_control: TemplateChild<SwVolumeControl>,
     }
 
     #[glib::object_subclass]
@@ -46,7 +46,6 @@ mod imp {
 
         fn class_init(klass: &mut Self::Class) {
             Self::bind_template(klass);
-            Self::Type::bind_template_callbacks(klass);
         }
 
         fn instance_init(obj: &subclass::InitializingObject<Self>) {
@@ -54,7 +53,18 @@ mod imp {
         }
     }
 
-    impl ObjectImpl for SwPlayerView {}
+    impl ObjectImpl for SwPlayerView {
+        fn constructed(&self) {
+            self.parent_constructed();
+
+            let player = SwApplication::default().player();
+            player
+                .bind_property("volume", &*self.volume_control, "volume")
+                .sync_create()
+                .bidirectional()
+                .build();
+        }
+    }
 
     impl WidgetImpl for SwPlayerView {}
 

@@ -19,6 +19,14 @@
                 <property name="margin_end">6</property>
                 <property name="maximum_size">400</property>
                 <property name="tightening_threshold">0</property>
+                <child>
+                  <object class="GtkBox">
+                    <property name="orientation">vertical</property>
+                    <child>
+                      <object class="SwVolumeControl" id="volume_control" />
+                    </child>
+                  </object>
+                </child>
               </object>
             </child>
           </object>
