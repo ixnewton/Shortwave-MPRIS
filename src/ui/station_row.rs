@@ -114,8 +114,7 @@ mod imp {
                 self.station,
                 move |_| {
                     SwApplication::default()
-                        .imp()
-                        .legacy_player
+                        .player()
                         .set_station(station.get().unwrap().clone());
                 }
             ));
