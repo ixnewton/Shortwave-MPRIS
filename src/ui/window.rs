@@ -76,10 +76,28 @@ mod imp {
     impl ObjectImpl for SwApplicationWindow {
         fn constructed(&self) {
             self.parent_constructed();
+            let obj = self.obj();
 
-            let app = SwApplication::default();
-            let sender = app.imp().sender.clone();
-            let player = app.imp().legacy_player.clone();
+            let player_actions = gio::SimpleActionGroup::new();
+
+            // player.start-playback
+            let a = gio::SimpleAction::new("start-playback", None);
+            a.connect_activate(move |_, _| {
+                SwApplication::default().player().start_playback();
+            });
+            player_actions.add_action(&a);
+
+            // player.stop-playback
+            let a = gio::SimpleAction::new("stop-playback", None);
+            a.connect_activate(move |_, _| {
+                SwApplication::default().player().stop_playback();
+            });
+            player_actions.add_action(&a);
+
+            obj.insert_action_group("player", Some(&player_actions));
+
+            let sender = SwApplication::default().imp().sender.clone();
+            let player = SwApplication::default().imp().legacy_player.clone();
 
             self.obj().setup_widgets(player);
             self.obj().setup_gactions(sender);
