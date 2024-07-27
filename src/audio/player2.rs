@@ -31,6 +31,7 @@ use gtk::{gio, glib};
 
 use crate::api::SwStation;
 use crate::app::Action;
+use crate::app::SwApplication;
 use crate::audio::backend::*;
 #[cfg(unix)]
 use crate::audio::controller::MprisController;
@@ -65,10 +66,12 @@ mod imp {
     #[derive(Debug, Default, Properties)]
     #[properties(wrapper_type = super::SwPlayer)]
     pub struct SwPlayer {
-        #[property(get, builder(SwPlaybackState::default()))]
-        state: Cell<SwPlaybackState>,
         #[property(get, set=Self::set_station)]
         station: RefCell<Option<SwStation>>,
+        #[property(get, builder(SwPlaybackState::default()))]
+        state: Cell<SwPlaybackState>,
+        #[property(get)]
+        last_failure: RefCell<String>,
         #[property(get, set=Self::set_volume)]
         volume: Cell<f64>,
 
@@ -204,7 +207,11 @@ mod imp {
                         PlaybackState::Playing => SwPlaybackState::Playing,
                         PlaybackState::Stopped => SwPlaybackState::Stopped,
                         PlaybackState::Loading => SwPlaybackState::Loading,
-                        PlaybackState::Failure(_) => SwPlaybackState::Failure,
+                        PlaybackState::Failure(msg) => {
+                            *self.last_failure.borrow_mut() = msg;
+                            self.obj().notify_last_failure();
+                            SwPlaybackState::Failure
+                        }
                     };
                     self.state.set(state);
                     self.obj().notify_state();
@@ -272,6 +279,6 @@ impl SwPlayer {
 
 impl Default for SwPlayer {
     fn default() -> Self {
-        Self::new()
+        SwApplication::default().player()
     }
 }
