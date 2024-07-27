@@ -2,7 +2,8 @@
 <interface>
   <template class="SwPlayerView" parent="AdwBin">
     <property name="child">
-      <object class="AdwToolbarView">
+      <object class="AdwToolbarView" id="toolbar_view">
+        <property name="extend_content_to_top_edge">True</property>
         <child type="top">
           <object class="AdwHeaderBar">
             <property name="show-title">False</property>
@@ -16,11 +17,26 @@
               <object class="AdwClamp">
                 <property name="margin_start">12</property>
                 <property name="margin_end">12</property>
+                <property name="margin_top" bind-source="toolbar_view" bind-property="top-bar-height" bind-flags="sync-create"/>
+                <property name="margin_bottom">18</property>
                 <property name="maximum_size">400</property>
                 <property name="tightening_threshold">0</property>
                 <child>
                   <object class="GtkBox">
                     <property name="orientation">vertical</property>
+                    <child>
+                      <object class="SwFavicon" id="station_favicon">
+                        <property name="size">Big</property>
+                        <property name="margin_bottom">18</property>
+                        <binding name="paintable">
+                          <lookup name="favicon" type="SwStation">
+                            <lookup name="station" type="SwPlayer">
+                              <lookup name="player">SwPlayerView</lookup>
+                            </lookup>
+                          </lookup>
+                        </binding>
+                      </object>
+                    </child>
                     <child>
                       <object class="GtkBox" id="stream_details">
                         <property name="orientation">vertical</property>

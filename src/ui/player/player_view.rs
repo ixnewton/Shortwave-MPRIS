@@ -14,20 +14,14 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use std::cell::{OnceCell, RefCell};
-
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use glib::{subclass, Properties};
-use gtk::{gdk, gio, glib, CompositeTemplate};
-use url::Url;
-use uuid::Uuid;
+use gtk::{glib, CompositeTemplate};
 
-use crate::api::{StationMetadata, SwStation};
 use crate::app::SwApplication;
 use crate::audio::SwPlayer;
-use crate::i18n::i18n;
-use crate::ui::{FaviconSize, StationFavicon, SwApplicationWindow, SwVolumeControl};
+use crate::ui::SwVolumeControl;
 
 mod imp {
     use super::*;
