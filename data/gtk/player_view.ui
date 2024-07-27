@@ -14,14 +14,13 @@
             <property name="hscrollbar_policy">never</property>
             <child>
               <object class="AdwClamp">
-                <property name="margin_start">6</property>
-                <property name="margin_end">6</property>
+                <property name="margin_start">12</property>
+                <property name="margin_end">12</property>
                 <property name="maximum_size">400</property>
                 <property name="tightening_threshold">0</property>
                 <child>
                   <object class="GtkBox">
                     <property name="orientation">vertical</property>
-                    <property name="spacing">18</property>
                     <child>
                       <object class="GtkBox" id="stream_details">
                         <property name="orientation">vertical</property>
@@ -47,11 +46,38 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkBox">
+                      <object class="GtkRevealer" id="song_revealer">
+                        <binding name="reveal-child">
+                          <lookup name="has-song" type="SwPlayer">
+                            <lookup name="player">SwPlayerView</lookup>
+                          </lookup>
+                        </binding>
+                        <child>
+                          <object class="GtkLabel" id="song_label">
+                            <property name="margin_top">6</property>
+                            <property name="justify">center</property>
+                            <property name="ellipsize">end</property>
+                            <property name="wrap">True</property>
+                            <property name="lines">2</property>
+                            <binding name="label">
+                              <lookup name="title" type="SwSong">
+                                <lookup name="song" type="SwPlayer">
+                                  <lookup name="player">SwPlayerView</lookup>
+                                </lookup>
+                              </lookup>
+                            </binding>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkBox" id="controls_box">
                         <property name="halign">center</property>
                         <property name="spacing">12</property>
+                        <property name="margin_top">24</property>
+                        <property name="margin_bottom">18</property>
                         <binding name="sensitive">
-                          <lookup name="is-active" type="SwPlayer">
+                          <lookup name="has-station" type="SwPlayer">
                             <lookup name="player">SwPlayerView</lookup>
                           </lookup>
                         </binding>
@@ -60,7 +86,7 @@
                             <property name="tooltip_text" translatable="yes">Stream Audio</property>
                             <property name="action_name">player.show-audio-streaming</property>
                             <property name="valign">center</property>
-                            <property name="icon_name">streaming</property>
+                            <property name="icon_name">streaming-symbolic</property>
                             <style>
                               <class name="circular"/>
                             </style>
@@ -143,7 +169,7 @@
                             <property name="tooltip_text" translatable="yes">Show Station Details</property>
                             <property name="action_name">player.show-station-details</property>
                             <property name="valign">center</property>
-                            <property name="icon_name">details</property>
+                            <property name="icon_name">details-symbolic</property>
                             <style>
                               <class name="circular"/>
                             </style>
