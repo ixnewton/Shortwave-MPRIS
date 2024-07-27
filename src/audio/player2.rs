@@ -67,6 +67,7 @@ mod imp {
     #[properties(wrapper_type = super::SwPlayer)]
     pub struct SwPlayer {
         #[property(get, set=Self::set_station)]
+        #[property(name="is-active", get=Self::is_active, type=bool)]
         station: RefCell<Option<SwStation>>,
         #[property(get, builder(SwPlaybackState::default()))]
         state: Cell<SwPlaybackState>,
@@ -110,10 +111,15 @@ mod imp {
     }
 
     impl SwPlayer {
-        fn set_station(&self, station: Option<&SwStation>) {
-            let obj = self.obj();
+        fn is_active(&self) -> bool {
+            self.obj().station().is_some()
+        }
 
+        fn set_station(&self, station: Option<&SwStation>) {
             *self.station.borrow_mut() = station.cloned();
+            self.obj().notify_is_active();
+
+            let obj = self.obj();
             obj.stop_playback();
 
             // Reset song title
