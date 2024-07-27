@@ -17,6 +17,7 @@
 use std::cell::Cell;
 use std::cell::OnceCell;
 use std::cell::RefCell;
+use std::marker::PhantomData;
 
 use glib::Properties;
 use gtk::prelude::*;
@@ -38,6 +39,8 @@ mod imp {
 
         #[property(get, set)]
         metadata: RefCell<StationMetadata>,
+        #[property(get=Self::title)]
+        title: PhantomData<String>,
         #[property(get, set, nullable)]
         favicon: OnceCell<Option<gdk::Texture>>,
         #[property(get, set)]
@@ -52,6 +55,12 @@ mod imp {
 
     #[glib::derived_properties]
     impl ObjectImpl for SwStation {}
+
+    impl SwStation {
+        fn title(&self) -> String {
+            self.obj().metadata().name
+        }
+    }
 }
 
 glib::wrapper! {
