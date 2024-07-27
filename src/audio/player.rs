@@ -30,10 +30,7 @@ use crate::app::Action;
 use crate::audio::backend::*;
 #[cfg(unix)]
 use crate::audio::controller::MprisController;
-use crate::audio::controller::{
-    Controller, GCastController, InhibitController, MiniController, SidebarController,
-    ToolbarController,
-};
+use crate::audio::controller::{Controller, GCastController, InhibitController, MiniController};
 use crate::audio::{GCastDevice, Song};
 use crate::i18n::*;
 use crate::settings::{settings_manager, Key};
@@ -77,7 +74,6 @@ pub enum PlaybackState {
 
 pub struct Player {
     pub widget: adw::Bin,
-    pub toolbar_controller_widget: gtk::Box,
     pub mini_controller_widget: gtk::Box,
     pub headerbar: adw::HeaderBar,
     controller: Vec<Box<dyn Controller>>,
@@ -98,17 +94,6 @@ impl Player {
         let mut controller: Vec<Box<dyn Controller>> = Vec::new();
 
         get_widget!(builder, adw::HeaderBar, headerbar);
-
-        // Sidebar Controller
-        let sidebar_controller = SidebarController::new(sender.clone());
-        get_widget!(builder, gtk::Box, player_box);
-        player_box.prepend(&sidebar_controller.widget);
-        controller.push(Box::new(sidebar_controller));
-
-        // Toolbar Controller
-        let toolbar_controller = ToolbarController::new(sender.clone());
-        let toolbar_controller_widget = toolbar_controller.widget.clone();
-        controller.push(Box::new(toolbar_controller));
 
         // Mini Controller (gets used in phone mode / bottom toolbar)
         let mini_controller = MiniController::new(sender.clone());
@@ -133,7 +118,6 @@ impl Player {
 
         // Backend
         let backend = Backend::default();
-        player_box.append(&backend.song.listbox.widget);
         let backend = Rc::new(RefCell::new(backend));
 
         // Current station (needed for notifications)
@@ -144,7 +128,6 @@ impl Player {
 
         let player = Rc::new(Self {
             widget: player,
-            toolbar_controller_widget,
             mini_controller_widget,
             headerbar,
             controller,

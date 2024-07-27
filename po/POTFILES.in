@@ -14,14 +14,12 @@ data/gtk/player_toolbar.ui
 data/gtk/player_view.ui
 data/gtk/search_page.ui
 data/gtk/settings_dialog.ui
-data/gtk/sidebar_controller.ui
 data/gtk/song_listbox.ui
 data/gtk/song_row.ui
 data/gtk/station_dialog.ui
 data/gtk/station_flowbox.ui
 data/gtk/station_row.ui
 data/gtk/streaming_dialog.ui
-data/gtk/toolbar_controller.ui
 data/gtk/volume_control.ui
 data/gtk/window.ui
 src/api/client.rs
@@ -41,8 +39,6 @@ src/audio/controller/inhibit_controller.rs
 src/audio/controller/mini_controller.rs
 src/audio/controller/mod.rs
 src/audio/controller/mpris_controller.rs
-src/audio/controller/sidebar_controller.rs
-src/audio/controller/toolbar_controller.rs
 src/audio/gcast_discoverer.rs
 src/audio/mod.rs
 src/audio/player.rs

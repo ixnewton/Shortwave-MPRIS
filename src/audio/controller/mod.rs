@@ -19,16 +19,12 @@ mod inhibit_controller;
 mod mini_controller;
 #[cfg(unix)]
 mod mpris_controller;
-mod sidebar_controller;
-mod toolbar_controller;
 
 pub use gcast_controller::GCastController;
 pub use inhibit_controller::InhibitController;
 pub use mini_controller::MiniController;
 #[cfg(unix)]
 pub use mpris_controller::MprisController;
-pub use sidebar_controller::SidebarController;
-pub use toolbar_controller::ToolbarController;
 
 use crate::api::SwStation;
 use crate::audio::PlaybackState;

@@ -19,9 +19,8 @@ use adw::subclass::prelude::*;
 use glib::{subclass, Properties};
 use gtk::{glib, CompositeTemplate};
 
-use crate::app::SwApplication;
 use crate::audio::SwPlayer;
-use crate::ui::SwVolumeControl;
+use crate::ui::SwFavicon;
 
 mod imp {
     use super::*;
@@ -30,6 +29,9 @@ mod imp {
     #[template(resource = "/de/haeckerfelix/Shortwave/gtk/player_toolbar.ui")]
     #[properties(wrapper_type = super::SwPlayerToolbar)]
     pub struct SwPlayerToolbar {
+        #[template_child]
+        station_favicon: TemplateChild<SwFavicon>,
+
         #[property(get)]
         pub player: SwPlayer,
     }
