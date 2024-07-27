@@ -29,7 +29,7 @@ use crate::config;
 use crate::model::SwSorting;
 use crate::settings::{settings_manager, Key};
 use crate::ui::pages::*;
-use crate::ui::player::SwPlayerView;
+use crate::ui::player::{SwPlayerToolbar, SwPlayerView};
 use crate::ui::{SwCreateStationDialog, SwStationDialog, SwStreamingDialog};
 
 mod imp {
@@ -48,7 +48,7 @@ mod imp {
         #[template_child]
         pub mini_controller_box: TemplateChild<gtk::Box>,
         #[template_child]
-        pub toolbar_controller_box: TemplateChild<gtk::Box>,
+        pub player_toolbar: TemplateChild<SwPlayerToolbar>,
         #[template_child]
         pub player_view: TemplateChild<SwPlayerView>,
         #[template_child]
@@ -171,8 +171,6 @@ impl SwApplicationWindow {
         // Wire everything up
         imp.mini_controller_box
             .append(&player.mini_controller_widget);
-        imp.toolbar_controller_box
-            .append(&player.toolbar_controller_widget);
 
         // Animations for smooth mini player transitions
         let x_callback = adw::CallbackAnimationTarget::new(clone!(

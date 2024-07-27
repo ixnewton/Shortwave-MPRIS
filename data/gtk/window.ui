@@ -54,7 +54,7 @@
                     <property name="content">
                       <object class="AdwBottomSheet" id="bottom_sheet">
                         <property name="bottom-bar">
-                          <object class="GtkBox" id="toolbar_controller_box"/>
+                          <object class="SwPlayerToolbar" id="player_toolbar"/>
                         </property>
                         <property name="content">
                           <object class="AdwLayoutSlot">
