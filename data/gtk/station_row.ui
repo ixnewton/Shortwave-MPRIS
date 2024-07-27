@@ -6,7 +6,9 @@
     <child>
       <object class="GtkBox">
         <child>
-          <object class="GtkBox" id="favicon_box"/>
+          <object class="SwFavicon" id="station_favicon">
+            <property name="size">Small</property>
+          </object>
         </child>
         <child>
           <object class="GtkSeparator">
@@ -39,7 +41,7 @@
                     <property name="max_width_chars">0</property>
                     <property name="xalign">0</property>
                     <style>
-                      <class name="dim-label"/>
+                      <class name="dim-label" />
                     </style>
                   </object>
                 </child>
@@ -56,7 +58,7 @@
                 <property name="icon_name">dialog-error-symbolic</property>
                 <property name="visible">False</property>
                 <style>
-                  <class name="error"/>
+                  <class name="error" />
                 </style>
               </object>
             </child>
@@ -74,9 +76,9 @@
       </object>
     </child>
     <style>
-      <class name="tile"/>
-      <class name="card"/>
-      <class name="activatable"/>
+      <class name="tile" />
+      <class name="card" />
+      <class name="activatable" />
     </style>
   </template>
 </interface>

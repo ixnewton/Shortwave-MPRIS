@@ -3,6 +3,7 @@ data/de.haeckerfelix.Shortwave.gschema.xml.in
 data/de.haeckerfelix.Shortwave.metainfo.xml.in.in
 data/gtk/create_station_dialog.ui
 data/gtk/discover_page.ui
+data/gtk/favicon.ui
 data/gtk/featured_carousel.ui
 data/gtk/featured_carousel_page.ui
 data/gtk/help_overlay.ui
@@ -16,7 +17,6 @@ data/gtk/sidebar_controller.ui
 data/gtk/song_listbox.ui
 data/gtk/song_row.ui
 data/gtk/station_dialog.ui
-data/gtk/station_favicon.ui
 data/gtk/station_flowbox.ui
 data/gtk/station_row.ui
 data/gtk/streaming_dialog.ui
@@ -65,6 +65,7 @@ src/settings/settings_dialog.rs
 src/settings/settings_manager.rs
 src/ui/about_dialog.rs
 src/ui/create_station_dialog.rs
+src/ui/favicon.rs
 src/ui/featured_carousel.rs
 src/ui/mod.rs
 src/ui/pages/discover_page.rs
@@ -76,7 +77,6 @@ src/ui/player/player_view.rs
 src/ui/song_listbox.rs
 src/ui/song_row.rs
 src/ui/station_dialog.rs
-src/ui/station_favicon.rs
 src/ui/station_flowbox.rs
 src/ui/station_row.rs
 src/ui/streaming_dialog.rs

@@ -19,11 +19,11 @@ pub mod player;
 
 pub mod about_dialog;
 mod create_station_dialog;
-pub mod featured_carousel;
+mod favicon;
+mod featured_carousel;
 mod song_listbox;
 mod song_row;
 mod station_dialog;
-mod station_favicon;
 mod station_flowbox;
 mod station_row;
 mod streaming_dialog;
@@ -31,11 +31,11 @@ mod volume_control;
 mod window;
 
 pub use create_station_dialog::SwCreateStationDialog;
+pub use favicon::{SwFavicon, SwFaviconSize};
 pub use featured_carousel::SwFeaturedCarousel;
 pub use song_listbox::SongListBox;
 pub use song_row::SwSongRow;
 pub use station_dialog::SwStationDialog;
-pub use station_favicon::{FaviconSize, StationFavicon};
 pub use station_flowbox::SwStationFlowBox;
 pub use station_row::SwStationRow;
 pub use streaming_dialog::SwStreamingDialog;

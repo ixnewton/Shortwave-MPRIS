@@ -25,7 +25,7 @@ use gtk::{glib, CompositeTemplate};
 use inflector::Inflector;
 
 use crate::api::{FaviconDownloader, SwStation};
-use crate::ui::{FaviconSize, StationFavicon};
+use crate::ui::SwFavicon;
 use crate::SwApplication;
 
 mod imp {
@@ -42,7 +42,7 @@ mod imp {
         #[template_child]
         subtitle_label: TemplateChild<gtk::Label>,
         #[template_child]
-        favicon_box: TemplateChild<gtk::Box>,
+        station_favicon: TemplateChild<SwFavicon>,
         #[template_child]
         local_image: TemplateChild<gtk::Image>,
         #[template_child]
@@ -76,17 +76,18 @@ mod imp {
             let station = self.obj().station();
 
             // Download & set station favicon
-            let station_favicon = StationFavicon::new(FaviconSize::Small);
-            self.favicon_box.append(&station_favicon.widget);
-
             if let Some(texture) = station.favicon() {
-                station_favicon.set_paintable(&texture.upcast());
+                self.station_favicon.set_paintable(Some(&texture.upcast()));
             } else if let Some(favicon) = station.metadata().favicon.as_ref() {
-                let fut = FaviconDownloader::download(favicon.clone()).map(move |paintable| {
-                    if let Ok(paintable) = paintable {
-                        station_favicon.set_paintable(&paintable)
+                let fut = FaviconDownloader::download(favicon.clone()).map(clone!(
+                    #[weak(rename_to = imp)]
+                    self,
+                    move |paintable| {
+                        if let Ok(paintable) = paintable {
+                            imp.station_favicon.set_paintable(Some(&paintable))
+                        }
                     }
-                });
+                ));
                 glib::spawn_future_local(fut);
             }
 

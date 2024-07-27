@@ -26,14 +26,14 @@ use gtk::{gio, glib};
 use crate::api::{FaviconDownloader, SwStation};
 use crate::app::{Action, SwApplication};
 use crate::audio::{Controller, PlaybackState};
-use crate::ui::{FaviconSize, StationFavicon, SwStationDialog};
+use crate::ui::{SwFavicon, SwFaviconSize, SwStationDialog};
 
 pub struct SidebarController {
     pub widget: gtk::Box,
     sender: Sender<Action>,
     station: Rc<RefCell<Option<SwStation>>>,
 
-    station_favicon: Rc<StationFavicon>,
+    station_favicon: Rc<SwFavicon>,
     title_label: gtk::Label,
     subtitle_label: gtk::Label,
     subtitle_revealer: gtk::Revealer,
@@ -68,8 +68,8 @@ impl SidebarController {
         let station = Rc::new(RefCell::new(None));
 
         get_widget!(builder, gtk::Box, favicon_box);
-        let station_favicon = Rc::new(StationFavicon::new(FaviconSize::Big));
-        favicon_box.append(&station_favicon.widget);
+        let station_favicon = Rc::new(SwFavicon::new(SwFaviconSize::Big));
+        favicon_box.append(&*station_favicon);
 
         // volume_button | We need the volume_signal_id later to block the signal
         let volume_signal_id = volume_button.connect_value_changed(clone!(
@@ -166,10 +166,10 @@ impl Controller for SidebarController {
         let station_favicon = self.station_favicon.clone();
 
         if let Some(texture) = station.favicon() {
-            station_favicon.set_paintable(&texture.upcast());
+            station_favicon.set_paintable(Some(&texture.upcast()));
         } else if let Some(favicon) = station.metadata().favicon {
             let fut = FaviconDownloader::download(favicon).map(move |paintable| match paintable {
-                Ok(paintable) => station_favicon.set_paintable(&paintable),
+                Ok(paintable) => station_favicon.set_paintable(Some(&paintable)),
                 Err(error) => {
                     debug!("Could not load favicon: {}", error);
                     station_favicon.reset()

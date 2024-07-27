@@ -7,10 +7,6 @@
   border-radius: 12px;
 }
 
-.smallcover {
-  background-color: @theme_base_color;
-}
-
 .toolbarcontroller {
   border-top: 1px solid @borders;
 }
@@ -87,6 +83,14 @@
   background: alpha(@error_color, .3);
   font-weight: bold;
   box-shadow: none;
+}
+
+favicon image.card {
+  box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.3),
+    0px 2px 12px rgba(0, 0, 0, 0.15),
+    0px 6px 32px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  margin: 6px;
 }
 
 volume>scale trough highlight {

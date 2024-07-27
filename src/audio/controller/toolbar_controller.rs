@@ -26,14 +26,14 @@ use gtk::prelude::*;
 use crate::api::{FaviconDownloader, SwStation};
 use crate::app::Action;
 use crate::audio::{Controller, PlaybackState};
-use crate::ui::{FaviconSize, StationFavicon};
+use crate::ui::{SwFavicon, SwFaviconSize};
 
 pub struct ToolbarController {
     pub widget: gtk::Box,
     sender: Sender<Action>,
     station: Rc<RefCell<Option<SwStation>>>,
 
-    station_favicon: Rc<StationFavicon>,
+    station_favicon: Rc<SwFavicon>,
     title_label: gtk::Label,
     subtitle_label: gtk::Label,
     subtitle_revealer: gtk::Revealer,
@@ -61,8 +61,8 @@ impl ToolbarController {
         let station = Rc::new(RefCell::new(None));
 
         get_widget!(builder, gtk::Box, favicon_box);
-        let station_favicon = Rc::new(StationFavicon::new(FaviconSize::Mini));
-        favicon_box.append(&station_favicon.widget);
+        let station_favicon = Rc::new(SwFavicon::new(SwFaviconSize::Mini));
+        favicon_box.append(&*station_favicon);
 
         let controller = Self {
             widget: toolbar_controller,
@@ -126,11 +126,11 @@ impl Controller for ToolbarController {
         let station_favicon = self.station_favicon.clone();
 
         if let Some(texture) = station.favicon() {
-            station_favicon.set_paintable(&texture.upcast());
+            station_favicon.set_paintable(Some(&texture.upcast()));
         } else if let Some(favicon) = station.metadata().favicon {
             let fut = FaviconDownloader::download(favicon).map(move |paintable| {
                 if let Ok(paintable) = paintable {
-                    station_favicon.set_paintable(&paintable)
+                    station_favicon.set_paintable(Some(&paintable))
                 }
             });
             glib::spawn_future_local(fut);

@@ -20,9 +20,8 @@ use std::marker::PhantomData;
 
 use adw::subclass::prelude::*;
 use glib::clone;
-use glib::{subclass::Signal, ParamSpec, ParamSpecBoolean, ParamSpecDouble, Properties, Value};
+use glib::{subclass::Signal, Properties};
 use gtk::{gio, glib, prelude::*, CompositeTemplate};
-use log::debug;
 use once_cell::sync::Lazy;
 
 mod imp {
