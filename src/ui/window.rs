@@ -30,7 +30,7 @@ use crate::model::SwSorting;
 use crate::settings::{settings_manager, Key};
 use crate::ui::pages::*;
 use crate::ui::player::SwPlayerView;
-use crate::ui::SwCreateStationDialog;
+use crate::ui::{SwCreateStationDialog, SwStationDialog, SwStreamingDialog};
 
 mod imp {
     use super::*;
@@ -92,6 +92,30 @@ mod imp {
             a.connect_activate(move |_, _| {
                 SwApplication::default().player().stop_playback();
             });
+            player_actions.add_action(&a);
+
+            // player.show-audio-streaming
+            let a = gio::SimpleAction::new("show-audio-streaming", None);
+            a.connect_activate(clone!(
+                #[weak(rename_to = imp)]
+                self,
+                move |_, _| {
+                    SwStreamingDialog::new().present(Some(&*imp.obj()));
+                }
+            ));
+            player_actions.add_action(&a);
+
+            // player.show-station-details
+            let a = gio::SimpleAction::new("show-station-details", None);
+            a.connect_activate(clone!(
+                #[weak(rename_to = imp)]
+                self,
+                move |_, _| {
+                    if let Some(station) = SwApplication::default().player().station() {
+                        SwStationDialog::new(&station).present(Some(&*imp.obj()));
+                    }
+                }
+            ));
             player_actions.add_action(&a);
 
             obj.insert_action_group("player", Some(&player_actions));
