@@ -25,7 +25,6 @@ use async_channel::{Receiver, Sender};
 use glib::{clone, subclass};
 use gtk::{gdk, glib, CompositeTemplate};
 
-use crate::app::Action;
 use crate::audio::{GCastDiscoverer, GCastDiscovererMessage};
 
 mod imp {
@@ -40,7 +39,6 @@ mod imp {
         pub devices_listbox: TemplateChild<gtk::ListBox>,
 
         pub gcd: OnceCell<Rc<GCastDiscoverer>>,
-        pub sender: OnceCell<Sender<Action>>,
     }
 
     #[glib::object_subclass]
@@ -74,7 +72,7 @@ glib::wrapper! {
 
 #[gtk::template_callbacks]
 impl SwStreamingDialog {
-    pub fn new(sender: Sender<Action>) -> Self {
+    pub fn new() -> Self {
         let dialog = glib::Object::new::<Self>();
 
         // Setup Google Cast discoverer
@@ -90,7 +88,6 @@ impl SwStreamingDialog {
         let gcd_receiver = gcd_t.1;
 
         let imp = dialog.imp();
-        imp.sender.set(sender).unwrap();
         imp.gcd.set(gcd).unwrap();
 
         dialog.setup_signals(gcd_receiver);
@@ -146,10 +143,11 @@ impl SwStreamingDialog {
 
                 // Get GCastDevice
                 let device = imp.gcd.get().unwrap().device_by_ip_addr(ip_addr).unwrap();
-                crate::utils::send(
-                    imp.sender.get().unwrap(),
-                    Action::PlaybackConnectGCastDevice(device),
-                );
+
+                // TODO:
+                //crate::utils::send(
+                // TODO: Action::PlaybackConnectGCastDevice(device),
+                //);
                 this.close();
             }
         ));
