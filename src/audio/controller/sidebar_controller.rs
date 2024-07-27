@@ -26,7 +26,7 @@ use gtk::{gio, glib};
 use crate::api::{FaviconDownloader, SwStation};
 use crate::app::{Action, SwApplication};
 use crate::audio::{Controller, PlaybackState};
-use crate::ui::{FaviconSize, StationFavicon, SwStationDialog, SwStreamingDialog};
+use crate::ui::{FaviconSize, StationFavicon, SwStationDialog};
 
 pub struct SidebarController {
     pub widget: gtk::Box,
@@ -47,7 +47,6 @@ pub struct SidebarController {
     volume_signal_id: glib::signal::SignalHandlerId,
 
     action_group: gio::SimpleActionGroup,
-    streaming_dialog: Rc<SwStreamingDialog>,
 }
 
 impl SidebarController {
@@ -85,9 +84,6 @@ impl SidebarController {
         let action_group = gio::SimpleActionGroup::new();
         sidebar_controller.insert_action_group("player", Some(&action_group));
 
-        // streaming dialog
-        let streaming_dialog = Rc::new(SwStreamingDialog::new(sender.clone()));
-
         let controller = Self {
             widget: sidebar_controller,
             sender,
@@ -105,7 +101,6 @@ impl SidebarController {
             volume_button,
             volume_signal_id,
             action_group,
-            streaming_dialog,
         };
 
         controller.setup_signals();
@@ -141,8 +136,8 @@ impl SidebarController {
         ));
 
         // details button
-        self.action_group.add_action_entries([
-            gio::ActionEntry::builder("show-details")
+        self.action_group
+            .add_action_entries([gio::ActionEntry::builder("show-details")
                 .activate(clone!(
                     #[strong(rename_to = station)]
                     self.station,
@@ -154,20 +149,7 @@ impl SidebarController {
                         station_dialog.present(Some(&widget));
                     }
                 ))
-                .build(),
-            // stream button
-            gio::ActionEntry::builder("stream-audio")
-                .activate(clone!(
-                    #[weak(rename_to = streaming_dialog)]
-                    self.streaming_dialog,
-                    #[weak(rename_to = widget)]
-                    self.widget,
-                    move |_, _, _| {
-                        streaming_dialog.present(Some(&widget));
-                    }
-                ))
-                .build(),
-        ]);
+                .build()]);
     }
 }
 

@@ -30,6 +30,10 @@
     <file preprocess="xml-stripblanks" alias="cloud-disabled-symbolic.svg">icons/hicolor/scalable/status/cloud-disabled-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="restore-window-symbolic.svg">icons/hicolor/scalable/status/restore-window-symbolic.svg</file>
   </gresource>
+  <gresource prefix="@PATH_ID@/icons/16x16/actions/">
+    <file preprocess="xml-stripblanks" alias="details.svg">icons/hicolor/scalable/actions/details.svg</file>
+    <file preprocess="xml-stripblanks" alias="streaming.svg">icons/hicolor/scalable/actions/streaming.svg</file>
+  </gresource>
   <gresource prefix="@PATH_ID@/assets/">
     <file compressed="true">images/metal.png</file>
     <file compressed="true">images/wood.png</file>
