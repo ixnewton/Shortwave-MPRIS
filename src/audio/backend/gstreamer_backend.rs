@@ -42,10 +42,10 @@ use crate::audio::PlaybackState;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #[derive(Clone)]
-pub enum GstreamerMessage {
-    SongTitleChanged(String),
-    PlaybackStateChanged(PlaybackState),
-    VolumeChanged(f64),
+pub enum GstreamerChange {
+    Title(String),
+    PlaybackState(PlaybackState),
+    Volume(f64),
 }
 
 #[derive(Default, Debug)]
@@ -73,11 +73,11 @@ pub struct GstreamerBackend {
     current_title: Arc<Mutex<String>>,
     buffering_state: Arc<Mutex<BufferingState>>,
     bus_watch_guard: OnceCell<gstreamer::bus::BusWatchGuard>,
-    sender: Sender<GstreamerMessage>,
+    sender: Sender<GstreamerChange>,
 }
 
 impl GstreamerBackend {
-    pub fn new(gst_sender: Sender<GstreamerMessage>) -> Self {
+    pub fn new(gst_sender: Sender<GstreamerChange>) -> Self {
         // Determine if env supports pulseaudio
         let audiosink = if Self::check_pulse_support() {
             "pulsesink"
@@ -98,7 +98,7 @@ impl GstreamerBackend {
         // The recorderbin gets added / removed dynamically to the pipeline
         let recorderbin = Arc::new(Mutex::new(None));
 
-        // Current song title
+        // Current title
         // We need this variable to check if the title have changed.
         let current_title = Arc::new(Mutex::new(String::new()));
 
@@ -136,7 +136,7 @@ impl GstreamerBackend {
                         );
 
                         sender
-                            .send_blocking(GstreamerMessage::VolumeChanged(new_volume))
+                            .send_blocking(GstreamerChange::Volume(new_volume))
                             .unwrap();
                     }
                 ),
@@ -152,9 +152,7 @@ impl GstreamerBackend {
                     move |element, _| {
                         let mute: bool = element.property("mute");
                         if mute {
-                            sender
-                                .send_blocking(GstreamerMessage::VolumeChanged(0.0))
-                                .unwrap();
+                            sender.send_blocking(GstreamerChange::Volume(0.0)).unwrap();
                         }
                     }
                 ),
@@ -224,7 +222,7 @@ impl GstreamerBackend {
         if state == gstreamer::State::Null {
             crate::utils::send(
                 &self.sender,
-                GstreamerMessage::PlaybackStateChanged(PlaybackState::Stopped),
+                GstreamerChange::PlaybackState(PlaybackState::Stopped),
             );
         }
 
@@ -234,7 +232,7 @@ impl GstreamerBackend {
             warn!("Failed to set pipeline to playing");
             crate::utils::send(
                 &self.sender,
-                GstreamerMessage::PlaybackStateChanged(PlaybackState::Failure(String::from(
+                GstreamerChange::PlaybackState(PlaybackState::Failure(String::from(
                     "Failed to set pipeline to playing",
                 ))),
             );
@@ -280,9 +278,10 @@ impl GstreamerBackend {
         }
     }
 
-    pub fn new_source_uri(&mut self, source: &str) {
+    pub fn set_source_uri(&mut self, source: &str) {
         debug!("Stop pipeline...");
         let _ = self.pipeline.set_state(State::Null);
+        *self.current_title.lock().unwrap() = String::new();
 
         debug!("Set new source URI...");
         let uridecodebin = self.pipeline.by_name("uridecodebin").unwrap();
@@ -297,7 +296,7 @@ impl GstreamerBackend {
             warn!("Failed to set pipeline to playing");
             crate::utils::send(
                 &self.sender,
-                GstreamerMessage::PlaybackStateChanged(PlaybackState::Failure(String::from(
+                GstreamerChange::PlaybackState(PlaybackState::Failure(String::from(
                     "Failed to set pipeline to playing",
                 ))),
             );
@@ -324,7 +323,7 @@ impl GstreamerBackend {
             .expect("Unable to create recorderbin");
         recorderbin.set_property("message-forward", true);
 
-        // We need to set an offset, otherwise the length of the recorded song would be
+        // We need to set an offset, otherwise the length of the recorded title would be
         // wrong. Get current clock time and calculate offset
         let offset = Self::calculate_pipeline_offset(&self.pipeline);
         let queue_srcpad = recorderbin
@@ -513,7 +512,7 @@ impl GstreamerBackend {
     fn parse_bus_message(
         pipeline: Pipeline,
         message: &gstreamer::Message,
-        sender: Sender<GstreamerMessage>,
+        sender: Sender<GstreamerChange>,
         buffering_state: &Arc<Mutex<BufferingState>>,
         current_title: Arc<Mutex<String>>,
     ) {
@@ -522,11 +521,11 @@ impl GstreamerBackend {
                 if let Some(t) = tag.tags().get::<gstreamer::tags::Title>() {
                     let new_title = t.get().to_string();
 
-                    // only send message if song title really have changed.
+                    // only send message if title really have changed.
                     let mut current_title_locked = current_title.lock().unwrap();
                     if *current_title_locked != new_title {
                         current_title_locked.clone_from(&new_title);
-                        crate::utils::send(&sender, GstreamerMessage::SongTitleChanged(new_title));
+                        crate::utils::send(&sender, GstreamerChange::Title(new_title));
                     }
                 }
             }
@@ -542,10 +541,7 @@ impl GstreamerBackend {
                         _ => PlaybackState::Stopped,
                     };
 
-                    crate::utils::send(
-                        &sender,
-                        GstreamerMessage::PlaybackStateChanged(playback_state),
-                    );
+                    crate::utils::send(&sender, GstreamerChange::PlaybackState(playback_state));
                 }
             }
             MessageView::Buffering(buffering) => {
@@ -559,7 +555,7 @@ impl GstreamerBackend {
                         buffering_state.buffering = true;
                         crate::utils::send(
                             &sender,
-                            GstreamerMessage::PlaybackStateChanged(PlaybackState::Loading),
+                            GstreamerChange::PlaybackState(PlaybackState::Loading),
                         );
 
                         if buffering_state.is_live == Some(false) {
@@ -586,7 +582,7 @@ impl GstreamerBackend {
                     buffering_state.buffering = false;
                     crate::utils::send(
                         &sender,
-                        GstreamerMessage::PlaybackStateChanged(PlaybackState::Playing),
+                        GstreamerChange::PlaybackState(PlaybackState::Playing),
                     );
 
                     if buffering_state.is_live == Some(false) {
@@ -630,7 +626,7 @@ impl GstreamerBackend {
                 }
                 crate::utils::send(
                     &sender,
-                    GstreamerMessage::PlaybackStateChanged(PlaybackState::Failure(msg)),
+                    GstreamerChange::PlaybackState(PlaybackState::Failure(msg)),
                 );
             }
             _ => (),

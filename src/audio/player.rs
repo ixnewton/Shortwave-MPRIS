@@ -186,10 +186,10 @@ impl Player {
         let mut backend = self.backend.borrow_mut();
         if let Some(url) = metadata.url_resolved {
             debug!("Start playing new URI: {}", url.to_string());
-            backend.gstreamer.new_source_uri(url.as_ref());
+            backend.gstreamer.set_source_uri(url.as_ref());
         } else if let Some(url) = metadata.url {
             debug!("Start playing new URI: {}", url.to_string());
-            backend.gstreamer.new_source_uri(url.as_ref());
+            backend.gstreamer.set_source_uri(url.as_ref());
         } else {
             let text = i18n("Station cannot be streamed. URL is not valid.");
             SwApplicationWindow::default().show_notification(&text);
@@ -297,9 +297,9 @@ impl Player {
         ));
     }
 
-    fn process_gst_message(&self, message: GstreamerMessage) -> glib::ControlFlow {
+    fn process_gst_message(&self, message: GstreamerChange) -> glib::ControlFlow {
         match message {
-            GstreamerMessage::SongTitleChanged(title) => {
+            GstreamerChange::Title(title) => {
                 let backend = &mut self.backend.borrow_mut();
                 debug!("Song title has changed to: \"{}\"", title);
 
@@ -352,7 +352,7 @@ impl Player {
                     self.show_song_notification();
                 }
             }
-            GstreamerMessage::PlaybackStateChanged(state) => {
+            GstreamerChange::PlaybackState(state) => {
                 for con in &*self.controller {
                     con.set_playback_state(&state);
                 }

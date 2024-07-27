@@ -30,20 +30,12 @@ use gtk::glib::Enum;
 use gtk::{gio, glib};
 
 use crate::api::SwStation;
-use crate::app::Action;
 use crate::app::SwApplication;
 use crate::audio::backend::*;
-#[cfg(unix)]
-use crate::audio::controller::MprisController;
-use crate::audio::controller::{
-    Controller, GCastController, InhibitController, MiniController, SidebarController,
-    ToolbarController,
-};
-use crate::audio::{GCastDevice, Song};
+use crate::audio::{GCastDevice, PlaybackState, SwSong, SwSongState};
 use crate::i18n::*;
 use crate::settings::{settings_manager, Key};
 use crate::ui::SwApplicationWindow;
-use crate::{config, path};
 
 #[derive(Display, Copy, Debug, Clone, EnumString, Eq, PartialEq, Enum)]
 #[repr(u32)]
@@ -58,21 +50,21 @@ pub enum SwPlaybackState {
 }
 
 mod imp {
-
-    use crate::audio::PlaybackState;
-
     use super::*;
 
     #[derive(Debug, Default, Properties)]
     #[properties(wrapper_type = super::SwPlayer)]
     pub struct SwPlayer {
         #[property(get, set=Self::set_station)]
-        #[property(name="is-active", get=Self::is_active, type=bool)]
+        #[property(name="has-station", get=Self::has_station, type=bool)]
         station: RefCell<Option<SwStation>>,
         #[property(get, builder(SwPlaybackState::default()))]
         state: Cell<SwPlaybackState>,
         #[property(get)]
         last_failure: RefCell<String>,
+        #[property(get)]
+        #[property(name="has-song", get=Self::has_song, type=bool)]
+        song: RefCell<Option<SwSong>>,
         #[property(get, set=Self::set_volume)]
         volume: Cell<f64>,
 
@@ -111,19 +103,20 @@ mod imp {
     }
 
     impl SwPlayer {
-        fn is_active(&self) -> bool {
+        fn has_station(&self) -> bool {
             self.obj().station().is_some()
+        }
+
+        fn has_song(&self) -> bool {
+            self.obj().song().is_some()
         }
 
         fn set_station(&self, station: Option<&SwStation>) {
             *self.station.borrow_mut() = station.cloned();
-            self.obj().notify_is_active();
+            self.obj().notify_has_station();
 
             let obj = self.obj();
             obj.stop_playback();
-
-            // Reset song title
-            // TODO: self.song_title.borrow_mut().reset();
 
             if let Some(station) = obj.station() {
                 let metadata = station.metadata();
@@ -138,7 +131,7 @@ mod imp {
                     self.backend
                         .borrow_mut()
                         .gstreamer
-                        .new_source_uri(url.as_ref());
+                        .set_source_uri(url.as_ref());
                 } else {
                     let text = i18n("Station cannot be streamed. URL is not valid.");
                     SwApplicationWindow::default().show_notification(&text);
@@ -153,62 +146,27 @@ mod imp {
             settings_manager::set_double(Key::PlaybackVolume, volume);
         }
 
-        fn process_gst_message(&self, message: GstreamerMessage) -> glib::ControlFlow {
+        fn process_gst_message(&self, message: GstreamerChange) -> glib::ControlFlow {
             match message {
-                GstreamerMessage::SongTitleChanged(title) => {
-                    let backend = &mut self.backend.borrow_mut();
-                    debug!("Song title has changed to: \"{}\"", title);
+                GstreamerChange::Title(title) => {
+                    debug!("Stream title has changed to: {}", title);
+                    let song = SwSong::new(&title);
 
-                    // If we're already recording something, we need to stop it first.
-                    if backend.gstreamer.is_recording() {
-                        let threshold: i64 =
-                            settings_manager::integer(Key::RecorderSongDurationThreshold).into();
-                        let duration: i64 = backend.gstreamer.current_recording_duration();
-                        if duration > threshold {
-                            backend.gstreamer.stop_recording(false);
-
-                            let duration = Duration::from_secs(duration.try_into().unwrap());
-                            // TODO
-                            /*
-                                let song = self
-                                    .song_title
-                                    .borrow()
-                                    .create_song(duration)
-                                    .expect("Unable to create new song");
-                                backend.song.add_song(song);
-                            */
-                        } else {
-                            debug!("Discard recorded data, song duration ({} sec) is below threshold ({} sec).", duration, threshold);
-                            backend.gstreamer.stop_recording(true);
-                        }
+                    if let Some(song) = self.stop_recording(false) {
+                        // TODO: add to model
                     }
+                    self.start_recording(&song);
 
-                    // Set new song title
-                    // TODO: self.song_title.borrow_mut().set_current_title(title.clone());
-
-                    // Start recording new song
-                    // We don't start recording the "first" detected song, since it is going to be
-                    // incomplete
-                    // TODO
-                    /*
-                    if !self.song_title.borrow().is_first_song() {
-                        backend.gstreamer.start_recording(
-                            self.song_title
-                                .borrow()
-                                .current_path()
-                                .expect("Unable to get song path"),
-                        );
-                    } else {
-                        debug!("Song will not be recorded because it may be incomplete (first song for this station).")
-                    }
-                     */
+                    *self.song.borrow_mut() = Some(song);
+                    self.obj().notify_song();
+                    self.obj().notify_has_song();
 
                     // Show desktop notification
                     if settings_manager::boolean(Key::Notifications) {
                         // TODO: self.show_song_notification();
                     }
                 }
-                GstreamerMessage::PlaybackStateChanged(s) => {
+                GstreamerChange::PlaybackState(s) => {
                     let state = match s {
                         PlaybackState::Playing => SwPlaybackState::Playing,
                         PlaybackState::Stopped => SwPlaybackState::Stopped,
@@ -216,27 +174,99 @@ mod imp {
                         PlaybackState::Failure(msg) => {
                             *self.last_failure.borrow_mut() = msg;
                             self.obj().notify_last_failure();
+
+                            // Discard recorded data when a failure occurs,
+                            // since the song has not been recorded completely.
+                            if self.backend.borrow().gstreamer.is_recording() {
+                                self.stop_recording(true);
+                                self.clear_song();
+                            }
+
                             SwPlaybackState::Failure
                         }
                     };
                     self.state.set(state);
                     self.obj().notify_state();
-
-                    // Discard recorded data when a failure occurs,
-                    // since the song has not been recorded completely.
-                    if self.backend.borrow().gstreamer.is_recording()
-                        && matches!(state, SwPlaybackState::Failure)
-                    {
-                        // TODO
-                        self.backend.borrow_mut().gstreamer.stop_recording(true);
-                    }
                 }
-                GstreamerMessage::VolumeChanged(volume) => {
+                GstreamerChange::Volume(volume) => {
                     self.volume.set(volume);
                     self.obj().notify_volume();
                 }
             }
             glib::ControlFlow::Continue
+        }
+
+        pub fn clear_song(&self) {
+            *self.song.borrow_mut() = None;
+            self.obj().notify_song();
+            self.obj().notify_has_song();
+        }
+
+        pub fn start_recording(&self, song: &SwSong) {
+            // TODO
+            let is_incomplete = false;
+            if is_incomplete {
+                debug!(
+                    "Song {:?} will not be recorded because it may be incomplete.",
+                    song.title()
+                );
+                song.set_state(SwSongState::Incomplete);
+                return;
+            }
+
+            // Start recording
+            let path = song.file().path().unwrap();
+            fs::create_dir_all(path.parent().unwrap())
+                .expect("Could not create path for recording");
+            self.backend.borrow_mut().gstreamer.start_recording(path);
+        }
+
+        /// Returns song object if a complete song has been recorded
+        pub fn stop_recording(&self, discard_data: bool) -> Option<SwSong> {
+            debug!("Stop recording...");
+            let backend = &mut self.backend.borrow_mut();
+
+            if !backend.gstreamer.is_recording() {
+                debug!("No recording, nothing to stop!");
+                return None;
+            }
+
+            let song = if let Some(song) = self.obj().song() {
+                song
+            } else {
+                warn!("No song available, discard recorded data.");
+                backend.gstreamer.stop_recording(true);
+                return None;
+            };
+
+            let threshold = settings_manager::integer(Key::RecorderSongDurationThreshold);
+            let duration: i64 = backend.gstreamer.current_recording_duration();
+
+            if discard_data {
+                debug!("Discard recorded data.");
+
+                backend.gstreamer.stop_recording(true);
+                song.set_state(SwSongState::Discarded);
+
+                None
+            } else if duration > threshold as i64 {
+                debug!("Save recorded data.");
+
+                backend.gstreamer.stop_recording(false);
+                song.set_state(SwSongState::Recorded);
+
+                Some(song)
+            } else {
+                debug!(
+                    "Discard recorded data, duration ({} sec) is below threshold ({} sec).",
+                    duration, threshold
+                );
+
+                backend.gstreamer.stop_recording(true);
+                song.set_state(SwSongState::BelowThreshold);
+
+                None
+            }
         }
     }
 }
@@ -259,17 +289,16 @@ impl SwPlayer {
     }
 
     pub fn stop_playback(&self) {
-        let mut backend = self.imp().backend.borrow_mut();
+        let imp = self.imp();
 
         // Discard recorded data when the stream stops
-        if backend.gstreamer.is_recording() {
-            backend.gstreamer.stop_recording(true);
-        }
+        imp.stop_recording(true);
+        imp.clear_song();
 
-        // Reset song title
-        // TODO: self.song_title.borrow_mut().reset();
-
-        backend.gstreamer.set_state(gstreamer::State::Null);
+        imp.backend
+            .borrow_mut()
+            .gstreamer
+            .set_state(gstreamer::State::Null);
     }
 
     pub fn toggle_playback(&self) {
