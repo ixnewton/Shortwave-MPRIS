@@ -21,12 +21,42 @@
                 <child>
                   <object class="GtkBox">
                     <property name="orientation">vertical</property>
+                    <property name="spacing">18</property>
+                    <child>
+                      <object class="GtkBox" id="stream_details">
+                        <property name="orientation">vertical</property>
+                        <child>
+                          <object class="GtkLabel" id="station_title_label">
+                            <property name="label" translatable="yes">No Playback</property>
+                            <property name="justify">center</property>
+                            <property name="ellipsize">end</property>
+                            <property name="wrap">True</property>
+                            <property name="lines">2</property>
+                            <binding name="label">
+                              <lookup name="title" type="SwStation">
+                                <lookup name="station" type="SwPlayer">
+                                  <lookup name="player">SwPlayerView</lookup>
+                                </lookup>
+                              </lookup>
+                            </binding>
+                            <style>
+                              <class name="title-3"/>
+                            </style>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
                     <child>
                       <object class="GtkStack" id="playback_button_stack">
                         <property name="width_request">70</property>
                         <property name="halign">center</property>
                         <binding name="visible_child_name">
                           <lookup name="state" type="SwPlayer">
+                            <lookup name="player">SwPlayerView</lookup>
+                          </lookup>
+                        </binding>
+                        <binding name="sensitive">
+                          <lookup name="is-active" type="SwPlayer">
                             <lookup name="player">SwPlayerView</lookup>
                           </lookup>
                         </binding>
