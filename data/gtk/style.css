@@ -89,15 +89,6 @@
   box-shadow: none;
 }
 
-
-volume>scale {
-  color: @dimmed_color;
-}
-
-volume:hover>scale {
-  color: inherit;
-}
-
 volume>scale trough highlight {
   min-height: 12px;
   min-width: 12px;
