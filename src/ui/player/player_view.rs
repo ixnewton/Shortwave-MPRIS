@@ -18,24 +18,29 @@ use std::cell::{OnceCell, RefCell};
 
 use adw::prelude::*;
 use adw::subclass::prelude::*;
-use glib::{clone, subclass};
+use glib::{subclass, Properties};
 use gtk::{gdk, gio, glib, CompositeTemplate};
 use url::Url;
 use uuid::Uuid;
 
 use crate::api::{StationMetadata, SwStation};
 use crate::app::SwApplication;
+use crate::audio::SwPlayer;
 use crate::i18n::i18n;
 use crate::ui::{FaviconSize, StationFavicon, SwApplicationWindow, SwVolumeControl};
 
 mod imp {
     use super::*;
 
-    #[derive(Debug, Default, CompositeTemplate)]
+    #[derive(Debug, Default, Properties, CompositeTemplate)]
     #[template(resource = "/de/haeckerfelix/Shortwave/gtk/player_view.ui")]
+    #[properties(wrapper_type = super::SwPlayerView)]
     pub struct SwPlayerView {
         #[template_child]
-        pub volume_control: TemplateChild<SwVolumeControl>,
+        volume_control: TemplateChild<SwVolumeControl>,
+
+        #[property(get)]
+        pub player: SwPlayer,
     }
 
     #[glib::object_subclass]
@@ -53,11 +58,12 @@ mod imp {
         }
     }
 
+    #[glib::derived_properties]
     impl ObjectImpl for SwPlayerView {
         fn constructed(&self) {
             self.parent_constructed();
-
             let player = SwApplication::default().player();
+
             player
                 .bind_property("volume", &*self.volume_control, "volume")
                 .sync_create()

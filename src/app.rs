@@ -80,7 +80,7 @@ mod imp {
             let receiver = RefCell::new(Some(r));
 
             let library = SwLibrary::default();
-            let player = SwPlayer::default();
+            let player = SwPlayer::new();
             let rb_server = RefCell::default();
 
             let window = OnceCell::new();
