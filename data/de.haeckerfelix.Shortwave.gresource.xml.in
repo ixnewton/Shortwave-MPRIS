@@ -31,8 +31,8 @@
     <file preprocess="xml-stripblanks" alias="restore-window-symbolic.svg">icons/hicolor/scalable/status/restore-window-symbolic.svg</file>
   </gresource>
   <gresource prefix="@PATH_ID@/icons/16x16/actions/">
-    <file preprocess="xml-stripblanks" alias="details.svg">icons/hicolor/scalable/actions/details.svg</file>
-    <file preprocess="xml-stripblanks" alias="streaming.svg">icons/hicolor/scalable/actions/streaming.svg</file>
+    <file preprocess="xml-stripblanks" alias="details-symbolic.svg">icons/hicolor/scalable/actions/details-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="streaming-symbolic.svg">icons/hicolor/scalable/actions/streaming-symbolic.svg</file>
   </gresource>
   <gresource prefix="@PATH_ID@/assets/">
     <file compressed="true">images/metal.png</file>
