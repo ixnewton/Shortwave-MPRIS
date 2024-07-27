@@ -19,7 +19,7 @@ mod song_backend;
 
 use async_channel::{Receiver, Sender};
 use gstreamer_backend::GstreamerBackend;
-pub use gstreamer_backend::GstreamerMessage;
+pub use gstreamer_backend::GstreamerChange;
 use song_backend::SongBackend;
 
 use crate::settings::{settings_manager, Key};
@@ -27,7 +27,7 @@ use crate::settings::{settings_manager, Key};
 #[derive(Debug)]
 pub struct Backend {
     pub gstreamer: GstreamerBackend,
-    pub gstreamer_receiver: Option<Receiver<GstreamerMessage>>,
+    pub gstreamer_receiver: Option<Receiver<GstreamerChange>>,
 
     pub song: SongBackend,
 }

@@ -27,4 +27,4 @@ mod song;
 pub use gcast_discoverer::{GCastDevice, GCastDiscoverer, GCastDiscovererMessage};
 pub use player::{PlaybackState, Player};
 pub use player2::{SwPlaybackState, SwPlayer};
-pub use song::Song;
+pub use song::{Song, SwSong, SwSongState};

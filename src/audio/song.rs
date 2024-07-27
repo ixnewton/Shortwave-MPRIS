@@ -1,5 +1,5 @@
 // Shortwave - song.rs
-// Copyright (C) 2021  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2021-2024  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -39,5 +39,71 @@ impl Song {
 impl PartialEq for Song {
     fn eq(&self, other: &Song) -> bool {
         self.title == other.title
+    }
+}
+
+use std::cell::{Cell, OnceCell, RefCell};
+
+use adw::prelude::*;
+use glib::subclass::prelude::*;
+use glib::Properties;
+use gtk::glib::Enum;
+use gtk::{gio, glib};
+
+#[derive(Display, Copy, Debug, Clone, EnumString, Eq, PartialEq, Enum)]
+#[repr(u32)]
+#[enum_type(name = "SwSongState")]
+#[derive(Default)]
+pub enum SwSongState {
+    #[default]
+    Recording,
+    Recorded,
+    Incomplete,
+    BelowThreshold,
+    Discarded,
+}
+
+mod imp {
+    use super::*;
+
+    #[derive(Debug, Default, Properties)]
+    #[properties(wrapper_type = super::SwSong)]
+    pub struct SwSong {
+        #[property(get, construct_only)]
+        title: OnceCell<String>,
+        #[property(get)]
+        file: OnceCell<gio::File>,
+        #[property(get, set, builder(SwSongState::default()))]
+        state: Cell<SwSongState>,
+    }
+
+    #[glib::object_subclass]
+    impl ObjectSubclass for SwSong {
+        const NAME: &'static str = "SwSong";
+        type Type = super::SwSong;
+    }
+
+    #[glib::derived_properties]
+    impl ObjectImpl for SwSong {
+        fn constructed(&self) {
+            self.parent_constructed();
+
+            let filename = sanitize_filename::sanitize(self.obj().title() + ".ogg");
+            let mut path = crate::path::CACHE.clone();
+            path.push("recording");
+            path.push(filename);
+
+            self.file.set(gio::File::for_path(path)).unwrap();
+        }
+    }
+}
+
+glib::wrapper! {
+    pub struct SwSong(ObjectSubclass<imp::SwSong>);
+}
+
+impl SwSong {
+    pub fn new(title: &str) -> Self {
+        glib::Object::builder().property("title", title).build()
     }
 }
