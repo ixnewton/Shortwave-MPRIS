@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2024-06-03 19:52+0000\n"
-"PO-Revision-Date: 2024-06-09 17:14-0300\n"
+"POT-Creation-Date: 2024-07-20 21:40+0000\n"
+"PO-Revision-Date: 2024-07-25 20:25-0300\n"
 "Last-Translator: Leônidas Araújo <leorusvellt@hotmail.com>\n"
 "Language-Team: Brazilian Portuguese <https://br.gnome.org/traducao>\n"
 "Language: pt_BR\n"
@@ -197,7 +197,7 @@ msgctxt "shortcut window"
 msgid "Quit the application"
 msgstr "Sai do aplicativo"
 
-#: data/gtk/help_overlay.ui:46 data/gtk/player.ui:5
+#: data/gtk/help_overlay.ui:46
 msgid "Playback"
 msgstr "Reprodução"
 
@@ -222,71 +222,67 @@ msgstr "Menu principal"
 msgid "Library"
 msgstr "Biblioteca"
 
-#: data/gtk/library_page.ui:85
-msgid "Receiving Station Data…"
-msgstr "Recebendo dados das estações…"
-
-#: data/gtk/library_page.ui:112
+#: data/gtk/library_page.ui:75
 msgid "_Discover New Stations"
 msgstr "_Descobrir novas estações"
 
-#: data/gtk/library_page.ui:134
+#: data/gtk/library_page.ui:97
 msgid "_Enable Mini Player"
 msgstr "Habilitar r_eprodutor compacto"
 
-#: data/gtk/library_page.ui:138
+#: data/gtk/library_page.ui:101
 msgid "_Sorting"
 msgstr "Cla_ssificação"
 
-#: data/gtk/library_page.ui:141 data/gtk/search_page.ui:160
+#: data/gtk/library_page.ui:104 data/gtk/search_page.ui:161
 msgid "_Name"
 msgstr "_Nome"
 
-#: data/gtk/library_page.ui:146 data/gtk/search_page.ui:165
+#: data/gtk/library_page.ui:109 data/gtk/search_page.ui:166
 msgid "_Language"
 msgstr "_Idioma"
 
-#: data/gtk/library_page.ui:151 data/gtk/search_page.ui:170
+#: data/gtk/library_page.ui:114 data/gtk/search_page.ui:171
 msgid "_Country"
 msgstr "_País"
 
-#: data/gtk/library_page.ui:156 data/gtk/search_page.ui:175
+#: data/gtk/library_page.ui:119 data/gtk/search_page.ui:176
 msgid "S_tate"
 msgstr "Es_tado"
 
-#: data/gtk/library_page.ui:161 data/gtk/search_page.ui:180
+#: data/gtk/library_page.ui:124 data/gtk/search_page.ui:181
 msgid "_Votes"
 msgstr "_Votos"
 
-#: data/gtk/library_page.ui:166 data/gtk/search_page.ui:185
+#: data/gtk/library_page.ui:129 data/gtk/search_page.ui:186
 msgid "_Bitrate"
 msgstr "Taxa de _bits"
 
-#: data/gtk/library_page.ui:173 data/gtk/search_page.ui:192
+#: data/gtk/library_page.ui:136 data/gtk/search_page.ui:193
 msgid "_Ascending"
 msgstr "_Crescente"
 
-#: data/gtk/library_page.ui:178 data/gtk/search_page.ui:197
+#: data/gtk/library_page.ui:141 data/gtk/search_page.ui:198
 msgid "_Descending"
 msgstr "_Decrescente"
 
-#: data/gtk/library_page.ui:187
+#: data/gtk/library_page.ui:150
 msgid "_Open radio-browser.info <sup>↗</sup>"
 msgstr "Abrir radi_o-browser.info <sup>↗</sup>"
 
-#: data/gtk/library_page.ui:192
+#: data/gtk/library_page.ui:155
 msgid "_Create New Station"
 msgstr "_Criar nova estação"
 
-#: data/gtk/library_page.ui:199
+#: data/gtk/library_page.ui:162
 msgid "_Preferences"
 msgstr "_Preferências"
 
-#: data/gtk/library_page.ui:203
+#: data/gtk/library_page.ui:166
 msgid "_Keyboard Shortcuts"
 msgstr "A_talhos de teclado"
 
-#: data/gtk/library_page.ui:207
+#: data/gtk/library_page.ui:170
 msgid "_About Shortwave"
 msgstr "Sobre o Shortw_ave"
 
@@ -316,10 +312,6 @@ msgstr "Fechar"
 msgid "Resize"
 msgstr "Redimensionar"
 
-#: data/gtk/player.ui:19
-msgid "Back"
-msgstr "Voltar"
-
 #: data/gtk/search_page.ui:41 data/gtk/station_dialog.ui:171
 #: src/ui/pages/search_page.rs:111
 msgid "Votes"
@@ -340,6 +332,10 @@ msgstr "Tente usar um termo de pesquisa diferente"
 #: data/gtk/search_page.ui:101
 msgid "Search Results"
 msgstr "Resultados de pesquisa"
+
+#: data/gtk/search_page.ui:143
+msgid "Searching…"
+msgstr "Pesquisando…"
 
 #: data/gtk/settings_dialog.ui:12
 msgid "Features"
@@ -509,7 +505,7 @@ msgstr "Pesquisa concluída"
 msgid "Searching for Devices…"
 msgstr "Pesquisando dispositivos…"
 
-#: data/gtk/window.ui:33
+#: data/gtk/window.ui:36
 msgid "Main View"
 msgstr "Vista principal"
 
@@ -520,11 +516,11 @@ msgstr ""
 "Não é possível acessar o diretório de músicas. Salvando a música no "
 "diretório inicial."
 
-#: src/audio/player.rs:190
+#: src/audio/player.rs:194
 msgid "Station cannot be streamed. URL is not valid."
 msgstr "A estação não pode ser reproduzida. URL não é válida."
 
-#: src/audio/player.rs:241
+#: src/audio/player.rs:245
 msgid "Cannot save song."
 msgstr "Não foi possível salvar a música."
 
@@ -565,15 +561,15 @@ msgstr "Abrir site"
 msgid "Powered by radio-browser.info"
 msgstr "Fornecido por radio-browser.info"
 
-#: src/ui/pages/discover_page.rs:151 src/ui/pages/search_page.rs:193
+#: src/ui/pages/discover_page.rs:151 src/ui/pages/search_page.rs:215
 msgid "Station data could not be received."
 msgstr "Os dados da estação não puderam ser recebidos."
 
-#: src/ui/pages/library_page.rs:114
+#: src/ui/pages/library_page.rs:110
 msgid "Welcome to {}"
 msgstr "Bem-vindo ao {}"
 
-#: src/ui/pages/search_page.rs:200
+#: src/ui/pages/search_page.rs:222
 msgid ""
 "The number of results is limited to {} item. Try using a more specific "
 "search term."
@@ -590,6 +586,12 @@ msgstr[1] ""
 #: src/ui/station_dialog.rs:216
 msgid "{} kbit/s"
 msgstr "{} kbit/s"
+
+#~ msgid "Receiving Station Data…"
+#~ msgstr "Recebendo dados das estações…"
+
+#~ msgid "Back"
+#~ msgstr "Voltar"
 
 #~ msgid "Appearance"
 #~ msgstr "Aparência"
