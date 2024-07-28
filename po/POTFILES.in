@@ -38,7 +38,6 @@ src/audio/controller/gcast_controller.rs
 src/audio/controller/inhibit_controller.rs
 src/audio/controller/mini_controller.rs
 src/audio/controller/mod.rs
-src/audio/controller/mpris_controller.rs
 src/audio/gcast_discoverer.rs
 src/audio/mod.rs
 src/audio/mpris.rs

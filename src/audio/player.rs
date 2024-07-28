@@ -29,7 +29,6 @@ use crate::api::SwStation;
 use crate::app::Action;
 use crate::audio::backend::*;
 #[cfg(unix)]
-use crate::audio::controller::MprisController;
 use crate::audio::controller::{Controller, GCastController, InhibitController, MiniController};
 use crate::audio::{GCastDevice, Song};
 use crate::i18n::*;
@@ -99,12 +98,6 @@ impl Player {
         let mini_controller = MiniController::new(sender.clone());
         let mini_controller_widget = mini_controller.widget.clone();
         controller.push(Box::new(mini_controller));
-
-        // Mpris Controller (Only available on UNIX platforms)
-        #[cfg(unix)]
-        let mpris_controller = MprisController::new(sender.clone());
-        #[cfg(unix)]
-        controller.push(Box::new(mpris_controller));
 
         // Google Cast Controller
         let gcast_controller = GCastController::new(sender.clone());

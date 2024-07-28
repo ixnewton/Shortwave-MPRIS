@@ -43,6 +43,3 @@ gettext-rs = { version = "0.7", features = ["gettext-system"] }
 adw = { version = "0.7", package = "libadwaita", features = ["v1_5"] }
 gtk = { version = "0.9", package = "gtk4", features = ["gnome_46"] }
 gtk-macros = "0.3"
-
-[target.'cfg(unix)'.dependencies]
-mpris-player = "0.6"

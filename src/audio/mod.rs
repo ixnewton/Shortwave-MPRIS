@@ -20,11 +20,13 @@ mod controller;
 pub use controller::Controller;
 
 mod gcast_discoverer;
+mod mpris;
 mod player;
 mod player2;
 mod song;
 
 pub use gcast_discoverer::{GCastDevice, GCastDiscoverer, GCastDiscovererMessage};
+pub use mpris::MprisServer;
 pub use player::{PlaybackState, Player};
 pub use player2::{SwPlaybackState, SwPlayer};
 pub use song::{Song, SwSong, SwSongState};
