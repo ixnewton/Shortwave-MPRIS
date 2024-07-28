@@ -65,6 +65,7 @@ mod imp {
 
         pub backend: RefCell<Backend>,
         pub mpris_server: OnceCell<MprisServer>,
+        pub inhibit_cookie: Cell<u32>,
     }
 
     #[glib::object_subclass]
@@ -186,8 +187,27 @@ mod imp {
                             SwPlaybackState::Failure
                         }
                     };
+
                     self.state.set(state);
                     self.obj().notify_state();
+
+                    let app = SwApplication::default();
+                    let window = SwApplicationWindow::default();
+
+                    // Inhibit session suspend when playback is active
+                    if state == SwPlaybackState::Playing && self.inhibit_cookie.get() == 0 {
+                        let cookie = app.inhibit(
+                            Some(&window),
+                            gtk::ApplicationInhibitFlags::SUSPEND,
+                            Some(&i18n("Active Playback")),
+                        );
+                        self.inhibit_cookie.set(cookie);
+                        debug!("Install inhibitor")
+                    } else if state != SwPlaybackState::Playing && self.inhibit_cookie.get() != 0 {
+                        app.uninhibit(self.inhibit_cookie.get());
+                        self.inhibit_cookie.set(0);
+                        debug!("Remove inhibitor");
+                    }
                 }
                 GstreamerChange::Volume(volume) => {
                     self.volume.set(volume);

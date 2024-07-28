@@ -29,7 +29,7 @@ use crate::api::SwStation;
 use crate::app::Action;
 use crate::audio::backend::*;
 #[cfg(unix)]
-use crate::audio::controller::{Controller, GCastController, InhibitController, MiniController};
+use crate::audio::controller::{Controller, GCastController, MiniController};
 use crate::audio::{GCastDevice, Song};
 use crate::i18n::*;
 use crate::settings::{settings_manager, Key};
@@ -102,10 +102,6 @@ impl Player {
         // Google Cast Controller
         let gcast_controller = GCastController::new(sender.clone());
         controller.push(Box::new(gcast_controller.clone()));
-
-        // Inhibit Controller
-        let inhibit_controller = InhibitController::new();
-        controller.push(Box::new(inhibit_controller));
 
         let controller: Vec<Box<dyn Controller>> = controller;
 

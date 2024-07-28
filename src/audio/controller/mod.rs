@@ -15,11 +15,9 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 mod gcast_controller;
-mod inhibit_controller;
 mod mini_controller;
 #[cfg(unix)]
 pub use gcast_controller::GCastController;
-pub use inhibit_controller::InhibitController;
 pub use mini_controller::MiniController;
 
 use crate::api::SwStation;
