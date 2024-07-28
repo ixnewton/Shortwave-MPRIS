@@ -224,6 +224,7 @@ impl GstreamerBackend {
                 &self.sender,
                 GstreamerChange::PlaybackState(PlaybackState::Stopped),
             );
+            *self.current_title.lock().unwrap() = String::new();
         }
 
         let res = self.pipeline.set_state(state);
