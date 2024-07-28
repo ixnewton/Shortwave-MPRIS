@@ -21,8 +21,8 @@ use adw::prelude::*;
 use glib::clone;
 use glib::subclass::prelude::*;
 use glib::Properties;
+use gtk::glib;
 use gtk::glib::Enum;
-use gtk::{gio, glib};
 
 use crate::api::SwStation;
 use crate::app::SwApplication;
@@ -302,6 +302,10 @@ impl SwPlayer {
     }
 
     pub fn start_playback(&self) {
+        if self.station().is_none() {
+            return;
+        }
+
         self.imp()
             .backend
             .borrow_mut()

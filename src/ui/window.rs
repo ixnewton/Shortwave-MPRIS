@@ -94,6 +94,13 @@ mod imp {
             });
             player_actions.add_action(&a);
 
+            // player.toggle-playback
+            let a = gio::SimpleAction::new("toggle-playback", None);
+            a.connect_activate(move |_, _| {
+                SwApplication::default().player().toggle_playback();
+            });
+            player_actions.add_action(&a);
+
             // player.show-audio-streaming
             let a = gio::SimpleAction::new("show-audio-streaming", None);
             a.connect_activate(clone!(
@@ -120,11 +127,10 @@ mod imp {
 
             obj.insert_action_group("player", Some(&player_actions));
 
-            let sender = SwApplication::default().imp().sender.clone();
             let player = SwApplication::default().imp().legacy_player.clone();
 
             self.obj().setup_widgets(player);
-            self.obj().setup_gactions(sender);
+            self.obj().setup_gactions();
         }
     }
 
@@ -206,7 +212,7 @@ impl SwApplicationWindow {
         self.set_default_size(width, height);
     }
 
-    fn setup_gactions(&self, sender: Sender<Action>) {
+    fn setup_gactions(&self) {
         let app = SwApplication::default();
 
         self.add_action_entries([
@@ -223,16 +229,6 @@ impl SwApplicationWindow {
                     dialog.present(Some(window));
                 })
                 .build(),
-            // win.toggle-playback
-            gio::ActionEntry::builder("toggle-playback")
-                .activate(clone!(
-                    #[strong]
-                    sender,
-                    move |_, _, _| {
-                        crate::utils::send(&sender, Action::PlaybackToggle);
-                    }
-                ))
-                .build(),
             // win.disable-mini-player
             gio::ActionEntry::builder("disable-mini-player")
                 .activate(move |window: &Self, _, _| {
@@ -246,7 +242,7 @@ impl SwApplicationWindow {
                 })
                 .build(),
         ]);
-        app.set_accels_for_action("win.toggle-playback", &["<primary>space"]);
+        app.set_accels_for_action("player.toggle-playback", &["<primary>space"]);
 
         // Sort / Order menu
         let sorting_action = settings_manager::create_action(Key::ViewSorting);

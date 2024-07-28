@@ -1,5 +1,5 @@
 // Shortwave - gcast_controller.rs
-// Copyright (C) 2021-2022  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2021-2024  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ use rust_cast::channels::receiver::{Application, CastDeviceApp};
 use rust_cast::{CastDevice, ChannelMessage};
 
 use crate::api::{StationMetadata, SwStation};
-use crate::app::Action;
+use crate::app::SwApplication;
 use crate::audio::{Controller, GCastDevice, PlaybackState};
 
 enum GCastAction {
@@ -41,14 +41,13 @@ pub struct GCastController {
     station_metadata: Arc<Mutex<Option<StationMetadata>>>,
     device_ip: Arc<Mutex<String>>,
     gcast_sender: Sender<GCastAction>,
-    app_sender: async_channel::Sender<Action>,
 }
 
 // TODO: Re-structure this mess. Code cleanup is necessary.
 // Even clippy starts to complain: "warning: the function has a cognitive
 // complexity of (36/25)" Oops.
 impl GCastController {
-    pub fn new(app_sender: async_channel::Sender<Action>) -> Rc<Self> {
+    pub fn new() -> Rc<Self> {
         let station_metadata = Arc::new(Mutex::new(None));
         let device_ip = Arc::new(Mutex::new("".to_string()));
 
@@ -57,7 +56,6 @@ impl GCastController {
             station_metadata,
             device_ip,
             gcast_sender,
-            app_sender,
         };
 
         let gcc = Rc::new(gcast_controller);
@@ -212,7 +210,7 @@ impl GCastController {
         send!(self.gcast_sender, GCastAction::Connect);
 
         // Stop audio playback
-        crate::utils::send(&self.app_sender, Action::PlaybackSet(false));
+        SwApplication::default().player().stop_playback();
     }
 
     pub fn disconnect_from_device(&self) {
@@ -231,7 +229,7 @@ impl Controller for Rc<GCastController> {
             send!(self.gcast_sender, GCastAction::SetStation);
 
             // Stop audio playback
-            crate::utils::send(&self.app_sender, Action::PlaybackSet(false));
+            SwApplication::default().player().stop_playback();
         } else {
             debug!("No device ip available, don't set station. ")
         }

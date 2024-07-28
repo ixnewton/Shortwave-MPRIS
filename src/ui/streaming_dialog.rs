@@ -21,7 +21,7 @@ use std::str::FromStr;
 
 use adw::prelude::*;
 use adw::subclass::prelude::*;
-use async_channel::{Receiver, Sender};
+use async_channel::Receiver;
 use glib::{clone, subclass};
 use gtk::{gdk, glib, CompositeTemplate};
 

@@ -42,7 +42,7 @@ impl PartialEq for Song {
     }
 }
 
-use std::cell::{Cell, OnceCell, RefCell};
+use std::cell::{Cell, OnceCell};
 
 use adw::prelude::*;
 use glib::subclass::prelude::*;

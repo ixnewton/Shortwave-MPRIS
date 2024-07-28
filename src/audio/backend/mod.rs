@@ -17,7 +17,7 @@
 mod gstreamer_backend;
 mod song_backend;
 
-use async_channel::{Receiver, Sender};
+use async_channel::Receiver;
 use gstreamer_backend::GstreamerBackend;
 pub use gstreamer_backend::GstreamerChange;
 use song_backend::SongBackend;

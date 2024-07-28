@@ -95,12 +95,12 @@ impl Player {
         get_widget!(builder, adw::HeaderBar, headerbar);
 
         // Mini Controller (gets used in phone mode / bottom toolbar)
-        let mini_controller = MiniController::new(sender.clone());
+        let mini_controller = MiniController::new();
         let mini_controller_widget = mini_controller.widget.clone();
         controller.push(Box::new(mini_controller));
 
         // Google Cast Controller
-        let gcast_controller = GCastController::new(sender.clone());
+        let gcast_controller = GCastController::new();
         controller.push(Box::new(gcast_controller.clone()));
 
         let controller: Vec<Box<dyn Controller>> = controller;

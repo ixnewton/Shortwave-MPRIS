@@ -17,20 +17,16 @@
 use std::cell::RefCell;
 use std::rc::Rc;
 
-use async_channel::Sender;
 use glib::clone;
 use gtk::glib;
 use gtk::prelude::*;
-use gtk::subclass::prelude::ObjectSubclassIsExt;
 
 use crate::api::SwStation;
-use crate::app::Action;
 use crate::app::SwApplication;
 use crate::audio::{Controller, PlaybackState};
 
 pub struct MiniController {
     pub widget: gtk::Box,
-    sender: Sender<Action>,
     station: Rc<RefCell<Option<SwStation>>>,
 
     title_label: gtk::Label,
@@ -45,7 +41,7 @@ pub struct MiniController {
 }
 
 impl MiniController {
-    pub fn new(sender: Sender<Action>) -> Self {
+    pub fn new() -> Self {
         let builder =
             gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/mini_controller.ui");
         get_widget!(builder, gtk::Box, mini_controller);
@@ -67,7 +63,6 @@ impl MiniController {
 
         let controller = Self {
             widget: mini_controller,
-            sender,
             station,
             title_label,
             subtitle_label,
@@ -86,31 +81,19 @@ impl MiniController {
 
     fn setup_signals(&self) {
         // start_playback_button
-        self.start_playback_button.connect_clicked(clone!(
-            #[strong(rename_to = sender)]
-            self.sender,
-            move |_| {
-                crate::utils::send(&sender, Action::PlaybackSet(true));
-            }
-        ));
+        self.start_playback_button.connect_clicked(clone!(move |_| {
+            SwApplication::default().player().start_playback();
+        }));
 
         // stop_playback_button
-        self.stop_playback_button.connect_clicked(clone!(
-            #[strong(rename_to = sender)]
-            self.sender,
-            move |_| {
-                crate::utils::send(&sender, Action::PlaybackSet(false));
-            }
-        ));
+        self.stop_playback_button.connect_clicked(clone!(move |_| {
+            SwApplication::default().player().stop_playback();
+        }));
 
         // loading_button
-        self.loading_button.connect_clicked(clone!(
-            #[strong(rename_to = sender)]
-            self.sender,
-            move |_| {
-                crate::utils::send(&sender, Action::PlaybackSet(false));
-            }
-        ));
+        self.loading_button.connect_clicked(clone!(move |_| {
+            SwApplication::default().player().stop_playback();
+        }));
     }
 }
 

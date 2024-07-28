@@ -17,12 +17,10 @@
 use std::fs;
 use std::rc::Rc;
 
-use async_channel::Sender;
 use gtk::glib;
 use indexmap::IndexMap;
 
 use crate::api::Error;
-use crate::app::Action;
 use crate::audio::Song;
 use crate::i18n::i18n;
 use crate::path;

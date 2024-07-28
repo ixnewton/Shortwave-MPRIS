@@ -28,7 +28,7 @@ use gtk::{gio, glib};
 
 use crate::api::SwClient;
 use crate::audio::SwPlayer;
-use crate::audio::{GCastDevice, PlaybackState, Player, Song};
+use crate::audio::{GCastDevice, Player, Song};
 use crate::config;
 use crate::database::SwLibrary;
 use crate::model::SwSorting;
@@ -40,8 +40,6 @@ pub enum Action {
     // Audio Playback
     PlaybackConnectGCastDevice(GCastDevice),
     PlaybackDisconnectGCastDevice,
-    PlaybackSet(bool),
-    PlaybackToggle,
     PlaybackSaveSong(Song),
 
     SettingsKeyChanged(Key),
@@ -261,9 +259,6 @@ impl SwApplication {
             Action::PlaybackDisconnectGCastDevice => {
                 imp.legacy_player.disconnect_from_gcast_device()
             }
-            Action::PlaybackSet(true) => imp.legacy_player.set_playback(PlaybackState::Playing),
-            Action::PlaybackSet(false) => imp.legacy_player.set_playback(PlaybackState::Stopped),
-            Action::PlaybackToggle => imp.legacy_player.toggle_playback(),
             Action::PlaybackSaveSong(song) => imp.legacy_player.save_song(song),
             Action::SettingsKeyChanged(key) => self.apply_settings_changes(key),
         }
