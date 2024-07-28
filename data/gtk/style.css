@@ -1,14 +1,5 @@
-.transparent {
-  background-color: transparent;
-}
-
 .tile {
   padding: 0px;
-  border-radius: 12px;
-}
-
-.toolbarcontroller {
-  border-top: 1px solid @borders;
 }
 
 .featured-carousel {
