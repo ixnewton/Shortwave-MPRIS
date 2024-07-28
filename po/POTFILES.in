@@ -41,6 +41,7 @@ src/audio/controller/mod.rs
 src/audio/controller/mpris_controller.rs
 src/audio/gcast_discoverer.rs
 src/audio/mod.rs
+src/audio/mpris.rs
 src/audio/player.rs
 src/audio/player2.rs
 src/audio/song.rs

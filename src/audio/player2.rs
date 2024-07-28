@@ -14,15 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use std::cell::Cell;
-use std::cell::RefCell;
+use std::cell::{Cell, OnceCell, RefCell};
 use std::fs;
-use std::path::PathBuf;
-use std::rc::Rc;
-use std::time::Duration;
 
 use adw::prelude::*;
-use async_channel::Sender;
 use glib::clone;
 use glib::subclass::prelude::*;
 use glib::Properties;
@@ -32,7 +27,7 @@ use gtk::{gio, glib};
 use crate::api::SwStation;
 use crate::app::SwApplication;
 use crate::audio::backend::*;
-use crate::audio::{GCastDevice, PlaybackState, SwSong, SwSongState};
+use crate::audio::{GCastDevice, MprisServer, PlaybackState, SwSong, SwSongState};
 use crate::i18n::*;
 use crate::settings::{settings_manager, Key};
 use crate::ui::SwApplicationWindow;
@@ -69,6 +64,7 @@ mod imp {
         volume: Cell<f64>,
 
         pub backend: RefCell<Backend>,
+        pub mpris_server: OnceCell<MprisServer>,
     }
 
     #[glib::object_subclass]
@@ -82,16 +78,16 @@ mod imp {
         fn constructed(&self) {
             self.parent_constructed();
 
+            // Receive change messages from gstreamer backend
             let receiver = self.backend.borrow_mut().gstreamer_receiver.take().unwrap();
-
             glib::spawn_future_local(clone!(
                 #[strong]
                 receiver,
-                #[weak(rename_to = this)]
+                #[weak(rename_to = imp)]
                 self,
                 async move {
                     while let Ok(message) = receiver.recv().await {
-                        this.process_gst_message(message);
+                        imp.process_gst_message(message);
                     }
                 }
             ));
@@ -99,6 +95,18 @@ mod imp {
             // Restore volume
             let volume = settings_manager::double(Key::PlaybackVolume);
             self.obj().set_volume(volume);
+
+            // mpris
+            glib::spawn_future_local(clone!(
+                #[weak(rename_to = imp)]
+                self,
+                async move {
+                    match MprisServer::start().await {
+                        Ok(mpris_server) => imp.mpris_server.set(mpris_server).unwrap(),
+                        Err(err) => error!("Unable to start mpris: {}", err.to_string()),
+                    }
+                }
+            ));
         }
     }
 
@@ -119,14 +127,7 @@ mod imp {
             obj.stop_playback();
 
             if let Some(station) = obj.station() {
-                let metadata = station.metadata();
-
-                // We try playing from `url_resolved` first, which is the pre-resolved
-                // URL from the API. However, for local stations, we don't do that, so
-                // `url_resolved` will be `None`. In that case we just use `url`, which
-                // can also be a potential fallback in case the API misses the resolved
-                // URL for some reason.
-                if let Some(url) = metadata.url_resolved.or(metadata.url) {
+                if let Some(url) = station.stream_url() {
                     debug!("Start playing new URI: {}", url.to_string());
                     self.backend
                         .borrow_mut()

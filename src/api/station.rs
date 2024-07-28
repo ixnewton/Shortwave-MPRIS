@@ -81,4 +81,13 @@ impl SwStation {
             .property("favicon", favicon)
             .build()
     }
+
+    // We try playing from `url_resolved` first, which is the pre-resolved
+    // URL from the API. However, for local stations, we don't do that, so
+    // `url_resolved` will be `None`. In that case we just use `url`, which
+    // can also be a potential fallback in case the API misses the resolved
+    // URL for some reason.
+    pub fn stream_url(&self) -> Option<url::Url> {
+        self.metadata().url_resolved.or(self.metadata().url)
+    }
 }
