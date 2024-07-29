@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2024-06-12 11:10+0000\n"
-"PO-Revision-Date: 2024-06-13 11:30+0530\n"
+"POT-Creation-Date: 2024-07-20 21:40+0000\n"
+"PO-Revision-Date: 2024-07-21 10:06+0530\n"
 "Last-Translator: Scrambled777 <weblate.scrambled777@simplelogin.com>\n"
 "Language-Team: Hindi <indlinux-hindi@lists.sourceforge.net>\n"
 "Language: hi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Gtranslator 46.1\n"
 
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:3
@@ -72,7 +72,7 @@ msgstr "समर्थित नेटवर्क उपकरणो पर �
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:22
 msgid "Seamless integration into the GNOME desktop environment"
-msgstr "GNOME डेस्कटॉप वातावरण में सहज एकीकरण"
+msgstr "गनोम डेस्कटॉप वातावरण में सहज एकीकरण"
 
 #. Branding
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:28
@@ -181,7 +181,7 @@ msgctxt "shortcut window"
 msgid "Quit the application"
 msgstr "अनुप्रयोग छोड़ें"
 
-#: data/gtk/help_overlay.ui:46 data/gtk/player.ui:5
+#: data/gtk/help_overlay.ui:46
 msgid "Playback"
 msgstr "प्लेबैक"
 
@@ -192,7 +192,7 @@ msgstr "प्लेबैक टॉगल करें"
 
 #: data/gtk/library_page.ui:4
 msgid "Shortwave"
-msgstr "Shortwave"
+msgstr "शॉर्टवेव"
 
 #: data/gtk/library_page.ui:15
 msgid "Add Stations"
@@ -200,77 +200,73 @@ msgstr "स्टेशन जोड़ें"
 
 #: data/gtk/library_page.ui:22
 msgid "Main Menu"
-msgstr "मुख्य मेन्यू"
+msgstr "मुख्य मेनू"
 
 #: data/gtk/library_page.ui:51
 msgid "Library"
 msgstr "लाइब्रेरी"
 
-#: data/gtk/library_page.ui:85
-msgid "Receiving Station Data…"
-msgstr "स्टेशन डेटा प्राप्त हो रहा है…"
-
-#: data/gtk/library_page.ui:112
+#: data/gtk/library_page.ui:75
 msgid "_Discover New Stations"
 msgstr "नये स्टेशन खोजें (_D)"
 
-#: data/gtk/library_page.ui:134
+#: data/gtk/library_page.ui:97
 msgid "_Enable Mini Player"
 msgstr "मिनी प्लेयर सक्षम करें (_E)"
 
-#: data/gtk/library_page.ui:138
+#: data/gtk/library_page.ui:101
 msgid "_Sorting"
 msgstr "छंटाई (_S)"
 
-#: data/gtk/library_page.ui:141 data/gtk/search_page.ui:160
+#: data/gtk/library_page.ui:104 data/gtk/search_page.ui:161
 msgid "_Name"
 msgstr "नाम (_N)"
 
-#: data/gtk/library_page.ui:146 data/gtk/search_page.ui:165
+#: data/gtk/library_page.ui:109 data/gtk/search_page.ui:166
 msgid "_Language"
 msgstr "भाषा (_L)"
 
-#: data/gtk/library_page.ui:151 data/gtk/search_page.ui:170
+#: data/gtk/library_page.ui:114 data/gtk/search_page.ui:171
 msgid "_Country"
 msgstr "देश (_C)"
 
-#: data/gtk/library_page.ui:156 data/gtk/search_page.ui:175
+#: data/gtk/library_page.ui:119 data/gtk/search_page.ui:176
 msgid "S_tate"
 msgstr "राज्य (_t)"
 
-#: data/gtk/library_page.ui:161 data/gtk/search_page.ui:180
+#: data/gtk/library_page.ui:124 data/gtk/search_page.ui:181
 msgid "_Votes"
 msgstr "मत (_V)"
 
-#: data/gtk/library_page.ui:166 data/gtk/search_page.ui:185
+#: data/gtk/library_page.ui:129 data/gtk/search_page.ui:186
 msgid "_Bitrate"
 msgstr "बिटरेट (_B)"
 
-#: data/gtk/library_page.ui:173 data/gtk/search_page.ui:192
+#: data/gtk/library_page.ui:136 data/gtk/search_page.ui:193
 msgid "_Ascending"
 msgstr "आरोही (_A)"
 
-#: data/gtk/library_page.ui:178 data/gtk/search_page.ui:197
+#: data/gtk/library_page.ui:141 data/gtk/search_page.ui:198
 msgid "_Descending"
 msgstr "अवरोही (_D)"
 
-#: data/gtk/library_page.ui:187
+#: data/gtk/library_page.ui:150
 msgid "_Open radio-browser.info <sup>↗</sup>"
 msgstr "radio-browser.info खोलें <sup>↗</sup> (_O)"
 
-#: data/gtk/library_page.ui:192
+#: data/gtk/library_page.ui:155
 msgid "_Create New Station"
 msgstr "नया स्टेशन बनाएं (_C)"
 
-#: data/gtk/library_page.ui:199
+#: data/gtk/library_page.ui:162
 msgid "_Preferences"
 msgstr "प्राथमिकताएं (_P)"
 
-#: data/gtk/library_page.ui:203
+#: data/gtk/library_page.ui:166
 msgid "_Keyboard Shortcuts"
 msgstr "कीबोर्ड शॉर्टकट (_K)"
 
-#: data/gtk/library_page.ui:207
+#: data/gtk/library_page.ui:170
 msgid "_About Shortwave"
 msgstr "शॉर्टवेव के बारे में (_A)"
 
@@ -294,15 +290,11 @@ msgstr "कोई प्लेबैक नहीं"
 
 #: data/gtk/mini_controller.ui:160
 msgid "Close"
-msgstr "बंद"
+msgstr "बंद करें"
 
 #: data/gtk/mini_controller.ui:171
 msgid "Resize"
 msgstr "पुनर्कार"
-
-#: data/gtk/player.ui:19
-msgid "Back"
-msgstr "पीछे"
 
 #: data/gtk/search_page.ui:41 data/gtk/station_dialog.ui:171
 #: src/ui/pages/search_page.rs:111
@@ -324,6 +316,10 @@ msgstr "किसी भिन्न खोज शब्द का उपयो�
 #: data/gtk/search_page.ui:101
 msgid "Search Results"
 msgstr "खोज के परिणाम"
+
+#: data/gtk/search_page.ui:143
+msgid "Searching…"
+msgstr "खोज रहे हैं…"
 
 #: data/gtk/settings_dialog.ui:12
 msgid "Features"
@@ -493,7 +489,7 @@ msgstr "खोज पूरी हुई"
 msgid "Searching for Devices…"
 msgstr "उपकरण खोजे जा रहे हैं…"
 
-#: data/gtk/window.ui:33
+#: data/gtk/window.ui:36
 msgid "Main View"
 msgstr "मुख्य दृश्य"
 
@@ -502,11 +498,11 @@ msgstr "मुख्य दृश्य"
 msgid "Unable to access music directory. Saving song in home directory."
 msgstr "संगीत निर्देशिका तक पहुंचने में असमर्थ। होम निर्देशिका में गाना सहेजा जा रहा है।"
 
-#: src/audio/player.rs:190
+#: src/audio/player.rs:194
 msgid "Station cannot be streamed. URL is not valid."
 msgstr "स्टेशन को स्ट्रीम नहीं किया जा सकता। URL मान्य नहीं है।"
 
-#: src/audio/player.rs:241
+#: src/audio/player.rs:245
 msgid "Cannot save song."
 msgstr "गाना सहेजा नहीं जा सका।"
 
@@ -543,15 +539,15 @@ msgstr "वेबसाइट खोलें"
 msgid "Powered by radio-browser.info"
 msgstr "radio-browser.info द्वारा संचालित"
 
-#: src/ui/pages/discover_page.rs:151 src/ui/pages/search_page.rs:193
+#: src/ui/pages/discover_page.rs:151 src/ui/pages/search_page.rs:215
 msgid "Station data could not be received."
 msgstr "स्टेशन डेटा प्राप्त नहीं किया जा सका।"
 
-#: src/ui/pages/library_page.rs:114
+#: src/ui/pages/library_page.rs:110
 msgid "Welcome to {}"
 msgstr "आपका स्वागत है {}"
 
-#: src/ui/pages/search_page.rs:200
+#: src/ui/pages/search_page.rs:222
 msgid ""
 "The number of results is limited to {} item. Try using a more specific "
 "search term."
