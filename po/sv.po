@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2024-06-03 19:52+0000\n"
-"PO-Revision-Date: 2024-06-04 00:30+0200\n"
+"POT-Creation-Date: 2024-07-20 12:28+0000\n"
+"PO-Revision-Date: 2024-07-20 20:18+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.4.4\n"
 
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:3
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
@@ -208,71 +208,71 @@ msgstr "Huvudmeny"
 msgid "Library"
 msgstr "Bibliotek"
 
-#: data/gtk/library_page.ui:85
+#: data/gtk/library_page.ui:67
 msgid "Receiving Station Data…"
 msgstr "Erhåller stationsdata…"
 
-#: data/gtk/library_page.ui:112
+#: data/gtk/library_page.ui:89
 msgid "_Discover New Stations"
 msgstr "_Upptäck nya stationer"
 
-#: data/gtk/library_page.ui:134
+#: data/gtk/library_page.ui:111
 msgid "_Enable Mini Player"
 msgstr "_Aktivera minispelare"
 
-#: data/gtk/library_page.ui:138
+#: data/gtk/library_page.ui:115
 msgid "_Sorting"
 msgstr "_Sortering"
 
-#: data/gtk/library_page.ui:141 data/gtk/search_page.ui:160
+#: data/gtk/library_page.ui:118 data/gtk/search_page.ui:161
 msgid "_Name"
 msgstr "_Namn"
 
-#: data/gtk/library_page.ui:146 data/gtk/search_page.ui:165
+#: data/gtk/library_page.ui:123 data/gtk/search_page.ui:166
 msgid "_Language"
 msgstr "S_pråk"
 
-#: data/gtk/library_page.ui:151 data/gtk/search_page.ui:170
+#: data/gtk/library_page.ui:128 data/gtk/search_page.ui:171
 msgid "_Country"
 msgstr "_Land"
 
-#: data/gtk/library_page.ui:156 data/gtk/search_page.ui:175
+#: data/gtk/library_page.ui:133 data/gtk/search_page.ui:176
 msgid "S_tate"
 msgstr "Lä_n"
 
-#: data/gtk/library_page.ui:161 data/gtk/search_page.ui:180
+#: data/gtk/library_page.ui:138 data/gtk/search_page.ui:181
 msgid "_Votes"
 msgstr "_Röster"
 
-#: data/gtk/library_page.ui:166 data/gtk/search_page.ui:185
+#: data/gtk/library_page.ui:143 data/gtk/search_page.ui:186
 msgid "_Bitrate"
 msgstr "_Bithastighet"
 
-#: data/gtk/library_page.ui:173 data/gtk/search_page.ui:192
+#: data/gtk/library_page.ui:150 data/gtk/search_page.ui:193
 msgid "_Ascending"
 msgstr "S_tigande"
 
-#: data/gtk/library_page.ui:178 data/gtk/search_page.ui:197
+#: data/gtk/library_page.ui:155 data/gtk/search_page.ui:198
 msgid "_Descending"
 msgstr "_Fallande"
 
-#: data/gtk/library_page.ui:187
+#: data/gtk/library_page.ui:164
 msgid "_Open radio-browser.info <sup>↗</sup>"
 msgstr "Ö_ppna radio-browser.info <sup>↗</sup>"
 
-#: data/gtk/library_page.ui:192
+#: data/gtk/library_page.ui:169
 msgid "_Create New Station"
 msgstr "S_kapa ny station"
 
-#: data/gtk/library_page.ui:199
+#: data/gtk/library_page.ui:176
 msgid "_Preferences"
 msgstr "_Inställningar"
 
-#: data/gtk/library_page.ui:203
+#: data/gtk/library_page.ui:180
 msgid "_Keyboard Shortcuts"
 msgstr "_Tangentbordsgenvägar"
 
-#: data/gtk/library_page.ui:207
+#: data/gtk/library_page.ui:184
 msgid "_About Shortwave"
 msgstr "_Om Shortwave"
 
@@ -326,6 +326,10 @@ msgstr "Försök använda en annan sökterm"
 #: data/gtk/search_page.ui:101
 msgid "Search Results"
 msgstr "Sökresultat"
+
+#: data/gtk/search_page.ui:143
+msgid "Searching…"
+msgstr "Söker…"
 
 #: data/gtk/settings_dialog.ui:12
 msgid "Features"
@@ -550,15 +554,15 @@ msgstr "Öppna webbplats"
 msgid "Powered by radio-browser.info"
 msgstr "Driftas av radio-browser.info"
 
-#: src/ui/pages/discover_page.rs:151 src/ui/pages/search_page.rs:193
+#: src/ui/pages/discover_page.rs:151 src/ui/pages/search_page.rs:215
 msgid "Station data could not be received."
 msgstr "Kunde inte erhålla stationsdata."
 
-#: src/ui/pages/library_page.rs:114
+#: src/ui/pages/library_page.rs:110
 msgid "Welcome to {}"
 msgstr "Välkommen till {}"
 
-#: src/ui/pages/search_page.rs:200
+#: src/ui/pages/search_page.rs:222
 msgid ""
 "The number of results is limited to {} item. Try using a more specific "
 "search term."
