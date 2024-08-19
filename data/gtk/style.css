@@ -76,6 +76,15 @@
   box-shadow: none;
 }
 
+recording-indicator button {
+  min-height: 24px;
+  font-size: x-small;
+}
+
+recording-indicator.active button {
+  background-color: @red_2;
+}
+
 favicon image.card {
   box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.3),
     0px 2px 12px rgba(0, 0, 0, 0.15),

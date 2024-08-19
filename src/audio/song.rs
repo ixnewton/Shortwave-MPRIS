@@ -59,6 +59,7 @@ pub enum SwSongState {
     Recording,
     Recorded,
     Incomplete,
+    Ignored,
     BelowThreshold,
     Discarded,
 }

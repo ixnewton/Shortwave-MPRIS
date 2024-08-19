@@ -69,19 +69,28 @@
                           </lookup>
                         </binding>
                         <child>
-                          <object class="GtkLabel" id="song_label">
-                            <property name="margin_top">6</property>
-                            <property name="justify">center</property>
-                            <property name="ellipsize">end</property>
-                            <property name="wrap">True</property>
-                            <property name="lines">2</property>
-                            <binding name="label">
-                              <lookup name="title" type="SwSong">
-                                <lookup name="song" type="SwPlayer">
-                                  <lookup name="player">SwPlayerView</lookup>
-                                </lookup>
-                              </lookup>
-                            </binding>
+                          <object class="GtkBox">
+                            <property name="orientation">vertical</property>
+                            <property name="spacing">12</property>
+                            <child>
+                              <object class="GtkLabel" id="song_label">
+                                <property name="margin_top">6</property>
+                                <property name="justify">center</property>
+                                <property name="ellipsize">end</property>
+                                <property name="wrap">True</property>
+                                <property name="lines">2</property>
+                                <binding name="label">
+                                  <lookup name="title" type="SwSong">
+                                    <lookup name="song" type="SwPlayer">
+                                      <lookup name="player">SwPlayerView</lookup>
+                                    </lookup>
+                                  </lookup>
+                                </binding>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="SwRecordingIndicator" id="recording_indicator"/>
+                            </child>
                           </object>
                         </child>
                       </object>
@@ -90,7 +99,7 @@
                       <object class="GtkBox" id="controls_box">
                         <property name="halign">center</property>
                         <property name="spacing">12</property>
-                        <property name="margin_top">24</property>
+                        <property name="margin_top">18</property>
                         <property name="margin_bottom">18</property>
                         <binding name="sensitive">
                           <lookup name="has-station" type="SwPlayer">
@@ -194,9 +203,61 @@
                       </object>
                     </child>
                     <child>
-                      <object class="SwVolumeControl" id="volume_control">>
+                      <object class="SwVolumeControl" id="volume_control">
                         <property name="halign">center</property>
                         <property name="width_request">250</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkSeparator">
+                        <property name="halign">center</property>
+                        <property name="width_request">125</property>
+                        <property name="margin_top">12</property>
+                        <property name="margin_bottom">24</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="spacing">6</property>
+                        <property name="halign">center</property>
+                        <property name="hexpand">true</property>
+                        <property name="visible">False</property>
+                        <child>
+                          <object class="SwRecordingIndicator"/>
+                        </child>
+                        <child>
+                          <object class="GtkButton">
+                            <property name="tooltip_text" translatable="yes">Recording Settings</property>
+                            <property name="valign">center</property>
+                            <property name="icon_name">view-more-symbolic</property>
+                            <style>
+                              <class name="circular"/>
+                            </style>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="label" translatable="yes">No Songs</property>
+                        <property name="justify">center</property>
+                        <property name="ellipsize">end</property>
+                        <property name="margin_top">18</property>
+                        <property name="margin_bottom">9</property>
+                        <style>
+                          <class name="title-2"/>
+                          <class name="dim-label"/>
+                        </style>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="label" translatable="yes">Songs that have been identified and recorded using the stream metadata will appear here.</property>
+                        <property name="justify">center</property>
+                        <property name="wrap">True</property>
+                        <style>
+                          <class name="dim-label"/>
+                        </style>
                       </object>
                     </child>
                   </object>
