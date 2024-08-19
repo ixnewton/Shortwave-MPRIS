@@ -261,7 +261,7 @@ mod imp {
             };
 
             let threshold = settings_manager::integer(Key::RecorderSongDurationThreshold);
-            let duration: i64 = backend.gstreamer.current_recording_duration();
+            let duration: u64 = backend.gstreamer.recording_duration();
 
             if discard_data {
                 debug!("Discard recorded data.");
@@ -270,7 +270,7 @@ mod imp {
                 song.set_state(SwSongState::Discarded);
 
                 None
-            } else if duration > threshold as i64 {
+            } else if duration > threshold as u64 {
                 debug!("Save recorded data.");
 
                 backend.gstreamer.stop_recording(false);
@@ -334,6 +334,10 @@ impl SwPlayer {
         {
             self.start_playback();
         }
+    }
+
+    pub fn recording_duration(&self) -> u64 {
+        self.imp().backend.borrow().gstreamer.recording_duration()
     }
 }
 

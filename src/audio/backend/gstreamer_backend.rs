@@ -332,7 +332,7 @@ impl GstreamerBackend {
             .unwrap()
             .static_pad("src")
             .unwrap();
-        queue_srcpad.set_offset(offset);
+        queue_srcpad.set_offset(offset.into_negative().try_into().unwrap_or_default());
 
         // Set recording path
         let filesink = recorderbin.by_name("filesink").unwrap();
@@ -441,7 +441,7 @@ impl GstreamerBackend {
         self.recorderbin.lock().unwrap().is_some()
     }
 
-    pub fn current_recording_duration(&self) -> i64 {
+    pub fn recording_duration(&self) -> u64 {
         let recorderbin: &Option<Bin> = &self.recorderbin.lock().unwrap();
         if let Some(recorderbin) = recorderbin {
             let queue_srcpad = recorderbin
@@ -449,49 +449,39 @@ impl GstreamerBackend {
                 .unwrap()
                 .static_pad("src")
                 .unwrap();
-            let offset = queue_srcpad.offset() / 1_000_000_000;
 
-            let pipeline_time = self
-                .pipeline
-                .clock()
-                .expect("Could not get pipeline clock")
-                .time()
-                .unwrap()
-                .nseconds() as i64
-                / 1_000_000_000;
-            let result = pipeline_time + offset + 1;
+            let running_time = *recorderbin.current_running_time().unwrap_or_default();
+            let offset = queue_srcpad.offset().unsigned_abs();
 
-            // Workaround to avoid crash as described in issue #540
-            // https://gitlab.gnome.org/World/Shortwave/-/issues/540
-            // TODO: Find out actual root cause for this nonsense
-            if !(0..=86_400).contains(&result) {
-                error!(
-                    "Unable to determine correct recording value: {} seconds",
-                    result
+            trace!("Running time: {running_time}");
+            trace!("offset: {offset}");
+
+            if offset > running_time {
+                warn!(
+                    "Offset is larger than running time, unable to determine recording duration."
                 );
                 return 0;
             }
 
-            return result;
+            // nanoseconds to seconds
+            (running_time - offset) / 1_000_000_000
+        } else {
+            warn!("No recording active, unable to get recording duration.");
+            0
         }
-
-        warn!("No recording active, unable to get recording duration.");
-        0
     }
 
-    fn calculate_pipeline_offset(pipeline: &Pipeline) -> i64 {
+    fn calculate_pipeline_offset(pipeline: &Pipeline) -> u64 {
         let clock_time = pipeline
             .clock()
             .expect("Could not get pipeline clock")
             .time()
-            .unwrap()
-            .nseconds() as i64;
+            .unwrap();
         let base_time = pipeline
             .base_time()
-            .expect("Could not get pipeline base time")
-            .nseconds() as i64;
+            .expect("Could not get pipeline base time");
 
-        -(clock_time - base_time)
+        *clock_time - *base_time
     }
 
     fn destroy_recorderbin(pipeline: Pipeline, recorderbin: Bin) {

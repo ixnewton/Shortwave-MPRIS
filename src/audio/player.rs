@@ -277,13 +277,15 @@ impl Player {
 
                 // If we're already recording something, we need to stop it first.
                 if backend.gstreamer.is_recording() {
-                    let threshold: i64 =
-                        settings_manager::integer(Key::RecorderSongDurationThreshold).into();
-                    let duration: i64 = backend.gstreamer.current_recording_duration();
+                    let threshold: u64 =
+                        settings_manager::integer(Key::RecorderSongDurationThreshold)
+                            .try_into()
+                            .unwrap();
+                    let duration: u64 = backend.gstreamer.recording_duration();
                     if duration > threshold {
                         backend.gstreamer.stop_recording(false);
 
-                        let duration = Duration::from_secs(duration.try_into().unwrap());
+                        let duration = Duration::from_secs(duration);
                         let song = self
                             .song_title
                             .borrow()
