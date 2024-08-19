@@ -83,6 +83,9 @@ mod imp {
 
     impl SwRecordingIndicator {
         fn set_song(&self, song: Option<SwSong>) {
+            self.duration_label.set_text(&Self::format_duration(0));
+            self.updating_duration.set(false);
+
             if let Some(song) = song {
                 self.update_state(song.state());
                 song.connect_state_notify(clone!(
@@ -151,8 +154,6 @@ mod imp {
                             }
                         }
 
-                        imp.duration_label.set_text(&Self::format_duration(0));
-                        imp.updating_duration.set(false);
                         glib::ControlFlow::Break
                     }
                 ),
