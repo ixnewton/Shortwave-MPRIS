@@ -82,7 +82,8 @@ recording-indicator button {
 }
 
 recording-indicator.active button {
-  background-color: @red_2;
+  color: @light_1;
+  background-color: @red_1;
 }
 
 favicon image.card {
