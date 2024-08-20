@@ -50,14 +50,16 @@ use glib::Properties;
 use gtk::glib::Enum;
 use gtk::{gio, glib};
 
+use crate::api::SwStation;
+
 #[derive(Display, Copy, Debug, Clone, EnumString, Eq, PartialEq, Enum)]
 #[repr(u32)]
 #[enum_type(name = "SwSongState")]
 #[derive(Default)]
 pub enum SwSongState {
-    #[default]
     Recording,
     Recorded,
+    #[default]
     Incomplete,
     Ignored,
     BelowThreshold,
@@ -72,6 +74,8 @@ mod imp {
     pub struct SwSong {
         #[property(get, construct_only)]
         title: OnceCell<String>,
+        #[property(get, construct_only)]
+        station: OnceCell<SwStation>,
         #[property(get)]
         file: OnceCell<gio::File>,
         #[property(get, set, builder(SwSongState::default()))]
@@ -104,7 +108,10 @@ glib::wrapper! {
 }
 
 impl SwSong {
-    pub fn new(title: &str) -> Self {
-        glib::Object::builder().property("title", title).build()
+    pub fn new(title: &str, station: &SwStation) -> Self {
+        glib::Object::builder()
+            .property("title", title)
+            .property("station", station)
+            .build()
     }
 }

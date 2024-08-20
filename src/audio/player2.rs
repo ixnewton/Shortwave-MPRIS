@@ -60,6 +60,8 @@ mod imp {
         #[property(get)]
         #[property(name="has-song", get=Self::has_song, type=bool)]
         song: RefCell<Option<SwSong>>,
+        #[property(get)]
+        previous_song: RefCell<Option<SwSong>>,
         #[property(get, set=Self::set_volume)]
         volume: Cell<f64>,
 
@@ -152,14 +154,21 @@ mod imp {
             match message {
                 GstreamerChange::Title(title) => {
                     debug!("Stream title has changed to: {}", title);
-                    let song = SwSong::new(&title);
 
+                    // Stop recording of old song
                     if let Some(song) = self.stop_recording(false) {
                         // TODO: add to model
                     }
-                    self.start_recording(&song);
 
+                    // Set previous song
+                    *self.previous_song.borrow_mut() = self.song.borrow_mut().take();
+                    self.obj().notify_previous_song();
+
+                    // Set new song
+                    let song = SwSong::new(&title, &self.obj().station().unwrap());
+                    self.start_recording(&song);
                     *self.song.borrow_mut() = Some(song);
+
                     self.obj().notify_song();
                     self.obj().notify_has_song();
 
@@ -219,27 +228,28 @@ mod imp {
 
         pub fn clear_song(&self) {
             *self.song.borrow_mut() = None;
+            *self.previous_song.borrow_mut() = None;
             self.obj().notify_song();
             self.obj().notify_has_song();
+            self.obj().notify_previous_song();
         }
 
         pub fn start_recording(&self, song: &SwSong) {
-            // TODO
-            let is_incomplete = false;
-            if is_incomplete {
+            // If there is no previous song, we know that the current song is the
+            // first song we play from that station. This means that it would be
+            // incomplete, as we couldn't record it completely from the beginning.
+            if self.obj().previous_song().is_some() {
+                let path = song.file().path().unwrap();
+                fs::create_dir_all(path.parent().unwrap())
+                    .expect("Could not create path for recording");
+                song.set_state(SwSongState::Recording);
+                self.backend.borrow_mut().gstreamer.start_recording(path);
+            } else {
                 debug!(
                     "Song {:?} will not be recorded because it may be incomplete.",
                     song.title()
                 );
-                song.set_state(SwSongState::Incomplete);
-                return;
             }
-
-            // Start recording
-            let path = song.file().path().unwrap();
-            fs::create_dir_all(path.parent().unwrap())
-                .expect("Could not create path for recording");
-            self.backend.borrow_mut().gstreamer.start_recording(path);
         }
 
         /// Returns song object if a complete song has been recorded
