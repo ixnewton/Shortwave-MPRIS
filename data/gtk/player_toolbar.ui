@@ -46,7 +46,7 @@
             <child>
               <object class="GtkRevealer" id="song_revealer">
                 <binding name="reveal-child">
-                  <lookup name="has-song" type="SwPlayer">
+                  <lookup name="has-playing-song" type="SwPlayer">
                     <lookup name="player">SwPlayerToolbar</lookup>
                   </lookup>
                 </binding>
@@ -57,7 +57,7 @@
                     <property name="xalign">0</property>
                     <binding name="label">
                       <lookup name="title" type="SwSong">
-                        <lookup name="song" type="SwPlayer">
+                        <lookup name="playing-song" type="SwPlayer">
                           <lookup name="player">SwPlayerToolbar</lookup>
                         </lookup>
                       </lookup>

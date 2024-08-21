@@ -16,12 +16,13 @@
 
 use adw::prelude::*;
 use adw::subclass::prelude::*;
-use glib::{subclass, Properties};
+use glib::{clone, subclass, Properties};
 use gtk::{glib, CompositeTemplate};
 
 use crate::app::SwApplication;
 use crate::audio::SwPlayer;
-use crate::ui::{SwFavicon, SwRecordingIndicator, SwVolumeControl};
+use crate::audio::SwSong;
+use crate::ui::{SwFavicon, SwRecordingIndicator, SwSongRow, SwVolumeControl};
 
 mod imp {
     use super::*;
@@ -36,6 +37,10 @@ mod imp {
         recording_indicator: TemplateChild<SwRecordingIndicator>,
         #[template_child]
         volume_control: TemplateChild<SwVolumeControl>,
+        #[template_child]
+        past_songs_stack: TemplateChild<gtk::Stack>,
+        #[template_child]
+        past_songs_listbox: TemplateChild<gtk::ListBox>,
 
         #[property(get)]
         pub player: SwPlayer,
@@ -67,6 +72,22 @@ mod imp {
                 .sync_create()
                 .bidirectional()
                 .build();
+
+            self.past_songs_listbox
+                .bind_model(Some(&player.past_songs()), |song| {
+                    SwSongRow::new(song.clone().downcast::<SwSong>().unwrap().clone()).into()
+                });
+
+            player.past_songs().connect_items_changed(clone!(
+                #[weak(rename_to = imp)]
+                self,
+                move |_, _, _, added| {
+                    if added > 0 {
+                        imp.past_songs_stack
+                            .set_visible_child(&*imp.past_songs_listbox);
+                    }
+                }
+            ));
         }
     }
 

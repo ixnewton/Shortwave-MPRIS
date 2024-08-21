@@ -66,12 +66,12 @@ mod imp {
         fn constructed(&self) {
             self.parent_constructed();
 
-            self.set_song(self.player.song());
-            self.player.connect_song_notify(clone!(
+            self.set_song(self.player.playing_song());
+            self.player.connect_playing_song_notify(clone!(
                 #[weak(rename_to = imp)]
                 self,
                 move |player| {
-                    imp.set_song(player.song());
+                    imp.set_song(player.playing_song());
                 }
             ));
         }
@@ -145,7 +145,7 @@ mod imp {
                     self,
                     #[upgrade_or_panic]
                     move || {
-                        if let Some(song) = imp.player.song() {
+                        if let Some(song) = imp.player.playing_song() {
                             if song.state() == SwSongState::Recording {
                                 imp.duration_label.set_text(&Self::format_duration(
                                     imp.player.recording_duration(),

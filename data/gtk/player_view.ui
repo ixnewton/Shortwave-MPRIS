@@ -3,7 +3,6 @@
   <template class="SwPlayerView" parent="AdwBin">
     <property name="child">
       <object class="AdwToolbarView" id="toolbar_view">
-        <property name="extend_content_to_top_edge">True</property>
         <child type="top">
           <object class="AdwHeaderBar">
             <property name="show-title">False</property>
@@ -17,7 +16,6 @@
               <object class="AdwClamp">
                 <property name="margin_start">12</property>
                 <property name="margin_end">12</property>
-                <property name="margin_top" bind-source="toolbar_view" bind-property="top-bar-height" bind-flags="sync-create"/>
                 <property name="margin_bottom">18</property>
                 <property name="maximum_size">400</property>
                 <property name="tightening_threshold">0</property>
@@ -64,7 +62,7 @@
                     <child>
                       <object class="GtkRevealer" id="song_revealer">
                         <binding name="reveal-child">
-                          <lookup name="has-song" type="SwPlayer">
+                          <lookup name="has-playing-song" type="SwPlayer">
                             <lookup name="player">SwPlayerView</lookup>
                           </lookup>
                         </binding>
@@ -81,7 +79,7 @@
                                 <property name="lines">2</property>
                                 <binding name="label">
                                   <lookup name="title" type="SwSong">
-                                    <lookup name="song" type="SwPlayer">
+                                    <lookup name="playing-song" type="SwPlayer">
                                       <lookup name="player">SwPlayerView</lookup>
                                     </lookup>
                                   </lookup>
@@ -217,47 +215,45 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkBox">
-                        <property name="spacing">6</property>
-                        <property name="halign">center</property>
-                        <property name="hexpand">true</property>
-                        <property name="visible">False</property>
+                      <object class="GtkStack" id="past_songs_stack">
+                        <property name="transition_type">crossfade</property>
+                        <property name="hhomogeneous">false</property>
+                        <property name="vhomogeneous">false</property>
+                        <property name="margin_bottom">12</property>
                         <child>
-                          <object class="SwRecordingIndicator"/>
+                          <object class="GtkBox">
+                            <property name="orientation">vertical</property>
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="label" translatable="yes">No Songs</property>
+                                <property name="justify">center</property>
+                                <property name="ellipsize">end</property>
+                                <style>
+                                  <class name="title-2"/>
+                                  <class name="dim-label"/>
+                                </style>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="label" translatable="yes">Songs that have been identified and recorded using the stream metadata will appear here.</property>
+                                <property name="justify">center</property>
+                                <property name="wrap">True</property>
+                                <style>
+                                  <class name="dim-label"/>
+                                </style>
+                              </object>
+                            </child>
+                          </object>
                         </child>
                         <child>
-                          <object class="GtkButton">
-                            <property name="tooltip_text" translatable="yes">Recording Settings</property>
-                            <property name="valign">center</property>
-                            <property name="icon_name">view-more-symbolic</property>
+                          <object class="GtkListBox" id="past_songs_listbox">
+                            <property name="selection-mode">none</property>
                             <style>
-                              <class name="circular"/>
+                              <class name="boxed-list"/>
                             </style>
                           </object>
                         </child>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkLabel">
-                        <property name="label" translatable="yes">No Songs</property>
-                        <property name="justify">center</property>
-                        <property name="ellipsize">end</property>
-                        <property name="margin_top">18</property>
-                        <property name="margin_bottom">9</property>
-                        <style>
-                          <class name="title-2"/>
-                          <class name="dim-label"/>
-                        </style>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkLabel">
-                        <property name="label" translatable="yes">Songs that have been identified and recorded using the stream metadata will appear here.</property>
-                        <property name="justify">center</property>
-                        <property name="wrap">True</property>
-                        <style>
-                          <class name="dim-label"/>
-                        </style>
                       </object>
                     </child>
                   </object>

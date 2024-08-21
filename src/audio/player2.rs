@@ -27,8 +27,9 @@ use gtk::glib::Enum;
 use crate::api::SwStation;
 use crate::app::SwApplication;
 use crate::audio::backend::*;
-use crate::audio::{GCastDevice, MprisServer, PlaybackState, SwSong, SwSongState};
+use crate::audio::{MprisServer, PlaybackState, SwSong, SwSongState};
 use crate::i18n::*;
+use crate::model::SwSongModel;
 use crate::settings::{settings_manager, Key};
 use crate::ui::SwApplicationWindow;
 
@@ -58,10 +59,12 @@ mod imp {
         #[property(get)]
         last_failure: RefCell<String>,
         #[property(get)]
-        #[property(name="has-song", get=Self::has_song, type=bool)]
-        song: RefCell<Option<SwSong>>,
+        #[property(name="has-playing-song", get=Self::has_playing_song, type=bool)]
+        playing_song: RefCell<Option<SwSong>>,
         #[property(get)]
         previous_song: RefCell<Option<SwSong>>,
+        #[property(get)]
+        past_songs: SwSongModel,
         #[property(get, set=Self::set_volume)]
         volume: Cell<f64>,
 
@@ -118,8 +121,8 @@ mod imp {
             self.obj().station().is_some()
         }
 
-        fn has_song(&self) -> bool {
-            self.obj().song().is_some()
+        fn has_playing_song(&self) -> bool {
+            self.obj().playing_song().is_some()
         }
 
         fn set_station(&self, station: Option<&SwStation>) {
@@ -157,20 +160,20 @@ mod imp {
 
                     // Stop recording of old song
                     if let Some(song) = self.stop_recording(false) {
-                        // TODO: add to model
+                        self.past_songs.add_song(&song);
                     }
 
                     // Set previous song
-                    *self.previous_song.borrow_mut() = self.song.borrow_mut().take();
+                    *self.previous_song.borrow_mut() = self.playing_song.borrow_mut().take();
                     self.obj().notify_previous_song();
 
                     // Set new song
                     let song = SwSong::new(&title, &self.obj().station().unwrap());
                     self.start_recording(&song);
-                    *self.song.borrow_mut() = Some(song);
+                    *self.playing_song.borrow_mut() = Some(song);
 
-                    self.obj().notify_song();
-                    self.obj().notify_has_song();
+                    self.obj().notify_playing_song();
+                    self.obj().notify_has_playing_song();
 
                     // Show desktop notification
                     if settings_manager::boolean(Key::Notifications) {
@@ -227,10 +230,10 @@ mod imp {
         }
 
         pub fn clear_song(&self) {
-            *self.song.borrow_mut() = None;
+            *self.playing_song.borrow_mut() = None;
             *self.previous_song.borrow_mut() = None;
-            self.obj().notify_song();
-            self.obj().notify_has_song();
+            self.obj().notify_playing_song();
+            self.obj().notify_has_playing_song();
             self.obj().notify_previous_song();
         }
 
@@ -262,7 +265,7 @@ mod imp {
                 return None;
             }
 
-            let song = if let Some(song) = self.obj().song() {
+            let song = if let Some(song) = self.obj().playing_song() {
                 song
             } else {
                 warn!("No song available, discard recorded data.");
