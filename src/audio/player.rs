@@ -211,12 +211,12 @@ impl Player {
     }
 
     pub fn save_song(&self, song: Song) {
-        if let Err(err) = self.backend.borrow().song.save_song(song) {
+        /*if let Err(err) = self.backend.borrow().song.save_song(song) {
             warn!("Cannot save song: {}", err.to_string());
 
             let text = i18n("Cannot save song.");
             SwApplicationWindow::default().show_notification(&text);
-        }
+        }*/
     }
 
     pub fn connect_to_gcast_device(&self, device: GCastDevice) {

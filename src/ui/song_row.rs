@@ -74,15 +74,14 @@ mod imp {
                 #[weak(rename_to = imp)]
                 self,
                 move |_| {
-                    // Save the song
-                    // TODO: let sender = imp.sender.get().unwrap();
-                    let song = imp.song.get().unwrap();
-                    //crate::utils::send(sender, Action::PlaybackSaveSong(song.clone()));
-
-                    // Display play button instead of save button
-                    imp.button_stack.set_visible_child_name("open");
-                    imp.obj()
-                        .set_activatable_widget(Some(&imp.open_button.get()));
+                    if let Err(err) = imp.obj().song().save() {
+                        error!("Unable to save song: {}", err.to_string());
+                    } else {
+                        // Display play button instead of save button
+                        imp.button_stack.set_visible_child_name("open");
+                        imp.obj()
+                            .set_activatable_widget(Some(&imp.open_button.get()));
+                    }
                 }
             ));
 
