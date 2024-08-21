@@ -81,6 +81,12 @@ mod imp {
 
             self.file.set(gio::File::for_path(path)).unwrap();
         }
+
+        fn dispose(&self) {
+            if let Err(err) = self.obj().file().delete(gio::Cancellable::NONE) {
+                error!("Unable to delete recorded file: {}", err.to_string());
+            }
+        }
     }
 }
 
