@@ -43,6 +43,7 @@ impl PartialEq for Song {
 }
 
 use std::cell::{Cell, OnceCell};
+use std::hash::{DefaultHasher, Hash, Hasher};
 
 use adw::prelude::*;
 use glib::subclass::prelude::*;
@@ -73,6 +74,8 @@ mod imp {
     #[properties(wrapper_type = super::SwSong)]
     pub struct SwSong {
         #[property(get, construct_only)]
+        id: Cell<u64>,
+        #[property(get, construct_only)]
         title: OnceCell<String>,
         #[property(get, construct_only)]
         station: OnceCell<SwStation>,
@@ -93,10 +96,13 @@ mod imp {
         fn constructed(&self) {
             self.parent_constructed();
 
-            let filename = sanitize_filename::sanitize(self.obj().title() + ".ogg");
-            let mut path = crate::path::CACHE.clone();
+            let mut hasher = DefaultHasher::new();
+            self.obj().title().hash(&mut hasher);
+            self.id.set(hasher.finish());
+
+            let mut path = crate::path::DATA.clone();
             path.push("recording");
-            path.push(filename);
+            path.push(self.obj().id().to_string() + ".ogg");
 
             self.file.set(gio::File::for_path(path)).unwrap();
         }

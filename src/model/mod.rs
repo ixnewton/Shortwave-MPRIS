@@ -1,5 +1,5 @@
 // Shortwave - mod.rs
-// Copyright (C) 2021  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2021-2024  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,8 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+mod song_model;
 mod station_model;
 mod station_sorter;
 
+pub use song_model::SwSongModel;
 pub use station_model::SwStationModel;
 pub use station_sorter::{SwSorting, SwStationSorter};

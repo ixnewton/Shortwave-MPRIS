@@ -53,6 +53,7 @@ src/database/schema.rs
 src/i18n.rs
 src/main.rs
 src/model/mod.rs
+src/model/song_model.rs
 src/model/station_model.rs
 src/model/station_sorter.rs
 src/path.rs
