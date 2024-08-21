@@ -34,7 +34,6 @@ src/api/stats.rs
 src/app.rs
 src/audio/backend/gstreamer_backend.rs
 src/audio/backend/mod.rs
-src/audio/backend/song_backend.rs
 src/audio/controller/gcast_controller.rs
 src/audio/controller/mini_controller.rs
 src/audio/controller/mod.rs

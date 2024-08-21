@@ -18,7 +18,6 @@ use std::cell::RefCell;
 use std::fs;
 use std::path::PathBuf;
 use std::rc::Rc;
-use std::time::Duration;
 
 use adw::prelude::*;
 use async_channel::Sender;
@@ -30,7 +29,7 @@ use crate::app::Action;
 use crate::audio::backend::*;
 #[cfg(unix)]
 use crate::audio::controller::{Controller, GCastController, MiniController};
-use crate::audio::{GCastDevice, Song};
+use crate::audio::GCastDevice;
 use crate::i18n::*;
 use crate::settings::{settings_manager, Key};
 use crate::ui::SwApplicationWindow;
@@ -210,15 +209,6 @@ impl Player {
         settings_manager::set_double(Key::PlaybackVolume, volume);
     }
 
-    pub fn save_song(&self, song: Song) {
-        /*if let Err(err) = self.backend.borrow().song.save_song(song) {
-            warn!("Cannot save song: {}", err.to_string());
-
-            let text = i18n("Cannot save song.");
-            SwApplicationWindow::default().show_notification(&text);
-        }*/
-    }
-
     pub fn connect_to_gcast_device(&self, device: GCastDevice) {
         get_widget!(self.builder, adw::ActionRow, stream_row);
         get_widget!(self.builder, gtk::Revealer, stream_revealer);
@@ -285,14 +275,16 @@ impl Player {
                     if duration > threshold {
                         backend.gstreamer.stop_recording(false);
 
-                        let duration = Duration::from_secs(duration);
+                        /*let duration = Duration::from_secs(duration);
                         let song = self
                             .song_title
                             .borrow()
                             .create_song(duration)
                             .expect("Unable to create new song");
 
+
                         backend.song.add_song(song);
+                        */
                     } else {
                         debug!("Discard recorded data, song duration ({} sec) is below threshold ({} sec).", duration, threshold);
                         backend.gstreamer.stop_recording(true);
@@ -393,17 +385,6 @@ impl SongTitle {
 
     pub fn current_title(&self) -> Option<String> {
         self.current_title.clone()
-    }
-
-    /// Returns song for current title
-    pub fn create_song(&self, duration: Duration) -> Option<Song> {
-        if let Some(title) = &self.current_title {
-            let path = self
-                .current_path()
-                .expect("Unable to get path for current song");
-            return Some(Song::new(title, path, duration));
-        }
-        None
     }
 
     /// Returns path for current title

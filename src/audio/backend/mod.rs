@@ -15,32 +15,19 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 mod gstreamer_backend;
-mod song_backend;
 
 use async_channel::Receiver;
 use gstreamer_backend::GstreamerBackend;
 pub use gstreamer_backend::GstreamerChange;
-use song_backend::SongBackend;
-
-use crate::settings::{settings_manager, Key};
 
 #[derive(Debug)]
 pub struct Backend {
     pub gstreamer: GstreamerBackend,
     pub gstreamer_receiver: Option<Receiver<GstreamerChange>>,
-
-    pub song: SongBackend,
 }
 
 impl Default for Backend {
     fn default() -> Self {
-        // Song backend
-        let save_count: usize = settings_manager::integer(Key::RecorderSaveCount)
-            .try_into()
-            .unwrap();
-        let song = SongBackend::new(save_count);
-        song.delete_songs(); // Delete old songs
-
         // Gstreamer backend
         let (gstreamer_sender, gstreamer_receiver) = async_channel::bounded(10);
         let gstreamer_receiver = Some(gstreamer_receiver);
@@ -49,7 +36,6 @@ impl Default for Backend {
         Self {
             gstreamer,
             gstreamer_receiver,
-            song,
         }
     }
 }
