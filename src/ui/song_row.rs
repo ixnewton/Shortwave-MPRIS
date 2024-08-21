@@ -63,7 +63,7 @@ mod imp {
             self.parent_constructed();
             let obj = self.obj();
 
-            let dt = glib::DateTime::from_unix_local(0).unwrap();
+            let dt = glib::DateTime::from_unix_local(obj.song().duration() as i64).unwrap();
             let duration = dt.format("%M:%S").unwrap_or_default().to_string();
 
             obj.set_title(&obj.song().title());

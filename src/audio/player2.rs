@@ -309,8 +309,11 @@ mod imp {
             } else if duration > threshold as u64 {
                 debug!("Save recorded data.");
 
+                let duration = backend.recording_duration();
                 backend.stop_recording(false);
+
                 song.set_state(SwSongState::Recorded);
+                song.set_duration(duration);
 
                 Some(song)
             } else {

@@ -59,6 +59,8 @@ mod imp {
         file: OnceCell<gio::File>,
         #[property(get, set, builder(SwSongState::default()))]
         state: Cell<SwSongState>,
+        #[property(get, set)]
+        duration: Cell<u64>,
     }
 
     #[glib::object_subclass]
