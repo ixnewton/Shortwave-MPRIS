@@ -25,12 +25,10 @@ use crate::audio::Song;
 use crate::i18n::i18n;
 use crate::path;
 use crate::settings::{settings_manager, Key};
-use crate::ui::{SongListBox, SwApplicationWindow};
+use crate::ui::SwApplicationWindow;
 
 #[derive(Debug)]
 pub struct SongBackend {
-    pub listbox: SongListBox,
-
     songs: IndexMap<String, Song>,
     save_count: usize,
 }
@@ -44,14 +42,9 @@ pub struct SongBackend {
 
 impl SongBackend {
     pub fn new(save_count: usize) -> Self {
-        let listbox = SongListBox::new();
         let songs = IndexMap::new();
 
-        Self {
-            listbox,
-            songs,
-            save_count,
-        }
+        Self { songs, save_count }
     }
 
     pub fn add_song(&mut self, song: Song) {
@@ -65,7 +58,6 @@ impl SongBackend {
             }
 
             // Add song to indexmap & listbox
-            self.listbox.add_song(song.clone());
             self.songs.insert(song.title.to_string(), song);
         } else {
             warn!("Song \"{}\" is already recorded", song.title);
@@ -80,7 +72,6 @@ impl SongBackend {
         fs::remove_file(&song.path).expect("Could not delete old song from disk.");
 
         // Removes the last row in song listbox
-        self.listbox.remove_last_row();
     }
 
     pub fn save_song(&self, song: Song) -> Result<(), Error> {

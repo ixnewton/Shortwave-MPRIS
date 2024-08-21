@@ -74,7 +74,6 @@ src/ui/player/mod.rs
 src/ui/player/player_toolbar.rs
 src/ui/player/player_view.rs
 src/ui/recording_indicator.rs
-src/ui/song_listbox.rs
 src/ui/song_row.rs
 src/ui/station_dialog.rs
 src/ui/station_flowbox.rs
