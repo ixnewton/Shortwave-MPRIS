@@ -25,6 +25,7 @@ mod player;
 mod player2;
 mod song;
 
+pub use backend::GstreamerBackend;
 pub use gcast_discoverer::{GCastDevice, GCastDiscoverer, GCastDiscovererMessage};
 pub use mpris::MprisServer;
 pub use player::{PlaybackState, Player};

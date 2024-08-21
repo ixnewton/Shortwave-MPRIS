@@ -15,9 +15,9 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 mod gstreamer_backend;
+pub use gstreamer_backend::GstreamerBackend;
 
 use async_channel::Receiver;
-use gstreamer_backend::GstreamerBackend;
 pub use gstreamer_backend::GstreamerChange;
 
 #[derive(Debug)]

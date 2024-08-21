@@ -26,6 +26,7 @@ use gtk::glib::Enum;
 
 use crate::api::SwStation;
 use crate::app::SwApplication;
+use crate::audio::backend::GstreamerBackend;
 use crate::audio::backend::*;
 use crate::audio::{MprisServer, PlaybackState, SwSong, SwSongState};
 use crate::i18n::*;
@@ -69,7 +70,7 @@ mod imp {
         #[property(get, set=Self::set_volume)]
         volume: Cell<f64>,
 
-        pub backend: RefCell<Backend>,
+        pub backend: OnceCell<RefCell<GstreamerBackend>>,
         pub mpris_server: OnceCell<MprisServer>,
         pub inhibit_cookie: Cell<u32>,
     }
@@ -96,8 +97,13 @@ mod imp {
             self.past_songs
                 .set_max_count(settings_manager::integer(Key::RecorderSaveCount) as u32);
 
+            // Setup Gstreamer backend
+            let (sender, receiver) = async_channel::bounded(10);
+            self.backend
+                .set(RefCell::new(GstreamerBackend::new(sender)))
+                .unwrap();
+
             // Receive change messages from gstreamer backend
-            let receiver = self.backend.borrow_mut().gstreamer_receiver.take().unwrap();
             glib::spawn_future_local(clone!(
                 #[strong]
                 receiver,
@@ -148,8 +154,9 @@ mod imp {
                 if let Some(url) = station.stream_url() {
                     debug!("Start playing new URI: {}", url.to_string());
                     self.backend
+                        .get()
+                        .unwrap()
                         .borrow_mut()
-                        .gstreamer
                         .set_source_uri(url.as_ref());
                 } else {
                     let text = i18n("Station cannot be streamed. URL is not valid.");
@@ -160,7 +167,7 @@ mod imp {
 
         fn set_volume(&self, volume: f64) {
             debug!("Set volume: {}", &volume);
-            self.backend.borrow().gstreamer.set_volume(volume);
+            self.backend.get().unwrap().borrow().set_volume(volume);
             self.volume.set(volume);
             settings_manager::set_double(Key::PlaybackVolume, volume);
         }
@@ -203,7 +210,7 @@ mod imp {
 
                             // Discard recorded data when a failure occurs,
                             // since the song has not been recorded completely.
-                            if self.backend.borrow().gstreamer.is_recording() {
+                            if self.backend.get().unwrap().borrow().is_recording() {
                                 self.stop_recording(true);
                                 self.clear_song();
                             }
@@ -258,7 +265,11 @@ mod imp {
                 fs::create_dir_all(path.parent().unwrap())
                     .expect("Could not create path for recording");
                 song.set_state(SwSongState::Recording);
-                self.backend.borrow_mut().gstreamer.start_recording(path);
+                self.backend
+                    .get()
+                    .unwrap()
+                    .borrow_mut()
+                    .start_recording(path);
             } else {
                 debug!(
                     "Song {:?} will not be recorded because it may be incomplete.",
@@ -270,9 +281,9 @@ mod imp {
         /// Returns song object if a complete song has been recorded
         pub fn stop_recording(&self, discard_data: bool) -> Option<SwSong> {
             debug!("Stop recording...");
-            let backend = &mut self.backend.borrow_mut();
+            let backend = &mut self.backend.get().unwrap().borrow_mut();
 
-            if !backend.gstreamer.is_recording() {
+            if !backend.is_recording() {
                 debug!("No recording, nothing to stop!");
                 return None;
             }
@@ -281,24 +292,24 @@ mod imp {
                 song
             } else {
                 warn!("No song available, discard recorded data.");
-                backend.gstreamer.stop_recording(true);
+                backend.stop_recording(true);
                 return None;
             };
 
             let threshold = settings_manager::integer(Key::RecorderSongDurationThreshold);
-            let duration: u64 = backend.gstreamer.recording_duration();
+            let duration: u64 = backend.recording_duration();
 
             if discard_data {
                 debug!("Discard recorded data.");
 
-                backend.gstreamer.stop_recording(true);
+                backend.stop_recording(true);
                 song.set_state(SwSongState::Discarded);
 
                 None
             } else if duration > threshold as u64 {
                 debug!("Save recorded data.");
 
-                backend.gstreamer.stop_recording(false);
+                backend.stop_recording(false);
                 song.set_state(SwSongState::Recorded);
 
                 Some(song)
@@ -308,7 +319,7 @@ mod imp {
                     duration, threshold
                 );
 
-                backend.gstreamer.stop_recording(true);
+                backend.stop_recording(true);
                 song.set_state(SwSongState::BelowThreshold);
 
                 None
@@ -333,8 +344,9 @@ impl SwPlayer {
 
         self.imp()
             .backend
+            .get()
+            .unwrap()
             .borrow_mut()
-            .gstreamer
             .set_state(gstreamer::State::Playing);
     }
 
@@ -346,8 +358,9 @@ impl SwPlayer {
         imp.clear_song();
 
         imp.backend
+            .get()
+            .unwrap()
             .borrow_mut()
-            .gstreamer
             .set_state(gstreamer::State::Null);
     }
 
@@ -362,7 +375,12 @@ impl SwPlayer {
     }
 
     pub fn recording_duration(&self) -> u64 {
-        self.imp().backend.borrow().gstreamer.recording_duration()
+        self.imp()
+            .backend
+            .get()
+            .unwrap()
+            .borrow()
+            .recording_duration()
     }
 }
 
