@@ -85,8 +85,10 @@ mod imp {
         }
 
         fn dispose(&self) {
-            if let Err(err) = self.obj().file().delete(gio::Cancellable::NONE) {
-                error!("Unable to delete recorded file: {}", err.to_string());
+            if self.obj().state() == SwSongState::Recorded {
+                if let Err(err) = self.obj().file().delete(gio::Cancellable::NONE) {
+                    error!("Unable to delete recorded file: {}", err.to_string());
+                }
             }
         }
     }
