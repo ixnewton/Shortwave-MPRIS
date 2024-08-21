@@ -14,8 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use std::cell::RefCell;
+use std::cell::{Cell, RefCell};
 
+use glib::Properties;
 use gtk::prelude::*;
 use gtk::subclass::prelude::*;
 use gtk::{gio, glib};
@@ -26,9 +27,13 @@ use crate::audio::SwSong;
 mod imp {
     use super::*;
 
-    #[derive(Debug, Default)]
+    #[derive(Debug, Properties, Default)]
+    #[properties(wrapper_type = super::SwSongModel)]
     pub struct SwSongModel {
-        pub map: RefCell<IndexMap<u64, SwSong>>,
+        #[property(get, set)]
+        max_count: Cell<u32>,
+
+        pub map: RefCell<IndexMap<String, SwSong>>,
     }
 
     #[glib::object_subclass]
@@ -38,6 +43,7 @@ mod imp {
         type Interfaces = (gio::ListModel,);
     }
 
+    #[glib::derived_properties]
     impl ObjectImpl for SwSongModel {}
 
     impl ListModelImpl for SwSongModel {
@@ -56,6 +62,28 @@ mod imp {
                 .map(|(_, o)| o.clone().upcast::<glib::Object>())
         }
     }
+
+    impl SwSongModel {
+        pub fn purge_songs(&self) {
+            let removed = {
+                let mut map = self.map.borrow_mut();
+
+                if map.len() > self.obj().max_count() as usize {
+                    dbg!(&map);
+                    let len = map.split_off((self.obj().max_count()) as usize).len();
+                    dbg!(&map);
+                    len
+                } else {
+                    0
+                }
+            };
+
+            if removed > 0 {
+                self.obj()
+                    .items_changed(self.obj().max_count(), removed as u32, 0);
+            }
+        }
+    }
 }
 
 glib::wrapper! {
@@ -68,30 +96,18 @@ impl SwSongModel {
     }
 
     pub fn add_song(&self, song: &SwSong) {
-        let pos = {
+        {
             let mut map = self.imp().map.borrow_mut();
-            if map.contains_key(&song.id()) {
+            if map.contains_key(&song.uuid()) {
                 warn!("song {:?} already exists in model", song.title());
                 return;
             }
 
-            map.insert(song.id(), song.clone());
-            (map.len() - 1) as u32
-        };
-
-        self.items_changed(pos, 0, 1);
-    }
-
-    pub fn remove_song(&self, song: &SwSong) {
-        let mut map = self.imp().map.borrow_mut();
-
-        match map.get_index_of(&song.id()) {
-            Some(pos) => {
-                map.shift_remove_full(&song.id());
-                self.items_changed(pos.try_into().unwrap(), 1, 0);
-            }
-            None => warn!("song {:?} not found in model", song.title()),
+            map.shift_insert(0, song.uuid(), song.clone());
         }
+
+        self.items_changed(0, 0, 1);
+        self.imp().purge_songs();
     }
 }
 

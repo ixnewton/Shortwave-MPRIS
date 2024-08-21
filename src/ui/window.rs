@@ -19,11 +19,10 @@ use std::rc::Rc;
 
 use adw::prelude::*;
 use adw::subclass::prelude::*;
-use async_channel::Sender;
 use glib::{clone, subclass};
 use gtk::{gio, glib, CompositeTemplate};
 
-use crate::app::{Action, SwApplication};
+use crate::app::SwApplication;
 use crate::audio::Player;
 use crate::config;
 use crate::model::SwSorting;

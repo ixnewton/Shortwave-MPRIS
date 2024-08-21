@@ -30,6 +30,7 @@ use crate::audio::backend::*;
 use crate::audio::{MprisServer, PlaybackState, SwSong, SwSongState};
 use crate::i18n::*;
 use crate::model::SwSongModel;
+use crate::path;
 use crate::settings::{settings_manager, Key};
 use crate::ui::SwApplicationWindow;
 
@@ -83,6 +84,17 @@ mod imp {
     impl ObjectImpl for SwPlayer {
         fn constructed(&self) {
             self.parent_constructed();
+
+            // Cleanup recording directory
+            let mut path = path::DATA.clone();
+            path.push("recording");
+            if path.exists() {
+                fs::remove_dir_all(path).expect("Could not delete recording directory.");
+            }
+
+            // Set how many songs will be saved before they are replaced with newer recordings
+            self.past_songs
+                .set_max_count(settings_manager::integer(Key::RecorderSaveCount) as u32);
 
             // Receive change messages from gstreamer backend
             let receiver = self.backend.borrow_mut().gstreamer_receiver.take().unwrap();
