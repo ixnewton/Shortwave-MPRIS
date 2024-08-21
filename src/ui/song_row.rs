@@ -18,17 +18,17 @@ use std::cell::OnceCell;
 
 use adw::prelude::*;
 use adw::subclass::prelude::*;
-use chrono::NaiveTime;
-use glib::{clone, subclass};
+use glib::{clone, subclass, Properties};
 use gtk::{gio, glib, CompositeTemplate};
 
-use crate::audio::Song;
+use crate::audio::SwSong;
 use crate::ui::SwApplicationWindow;
 
 mod imp {
     use super::*;
 
-    #[derive(Debug, Default, CompositeTemplate)]
+    #[derive(Debug, Default, Properties, CompositeTemplate)]
+    #[properties(wrapper_type = super::SwSongRow)]
     #[template(resource = "/de/haeckerfelix/Shortwave/gtk/song_row.ui")]
     pub struct SwSongRow {
         #[template_child]
@@ -38,7 +38,8 @@ mod imp {
         #[template_child]
         pub button_stack: TemplateChild<gtk::Stack>,
 
-        pub song: OnceCell<Song>,
+        #[property(get, set, construct_only)]
+        pub song: OnceCell<SwSong>,
     }
 
     #[glib::object_subclass]
@@ -56,7 +57,51 @@ mod imp {
         }
     }
 
-    impl ObjectImpl for SwSongRow {}
+    #[glib::derived_properties]
+    impl ObjectImpl for SwSongRow {
+        fn constructed(&self) {
+            self.parent_constructed();
+            let obj = self.obj();
+
+            let dt = glib::DateTime::from_unix_local(0).unwrap();
+            let duration = dt.format("%M:%S").unwrap_or_default().to_string();
+
+            obj.set_title(&obj.song().title());
+            obj.set_tooltip_text(Some(&obj.song().title()));
+            obj.set_subtitle(&duration);
+
+            self.save_button.connect_clicked(clone!(
+                #[weak(rename_to = imp)]
+                self,
+                move |_| {
+                    // Save the song
+                    // TODO: let sender = imp.sender.get().unwrap();
+                    let song = imp.song.get().unwrap();
+                    //crate::utils::send(sender, Action::PlaybackSaveSong(song.clone()));
+
+                    // Display play button instead of save button
+                    imp.button_stack.set_visible_child_name("open");
+                    imp.obj()
+                        .set_activatable_widget(Some(&imp.open_button.get()));
+                }
+            ));
+
+            self.open_button.connect_clicked(clone!(
+                #[weak(rename_to = imp)]
+                self,
+                move |_| {
+                    let file = imp.obj().song().file();
+                    let launcher = gtk::FileLauncher::new(Some(&file));
+                    let window = SwApplicationWindow::default();
+                    launcher.launch(Some(&window), gio::Cancellable::NONE, |res| {
+                        if let Err(err) = res {
+                            error!("Could not open dir: {err}");
+                        }
+                    });
+                }
+            ));
+        }
+    }
 
     impl WidgetImpl for SwSongRow {}
 
@@ -73,69 +118,7 @@ glib::wrapper! {
 }
 
 impl SwSongRow {
-    pub fn new(song: Song) -> Self {
-        let row = glib::Object::new::<Self>();
-
-        // Set information
-        let duration = Self::format_duration(song.duration.as_secs());
-        row.set_title(&song.title);
-        row.set_tooltip_text(Some(&song.title));
-        row.set_subtitle(&duration);
-
-        let imp = row.imp();
-        imp.song.set(song).unwrap();
-
-        row.setup_signals();
-        row
-    }
-
-    fn setup_signals(&self) {
-        let imp = self.imp();
-
-        imp.save_button.connect_clicked(clone!(
-            #[weak(rename_to = this)]
-            self,
-            move |_| {
-                let imp = this.imp();
-
-                // Save the song
-                // TODO: let sender = imp.sender.get().unwrap();
-                let song = imp.song.get().unwrap();
-                //crate::utils::send(sender, Action::PlaybackSaveSong(song.clone()));
-
-                // Display play button instead of save button
-                imp.button_stack.set_visible_child_name("open");
-                this.set_activatable_widget(Some(&imp.open_button.get()));
-            }
-        ));
-
-        imp.open_button.connect_clicked(clone!(
-            #[strong(rename_to = this)]
-            self,
-            move |_| {
-                let song = this.imp().song.get().unwrap();
-                let file = gio::File::for_path(&song.path);
-                let launcher = gtk::FileLauncher::new(Some(&file));
-                let window = SwApplicationWindow::default();
-                launcher.launch(Some(&window), gio::Cancellable::NONE, |res| {
-                    if let Err(err) = res {
-                        error!("Could not open dir: {err}");
-                    }
-                })
-            }
-        ));
-    }
-
-    // stolen from gnome-podcasts
-    // https://gitlab.gnome.org/haecker-felix/podcasts/blob/2f8a6a91f87d7fa335a954bbaf2f70694f32f6dd/podcasts-gtk/src/widgets/player.rs#L168
-    fn format_duration(seconds: u64) -> String {
-        debug!("Format duration (seconds): {}", &seconds);
-        let time = NaiveTime::from_num_seconds_from_midnight_opt(seconds as u32, 0).unwrap();
-
-        if seconds >= 3600 {
-            time.format("%T").to_string()
-        } else {
-            time.format("%M∶%S").to_string()
-        }
+    pub fn new(song: SwSong) -> Self {
+        glib::Object::builder().property("song", &song).build()
     }
 }
