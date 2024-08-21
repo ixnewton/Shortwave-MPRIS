@@ -42,14 +42,14 @@ impl PartialEq for Song {
     }
 }
 
-use std::cell::{Cell, OnceCell};
-use std::hash::{DefaultHasher, Hash, Hasher};
+use std::cell::{Cell, OnceCell, RefCell};
 
 use adw::prelude::*;
 use glib::subclass::prelude::*;
 use glib::Properties;
 use gtk::glib::Enum;
 use gtk::{gio, glib};
+use uuid::Uuid;
 
 use crate::api::SwStation;
 
@@ -73,8 +73,8 @@ mod imp {
     #[derive(Debug, Default, Properties)]
     #[properties(wrapper_type = super::SwSong)]
     pub struct SwSong {
-        #[property(get, construct_only)]
-        id: Cell<u64>,
+        #[property(get)]
+        uuid: RefCell<String>,
         #[property(get, construct_only)]
         title: OnceCell<String>,
         #[property(get, construct_only)]
@@ -96,13 +96,12 @@ mod imp {
         fn constructed(&self) {
             self.parent_constructed();
 
-            let mut hasher = DefaultHasher::new();
-            self.obj().title().hash(&mut hasher);
-            self.id.set(hasher.finish());
+            let uuid = Uuid::new_v4().to_string();
+            *self.uuid.borrow_mut() = uuid;
 
             let mut path = crate::path::DATA.clone();
             path.push("recording");
-            path.push(self.obj().id().to_string() + ".ogg");
+            path.push(self.obj().uuid().to_string() + ".ogg");
 
             self.file.set(gio::File::for_path(path)).unwrap();
         }
