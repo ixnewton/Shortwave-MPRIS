@@ -12,7 +12,7 @@
     </child>
     <child>
       <object class="AdwBreakpoint">
-        <condition>max-height: 150px</condition>
+        <condition>max-height: 165px</condition>
         <setter object="stack" property="visible-child">gadget_handle</setter>
       </object>
     </child>
