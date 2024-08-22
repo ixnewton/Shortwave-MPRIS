@@ -15,10 +15,8 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 mod gcast_controller;
-mod mini_controller;
 #[cfg(unix)]
 pub use gcast_controller::GCastController;
-pub use mini_controller::MiniController;
 
 use crate::api::SwStation;
 use crate::audio::PlaybackState;

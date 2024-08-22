@@ -13,7 +13,7 @@
     <child>
       <object class="AdwBreakpoint">
         <condition>max-height: 150px</condition>
-        <setter object="stack" property="visible-child">mini_controller_handle</setter>
+        <setter object="stack" property="visible-child">gadget_handle</setter>
       </object>
     </child>
     <child>
@@ -92,9 +92,9 @@
           </object>
         </child>
         <child>
-          <object class="GtkWindowHandle" id="mini_controller_handle">
+          <object class="GtkWindowHandle" id="gadget_handle">
             <child>
-              <object class="GtkBox" id="mini_controller_box" />
+              <object class="SwPlayerGadget" id="player_gadget" />
             </child>
           </object>
         </child>

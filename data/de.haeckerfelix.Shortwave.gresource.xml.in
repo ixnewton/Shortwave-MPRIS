@@ -9,7 +9,7 @@
     <file compressed="true" preprocess="xml-stripblanks">gtk/featured_carousel_page.ui</file>
     <file compressed="true" preprocess="xml-stripblanks" alias="gtk/help-overlay.ui">gtk/help_overlay.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">gtk/library_page.ui</file>
-    <file compressed="true" preprocess="xml-stripblanks">gtk/mini_controller.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">gtk/player_gadget.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">gtk/player_toolbar.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">gtk/player_view.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">gtk/player.ui</file>

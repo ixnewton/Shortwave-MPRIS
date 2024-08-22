@@ -15,7 +15,6 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 use std::cell::OnceCell;
-use std::rc::Rc;
 
 use adw::prelude::*;
 use adw::subclass::prelude::*;
@@ -23,12 +22,11 @@ use glib::{clone, subclass};
 use gtk::{gio, glib, CompositeTemplate};
 
 use crate::app::SwApplication;
-use crate::audio::Player;
 use crate::config;
 use crate::model::SwSorting;
 use crate::settings::{settings_manager, Key};
 use crate::ui::pages::*;
-use crate::ui::player::{SwPlayerToolbar, SwPlayerView};
+use crate::ui::player::{SwPlayerGadget, SwPlayerToolbar, SwPlayerView};
 use crate::ui::{SwCreateStationDialog, SwStationDialog, SwStreamingDialog};
 
 mod imp {
@@ -45,7 +43,7 @@ mod imp {
         pub search_page: TemplateChild<SwSearchPage>,
 
         #[template_child]
-        pub mini_controller_box: TemplateChild<gtk::Box>,
+        pub player_gadget: TemplateChild<SwPlayerGadget>,
         #[template_child]
         pub player_toolbar: TemplateChild<SwPlayerToolbar>,
         #[template_child]
@@ -126,9 +124,7 @@ mod imp {
 
             obj.insert_action_group("player", Some(&player_actions));
 
-            let player = SwApplication::default().imp().legacy_player.clone();
-
-            self.obj().setup_widgets(player);
+            self.obj().setup_widgets();
             self.obj().setup_gactions();
         }
     }
@@ -166,18 +162,14 @@ impl SwApplicationWindow {
         glib::Object::new::<Self>()
     }
 
-    pub fn setup_widgets(&self, player: Rc<Player>) {
+    pub fn setup_widgets(&self) {
         let imp = self.imp();
 
         // Init pages
         imp.library_page.init();
         imp.discover_page.init();
 
-        // Wire everything up
-        imp.mini_controller_box
-            .append(&player.mini_controller_widget);
-
-        // Animations for smooth mini player transitions
+        // Animations for smooth gadget player transitions
         let x_callback = adw::CallbackAnimationTarget::new(clone!(
             #[weak(rename_to = this)]
             self,
@@ -228,16 +220,16 @@ impl SwApplicationWindow {
                     dialog.present(Some(window));
                 })
                 .build(),
-            // win.disable-mini-player
-            gio::ActionEntry::builder("disable-mini-player")
+            // win.disable-gadget-player
+            gio::ActionEntry::builder("disable-gadget-player")
                 .activate(move |window: &Self, _, _| {
-                    window.enable_mini_player(false);
+                    window.enable_gadget_player(false);
                 })
                 .build(),
-            // win.enable-mini-player
-            gio::ActionEntry::builder("enable-mini-player")
+            // win.enable-gadget-player
+            gio::ActionEntry::builder("enable-gadget-player")
                 .activate(move |window: &Self, _, _| {
-                    window.enable_mini_player(true);
+                    window.enable_gadget_player(true);
                 })
                 .build(),
         ]);
@@ -263,8 +255,8 @@ impl SwApplicationWindow {
             .set_sorting(sorting, descending);
     }
 
-    pub fn enable_mini_player(&self, enable: bool) {
-        debug!("Enable mini player: {:?}", enable);
+    pub fn enable_gadget_player(&self, enable: bool) {
+        debug!("Enable gadget player: {:?}", enable);
 
         if self.is_maximized() && enable {
             self.unmaximize();
@@ -274,7 +266,7 @@ impl SwApplicationWindow {
         let mut previous_height = settings_manager::integer(Key::WindowPreviousHeight) as f64;
 
         // Save current window size as previous size, so you can restore it
-        // if you switch between mini player / normal window mode.
+        // if you switch between gadget player / normal window mode.
         let current_width = self.default_size().0;
         let current_height = self.default_size().1;
         settings_manager::set_integer(Key::WindowPreviousWidth, current_width);

@@ -28,7 +28,7 @@ use crate::api::SwStation;
 use crate::app::Action;
 use crate::audio::backend::*;
 #[cfg(unix)]
-use crate::audio::controller::{Controller, GCastController, MiniController};
+use crate::audio::controller::{Controller, GCastController};
 use crate::audio::GCastDevice;
 use crate::i18n::*;
 use crate::settings::{settings_manager, Key};
@@ -72,7 +72,6 @@ pub enum PlaybackState {
 
 pub struct Player {
     pub widget: adw::Bin,
-    pub mini_controller_widget: gtk::Box,
     pub headerbar: adw::HeaderBar,
     controller: Vec<Box<dyn Controller>>,
     gcast_controller: Rc<GCastController>,
@@ -93,11 +92,6 @@ impl Player {
 
         get_widget!(builder, adw::HeaderBar, headerbar);
 
-        // Mini Controller (gets used in phone mode / bottom toolbar)
-        let mini_controller = MiniController::new();
-        let mini_controller_widget = mini_controller.widget.clone();
-        controller.push(Box::new(mini_controller));
-
         // Google Cast Controller
         let gcast_controller = GCastController::new();
         controller.push(Box::new(gcast_controller.clone()));
@@ -116,7 +110,6 @@ impl Player {
 
         let player = Rc::new(Self {
             widget: player,
-            mini_controller_widget,
             headerbar,
             controller,
             gcast_controller,

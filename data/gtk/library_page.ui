@@ -94,8 +94,8 @@
   <menu id="library_menu">
     <section>
       <item>
-        <attribute name="label" translatable="yes">_Enable Mini Player</attribute>
-        <attribute name="action">win.enable-mini-player</attribute>
+        <attribute name="label" translatable="yes">_Enable Gadget Player</attribute>
+        <attribute name="action">win.enable-gadget-player</attribute>
       </item>
       <submenu>
         <attribute name="label" translatable="yes">_Sorting</attribute>

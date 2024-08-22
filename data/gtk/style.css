@@ -26,7 +26,7 @@
   margin: 6px;
 }
 
-.mini-controller {
+.gadget-controller {
   background-image: url('resource://de/haeckerfelix/Shortwave/assets/images/wood.png');
   background-size: cover;
   color: black;
@@ -34,7 +34,7 @@
 
 /* Based on the styling from Pebbles by Subhadeep Jasu */
 /* https://github.com/SubhadeepJasu/pebbles/blob/e8159b8e73f2ceb3597c8fe37fe338ba1fb6f50c/data/Application.css */
-.mini-controller-display {
+.gadget-controller-display {
   background-image: linear-gradient(#b6bfb6, #dae6da);
   border-radius: 12px;
   border: 1px solid alpha(black, 1);
@@ -45,15 +45,15 @@
     0px -1px 0px 0px alpha(black, 0.15);
 }
 
-.mini-controller-button,
-.mini-controller-volume-button>button {
+.gadget-controller-button,
+.gadget-controller-volume-button>button {
   background-image: url('resource://de/haeckerfelix/Shortwave/assets/images/metal.png');
   background-size: cover;
   color: black;
   border: 1px solid alpha(black, 1);
 }
 
-.mini-controller-volume-button>button {
+.gadget-controller-volume-button>button {
   border-radius: 100%;
   padding: 0;
   min-width: 34px;

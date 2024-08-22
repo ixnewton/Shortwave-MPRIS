@@ -14,8 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+mod player_gadget;
 mod player_toolbar;
 mod player_view;
 
+pub use player_gadget::SwPlayerGadget;
 pub use player_toolbar::SwPlayerToolbar;
 pub use player_view::SwPlayerView;
