@@ -22,26 +22,12 @@ use std::rc::Rc;
 use adw::prelude::*;
 use glib::subclass::prelude::*;
 use glib::Properties;
-use gtk::glib::Enum;
 use gtk::{gio, glib};
 use uuid::Uuid;
 
+use super::SwSongState;
 use crate::api::{Error, SwStation};
 use crate::settings::{settings_manager, Key};
-
-#[derive(Display, Copy, Debug, Clone, EnumString, Eq, PartialEq, Enum)]
-#[repr(u32)]
-#[enum_type(name = "SwSongState")]
-#[derive(Default)]
-pub enum SwSongState {
-    Recording,
-    Recorded,
-    #[default]
-    Incomplete,
-    Ignored,
-    BelowThreshold,
-    Discarded,
-}
 
 mod imp {
     use super::*;
@@ -51,9 +37,9 @@ mod imp {
     pub struct SwSong {
         #[property(get)]
         uuid: RefCell<String>,
-        #[property(get, construct_only)]
+        #[property(get, set, construct_only)]
         title: OnceCell<String>,
-        #[property(get, construct_only)]
+        #[property(get, set, construct_only)]
         station: OnceCell<SwStation>,
         #[property(get)]
         file: OnceCell<gio::File>,

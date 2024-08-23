@@ -16,8 +16,10 @@
 
 mod connection;
 mod library;
+mod library_status;
 mod models;
 mod queries;
 mod schema;
 
-pub use library::{SwLibrary, SwLibraryStatus};
+pub use library::SwLibrary;
+pub use library_status::SwLibraryStatus;

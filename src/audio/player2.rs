@@ -22,29 +22,15 @@ use glib::clone;
 use glib::subclass::prelude::*;
 use glib::Properties;
 use gtk::glib;
-use gtk::glib::Enum;
 
 use crate::api::SwStation;
 use crate::app::SwApplication;
-use crate::audio::backend::GstreamerBackend;
 use crate::audio::backend::*;
-use crate::audio::{MprisServer, PlaybackState, SwSong, SwSongModel, SwSongState};
+use crate::audio::*;
 use crate::i18n::*;
 use crate::path;
 use crate::settings::{settings_manager, Key};
 use crate::ui::SwApplicationWindow;
-
-#[derive(Display, Copy, Debug, Clone, EnumString, Eq, PartialEq, Enum)]
-#[repr(u32)]
-#[enum_type(name = "SwPlaybackState")]
-#[derive(Default)]
-pub enum SwPlaybackState {
-    #[default]
-    Stopped,
-    Playing,
-    Loading,
-    Failure,
-}
 
 mod imp {
     use super::*;
