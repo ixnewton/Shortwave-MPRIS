@@ -31,8 +31,8 @@ mod imp {
     pub struct SwStationSorter {
         #[property(get, set)]
         pub descending: Cell<bool>,
-        #[property(get, set, builder(SwSorting::default()))]
-        pub sorting: RefCell<SwSorting>,
+        #[property(get, set, builder(SwStationSorting::default()))]
+        pub sorting: RefCell<SwStationSorting>,
     }
 
     #[glib::object_subclass]
@@ -71,7 +71,7 @@ impl SwStationSorter {
     fn station_cmp(
         a: &SwStation,
         b: &SwStation,
-        sorting: SwSorting,
+        sorting: SwStationSorting,
         descending: bool,
     ) -> std::cmp::Ordering {
         let mut station_a = a.clone();
@@ -82,20 +82,20 @@ impl SwStationSorter {
         }
 
         match sorting {
-            SwSorting::Default => std::cmp::Ordering::Equal,
-            SwSorting::Name => station_a.metadata().name.cmp(&station_b.metadata().name),
-            SwSorting::Language => station_a
+            SwStationSorting::Default => std::cmp::Ordering::Equal,
+            SwStationSorting::Name => station_a.metadata().name.cmp(&station_b.metadata().name),
+            SwStationSorting::Language => station_a
                 .metadata()
                 .language
                 .cmp(&station_b.metadata().language),
-            SwSorting::Country => station_a
+            SwStationSorting::Country => station_a
                 .metadata()
                 .country
                 .cmp(&station_b.metadata().country),
-            SwSorting::State => station_a.metadata().state.cmp(&station_b.metadata().state),
-            SwSorting::Codec => station_a.metadata().codec.cmp(&station_b.metadata().codec),
-            SwSorting::Votes => station_a.metadata().votes.cmp(&station_b.metadata().votes),
-            SwSorting::Bitrate => station_a
+            SwStationSorting::State => station_a.metadata().state.cmp(&station_b.metadata().state),
+            SwStationSorting::Codec => station_a.metadata().codec.cmp(&station_b.metadata().codec),
+            SwStationSorting::Votes => station_a.metadata().votes.cmp(&station_b.metadata().votes),
+            SwStationSorting::Bitrate => station_a
                 .metadata()
                 .bitrate
                 .cmp(&station_b.metadata().bitrate),
@@ -111,9 +111,9 @@ impl Default for SwStationSorter {
 
 #[derive(Display, Copy, Debug, Clone, EnumString, Eq, PartialEq, Enum)]
 #[repr(u32)]
-#[enum_type(name = "SwSorting")]
+#[enum_type(name = "SwStationSorting")]
 #[derive(Default)]
-pub enum SwSorting {
+pub enum SwStationSorting {
     #[default]
     Default,
     Name,

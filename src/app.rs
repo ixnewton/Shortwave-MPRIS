@@ -26,12 +26,11 @@ use glib::{clone, Properties};
 use gtk::glib::WeakRef;
 use gtk::{gio, glib};
 
-use crate::api::SwClient;
+use crate::api::{SwClient, SwStationSorting};
 use crate::audio::SwPlayer;
 use crate::audio::{GCastDevice, Player};
 use crate::config;
 use crate::database::SwLibrary;
-use crate::model::SwSorting;
 use crate::settings::{settings_manager, Key, SwSettingsDialog};
 use crate::ui::{about_dialog, SwApplicationWindow};
 
@@ -267,7 +266,7 @@ impl SwApplication {
         match key {
             Key::ViewSorting | Key::ViewOrder => {
                 let value = settings_manager::string(Key::ViewSorting);
-                let sorting = SwSorting::from_str(&value).unwrap();
+                let sorting = SwStationSorting::from_str(&value).unwrap();
                 let order = settings_manager::string(Key::ViewOrder);
                 let descending = order == "Descending";
 

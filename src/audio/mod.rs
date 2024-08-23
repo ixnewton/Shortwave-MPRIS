@@ -24,6 +24,7 @@ mod mpris;
 mod player;
 mod player2;
 mod song;
+mod song_model;
 
 pub use backend::GstreamerBackend;
 pub use gcast_discoverer::{GCastDevice, GCastDiscoverer, GCastDiscovererMessage};
@@ -31,3 +32,4 @@ pub use mpris::MprisServer;
 pub use player::{PlaybackState, Player};
 pub use player2::{SwPlaybackState, SwPlayer};
 pub use song::{SwSong, SwSongState};
+pub use song_model::SwSongModel;

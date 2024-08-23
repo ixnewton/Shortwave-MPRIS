@@ -34,7 +34,6 @@ use url::Url;
 use crate::api::*;
 use crate::app::SwApplication;
 use crate::config;
-use crate::model::SwStationModel;
 use crate::settings::{settings_manager, Key};
 
 static USER_AGENT: Lazy<String> = Lazy::new(|| {

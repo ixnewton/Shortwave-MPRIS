@@ -21,9 +21,9 @@ use adw::subclass::prelude::*;
 use glib::{clone, subclass};
 use gtk::{gio, glib, CompositeTemplate};
 
+use crate::api::SwStationSorting;
 use crate::app::SwApplication;
 use crate::config;
-use crate::model::SwSorting;
 use crate::settings::{settings_manager, Key};
 use crate::ui::pages::*;
 use crate::ui::player::{SwPlayerGadget, SwPlayerToolbar, SwPlayerView};
@@ -248,7 +248,7 @@ impl SwApplicationWindow {
         self.imp().toast_overlay.add_toast(toast);
     }
 
-    pub fn set_sorting(&self, sorting: SwSorting, descending: bool) {
+    pub fn set_sorting(&self, sorting: SwStationSorting, descending: bool) {
         self.imp()
             .library_page
             .get()

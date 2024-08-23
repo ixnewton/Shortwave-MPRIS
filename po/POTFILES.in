@@ -29,7 +29,9 @@ src/api/favicon_downloader.rs
 src/api/mod.rs
 src/api/station.rs
 src/api/station_metadata.rs
+src/api/station_model.rs
 src/api/station_request.rs
+src/api/station_sorter.rs
 src/api/stats.rs
 src/app.rs
 src/audio/backend/gstreamer_backend.rs
@@ -42,6 +44,7 @@ src/audio/mpris.rs
 src/audio/player.rs
 src/audio/player2.rs
 src/audio/song.rs
+src/audio/song_model.rs
 src/database/connection.rs
 src/database/library.rs
 src/database/mod.rs
@@ -50,10 +53,6 @@ src/database/queries.rs
 src/database/schema.rs
 src/i18n.rs
 src/main.rs
-src/model/mod.rs
-src/model/song_model.rs
-src/model/station_model.rs
-src/model/station_sorter.rs
 src/path.rs
 src/settings/key.rs
 src/settings/mod.rs

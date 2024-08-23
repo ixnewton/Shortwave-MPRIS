@@ -19,8 +19,7 @@ use adw::subclass::prelude::*;
 use glib::{subclass, Properties};
 use gtk::{glib, CompositeTemplate};
 
-use crate::api::SwStation;
-use crate::model::{SwSorting, SwStationModel, SwStationSorter};
+use crate::api::{SwStation, SwStationModel, SwStationSorter, SwStationSorting};
 use crate::ui::{SwStationDialog, SwStationRow};
 
 mod imp {
@@ -116,7 +115,7 @@ impl SwStationFlowBox {
         imp.model.set_model(Some(&model));
     }
 
-    pub fn set_sorting(&self, sorting: SwSorting, descending: bool) {
+    pub fn set_sorting(&self, sorting: SwStationSorting, descending: bool) {
         let imp = self.imp();
         imp.sorter.set_sorting(sorting);
         imp.sorter.set_descending(descending);

@@ -23,7 +23,9 @@ mod error;
 mod favicon_downloader;
 mod station;
 mod station_metadata;
+mod station_model;
 mod station_request;
+mod station_sorter;
 mod stats;
 
 pub use client::SwClient;
@@ -31,5 +33,7 @@ pub use error::Error;
 pub use favicon_downloader::FaviconDownloader;
 pub use station::SwStation;
 pub use station_metadata::StationMetadata;
+pub use station_model::SwStationModel;
 pub use station_request::StationRequest;
+pub use station_sorter::{SwStationSorter, SwStationSorting};
 pub use stats::Stats;

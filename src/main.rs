@@ -29,7 +29,6 @@ extern crate gtk_macros;
 mod api;
 mod audio;
 mod database;
-mod model;
 mod settings;
 mod ui;
 mod utils;

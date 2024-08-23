@@ -19,11 +19,11 @@ use glib::{clone, subclass};
 use gtk::prelude::*;
 use gtk::{gio, glib, CompositeTemplate};
 
+use crate::api::SwStationSorting;
 use crate::app::SwApplication;
 use crate::config;
 use crate::database::{SwLibrary, SwLibraryStatus};
 use crate::i18n::*;
-use crate::model::SwSorting;
 use crate::ui::SwStationFlowBox;
 
 mod imp {
@@ -94,7 +94,7 @@ impl SwLibraryPage {
         self.setup_signals();
     }
 
-    pub fn set_sorting(&self, sorting: SwSorting, descending: bool) {
+    pub fn set_sorting(&self, sorting: SwStationSorting, descending: bool) {
         self.imp().flowbox.get().set_sorting(sorting, descending);
     }
 

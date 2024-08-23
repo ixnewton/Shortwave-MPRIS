@@ -25,9 +25,8 @@ use gtk::subclass::prelude::*;
 use super::models::StationEntry;
 use crate::api;
 use crate::api::StationMetadata;
-use crate::api::{SwClient, SwStation};
+use crate::api::{SwClient, SwStation, SwStationModel};
 use crate::database::{connection, queries};
-use crate::model::SwStationModel;
 
 #[derive(Display, Copy, Debug, Clone, EnumString, Eq, PartialEq, Enum)]
 #[repr(u32)]
