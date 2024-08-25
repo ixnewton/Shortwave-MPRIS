@@ -54,6 +54,11 @@ src/database/mod.rs
 src/database/models.rs
 src/database/queries.rs
 src/database/schema.rs
+src/device/device.rs
+src/device/device_discovery.rs
+src/device/device_kind.rs
+src/device/device_model.rs
+src/device/mod.rs
 src/i18n.rs
 src/main.rs
 src/path.rs
