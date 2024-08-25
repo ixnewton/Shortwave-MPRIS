@@ -3,6 +3,7 @@ data/de.haeckerfelix.Shortwave.gschema.xml.in
 data/de.haeckerfelix.Shortwave.metainfo.xml.in.in
 data/gtk/create_station_dialog.ui
 data/gtk/device_dialog.ui
+data/gtk/device_indicator.ui
 data/gtk/discover_page.ui
 data/gtk/favicon.ui
 data/gtk/featured_carousel.ui
@@ -70,6 +71,7 @@ src/settings/settings_manager.rs
 src/ui/about_dialog.rs
 src/ui/create_station_dialog.rs
 src/ui/device_dialog.rs
+src/ui/device_indicator.rs
 src/ui/favicon.rs
 src/ui/featured_carousel.rs
 src/ui/mod.rs

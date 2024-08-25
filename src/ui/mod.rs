@@ -20,6 +20,7 @@ pub mod player;
 pub mod about_dialog;
 mod create_station_dialog;
 mod device_dialog;
+mod device_indicator;
 mod favicon;
 mod featured_carousel;
 mod recording_indicator;
@@ -33,6 +34,7 @@ mod window;
 
 pub use create_station_dialog::SwCreateStationDialog;
 pub use device_dialog::SwDeviceDialog;
+pub use device_indicator::SwDeviceIndicator;
 pub use favicon::{SwFavicon, SwFaviconSize};
 pub use featured_carousel::SwFeaturedCarousel;
 pub use recording_indicator::SwRecordingIndicator;

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <template class="SwDeviceIndicator" parent="AdwBin">
+    <property name="halign">center</property>
+    <property name="child">
+      <object class="GtkButton" id="button">
+        <property name="tooltip_text" translatable="yes">Disconnect From Device</property>
+        <signal name="clicked" handler="disconnect" swapped="true" />
+        <property name="child">
+          <object class="GtkBox">
+            <property name="margin_start">16</property>
+            <property name="margin_end">12</property>
+            <property name="spacing">6</property>
+            <child>
+              <object class="GtkLabel" id="device_label">
+                <binding name="label">
+                  <lookup name="name" type="SwDevice">
+                    <lookup name="device" type="SwPlayer">
+                      <lookup name="player">SwDeviceIndicator</lookup>
+                    </lookup>
+                  </lookup>
+                </binding>
+              </object>
+            </child>
+            <child>
+              <object class="GtkImage">
+                <property name="icon_name">window-close-symbolic</property>
+              </object>
+            </child>
+          </object>
+        </property>
+        <style>
+          <class name="circular"/>
+          <class name="suggested-action"/>
+        </style>
+      </object>
+    </property>
+  </template>
+</interface>

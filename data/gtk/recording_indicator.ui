@@ -22,9 +22,6 @@
                 <attributes>
                   <attribute name="font-features" value="tnum"/>
                 </attributes>
-                <style>
-                  <class name="small-font"/>
-                </style>
               </object>
             </child>
           </object>
