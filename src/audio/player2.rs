@@ -27,6 +27,7 @@ use crate::api::SwStation;
 use crate::app::SwApplication;
 use crate::audio::backend::*;
 use crate::audio::*;
+use crate::device::{SwDevice, SwDeviceDiscovery};
 use crate::i18n::*;
 use crate::path;
 use crate::settings::{settings_manager, Key};
@@ -54,6 +55,10 @@ mod imp {
         past_songs: SwSongModel,
         #[property(get, set=Self::set_volume)]
         volume: Cell<f64>,
+        #[property(get)]
+        device: RefCell<Option<SwDevice>>,
+        #[property(get)]
+        device_discovery: SwDeviceDiscovery,
 
         pub backend: OnceCell<RefCell<GstreamerBackend>>,
         pub mpris_server: OnceCell<MprisServer>,
@@ -369,6 +374,10 @@ impl SwPlayer {
             .unwrap()
             .borrow()
             .recording_duration()
+    }
+
+    pub fn connect_device(&self, device: &SwDevice) {
+        // TODO
     }
 }
 

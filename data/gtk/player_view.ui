@@ -105,9 +105,9 @@
                           </lookup>
                         </binding>
                         <child>
-                          <object class="GtkButton" id="streaming_button">
-                            <property name="tooltip_text" translatable="yes">Stream Audio</property>
-                            <property name="action_name">player.show-audio-streaming</property>
+                          <object class="GtkButton" id="connect_button">
+                            <property name="tooltip_text" translatable="yes">Connect Device</property>
+                            <property name="action_name">player.show-device-connect</property>
                             <property name="valign">center</property>
                             <property name="icon_name">streaming-symbolic</property>
                             <style>

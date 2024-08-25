@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <template class="SwDeviceDialog" parent="AdwDialog">
+    <property name="width_request">325</property>
+    <property name="content_width">500</property>
+    <property name="content_height">400</property>
+    <property name="title" translatable="yes">Connect Device</property>
+    <child>
+      <object class="AdwToolbarView">
+        <child type="top">
+          <object class="AdwHeaderBar">
+            <child>
+              <object class="GtkStack" id="scan_stack">
+                <child>
+                  <object class="AdwSpinner" id="scan_spinner">
+                    <property name="tooltip_text" translatable="yes">Searching for Devices…</property>
+                    <property name="halign">center</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkButton" id="scan_button">
+                    <property name="icon_name">view-refresh-symbolic</property>
+                    <property name="tooltip_text" translatable="yes">Search for Devices</property>
+                    <signal name="clicked" handler="scan" swapped="true" />
+                    <style>
+                      <class name="flat" />
+                    </style>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkStack" id="dialog_stack">
+            <child>
+              <object class="AdwStatusPage" id="no_devices_page">
+                <property name="hexpand">True</property>
+                <property name="title" translatable="yes">No Devices Available</property>
+                <property name="description" translatable="yes">No supported Google Cast device found</property>
+                <style>
+                  <class name="compact" />
+                </style>
+              </object>
+            </child>
+            <child>
+              <object class="GtkScrolledWindow" id="devices_page">
+                <property name="hscrollbar_policy">never</property>
+                <child>
+                  <object class="AdwClamp">
+                    <child>
+                      <object class="GtkBox">
+                        <property name="orientation">vertical</property>
+                        <property name="margin_start">12</property>
+                        <property name="margin_end">12</property>
+                        <child>
+                          <object class="GtkListBox" id="devices_listbox">
+                            <property name="valign">start</property>
+                            <property name="margin_top">6</property>
+                            <property name="selection_mode">none</property>
+                            <style>
+                              <class name="boxed-list" />
+                            </style>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>

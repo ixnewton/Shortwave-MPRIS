@@ -27,7 +27,7 @@ use crate::config;
 use crate::settings::{settings_manager, Key};
 use crate::ui::pages::*;
 use crate::ui::player::{SwPlayerGadget, SwPlayerToolbar, SwPlayerView};
-use crate::ui::{SwCreateStationDialog, SwStationDialog, SwStreamingDialog};
+use crate::ui::{SwCreateStationDialog, SwDeviceDialog, SwStationDialog};
 
 mod imp {
     use super::*;
@@ -98,13 +98,13 @@ mod imp {
             });
             player_actions.add_action(&a);
 
-            // player.show-audio-streaming
-            let a = gio::SimpleAction::new("show-audio-streaming", None);
+            // player.show-device-connect
+            let a = gio::SimpleAction::new("show-device-connect", None);
             a.connect_activate(clone!(
                 #[weak(rename_to = imp)]
                 self,
                 move |_, _| {
-                    SwStreamingDialog::new().present(Some(&*imp.obj()));
+                    SwDeviceDialog::new().present(Some(&*imp.obj()));
                 }
             ));
             player_actions.add_action(&a);
