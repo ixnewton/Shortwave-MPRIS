@@ -201,6 +201,20 @@
                       </object>
                     </child>
                     <child>
+                      <object class="GtkRevealer" id="device_revealer">
+                        <binding name="reveal-child">
+                          <lookup name="has-device" type="SwPlayer">
+                            <lookup name="player">SwPlayerView</lookup>
+                          </lookup>
+                        </binding>
+                        <child>
+                          <object class="SwDeviceIndicator" id="device_indicator">
+                            <property name="margin_bottom">12</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
                       <object class="SwVolumeControl" id="volume_control">
                         <property name="halign">center</property>
                         <property name="width_request">250</property>
