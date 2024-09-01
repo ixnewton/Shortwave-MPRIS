@@ -1,16 +1,16 @@
-# Turkish translation for shortwave.
-# Copyright (C) 2020-2023 shortwave's COPYRIGHT HOLDER
-# This file is distributed under the same license as the shortwave package.
+# Turkish translation for Shortwave.
+# Copyright (C) 2020-2024 Shortwave's COPYRIGHT HOLDER
+# This file is distributed under the same license as the Shortwave package.
 #
 # Muhammet Kara <muhammetk@gmail.com>, 2021.
-# Sabri Ünal <libreajans@gmail.com>, 2020, 2022, 2023.
-# Emin Tufan Çetin <etcetin@gmail.com>, 2020, 2021, 2022.
+# Sabri Ünal <yakushabb@gmail.com>, 2020, 2022-2024.
+# Emin Tufan Çetin <etcetin@gmail.com>, 2020-2024.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: shortwave master\n"
+"Project-Id-Version: Shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2024-07-20 21:40+0000\n"
+"POT-Creation-Date: 2024-08-01 17:57+0000\n"
 "PO-Revision-Date: 2024-07-30 00:06+0300\n"
 "Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
 "Language-Team: Turkish <takim@gnome.org.tr>\n"
@@ -515,7 +515,7 @@ msgstr "Şarkı kaydedilemedi."
 msgid "translator-credits"
 msgstr ""
 "Emin Tufan Çetin <etcetin@gmail.com>\n"
-"Sabri Ünal <libreajans@gmail.com>"
+"Sabri Ünal <yakushabb@gmail.com>"
 
 #: src/ui/create_station_dialog.rs:106
 msgid "Select station image"
@@ -568,9 +568,3 @@ msgstr[0] ""
 #: src/ui/station_dialog.rs:216
 msgid "{} kbit/s"
 msgstr "{} kbit/s"
-
-#~ msgid "Receiving Station Data…"
-#~ msgstr "İstasyon Verisi Alınıyor…"
-
-#~ msgid "Back"
-#~ msgstr "Geri"
