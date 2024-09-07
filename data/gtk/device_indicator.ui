@@ -13,6 +13,7 @@
             <property name="spacing">6</property>
             <child>
               <object class="GtkLabel" id="device_label">
+                <property name="ellipsize">middle</property>
                 <binding name="label">
                   <lookup name="name" type="SwDevice">
                     <lookup name="device" type="SwPlayer">

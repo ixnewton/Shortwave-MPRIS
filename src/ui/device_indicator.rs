@@ -14,16 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use std::cell::Cell;
-
 use adw::prelude::*;
 use adw::subclass::prelude::*;
-use glib::{clone, subclass, Properties};
+use glib::{subclass, Properties};
 use gtk::{glib, CompositeTemplate};
 
 use crate::audio::SwPlayer;
-use crate::audio::{SwSong, SwSongState};
-use crate::i18n::i18n;
 
 mod imp {
     use super::*;
