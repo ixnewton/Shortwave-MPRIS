@@ -28,7 +28,7 @@ use crate::api::SwStation;
 use crate::app::Action;
 use crate::audio::backend::*;
 #[cfg(unix)]
-use crate::audio::controller::{Controller, GCastController};
+use crate::audio::controller::Controller;
 use crate::audio::GCastDevice;
 use crate::i18n::*;
 use crate::settings::{settings_manager, Key};
@@ -74,7 +74,6 @@ pub struct Player {
     pub widget: adw::Bin,
     pub headerbar: adw::HeaderBar,
     controller: Vec<Box<dyn Controller>>,
-    gcast_controller: Rc<GCastController>,
 
     backend: Rc<RefCell<Backend>>,
     current_station: RefCell<Option<SwStation>>,
@@ -88,14 +87,11 @@ impl Player {
     pub fn new(sender: Sender<Action>) -> Rc<Self> {
         let builder = gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/player.ui");
         get_widget!(builder, adw::Bin, player);
-        let mut controller: Vec<Box<dyn Controller>> = Vec::new();
+        let controller: Vec<Box<dyn Controller>> = Vec::new();
 
         get_widget!(builder, adw::HeaderBar, headerbar);
 
         // Google Cast Controller
-        let gcast_controller = GCastController::new();
-        controller.push(Box::new(gcast_controller.clone()));
-
         let controller: Vec<Box<dyn Controller>> = controller;
 
         // Backend
@@ -112,7 +108,6 @@ impl Player {
             widget: player,
             headerbar,
             controller,
-            gcast_controller,
             backend,
             current_station,
             song_title,
@@ -208,14 +203,11 @@ impl Player {
 
         stream_row.set_title(&device.name);
         stream_revealer.set_reveal_child(true);
-
-        self.gcast_controller.connect_to_device(device);
     }
 
     pub fn disconnect_from_gcast_device(&self) {
         get_widget!(self.builder, gtk::Revealer, stream_revealer);
         stream_revealer.set_reveal_child(false);
-        self.gcast_controller.disconnect_from_device();
     }
 
     pub fn has_station(&self) -> bool {

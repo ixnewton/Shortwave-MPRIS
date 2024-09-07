@@ -14,11 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+mod cast_sender;
 mod device;
 mod device_discovery;
 mod device_kind;
 mod device_model;
 
+pub use cast_sender::SwCastSender;
 pub use device::SwDevice;
 pub use device_discovery::SwDeviceDiscovery;
 pub use device_kind::SwDeviceKind;

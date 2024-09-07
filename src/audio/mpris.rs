@@ -105,15 +105,21 @@ impl MprisServer {
 
         // Mpris side callbacks
         server.player.connect_play_pause(|_| {
-            SwApplication::default().player().toggle_playback();
+            glib::spawn_future_local(async move {
+                SwApplication::default().player().toggle_playback().await;
+            });
         });
 
         server.player.connect_play(|_| {
-            SwApplication::default().player().start_playback();
+            glib::spawn_future_local(async move {
+                SwApplication::default().player().start_playback().await;
+            });
         });
 
         server.player.connect_stop(|_| {
-            SwApplication::default().player().stop_playback();
+            glib::spawn_future_local(async move {
+                SwApplication::default().player().stop_playback().await;
+            });
         });
 
         server.player.connect_set_volume(|_, volume| {

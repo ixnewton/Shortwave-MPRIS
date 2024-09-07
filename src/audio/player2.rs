@@ -27,7 +27,7 @@ use crate::api::SwStation;
 use crate::app::SwApplication;
 use crate::audio::backend::*;
 use crate::audio::*;
-use crate::device::{SwDevice, SwDeviceDiscovery};
+use crate::device::{SwCastSender, SwDevice, SwDeviceDiscovery, SwDeviceKind};
 use crate::i18n::*;
 use crate::path;
 use crate::settings::{settings_manager, Key};
@@ -55,10 +55,14 @@ mod imp {
         past_songs: SwSongModel,
         #[property(get, set=Self::set_volume)]
         volume: Cell<f64>,
+
         #[property(get)]
-        device: RefCell<Option<SwDevice>>,
+        #[property(name="has-device", get=Self::has_device, type=bool)]
+        pub device: RefCell<Option<SwDevice>>,
         #[property(get)]
         device_discovery: SwDeviceDiscovery,
+        #[property(get)]
+        cast_sender: SwCastSender,
 
         pub backend: OnceCell<RefCell<GstreamerBackend>>,
         pub mpris_server: OnceCell<MprisServer>,
@@ -110,7 +114,27 @@ mod imp {
             let volume = settings_manager::double(Key::PlaybackVolume);
             self.obj().set_volume(volume);
 
-            // mpris
+            // Remove device on cast disconnect
+            self.cast_sender.connect_is_connected_notify(clone!(
+                #[weak (rename_to = imp)]
+                self,
+                move |cs| {
+                    if !cs.is_connected() {
+                        *imp.device.borrow_mut() = None;
+                        imp.obj().notify_device();
+                        imp.obj().notify_has_device();
+                    }
+                }
+            ));
+
+            // Sync volume with cast device
+            self.obj()
+                .bind_property("volume", &self.cast_sender, "volume")
+                .sync_create()
+                .bidirectional()
+                .build();
+
+            // MPRIS controls
             glib::spawn_future_local(clone!(
                 #[weak(rename_to = imp)]
                 self,
@@ -133,33 +157,60 @@ mod imp {
             self.obj().playing_song().is_some()
         }
 
+        fn has_device(&self) -> bool {
+            self.obj().device().is_some()
+        }
+
         fn set_station(&self, station: Option<&SwStation>) {
             *self.station.borrow_mut() = station.cloned();
             self.obj().notify_has_station();
 
-            let obj = self.obj();
-            obj.stop_playback();
+            glib::spawn_future_local(clone!(
+                #[weak(rename_to = imp)]
+                self,
+                async move {
+                    imp.obj().stop_playback().await;
 
-            if let Some(station) = obj.station() {
-                if let Some(url) = station.stream_url() {
-                    debug!("Start playing new URI: {}", url.to_string());
-                    self.backend
-                        .get()
-                        .unwrap()
-                        .borrow_mut()
-                        .set_source_uri(url.as_ref());
-                } else {
-                    let text = i18n("Station cannot be streamed. URL is not valid.");
-                    SwApplicationWindow::default().show_notification(&text);
+                    if let Some(station) = imp.obj().station() {
+                        if let Some(url) = station.stream_url() {
+                            debug!("Start playing new URI: {}", url.to_string());
+
+                            imp.backend
+                                .get()
+                                .unwrap()
+                                .borrow_mut()
+                                .set_source_uri(url.as_ref());
+
+                            imp.cast_sender
+                                .load_media(
+                                    &url.as_ref(),
+                                    &station
+                                        .metadata()
+                                        .favicon
+                                        .map(|u| u.to_string())
+                                        .unwrap_or_default(),
+                                    &station.title(),
+                                )
+                                .await; // TODO: Error handling
+                        } else {
+                            let text = i18n("Station cannot be streamed. URL is not valid.");
+                            SwApplicationWindow::default().show_notification(&text);
+                        }
+                    }
                 }
-            }
+            ));
         }
 
         fn set_volume(&self, volume: f64) {
-            debug!("Set volume: {}", &volume);
-            self.backend.get().unwrap().borrow().set_volume(volume);
-            self.volume.set(volume);
-            settings_manager::set_double(Key::PlaybackVolume, volume);
+            if self.volume.get() != volume {
+                debug!("Set volume: {}", &volume);
+                self.volume.set(volume);
+
+                if self.obj().device().is_none() {
+                    self.backend.get().unwrap().borrow().set_volume(volume);
+                    settings_manager::set_double(Key::PlaybackVolume, volume);
+                }
+            }
         }
 
         fn process_gst_message(&self, message: GstreamerChange) -> glib::ControlFlow {
@@ -231,8 +282,20 @@ mod imp {
                     }
                 }
                 GstreamerChange::Volume(volume) => {
-                    self.volume.set(volume);
-                    self.obj().notify_volume();
+                    if self.obj().device().is_some() {
+                        return glib::ControlFlow::Continue;
+                    }
+
+                    // Check if the volume differs. For some reason gstreamer sends us slightly
+                    // different floats, so we round up here (only the the first two digits are
+                    // important for use here).
+                    let new_val = format!("{:.2}", volume);
+                    let old_val = format!("{:.2}", self.volume.get());
+
+                    if new_val != old_val {
+                        self.volume.set(volume);
+                        self.obj().notify_volume();
+                    }
                 }
             }
             glib::ControlFlow::Continue
@@ -330,7 +393,7 @@ impl SwPlayer {
         glib::Object::new()
     }
 
-    pub fn start_playback(&self) {
+    pub async fn start_playback(&self) {
         if self.station().is_none() {
             return;
         }
@@ -341,9 +404,11 @@ impl SwPlayer {
             .unwrap()
             .borrow_mut()
             .set_state(gstreamer::State::Playing);
+
+        self.cast_sender().start_playback().await.unwrap(); // TODO: error handling
     }
 
-    pub fn stop_playback(&self) {
+    pub async fn stop_playback(&self) {
         let imp = self.imp();
 
         // Discard recorded data when the stream stops
@@ -355,15 +420,17 @@ impl SwPlayer {
             .unwrap()
             .borrow_mut()
             .set_state(gstreamer::State::Null);
+
+        self.cast_sender().stop_playback().await.unwrap(); // TODO: error handling
     }
 
-    pub fn toggle_playback(&self) {
+    pub async fn toggle_playback(&self) {
         if self.state() == SwPlaybackState::Playing || self.state() == SwPlaybackState::Loading {
-            self.stop_playback();
+            self.stop_playback().await;
         } else if self.state() == SwPlaybackState::Stopped
             || self.state() == SwPlaybackState::Failure
         {
-            self.start_playback();
+            self.start_playback().await;
         }
     }
 
@@ -376,8 +443,52 @@ impl SwPlayer {
             .recording_duration()
     }
 
-    pub fn connect_device(&self, device: &SwDevice) {
-        // TODO
+    pub async fn connect_device(&self, device: &SwDevice) -> Result<(), cast_sender::Error> {
+        let result = match device.kind() {
+            SwDeviceKind::Cast => self.cast_sender().connect(&device.address()).await,
+        };
+
+        if result.is_ok() {
+            *self.imp().device.borrow_mut() = Some(device.clone());
+            self.notify_has_device();
+            self.notify_device();
+
+            if self.state() == SwPlaybackState::Playing || self.state() == SwPlaybackState::Loading
+            {
+                self.cast_sender().start_playback().await?;
+
+                // Mute local gstreamer audio
+                self.imp()
+                    .backend
+                    .get()
+                    .unwrap()
+                    .borrow_mut()
+                    .set_mute(true);
+            }
+        }
+
+        result
+    }
+
+    pub async fn disconnect_device(&self) {
+        if let Some(device) = self.device() {
+            match device.kind() {
+                SwDeviceKind::Cast => self.cast_sender().disconnect().await,
+            };
+
+            *self.imp().device.borrow_mut() = None;
+            self.notify_has_device();
+            self.notify_device();
+
+            // Restore previous gstreamer volume
+            let volume = {
+                let backend = self.imp().backend.get().unwrap().borrow_mut();
+                backend.set_mute(false);
+                backend.volume()
+            };
+            debug!("Restore previous volume: {}", volume);
+            self.set_volume(volume);
+        }
     }
 }
 

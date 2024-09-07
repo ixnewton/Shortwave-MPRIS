@@ -262,6 +262,16 @@ impl GstreamerBackend {
         }
     }
 
+    pub fn volume(&self) -> f64 {
+        let v = if let Some(pulsesink) = self.pipeline.by_name("pulsesink") {
+            pulsesink.property("volume")
+        } else {
+            0.0
+        };
+
+        StreamVolume::convert_volume(StreamVolumeFormat::Linear, StreamVolumeFormat::Cubic, v)
+    }
+
     pub fn set_volume(&self, volume: f64) {
         if let Some(pulsesink) = self.pipeline.by_name("pulsesink") {
             if volume != 0.0 {
@@ -276,6 +286,12 @@ impl GstreamerBackend {
             pulsesink.set_property("volume", pa_volume);
         } else {
             warn!("PulseAudio is required for changing the volume.")
+        }
+    }
+
+    pub fn set_mute(&self, mute: bool) {
+        if let Some(pulsesink) = self.pipeline.by_name("pulsesink") {
+            pulsesink.set_property("mute", mute);
         }
     }
 

@@ -80,21 +80,27 @@ mod imp {
             // player.start-playback
             let a = gio::SimpleAction::new("start-playback", None);
             a.connect_activate(move |_, _| {
-                SwApplication::default().player().start_playback();
+                glib::spawn_future_local(async move {
+                    SwApplication::default().player().start_playback().await;
+                });
             });
             player_actions.add_action(&a);
 
             // player.stop-playback
             let a = gio::SimpleAction::new("stop-playback", None);
             a.connect_activate(move |_, _| {
-                SwApplication::default().player().stop_playback();
+                glib::spawn_future_local(async move {
+                    SwApplication::default().player().stop_playback().await;
+                });
             });
             player_actions.add_action(&a);
 
             // player.toggle-playback
             let a = gio::SimpleAction::new("toggle-playback", None);
             a.connect_activate(move |_, _| {
-                SwApplication::default().player().toggle_playback();
+                glib::spawn_future_local(async move {
+                    SwApplication::default().player().toggle_playback().await;
+                });
             });
             player_actions.add_action(&a);
 

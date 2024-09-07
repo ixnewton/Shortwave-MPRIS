@@ -33,6 +33,8 @@ use crate::i18n::i18n;
 mod imp {
     use super::*;
 
+    const CAST_SERVICE: &str = "_googlecast._tcp.local";
+
     #[derive(Debug, Default, Properties)]
     #[properties(wrapper_type = super::SwDeviceDiscovery)]
     pub struct SwDeviceDiscovery {
@@ -65,8 +67,7 @@ mod imp {
 
     impl SwDeviceDiscovery {
         pub async fn discover_cast_devices(&self) -> Result<(), Error> {
-            let stream =
-                mdns::discover::all("_googlecast._tcp.local", Duration::from_secs(3))?.listen();
+            let stream = mdns::discover::all(CAST_SERVICE, Duration::from_secs(3))?.listen();
             pin_mut!(stream);
 
             while let Some(Ok(response)) = stream.next().await {
@@ -108,18 +109,18 @@ impl SwDeviceDiscovery {
 
     pub async fn scan(&self) {
         if self.is_scanning() {
-            debug!("Device discovery is already active");
+            debug!("Device scan is already active");
             return;
         }
 
-        debug!("Start device discovery...");
+        debug!("Start device scan...");
         self.imp().is_scanning.set(true);
         self.notify_is_scanning();
 
         self.devices().clear();
         let _ = future::timeout(Duration::from_secs(15), self.imp().discover_cast_devices()).await;
 
-        debug!("Device discovery ended!");
+        debug!("Device scan ended!");
         self.imp().is_scanning.set(false);
         self.notify_is_scanning();
     }
