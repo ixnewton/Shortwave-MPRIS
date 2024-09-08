@@ -15,6 +15,7 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 mod cast_sender;
+#[allow(clippy::module_inception)]
 mod device;
 mod device_discovery;
 mod device_kind;
