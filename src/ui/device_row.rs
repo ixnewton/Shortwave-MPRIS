@@ -21,11 +21,10 @@ use adw::subclass::prelude::*;
 use glib::clone;
 use glib::subclass;
 use glib::Properties;
-use gtk::prelude::*;
 use gtk::{glib, CompositeTemplate};
 
 use crate::audio::SwPlayer;
-use crate::device::{SwDevice, SwDeviceKind};
+use crate::device::SwDevice;
 use crate::ui::DisplayError;
 use crate::ui::SwDeviceDialog;
 

@@ -16,6 +16,7 @@
 
 use std::net::IpAddr;
 use std::rc::Rc;
+use std::sync::LazyLock;
 use std::time::Duration;
 
 use async_std_resolver::{config as rconfig, resolver, resolver_from_system_conf};
@@ -26,7 +27,6 @@ use gtk::prelude::*;
 use gtk::subclass::prelude::*;
 use isahc::config::RedirectPolicy;
 use isahc::prelude::*;
-use once_cell::sync::Lazy;
 use rand::prelude::SliceRandom;
 use rand::thread_rng;
 use url::Url;
@@ -36,7 +36,7 @@ use crate::app::SwApplication;
 use crate::config;
 use crate::settings::{settings_manager, Key};
 
-static USER_AGENT: Lazy<String> = Lazy::new(|| {
+static USER_AGENT: LazyLock<String> = LazyLock::new(|| {
     format!(
         "{}/{}-{}",
         config::PKGNAME,
@@ -45,7 +45,7 @@ static USER_AGENT: Lazy<String> = Lazy::new(|| {
     )
 });
 
-pub static HTTP_CLIENT: Lazy<isahc::HttpClient> = Lazy::new(|| {
+pub static HTTP_CLIENT: LazyLock<isahc::HttpClient> = LazyLock::new(|| {
     isahc::HttpClientBuilder::new()
         // Limit to reduce ram usage. We don't need 250 concurrent connections
         .max_connections(8)
@@ -79,7 +79,7 @@ mod imp {
     #[glib::derived_properties]
     impl ObjectImpl for SwClient {
         fn signals() -> &'static [Signal] {
-            static SIGNALS: Lazy<Vec<Signal>> = Lazy::new(|| {
+            static SIGNALS: LazyLock<Vec<Signal>> = LazyLock::new(|| {
                 vec![
                     Signal::builder("ready").build(),
                     Signal::builder("error")

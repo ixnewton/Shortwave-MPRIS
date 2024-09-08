@@ -18,12 +18,12 @@
 // https://gitlab.gnome.org/World/podcasts/blob/cf644d508d8d7dab3c9357d12b1262ae6b44c8e8/podcasts-data/src/database.rs
 
 use std::path::PathBuf;
+use std::sync::LazyLock;
 
 use diesel::prelude::*;
 use diesel::r2d2;
 use diesel::r2d2::ConnectionManager;
 use diesel_migrations::{embed_migrations, EmbeddedMigrations, MigrationHarness};
-use once_cell::sync::Lazy;
 
 use crate::{config, path};
 
@@ -34,14 +34,14 @@ pub const MIGRATIONS: EmbeddedMigrations = embed_migrations!("./data/database/mi
 type Pool = r2d2::Pool<ConnectionManager<SqliteConnection>>;
 
 // Database path
-pub static DB_PATH: Lazy<PathBuf> = Lazy::new(|| {
+pub static DB_PATH: LazyLock<PathBuf> = LazyLock::new(|| {
     let mut path = path::DATA.clone();
     path.push(format!("{}.db", config::NAME));
     path
 });
 
 // Database R2D2 connection pool
-static POOL: Lazy<Pool> = Lazy::new(|| init_connection_pool(DB_PATH.to_str().unwrap()));
+static POOL: LazyLock<Pool> = LazyLock::new(|| init_connection_pool(DB_PATH.to_str().unwrap()));
 
 // Returns a R2D2 SqliteConnection
 pub fn connection() -> Pool {

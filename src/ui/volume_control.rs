@@ -22,9 +22,10 @@ use adw::subclass::prelude::*;
 use glib::clone;
 use glib::{subclass::Signal, Properties};
 use gtk::{gio, glib, prelude::*, CompositeTemplate};
-use once_cell::sync::Lazy;
 
 mod imp {
+    use std::sync::LazyLock;
+
     use super::*;
 
     #[derive(Debug, Default, CompositeTemplate, Properties)]
@@ -127,7 +128,7 @@ mod imp {
         }
 
         fn signals() -> &'static [Signal] {
-            static SIGNALS: Lazy<Vec<Signal>> = Lazy::new(|| {
+            static SIGNALS: LazyLock<Vec<Signal>> = LazyLock::new(|| {
                 vec![Signal::builder("volume-changed")
                     .param_types([f64::static_type()])
                     .build()]
