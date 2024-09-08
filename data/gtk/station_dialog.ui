@@ -206,7 +206,7 @@
                         <property name="visible">False</property>
                         <child>
                           <object class="GtkFrame">
-                            <property name="halign">center</property>
+                            <property name="halign">fill</property>
                             <property name="child">
                               <object class="ShumateMap" id="map">
                                 <property name="sensitive">False</property>
