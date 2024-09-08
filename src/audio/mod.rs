@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-mod backend;
+mod gstreamer_backend;
 mod mpris;
 mod playback_state;
 mod player2;
@@ -22,7 +22,7 @@ mod song;
 mod song_model;
 mod song_state;
 
-pub use backend::GstreamerBackend;
+pub use gstreamer_backend::{GstreamerBackend, GstreamerChange};
 pub use mpris::MprisServer;
 pub use playback_state::SwPlaybackState;
 pub use player2::SwPlayer;

@@ -25,7 +25,6 @@ use gtk::glib;
 
 use crate::api::SwStation;
 use crate::app::SwApplication;
-use crate::audio::backend::*;
 use crate::audio::*;
 use crate::device::{SwCastSender, SwDevice, SwDeviceDiscovery, SwDeviceKind};
 use crate::i18n::*;

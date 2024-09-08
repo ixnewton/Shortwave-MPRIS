@@ -36,8 +36,7 @@ src/api/station_request.rs
 src/api/station_sorter.rs
 src/api/stats.rs
 src/app.rs
-src/audio/backend/gstreamer_backend.rs
-src/audio/backend/mod.rs
+src/audio/gstreamer_backend.rs
 src/audio/mod.rs
 src/audio/mpris.rs
 src/audio/playback_state.rs
