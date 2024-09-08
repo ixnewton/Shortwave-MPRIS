@@ -15,37 +15,20 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 use std::cell::{OnceCell, RefCell};
-use std::rc::Rc;
-use std::str::FromStr;
 
 use adw::prelude::*;
 use adw::subclass::prelude::*;
-use async_channel::{Receiver, Sender};
 use gio::subclass::prelude::ApplicationImpl;
 use glib::{clone, Properties};
 use gtk::glib::WeakRef;
 use gtk::{gio, glib};
 
 use crate::api::SwClient;
-use crate::audio::{GCastDevice, PlaybackState, Player, Song};
+use crate::audio::SwPlayer;
 use crate::config;
 use crate::database::SwLibrary;
-use crate::model::SwSorting;
-use crate::settings::{settings_manager, Key, SwSettingsDialog};
+use crate::settings::{settings_manager, SwSettingsDialog};
 use crate::ui::{about_dialog, SwApplicationWindow};
-
-#[derive(Debug, Clone)]
-pub enum Action {
-    // Audio Playback
-    PlaybackConnectGCastDevice(GCastDevice),
-    PlaybackDisconnectGCastDevice,
-    PlaybackSet(bool),
-    PlaybackToggle,
-    PlaybackSetVolume(f64),
-    PlaybackSaveSong(Song),
-
-    SettingsKeyChanged(Key),
-}
 
 mod imp {
     use super::*;
@@ -56,14 +39,11 @@ mod imp {
         #[property(get)]
         pub library: SwLibrary,
         #[property(get)]
+        pub player: SwPlayer,
+        #[property(get)]
         pub rb_server: RefCell<Option<String>>,
 
-        pub sender: Sender<Action>,
-        pub receiver: RefCell<Option<Receiver<Action>>>,
-
         pub window: OnceCell<WeakRef<SwApplicationWindow>>,
-        pub player: Rc<Player>,
-
         pub settings: gio::Settings,
     }
 
@@ -74,24 +54,18 @@ mod imp {
         type Type = super::SwApplication;
 
         fn new() -> Self {
-            let (sender, r) = async_channel::bounded(10);
-            let receiver = RefCell::new(Some(r));
-
             let library = SwLibrary::default();
+            let player = SwPlayer::new();
             let rb_server = RefCell::default();
 
             let window = OnceCell::new();
-            let player = Player::new(sender.clone());
-
             let settings = settings_manager::settings();
 
             Self {
                 library,
-                rb_server,
-                sender,
-                receiver,
-                window,
                 player,
+                rb_server,
+                window,
                 settings,
             }
         }
@@ -121,18 +95,6 @@ mod imp {
             // Setup app level GActions
             app.setup_gactions();
 
-            // Setup action channel
-            let receiver = self.receiver.borrow_mut().take().unwrap();
-            glib::spawn_future_local(clone!(
-                #[weak]
-                app,
-                async move {
-                    while let Ok(action) = receiver.recv().await {
-                        app.process_action(action);
-                    }
-                }
-            ));
-
             // Find radiobrowser server and update library data
             let fut = clone!(
                 #[weak]
@@ -142,22 +104,6 @@ mod imp {
                 }
             );
             glib::spawn_future_local(fut);
-
-            // Setup settings signal (we get notified when a key gets changed)
-            self.settings.connect_changed(
-                None,
-                clone!(
-                    #[strong(rename_to = sender)]
-                    self.sender,
-                    move |_, key_str| {
-                        let key: Key = Key::from_str(key_str).unwrap();
-                        crate::utils::send(&sender, Action::SettingsKeyChanged(key));
-                    }
-                ),
-            );
-
-            // Small workaround to update every view to the correct sorting/order.
-            crate::utils::send(&self.sender, Action::SettingsKeyChanged(Key::ViewSorting));
         }
     }
 
@@ -242,48 +188,6 @@ impl SwApplication {
         self.set_accels_for_action("app.show-preferences", &["<primary>comma"]);
         self.set_accels_for_action("app.quit", &["<primary>q"]);
         self.set_accels_for_action("window.close", &["<primary>w"]);
-    }
-
-    fn process_action(&self, action: Action) -> glib::ControlFlow {
-        let imp = self.imp();
-        if self.active_window().is_none() {
-            return glib::ControlFlow::Continue;
-        }
-
-        match action {
-            Action::PlaybackConnectGCastDevice(device) => {
-                imp.player.connect_to_gcast_device(device)
-            }
-            Action::PlaybackDisconnectGCastDevice => imp.player.disconnect_from_gcast_device(),
-            Action::PlaybackSet(true) => imp.player.set_playback(PlaybackState::Playing),
-            Action::PlaybackSet(false) => imp.player.set_playback(PlaybackState::Stopped),
-            Action::PlaybackToggle => imp.player.toggle_playback(),
-            Action::PlaybackSetVolume(volume) => imp.player.set_volume(volume),
-            Action::PlaybackSaveSong(song) => imp.player.save_song(song),
-            Action::SettingsKeyChanged(key) => self.apply_settings_changes(key),
-        }
-        glib::ControlFlow::Continue
-    }
-
-    fn apply_settings_changes(&self, key: Key) {
-        debug!("Settings key changed: {:?}", &key);
-        match key {
-            Key::ViewSorting | Key::ViewOrder => {
-                let value = settings_manager::string(Key::ViewSorting);
-                let sorting = SwSorting::from_str(&value).unwrap();
-                let order = settings_manager::string(Key::ViewOrder);
-                let descending = order == "Descending";
-
-                self.imp()
-                    .window
-                    .get()
-                    .unwrap()
-                    .upgrade()
-                    .unwrap()
-                    .set_sorting(sorting, descending);
-            }
-            _ => (),
-        }
     }
 
     async fn lookup_rb_server(&self) {

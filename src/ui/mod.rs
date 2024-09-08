@@ -15,26 +15,35 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 pub mod pages;
+pub mod player;
 
 pub mod about_dialog;
 mod create_station_dialog;
-pub mod featured_carousel;
-mod song_listbox;
+mod device_dialog;
+mod device_indicator;
+mod device_row;
+mod display_error;
+mod favicon;
+mod featured_carousel;
+mod recording_indicator;
 mod song_row;
 mod station_dialog;
-mod station_favicon;
 mod station_flowbox;
 mod station_row;
-mod streaming_dialog;
+mod volume_control;
 mod window;
 
 pub use create_station_dialog::SwCreateStationDialog;
+pub use device_dialog::SwDeviceDialog;
+pub use device_indicator::SwDeviceIndicator;
+pub use device_row::SwDeviceRow;
+pub use display_error::{DisplayError, ToastWindow};
+pub use favicon::SwFavicon;
 pub use featured_carousel::SwFeaturedCarousel;
-pub use song_listbox::SongListBox;
+pub use recording_indicator::SwRecordingIndicator;
 pub use song_row::SwSongRow;
 pub use station_dialog::SwStationDialog;
-pub use station_favicon::{FaviconSize, StationFavicon};
 pub use station_flowbox::SwStationFlowBox;
 pub use station_row::SwStationRow;
-pub use streaming_dialog::SwStreamingDialog;
+pub use volume_control::SwVolumeControl;
 pub use window::SwApplicationWindow;

@@ -18,7 +18,7 @@ use std::collections::hash_map::DefaultHasher;
 use std::hash::{Hash, Hasher};
 use std::rc::Rc;
 
-use async_std::io::ReadExt;
+use futures_lite::AsyncReadExt;
 use gdk::{Paintable, Texture};
 use gio::prelude::*;
 use gtk::{gdk, gio, glib};

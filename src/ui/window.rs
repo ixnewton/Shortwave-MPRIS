@@ -15,21 +15,20 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 use std::cell::OnceCell;
-use std::rc::Rc;
 
 use adw::prelude::*;
 use adw::subclass::prelude::*;
-use async_channel::Sender;
 use glib::{clone, subclass};
 use gtk::{gio, glib, CompositeTemplate};
 
-use crate::app::{Action, SwApplication};
-use crate::audio::Player;
+use crate::app::SwApplication;
 use crate::config;
-use crate::model::SwSorting;
 use crate::settings::{settings_manager, Key};
 use crate::ui::pages::*;
-use crate::ui::SwCreateStationDialog;
+use crate::ui::player::{SwPlayerGadget, SwPlayerToolbar, SwPlayerView};
+use crate::ui::{DisplayError, SwCreateStationDialog, SwDeviceDialog, SwStationDialog};
+
+use super::ToastWindow;
 
 mod imp {
     use super::*;
@@ -38,14 +37,6 @@ mod imp {
     #[template(resource = "/de/haeckerfelix/Shortwave/gtk/window.ui")]
     pub struct SwApplicationWindow {
         #[template_child]
-        pub split_view: TemplateChild<adw::OverlaySplitView>,
-        #[template_child]
-        pub navigation_view: TemplateChild<adw::NavigationView>,
-
-        #[template_child]
-        pub narrow_breakpoint: TemplateChild<adw::Breakpoint>,
-
-        #[template_child]
         pub library_page: TemplateChild<SwLibraryPage>,
         #[template_child]
         pub discover_page: TemplateChild<SwDiscoverPage>,
@@ -53,11 +44,11 @@ mod imp {
         pub search_page: TemplateChild<SwSearchPage>,
 
         #[template_child]
-        pub mini_controller_box: TemplateChild<gtk::Box>,
+        pub player_gadget: TemplateChild<SwPlayerGadget>,
         #[template_child]
-        pub toolbar_controller_box: TemplateChild<gtk::Box>,
+        pub player_toolbar: TemplateChild<SwPlayerToolbar>,
         #[template_child]
-        pub player_bin: TemplateChild<adw::Bin>,
+        pub player_view: TemplateChild<SwPlayerView>,
         #[template_child]
         pub toast_overlay: TemplateChild<adw::ToastOverlay>,
 
@@ -83,13 +74,65 @@ mod imp {
     impl ObjectImpl for SwApplicationWindow {
         fn constructed(&self) {
             self.parent_constructed();
+            let obj = self.obj();
 
-            let app = SwApplication::default();
-            let sender = app.imp().sender.clone();
-            let player = app.imp().player.clone();
+            let player_actions = gio::SimpleActionGroup::new();
 
-            self.obj().setup_widgets(player);
-            self.obj().setup_gactions(sender);
+            // player.start-playback
+            let a = gio::SimpleAction::new("start-playback", None);
+            a.connect_activate(move |_, _| {
+                glib::spawn_future_local(async move {
+                    SwApplication::default().player().start_playback().await;
+                });
+            });
+            player_actions.add_action(&a);
+
+            // player.stop-playback
+            let a = gio::SimpleAction::new("stop-playback", None);
+            a.connect_activate(move |_, _| {
+                glib::spawn_future_local(async move {
+                    SwApplication::default().player().stop_playback().await;
+                });
+            });
+            player_actions.add_action(&a);
+
+            // player.toggle-playback
+            let a = gio::SimpleAction::new("toggle-playback", None);
+            a.connect_activate(move |_, _| {
+                glib::spawn_future_local(async move {
+                    SwApplication::default().player().toggle_playback().await;
+                });
+            });
+            player_actions.add_action(&a);
+
+            // player.show-device-connect
+            let a = gio::SimpleAction::new("show-device-connect", None);
+            a.connect_activate(clone!(
+                #[weak(rename_to = imp)]
+                self,
+                move |_, _| {
+                    SwDeviceDialog::new().present(Some(&*imp.obj()));
+                }
+            ));
+            player_actions.add_action(&a);
+
+            // player.show-station-details
+            let a = gio::SimpleAction::new("show-station-details", None);
+            a.connect_activate(clone!(
+                #[weak(rename_to = imp)]
+                self,
+                move |_, _| {
+                    if let Some(station) = SwApplication::default().player().station() {
+                        SwStationDialog::new(&station).present(Some(&*imp.obj()));
+                    }
+                }
+            ));
+            player_actions.add_action(&a);
+
+            obj.insert_action_group("player", Some(&player_actions));
+
+            self.obj().setup_widgets();
+            self.obj().setup_gactions();
         }
     }
 
@@ -126,21 +169,13 @@ impl SwApplicationWindow {
         glib::Object::new::<Self>()
     }
 
-    pub fn setup_widgets(&self, player: Rc<Player>) {
+    pub fn setup_widgets(&self) {
         let imp = self.imp();
 
         // Init pages
-        imp.library_page.init();
         imp.discover_page.init();
 
-        // Wire everything up
-        imp.mini_controller_box
-            .append(&player.mini_controller_widget);
-        imp.toolbar_controller_box
-            .append(&player.toolbar_controller_widget);
-        imp.player_bin.set_child(Some(&player.widget));
-
-        // Animations for smooth mini player transitions
+        // Animations for smooth gadget player transitions
         let x_callback = adw::CallbackAnimationTarget::new(clone!(
             #[weak(rename_to = this)]
             self,
@@ -174,7 +209,7 @@ impl SwApplicationWindow {
         self.set_default_size(width, height);
     }
 
-    fn setup_gactions(&self, sender: Sender<Action>) {
+    fn setup_gactions(&self) {
         let app = SwApplication::default();
 
         self.add_action_entries([
@@ -191,49 +226,20 @@ impl SwApplicationWindow {
                     dialog.present(Some(window));
                 })
                 .build(),
-            // win.show-player
-            gio::ActionEntry::builder("show-player")
-                .activate(|window: &Self, _, _| {
-                    window.imp().split_view.set_show_sidebar(true);
-                })
-                .build(),
-            // win.hide-player
-            gio::ActionEntry::builder("hide-player")
-                .activate(|window: &Self, _, _| {
-                    window.imp().split_view.set_show_sidebar(false);
-                })
-                .build(),
-            // win.toggle-playback
-            gio::ActionEntry::builder("toggle-playback")
-                .activate(clone!(
-                    #[strong]
-                    sender,
-                    move |_, _, _| {
-                        crate::utils::send(&sender, Action::PlaybackToggle);
-                    }
-                ))
-                .build(),
-            // win.disable-mini-player
-            gio::ActionEntry::builder("disable-mini-player")
+            // win.disable-gadget-player
+            gio::ActionEntry::builder("disable-gadget-player")
                 .activate(move |window: &Self, _, _| {
-                    window.enable_mini_player(false);
+                    window.enable_gadget_player(false);
                 })
                 .build(),
-            // win.enable-mini-player
-            gio::ActionEntry::builder("enable-mini-player")
+            // win.enable-gadget-player
+            gio::ActionEntry::builder("enable-gadget-player")
                 .activate(move |window: &Self, _, _| {
-                    window.enable_mini_player(true);
+                    window.enable_gadget_player(true);
                 })
                 .build(),
         ]);
-        app.set_accels_for_action("win.toggle-playback", &["<primary>space"]);
-
-        // Sort / Order menu
-        let sorting_action = settings_manager::create_action(Key::ViewSorting);
-        self.add_action(&sorting_action);
-
-        let order_action = settings_manager::create_action(Key::ViewOrder);
-        self.add_action(&order_action);
+        app.set_accels_for_action("player.toggle-playback", &["<primary>space"]);
     }
 
     pub fn show_notification(&self, text: &str) {
@@ -241,15 +247,8 @@ impl SwApplicationWindow {
         self.imp().toast_overlay.add_toast(toast);
     }
 
-    pub fn set_sorting(&self, sorting: SwSorting, descending: bool) {
-        self.imp()
-            .library_page
-            .get()
-            .set_sorting(sorting, descending);
-    }
-
-    pub fn enable_mini_player(&self, enable: bool) {
-        debug!("Enable mini player: {:?}", enable);
+    pub fn enable_gadget_player(&self, enable: bool) {
+        debug!("Enable gadget player: {:?}", enable);
 
         if self.is_maximized() && enable {
             self.unmaximize();
@@ -259,7 +258,7 @@ impl SwApplicationWindow {
         let mut previous_height = settings_manager::integer(Key::WindowPreviousHeight) as f64;
 
         // Save current window size as previous size, so you can restore it
-        // if you switch between mini player / normal window mode.
+        // if you switch between gadget player / normal window mode.
         let current_width = self.default_size().0;
         let current_height = self.default_size().1;
         settings_manager::set_integer(Key::WindowPreviousWidth, current_width);
@@ -298,9 +297,7 @@ impl SwApplicationWindow {
     pub fn show_uri(&self, uri: &str) {
         let launcher = gtk::UriLauncher::new(uri);
         launcher.launch(Some(self), gio::Cancellable::NONE, |res| {
-            if let Err(err) = res {
-                error!("Could not launch uri: {err}");
-            }
+            res.handle_error("Unable to launch URI");
         });
     }
 }
@@ -312,5 +309,11 @@ impl Default for SwApplicationWindow {
             .unwrap()
             .downcast()
             .unwrap()
+    }
+}
+
+impl ToastWindow for SwApplicationWindow {
+    fn toast_overlay(&self) -> adw::ToastOverlay {
+        self.imp().toast_overlay.clone()
     }
 }

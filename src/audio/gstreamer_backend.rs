@@ -1,5 +1,5 @@
 // Shortwave - gstreamer_backend.rs
-// Copyright (C) 2021-2023  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2021-2024  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -25,8 +25,7 @@ use gstreamer::{Bin, Element, MessageView, PadProbeReturn, PadProbeType, Pipelin
 use gstreamer_audio::{StreamVolume, StreamVolumeFormat};
 use gtk::glib;
 
-use crate::app::Action;
-use crate::audio::PlaybackState;
+use crate::audio::SwPlaybackState;
 
 #[rustfmt::skip]
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -43,12 +42,14 @@ use crate::audio::PlaybackState;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #[derive(Clone)]
-pub enum GstreamerMessage {
-    SongTitleChanged(String),
-    PlaybackStateChanged(PlaybackState),
+pub enum GstreamerChange {
+    Title(String),
+    PlaybackState(SwPlaybackState),
+    Volume(f64),
+    Failure(String),
 }
 
-#[derive(Default)]
+#[derive(Default, Debug)]
 struct BufferingState {
     buffering: bool,
     buffering_probe: Option<(gstreamer::Pad, gstreamer::PadProbeId)>,
@@ -66,19 +67,18 @@ impl BufferingState {
     }
 }
 
+#[derive(Debug)]
 pub struct GstreamerBackend {
     pipeline: Pipeline,
     recorderbin: Arc<Mutex<Option<Bin>>>,
     current_title: Arc<Mutex<String>>,
-    volume: Arc<Mutex<f64>>,
-    volume_signal_id: Option<glib::signal::SignalHandlerId>,
     buffering_state: Arc<Mutex<BufferingState>>,
     bus_watch_guard: OnceCell<gstreamer::bus::BusWatchGuard>,
-    sender: Sender<GstreamerMessage>,
+    sender: Sender<GstreamerChange>,
 }
 
 impl GstreamerBackend {
-    pub fn new(gst_sender: Sender<GstreamerMessage>, app_sender: Sender<Action>) -> Self {
+    pub fn new(gst_sender: Sender<GstreamerChange>) -> Self {
         // Determine if env supports pulseaudio
         let audiosink = if Self::check_pulse_support() {
             "pulsesink"
@@ -92,20 +92,17 @@ impl GstreamerBackend {
         let pipeline_launch = format!(
             "uridecodebin name=uridecodebin use-buffering=true buffer-duration=6000000000 ! audioconvert name=audioconvert ! tee name=tee ! queue ! {audiosink} name={audiosink}"
         );
-        let pipeline = gstreamer::parse::launch(&pipeline_launch).unwrap();
+        let pipeline = gstreamer::parse::launch(&pipeline_launch)
+            .expect("Unable to create gstreamer pipeline");
         let pipeline = pipeline.downcast::<gstreamer::Pipeline>().unwrap();
         pipeline.set_message_forward(true);
 
         // The recorderbin gets added / removed dynamically to the pipeline
         let recorderbin = Arc::new(Mutex::new(None));
 
-        // Current song title
+        // Current title
         // We need this variable to check if the title have changed.
         let current_title = Arc::new(Mutex::new(String::new()));
-
-        // Playback volume
-        let volume = Arc::new(Mutex::new(1.0));
-        let volume_signal_id = None;
 
         // Buffering state
         let buffering_state = Arc::new(Mutex::new(BufferingState::default()));
@@ -114,45 +111,24 @@ impl GstreamerBackend {
             pipeline,
             recorderbin,
             current_title,
-            volume,
-            volume_signal_id,
             buffering_state,
             bus_watch_guard: OnceCell::default(),
             sender: gst_sender,
         };
 
-        gstreamer_backend.setup_signals(app_sender);
+        gstreamer_backend.setup_signals();
         gstreamer_backend
     }
 
-    fn setup_signals(&mut self, app_sender: Sender<Action>) {
+    fn setup_signals(&mut self) {
         // There's no volume support for non pulseaudio systems
         if let Some(pulsesink) = self.pipeline.by_name("pulsesink") {
-            // We have to update the volume if we get changes from pulseaudio (pulsesink).
-            // The user is able to control the volume from g-c-c.
-            let (volume_sender, volume_receiver) = async_channel::bounded(10);
-
-            // We need to do message passing (sender/receiver) here, because gstreamer
-            // messages are coming from a other thread (and app::Action enum is
-            // not thread safe).
-            glib::spawn_future_local(clone!(
-                #[strong]
-                app_sender,
-                async move {
-                    while let Ok(volume) = volume_receiver.recv().await {
-                        crate::utils::send(&app_sender, Action::PlaybackSetVolume(volume));
-                    }
-                }
-            ));
-
             // Update volume coming from pulseaudio / pulsesink
-            self.volume_signal_id = Some(pulsesink.connect_notify(
+            pulsesink.connect_notify(
                 Some("volume"),
                 clone!(
-                    #[weak(rename_to = old_volume)]
-                    self.volume,
-                    #[strong]
-                    volume_sender,
+                    #[strong(rename_to = sender)]
+                    self.sender,
                     move |element, _| {
                         let pa_volume: f64 = element.property("volume");
                         let new_volume = StreamVolume::convert_volume(
@@ -161,36 +137,24 @@ impl GstreamerBackend {
                             pa_volume,
                         );
 
-                        // We have to check if the values are the same. For some reason gstreamer sends us
-                        // slightly different floats, so we round up here (only the the first two digits are
-                        // important for use here).
-                        let mut old_volume_locked = old_volume.lock().unwrap();
-                        let new_val = format!("{new_volume:.2}");
-                        let old_val = format!("{old_volume_locked:.2}");
-
-                        if new_val != old_val {
-                            crate::utils::send(&volume_sender, new_volume);
-                            *old_volume_locked = new_volume;
-                        }
+                        sender
+                            .send_blocking(GstreamerChange::Volume(new_volume))
+                            .unwrap();
                     }
                 ),
-            ));
+            );
 
             // It's possible to mute the audio (!= 0.0) from pulseaudio side, so we should
             // handle this too by setting the volume to 0.0
             pulsesink.connect_notify(
                 Some("mute"),
                 clone!(
-                    #[weak(rename_to = old_volume)]
-                    self.volume,
-                    #[strong]
-                    volume_sender,
+                    #[strong(rename_to = sender)]
+                    self.sender,
                     move |element, _| {
                         let mute: bool = element.property("mute");
-                        let mut old_volume_locked = old_volume.lock().unwrap();
-                        if mute && *old_volume_locked != 0.0 {
-                            crate::utils::send(&volume_sender, 0.0);
-                            *old_volume_locked = 0.0;
+                        if mute {
+                            sender.send_blocking(GstreamerChange::Volume(0.0)).unwrap();
                         }
                     }
                 ),
@@ -260,8 +224,9 @@ impl GstreamerBackend {
         if state == gstreamer::State::Null {
             crate::utils::send(
                 &self.sender,
-                GstreamerMessage::PlaybackStateChanged(PlaybackState::Stopped),
+                GstreamerChange::PlaybackState(SwPlaybackState::Stopped),
             );
+            *self.current_title.lock().unwrap() = String::new();
         }
 
         let res = self.pipeline.set_state(state);
@@ -270,9 +235,11 @@ impl GstreamerBackend {
             warn!("Failed to set pipeline to playing");
             crate::utils::send(
                 &self.sender,
-                GstreamerMessage::PlaybackStateChanged(PlaybackState::Failure(String::from(
-                    "Failed to set pipeline to playing",
-                ))),
+                GstreamerChange::PlaybackState(SwPlaybackState::Failure),
+            );
+            crate::utils::send(
+                &self.sender,
+                GstreamerChange::Failure("Failed to set pipeline to playing".into()),
             );
             let _ = self.pipeline.set_state(gstreamer::State::Null);
             return;
@@ -288,22 +255,29 @@ impl GstreamerBackend {
         }
     }
 
-    pub fn state(&self) -> PlaybackState {
+    pub fn state(&self) -> SwPlaybackState {
         let state = self
             .pipeline
             .state(gstreamer::ClockTime::from_mseconds(250))
             .1;
         match state {
-            gstreamer::State::Playing => PlaybackState::Playing,
-            _ => PlaybackState::Stopped,
+            gstreamer::State::Playing => SwPlaybackState::Playing,
+            _ => SwPlaybackState::Stopped,
         }
+    }
+
+    pub fn volume(&self) -> f64 {
+        let v = if let Some(pulsesink) = self.pipeline.by_name("pulsesink") {
+            pulsesink.property("volume")
+        } else {
+            1.0
+        };
+
+        StreamVolume::convert_volume(StreamVolumeFormat::Linear, StreamVolumeFormat::Cubic, v)
     }
 
     pub fn set_volume(&self, volume: f64) {
         if let Some(pulsesink) = self.pipeline.by_name("pulsesink") {
-            // We need to block the signal, otherwise we risk creating a endless loop
-            glib::signal::signal_handler_block(&pulsesink, self.volume_signal_id.as_ref().unwrap());
-
             if volume != 0.0 {
                 pulsesink.set_property("mute", false);
             }
@@ -314,22 +288,21 @@ impl GstreamerBackend {
                 volume,
             );
             pulsesink.set_property("volume", pa_volume);
-
-            *self.volume.lock().unwrap() = volume;
-
-            // Unblock the signal again
-            glib::signal::signal_handler_unblock(
-                &pulsesink,
-                self.volume_signal_id.as_ref().unwrap(),
-            );
         } else {
             warn!("PulseAudio is required for changing the volume.")
         }
     }
 
-    pub fn new_source_uri(&mut self, source: &str) {
+    pub fn set_mute(&self, mute: bool) {
+        if let Some(pulsesink) = self.pipeline.by_name("pulsesink") {
+            pulsesink.set_property("mute", mute);
+        }
+    }
+
+    pub fn set_source_uri(&mut self, source: &str) {
         debug!("Stop pipeline...");
         let _ = self.pipeline.set_state(State::Null);
+        *self.current_title.lock().unwrap() = String::new();
 
         debug!("Set new source URI...");
         let uridecodebin = self.pipeline.by_name("uridecodebin").unwrap();
@@ -344,9 +317,11 @@ impl GstreamerBackend {
             warn!("Failed to set pipeline to playing");
             crate::utils::send(
                 &self.sender,
-                GstreamerMessage::PlaybackStateChanged(PlaybackState::Failure(String::from(
-                    "Failed to set pipeline to playing",
-                ))),
+                GstreamerChange::PlaybackState(SwPlaybackState::Failure),
+            );
+            crate::utils::send(
+                &self.sender,
+                GstreamerChange::Failure("Failed to set pipeline to playing".into()),
             );
             let _ = self.pipeline.set_state(gstreamer::State::Null);
             return;
@@ -371,7 +346,7 @@ impl GstreamerBackend {
             .expect("Unable to create recorderbin");
         recorderbin.set_property("message-forward", true);
 
-        // We need to set an offset, otherwise the length of the recorded song would be
+        // We need to set an offset, otherwise the length of the recorded title would be
         // wrong. Get current clock time and calculate offset
         let offset = Self::calculate_pipeline_offset(&self.pipeline);
         let queue_srcpad = recorderbin
@@ -379,7 +354,7 @@ impl GstreamerBackend {
             .unwrap()
             .static_pad("src")
             .unwrap();
-        queue_srcpad.set_offset(offset);
+        queue_srcpad.set_offset(offset.into_negative().try_into().unwrap_or_default());
 
         // Set recording path
         let filesink = recorderbin.by_name("filesink").unwrap();
@@ -488,7 +463,7 @@ impl GstreamerBackend {
         self.recorderbin.lock().unwrap().is_some()
     }
 
-    pub fn current_recording_duration(&self) -> i64 {
+    pub fn recording_duration(&self) -> u64 {
         let recorderbin: &Option<Bin> = &self.recorderbin.lock().unwrap();
         if let Some(recorderbin) = recorderbin {
             let queue_srcpad = recorderbin
@@ -496,49 +471,39 @@ impl GstreamerBackend {
                 .unwrap()
                 .static_pad("src")
                 .unwrap();
-            let offset = queue_srcpad.offset() / 1_000_000_000;
 
-            let pipeline_time = self
-                .pipeline
-                .clock()
-                .expect("Could not get pipeline clock")
-                .time()
-                .unwrap()
-                .nseconds() as i64
-                / 1_000_000_000;
-            let result = pipeline_time + offset + 1;
+            let running_time = *recorderbin.current_running_time().unwrap_or_default();
+            let offset = queue_srcpad.offset().unsigned_abs();
 
-            // Workaround to avoid crash as described in issue #540
-            // https://gitlab.gnome.org/World/Shortwave/-/issues/540
-            // TODO: Find out actual root cause for this nonsense
-            if !(0..=86_400).contains(&result) {
-                error!(
-                    "Unable to determine correct recording value: {} seconds",
-                    result
+            trace!("Running time: {running_time}");
+            trace!("offset: {offset}");
+
+            if offset > running_time {
+                warn!(
+                    "Offset is larger than running time, unable to determine recording duration."
                 );
                 return 0;
             }
 
-            return result;
+            // nanoseconds to seconds
+            (running_time - offset) / 1_000_000_000
+        } else {
+            warn!("No recording active, unable to get recording duration.");
+            0
         }
-
-        warn!("No recording active, unable to get recording duration.");
-        0
     }
 
-    fn calculate_pipeline_offset(pipeline: &Pipeline) -> i64 {
+    fn calculate_pipeline_offset(pipeline: &Pipeline) -> u64 {
         let clock_time = pipeline
             .clock()
             .expect("Could not get pipeline clock")
             .time()
-            .unwrap()
-            .nseconds() as i64;
+            .unwrap();
         let base_time = pipeline
             .base_time()
-            .expect("Could not get pipeline base time")
-            .nseconds() as i64;
+            .expect("Could not get pipeline base time");
 
-        -(clock_time - base_time)
+        *clock_time - *base_time
     }
 
     fn destroy_recorderbin(pipeline: Pipeline, recorderbin: Bin) {
@@ -560,7 +525,7 @@ impl GstreamerBackend {
     fn parse_bus_message(
         pipeline: Pipeline,
         message: &gstreamer::Message,
-        sender: Sender<GstreamerMessage>,
+        sender: Sender<GstreamerChange>,
         buffering_state: &Arc<Mutex<BufferingState>>,
         current_title: Arc<Mutex<String>>,
     ) {
@@ -569,11 +534,11 @@ impl GstreamerBackend {
                 if let Some(t) = tag.tags().get::<gstreamer::tags::Title>() {
                     let new_title = t.get().to_string();
 
-                    // only send message if song title really have changed.
+                    // only send message if title really have changed.
                     let mut current_title_locked = current_title.lock().unwrap();
                     if *current_title_locked != new_title {
                         current_title_locked.clone_from(&new_title);
-                        crate::utils::send(&sender, GstreamerMessage::SongTitleChanged(new_title));
+                        crate::utils::send(&sender, GstreamerChange::Title(new_title));
                     }
                 }
             }
@@ -583,16 +548,13 @@ impl GstreamerBackend {
                 // https://gitlab.gnome.org/World/Shortwave/-/issues/528
                 if message.src() == Some(pipeline.upcast_ref::<gstreamer::Object>()) {
                     let playback_state = match sc.current() {
-                        gstreamer::State::Playing => PlaybackState::Playing,
-                        gstreamer::State::Paused => PlaybackState::Playing,
-                        gstreamer::State::Ready => PlaybackState::Loading,
-                        _ => PlaybackState::Stopped,
+                        gstreamer::State::Playing => SwPlaybackState::Playing,
+                        gstreamer::State::Paused => SwPlaybackState::Playing,
+                        gstreamer::State::Ready => SwPlaybackState::Loading,
+                        _ => SwPlaybackState::Stopped,
                     };
 
-                    crate::utils::send(
-                        &sender,
-                        GstreamerMessage::PlaybackStateChanged(playback_state),
-                    );
+                    crate::utils::send(&sender, GstreamerChange::PlaybackState(playback_state));
                 }
             }
             MessageView::Buffering(buffering) => {
@@ -606,7 +568,7 @@ impl GstreamerBackend {
                         buffering_state.buffering = true;
                         crate::utils::send(
                             &sender,
-                            GstreamerMessage::PlaybackStateChanged(PlaybackState::Loading),
+                            GstreamerChange::PlaybackState(SwPlaybackState::Loading),
                         );
 
                         if buffering_state.is_live == Some(false) {
@@ -633,7 +595,7 @@ impl GstreamerBackend {
                     buffering_state.buffering = false;
                     crate::utils::send(
                         &sender,
-                        GstreamerMessage::PlaybackStateChanged(PlaybackState::Playing),
+                        GstreamerChange::PlaybackState(SwPlaybackState::Playing),
                     );
 
                     if buffering_state.is_live == Some(false) {
@@ -677,8 +639,9 @@ impl GstreamerBackend {
                 }
                 crate::utils::send(
                     &sender,
-                    GstreamerMessage::PlaybackStateChanged(PlaybackState::Failure(msg)),
+                    GstreamerChange::PlaybackState(SwPlaybackState::Failure),
                 );
+                crate::utils::send(&sender, GstreamerChange::Failure(msg));
             }
             _ => (),
         };

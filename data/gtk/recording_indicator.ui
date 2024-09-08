@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <template class="SwRecordingIndicator" parent="AdwBin">
+    <property name="halign">center</property>
+    <property name="child">
+      <object class="GtkMenuButton" id="button">
+        <property name="popover">state_popover</property>
+        <property name="child">
+          <object class="GtkBox">
+            <child>
+              <object class="GtkImage">
+                <property name="icon_name">media-record-symbolic</property>
+                <property name="pixel_size">10</property>
+                <property name="margin_start">8</property>
+                <property name="margin_end">4</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel" id="duration_label">
+                <property name="label">00:00</property>
+                <property name="margin_end">8</property>
+                <attributes>
+                  <attribute name="font-features" value="tnum"/>
+                </attributes>
+              </object>
+            </child>
+          </object>
+        </property>
+        <style>
+          <class name="circular"/>
+        </style>
+      </object>
+    </property>
+    <object class="GtkPopover" id="state_popover">
+      <child>
+        <object class="AdwStatusPage" id="state_statuspage">
+          <property name="width_request">200</property>
+          <property name="title" translatable="yes">An error occurred</property>
+          <binding name="description">
+            <lookup name="last-failure" type="SwPlayer">
+              <lookup name="player">SwRecordingIndicator</lookup>
+            </lookup>
+          </binding>
+          <style>
+            <class name="compact" />
+          </style>
+        </object>
+      </child>
+    </object>
+  </template>
+</interface>

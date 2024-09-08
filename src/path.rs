@@ -16,25 +16,25 @@
 
 use std::fs;
 use std::path::PathBuf;
+use std::sync::LazyLock;
 
 use gtk::glib;
-use once_cell::sync::Lazy;
 
 use crate::config;
 
-pub static DATA: Lazy<PathBuf> = Lazy::new(|| {
+pub static DATA: LazyLock<PathBuf> = LazyLock::new(|| {
     let mut path = glib::user_data_dir();
     path.push(config::NAME);
     path
 });
 
-pub static CONFIG: Lazy<PathBuf> = Lazy::new(|| {
+pub static CONFIG: LazyLock<PathBuf> = LazyLock::new(|| {
     let mut path = glib::user_config_dir();
     path.push(config::NAME);
     path
 });
 
-pub static CACHE: Lazy<PathBuf> = Lazy::new(|| {
+pub static CACHE: LazyLock<PathBuf> = LazyLock::new(|| {
     let mut path = glib::user_cache_dir();
     path.push(config::NAME);
     path

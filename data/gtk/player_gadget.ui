@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <template class="SwPlayerGadget" parent="AdwBin">
+    <property name="child">
+      <object class="GtkBox" id="mini_controller">
+        <property name="hexpand">True</property>
+        <property name="vexpand">True</property>
+        <child>
+          <object class="GtkBox">
+            <property name="spacing">12</property>
+            <property name="margin_start">12</property>
+            <property name="margin_end">12</property>
+            <property name="margin_top">6</property>
+            <property name="margin_bottom">6</property>
+            <child>
+              <object class="GtkBox">
+                <property name="valign">center</property>
+                <property name="orientation">vertical</property>
+                <property name="spacing">6</property>
+                <child>
+                  <object class="GtkStack" id="playback_button_stack">
+                    <property name="valign">center</property>
+                    <binding name="visible_child_name">
+                      <lookup name="state" type="SwPlayer">
+                        <lookup name="player">SwPlayerGadget</lookup>
+                      </lookup>
+                    </binding>
+                    <binding name="sensitive">
+                      <lookup name="has-station" type="SwPlayer">
+                        <lookup name="player">SwPlayerGadget</lookup>
+                      </lookup>
+                    </binding>
+                    <child>
+                      <object class="GtkStackPage">
+                        <property name="name">Stopped</property>
+                        <property name="child">
+                          <object class="GtkButton" id="start_playback_button">
+                            <property name="action_name">player.start-playback</property>
+                            <property name="icon_name">media-playback-start-symbolic</property>
+                            <property name="tooltip_text" translatable="yes">Play</property>
+                            <style>
+                              <class name="circular" />
+                              <class name="gadget-controller-button" />
+                            </style>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkStackPage">
+                        <property name="name">Playing</property>
+                        <property name="child">
+                          <object class="GtkButton" id="stop_playback_button">
+                            <property name="action_name">player.stop-playback</property>
+                            <property name="tooltip_text" translatable="yes">Stop</property>
+                            <property name="icon_name">media-playback-stop-symbolic</property>
+                            <style>
+                              <class name="circular" />
+                              <class name="gadget-controller-button" />
+                            </style>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkStackPage">
+                        <property name="name">Loading</property>
+                        <property name="child">
+                          <object class="GtkButton" id="loading_button">
+                            <property name="action_name">player.stop-playback</property>
+                            <property name="tooltip_text" translatable="yes">Buffering…</property>
+                            <child>
+                              <object class="AdwSpinner" />
+                            </child>
+                            <style>
+                              <class name="circular" />
+                              <class name="gadget-controller-button" />
+                            </style>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkStackPage">
+                        <property name="name">Failure</property>
+                        <property name="child">
+                          <object class="GtkMenuButton">
+                            <property name="icon_name">dialog-error-symbolic</property>
+                            <style>
+                              <class name="destructive-action"/>
+                              <class name="circular"/>
+                              <class name="gadget-controller-button" />
+                            </style>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkMenuButton" id="volume_button">
+                    <property name="icon_name">multimedia-volume-control-symbolic</property>
+                    <property name="popover">volume_popover</property>
+                    <style>
+                      <class name="gadget-controller-volume-button" />
+                    </style>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkBox">
+                <property name="height_request">80</property>
+                <property name="orientation">vertical</property>
+                <property name="hexpand">True</property>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="label" translatable="yes">SHORTWAVE INTERNET RADIO</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Cantarell Bold 9" />
+                      <attribute name="style" value="italic" />
+                    </attributes>
+                    <style>
+                      <class name="dim-label" />
+                    </style>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkBox">
+                    <property name="valign">center</property>
+                    <property name="orientation">vertical</property>
+                    <property name="spacing">6</property>
+                    <property name="vexpand">True</property>
+                    <property name="valign">center</property>
+                    <property name="margin-start">6</property>
+                    <property name="margin-end">6</property>
+                    <child>
+                      <object class="GtkLabel" id="station_title_label">
+                        <property name="halign">center</property>
+                        <property name="label" translatable="yes">No Playback</property>
+                        <property name="ellipsize">end</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Nimbus Mono PS Bold 14" />
+                        </attributes>
+                        <binding name="label">
+                          <lookup name="title" type="SwStation">
+                            <lookup name="station" type="SwPlayer">
+                              <lookup name="player">SwPlayerGadget</lookup>
+                            </lookup>
+                          </lookup>
+                        </binding>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkRevealer" id="subtitle_revealer">
+                        <binding name="reveal-child">
+                          <lookup name="has-playing-song" type="SwPlayer">
+                            <lookup name="player">SwPlayerGadget</lookup>
+                          </lookup>
+                        </binding>
+                        <child>
+                          <object class="GtkLabel" id="song_label">
+                            <property name="halign">center</property>
+                            <property name="label">subtitle</property>
+                            <property name="ellipsize">end</property>
+                            <property name="xalign">0</property>
+                            <attributes>
+                              <attribute name="font-desc" value="Nimbus Mono PS Bold 12" />
+                            </attributes>
+                            <binding name="label">
+                              <lookup name="title" type="SwSong">
+                                <lookup name="playing-song" type="SwPlayer">
+                                  <lookup name="player">SwPlayerGadget</lookup>
+                                </lookup>
+                              </lookup>
+                            </binding>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <style>
+                  <class name="frame" />
+                  <class name="gadget-controller-display" />
+                </style>
+              </object>
+            </child>
+            <child>
+              <object class="GtkBox">
+                <property name="valign">center</property>
+                <property name="orientation">vertical</property>
+                <property name="spacing">6</property>
+                <child>
+                  <object class="GtkButton" id="close_button">
+                    <property name="valign">center</property>
+                    <property name="action_name">window.close</property>
+                    <property name="icon_name">window-close-symbolic</property>
+                    <property name="tooltip_text" translatable="yes">Close</property>
+                    <style>
+                      <class name="circular" />
+                      <class name="gadget-controller-button" />
+                    </style>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkButton" id="resize_button">
+                    <property name="action_name">win.disable-gadget-player</property>
+                    <property name="icon_name">restore-window-symbolic</property>
+                    <property name="tooltip_text" translatable="yes">Resize</property>
+                    <style>
+                      <class name="circular" />
+                      <class name="gadget-controller-button" />
+                    </style>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+        <style>
+          <class name="gadget-controller" />
+        </style>
+      </object>
+    </property>
+    <object class="GtkPopover" id="volume_popover">
+      <child>
+        <object class="SwVolumeControl" id="volume_control">
+          <property name="width_request">250</property>
+        </object>
+      </child>
+    </object>
+  </template>
+</interface>

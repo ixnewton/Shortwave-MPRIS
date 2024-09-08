@@ -1,16 +1,20 @@
 [advisories]
-ignore = [
-    "RUSTSEC-2020-0071",
-    "RUSTSEC-2020-0159",
-]
+version = 2
+yanked = "deny"
 
 [licenses]
-allow-osi-fsf-free = "either"
-copyleft = "allow"
-
-[[licenses.clarify]]
-name = "encoding_rs"
-expression = "(Apache-2.0 OR MIT) AND BSD-3-Clause"
-license-files = [
-    { path = "COPYRIGHT", hash = 0x39f8ad31 },
+version = 2
+allow = [
+    "Apache-2.0 WITH LLVM-exception",
+    "Apache-2.0",
+    "BSD-2-Clause",
+    "BSD-3-Clause",
+    "GPL-3.0",
+    "ISC",
+    "LGPL-2.1",
+    "MIT",
+    "MPL-2.0",
+    "OpenSSL",
+    "Unicode-3.0",
+    "Unicode-DFS-2016",
 ]

@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use std::cell::{OnceCell, RefCell};
+use std::cell::RefCell;
 
 use adw::prelude::*;
 use adw::subclass::prelude::*;
@@ -26,7 +26,7 @@ use uuid::Uuid;
 use crate::api::{StationMetadata, SwStation};
 use crate::app::SwApplication;
 use crate::i18n::i18n;
-use crate::ui::{FaviconSize, StationFavicon, SwApplicationWindow};
+use crate::ui::{SwApplicationWindow, SwFavicon};
 
 mod imp {
     use super::*;
@@ -45,7 +45,7 @@ mod imp {
         #[template_child]
         pub create_button: TemplateChild<gtk::Button>,
         #[template_child]
-        pub favicon_box: TemplateChild<gtk::Box>,
+        pub station_favicon: TemplateChild<SwFavicon>,
         #[template_child]
         pub favicon_button: TemplateChild<gtk::Button>,
         #[template_child]
@@ -54,7 +54,6 @@ mod imp {
         pub url_row: TemplateChild<adw::EntryRow>,
 
         pub favicon: RefCell<Option<gtk::gdk::Texture>>,
-        pub favicon_widget: OnceCell<StationFavicon>,
     }
 
     #[glib::object_subclass]
@@ -89,13 +88,6 @@ glib::wrapper! {
 impl SwCreateStationDialog {
     pub fn new() -> Self {
         let dialog: Self = glib::Object::new();
-
-        let imp = dialog.imp();
-        let favicon_widget = StationFavicon::new(FaviconSize::Big);
-
-        imp.favicon_widget.set(favicon_widget).unwrap();
-        imp.favicon_box
-            .append(&imp.favicon_widget.get().unwrap().widget);
 
         dialog.setup_signals();
         dialog
@@ -194,10 +186,8 @@ impl SwCreateStationDialog {
     fn set_favicon(&self, file: &gio::File) {
         if let Ok(texture) = gdk::Texture::from_file(file) {
             self.imp()
-                .favicon_widget
-                .get()
-                .unwrap()
-                .set_paintable(&texture.clone().upcast());
+                .station_favicon
+                .set_paintable(Some(&texture.clone().upcast()));
             self.imp().favicon.replace(Some(texture));
         }
     }

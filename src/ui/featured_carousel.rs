@@ -108,10 +108,10 @@ impl SwFeaturedCarousel {
 
         let builder =
             gtk::Builder::from_resource("/de/haeckerfelix/Shortwave/gtk/featured_carousel_page.ui");
-        get_widget!(builder, gtk::Box, page_box);
-        get_widget!(builder, gtk::Label, title_label);
-        get_widget!(builder, adw::ButtonContent, action_content);
-        get_widget!(builder, gtk::Button, action_button);
+        let page_box: gtk::Box = builder.object("page_box").unwrap();
+        let title_label: gtk::Label = builder.object("title_label").unwrap();
+        let action_content: adw::ButtonContent = builder.object("action_content").unwrap();
+        let action_button: gtk::Button = builder.object("action_button").unwrap();
 
         title_label.set_text(title);
 

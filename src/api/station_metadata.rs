@@ -73,7 +73,7 @@ impl StationMetadata {
         let tags = self.tags.split(',');
         let mut formatted = String::new();
         for tag in tags {
-            write!(formatted, ", {}", tag.to_title_case()).unwrap();
+            write!(formatted, ", {}", tag.to_title_case()).unwrap_or_default();
         }
         formatted.split_at(2).1.to_string()
     }

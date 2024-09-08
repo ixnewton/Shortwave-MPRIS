@@ -19,8 +19,7 @@ use adw::subclass::prelude::*;
 use glib::{subclass, Properties};
 use gtk::{glib, CompositeTemplate};
 
-use crate::api::SwStation;
-use crate::model::{SwSorting, SwStationModel, SwStationSorter};
+use crate::api::{SwStation, SwStationModel, SwStationSorter};
 use crate::ui::{SwStationDialog, SwStationRow};
 
 mod imp {
@@ -32,23 +31,15 @@ mod imp {
     #[template(resource = "/de/haeckerfelix/Shortwave/gtk/station_flowbox.ui")]
     #[properties(wrapper_type = super::SwStationFlowBox)]
     pub struct SwStationFlowBox {
+        #[template_child]
+        pub flowbox: TemplateChild<gtk::FlowBox>,
+
         #[property(get)]
         pub model: gtk::SortListModel,
         #[property(get, set = Self::set_title)]
         pub title: RefCell<Option<String>>,
-
-        #[template_child]
-        pub flowbox: TemplateChild<gtk::FlowBox>,
-
+        #[property(get)]
         pub sorter: SwStationSorter,
-    }
-
-    impl SwStationFlowBox {
-        fn set_title(&self, title: String) {
-            self.flowbox
-                .update_property(&[gtk::accessible::Property::Label(&title)]);
-            self.title.replace(Some(title));
-        }
     }
 
     #[glib::object_subclass]
@@ -103,6 +94,14 @@ mod imp {
     impl WidgetImpl for SwStationFlowBox {}
 
     impl BinImpl for SwStationFlowBox {}
+
+    impl SwStationFlowBox {
+        fn set_title(&self, title: String) {
+            self.flowbox
+                .update_property(&[gtk::accessible::Property::Label(&title)]);
+            self.title.replace(Some(title));
+        }
+    }
 }
 
 glib::wrapper! {
@@ -114,11 +113,5 @@ impl SwStationFlowBox {
     pub fn init(&self, model: SwStationModel) {
         let imp = self.imp();
         imp.model.set_model(Some(&model));
-    }
-
-    pub fn set_sorting(&self, sorting: SwSorting, descending: bool) {
-        let imp = self.imp();
-        imp.sorter.set_sorting(sorting);
-        imp.sorter.set_descending(descending);
     }
 }

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <template class="SwVolumeControl" parent="GtkWidget">
+    <child>
+      <object class="GtkButton" id="volume_low_button">
+        <property name="icon-name">audio-volume-low-symbolic</property>
+        <property name="action-name">volume.toggle-mute</property>
+        <property name="valign">center</property>
+        <style>
+          <class name="flat" />
+          <class name="circular" />
+        </style>
+      </object>
+    </child>
+    <child>
+      <object class="GtkScale" id="volume_scale">
+        <property name="hexpand">true</property>
+        <property name="margin-end">6</property>
+      </object>
+    </child>
+    <child>
+      <object class="GtkImage" id="volume_high_image">
+        <property name="icon-name">audio-volume-high-symbolic</property>
+        <property name="margin-end">10</property>
+      </object>
+    </child>
+  </template>
+</interface>

@@ -17,28 +17,16 @@
 use std::cell::RefCell;
 use std::collections::HashMap;
 
-use glib::{Enum, Properties};
+use glib::Properties;
 use gtk::glib;
 use gtk::prelude::*;
 use gtk::subclass::prelude::*;
 
 use super::models::StationEntry;
+use super::*;
 use crate::api;
 use crate::api::StationMetadata;
-use crate::api::{SwClient, SwStation};
-use crate::database::{connection, queries};
-use crate::model::SwStationModel;
-
-#[derive(Display, Copy, Debug, Clone, EnumString, Eq, PartialEq, Enum)]
-#[repr(u32)]
-#[enum_type(name = "SwLibraryStatus")]
-#[derive(Default)]
-pub enum SwLibraryStatus {
-    #[default]
-    Content,
-    Empty,
-    Offline,
-}
+use crate::api::{SwClient, SwStation, SwStationModel};
 
 mod imp {
     use super::*;

@@ -26,8 +26,9 @@ pub enum Key {
     WindowHeight,
     WindowPreviousWidth,
     WindowPreviousHeight,
-    ViewSorting,
-    ViewOrder,
+
+    LibrarySorting,
+    LibrarySortingType,
 
     // Audio
     RecorderSaveCount,

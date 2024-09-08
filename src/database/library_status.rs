@@ -1,5 +1,5 @@
-// Shortwave - mod.rs
-// Copyright (C) 2021  Felix Häcker <haeckerfelix@gnome.org>
+// Shortwave - library_state.rs
+// Copyright (C) 2024  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,8 +14,16 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-mod station_model;
-mod station_sorter;
+use gtk::glib;
+use gtk::glib::Enum;
 
-pub use station_model::SwStationModel;
-pub use station_sorter::{SwSorting, SwStationSorter};
+#[derive(Display, Copy, Debug, Clone, EnumString, Eq, PartialEq, Enum)]
+#[repr(u32)]
+#[enum_type(name = "SwLibraryStatus")]
+#[derive(Default)]
+pub enum SwLibraryStatus {
+    #[default]
+    Content,
+    Empty,
+    Offline,
+}

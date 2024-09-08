@@ -94,53 +94,53 @@
   <menu id="library_menu">
     <section>
       <item>
-        <attribute name="label" translatable="yes">_Enable Mini Player</attribute>
-        <attribute name="action">win.enable-mini-player</attribute>
+        <attribute name="label" translatable="yes">_Enable Gadget Player</attribute>
+        <attribute name="action">win.enable-gadget-player</attribute>
       </item>
       <submenu>
         <attribute name="label" translatable="yes">_Sorting</attribute>
         <section>
           <item>
             <attribute name="label" translatable="yes">_Name</attribute>
-            <attribute name="action">win.view-sorting</attribute>
-            <attribute name="target">Name</attribute>
+            <attribute name="action">library.set-sorting</attribute>
+            <attribute name="target">name</attribute>
           </item>
           <item>
             <attribute name="label" translatable="yes">_Language</attribute>
-            <attribute name="action">win.view-sorting</attribute>
-            <attribute name="target">Language</attribute>
+            <attribute name="action">library.set-sorting</attribute>
+            <attribute name="target">language</attribute>
           </item>
           <item>
             <attribute name="label" translatable="yes">_Country</attribute>
-            <attribute name="action">win.view-sorting</attribute>
-            <attribute name="target">Country</attribute>
+            <attribute name="action">library.set-sorting</attribute>
+            <attribute name="target">country</attribute>
           </item>
           <item>
             <attribute name="label" translatable="yes">S_tate</attribute>
-            <attribute name="action">win.view-sorting</attribute>
-            <attribute name="target">State</attribute>
+            <attribute name="action">library.set-sorting</attribute>
+            <attribute name="target">state</attribute>
           </item>
           <item>
             <attribute name="label" translatable="yes">_Votes</attribute>
-            <attribute name="action">win.view-sorting</attribute>
-            <attribute name="target">Votes</attribute>
+            <attribute name="action">library.set-sorting</attribute>
+            <attribute name="target">votes</attribute>
           </item>
           <item>
             <attribute name="label" translatable="yes">_Bitrate</attribute>
-            <attribute name="action">win.view-sorting</attribute>
-            <attribute name="target">Bitrate</attribute>
+            <attribute name="action">library.set-sorting</attribute>
+            <attribute name="target">bitrate</attribute>
           </item>
         </section>
         <section>
           <item>
             <attribute name="label" translatable="yes">_Ascending</attribute>
-            <attribute name="action">win.view-order</attribute>
-            <attribute name="target">Ascending</attribute>
+            <attribute name="action">library.set-sorting-type</attribute>
+            <attribute name="target">ascending</attribute>
           </item>
           <item>
             <attribute name="label" translatable="yes">_Descending</attribute>
-            <attribute name="action">win.view-order</attribute>
-            <attribute name="target">Descending</attribute>
+            <attribute name="action">library.set-sorting-type</attribute>
+            <attribute name="target">descending</attribute>
           </item>
         </section>
       </submenu>

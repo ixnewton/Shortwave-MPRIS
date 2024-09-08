@@ -1,5 +1,5 @@
 // Shortwave - station_dialog.rs
-// Copyright (C) 2021-2023  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2021-2024  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,8 +18,7 @@ use std::cell::OnceCell;
 
 use adw::prelude::*;
 use adw::subclass::prelude::*;
-use futures_util::future::FutureExt;
-use glib::{subclass, Properties};
+use glib::{clone, subclass, Properties};
 use gtk::{gdk, glib, CompositeTemplate};
 use inflector::Inflector;
 use shumate::prelude::*;
@@ -28,7 +27,7 @@ use crate::api::{FaviconDownloader, SwStation};
 use crate::app::SwApplication;
 use crate::database::SwLibrary;
 use crate::i18n;
-use crate::ui::{FaviconSize, StationFavicon};
+use crate::ui::SwFavicon;
 
 mod imp {
     use super::*;
@@ -38,7 +37,7 @@ mod imp {
     #[properties(wrapper_type = super::SwStationDialog)]
     pub struct SwStationDialog {
         #[template_child]
-        favicon_box: TemplateChild<gtk::Box>,
+        station_favicon: TemplateChild<SwFavicon>,
         #[template_child]
         local_station_group: TemplateChild<adw::PreferencesGroup>,
         #[template_child]
@@ -119,18 +118,20 @@ mod imp {
             let metadata = station.metadata();
 
             // Download & set station favicon
-            let station_favicon = StationFavicon::new(FaviconSize::Big);
-            self.favicon_box.append(&station_favicon.widget);
-
             if let Some(texture) = station.favicon() {
-                station_favicon.set_paintable(&texture.upcast());
+                self.station_favicon.set_paintable(Some(&texture.upcast()));
             } else if let Some(favicon) = metadata.favicon.as_ref() {
-                let fut = FaviconDownloader::download(favicon.clone()).map(move |paintable| {
-                    if let Ok(paintable) = paintable {
-                        station_favicon.set_paintable(&paintable)
+                glib::spawn_future_local(clone!(
+                    #[weak(rename_to = imp)]
+                    self,
+                    #[strong]
+                    favicon,
+                    async move {
+                        if let Ok(paintable) = FaviconDownloader::download(favicon.clone()).await {
+                            imp.station_favicon.set_paintable(Some(&paintable))
+                        }
                     }
-                });
-                glib::spawn_future_local(fut);
+                ));
             }
 
             // Title
@@ -140,7 +141,7 @@ mod imp {
             // Homepage
             if let Some(ref homepage) = metadata.homepage {
                 let url = homepage.to_string().replace('&', "&amp;");
-                let domain = homepage.domain().unwrap();
+                let domain = homepage.domain().unwrap_or_default();
                 let markup = format!("<a href=\"{}\">{}</a>", &url, &domain);
 
                 self.homepage_label.set_visible(true);
@@ -285,7 +286,7 @@ mod imp {
             let station = obj.station();
 
             let app = SwApplication::default();
-            app.imp().player.set_station(station);
+            app.player().set_station(station);
 
             obj.close();
         }

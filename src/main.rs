@@ -23,13 +23,11 @@ extern crate serde_derive;
 extern crate diesel;
 #[macro_use]
 extern crate strum_macros;
-#[macro_use]
-extern crate gtk_macros;
 
 mod api;
 mod audio;
 mod database;
-mod model;
+mod device;
 mod settings;
 mod ui;
 mod utils;
