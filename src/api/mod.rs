@@ -35,5 +35,5 @@ pub use station::SwStation;
 pub use station_metadata::StationMetadata;
 pub use station_model::SwStationModel;
 pub use station_request::StationRequest;
-pub use station_sorter::{SwStationSorting, SwStationSortingType, SwStationSorter};
+pub use station_sorter::{SwStationSorter, SwStationSorting, SwStationSortingType};
 pub use stats::Stats;
