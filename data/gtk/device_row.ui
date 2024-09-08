@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <template class="SwDeviceRow" parent="AdwActionRow">
+    <property name="use_markup">False</property>
+    <child>
+      <object class="AdwSpinner" id="spinner">
+        <property name="visible">False</property>
+      </object>
+    </child>
+  </template>
+</interface>

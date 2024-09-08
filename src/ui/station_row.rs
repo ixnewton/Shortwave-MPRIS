@@ -17,6 +17,7 @@
 use std::cell::OnceCell;
 
 use glib::clone;
+use glib::subclass;
 use glib::Properties;
 use gtk::prelude::*;
 use gtk::subclass::prelude::*;
@@ -28,8 +29,6 @@ use crate::ui::SwFavicon;
 use crate::SwApplication;
 
 mod imp {
-    use glib::subclass;
-
     use super::*;
 
     #[derive(Debug, Default, CompositeTemplate, Properties)]

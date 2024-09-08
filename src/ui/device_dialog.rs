@@ -21,6 +21,9 @@ use gtk::{glib, CompositeTemplate};
 
 use crate::audio::SwPlayer;
 use crate::device::SwDevice;
+use crate::ui::SwDeviceRow;
+
+use super::ToastWindow;
 
 mod imp {
     use super::*;
@@ -29,6 +32,8 @@ mod imp {
     #[template(resource = "/de/haeckerfelix/Shortwave/gtk/device_dialog.ui")]
     #[properties(wrapper_type = super::SwDeviceDialog)]
     pub struct SwDeviceDialog {
+        #[template_child]
+        pub toast_overlay: TemplateChild<adw::ToastOverlay>,
         #[template_child]
         pub devices_listbox: TemplateChild<gtk::ListBox>,
         #[template_child]
@@ -89,44 +94,11 @@ mod imp {
                 }
             ));
 
-            self.devices_listbox.bind_model(
-                Some(&player.device_discovery().devices()),
-                clone!(
-                    #[weak(rename_to = imp)]
-                    self,
-                    #[upgrade_or]
-                    adw::ActionRow::new().into(),
-                    move |o| {
-                        let device: &SwDevice = o.downcast_ref().unwrap();
-                        let row = adw::ActionRow::builder()
-                            .title(device.name())
-                            .subtitle(device.model())
-                            .activatable(true)
-                            .build();
-
-                        row.connect_activated(clone!(
-                            #[weak]
-                            imp,
-                            #[weak]
-                            device,
-                            move |_| {
-                                glib::spawn_future_local(clone!(
-                                    #[weak]
-                                    imp,
-                                    async move {
-                                        // TODO: Proper error handling + maybe adding own row type
-                                        if let Err(err) = imp.player.connect_device(&device).await {
-                                            error!("Unable to connect: {}", err.to_string())
-                                        }
-                                        imp.obj().close();
-                                    }
-                                ));
-                            }
-                        ));
-                        row.into()
-                    }
-                ),
-            );
+            self.devices_listbox
+                .bind_model(Some(&player.device_discovery().devices()), move |o| {
+                    let device: &SwDevice = o.downcast_ref().unwrap();
+                    SwDeviceRow::new(device).into()
+                });
 
             self.update_dialog_stack();
             self.update_scan_stack();
@@ -170,6 +142,12 @@ glib::wrapper! {
 impl SwDeviceDialog {
     pub fn new() -> Self {
         glib::Object::new()
+    }
+}
+
+impl ToastWindow for SwDeviceDialog {
+    fn toast_overlay(&self) -> adw::ToastOverlay {
+        self.imp().toast_overlay.clone()
     }
 }
 
