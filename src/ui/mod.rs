@@ -38,7 +38,7 @@ pub use device_dialog::SwDeviceDialog;
 pub use device_indicator::SwDeviceIndicator;
 pub use device_row::SwDeviceRow;
 pub use display_error::{DisplayError, ToastWindow};
-pub use favicon::{SwFavicon, SwFaviconSize};
+pub use favicon::SwFavicon;
 pub use featured_carousel::SwFeaturedCarousel;
 pub use recording_indicator::SwRecordingIndicator;
 pub use song_row::SwSongRow;
