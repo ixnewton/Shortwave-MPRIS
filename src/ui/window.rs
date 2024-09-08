@@ -26,7 +26,9 @@ use crate::config;
 use crate::settings::{settings_manager, Key};
 use crate::ui::pages::*;
 use crate::ui::player::{SwPlayerGadget, SwPlayerToolbar, SwPlayerView};
-use crate::ui::{SwCreateStationDialog, SwDeviceDialog, SwStationDialog};
+use crate::ui::{DisplayError, SwCreateStationDialog, SwDeviceDialog, SwStationDialog};
+
+use super::ToastWindow;
 
 mod imp {
     use super::*;
@@ -295,9 +297,7 @@ impl SwApplicationWindow {
     pub fn show_uri(&self, uri: &str) {
         let launcher = gtk::UriLauncher::new(uri);
         launcher.launch(Some(self), gio::Cancellable::NONE, |res| {
-            if let Err(err) = res {
-                error!("Could not launch uri: {err}");
-            }
+            res.handle_error("Unable to launch URI");
         });
     }
 }
@@ -309,5 +309,11 @@ impl Default for SwApplicationWindow {
             .unwrap()
             .downcast()
             .unwrap()
+    }
+}
+
+impl ToastWindow for SwApplicationWindow {
+    fn toast_overlay(&self) -> adw::ToastOverlay {
+        self.imp().toast_overlay.clone()
     }
 }

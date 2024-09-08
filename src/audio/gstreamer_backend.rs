@@ -92,7 +92,8 @@ impl GstreamerBackend {
         let pipeline_launch = format!(
             "uridecodebin name=uridecodebin use-buffering=true buffer-duration=6000000000 ! audioconvert name=audioconvert ! tee name=tee ! queue ! {audiosink} name={audiosink}"
         );
-        let pipeline = gstreamer::parse::launch(&pipeline_launch).unwrap();
+        let pipeline = gstreamer::parse::launch(&pipeline_launch)
+            .expect("Unable to create gstreamer pipeline");
         let pipeline = pipeline.downcast::<gstreamer::Pipeline>().unwrap();
         pipeline.set_message_forward(true);
 

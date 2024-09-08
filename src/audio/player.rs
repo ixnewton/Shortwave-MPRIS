@@ -30,6 +30,7 @@ use crate::device::{SwCastSender, SwDevice, SwDeviceDiscovery, SwDeviceKind};
 use crate::i18n::*;
 use crate::path;
 use crate::settings::{settings_manager, Key};
+use crate::ui::DisplayError;
 use crate::ui::SwApplicationWindow;
 
 mod imp {
@@ -134,16 +135,11 @@ mod imp {
                 .build();
 
             // MPRIS controls
-            glib::spawn_future_local(clone!(
-                #[weak(rename_to = imp)]
-                self,
-                async move {
-                    match MprisServer::start().await {
-                        Ok(mpris_server) => imp.mpris_server.set(mpris_server).unwrap(),
-                        Err(err) => error!("Unable to start mpris: {}", err.to_string()),
-                    }
-                }
-            ));
+            glib::spawn_future_local(async move {
+                MprisServer::start()
+                    .await
+                    .handle_error("Unable to start MPRIS media controls")
+            });
         }
     }
 
@@ -182,7 +178,7 @@ mod imp {
 
                             imp.cast_sender
                                 .load_media(
-                                    &url.as_ref(),
+                                    url.as_ref(),
                                     &station
                                         .metadata()
                                         .favicon
@@ -190,7 +186,8 @@ mod imp {
                                         .unwrap_or_default(),
                                     &station.title(),
                                 )
-                                .await; // TODO: Error handling
+                                .await
+                                .handle_error("Unable to load Google Cast media");
                         } else {
                             let text = i18n("Station cannot be streamed. URL is not valid.");
                             SwApplicationWindow::default().show_notification(&text);
@@ -398,7 +395,10 @@ impl SwPlayer {
             .borrow_mut()
             .set_state(gstreamer::State::Playing);
 
-        self.cast_sender().start_playback().await.unwrap(); // TODO: error handling
+        self.cast_sender()
+            .start_playback()
+            .await
+            .handle_error("Unable to start Google Cast playback");
     }
 
     pub async fn stop_playback(&self) {
@@ -414,7 +414,10 @@ impl SwPlayer {
             .borrow_mut()
             .set_state(gstreamer::State::Null);
 
-        self.cast_sender().stop_playback().await.unwrap(); // TODO: error handling
+        self.cast_sender()
+            .stop_playback()
+            .await
+            .handle_error("Unable to stop Google Cast playback");
     }
 
     pub async fn toggle_playback(&self) {

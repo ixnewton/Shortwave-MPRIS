@@ -66,7 +66,6 @@ mod imp {
         #[template_callback]
         async fn disconnect(&self) {
             self.obj().set_sensitive(false);
-            // TODO: Proper error handling
             self.player.disconnect_device().await;
             self.obj().set_sensitive(true);
         }

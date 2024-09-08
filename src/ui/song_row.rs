@@ -22,7 +22,7 @@ use glib::{clone, subclass, Properties};
 use gtk::{gio, glib, CompositeTemplate};
 
 use crate::audio::SwSong;
-use crate::ui::SwApplicationWindow;
+use crate::ui::{DisplayError, SwApplicationWindow};
 
 mod imp {
     use super::*;
@@ -74,9 +74,10 @@ mod imp {
                 #[weak(rename_to = imp)]
                 self,
                 move |_| {
-                    if let Err(err) = imp.obj().song().save() {
-                        error!("Unable to save song: {}", err.to_string());
-                    } else {
+                    let res = imp.obj().song().save();
+                    res.handle_error("Unable to save song");
+
+                    if res.is_ok() {
                         // Display play button instead of save button
                         imp.button_stack.set_visible_child_name("open");
                         imp.obj()
@@ -93,9 +94,7 @@ mod imp {
                     let launcher = gtk::FileLauncher::new(Some(&file));
                     let window = SwApplicationWindow::default();
                     launcher.launch(Some(&window), gio::Cancellable::NONE, |res| {
-                        if let Err(err) = res {
-                            error!("Could not open dir: {err}");
-                        }
+                        res.handle_error("Unable to open directory");
                     });
                 }
             ));

@@ -24,6 +24,8 @@ use glib::subclass::prelude::*;
 use glib::Properties;
 use gtk::glib;
 
+use crate::ui::DisplayError;
+
 mod imp {
     use super::*;
 
@@ -59,15 +61,20 @@ mod imp {
         fn set_volume(&self, volume: f64) {
             self.volume.set(volume);
 
-            glib::spawn_future_local(clone!(
-                #[strong(rename_to = receiver)]
-                self.receiver,
-                #[strong]
-                volume,
-                async move {
-                    receiver.set_volume(volume, false).await; // TODO: Error handling
-                }
-            ));
+            if self.obj().is_connected() {
+                glib::spawn_future_local(clone!(
+                    #[strong(rename_to = receiver)]
+                    self.receiver,
+                    #[strong]
+                    volume,
+                    async move {
+                        receiver
+                            .set_volume(volume, false)
+                            .await
+                            .handle_error("Unable to set cast volume");
+                    }
+                ));
+            }
         }
 
         pub async fn load(&self) -> Result<(), cast_sender::Error> {

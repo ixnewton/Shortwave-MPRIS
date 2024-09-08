@@ -67,6 +67,7 @@ src/ui/about_dialog.rs
 src/ui/create_station_dialog.rs
 src/ui/device_dialog.rs
 src/ui/device_indicator.rs
+src/ui/display_error.rs
 src/ui/favicon.rs
 src/ui/featured_carousel.rs
 src/ui/mod.rs

@@ -141,7 +141,7 @@ mod imp {
             // Homepage
             if let Some(ref homepage) = metadata.homepage {
                 let url = homepage.to_string().replace('&', "&amp;");
-                let domain = homepage.domain().unwrap();
+                let domain = homepage.domain().unwrap_or_default();
                 let markup = format!("<a href=\"{}\">{}</a>", &url, &domain);
 
                 self.homepage_label.set_visible(true);
