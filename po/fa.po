@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2024-07-20 21:40+0000\n"
-"PO-Revision-Date: 2024-07-23 07:24+0330\n"
+"POT-Creation-Date: 2024-09-08 19:14+0000\n"
+"PO-Revision-Date: 2024-09-09 00:31+0330\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
 "Language: fa\n"
@@ -16,12 +16,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:3
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
 msgid "@NAME@"
-msgstr "هم‌رسانی صدا"
+msgstr "موج کوتاه"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:12
@@ -46,12 +46,12 @@ msgid "Features:"
 msgstr "ویژگی‌ها:"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:17
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:65
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:64
 msgid "Create your own library where you can add your favorite stations"
 msgstr "ایجاد کتاب‌خانهٔ خودتان با توانایی افزودن ایستگاه‌های محبوبتان"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:18
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:69
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:68
 msgid "Easily search and discover new radio stations"
 msgstr "جست‌وجو و کشف آسان ایستگاه‌های رادیویی جدید"
 
@@ -61,7 +61,7 @@ msgid ""
 msgstr "بازشناسی خودکار آوازها با امکان ذخیرهٔ جداگانه‌شان"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:20
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:73
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:72
 msgid "Responsive application layout, compatible for small and large screens"
 msgstr "چینش واکنشگرای برنامه،‌سازگار با صفحه‌های بزرگ و کوچک"
 
@@ -110,17 +110,41 @@ msgstr "ایجاد ایستگاه محلّی"
 msgid "Change station image"
 msgstr "تغییر تصویر ایستگاه"
 
-#: data/gtk/create_station_dialog.ui:128 src/ui/pages/search_page.rs:107
+#: data/gtk/create_station_dialog.ui:123 src/ui/pages/search_page.rs:107
 msgid "Name"
 msgstr "نام"
 
-#: data/gtk/create_station_dialog.ui:136
+#: data/gtk/create_station_dialog.ui:131
 msgid "Stream URL"
 msgstr "نشانی جریان"
 
-#: data/gtk/create_station_dialog.ui:144
+#: data/gtk/create_station_dialog.ui:139
 msgid "Create Station"
 msgstr "ایجاد ایستگاه"
+
+#: data/gtk/device_dialog.ui:7 data/gtk/player_view.ui:109
+msgid "Connect Device"
+msgstr "وصل کردن افزاره"
+
+#: data/gtk/device_dialog.ui:18
+msgid "Searching for Devices…"
+msgstr "جست‌وجوی افزاره‌ها…"
+
+#: data/gtk/device_dialog.ui:25
+msgid "Search for Devices"
+msgstr "جست‌وجوی افزاره‌ها"
+
+#: data/gtk/device_dialog.ui:41
+msgid "No Devices Available"
+msgstr "هیچ افزاره‌ای موجود نیست"
+
+#: data/gtk/device_dialog.ui:42
+msgid "No supported Google Cast device found"
+msgstr "هیچ افزاره‌ای با پشتیبانی از پخش گوگل پیدا نشد"
+
+#: data/gtk/device_indicator.ui:7
+msgid "Disconnect From Device"
+msgstr "جدا کردن از افزاره"
 
 #: data/gtk/discover_page.ui:4
 msgid "Discover"
@@ -210,8 +234,8 @@ msgid "_Discover New Stations"
 msgstr "_کشف ایستگاه‌های جدید"
 
 #: data/gtk/library_page.ui:97
-msgid "_Enable Mini Player"
-msgstr "_به کار انداختن پخش‌کنندهٔ کوچک"
+msgid "_Enable Gadget Player"
+msgstr "_به کار انداختن پخش‌کنندهٔ ابزارکی"
 
 #: data/gtk/library_page.ui:101
 msgid "_Sorting"
@@ -269,33 +293,59 @@ msgstr "_میان‌برهای صفحه‌کلید"
 msgid "_About Shortwave"
 msgstr "_دربارهٔ موج کوتاه"
 
-#: data/gtk/mini_controller.ui:27 data/gtk/sidebar_controller.ui:127
-#: data/gtk/toolbar_controller.ui:70
+#: data/gtk/player_gadget.ui:40 data/gtk/player_toolbar.ui:94
+#: data/gtk/player_view.ui:133 data/gtk/station_row.ui:71
+msgid "Play"
+msgstr "پخش"
+
+#: data/gtk/player_gadget.ui:55 data/gtk/player_toolbar.ui:108
+#: data/gtk/player_view.ui:147
 msgid "Stop"
 msgstr "توقّف"
 
-#: data/gtk/mini_controller.ui:42
-msgid "Start"
-msgstr "آغاز"
+#: data/gtk/player_gadget.ui:71 data/gtk/player_toolbar.ui:123
+#: data/gtk/player_view.ui:162
+msgid "Buffering…"
+msgstr "میانگیری…"
 
-#: data/gtk/mini_controller.ui:98
+#: data/gtk/player_gadget.ui:118
 msgid "SHORTWAVE INTERNET RADIO"
 msgstr "رادیوهای اینترنتی موج کوتاه"
 
-#: data/gtk/mini_controller.ui:120 data/gtk/sidebar_controller.ui:64
-#: data/gtk/toolbar_controller.ui:29
+#: data/gtk/player_gadget.ui:140 data/gtk/player_toolbar.ui:31
+#: data/gtk/player_view.ui:43
 msgid "No Playback"
 msgstr "بدون پخش"
 
-#: data/gtk/mini_controller.ui:160
+#: data/gtk/player_gadget.ui:199
 msgid "Close"
 msgstr "بستن"
 
-#: data/gtk/mini_controller.ui:171
+#: data/gtk/player_gadget.ui:210
 msgid "Resize"
 msgstr "تغییر اندازه"
 
-#: data/gtk/search_page.ui:41 data/gtk/station_dialog.ui:171
+#: data/gtk/player_view.ui:192
+msgid "Show Station Details"
+msgstr "نمایش جزییات ایستگاه"
+
+#: data/gtk/player_view.ui:242
+msgid "No Songs"
+msgstr "بدون آواز"
+
+#: data/gtk/player_view.ui:253
+msgid ""
+"Songs that have been identified and recorded using the stream metadata will "
+"appear here."
+msgstr ""
+"آوازهایی که با استفاده از فرادادهٔ جریان شناسایی و ضبط شده‌اند این‌جا ظاهر خواهند "
+"شد."
+
+#: data/gtk/player_view.ui:285 data/gtk/recording_indicator.ui:38
+msgid "An error occurred"
+msgstr "خطایی پیش آمد"
+
+#: data/gtk/search_page.ui:41 data/gtk/station_dialog.ui:167
 #: src/ui/pages/search_page.rs:111
 msgid "Votes"
 msgstr "رأی‌ها"
@@ -332,27 +382,6 @@ msgstr "_آگاهی‌ها"
 msgid "Show desktop notifications when a new song gets played"
 msgstr "نمایش آگاهی‌های میزکار هنگام آغاز به پخش آوازی جدید"
 
-#: data/gtk/sidebar_controller.ui:23
-msgid "An error occurred"
-msgstr "خطایی پیش آمد"
-
-#: data/gtk/sidebar_controller.ui:142 data/gtk/station_row.ui:69
-#: data/gtk/toolbar_controller.ui:81
-msgid "Play"
-msgstr "پخش"
-
-#: data/gtk/sidebar_controller.ui:188
-msgid "Station Menu"
-msgstr "فهرست ایستگاه"
-
-#: data/gtk/sidebar_controller.ui:202
-msgid "_Show Station Details"
-msgstr "_نمایش جزییات ایستگاه"
-
-#: data/gtk/sidebar_controller.ui:206
-msgid "Stream to a _Device"
-msgstr "_جریان به افزاره"
-
 #: data/gtk/song_listbox.ui:29
 msgid "No Songs Detected"
 msgstr "آوازی تشخیص داده نشد"
@@ -379,23 +408,23 @@ msgstr "_گشودن"
 msgid "Save recorded song"
 msgstr "ذخیرهٔ آواز ضبط شده"
 
-#: data/gtk/station_dialog.ui:70
+#: data/gtk/station_dialog.ui:66
 msgid "_Play Station"
 msgstr "_پخش ایستگاه"
 
-#: data/gtk/station_dialog.ui:85
+#: data/gtk/station_dialog.ui:81
 msgid "_Add to Library"
 msgstr "_افزودن به کتاب‌خانه"
 
-#: data/gtk/station_dialog.ui:101
+#: data/gtk/station_dialog.ui:97
 msgid "_Remove From Library"
 msgstr "_برداشتن از کتاب‌خانه"
 
-#: data/gtk/station_dialog.ui:119
+#: data/gtk/station_dialog.ui:115
 msgid "Local Station"
 msgstr "ایستگاه محلّی"
 
-#: data/gtk/station_dialog.ui:120
+#: data/gtk/station_dialog.ui:116
 msgid ""
 "This station exists only in your library, and is not part of the public online "
 "station database."
@@ -403,11 +432,11 @@ msgstr ""
 "ایستگاه فقط در کتاب‌خانه‌تان وجود داشته و بخشی از پایگاه دادهٔ همگانی ایستگاه‌های "
 "برخط نیست."
 
-#: data/gtk/station_dialog.ui:135
+#: data/gtk/station_dialog.ui:131
 msgid "Orphaned Station"
 msgstr "ایستگاه یتیم"
 
-#: data/gtk/station_dialog.ui:136
+#: data/gtk/station_dialog.ui:132
 msgid ""
 "The information could not be updated, probably this station was removed from the "
 "public online station database."
@@ -415,101 +444,78 @@ msgstr ""
 "اطّلاعات نتوانستند به‌روز شوند. احتمالاً این ایستگاه از پایگاه دادهٔ همگانی "
 "ایستگاه‌های برخط برداشته شده."
 
-#: data/gtk/station_dialog.ui:148
+#: data/gtk/station_dialog.ui:144
 msgid "Information"
 msgstr "اطّلاعات"
 
-#: data/gtk/station_dialog.ui:151 src/ui/pages/search_page.rs:108
+#: data/gtk/station_dialog.ui:147 src/ui/pages/search_page.rs:108
 msgid "Language"
 msgstr "زبان"
 
-#: data/gtk/station_dialog.ui:161
+#: data/gtk/station_dialog.ui:157
 msgid "Tags"
 msgstr "برچسب‌ها"
 
-#: data/gtk/station_dialog.ui:182
+#: data/gtk/station_dialog.ui:178
 msgid "Location"
 msgstr "مکان"
 
-#: data/gtk/station_dialog.ui:187 src/ui/pages/search_page.rs:109
+#: data/gtk/station_dialog.ui:183 src/ui/pages/search_page.rs:109
 msgid "Country"
 msgstr "کشور"
 
-#: data/gtk/station_dialog.ui:197 src/ui/pages/search_page.rs:110
+#: data/gtk/station_dialog.ui:193 src/ui/pages/search_page.rs:110
 msgid "State"
 msgstr "ایالت"
 
-#: data/gtk/station_dialog.ui:231
+#: data/gtk/station_dialog.ui:227
 msgid "Audio"
 msgstr "صدا"
 
-#: data/gtk/station_dialog.ui:235 src/ui/pages/search_page.rs:112
+#: data/gtk/station_dialog.ui:231 src/ui/pages/search_page.rs:112
 msgid "Bitrate"
 msgstr "نرخ بیت"
 
-#: data/gtk/station_dialog.ui:245
+#: data/gtk/station_dialog.ui:241
 msgid "Codec"
 msgstr "رمزینه"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:255
+#: data/gtk/station_dialog.ui:251
 msgid "Stream"
 msgstr "جریان"
 
-#: data/gtk/station_dialog.ui:264
+#: data/gtk/station_dialog.ui:260
 msgid "Copy"
 msgstr "رونوشت"
 
-#: data/gtk/streaming_dialog.ui:8
-msgid "Stream to a Device"
-msgstr "جریان به افزاره"
-
-#: data/gtk/streaming_dialog.ui:26
-msgid ""
-"Audio playback can be streamed to a network device (requires Google Cast "
-"support)."
-msgstr "پخش صدا می‌تواند به افزارهٔ شبکه‌ای جریان یابد (نیازمند پشتیبانی پخش گوگل)."
-
-#: data/gtk/streaming_dialog.ui:41
-msgid "No Devices Found"
-msgstr "هیچ افزاره‌ای پیدا نشد"
-
-#: data/gtk/streaming_dialog.ui:47 data/gtk/streaming_dialog.ui:73
-msgid "Search Again"
-msgstr "جست‌وجوی دوباره"
-
-#: data/gtk/streaming_dialog.ui:67
-msgid "Search Completed"
-msgstr "جست‌وجو کمل شد"
-
-#: data/gtk/streaming_dialog.ui:93
-msgid "Searching for Devices…"
-msgstr "جست‌وجوی افزاره‌ها…"
-
-#: data/gtk/window.ui:36
-msgid "Main View"
-msgstr "نمای اصلی"
-
-#. Fallback to xdg-home when xdg-music is not available
-#: src/audio/backend/song_backend.rs:97
-msgid "Unable to access music directory. Saving song in home directory."
-msgstr "ناتوان در دسترسی به شاخهٔ آهنگ‌ها. ذخیره کردن آواز در شاخهٔ خانگی."
-
-#: src/audio/player.rs:194
+#: src/audio/player.rs:192
 msgid "Station cannot be streamed. URL is not valid."
 msgstr "ایستگاه نمی‌تواند جریان یابد. نشانی معتبر نیست."
 
-#: src/audio/player.rs:245
-msgid "Cannot save song."
-msgstr "نمی‌توان آواز را ذخیره کرد."
+#: src/audio/player.rs:260
+msgid "Active Playback"
+msgstr "فعّال کردن پخش"
+
+#: src/device/device_discovery.rs:90
+msgid "Google Cast Device"
+msgstr "افزارهٔ پخش گوگل"
+
+#: src/device/device_discovery.rs:91
+msgid "Unknown Model"
+msgstr "مدل ناشناخته"
 
 #: src/ui/about_dialog.rs:44
 msgid "translator-credits"
 msgstr "دانیال بهزادی <dani.behzi@ubuntu.com>"
 
-#: src/ui/create_station_dialog.rs:106
+#: src/ui/create_station_dialog.rs:98
 msgid "Select station image"
 msgstr "گزینش تصویر ایستگاه"
+
+#: src/ui/display_error.rs:46
+msgid "Show Details"
+msgstr "نمایش جزییات"
 
 #. TODO: Implement show-server-stats action
 #: src/ui/pages/discover_page.rs:127
@@ -540,7 +546,7 @@ msgstr "قدرت گرفته از radio-browser.info"
 msgid "Station data could not be received."
 msgstr "داده‌های ایستگاه نتوانستند دریافت شوند."
 
-#: src/ui/pages/library_page.rs:110
+#: src/ui/pages/library_page.rs:94
 msgid "Welcome to {}"
 msgstr "به {} خوش‌آمدید"
 
@@ -558,9 +564,63 @@ msgstr[1] ""
 "تعداد نتیجه‌ها محدود به {} مورد است. استفاده از عبارت جست‌وجویی دقیق‌تر را "
 "بیازمایید."
 
-#: src/ui/station_dialog.rs:216
+#: src/ui/recording_indicator.rs:111
+msgid "Recording in Progress"
+msgstr "در حال ضبط"
+
+#: src/ui/recording_indicator.rs:112
+msgid "Ignored"
+msgstr "چشم‌پوشیده"
+
+#: src/ui/recording_indicator.rs:113
+msgid "Incomplete"
+msgstr "ناقص"
+
+#: src/ui/recording_indicator.rs:120
+msgid "The current song will be recorded until a new song is detected."
+msgstr "آواز کنونی تا زمان تشخیص آوازی جدید ضبط خواهد شد."
+
+#: src/ui/recording_indicator.rs:123
+msgid "No recording because the song title contains a word on the ignore list."
+msgstr "ضبطی در کار نیست چرا که عنوان آواز شامل واژه‌ای در سیاههٔ چشم‌پوشی است."
+
+#: src/ui/recording_indicator.rs:126
+msgid "The current song cannot be fully recorded. The beginning has been missed."
+msgstr "آواز کنونی نمی‌تواند کامل ضبط شود. ابتدایش از دست رفته."
+
+#: src/ui/station_dialog.rs:217
 msgid "{} kbit/s"
 msgstr "{} ک‌بی/ث"
+
+#~ msgid "Start"
+#~ msgstr "آغاز"
+
+#~ msgid "Station Menu"
+#~ msgstr "فهرست ایستگاه"
+
+#~ msgid "Stream to a _Device"
+#~ msgstr "_جریان به افزاره"
+
+#~ msgid "Stream to a Device"
+#~ msgstr "جریان به افزاره"
+
+#~ msgid ""
+#~ "Audio playback can be streamed to a network device (requires Google Cast "
+#~ "support)."
+#~ msgstr ""
+#~ "پخش صدا می‌تواند به افزارهٔ شبکه‌ای جریان یابد (نیازمند پشتیبانی پخش گوگل)."
+
+#~ msgid "Search Again"
+#~ msgstr "جست‌وجوی دوباره"
+
+#~ msgid "Main View"
+#~ msgstr "نمای اصلی"
+
+#~ msgid "Unable to access music directory. Saving song in home directory."
+#~ msgstr "ناتوان در دسترسی به شاخهٔ آهنگ‌ها. ذخیره کردن آواز در شاخهٔ خانگی."
+
+#~ msgid "Cannot save song."
+#~ msgstr "نمی‌توان آواز را ذخیره کرد."
 
 #~ msgid "Receiving Station Data…"
 #~ msgstr "گرفتن داده‌های ایستگاه…"
