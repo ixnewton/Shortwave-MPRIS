@@ -286,7 +286,7 @@ mod imp {
             let station = obj.station();
 
             let app = SwApplication::default();
-            app.imp().legacy_player.set_station(station);
+            app.player().set_station(station);
 
             obj.close();
         }

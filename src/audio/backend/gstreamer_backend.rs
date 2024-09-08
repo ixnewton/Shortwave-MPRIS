@@ -25,7 +25,7 @@ use gstreamer::{Bin, Element, MessageView, PadProbeReturn, PadProbeType, Pipelin
 use gstreamer_audio::{StreamVolume, StreamVolumeFormat};
 use gtk::glib;
 
-use crate::audio::PlaybackState;
+use crate::audio::SwPlaybackState;
 
 #[rustfmt::skip]
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -44,8 +44,9 @@ use crate::audio::PlaybackState;
 #[derive(Clone)]
 pub enum GstreamerChange {
     Title(String),
-    PlaybackState(PlaybackState),
+    PlaybackState(SwPlaybackState),
     Volume(f64),
+    Failure(String),
 }
 
 #[derive(Default, Debug)]
@@ -222,7 +223,7 @@ impl GstreamerBackend {
         if state == gstreamer::State::Null {
             crate::utils::send(
                 &self.sender,
-                GstreamerChange::PlaybackState(PlaybackState::Stopped),
+                GstreamerChange::PlaybackState(SwPlaybackState::Stopped),
             );
             *self.current_title.lock().unwrap() = String::new();
         }
@@ -233,9 +234,11 @@ impl GstreamerBackend {
             warn!("Failed to set pipeline to playing");
             crate::utils::send(
                 &self.sender,
-                GstreamerChange::PlaybackState(PlaybackState::Failure(String::from(
-                    "Failed to set pipeline to playing",
-                ))),
+                GstreamerChange::PlaybackState(SwPlaybackState::Failure),
+            );
+            crate::utils::send(
+                &self.sender,
+                GstreamerChange::Failure("Failed to set pipeline to playing".into()),
             );
             let _ = self.pipeline.set_state(gstreamer::State::Null);
             return;
@@ -251,14 +254,14 @@ impl GstreamerBackend {
         }
     }
 
-    pub fn state(&self) -> PlaybackState {
+    pub fn state(&self) -> SwPlaybackState {
         let state = self
             .pipeline
             .state(gstreamer::ClockTime::from_mseconds(250))
             .1;
         match state {
-            gstreamer::State::Playing => PlaybackState::Playing,
-            _ => PlaybackState::Stopped,
+            gstreamer::State::Playing => SwPlaybackState::Playing,
+            _ => SwPlaybackState::Stopped,
         }
     }
 
@@ -266,7 +269,7 @@ impl GstreamerBackend {
         let v = if let Some(pulsesink) = self.pipeline.by_name("pulsesink") {
             pulsesink.property("volume")
         } else {
-            0.0
+            1.0
         };
 
         StreamVolume::convert_volume(StreamVolumeFormat::Linear, StreamVolumeFormat::Cubic, v)
@@ -313,9 +316,11 @@ impl GstreamerBackend {
             warn!("Failed to set pipeline to playing");
             crate::utils::send(
                 &self.sender,
-                GstreamerChange::PlaybackState(PlaybackState::Failure(String::from(
-                    "Failed to set pipeline to playing",
-                ))),
+                GstreamerChange::PlaybackState(SwPlaybackState::Failure),
+            );
+            crate::utils::send(
+                &self.sender,
+                GstreamerChange::Failure("Failed to set pipeline to playing".into()),
             );
             let _ = self.pipeline.set_state(gstreamer::State::Null);
             return;
@@ -542,10 +547,10 @@ impl GstreamerBackend {
                 // https://gitlab.gnome.org/World/Shortwave/-/issues/528
                 if message.src() == Some(pipeline.upcast_ref::<gstreamer::Object>()) {
                     let playback_state = match sc.current() {
-                        gstreamer::State::Playing => PlaybackState::Playing,
-                        gstreamer::State::Paused => PlaybackState::Playing,
-                        gstreamer::State::Ready => PlaybackState::Loading,
-                        _ => PlaybackState::Stopped,
+                        gstreamer::State::Playing => SwPlaybackState::Playing,
+                        gstreamer::State::Paused => SwPlaybackState::Playing,
+                        gstreamer::State::Ready => SwPlaybackState::Loading,
+                        _ => SwPlaybackState::Stopped,
                     };
 
                     crate::utils::send(&sender, GstreamerChange::PlaybackState(playback_state));
@@ -562,7 +567,7 @@ impl GstreamerBackend {
                         buffering_state.buffering = true;
                         crate::utils::send(
                             &sender,
-                            GstreamerChange::PlaybackState(PlaybackState::Loading),
+                            GstreamerChange::PlaybackState(SwPlaybackState::Loading),
                         );
 
                         if buffering_state.is_live == Some(false) {
@@ -589,7 +594,7 @@ impl GstreamerBackend {
                     buffering_state.buffering = false;
                     crate::utils::send(
                         &sender,
-                        GstreamerChange::PlaybackState(PlaybackState::Playing),
+                        GstreamerChange::PlaybackState(SwPlaybackState::Playing),
                     );
 
                     if buffering_state.is_live == Some(false) {
@@ -633,8 +638,9 @@ impl GstreamerBackend {
                 }
                 crate::utils::send(
                     &sender,
-                    GstreamerChange::PlaybackState(PlaybackState::Failure(msg)),
+                    GstreamerChange::PlaybackState(SwPlaybackState::Failure),
                 );
+                crate::utils::send(&sender, GstreamerChange::Failure(msg));
             }
             _ => (),
         };

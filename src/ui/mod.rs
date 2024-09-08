@@ -28,7 +28,6 @@ mod song_row;
 mod station_dialog;
 mod station_flowbox;
 mod station_row;
-mod streaming_dialog;
 mod volume_control;
 mod window;
 
@@ -42,6 +41,5 @@ pub use song_row::SwSongRow;
 pub use station_dialog::SwStationDialog;
 pub use station_flowbox::SwStationFlowBox;
 pub use station_row::SwStationRow;
-pub use streaming_dialog::SwStreamingDialog;
 pub use volume_control::SwVolumeControl;
 pub use window::SwApplicationWindow;

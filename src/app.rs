@@ -15,7 +15,6 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 use std::cell::{OnceCell, RefCell};
-use std::rc::Rc;
 use std::str::FromStr;
 
 use adw::prelude::*;
@@ -28,7 +27,6 @@ use gtk::{gio, glib};
 
 use crate::api::{SwClient, SwStationSorting};
 use crate::audio::SwPlayer;
-use crate::audio::{GCastDevice, Player};
 use crate::config;
 use crate::database::SwLibrary;
 use crate::settings::{settings_manager, Key, SwSettingsDialog};
@@ -37,8 +35,6 @@ use crate::ui::{about_dialog, SwApplicationWindow};
 #[derive(Debug, Clone)]
 pub enum Action {
     // Audio Playback
-    PlaybackConnectGCastDevice(GCastDevice),
-    PlaybackDisconnectGCastDevice,
     SettingsKeyChanged(Key),
 }
 
@@ -59,8 +55,6 @@ mod imp {
         pub receiver: RefCell<Option<Receiver<Action>>>,
 
         pub window: OnceCell<WeakRef<SwApplicationWindow>>,
-        pub legacy_player: Rc<Player>,
-
         pub settings: gio::Settings,
     }
 
@@ -79,8 +73,6 @@ mod imp {
             let rb_server = RefCell::default();
 
             let window = OnceCell::new();
-            let legacy_player = Player::new(sender.clone());
-
             let settings = settings_manager::settings();
 
             Self {
@@ -90,7 +82,6 @@ mod imp {
                 sender,
                 receiver,
                 window,
-                legacy_player,
                 settings,
             }
         }
@@ -244,18 +235,11 @@ impl SwApplication {
     }
 
     fn process_action(&self, action: Action) -> glib::ControlFlow {
-        let imp = self.imp();
         if self.active_window().is_none() {
             return glib::ControlFlow::Continue;
         }
 
         match action {
-            Action::PlaybackConnectGCastDevice(device) => {
-                imp.legacy_player.connect_to_gcast_device(device)
-            }
-            Action::PlaybackDisconnectGCastDevice => {
-                imp.legacy_player.disconnect_from_gcast_device()
-            }
             Action::SettingsKeyChanged(key) => self.apply_settings_changes(key),
         }
         glib::ControlFlow::Continue

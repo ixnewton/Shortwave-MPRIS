@@ -38,13 +38,9 @@ src/api/stats.rs
 src/app.rs
 src/audio/backend/gstreamer_backend.rs
 src/audio/backend/mod.rs
-src/audio/controller/gcast_controller.rs
-src/audio/controller/mod.rs
-src/audio/gcast_discoverer.rs
 src/audio/mod.rs
 src/audio/mpris.rs
 src/audio/playback_state.rs
-src/audio/player.rs
 src/audio/player2.rs
 src/audio/song.rs
 src/audio/song_model.rs
@@ -89,7 +85,6 @@ src/ui/song_row.rs
 src/ui/station_dialog.rs
 src/ui/station_flowbox.rs
 src/ui/station_row.rs
-src/ui/streaming_dialog.rs
 src/ui/volume_control.rs
 src/ui/window.rs
 src/utils.rs

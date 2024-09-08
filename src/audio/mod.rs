@@ -15,24 +15,16 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 mod backend;
-mod controller;
-
-pub use controller::Controller;
-
-mod gcast_discoverer;
 mod mpris;
 mod playback_state;
-mod player;
 mod player2;
 mod song;
 mod song_model;
 mod song_state;
 
 pub use backend::GstreamerBackend;
-pub use gcast_discoverer::{GCastDevice, GCastDiscoverer, GCastDiscovererMessage};
 pub use mpris::MprisServer;
 pub use playback_state::SwPlaybackState;
-pub use player::{PlaybackState, Player};
 pub use player2::SwPlayer;
 pub use song::SwSong;
 pub use song_model::SwSongModel;

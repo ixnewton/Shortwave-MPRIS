@@ -110,8 +110,17 @@ mod imp {
                             #[weak]
                             device,
                             move |_| {
-                                imp.player.connect_device(&device);
-                                imp.obj().close();
+                                glib::spawn_future_local(clone!(
+                                    #[weak]
+                                    imp,
+                                    async move {
+                                        // TODO: Proper error handling + maybe adding own row type
+                                        if let Err(err) = imp.player.connect_device(&device).await {
+                                            error!("Unable to connect: {}", err.to_string())
+                                        }
+                                        imp.obj().close();
+                                    }
+                                ));
                             }
                         ));
                         row.into()

@@ -240,25 +240,15 @@ mod imp {
                         // TODO: self.show_song_notification();
                     }
                 }
-                GstreamerChange::PlaybackState(s) => {
-                    let state = match s {
-                        PlaybackState::Playing => SwPlaybackState::Playing,
-                        PlaybackState::Stopped => SwPlaybackState::Stopped,
-                        PlaybackState::Loading => SwPlaybackState::Loading,
-                        PlaybackState::Failure(msg) => {
-                            *self.last_failure.borrow_mut() = msg;
-                            self.obj().notify_last_failure();
-
-                            // Discard recorded data when a failure occurs,
-                            // since the song has not been recorded completely.
-                            if self.backend.get().unwrap().borrow().is_recording() {
-                                self.stop_recording(true);
-                                self.clear_song();
-                            }
-
-                            SwPlaybackState::Failure
+                GstreamerChange::PlaybackState(state) => {
+                    if state == SwPlaybackState::Failure {
+                        // Discard recorded data when a failure occurs,
+                        // since the song has not been recorded completely.
+                        if self.backend.get().unwrap().borrow().is_recording() {
+                            self.stop_recording(true);
+                            self.clear_song();
                         }
-                    };
+                    }
 
                     self.state.set(state);
                     self.obj().notify_state();
@@ -296,6 +286,10 @@ mod imp {
                         self.volume.set(volume);
                         self.obj().notify_volume();
                     }
+                }
+                GstreamerChange::Failure(f) => {
+                    *self.last_failure.borrow_mut() = f;
+                    self.obj().notify_last_failure();
                 }
             }
             glib::ControlFlow::Continue
