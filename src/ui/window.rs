@@ -21,7 +21,6 @@ use adw::subclass::prelude::*;
 use glib::{clone, subclass};
 use gtk::{gio, glib, CompositeTemplate};
 
-use crate::api::SwStationSorting;
 use crate::app::SwApplication;
 use crate::config;
 use crate::settings::{settings_manager, Key};
@@ -172,7 +171,6 @@ impl SwApplicationWindow {
         let imp = self.imp();
 
         // Init pages
-        imp.library_page.init();
         imp.discover_page.init();
 
         // Animations for smooth gadget player transitions
@@ -240,25 +238,11 @@ impl SwApplicationWindow {
                 .build(),
         ]);
         app.set_accels_for_action("player.toggle-playback", &["<primary>space"]);
-
-        // Sort / Order menu
-        let sorting_action = settings_manager::create_action(Key::ViewSorting);
-        self.add_action(&sorting_action);
-
-        let order_action = settings_manager::create_action(Key::ViewOrder);
-        self.add_action(&order_action);
     }
 
     pub fn show_notification(&self, text: &str) {
         let toast = adw::Toast::new(text);
         self.imp().toast_overlay.add_toast(toast);
-    }
-
-    pub fn set_sorting(&self, sorting: SwStationSorting, descending: bool) {
-        self.imp()
-            .library_page
-            .get()
-            .set_sorting(sorting, descending);
     }
 
     pub fn enable_gadget_player(&self, enable: bool) {

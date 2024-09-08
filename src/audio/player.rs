@@ -36,7 +36,7 @@ mod imp {
     use super::*;
 
     #[derive(Debug, Default, Properties)]
-    #[properties(wrapper_type = player::SwPlayer)]
+    #[properties(wrapper_type = super::SwPlayer)]
     pub struct SwPlayer {
         #[property(get, set=Self::set_station)]
         #[property(name="has-station", get=Self::has_station, type=bool)]

@@ -1,5 +1,5 @@
 // Shortwave - station_sorter.rs
-// Copyright (C) 2021-2023  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2021-2024  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use std::cell::{Cell, RefCell};
+use std::cell::Cell;
 
 use glib::{Enum, Properties};
 use gtk::glib;
@@ -29,10 +29,10 @@ mod imp {
     #[derive(Debug, Default, Properties)]
     #[properties(wrapper_type = super::SwStationSorter)]
     pub struct SwStationSorter {
-        #[property(get, set)]
-        pub descending: Cell<bool>,
-        #[property(get, set, builder(SwStationSorting::default()))]
-        pub sorting: RefCell<SwStationSorting>,
+        #[property(get, set=Self::set_sorting, builder(SwStationSorting::default()))]
+        pub sorting: Cell<SwStationSorting>,
+        #[property(get, set=Self::set_sorting_type, builder(SwStationSortingType::Ascending))]
+        pub sorting_type: Cell<SwStationSortingType>,
     }
 
     #[glib::object_subclass]
@@ -53,8 +53,65 @@ mod imp {
         fn compare(&self, item1: &glib::Object, item2: &glib::Object) -> gtk::Ordering {
             let a = &item1.clone().downcast::<SwStation>().unwrap();
             let b = &item2.clone().downcast::<SwStation>().unwrap();
-            super::SwStationSorter::station_cmp(a, b, *self.sorting.borrow(), self.descending.get())
-                .into()
+            Self::station_cmp(
+                a,
+                b,
+                self.sorting.get(),
+                self.sorting_type.get() == SwStationSortingType::Descending,
+            )
+            .into()
+        }
+    }
+
+    impl SwStationSorter {
+        fn set_sorting(&self, sorting: SwStationSorting) {
+            self.sorting.set(sorting);
+            self.obj().changed(gtk::SorterChange::Different);
+        }
+
+        fn set_sorting_type(&self, sorting_type: SwStationSortingType) {
+            self.sorting_type.set(sorting_type);
+            self.obj().changed(gtk::SorterChange::Different);
+        }
+
+        fn station_cmp(
+            a: &SwStation,
+            b: &SwStation,
+            sorting: SwStationSorting,
+            descending: bool,
+        ) -> std::cmp::Ordering {
+            let mut station_a = a.clone();
+            let mut station_b = b.clone();
+
+            if descending {
+                std::mem::swap(&mut station_a, &mut station_b);
+            }
+
+            match sorting {
+                SwStationSorting::Default => std::cmp::Ordering::Equal,
+                SwStationSorting::Name => station_a.metadata().name.cmp(&station_b.metadata().name),
+                SwStationSorting::Language => station_a
+                    .metadata()
+                    .language
+                    .cmp(&station_b.metadata().language),
+                SwStationSorting::Country => station_a
+                    .metadata()
+                    .country
+                    .cmp(&station_b.metadata().country),
+                SwStationSorting::State => {
+                    station_a.metadata().state.cmp(&station_b.metadata().state)
+                }
+                SwStationSorting::Codec => {
+                    station_a.metadata().codec.cmp(&station_b.metadata().codec)
+                }
+                SwStationSorting::Votes => {
+                    station_a.metadata().votes.cmp(&station_b.metadata().votes)
+                }
+                SwStationSorting::Bitrate => station_a
+                    .metadata()
+                    .bitrate
+                    .cmp(&station_b.metadata().bitrate),
+            }
         }
     }
 }
@@ -66,40 +123,6 @@ glib::wrapper! {
 impl SwStationSorter {
     pub fn new() -> Self {
         glib::Object::new()
-    }
-
-    fn station_cmp(
-        a: &SwStation,
-        b: &SwStation,
-        sorting: SwStationSorting,
-        descending: bool,
-    ) -> std::cmp::Ordering {
-        let mut station_a = a.clone();
-        let mut station_b = b.clone();
-
-        if descending {
-            std::mem::swap(&mut station_a, &mut station_b);
-        }
-
-        match sorting {
-            SwStationSorting::Default => std::cmp::Ordering::Equal,
-            SwStationSorting::Name => station_a.metadata().name.cmp(&station_b.metadata().name),
-            SwStationSorting::Language => station_a
-                .metadata()
-                .language
-                .cmp(&station_b.metadata().language),
-            SwStationSorting::Country => station_a
-                .metadata()
-                .country
-                .cmp(&station_b.metadata().country),
-            SwStationSorting::State => station_a.metadata().state.cmp(&station_b.metadata().state),
-            SwStationSorting::Codec => station_a.metadata().codec.cmp(&station_b.metadata().codec),
-            SwStationSorting::Votes => station_a.metadata().votes.cmp(&station_b.metadata().votes),
-            SwStationSorting::Bitrate => station_a
-                .metadata()
-                .bitrate
-                .cmp(&station_b.metadata().bitrate),
-        }
     }
 }
 
@@ -123,4 +146,14 @@ pub enum SwStationSorting {
     Codec,
     Votes,
     Bitrate,
+}
+
+#[derive(Display, Copy, Debug, Clone, EnumString, Eq, PartialEq, Enum)]
+#[repr(u32)]
+#[enum_type(name = "SwStationSortingType")]
+#[derive(Default)]
+pub enum SwStationSortingType {
+    #[default]
+    Ascending,
+    Descending,
 }

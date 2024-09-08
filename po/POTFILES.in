@@ -22,7 +22,6 @@ data/gtk/song_row.ui
 data/gtk/station_dialog.ui
 data/gtk/station_flowbox.ui
 data/gtk/station_row.ui
-data/gtk/streaming_dialog.ui
 data/gtk/volume_control.ui
 data/gtk/window.ui
 src/api/client.rs

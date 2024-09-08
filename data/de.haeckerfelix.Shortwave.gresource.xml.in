@@ -23,7 +23,6 @@
     <file compressed="true" preprocess="xml-stripblanks">gtk/station_dialog.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">gtk/station_flowbox.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">gtk/station_row.ui</file>
-    <file compressed="true" preprocess="xml-stripblanks">gtk/streaming_dialog.ui</file>
     <file compressed="true" alias="style.css">gtk/style.css</file>
     <file compressed="true" preprocess="xml-stripblanks">gtk/volume_control.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">gtk/window.ui</file>

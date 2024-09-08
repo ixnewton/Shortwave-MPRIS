@@ -14,32 +14,39 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+use std::cell::Cell;
+
 use adw::subclass::prelude::*;
-use glib::{clone, subclass};
+use glib::{clone, subclass, Properties};
 use gtk::prelude::*;
 use gtk::{gio, glib, CompositeTemplate};
 
-use crate::api::SwStationSorting;
+use crate::api::{SwStationSorting, SwStationSortingType};
 use crate::app::SwApplication;
 use crate::config;
 use crate::database::{SwLibrary, SwLibraryStatus};
 use crate::i18n::*;
+use crate::settings::{settings_manager, Key};
 use crate::ui::SwStationFlowBox;
 
 mod imp {
     use super::*;
 
-    #[derive(Debug, CompositeTemplate)]
+    #[derive(Default, Debug, Properties, CompositeTemplate)]
     #[template(resource = "/de/haeckerfelix/Shortwave/gtk/library_page.ui")]
+    #[properties(wrapper_type = super::SwLibraryPage)]
     pub struct SwLibraryPage {
         #[template_child]
-        pub status_page: TemplateChild<adw::StatusPage>,
+        status_page: TemplateChild<adw::StatusPage>,
         #[template_child]
-        pub stack: TemplateChild<gtk::Stack>,
+        stack: TemplateChild<gtk::Stack>,
         #[template_child]
-        pub flowbox: TemplateChild<SwStationFlowBox>,
+        flowbox: TemplateChild<SwStationFlowBox>,
 
-        pub library: SwLibrary,
+        #[property(get, set, builder(SwStationSorting::default()))]
+        sorting: Cell<SwStationSorting>,
+        #[property(get, set, builder(SwStationSortingType::Ascending))]
+        sorting_type: Cell<SwStationSortingType>,
     }
 
     #[glib::object_subclass]
@@ -48,27 +55,10 @@ mod imp {
         type ParentType = adw::NavigationPage;
         type Type = super::SwLibraryPage;
 
-        fn new() -> Self {
-            let status_page = TemplateChild::default();
-            let stack = TemplateChild::default();
-            let flowbox = TemplateChild::default();
-
-            let app = gio::Application::default()
-                .unwrap()
-                .downcast::<SwApplication>()
-                .unwrap();
-            let library = app.library();
-
-            Self {
-                status_page,
-                stack,
-                flowbox,
-                library,
-            }
-        }
-
         fn class_init(klass: &mut Self::Class) {
             Self::bind_template(klass);
+            klass.install_property_action("library.set-sorting", "sorting");
+            klass.install_property_action("library.set-sorting-type", "sorting-type");
         }
 
         fn instance_init(obj: &subclass::InitializingObject<Self>) {
@@ -76,65 +66,67 @@ mod imp {
         }
     }
 
-    impl ObjectImpl for SwLibraryPage {}
+    #[glib::derived_properties]
+    impl ObjectImpl for SwLibraryPage {
+        fn constructed(&self) {
+            self.parent_constructed();
+            let library = SwApplication::default().library();
+
+            settings_manager::bind_property(Key::LibrarySorting, &*self.obj(), "sorting");
+            settings_manager::bind_property(Key::LibrarySortingType, &*self.obj(), "sorting-type");
+
+            self.obj()
+                .bind_property("sorting", &self.flowbox.sorter(), "sorting")
+                .bidirectional()
+                .build();
+
+            self.obj()
+                .bind_property("sorting-type", &self.flowbox.sorter(), "sorting-type")
+                .bidirectional()
+                .build();
+
+            // Setup empty state page
+            self.status_page.set_icon_name(Some(config::APP_ID));
+
+            // Welcome text which gets displayed when the library is empty. "{}" is the
+            // application name.
+            self.status_page
+                .set_title(&i18n_f("Welcome to {}", &[config::NAME]));
+
+            // Station flowbox
+            self.flowbox.init(library.model());
+
+            // Set initial stack page
+            self.update_stack_page();
+
+            library.connect_notify_local(
+                Some("status"),
+                clone!(
+                    #[weak(rename_to = this)]
+                    self,
+                    move |_, _| this.update_stack_page()
+                ),
+            );
+        }
+    }
 
     impl WidgetImpl for SwLibraryPage {}
 
     impl NavigationPageImpl for SwLibraryPage {}
+
+    impl SwLibraryPage {
+        fn update_stack_page(&self) {
+            let status = SwApplication::default().library().status();
+            match status {
+                SwLibraryStatus::Empty => self.stack.set_visible_child_name("empty"),
+                SwLibraryStatus::Content => self.stack.set_visible_child_name("content"),
+                _ => (),
+            }
+        }
+    }
 }
 
 glib::wrapper! {
     pub struct SwLibraryPage(ObjectSubclass<imp::SwLibraryPage>)
         @extends gtk::Widget, adw::NavigationPage;
-}
-
-impl SwLibraryPage {
-    pub fn init(&self) {
-        self.setup_widgets();
-        self.setup_signals();
-    }
-
-    pub fn set_sorting(&self, sorting: SwStationSorting, descending: bool) {
-        self.imp().flowbox.get().set_sorting(sorting, descending);
-    }
-
-    fn setup_widgets(&self) {
-        let imp = self.imp();
-
-        // Setup empty state page
-        imp.status_page.set_icon_name(Some(config::APP_ID));
-
-        // Welcome text which gets displayed when the library is empty. "{}" is the
-        // application name.
-        imp.status_page
-            .set_title(&i18n_f("Welcome to {}", &[config::NAME]));
-
-        // Station flowbox
-        imp.flowbox.init(imp.library.model());
-
-        // Set initial stack page
-        self.update_stack_page();
-    }
-
-    fn setup_signals(&self) {
-        self.imp().library.connect_notify_local(
-            Some("status"),
-            clone!(
-                #[weak(rename_to = this)]
-                self,
-                move |_, _| this.update_stack_page()
-            ),
-        );
-    }
-
-    fn update_stack_page(&self) {
-        let imp = self.imp();
-        let status = imp.library.status();
-
-        match status {
-            SwLibraryStatus::Empty => imp.stack.set_visible_child_name("empty"),
-            SwLibraryStatus::Content => imp.stack.set_visible_child_name("content"),
-            _ => (),
-        }
-    }
 }
