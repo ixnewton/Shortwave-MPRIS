@@ -19,9 +19,9 @@ use std::collections::HashMap;
 use std::time::Duration;
 
 use adw::prelude::*;
-use async_std::future;
-use async_std::stream::StreamExt;
-use futures_util::pin_mut;
+use async_io::Timer;
+use futures_lite::future::FutureExt;
+use futures_lite::StreamExt;
 use glib::subclass::prelude::*;
 use glib::{clone, Properties};
 use gtk::glib;
@@ -31,6 +31,8 @@ use super::{SwDevice, SwDeviceKind, SwDeviceModel};
 use crate::i18n::i18n;
 
 mod imp {
+    use futures_lite::pin;
+
     use super::*;
 
     const CAST_SERVICE: &str = "_googlecast._tcp.local";
@@ -68,7 +70,7 @@ mod imp {
     impl SwDeviceDiscovery {
         pub async fn discover_cast_devices(&self) -> Result<(), Error> {
             let stream = mdns::discover::all(CAST_SERVICE, Duration::from_secs(3))?.listen();
-            pin_mut!(stream);
+            pin!(stream);
 
             while let Some(Ok(response)) = stream.next().await {
                 if let Some(addr) = response.ip_addr() {
@@ -118,7 +120,14 @@ impl SwDeviceDiscovery {
         self.notify_is_scanning();
 
         self.devices().clear();
-        let _ = future::timeout(Duration::from_secs(15), self.imp().discover_cast_devices()).await;
+        let _ = self
+            .imp()
+            .discover_cast_devices()
+            .or(async {
+                Timer::after(Duration::from_secs(15)).await;
+                Ok(())
+            })
+            .await;
 
         debug!("Device scan ended!");
         self.imp().is_scanning.set(false);

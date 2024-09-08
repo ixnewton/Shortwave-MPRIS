@@ -7,12 +7,12 @@ license = "GPL-3.0-or-later"
 
 [dependencies]
 async-channel = "2.3"
-async-std = "1.13"
+async-io = "2.3"
 async-std-resolver = "0.24"
 cast-sender = "0.2"
 diesel = { version = "2.2", features = ["sqlite", "r2d2"] }
 diesel_migrations = "2.1"
-futures-util = "0.3"
+futures-lite = "2.3"
 indexmap = "2.2"
 Inflector = "0.11"
 isahc = { version = "1.7", features = ["json"] }

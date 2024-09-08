@@ -18,7 +18,6 @@ use std::cell::OnceCell;
 
 use adw::prelude::*;
 use adw::subclass::prelude::*;
-use futures_util::future::FutureExt;
 use glib::{clone, subclass, Properties};
 use gtk::{gdk, glib, CompositeTemplate};
 use inflector::Inflector;
@@ -122,16 +121,17 @@ mod imp {
             if let Some(texture) = station.favicon() {
                 self.station_favicon.set_paintable(Some(&texture.upcast()));
             } else if let Some(favicon) = metadata.favicon.as_ref() {
-                let fut = FaviconDownloader::download(favicon.clone()).map(clone!(
+                glib::spawn_future_local(clone!(
                     #[weak(rename_to = imp)]
                     self,
-                    move |paintable| {
-                        if let Ok(paintable) = paintable {
+                    #[strong]
+                    favicon,
+                    async move {
+                        if let Ok(paintable) = FaviconDownloader::download(favicon.clone()).await {
                             imp.station_favicon.set_paintable(Some(&paintable))
                         }
                     }
                 ));
-                glib::spawn_future_local(fut);
             }
 
             // Title
