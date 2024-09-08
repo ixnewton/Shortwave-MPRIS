@@ -19,12 +19,12 @@ use std::cell::Cell;
 use adw::subclass::prelude::*;
 use glib::{clone, subclass, Properties};
 use gtk::prelude::*;
-use gtk::{gio, glib, CompositeTemplate};
+use gtk::{glib, CompositeTemplate};
 
 use crate::api::{SwStationSorting, SwStationSortingType};
 use crate::app::SwApplication;
 use crate::config;
-use crate::database::{SwLibrary, SwLibraryStatus};
+use crate::database::SwLibraryStatus;
 use crate::i18n::*;
 use crate::settings::{settings_manager, Key};
 use crate::ui::SwStationFlowBox;

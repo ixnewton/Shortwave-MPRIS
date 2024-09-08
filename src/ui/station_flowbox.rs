@@ -19,7 +19,7 @@ use adw::subclass::prelude::*;
 use glib::{subclass, Properties};
 use gtk::{glib, CompositeTemplate};
 
-use crate::api::{SwStation, SwStationModel, SwStationSorter, SwStationSorting};
+use crate::api::{SwStation, SwStationModel, SwStationSorter};
 use crate::ui::{SwStationDialog, SwStationRow};
 
 mod imp {
