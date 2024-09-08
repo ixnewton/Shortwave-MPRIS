@@ -40,7 +40,7 @@ src/audio/gstreamer_backend.rs
 src/audio/mod.rs
 src/audio/mpris.rs
 src/audio/playback_state.rs
-src/audio/player2.rs
+src/audio/player.rs
 src/audio/song.rs
 src/audio/song_model.rs
 src/audio/song_state.rs

@@ -17,7 +17,7 @@
 mod gstreamer_backend;
 mod mpris;
 mod playback_state;
-mod player2;
+mod player;
 mod song;
 mod song_model;
 mod song_state;
@@ -25,7 +25,7 @@ mod song_state;
 pub use gstreamer_backend::{GstreamerBackend, GstreamerChange};
 pub use mpris::MprisServer;
 pub use playback_state::SwPlaybackState;
-pub use player2::SwPlayer;
+pub use player::SwPlayer;
 pub use song::SwSong;
 pub use song_model::SwSongModel;
 pub use song_state::SwSongState;

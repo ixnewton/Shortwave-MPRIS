@@ -36,7 +36,7 @@ mod imp {
     use super::*;
 
     #[derive(Debug, Default, Properties)]
-    #[properties(wrapper_type = super::SwPlayer)]
+    #[properties(wrapper_type = player::SwPlayer)]
     pub struct SwPlayer {
         #[property(get, set=Self::set_station)]
         #[property(name="has-station", get=Self::has_station, type=bool)]
@@ -71,7 +71,7 @@ mod imp {
     #[glib::object_subclass]
     impl ObjectSubclass for SwPlayer {
         const NAME: &'static str = "SwPlayer";
-        type Type = super::SwPlayer;
+        type Type = player::SwPlayer;
     }
 
     #[glib::derived_properties]
