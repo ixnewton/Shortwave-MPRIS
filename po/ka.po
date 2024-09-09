@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2024-07-20 21:40+0000\n"
-"PO-Revision-Date: 2024-07-22 06:27+0200\n"
+"POT-Creation-Date: 2024-09-08 19:14+0000\n"
+"PO-Revision-Date: 2024-09-09 15:05+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -46,14 +46,14 @@ msgid "Features:"
 msgstr "თვისებები:"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:17
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:65
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:64
 msgid "Create your own library where you can add your favorite stations"
 msgstr ""
 "შექმენით თქვენი საკუთარი ბიბლიოთეკა, სადაც შეგიძლიათ თქვენი საყვარელი "
 "სადგურები დაამატოთ"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:18
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:69
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:68
 msgid "Easily search and discover new radio stations"
 msgstr "მარტივად მოძებნეთ და აღმოაჩინეთ ახალი რადიოსადგურები"
 
@@ -65,7 +65,7 @@ msgstr ""
 "სიმღერების ავტომატური ამოცნობა, მათი ინდივიდუალურად შენახვის შესაძლებლობით"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:20
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:73
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:72
 msgid "Responsive application layout, compatible for small and large screens"
 msgstr "აპლიკაციის მოხერხებული განლაგება, თავსებადი მცირე და დიდ ეკრანებთან"
 
@@ -115,17 +115,41 @@ msgstr "ლოკალური სადგურის შექმნა"
 msgid "Change station image"
 msgstr "სადგურის გამოსახულების შექმნა"
 
-#: data/gtk/create_station_dialog.ui:128 src/ui/pages/search_page.rs:107
+#: data/gtk/create_station_dialog.ui:123 src/ui/pages/search_page.rs:107
 msgid "Name"
 msgstr "სახელი"
 
-#: data/gtk/create_station_dialog.ui:136
+#: data/gtk/create_station_dialog.ui:131
 msgid "Stream URL"
 msgstr "ნაკადის URL"
 
-#: data/gtk/create_station_dialog.ui:144
+#: data/gtk/create_station_dialog.ui:139
 msgid "Create Station"
 msgstr "სადგურის შექმნა"
+
+#: data/gtk/device_dialog.ui:7 data/gtk/player_view.ui:109
+msgid "Connect Device"
+msgstr "მოწყობილობის მიერთება"
+
+#: data/gtk/device_dialog.ui:18
+msgid "Searching for Devices…"
+msgstr "მოწყობილობების ძებნა…"
+
+#: data/gtk/device_dialog.ui:25
+msgid "Search for Devices"
+msgstr "მოწყობილობების ძებნა"
+
+#: data/gtk/device_dialog.ui:41
+msgid "No Devices Available"
+msgstr "მოწყობილობები მიუწვდომელია"
+
+#: data/gtk/device_dialog.ui:42
+msgid "No supported Google Cast device found"
+msgstr "მხარდაჭერილი Google Cast მოწყობილობები აღმოჩენილი არაა"
+
+#: data/gtk/device_indicator.ui:7
+msgid "Disconnect From Device"
+msgstr "მოსწყობილობასთან კავშირის გაწყვეტა"
 
 #: data/gtk/discover_page.ui:4
 msgid "Discover"
@@ -215,8 +239,8 @@ msgid "_Discover New Stations"
 msgstr "ახალი სადგურების აღმოჩენა"
 
 #: data/gtk/library_page.ui:97
-msgid "_Enable Mini Player"
-msgstr "_მინი დამკვრელის ჩართვა"
+msgid "_Enable Gadget Player"
+msgstr "გაჯ_ეტის დამკვრელის ჩართვა"
 
 #: data/gtk/library_page.ui:101
 msgid "_Sorting"
@@ -274,33 +298,59 @@ msgstr "კლავიატურის მალსახმობები"
 msgid "_About Shortwave"
 msgstr "Shortwave-ის შესახებ"
 
-#: data/gtk/mini_controller.ui:27 data/gtk/sidebar_controller.ui:127
-#: data/gtk/toolbar_controller.ui:70
+#: data/gtk/player_gadget.ui:40 data/gtk/player_toolbar.ui:94
+#: data/gtk/player_view.ui:133 data/gtk/station_row.ui:71
+msgid "Play"
+msgstr "დაკვრა"
+
+#: data/gtk/player_gadget.ui:55 data/gtk/player_toolbar.ui:108
+#: data/gtk/player_view.ui:147
 msgid "Stop"
 msgstr "შეჩერება"
 
-#: data/gtk/mini_controller.ui:42
-msgid "Start"
-msgstr "გაშვება"
+#: data/gtk/player_gadget.ui:71 data/gtk/player_toolbar.ui:123
+#: data/gtk/player_view.ui:162
+msgid "Buffering…"
+msgstr "ბუფერის შევსება…"
 
-#: data/gtk/mini_controller.ui:98
+#: data/gtk/player_gadget.ui:118
 msgid "SHORTWAVE INTERNET RADIO"
 msgstr "SHORTWAVE INTERNET RADIO"
 
-#: data/gtk/mini_controller.ui:120 data/gtk/sidebar_controller.ui:64
-#: data/gtk/toolbar_controller.ui:29
+#: data/gtk/player_gadget.ui:140 data/gtk/player_toolbar.ui:31
+#: data/gtk/player_view.ui:43
 msgid "No Playback"
 msgstr "არ ვუკრავ"
 
-#: data/gtk/mini_controller.ui:160
+#: data/gtk/player_gadget.ui:199
 msgid "Close"
 msgstr "დახურვა"
 
-#: data/gtk/mini_controller.ui:171
+#: data/gtk/player_gadget.ui:210
 msgid "Resize"
 msgstr "ზომის შეცვლა"
 
-#: data/gtk/search_page.ui:41 data/gtk/station_dialog.ui:171
+#: data/gtk/player_view.ui:192
+msgid "Show Station Details"
+msgstr "სადგურის დეტალების ჩვენება"
+
+#: data/gtk/player_view.ui:242
+msgid "No Songs"
+msgstr "სიმღერების გარეშე"
+
+#: data/gtk/player_view.ui:253
+msgid ""
+"Songs that have been identified and recorded using the stream metadata will "
+"appear here."
+msgstr ""
+"სიმღერები, რომლებიც ამოცნობილი და ჩაწერილია ნაკადის მეტამონაცემების "
+"გამოყენებით, აქ გამოჩნდება."
+
+#: data/gtk/player_view.ui:285 data/gtk/recording_indicator.ui:38
+msgid "An error occurred"
+msgstr "შეცდომა"
+
+#: data/gtk/search_page.ui:41 data/gtk/station_dialog.ui:167
 #: src/ui/pages/search_page.rs:111
 msgid "Votes"
 msgstr "ხმები"
@@ -337,27 +387,6 @@ msgstr "შეტყობინებები"
 msgid "Show desktop notifications when a new song gets played"
 msgstr "ახალ სიმღერაზე გადართვისას სამუშაო მაგიდაზე შეტყობინების ჩვენება"
 
-#: data/gtk/sidebar_controller.ui:23
-msgid "An error occurred"
-msgstr "შეცდომა"
-
-#: data/gtk/sidebar_controller.ui:142 data/gtk/station_row.ui:69
-#: data/gtk/toolbar_controller.ui:81
-msgid "Play"
-msgstr "დაკვრა"
-
-#: data/gtk/sidebar_controller.ui:188
-msgid "Station Menu"
-msgstr "სადგურის მენიუ"
-
-#: data/gtk/sidebar_controller.ui:202
-msgid "_Show Station Details"
-msgstr "_სადგურის დეტალების ჩვენება"
-
-#: data/gtk/sidebar_controller.ui:206
-msgid "Stream to a _Device"
-msgstr "_ნაკადის მოწყობილობაზე გაშვება"
-
 #: data/gtk/song_listbox.ui:29
 msgid "No Songs Detected"
 msgstr "სიმღერების გარეშე"
@@ -384,23 +413,23 @@ msgstr "_გახსნა"
 msgid "Save recorded song"
 msgstr "ჩაწერილი სიმღერის შენახვა"
 
-#: data/gtk/station_dialog.ui:70
+#: data/gtk/station_dialog.ui:66
 msgid "_Play Station"
 msgstr "_სადგურის დაკვრა"
 
-#: data/gtk/station_dialog.ui:85
+#: data/gtk/station_dialog.ui:81
 msgid "_Add to Library"
 msgstr "_ბიბლიოთეკაში ჩამატება"
 
-#: data/gtk/station_dialog.ui:101
+#: data/gtk/station_dialog.ui:97
 msgid "_Remove From Library"
 msgstr "_ბიბლიოთეკიდან წაშლა"
 
-#: data/gtk/station_dialog.ui:119
+#: data/gtk/station_dialog.ui:115
 msgid "Local Station"
 msgstr "ლოკალური სადგური"
 
-#: data/gtk/station_dialog.ui:120
+#: data/gtk/station_dialog.ui:116
 msgid ""
 "This station exists only in your library, and is not part of the public "
 "online station database."
@@ -408,11 +437,11 @@ msgstr ""
 "სადგური არსებობს მხოლოდ თქვენს პირად ბიბლიოთეკაში და ის ონლაინ სადგურების "
 "საჯარო ბაზის ნაწილს არ წარმოადგენს.."
 
-#: data/gtk/station_dialog.ui:135
+#: data/gtk/station_dialog.ui:131
 msgid "Orphaned Station"
 msgstr "მიტოვებული სადგური"
 
-#: data/gtk/station_dialog.ui:136
+#: data/gtk/station_dialog.ui:132
 msgid ""
 "The information could not be updated, probably this station was removed from "
 "the public online station database."
@@ -420,105 +449,78 @@ msgstr ""
 "ინფორმაციის განახლება შეუძლებელია. ალბათ სადგური წაიშალა საჯარო ონლაინ "
 "სადგურების ბაზიდან."
 
-#: data/gtk/station_dialog.ui:148
+#: data/gtk/station_dialog.ui:144
 msgid "Information"
 msgstr "ინფორმაცია"
 
-#: data/gtk/station_dialog.ui:151 src/ui/pages/search_page.rs:108
+#: data/gtk/station_dialog.ui:147 src/ui/pages/search_page.rs:108
 msgid "Language"
 msgstr "ენა"
 
-#: data/gtk/station_dialog.ui:161
+#: data/gtk/station_dialog.ui:157
 msgid "Tags"
 msgstr "ჭდეები"
 
-#: data/gtk/station_dialog.ui:182
+#: data/gtk/station_dialog.ui:178
 msgid "Location"
 msgstr "მდებარეობა"
 
-#: data/gtk/station_dialog.ui:187 src/ui/pages/search_page.rs:109
+#: data/gtk/station_dialog.ui:183 src/ui/pages/search_page.rs:109
 msgid "Country"
 msgstr "ქვეყანა"
 
-#: data/gtk/station_dialog.ui:197 src/ui/pages/search_page.rs:110
+#: data/gtk/station_dialog.ui:193 src/ui/pages/search_page.rs:110
 msgid "State"
 msgstr "State"
 
-#: data/gtk/station_dialog.ui:231
+#: data/gtk/station_dialog.ui:227
 msgid "Audio"
 msgstr "აუდიო"
 
-#: data/gtk/station_dialog.ui:235 src/ui/pages/search_page.rs:112
+#: data/gtk/station_dialog.ui:231 src/ui/pages/search_page.rs:112
 msgid "Bitrate"
 msgstr "სიჩქარე"
 
-#: data/gtk/station_dialog.ui:245
+#: data/gtk/station_dialog.ui:241
 msgid "Codec"
 msgstr "კოდეკი"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:255
+#: data/gtk/station_dialog.ui:251
 msgid "Stream"
 msgstr "ნაკადი"
 
-#: data/gtk/station_dialog.ui:264
+#: data/gtk/station_dialog.ui:260
 msgid "Copy"
 msgstr "კოპირება"
 
-#: data/gtk/streaming_dialog.ui:8
-msgid "Stream to a Device"
-msgstr "მოწყობილობაზე გაშვება"
-
-#: data/gtk/streaming_dialog.ui:26
-msgid ""
-"Audio playback can be streamed to a network device (requires Google Cast "
-"support)."
-msgstr ""
-"აუდიო შეგიძლიათ ქსელურ მოწყობილობაზე გაუშვათ (საჭიროა Google Cast-ის "
-"მხარდაჭერა)."
-
-#: data/gtk/streaming_dialog.ui:41
-msgid "No Devices Found"
-msgstr "მოწყობილობების პოვნა ვერ მოხერხდა"
-
-#: data/gtk/streaming_dialog.ui:47 data/gtk/streaming_dialog.ui:73
-msgid "Search Again"
-msgstr "თავიდან ძებნა"
-
-#: data/gtk/streaming_dialog.ui:67
-msgid "Search Completed"
-msgstr "ძებნა დასრულდა"
-
-#: data/gtk/streaming_dialog.ui:93
-msgid "Searching for Devices…"
-msgstr "მოწყობილობების ძებნა…"
-
-#: data/gtk/window.ui:36
-msgid "Main View"
-msgstr "მთავარი ხედი"
-
-#. Fallback to xdg-home when xdg-music is not available
-#: src/audio/backend/song_backend.rs:97
-msgid "Unable to access music directory. Saving song in home directory."
-msgstr ""
-"მუსიკის საქაღალდესთან წვდომა აკრძალულია. სიმღერა საწყის საქაღალდეში იქნება "
-"შენახული."
-
-#: src/audio/player.rs:194
+#: src/audio/player.rs:192
 msgid "Station cannot be streamed. URL is not valid."
 msgstr "სადგურის ნაკადის შეცდომა. URL არასწორია."
 
-#: src/audio/player.rs:245
-msgid "Cannot save song."
-msgstr "სიმღერის შენახვა შეუძლებელია."
+#: src/audio/player.rs:260
+msgid "Active Playback"
+msgstr "აქტიური დაკვრა"
+
+#: src/device/device_discovery.rs:90
+msgid "Google Cast Device"
+msgstr "Google Cast მოწყობილობა"
+
+#: src/device/device_discovery.rs:91
+msgid "Unknown Model"
+msgstr "უცნობი მოდელი"
 
 #: src/ui/about_dialog.rs:44
 msgid "translator-credits"
 msgstr "მთარგმნელის შესახებ"
 
-#: src/ui/create_station_dialog.rs:106
+#: src/ui/create_station_dialog.rs:98
 msgid "Select station image"
 msgstr "აირჩიეთ სადგურის სურათი"
+
+#: src/ui/display_error.rs:46
+msgid "Show Details"
+msgstr "დეტალების ჩვენება"
 
 #. TODO: Implement show-server-stats action
 #: src/ui/pages/discover_page.rs:127
@@ -549,7 +551,7 @@ msgstr "Radio-browser.info-სგან"
 msgid "Station data could not be received."
 msgstr "სადგურის მონაცემების მიღება შეუძლებელია."
 
-#: src/ui/pages/library_page.rs:110
+#: src/ui/pages/library_page.rs:94
 msgid "Welcome to {}"
 msgstr "მოგესალმებით {}-ში"
 
@@ -563,9 +565,69 @@ msgid_plural ""
 msgstr[0] ""
 "შედეგების რაოდენობის ლიმიტია {} ჩანაწერი. სცადეთ სხვანაირად მოძებნოთ."
 
-#: src/ui/station_dialog.rs:216
+#: src/ui/recording_indicator.rs:111
+msgid "Recording in Progress"
+msgstr "მიმდინარეობს ჩაწერა"
+
+#: src/ui/recording_indicator.rs:112
+msgid "Ignored"
+msgstr "გამოტოვებულია"
+
+#: src/ui/recording_indicator.rs:113
+msgid "Incomplete"
+msgstr "არასრული"
+
+#: src/ui/recording_indicator.rs:120
+msgid "The current song will be recorded until a new song is detected."
+msgstr "მიმდინარე სიმღერა ჩაიწერება, სანამ ახალ სიმღერას არ აღმოვაჩენთ."
+
+#: src/ui/recording_indicator.rs:123
+msgid "No recording because the song title contains a word on the ignore list."
+msgstr ""
+"ჩაწერა არ მოხდება, რადგან სიმღერის სახელი გამოსატოვებელი სიიდან შეიცავს "
+"სიტყვას."
+
+#: src/ui/recording_indicator.rs:126
+msgid ""
+"The current song cannot be fully recorded. The beginning has been missed."
+msgstr "მიმდინარე სიმღერის სრულად ჩაწერა ვერ მოხერხდა. დასაწყისი აკლია."
+
+#: src/ui/station_dialog.rs:217
 msgid "{} kbit/s"
 msgstr "{} კბიტ/წმ"
+
+#~ msgid "Start"
+#~ msgstr "გაშვება"
+
+#~ msgid "Station Menu"
+#~ msgstr "სადგურის მენიუ"
+
+#~ msgid "Stream to a _Device"
+#~ msgstr "_ნაკადის მოწყობილობაზე გაშვება"
+
+#~ msgid "Stream to a Device"
+#~ msgstr "მოწყობილობაზე გაშვება"
+
+#~ msgid ""
+#~ "Audio playback can be streamed to a network device (requires Google Cast "
+#~ "support)."
+#~ msgstr ""
+#~ "აუდიო შეგიძლიათ ქსელურ მოწყობილობაზე გაუშვათ (საჭიროა Google Cast-ის "
+#~ "მხარდაჭერა)."
+
+#~ msgid "Search Again"
+#~ msgstr "თავიდან ძებნა"
+
+#~ msgid "Main View"
+#~ msgstr "მთავარი ხედი"
+
+#~ msgid "Unable to access music directory. Saving song in home directory."
+#~ msgstr ""
+#~ "მუსიკის საქაღალდესთან წვდომა აკრძალულია. სიმღერა საწყის საქაღალდეში "
+#~ "იქნება შენახული."
+
+#~ msgid "Cannot save song."
+#~ msgstr "სიმღერის შენახვა შეუძლებელია."
 
 #~ msgid "Receiving Station Data…"
 #~ msgstr "სადგურის მონაცემების მიღება…"
