@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2024-07-20 21:40+0000\n"
-"PO-Revision-Date: 2024-07-21 19:45+0800\n"
+"POT-Creation-Date: 2024-09-08 19:14+0000\n"
+"PO-Revision-Date: 2024-09-10 10:57+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -54,12 +54,12 @@ msgid "Features:"
 msgstr "特性："
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:17
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:65
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:64
 msgid "Create your own library where you can add your favorite stations"
 msgstr "创建您自己的媒体库，可以在其中添加最喜欢的电台"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:18
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:69
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:68
 msgid "Easily search and discover new radio stations"
 msgstr "轻松搜索并发现新电台"
 
@@ -70,7 +70,7 @@ msgid ""
 msgstr "自动识别歌曲，并可以将其分别保存"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:20
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:73
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:72
 msgid "Responsive application layout, compatible for small and large screens"
 msgstr "响应式应用程序布局，兼容小型屏幕和大型屏幕"
 
@@ -117,17 +117,41 @@ msgstr "创建本地电台"
 msgid "Change station image"
 msgstr "修改电台图像"
 
-#: data/gtk/create_station_dialog.ui:128 src/ui/pages/search_page.rs:107
+#: data/gtk/create_station_dialog.ui:123 src/ui/pages/search_page.rs:107
 msgid "Name"
 msgstr "名称"
 
-#: data/gtk/create_station_dialog.ui:136
+#: data/gtk/create_station_dialog.ui:131
 msgid "Stream URL"
 msgstr "媒体流 URL"
 
-#: data/gtk/create_station_dialog.ui:144
+#: data/gtk/create_station_dialog.ui:139
 msgid "Create Station"
 msgstr "创建电台"
+
+#: data/gtk/device_dialog.ui:7 data/gtk/player_view.ui:109
+msgid "Connect Device"
+msgstr "连接设备"
+
+#: data/gtk/device_dialog.ui:18
+msgid "Searching for Devices…"
+msgstr "正在搜索设备…"
+
+#: data/gtk/device_dialog.ui:25
+msgid "Search for Devices"
+msgstr "搜索设备"
+
+#: data/gtk/device_dialog.ui:41
+msgid "No Devices Available"
+msgstr "无可用设备"
+
+#: data/gtk/device_dialog.ui:42
+msgid "No supported Google Cast device found"
+msgstr "未找到支持的 Google Cast 设备"
+
+#: data/gtk/device_indicator.ui:7
+msgid "Disconnect From Device"
+msgstr "断开设备连接"
 
 #: data/gtk/discover_page.ui:4
 msgid "Discover"
@@ -217,7 +241,7 @@ msgid "_Discover New Stations"
 msgstr "探索新电台(_D)"
 
 #: data/gtk/library_page.ui:97
-msgid "_Enable Mini Player"
+msgid "_Enable Gadget Player"
 msgstr "启用迷你播放器(_E)"
 
 #: data/gtk/library_page.ui:101
@@ -276,33 +300,57 @@ msgstr "键盘快捷键(_K)"
 msgid "_About Shortwave"
 msgstr "关于短波(_A)"
 
-#: data/gtk/mini_controller.ui:27 data/gtk/sidebar_controller.ui:127
-#: data/gtk/toolbar_controller.ui:70
+#: data/gtk/player_gadget.ui:40 data/gtk/player_toolbar.ui:94
+#: data/gtk/player_view.ui:133 data/gtk/station_row.ui:71
+msgid "Play"
+msgstr "播放"
+
+#: data/gtk/player_gadget.ui:55 data/gtk/player_toolbar.ui:108
+#: data/gtk/player_view.ui:147
 msgid "Stop"
 msgstr "停止"
 
-#: data/gtk/mini_controller.ui:42
-msgid "Start"
-msgstr "开始"
+#: data/gtk/player_gadget.ui:71 data/gtk/player_toolbar.ui:123
+#: data/gtk/player_view.ui:162
+msgid "Buffering…"
+msgstr "正在缓冲…"
 
-#: data/gtk/mini_controller.ui:98
+#: data/gtk/player_gadget.ui:118
 msgid "SHORTWAVE INTERNET RADIO"
 msgstr "短波互联网电台"
 
-#: data/gtk/mini_controller.ui:120 data/gtk/sidebar_controller.ui:64
-#: data/gtk/toolbar_controller.ui:29
+#: data/gtk/player_gadget.ui:140 data/gtk/player_toolbar.ui:31
+#: data/gtk/player_view.ui:43
 msgid "No Playback"
 msgstr "无回放"
 
-#: data/gtk/mini_controller.ui:160
+#: data/gtk/player_gadget.ui:199
 msgid "Close"
 msgstr "关闭"
 
-#: data/gtk/mini_controller.ui:171
+#: data/gtk/player_gadget.ui:210
 msgid "Resize"
 msgstr "改变大小"
 
-#: data/gtk/search_page.ui:41 data/gtk/station_dialog.ui:171
+#: data/gtk/player_view.ui:192
+msgid "Show Station Details"
+msgstr "显示电台详情"
+
+#: data/gtk/player_view.ui:242
+msgid "No Songs"
+msgstr "无歌曲"
+
+#: data/gtk/player_view.ui:253
+msgid ""
+"Songs that have been identified and recorded using the stream metadata will "
+"appear here."
+msgstr "使用串流元数据识别和录制的歌曲将出现在这里。"
+
+#: data/gtk/player_view.ui:285 data/gtk/recording_indicator.ui:38
+msgid "An error occurred"
+msgstr "发生了错误"
+
+#: data/gtk/search_page.ui:41 data/gtk/station_dialog.ui:167
 #: src/ui/pages/search_page.rs:111
 msgid "Votes"
 msgstr "票数"
@@ -339,27 +387,6 @@ msgstr "通知(_N)"
 msgid "Show desktop notifications when a new song gets played"
 msgstr "当播放新歌曲时显示桌面通知"
 
-#: data/gtk/sidebar_controller.ui:23
-msgid "An error occurred"
-msgstr "发生了错误"
-
-#: data/gtk/sidebar_controller.ui:142 data/gtk/station_row.ui:69
-#: data/gtk/toolbar_controller.ui:81
-msgid "Play"
-msgstr "播放"
-
-#: data/gtk/sidebar_controller.ui:188
-msgid "Station Menu"
-msgstr "电台菜单"
-
-#: data/gtk/sidebar_controller.ui:202
-msgid "_Show Station Details"
-msgstr "显示电台详情(_S)"
-
-#: data/gtk/sidebar_controller.ui:206
-msgid "Stream to a _Device"
-msgstr "串流到设备(_D)"
-
 #: data/gtk/song_listbox.ui:29
 msgid "No Songs Detected"
 msgstr "未检测到歌曲"
@@ -386,136 +413,115 @@ msgstr "打开(_O)"
 msgid "Save recorded song"
 msgstr "保存录制的歌曲"
 
-#: data/gtk/station_dialog.ui:70
+#: data/gtk/station_dialog.ui:66
 msgid "_Play Station"
 msgstr "播放电台(_P)"
 
-#: data/gtk/station_dialog.ui:85
+#: data/gtk/station_dialog.ui:81
 msgid "_Add to Library"
 msgstr "添加到库(_A)"
 
-#: data/gtk/station_dialog.ui:101
+#: data/gtk/station_dialog.ui:97
 msgid "_Remove From Library"
 msgstr "从库移除(_R)"
 
-#: data/gtk/station_dialog.ui:119
+#: data/gtk/station_dialog.ui:115
 msgid "Local Station"
 msgstr "本地电台"
 
-#: data/gtk/station_dialog.ui:120
+#: data/gtk/station_dialog.ui:116
 msgid ""
 "This station exists only in your library, and is not part of the public "
 "online station database."
 msgstr "该电台仅存在于您的库中，且不是公共在线电台数据库的一部分。"
 
-#: data/gtk/station_dialog.ui:135
+#: data/gtk/station_dialog.ui:131
 msgid "Orphaned Station"
 msgstr "孤立电台"
 
-#: data/gtk/station_dialog.ui:136
+#: data/gtk/station_dialog.ui:132
 msgid ""
 "The information could not be updated, probably this station was removed from "
 "the public online station database."
 msgstr "信息无法更新，可能是因为该电台已从公共在线电台数据库移除。"
 
-#: data/gtk/station_dialog.ui:148
+#: data/gtk/station_dialog.ui:144
 msgid "Information"
 msgstr "信息"
 
-#: data/gtk/station_dialog.ui:151 src/ui/pages/search_page.rs:108
+#: data/gtk/station_dialog.ui:147 src/ui/pages/search_page.rs:108
 msgid "Language"
 msgstr "语言"
 
-#: data/gtk/station_dialog.ui:161
+#: data/gtk/station_dialog.ui:157
 msgid "Tags"
 msgstr "标签"
 
-#: data/gtk/station_dialog.ui:182
+#: data/gtk/station_dialog.ui:178
 msgid "Location"
 msgstr "位置"
 
-#: data/gtk/station_dialog.ui:187 src/ui/pages/search_page.rs:109
+#: data/gtk/station_dialog.ui:183 src/ui/pages/search_page.rs:109
 msgid "Country"
 msgstr "国家"
 
-#: data/gtk/station_dialog.ui:197 src/ui/pages/search_page.rs:110
+#: data/gtk/station_dialog.ui:193 src/ui/pages/search_page.rs:110
 msgid "State"
 msgstr "州省"
 
-#: data/gtk/station_dialog.ui:231
+#: data/gtk/station_dialog.ui:227
 msgid "Audio"
 msgstr "音频"
 
-#: data/gtk/station_dialog.ui:235 src/ui/pages/search_page.rs:112
+#: data/gtk/station_dialog.ui:231 src/ui/pages/search_page.rs:112
 msgid "Bitrate"
 msgstr "位速率"
 
-#: data/gtk/station_dialog.ui:245
+#: data/gtk/station_dialog.ui:241
 msgid "Codec"
 msgstr "编解码器"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:255
+#: data/gtk/station_dialog.ui:251
 msgid "Stream"
 msgstr "流"
 
-#: data/gtk/station_dialog.ui:264
+#: data/gtk/station_dialog.ui:260
 msgid "Copy"
 msgstr "复制"
 
-#: data/gtk/streaming_dialog.ui:8
-msgid "Stream to a Device"
-msgstr "串流到设备"
-
-#: data/gtk/streaming_dialog.ui:26
-msgid ""
-"Audio playback can be streamed to a network device (requires Google Cast "
-"support)."
-msgstr "音频播放可以串流至网络设备（需要 Google Cast 支持）。"
-
-#: data/gtk/streaming_dialog.ui:41
-msgid "No Devices Found"
-msgstr "未找到设备"
-
-#: data/gtk/streaming_dialog.ui:47 data/gtk/streaming_dialog.ui:73
-msgid "Search Again"
-msgstr "再次搜索"
-
-#: data/gtk/streaming_dialog.ui:67
-msgid "Search Completed"
-msgstr "搜索已完成"
-
-#: data/gtk/streaming_dialog.ui:93
-msgid "Searching for Devices…"
-msgstr "正在搜索设备…"
-
-#: data/gtk/window.ui:36
-msgid "Main View"
-msgstr "主视图"
-
-#. Fallback to xdg-home when xdg-music is not available
-#: src/audio/backend/song_backend.rs:97
-msgid "Unable to access music directory. Saving song in home directory."
-msgstr "无法访问音乐目录。在主目录保存歌曲。"
-
-#: src/audio/player.rs:194
+#: src/audio/player.rs:192
 msgid "Station cannot be streamed. URL is not valid."
 msgstr "电台无法串流。网址无效。"
 
-#: src/audio/player.rs:245
-msgid "Cannot save song."
-msgstr "无法保存歌曲。"
+#: src/audio/player.rs:260
+msgid "Active Playback"
+msgstr "活动播放"
+
+#: src/device/device_discovery.rs:90
+msgid "Google Cast Device"
+msgstr "Google Cast 设备"
+
+#: src/device/device_discovery.rs:91
+msgid "Unknown Model"
+msgstr "未知型号"
 
 #: src/ui/about_dialog.rs:44
 msgid "translator-credits"
 msgstr ""
 "Damned <damnedlies@163.com>, 2020.\n"
 "Dingzhong Chen <wsxy162@gmail.com>, 2020.\n"
+"Junping Sun <junping@nfschina.com>, 2021.\n"
+"Liu Tao <lyuutau@outlook.com>, 2021.\n"
 "lumingzh <lumingzh@qq.com>, 2022-2024."
 
-#: src/ui/create_station_dialog.rs:106
+#: src/ui/create_station_dialog.rs:98
 msgid "Select station image"
 msgstr "选择电台图像"
+
+#: src/ui/display_error.rs:46
+msgid "Show Details"
+msgstr "显示详情"
 
 #. TODO: Implement show-server-stats action
 #: src/ui/pages/discover_page.rs:127
@@ -546,7 +552,7 @@ msgstr "由 radio-browser.info 提供支持"
 msgid "Station data could not be received."
 msgstr "无法接收电台数据。"
 
-#: src/ui/pages/library_page.rs:110
+#: src/ui/pages/library_page.rs:94
 msgid "Welcome to {}"
 msgstr "欢迎使用 {}"
 
@@ -559,9 +565,63 @@ msgid_plural ""
 "search term."
 msgstr[0] "结果数量已限制为 {} 项。请尝试使用更明确的搜索词语。"
 
-#: src/ui/station_dialog.rs:216
+#: src/ui/recording_indicator.rs:111
+msgid "Recording in Progress"
+msgstr "正在进行录制"
+
+#: src/ui/recording_indicator.rs:112
+msgid "Ignored"
+msgstr "已忽略"
+
+#: src/ui/recording_indicator.rs:113
+msgid "Incomplete"
+msgstr "未完成"
+
+#: src/ui/recording_indicator.rs:120
+msgid "The current song will be recorded until a new song is detected."
+msgstr "将录制当前歌曲直到检测到新歌曲。"
+
+#: src/ui/recording_indicator.rs:123
+msgid "No recording because the song title contains a word on the ignore list."
+msgstr "由于歌曲标题包含了忽略列表上的单词而未进行录制。"
+
+#: src/ui/recording_indicator.rs:126
+msgid ""
+"The current song cannot be fully recorded. The beginning has been missed."
+msgstr "当前歌曲无法完整录制。开头已被漏掉。"
+
+#: src/ui/station_dialog.rs:217
 msgid "{} kbit/s"
 msgstr "{} kbit/s"
+
+#~ msgid "Start"
+#~ msgstr "开始"
+
+#~ msgid "Station Menu"
+#~ msgstr "电台菜单"
+
+#~ msgid "Stream to a _Device"
+#~ msgstr "串流到设备(_D)"
+
+#~ msgid "Stream to a Device"
+#~ msgstr "串流到设备"
+
+#~ msgid ""
+#~ "Audio playback can be streamed to a network device (requires Google Cast "
+#~ "support)."
+#~ msgstr "音频播放可以串流至网络设备（需要 Google Cast 支持）。"
+
+#~ msgid "Search Again"
+#~ msgstr "再次搜索"
+
+#~ msgid "Main View"
+#~ msgstr "主视图"
+
+#~ msgid "Unable to access music directory. Saving song in home directory."
+#~ msgstr "无法访问音乐目录。在主目录保存歌曲。"
+
+#~ msgid "Cannot save song."
+#~ msgstr "无法保存歌曲。"
 
 #~ msgid "Receiving Station Data…"
 #~ msgstr "正在接收电台数据…"
@@ -635,9 +695,6 @@ msgstr "{} kbit/s"
 
 #~ msgid "An invalid station was removed from the library."
 #~ msgstr "已从库中移除一个无效的电台。"
-
-#~ msgid "Connected with"
-#~ msgstr "已连接到"
 
 #~ msgid "_Cancel"
 #~ msgstr "取消(_C)"
