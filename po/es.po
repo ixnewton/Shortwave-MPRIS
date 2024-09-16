@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2024-07-27 11:59+0000\n"
-"PO-Revision-Date: 2024-08-30 16:18+0200\n"
+"POT-Creation-Date: 2024-09-14 09:13+0000\n"
+"PO-Revision-Date: 2024-09-15 19:05+0200\n"
 "Last-Translator: Julián Villodre <jvillodrede@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -48,12 +48,12 @@ msgid "Features:"
 msgstr "Características:"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:17
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:65
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:64
 msgid "Create your own library where you can add your favorite stations"
 msgstr "Crear su propia biblioteca donde puede añadir sus emisoras favoritas"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:18
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:69
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:68
 msgid "Easily search and discover new radio stations"
 msgstr "Buscar y descubrir nuevas emisoras de radio fácilmente"
 
@@ -66,7 +66,7 @@ msgstr ""
 "individualmente"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:20
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:73
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:72
 msgid "Responsive application layout, compatible for small and large screens"
 msgstr "Diseño adaptativo, compatible con pantallas grandes y pequeñas"
 
@@ -116,17 +116,41 @@ msgstr "Crear emisora local"
 msgid "Change station image"
 msgstr "Crear imagen de la emisora"
 
-#: data/gtk/create_station_dialog.ui:128 src/ui/pages/search_page.rs:107
+#: data/gtk/create_station_dialog.ui:123 src/ui/pages/search_page.rs:107
 msgid "Name"
 msgstr "Nombre"
 
-#: data/gtk/create_station_dialog.ui:136
+#: data/gtk/create_station_dialog.ui:131
 msgid "Stream URL"
 msgstr "URL del Flujo"
 
-#: data/gtk/create_station_dialog.ui:144
+#: data/gtk/create_station_dialog.ui:139
 msgid "Create Station"
 msgstr "Crear emisora"
+
+#: data/gtk/device_dialog.ui:7 data/gtk/player_view.ui:109
+msgid "Connect Device"
+msgstr "Conectar dispositivo"
+
+#: data/gtk/device_dialog.ui:18
+msgid "Searching for Devices…"
+msgstr "Buscado dispositivos…"
+
+#: data/gtk/device_dialog.ui:25
+msgid "Search for Devices"
+msgstr "Buscar dispositivos"
+
+#: data/gtk/device_dialog.ui:41
+msgid "No Devices Available"
+msgstr "No hay dispositivos disponibles"
+
+#: data/gtk/device_dialog.ui:42
+msgid "No supported Google Cast device found"
+msgstr "No se encontró ningún dispositivo compatible con Google Cast"
+
+#: data/gtk/device_indicator.ui:7
+msgid "Disconnect From Device"
+msgstr "Desconectarse del dispositivo"
 
 #: data/gtk/discover_page.ui:4
 msgid "Discover"
@@ -216,7 +240,7 @@ msgid "_Discover New Stations"
 msgstr "_Descubrir emisoras nuevas"
 
 #: data/gtk/library_page.ui:97
-msgid "_Enable Mini Player"
+msgid "_Enable Gadget Player"
 msgstr "Acti_var mini-reproductor"
 
 #: data/gtk/library_page.ui:101
@@ -275,33 +299,59 @@ msgstr "Ata_jos de teclado"
 msgid "_About Shortwave"
 msgstr "_Acerca de Shortwave"
 
-#: data/gtk/mini_controller.ui:27 data/gtk/sidebar_controller.ui:127
-#: data/gtk/toolbar_controller.ui:70
+#: data/gtk/player_gadget.ui:40 data/gtk/player_toolbar.ui:94
+#: data/gtk/player_view.ui:133 data/gtk/station_row.ui:71
+msgid "Play"
+msgstr "Reproducir"
+
+#: data/gtk/player_gadget.ui:55 data/gtk/player_toolbar.ui:108
+#: data/gtk/player_view.ui:147
 msgid "Stop"
 msgstr "Detener"
 
-#: data/gtk/mini_controller.ui:42
-msgid "Start"
-msgstr "Iniciar"
+#: data/gtk/player_gadget.ui:71 data/gtk/player_toolbar.ui:123
+#: data/gtk/player_view.ui:162
+msgid "Buffering…"
+msgstr "Cargando búfer…"
 
-#: data/gtk/mini_controller.ui:98
+#: data/gtk/player_gadget.ui:118
 msgid "SHORTWAVE INTERNET RADIO"
 msgstr "RADIO POR INTERNET SHORTWAVE"
 
-#: data/gtk/mini_controller.ui:120 data/gtk/sidebar_controller.ui:64
-#: data/gtk/toolbar_controller.ui:29
+#: data/gtk/player_gadget.ui:140 data/gtk/player_toolbar.ui:31
+#: data/gtk/player_view.ui:43
 msgid "No Playback"
 msgstr "Sin reproducción"
 
-#: data/gtk/mini_controller.ui:160
+#: data/gtk/player_gadget.ui:199
 msgid "Close"
 msgstr "Cerrar"
 
-#: data/gtk/mini_controller.ui:171
+#: data/gtk/player_gadget.ui:210
 msgid "Resize"
 msgstr "Redimensionar"
 
-#: data/gtk/search_page.ui:41 data/gtk/station_dialog.ui:171
+#: data/gtk/player_view.ui:192
+msgid "Show Station Details"
+msgstr "Mostrar detalles de la emisora"
+
+#: data/gtk/player_view.ui:242
+msgid "No Songs"
+msgstr "No se han detectado canciones"
+
+#: data/gtk/player_view.ui:253
+msgid ""
+"Songs that have been identified and recorded using the stream metadata will "
+"appear here."
+msgstr ""
+"Las canciones que se hayan identificado y grabado usando los metadatos del "
+"flujo aparecerán aquí."
+
+#: data/gtk/player_view.ui:285 data/gtk/recording_indicator.ui:38
+msgid "An error occurred"
+msgstr "Ocurrió un error"
+
+#: data/gtk/search_page.ui:41 data/gtk/station_dialog.ui:167
 #: src/ui/pages/search_page.rs:111
 msgid "Votes"
 msgstr "Votos"
@@ -339,27 +389,6 @@ msgid "Show desktop notifications when a new song gets played"
 msgstr ""
 "Mostrar notificaciones del escritorio cuando se reproduce una canción nueva"
 
-#: data/gtk/sidebar_controller.ui:23
-msgid "An error occurred"
-msgstr "Ocurrió un error"
-
-#: data/gtk/sidebar_controller.ui:142 data/gtk/station_row.ui:69
-#: data/gtk/toolbar_controller.ui:81
-msgid "Play"
-msgstr "Reproducir"
-
-#: data/gtk/sidebar_controller.ui:188
-msgid "Station Menu"
-msgstr "Menú de la emisora"
-
-#: data/gtk/sidebar_controller.ui:202
-msgid "_Show Station Details"
-msgstr "Mo_strar detalles de la emisora"
-
-#: data/gtk/sidebar_controller.ui:206
-msgid "Stream to a _Device"
-msgstr "Reproducir en un _dispositivo"
-
 #: data/gtk/song_listbox.ui:29
 msgid "No Songs Detected"
 msgstr "No se han detectado canciones"
@@ -386,23 +415,23 @@ msgstr "_Abrir"
 msgid "Save recorded song"
 msgstr "Guardar canción grabada"
 
-#: data/gtk/station_dialog.ui:70
+#: data/gtk/station_dialog.ui:66
 msgid "_Play Station"
 msgstr "_Reproducir esta emisora"
 
-#: data/gtk/station_dialog.ui:85
+#: data/gtk/station_dialog.ui:81
 msgid "_Add to Library"
 msgstr "_Añadir a la biblioteca"
 
-#: data/gtk/station_dialog.ui:101
+#: data/gtk/station_dialog.ui:97
 msgid "_Remove From Library"
 msgstr "_Quitar de la biblioteca"
 
-#: data/gtk/station_dialog.ui:119
+#: data/gtk/station_dialog.ui:115
 msgid "Local Station"
 msgstr "Emisora local"
 
-#: data/gtk/station_dialog.ui:120
+#: data/gtk/station_dialog.ui:116
 msgid ""
 "This station exists only in your library, and is not part of the public "
 "online station database."
@@ -410,11 +439,11 @@ msgstr ""
 "Esta emisora sólo existe en su biblioteca y no es parte de la base de datos "
 "en línea de emisoras públicas."
 
-#: data/gtk/station_dialog.ui:135
+#: data/gtk/station_dialog.ui:131
 msgid "Orphaned Station"
 msgstr "Emisora huérfana"
 
-#: data/gtk/station_dialog.ui:136
+#: data/gtk/station_dialog.ui:132
 msgid ""
 "The information could not be updated, probably this station was removed from "
 "the public online station database."
@@ -422,97 +451,66 @@ msgstr ""
 "No se pudo actualizar la información. Probablemente esta emisora se haya "
 "quitado de la base de datos de emisoras públicas en linea."
 
-#: data/gtk/station_dialog.ui:148
+#: data/gtk/station_dialog.ui:144
 msgid "Information"
 msgstr "Información"
 
-#: data/gtk/station_dialog.ui:151 src/ui/pages/search_page.rs:108
+#: data/gtk/station_dialog.ui:147 src/ui/pages/search_page.rs:108
 msgid "Language"
 msgstr "Idioma"
 
-#: data/gtk/station_dialog.ui:161
+#: data/gtk/station_dialog.ui:157
 msgid "Tags"
 msgstr "Etiquetas"
 
-#: data/gtk/station_dialog.ui:182
+#: data/gtk/station_dialog.ui:178
 msgid "Location"
 msgstr "Ubicación"
 
-#: data/gtk/station_dialog.ui:187 src/ui/pages/search_page.rs:109
+#: data/gtk/station_dialog.ui:183 src/ui/pages/search_page.rs:109
 msgid "Country"
 msgstr "País"
 
-#: data/gtk/station_dialog.ui:197 src/ui/pages/search_page.rs:110
+#: data/gtk/station_dialog.ui:193 src/ui/pages/search_page.rs:110
 msgid "State"
 msgstr "Estado"
 
-#: data/gtk/station_dialog.ui:231
+#: data/gtk/station_dialog.ui:227
 msgid "Audio"
 msgstr "Sonido"
 
-#: data/gtk/station_dialog.ui:235 src/ui/pages/search_page.rs:112
+#: data/gtk/station_dialog.ui:231 src/ui/pages/search_page.rs:112
 msgid "Bitrate"
 msgstr "Tasa de bits"
 
-#: data/gtk/station_dialog.ui:245
+#: data/gtk/station_dialog.ui:241
 msgid "Codec"
 msgstr "Códec"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:255
+#: data/gtk/station_dialog.ui:251
 msgid "Stream"
 msgstr "Flujo"
 
-#: data/gtk/station_dialog.ui:264
+#: data/gtk/station_dialog.ui:260
 msgid "Copy"
 msgstr "Copiar"
 
-#: data/gtk/streaming_dialog.ui:8
-msgid "Stream to a Device"
-msgstr "Reproducir en un dispositivo"
-
-#: data/gtk/streaming_dialog.ui:26
-msgid ""
-"Audio playback can be streamed to a network device (requires Google Cast "
-"support)."
-msgstr ""
-"La reproducción de sonido se puede enviar a un dispositivo de red (requiere "
-"soporte de Google Cast)."
-
-#: data/gtk/streaming_dialog.ui:41
-msgid "No Devices Found"
-msgstr "No se han encontrado dispositivos"
-
-#: data/gtk/streaming_dialog.ui:47 data/gtk/streaming_dialog.ui:73
-msgid "Search Again"
-msgstr "Buscar de nuevo"
-
-#: data/gtk/streaming_dialog.ui:67
-msgid "Search Completed"
-msgstr "Búsquedas completada"
-
-#: data/gtk/streaming_dialog.ui:93
-msgid "Searching for Devices…"
-msgstr "Buscado dispositivos…"
-
-#: data/gtk/window.ui:36
-msgid "Main View"
-msgstr "Vista principal"
-
-#. Fallback to xdg-home when xdg-music is not available
-#: src/audio/backend/song_backend.rs:97
-msgid "Unable to access music directory. Saving song in home directory."
-msgstr ""
-"No se puede acceder a la carpeta de música. Guardando la canción en la "
-"capeta personal."
-
-#: src/audio/player.rs:194
+#: src/audio/player.rs:192
 msgid "Station cannot be streamed. URL is not valid."
 msgstr "No se puede reproducir la emisora. El URL no es válido."
 
-#: src/audio/player.rs:245
-msgid "Cannot save song."
-msgstr "No se puede guardar la canción."
+#: src/audio/player.rs:260
+msgid "Active Playback"
+msgstr "Reproducción activa"
+
+#: src/device/device_discovery.rs:82
+msgid "Google Cast Device"
+msgstr "Dispositivo Google Cast"
+
+#: src/device/device_discovery.rs:85
+msgid "Unknown Model"
+msgstr "Modelo desconocido"
 
 #: src/ui/about_dialog.rs:44
 msgid "translator-credits"
@@ -520,9 +518,13 @@ msgstr ""
 "Julián Villodre <jvillodrede@gmail.com>, 2024\n"
 "Daniel Mustieles <daniel.mustieles@gmail.com>, 2020"
 
-#: src/ui/create_station_dialog.rs:106
+#: src/ui/create_station_dialog.rs:98
 msgid "Select station image"
 msgstr "Seleccionar imagen de la emisora"
+
+#: src/ui/display_error.rs:46
+msgid "Show Details"
+msgstr "Mostrar detalles"
 
 #. TODO: Implement show-server-stats action
 #: src/ui/pages/discover_page.rs:127
@@ -553,7 +555,7 @@ msgstr "Ofrecido por radio-browser.info"
 msgid "Station data could not be received."
 msgstr "No se han podido recibir los datos de la emisora."
 
-#: src/ui/pages/library_page.rs:110
+#: src/ui/pages/library_page.rs:94
 msgid "Welcome to {}"
 msgstr "Bienvenido/a a {}"
 
@@ -571,9 +573,70 @@ msgstr[1] ""
 "El numero de resultados está limitado a {} elementos. Pruebe a usar un "
 "término de búsqueda más concreto."
 
-#: src/ui/station_dialog.rs:216
+#: src/ui/recording_indicator.rs:111
+msgid "Recording in Progress"
+msgstr "Grabación en progreso"
+
+#: src/ui/recording_indicator.rs:112
+msgid "Ignored"
+msgstr "Ignorado"
+
+#: src/ui/recording_indicator.rs:113
+msgid "Incomplete"
+msgstr "Incompleto"
+
+#: src/ui/recording_indicator.rs:120
+msgid "The current song will be recorded until a new song is detected."
+msgstr "La canción actual se grabará hasta que se detecte una nueva canción."
+
+#: src/ui/recording_indicator.rs:123
+msgid "No recording because the song title contains a word on the ignore list."
+msgstr ""
+"No se grabó porque el título de la canción contiene una palabra de la lista "
+"de ignorados."
+
+#: src/ui/recording_indicator.rs:126
+msgid ""
+"The current song cannot be fully recorded. The beginning has been missed."
+msgstr ""
+"No se puede grabar completamente la canción actual. Se omitió el inicio."
+
+#: src/ui/station_dialog.rs:217
 msgid "{} kbit/s"
 msgstr "{} kbit/s"
+
+#~ msgid "Start"
+#~ msgstr "Iniciar"
+
+#~ msgid "Station Menu"
+#~ msgstr "Menú de la emisora"
+
+#~ msgid "Stream to a _Device"
+#~ msgstr "Reproducir en un _dispositivo"
+
+#~ msgid "Stream to a Device"
+#~ msgstr "Reproducir en un dispositivo"
+
+#~ msgid ""
+#~ "Audio playback can be streamed to a network device (requires Google Cast "
+#~ "support)."
+#~ msgstr ""
+#~ "La reproducción de sonido se puede enviar a un dispositivo de red "
+#~ "(requiere soporte de Google Cast)."
+
+#~ msgid "Search Again"
+#~ msgstr "Buscar de nuevo"
+
+#~ msgid "Main View"
+#~ msgstr "Vista principal"
+
+#~ msgid "Unable to access music directory. Saving song in home directory."
+#~ msgstr ""
+#~ "No se puede acceder a la carpeta de música. Guardando la canción en la "
+#~ "capeta personal."
+
+#~ msgid "Cannot save song."
+#~ msgstr "No se puede guardar la canción."
 
 #~ msgid "Receiving Station Data…"
 #~ msgstr "Recibiendo datos de la emisora…"
@@ -643,9 +706,6 @@ msgstr "{} kbit/s"
 
 #~ msgid "Error details"
 #~ msgstr "Detalles del error"
-
-#~ msgid "Connected with"
-#~ msgstr "Conectado con"
 
 #~ msgid "This is a local private station."
 #~ msgstr "Esto es una emisora local privada."
