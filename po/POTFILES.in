@@ -28,7 +28,6 @@ data/gtk/volume_control.ui
 data/gtk/window.ui
 src/api/client.rs
 src/api/error.rs
-src/api/favicon_downloader.rs
 src/api/mod.rs
 src/api/station.rs
 src/api/station_metadata.rs

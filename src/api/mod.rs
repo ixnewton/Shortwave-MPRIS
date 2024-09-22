@@ -20,7 +20,6 @@ static STATS: &str = "json/stats";
 
 mod client;
 mod error;
-mod favicon_downloader;
 mod station;
 mod station_metadata;
 mod station_model;
@@ -30,7 +29,6 @@ mod stats;
 
 pub use client::SwClient;
 pub use error::Error;
-pub use favicon_downloader::FaviconDownloader;
 pub use station::SwStation;
 pub use station_metadata::StationMetadata;
 pub use station_model::SwStationModel;
