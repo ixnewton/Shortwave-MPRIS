@@ -24,8 +24,8 @@ use gtk::subclass::prelude::*;
 use gtk::{glib, CompositeTemplate};
 use inflector::Inflector;
 
-use crate::api::{FaviconDownloader, SwStation};
-use crate::ui::SwFavicon;
+use crate::api::SwStation;
+use crate::ui::SwStationCover;
 use crate::SwApplication;
 
 mod imp {
@@ -40,7 +40,7 @@ mod imp {
         #[template_child]
         subtitle_label: TemplateChild<gtk::Label>,
         #[template_child]
-        station_favicon: TemplateChild<SwFavicon>,
+        station_cover: TemplateChild<SwStationCover>,
         #[template_child]
         local_image: TemplateChild<gtk::Image>,
         #[template_child]
@@ -73,22 +73,10 @@ mod imp {
             self.parent_constructed();
             let station = self.obj().station();
 
-            // Download & set station favicon
-            if let Some(texture) = station.favicon() {
-                self.station_favicon.set_paintable(Some(&texture.upcast()));
-            } else if let Some(favicon) = station.metadata().favicon.as_ref() {
-                glib::spawn_future_local(clone!(
-                    #[weak(rename_to = imp)]
-                    self,
-                    #[strong]
-                    favicon,
-                    async move {
-                        if let Ok(paintable) = FaviconDownloader::download(favicon.clone()).await {
-                            imp.station_favicon.set_paintable(Some(&paintable))
-                        }
-                    }
-                ));
-            }
+            self.obj()
+                .bind_property("station", &*self.station_cover, "station")
+                .sync_create()
+                .build();
 
             station
                 .bind_property("is-local", &*self.local_image, "visible")

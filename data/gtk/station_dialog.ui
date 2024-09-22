@@ -25,8 +25,12 @@
                     <property name="margin_bottom">18</property>
                     <property name="margin_top">12</property>
                     <child>
-                      <object class="SwFavicon" id="station_favicon">
-                        <property name="size">Big</property>
+                      <object class="SwStationCover" id="station_cover">
+                        <property name="size">192</property>
+                        <property name="overflow">hidden</property>
+                        <style>
+                          <class name="card"/>
+                        </style>
                       </object>
                     </child>
                     <child>

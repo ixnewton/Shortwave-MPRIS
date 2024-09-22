@@ -22,7 +22,9 @@ use gtk::{glib, CompositeTemplate};
 use crate::app::SwApplication;
 use crate::audio::SwPlayer;
 use crate::audio::SwSong;
-use crate::ui::{SwDeviceIndicator, SwFavicon, SwRecordingIndicator, SwSongRow, SwVolumeControl};
+use crate::ui::{
+    SwDeviceIndicator, SwRecordingIndicator, SwSongRow, SwStationCover, SwVolumeControl,
+};
 
 mod imp {
     use super::*;
@@ -32,7 +34,7 @@ mod imp {
     #[properties(wrapper_type = super::SwPlayerView)]
     pub struct SwPlayerView {
         #[template_child]
-        station_favicon: TemplateChild<SwFavicon>,
+        station_cover: TemplateChild<SwStationCover>,
         #[template_child]
         recording_indicator: TemplateChild<SwRecordingIndicator>,
         #[template_child]

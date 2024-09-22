@@ -4,13 +4,11 @@
     <property name="child">
       <object class="GtkBox">
         <child>
-          <object class="SwFavicon" id="station_favicon">
-            <property name="size">Small</property>
-            <binding name="paintable">
-              <lookup name="favicon" type="SwStation">
-                <lookup name="station" type="SwPlayer">
-                  <lookup name="player">SwPlayerToolbar</lookup>
-                </lookup>
+          <object class="SwStationCover" id="station_cover">
+            <property name="size">64</property>
+            <binding name="station">
+              <lookup name="station" type="SwPlayer">
+                <lookup name="player">SwPlayerToolbar</lookup>
               </lookup>
             </binding>
           </object>

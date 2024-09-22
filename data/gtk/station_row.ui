@@ -6,8 +6,8 @@
     <child>
       <object class="GtkBox">
         <child>
-          <object class="SwFavicon" id="station_favicon">
-            <property name="size">Small</property>
+          <object class="SwStationCover" id="station_cover">
+            <property name="size">64</property>
           </object>
         </child>
         <child>

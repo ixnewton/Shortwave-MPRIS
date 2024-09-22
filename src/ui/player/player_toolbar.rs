@@ -20,7 +20,7 @@ use glib::{subclass, Properties};
 use gtk::{glib, CompositeTemplate};
 
 use crate::audio::SwPlayer;
-use crate::ui::SwFavicon;
+use crate::ui::SwStationCover;
 
 mod imp {
     use super::*;
@@ -30,7 +30,7 @@ mod imp {
     #[properties(wrapper_type = super::SwPlayerToolbar)]
     pub struct SwPlayerToolbar {
         #[template_child]
-        station_favicon: TemplateChild<SwFavicon>,
+        station_cover: TemplateChild<SwStationCover>,
 
         #[property(get)]
         pub player: SwPlayer,

@@ -86,7 +86,7 @@ recording-indicator.active button {
   background-color: @red_1;
 }
 
-favicon image.card {
+cover.card {
   box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.3),
     0px 2px 12px rgba(0, 0, 0, 0.15),
     0px 6px 32px rgba(0, 0, 0, 0.1);

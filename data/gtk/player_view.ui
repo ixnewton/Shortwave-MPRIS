@@ -23,16 +23,18 @@
                   <object class="GtkBox">
                     <property name="orientation">vertical</property>
                     <child>
-                      <object class="SwFavicon" id="station_favicon">
-                        <property name="size">Big</property>
+                      <object class="SwStationCover" id="station_cover">
+                        <property name="size">192</property>
+                        <property name="overflow">hidden</property>
                         <property name="margin_bottom">18</property>
-                        <binding name="paintable">
-                          <lookup name="favicon" type="SwStation">
-                            <lookup name="station" type="SwPlayer">
-                              <lookup name="player">SwPlayerView</lookup>
-                            </lookup>
+                        <binding name="station">
+                          <lookup name="station" type="SwPlayer">
+                            <lookup name="player">SwPlayerView</lookup>
                           </lookup>
                         </binding>
+                        <style>
+                          <class name="card"/>
+                        </style>
                       </object>
                     </child>
                     <child>

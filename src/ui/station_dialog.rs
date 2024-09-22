@@ -18,16 +18,16 @@ use std::cell::OnceCell;
 
 use adw::prelude::*;
 use adw::subclass::prelude::*;
-use glib::{clone, subclass, Properties};
+use glib::{subclass, Properties};
 use gtk::{gdk, glib, CompositeTemplate};
 use inflector::Inflector;
 use shumate::prelude::*;
 
-use crate::api::{FaviconDownloader, SwStation};
+use crate::api::SwStation;
 use crate::app::SwApplication;
 use crate::database::SwLibrary;
 use crate::i18n;
-use crate::ui::SwFavicon;
+use crate::ui::SwStationCover;
 
 mod imp {
     use super::*;
@@ -37,7 +37,7 @@ mod imp {
     #[properties(wrapper_type = super::SwStationDialog)]
     pub struct SwStationDialog {
         #[template_child]
-        station_favicon: TemplateChild<SwFavicon>,
+        station_cover: TemplateChild<SwStationCover>,
         #[template_child]
         local_station_group: TemplateChild<adw::PreferencesGroup>,
         #[template_child]
@@ -117,22 +117,11 @@ mod imp {
             let station = self.obj().station();
             let metadata = station.metadata();
 
-            // Download & set station favicon
-            if let Some(texture) = station.favicon() {
-                self.station_favicon.set_paintable(Some(&texture.upcast()));
-            } else if let Some(favicon) = metadata.favicon.as_ref() {
-                glib::spawn_future_local(clone!(
-                    #[weak(rename_to = imp)]
-                    self,
-                    #[strong]
-                    favicon,
-                    async move {
-                        if let Ok(paintable) = FaviconDownloader::download(favicon.clone()).await {
-                            imp.station_favicon.set_paintable(Some(&paintable))
-                        }
-                    }
-                ));
-            }
+            // Station cover
+            self.obj()
+                .bind_property("station", &*self.station_cover, "station")
+                .sync_create()
+                .build();
 
             // Title
             self.obj().set_title(&metadata.name);
