@@ -41,13 +41,13 @@
                 "-Dvapi=false",
                 "-Dgtk_doc=false",
                 "-Ddemos=false",
-                "-Dlibsoup3=true"
+                "-Dvector_renderer=false"
             ],
             "sources": [
                 {
                     "type": "git",
                     "url": "https://gitlab.gnome.org/GNOME/libshumate.git",
-                    "branch": "libshumate-1-1"
+                    "branch": "libshumate-1-3"
                 }
             ]
         },
