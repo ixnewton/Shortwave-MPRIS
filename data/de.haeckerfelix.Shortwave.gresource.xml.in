@@ -21,6 +21,7 @@
     <file compressed="true" preprocess="xml-stripblanks">gtk/settings_dialog.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">gtk/song_listbox.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">gtk/song_row.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">gtk/station_cover.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">gtk/station_dialog.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">gtk/station_flowbox.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">gtk/station_row.ui</file>

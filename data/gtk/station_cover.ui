@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <template class="SwStationCover" parent="AdwBin">
+    <property name="halign">center</property>
+    <property name="valign">center</property>
+    <child>
+      <object class="GtkStack" id="stack">
+        <property name="transition_type">crossfade</property>
+        <child>
+          <object class="GtkStackPage">
+            <property name="name">placeholder</property>
+            <property name="child">
+              <object class="GtkImage" id="placeholder">
+                <property name="pixel_size">48</property>
+                <property name="icon_name">emblem-music-symbolic</property>
+                <property name="accessible_role">presentation</property>
+                <style>
+                  <class name="dim-label"/>
+                </style>
+              </object>
+            </property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkStackPage">
+            <property name="name">image</property>
+            <property name="child">
+              <object class="GtkImage" id="image">
+                <property name="accessible_role">presentation</property>
+                <property name="overflow">hidden</property>
+              </object>
+            </property>
+          </object>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>
