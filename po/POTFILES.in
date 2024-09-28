@@ -15,11 +15,9 @@ data/gtk/player_view.ui
 data/gtk/recording_indicator.ui
 data/gtk/search_page.ui
 data/gtk/settings_dialog.ui
-data/gtk/song_listbox.ui
 data/gtk/song_row.ui
 data/gtk/station_cover.ui
 data/gtk/station_dialog.ui
-data/gtk/station_flowbox.ui
 data/gtk/station_row.ui
 data/gtk/volume_control.ui
 data/gtk/window.ui
@@ -80,7 +78,6 @@ src/ui/recording_indicator.rs
 src/ui/song_row.rs
 src/ui/station_cover.rs
 src/ui/station_dialog.rs
-src/ui/station_flowbox.rs
 src/ui/station_row.rs
 src/ui/volume_control.rs
 src/ui/window.rs
