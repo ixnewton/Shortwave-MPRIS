@@ -39,8 +39,6 @@ mod imp {
         #[template_child]
         pub library_page: TemplateChild<SwLibraryPage>,
         #[template_child]
-        pub discover_page: TemplateChild<SwDiscoverPage>,
-        #[template_child]
         pub search_page: TemplateChild<SwSearchPage>,
 
         #[template_child]
@@ -171,9 +169,6 @@ impl SwApplicationWindow {
 
     pub fn setup_widgets(&self) {
         let imp = self.imp();
-
-        // Init pages
-        imp.discover_page.init();
 
         // Animations for smooth gadget player transitions
         let x_callback = adw::CallbackAnimationTarget::new(clone!(

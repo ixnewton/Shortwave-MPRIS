@@ -77,9 +77,6 @@
                       <object class="SwLibraryPage" id="library_page" />
                     </child>
                     <child>
-                      <object class="SwDiscoverPage" id="discover_page" />
-                    </child>
-                    <child>
                       <object class="SwSearchPage" id="search_page" />
                     </child>
                   </object>

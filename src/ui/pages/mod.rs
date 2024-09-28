@@ -1,5 +1,5 @@
 // Shortwave - mod.rs
-// Copyright (C) 2021  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2021-2024  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,10 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-mod discover_page;
 mod library_page;
 mod search_page;
 
-pub use discover_page::SwDiscoverPage;
 pub use library_page::SwLibraryPage;
 pub use search_page::SwSearchPage;

@@ -6,7 +6,6 @@
     <file compressed="true" preprocess="xml-stripblanks">gtk/device_dialog.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">gtk/device_indicator.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">gtk/device_row.ui</file>
-    <file compressed="true" preprocess="xml-stripblanks">gtk/discover_page.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">gtk/favicon.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">gtk/featured_carousel.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">gtk/featured_carousel_page.ui</file>

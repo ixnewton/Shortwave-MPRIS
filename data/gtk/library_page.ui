@@ -10,7 +10,7 @@
             <child>
               <object class="GtkButton">
                 <property name="action-name">navigation.push</property>
-                <property name="action-target">'discover'</property>
+                <property name="action-target">'search'</property>
                 <property name="icon_name">list-add-symbolic</property>
                 <property name="tooltip_text" translatable="yes">Add Stations</property>
               </object>
@@ -84,11 +84,11 @@
                       <object class="AdwStatusPage" id="status_page">
                         <property name="hexpand">True</property>
                         <child>
-                          <object class="GtkButton" id="discover_button">
+                          <object class="GtkButton" id="add_button">
                             <property name="action-name">navigation.push</property>
-                            <property name="action-target">'discover'</property>                            
+                            <property name="action-target">'search'</property>                            
                             <property name="halign">center</property>
-                            <property name="label" translatable="yes">_Discover New Stations</property>
+                            <property name="label" translatable="yes">_Add New Stations</property>
                             <property name="use_underline">True</property>
                             <style>
                               <class name="suggested-action"/>

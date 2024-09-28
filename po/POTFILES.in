@@ -5,10 +5,7 @@ data/gtk/create_station_dialog.ui
 data/gtk/device_dialog.ui
 data/gtk/device_indicator.ui
 data/gtk/device_row.ui
-data/gtk/discover_page.ui
 data/gtk/favicon.ui
-data/gtk/featured_carousel.ui
-data/gtk/featured_carousel_page.ui
 data/gtk/help_overlay.ui
 data/gtk/library_page.ui
 data/gtk/player.ui
@@ -71,9 +68,7 @@ src/ui/device_indicator.rs
 src/ui/device_row.rs
 src/ui/display_error.rs
 src/ui/favicon.rs
-src/ui/featured_carousel.rs
 src/ui/mod.rs
-src/ui/pages/discover_page.rs
 src/ui/pages/library_page.rs
 src/ui/pages/mod.rs
 src/ui/pages/search_page.rs
