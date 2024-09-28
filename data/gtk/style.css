@@ -1,7 +1,3 @@
-.tile {
-  padding: 0px;
-}
-
 .featured-carousel {
   border-radius: 8px;
   color: white;
@@ -74,6 +70,18 @@
   background: alpha(@error_color, .3);
   font-weight: bold;
   box-shadow: none;
+}
+
+.station-grid {
+  background: none;
+  color: inherit;
+}
+
+.station-grid>child {
+  margin: 6px;
+  padding: 0px;
+  background: none;
+  border-radius: 12px;
 }
 
 recording-indicator button {

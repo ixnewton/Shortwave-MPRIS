@@ -1,4 +1,4 @@
-// Shortwave - search_page.rs
+// Shortwave - library_page.rs
 // Copyright (C) 2021-2024  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
@@ -16,18 +16,18 @@
 
 use std::cell::Cell;
 
+use adw::prelude::*;
 use adw::subclass::prelude::*;
 use glib::{clone, subclass, Properties};
-use gtk::prelude::*;
 use gtk::{glib, CompositeTemplate};
 
-use crate::api::{SwStationSorting, SwStationSortingType};
+use crate::api::{SwStation, SwStationSorter, SwStationSorting, SwStationSortingType};
 use crate::app::SwApplication;
 use crate::config;
 use crate::database::SwLibraryStatus;
 use crate::i18n::*;
 use crate::settings::{settings_manager, Key};
-use crate::ui::SwStationFlowBox;
+use crate::ui::{SwStationDialog, SwStationRow};
 
 mod imp {
     use super::*;
@@ -41,7 +41,7 @@ mod imp {
         #[template_child]
         stack: TemplateChild<gtk::Stack>,
         #[template_child]
-        flowbox: TemplateChild<SwStationFlowBox>,
+        gridview: TemplateChild<gtk::GridView>,
 
         #[property(get, set, builder(SwStationSorting::default()))]
         sorting: Cell<SwStationSorting>,
@@ -75,15 +75,32 @@ mod imp {
             settings_manager::bind_property(Key::LibrarySorting, &*self.obj(), "sorting");
             settings_manager::bind_property(Key::LibrarySortingType, &*self.obj(), "sorting-type");
 
+            let sorter = SwStationSorter::new();
             self.obj()
-                .bind_property("sorting", &self.flowbox.sorter(), "sorting")
+                .bind_property("sorting", &sorter, "sorting")
                 .bidirectional()
                 .build();
 
             self.obj()
-                .bind_property("sorting-type", &self.flowbox.sorter(), "sorting-type")
+                .bind_property("sorting-type", &sorter, "sorting-type")
                 .bidirectional()
                 .build();
+
+            let model = gtk::SortListModel::new(Some(library.model()), Some(sorter.clone()));
+
+            // Ensure that row type is registered
+            SwStationRow::static_type();
+
+            // Station grid view
+            let model = gtk::NoSelection::new(Some(model));
+            self.gridview.set_model(Some(&model));
+
+            self.gridview.connect_activate(|gridview, pos| {
+                let model = gridview.model().unwrap();
+                let station = model.item(pos).unwrap().downcast::<SwStation>().unwrap();
+                let station_dialog = SwStationDialog::new(&station);
+                station_dialog.present(Some(gridview));
+            });
 
             // Setup empty state page
             self.status_page.set_icon_name(Some(config::APP_ID));
@@ -92,9 +109,6 @@ mod imp {
             // application name.
             self.status_page
                 .set_title(&i18n_f("Welcome to {}", &[config::NAME]));
-
-            // Station flowbox
-            self.flowbox.init(library.model());
 
             // Set initial stack page
             self.update_stack_page();
