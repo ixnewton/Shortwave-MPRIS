@@ -17,15 +17,15 @@
 use std::cell::RefCell;
 use std::rc::Rc;
 
+use adw::prelude::*;
 use adw::subclass::prelude::*;
 use gio::SimpleAction;
 use glib::{clone, closure, subclass};
-use gtk::prelude::*;
 use gtk::{gio, glib, CompositeTemplate};
 
-use crate::api::{Error, StationRequest, SwClient};
+use crate::api::{Error, StationRequest, SwClient, SwStation};
 use crate::i18n::*;
-use crate::ui::{SwApplicationWindow, SwStationFlowBox};
+use crate::ui::{SwApplicationWindow, SwStationDialog};
 
 mod imp {
     use super::*;
@@ -36,15 +36,11 @@ mod imp {
         #[template_child]
         stack: TemplateChild<gtk::Stack>,
         #[template_child]
-        flowbox: TemplateChild<SwStationFlowBox>,
+        gridview: TemplateChild<gtk::GridView>,
         #[template_child]
         search_entry: TemplateChild<gtk::SearchEntry>,
         #[template_child]
         sorting_button_content: TemplateChild<adw::ButtonContent>,
-        #[template_child]
-        results_limit_box: TemplateChild<gtk::Box>,
-        #[template_child]
-        results_limit_label: TemplateChild<gtk::Label>,
 
         search_action_group: gio::SimpleActionGroup,
         client: SwClient,
@@ -60,16 +56,15 @@ mod imp {
 
         fn new() -> Self {
             let search_action_group = gio::SimpleActionGroup::new();
-            let station_request = Rc::new(RefCell::new(StationRequest::search_for_name(None, 250)));
+            let station_request =
+                Rc::new(RefCell::new(StationRequest::search_for_name(None, 1000)));
             let client = SwClient::new();
 
             Self {
                 stack: TemplateChild::default(),
-                flowbox: TemplateChild::default(),
+                gridview: TemplateChild::default(),
                 search_entry: TemplateChild::default(),
                 sorting_button_content: TemplateChild::default(),
-                results_limit_box: TemplateChild::default(),
-                results_limit_label: TemplateChild::default(),
                 search_action_group,
                 client,
                 station_request,
@@ -190,10 +185,6 @@ mod imp {
                     #[upgrade_or]
                     None,
                     move |_| {
-                        let max_results = this.station_request.borrow().limit.unwrap();
-                        let over_max_results = this.client.model().n_items() >= max_results;
-                        this.results_limit_box.set_visible(over_max_results);
-
                         if this.client.model().n_items() == 0 {
                             this.stack.set_visible_child_name("no-results");
                         } else {
@@ -217,16 +208,16 @@ mod imp {
                 }),
             );
 
-            let max = self.station_request.borrow().limit.unwrap();
-            let text = ni18n_f(
-                "The number of results is limited to {} item. Try using a more specific search term.",
-                "The number of results is limited to {} items. Try using a more specific search term.",
-                max,
-                &[&max.to_string()],
-            );
-            self.results_limit_label.set_text(&text);
+            // Station grid view
+            let model = gtk::NoSelection::new(Some(self.client.model()));
+            self.gridview.set_model(Some(&model));
 
-            self.flowbox.init(self.client.model());
+            self.gridview.connect_activate(|gridview, pos| {
+                let model = gridview.model().unwrap();
+                let station = model.item(pos).unwrap().downcast::<SwStation>().unwrap();
+                let station_dialog = SwStationDialog::new(&station);
+                station_dialog.present(Some(gridview));
+            });
         }
     }
 

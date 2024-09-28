@@ -9,43 +9,38 @@
           <object class="AdwHeaderBar"/>
         </child>
         <child type="top">
-          <object class="GtkSearchBar" id="search_bar">
-            <property name="halign">fill</property>
-            <property name="valign">start</property>
+          <object class="AdwClamp">
+            <property name="maximum_size">1600</property>
+            <property name="margin_start">12</property>
+            <property name="margin_end">12</property>
+            <property name="margin_top">6</property>
+            <property name="margin_bottom">6</property>
             <property name="hexpand">True</property>
-            <property name="show-close-button">False</property>
-            <property name="search-mode-enabled">True</property>
             <child>
-              <object class="AdwClamp">
-                <property name="maximum_size">1600</property>
-                <property name="hexpand">True</property>
+              <object class="GtkBox">
+                <property name="spacing">6</property>
                 <child>
-                  <object class="GtkBox">
-                    <property name="spacing">6</property>
-                    <child>
-                      <object class="GtkSearchEntry" id="search_entry">
-                        <property name="hexpand">True</property>
-                        <property name="search_delay">750</property>
-                        <property name="tooltip_text" translatable="yes">Search</property>
-                        <signal name="search_changed" handler="search_changed" swapped="true"/>
-                        <accessibility>
-                          <relation name="labelled-by">SwSearchPage</relation>
-                        </accessibility>
+                  <object class="GtkSearchEntry" id="search_entry">
+                    <property name="hexpand">True</property>
+                    <property name="search_delay">750</property>
+                    <property name="tooltip_text" translatable="yes">Search</property>
+                    <signal name="search_changed" handler="search_changed" swapped="true"/>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkMenuButton" id="sorting_button">
+                    <property name="child">
+                      <object class="AdwButtonContent" id="sorting_button_content">
+                        <property name="icon-name">view-sort-descending-symbolic</property>
+                        <property name="label" translatable="yes">Votes</property>
                       </object>
-                    </child>
-                    <child>
-                      <object class="GtkMenuButton" id="sorting_button">
-                        <property name="child">
-                          <object class="AdwButtonContent" id="sorting_button_content">
-                            <property name="icon-name">view-sort-descending-symbolic</property>
-                            <property name="label" translatable="yes">Votes</property>
-                          </object>
-                        </property>
-                        <property name="menu_model">sorting_menu</property>
-                        <property name="always-show-arrow">True</property>
-                        <property name="tooltip_text" translatable="yes">Change the sorting of the search results</property>
-                      </object>
-                    </child>
+                    </property>
+                    <property name="menu_model">sorting_menu</property>
+                    <property name="always-show-arrow">True</property>
+                    <property name="tooltip_text" translatable="yes">Change the sorting of the search results</property>
+                    <style>
+                      <class name="flat"/>
+                    </style>
                   </object>
                 </child>
               </object>
@@ -83,50 +78,36 @@
                   <object class="GtkScrolledWindow" id="scrolledwindow">
                     <property name="hscrollbar_policy">never</property>
                     <child>
-                      <object class="GtkViewport">
-                        <property name="vexpand">True</property>
-                        <property name="scroll-to-focus">True</property>
+                      <object class="AdwClampScrollable">
+                        <property name="maximum_size">1600</property>
+                        <property name="margin_start">6</property>
+                        <property name="margin_end">6</property>
                         <child>
-                          <object class="AdwClamp">
-                            <property name="maximum_size">1600</property>
-                            <property name="margin_top">12</property>
-                            <property name="margin_bottom">12</property>
-                            <property name="margin_start">12</property>
-                            <property name="margin_end">12</property>
-                            <child>
-                              <object class="GtkBox">
-                                <property name="orientation">vertical</property>
-                                <child>
-                                  <object class="SwStationFlowBox" id="flowbox">
-                                    <property name="title" translatable="yes">Search Results</property>
-                                  </object>
-                                </child>
-                                <child>
-                                  <object class="GtkBox" id="results_limit_box">
-                                    <property name="halign">center</property>
-                                    <property name="margin_top">24</property>
-                                    <property name="margin_bottom">12</property>
-                                    <property name="spacing">6</property>
-                                    <property name="visible">False</property>
-                                    <child>
-                                      <object class="GtkImage">
-                                        <property name="icon-name">dialog-information-symbolic</property>
-                                        <property name="accessible-role">presentation</property>
-                                      </object>
-                                    </child>
-                                    <child>
-                                      <object class="GtkLabel" id="results_limit_label">
-                                        <property name="wrap">True</property>
-                                        <property name="wrap-mode">word-char</property>
-                                      </object>
-                                    </child>
-                                    <style>
-                                      <class name="dim-label"/>
-                                    </style>
-                                  </object>
-                                </child>
+                          <object class="GtkGridView" id="gridview">
+                            <property name="single_click_activate">True</property>
+                            <property name="max_columns">3</property>
+                            <property name="min_columns">1</property>
+                            <property name="factory">
+                              <object class="GtkBuilderListItemFactory">
+                                <property name="bytes"><![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <template class="GtkListItem">
+    <property name="child">
+      <object class="SwStationRow">
+        <binding name="station">
+          <lookup name="item">GtkListItem</lookup>
+        </binding>
+      </object>
+    </property>
+  </template>
+</interface>]]>
+                                </property>
                               </object>
-                            </child>
+                            </property>
+                            <style>
+                              <class name="station-grid"/>
+                            </style>
                           </object>
                         </child>
                       </object>
