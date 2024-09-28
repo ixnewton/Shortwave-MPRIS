@@ -22,6 +22,7 @@ data/gtk/station_row.ui
 data/gtk/volume_control.ui
 data/gtk/window.ui
 src/api/client.rs
+src/api/cover_loader.rs
 src/api/error.rs
 src/api/mod.rs
 src/api/station.rs

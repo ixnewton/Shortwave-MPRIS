@@ -15,11 +15,12 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 use std::cell::Cell;
+use std::pin::pin;
 use std::time::Duration;
 
 use adw::prelude::*;
 use async_io::Timer;
-use futures_lite::future::FutureExt;
+use futures_util::future::select;
 use glib::subclass::prelude::*;
 use glib::{clone, Properties};
 use gtk::glib;
@@ -114,14 +115,9 @@ impl SwDeviceDiscovery {
         self.notify_is_scanning();
 
         self.devices().clear();
-        let _ = self
-            .imp()
-            .discover_cast_devices()
-            .or(async {
-                Timer::after(Duration::from_secs(15)).await;
-                Ok(())
-            })
-            .await;
+        let discover = self.imp().discover_cast_devices();
+        let timeout = Timer::after(Duration::from_secs(15));
+        let _ = select(pin!(discover), pin!(timeout)).await;
 
         debug!("Device scan ended!");
         self.imp().is_scanning.set(false);

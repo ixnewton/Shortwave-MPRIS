@@ -23,6 +23,7 @@ use glib::{clone, Properties};
 use gtk::glib::WeakRef;
 use gtk::{gio, glib};
 
+use crate::api::CoverLoader;
 use crate::api::SwClient;
 use crate::audio::SwPlayer;
 use crate::config;
@@ -44,6 +45,7 @@ mod imp {
         pub rb_server: RefCell<Option<String>>,
 
         pub window: OnceCell<WeakRef<SwApplicationWindow>>,
+        pub cover_loader: CoverLoader,
         pub settings: gio::Settings,
     }
 
@@ -59,6 +61,7 @@ mod imp {
             let rb_server = RefCell::default();
 
             let window = OnceCell::new();
+            let cover_loader = CoverLoader::new();
             let settings = settings_manager::settings();
 
             Self {
@@ -66,6 +69,7 @@ mod imp {
                 player,
                 rb_server,
                 window,
+                cover_loader,
                 settings,
             }
         }
@@ -139,6 +143,10 @@ impl SwApplication {
 
         // Start running gtk::Application
         app.run()
+    }
+
+    pub fn cover_loader(&self) -> CoverLoader {
+        self.imp().cover_loader.clone()
     }
 
     fn create_window(&self) -> SwApplicationWindow {

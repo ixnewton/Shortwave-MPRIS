@@ -18,6 +18,8 @@
         "--socket=wayland",
         "--device=dri",
         "--socket=pulseaudio",
+        "--talk-name=org.gtk.vfs.*",
+        "--filesystem=xdg-run/gvfsd",
         "--filesystem=xdg-music",
         "--env=RUST_LOG=shortwave,cast_sender=debug",
         "--env=RUST_BACKTRACE=1"
@@ -32,6 +34,21 @@
         ]
     },
     "modules": [
+        {
+            "name": "glycin-loaders",
+            "buildsystem": "meson",
+            "config-opts": [
+                "-Dglycin-loaders=true",
+                "-Dlibglycin=false"
+            ],
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://gitlab.gnome.org/sophie-h/glycin.git",
+                    "tag": "1.1.0"
+                }
+            ]
+        },
         {
             "name": "libshumate",
             "buildsystem": "meson",

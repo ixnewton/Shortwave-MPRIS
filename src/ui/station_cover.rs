@@ -41,8 +41,10 @@ mod imp {
 
         #[property(get, set, construct_only)]
         size: Cell<i32>,
-        #[property(get, set)]
+        #[property(get, set=Self::set_station)]
         station: RefCell<Option<SwStation>>,
+        #[property(get)]
+        is_loaded: Cell<bool>,
 
         loader_cancellable: RefCell<Option<gio::Cancellable>>,
     }
@@ -77,7 +79,6 @@ mod imp {
     impl WidgetImpl for SwStationCover {
         fn map(&self) {
             self.parent_map();
-
             glib::spawn_future_local(clone!(
                 #[weak(rename_to = imp)]
                 self,
@@ -89,43 +90,70 @@ mod imp {
 
         fn unmap(&self) {
             self.parent_unmap();
-            self.cancel_request();
+            self.cancel();
         }
     }
 
     impl BinImpl for SwStationCover {}
 
     impl SwStationCover {
+        fn set_station(&self, station: Option<&SwStation>) {
+            *self.station.borrow_mut() = station.cloned();
+
+            self.image.set_paintable(gtk::gdk::Paintable::NONE);
+            self.stack.set_visible_child_name("placeholder");
+            self.is_loaded.set(false);
+            self.obj().notify_is_loaded();
+
+            glib::spawn_future_local(clone!(
+                #[weak(rename_to = imp)]
+                self,
+                async move {
+                    imp.load_cover().await;
+                }
+            ));
+        }
+
         async fn load_cover(&self) {
-            self.cancel_request();
+            if self.obj().is_loaded() || !self.obj().is_mapped() {
+                return;
+            }
 
             if let Some(station) = self.obj().station() {
+                debug!("Try loading cover for station {:?}", station.title());
+                self.cancel();
+
                 let mut cover_loader = SwApplication::default().cover_loader();
                 let cancellable = gio::Cancellable::new();
+                *self.loader_cancellable.borrow_mut() = Some(cancellable.clone());
 
                 match cover_loader
                     .load_cover(&station, self.obj().size(), cancellable.clone())
                     .await
                 {
-                    Ok(Some(texture)) => {
-                        self.image.set_paintable(Some(&texture));
-                        self.stack.set_visible_child_name("image");
+                    Ok(texture) => {
+                        if let Some(texture) = texture {
+                            self.image.set_paintable(Some(&texture));
+                            self.stack.set_visible_child_name("image");
+
+                            self.is_loaded.set(true);
+                            self.obj().notify_is_loaded();
+                        } else {
+                            debug!("Cancelled cover load for station {:?}", station.title())
+                        }
                     }
-                    Err(err) => {
+                    Err(e) => {
                         warn!(
-                            "Unable to load station cover ({:?}) ({}): {}",
+                            "Unable to load cover for station {:?}: {}",
                             station.title(),
-                            station.metadata().favicon.unwrap(),
-                            err.root_cause().to_string()
+                            e.root_cause().to_string()
                         )
                     }
-                    _ => (), // Cancelled
                 }
-                *self.loader_cancellable.borrow_mut() = Some(cancellable);
             }
         }
 
-        fn cancel_request(&self) {
+        fn cancel(&self) {
             if let Some(cancellable) = self.loader_cancellable.borrow_mut().take() {
                 cancellable.cancel();
             }

@@ -19,6 +19,7 @@ static STATION_BY_UUID: &str = "json/stations/byuuid";
 static STATS: &str = "json/stats";
 
 mod client;
+mod cover_loader;
 mod error;
 mod station;
 mod station_metadata;
@@ -28,6 +29,7 @@ mod station_sorter;
 mod stats;
 
 pub use client::SwClient;
+pub use cover_loader::CoverLoader;
 pub use error::Error;
 pub use station::SwStation;
 pub use station_metadata::StationMetadata;
