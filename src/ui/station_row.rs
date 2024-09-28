@@ -14,16 +14,17 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use std::cell::OnceCell;
+use std::cell::RefCell;
 
+use adw::subclass::prelude::*;
 use glib::clone;
 use glib::subclass;
 use glib::Properties;
 use gtk::prelude::*;
-use gtk::subclass::prelude::*;
 use gtk::{glib, CompositeTemplate};
 use inflector::Inflector;
 
+use crate::api::StationMetadata;
 use crate::api::SwStation;
 use crate::ui::SwStationCover;
 use crate::SwApplication;
@@ -48,14 +49,14 @@ mod imp {
         #[template_child]
         play_button: TemplateChild<gtk::Button>,
 
-        #[property(get, set, construct_only)]
-        station: OnceCell<SwStation>,
+        #[property(get, set=Self::set_station)]
+        station: RefCell<Option<SwStation>>,
     }
 
     #[glib::object_subclass]
     impl ObjectSubclass for SwStationRow {
         const NAME: &'static str = "SwStationRow";
-        type ParentType = gtk::FlowBoxChild;
+        type ParentType = adw::Bin;
         type Type = super::SwStationRow;
 
         fn class_init(klass: &mut Self::Class) {
@@ -71,39 +72,13 @@ mod imp {
     impl ObjectImpl for SwStationRow {
         fn constructed(&self) {
             self.parent_constructed();
-            let station = self.obj().station();
-
-            self.obj()
-                .bind_property("station", &*self.station_cover, "station")
-                .sync_create()
-                .build();
-
-            station
-                .bind_property("is-local", &*self.local_image, "visible")
-                .sync_create()
-                .build();
-
-            station
-                .bind_property("is-orphaned", &*self.orphaned_image, "visible")
-                .sync_create()
-                .build();
-
-            station.connect_metadata_notify(clone!(
-                #[weak(rename_to = this)]
-                self,
-                move |_| {
-                    this.set_metadata();
-                }
-            ));
-            self.set_metadata();
-
             self.play_button.connect_clicked(clone!(
-                #[strong(rename_to = station)]
-                self.station,
+                #[strong(rename_to = obj)]
+                self.obj(),
                 move |_| {
-                    SwApplication::default()
-                        .player()
-                        .set_station(station.get().unwrap().clone());
+                    if let Some(station) = obj.station() {
+                        SwApplication::default().player().set_station(station);
+                    }
                 }
             ));
         }
@@ -111,13 +86,25 @@ mod imp {
 
     impl WidgetImpl for SwStationRow {}
 
-    impl FlowBoxChildImpl for SwStationRow {}
+    impl BinImpl for SwStationRow {}
 
     impl SwStationRow {
-        fn set_metadata(&self) {
-            let station = self.obj().station();
-            let metadata = station.metadata();
+        fn set_station(&self, station: Option<&SwStation>) {
+            if let Some(station) = station {
+                station.connect_metadata_notify(clone!(
+                    #[weak(rename_to = this)]
+                    self,
+                    move |s| {
+                        this.set_metadata(s.metadata());
+                    }
+                ));
+                self.set_metadata(station.metadata());
+            }
 
+            *self.station.borrow_mut() = station.cloned();
+        }
+
+        fn set_metadata(&self, metadata: StationMetadata) {
             self.station_label.set_text(&metadata.name);
             let mut subtitle = metadata.country.to_title_case();
 
@@ -135,7 +122,7 @@ mod imp {
 
 glib::wrapper! {
     pub struct SwStationRow(ObjectSubclass<imp::SwStationRow>)
-        @extends gtk::Widget, gtk::FlowBoxChild;
+        @extends gtk::Widget, adw::Bin;
 }
 
 impl SwStationRow {
