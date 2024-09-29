@@ -1,25 +1,85 @@
-.featured-carousel {
-  border-radius: 8px;
-  color: white;
+cover {
+  font-weight: bold;
 }
 
-.featured-carousel.dark-foreground {
-  color: rgba(0, 0, 0, .75);
-}
-
-.carousel-banner {
-  padding: 0px;
-}
-
-.carousel-banner-title {
-  transition: color 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.carousel-button {
-  padding: 8px;
-  min-width: 30px;
-  min-height: 30px;
+cover.card {
+  box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.3),
+    0px 2px 12px rgba(0, 0, 0, 0.15),
+    0px 6px 32px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
   margin: 6px;
+}
+
+/* Based on libadwaita avatar colors */
+/* https://gitlab.gnome.org/GNOME/libadwaita/-/blob/8c422b36bcc3efca6bbf63a3979bd53aededbdcd/src/stylesheet/widgets/_avatar.scss */
+.color0 {
+  color: #cfe1f5;
+  background-image: linear-gradient(#83b6ec, #337fdc);
+}
+
+.color1 {
+  color: #caeaf2;
+  background-image: linear-gradient(#7ad9f1, #0f9ac8);
+}
+
+.color2 {
+  color: #cef8d8;
+  background-image: linear-gradient(#8de6b1, #29ae74);
+}
+
+.color3 {
+  color: #e6f9d7;
+  background-image: linear-gradient(#b5e98a, #6ab85b);
+}
+
+.color4 {
+  color: #f9f4e1;
+  background-image: linear-gradient(#f8e359, #d29d09);
+}
+
+.color5 {
+  color: #ffead1;
+  background-image: linear-gradient(#ffcb62, #d68400);
+}
+
+.color6 {
+  color: #ffe5c5;
+  background-image: linear-gradient(#ffa95a, #ed5b00);
+}
+
+.color7 {
+  color: #f8d2ce;
+  background-image: linear-gradient(#f78773, #e62d42);
+}
+
+.color8 {
+  color: #fac7de;
+  background-image: linear-gradient(#e973ab, #e33b6a);
+}
+
+.color9 {
+  color: #e7c2e8;
+  background-image: linear-gradient(#cb78d4, #9945b5);
+}
+
+.color10 {
+  color: #d5d2f5;
+  background-image: linear-gradient(#9e91e8, #7a59ca);
+}
+
+.color11 {
+  color: #f2eade;
+  background-image: linear-gradient(#e3cf9c, #b08952);
+}
+
+.color12 {
+  color: #e5d6ca;
+  background-image: linear-gradient(#be916d, #785336);
+}
+
+.color13 {
+  color: #d8d7d3;
+  background-image: linear-gradient(#c0bfbc, #6e6d71);
 }
 
 .gadget-controller {
@@ -92,14 +152,6 @@ recording-indicator button {
 recording-indicator.active button {
   color: @light_1;
   background-color: @red_1;
-}
-
-cover.card {
-  box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.3),
-    0px 2px 12px rgba(0, 0, 0, 0.15),
-    0px 6px 32px rgba(0, 0, 0, 0.1);
-  border-radius: 12px;
-  margin: 6px;
 }
 
 volume>scale trough highlight {

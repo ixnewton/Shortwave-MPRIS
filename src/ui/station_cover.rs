@@ -16,14 +16,16 @@
 
 use std::cell::Cell;
 use std::cell::RefCell;
+use std::hash::{DefaultHasher, Hash, Hasher};
 
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use glib::{clone, subclass, Properties};
-use gtk::{gio, glib, CompositeTemplate};
+use gtk::{gio, glib, pango, CompositeTemplate};
 
 use crate::api::SwStation;
 use crate::app::SwApplication;
+use crate::config;
 
 mod imp {
     use super::*;
@@ -34,11 +36,13 @@ mod imp {
     #[properties(wrapper_type = super::SwStationCover)]
     pub struct SwStationCover {
         #[template_child]
+        placeholder_image: TemplateChild<gtk::Image>,
+        #[template_child]
         image: TemplateChild<gtk::Image>,
         #[template_child]
-        pub stack: TemplateChild<gtk::Stack>,
+        stack: TemplateChild<gtk::Stack>,
         #[template_child]
-        placeholder: TemplateChild<gtk::Image>,
+        fallback_label: TemplateChild<gtk::Label>,
 
         #[property(get, set, construct_only)]
         size: Cell<i32>,
@@ -73,7 +77,16 @@ mod imp {
 
             let size = self.obj().size();
             self.image.set_size_request(size, size);
-            self.placeholder.set_pixel_size(size.div_euclid(2));
+            self.obj().set_size_request(size, size);
+
+            self.placeholder_image.set_pixel_size(size.div_euclid(2));
+
+            let icon = format!("{}-symbolic", config::APP_ID);
+            self.placeholder_image.set_icon_name(Some(&icon));
+
+            self.update_initials();
+            self.update_font_size();
+            self.update_color_class();
         }
     }
 
@@ -103,9 +116,15 @@ mod imp {
 
             // Reset previous cover
             self.image.set_paintable(gtk::gdk::Paintable::NONE);
-            self.stack.set_visible_child_name("placeholder");
+            self.stack.set_visible_child_name("fallback");
+
             self.is_loaded.set(false);
             self.obj().notify_is_loaded();
+
+            // Set fallback initials
+            self.update_initials();
+            self.update_font_size();
+            self.update_color_class();
 
             // Load new cover, but only if it's mapped
             if self.obj().is_mapped() {
@@ -116,6 +135,72 @@ mod imp {
                         imp.load_cover().await;
                     }
                 ));
+            }
+        }
+
+        fn update_initials(&self) {
+            let title = if let Some(station) = self.obj().station() {
+                station.title()
+            } else {
+                String::new()
+            };
+
+            let mut initials = String::new();
+            let words: Vec<&str> = title.split(" ").collect();
+
+            if let Some(char) = words.first().and_then(|w| Self::first_char(w)) {
+                initials += &char.to_string();
+            }
+
+            if let Some(char) = words.get(1).and_then(|w| Self::first_char(w)) {
+                initials += &char.to_string();
+            }
+
+            if initials.is_empty() {
+                initials += "?";
+            }
+
+            self.fallback_label.set_label(&initials.to_uppercase());
+        }
+
+        fn first_char(word: &str) -> Option<char> {
+            word.chars()
+                .filter(|c| c.is_alphabetic())
+                .collect::<Vec<char>>()
+                .first()
+                .cloned()
+        }
+
+        fn update_font_size(&self) {
+            let attributes = pango::AttrList::new();
+            self.fallback_label.set_attributes(Some(&attributes));
+
+            let (width, height) = self.fallback_label.layout().pixel_size();
+
+            let size = self.obj().size() as f32;
+            let padding = f32::max(self.obj().size() as f32 * 0.5, 0.0);
+            let max_size: f32 = size - padding;
+            let new_font_size = height as f32 * (max_size / width as f32);
+
+            attributes.insert(pango::AttrSize::new_size_absolute(
+                (new_font_size.clamp(0.0, max_size) * pango::SCALE as f32) as i32,
+            ));
+            self.fallback_label.set_attributes(Some(&attributes));
+        }
+
+        fn update_color_class(&self) {
+            for css_class in self.fallback_label.css_classes() {
+                self.fallback_label.remove_css_class(&css_class);
+            }
+
+            if let Some(station) = self.obj().station() {
+                let mut hasher = DefaultHasher::new();
+                station.title().hash(&mut hasher);
+                let hash = hasher.finish();
+
+                let color_class = hash % 14;
+                self.fallback_label
+                    .add_css_class(&format!("color{color_class}"));
             }
         }
 
@@ -157,11 +242,9 @@ mod imp {
                             }
                         }
                     }
-                } else {
-                    // TODO -> show station fallback
                 }
             } else {
-                // TODO -> show generic fallback
+                self.stack.set_visible_child_name("placeholder");
             }
         }
 
