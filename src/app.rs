@@ -109,6 +109,16 @@ mod imp {
             );
             glib::spawn_future_local(fut);
         }
+
+        fn shutdown(&self) {
+            self.parent_shutdown();
+            glib::spawn_future_local(async {
+                super::SwApplication::default()
+                    .cover_loader()
+                    .prune_cache()
+                    .await;
+            });
+        }
     }
 
     impl GtkApplicationImpl for SwApplication {}

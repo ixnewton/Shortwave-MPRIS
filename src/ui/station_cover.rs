@@ -27,6 +27,7 @@ use crate::app::SwApplication;
 
 mod imp {
     use super::*;
+    static MAX_COVER_SIZE: i32 = 256;
 
     #[derive(Debug, Default, Properties, CompositeTemplate)]
     #[template(resource = "/de/haeckerfelix/Shortwave/gtk/station_cover.ui")]
@@ -100,18 +101,22 @@ mod imp {
         fn set_station(&self, station: Option<&SwStation>) {
             *self.station.borrow_mut() = station.cloned();
 
+            // Reset previous cover
             self.image.set_paintable(gtk::gdk::Paintable::NONE);
             self.stack.set_visible_child_name("placeholder");
             self.is_loaded.set(false);
             self.obj().notify_is_loaded();
 
-            glib::spawn_future_local(clone!(
-                #[weak(rename_to = imp)]
-                self,
-                async move {
-                    imp.load_cover().await;
-                }
-            ));
+            // Load new cover, but only if it's mapped
+            if self.obj().is_mapped() {
+                glib::spawn_future_local(clone!(
+                    #[weak(rename_to = imp)]
+                    self,
+                    async move {
+                        imp.load_cover().await;
+                    }
+                ));
+            }
         }
 
         async fn load_cover(&self) {
@@ -119,37 +124,44 @@ mod imp {
                 return;
             }
 
+            self.cancel();
+
             if let Some(station) = self.obj().station() {
-                debug!("Try loading cover for station {:?}", station.title());
-                self.cancel();
+                if let Some(favicon_url) = station.metadata().favicon {
+                    let mut cover_loader = SwApplication::default().cover_loader();
 
-                let mut cover_loader = SwApplication::default().cover_loader();
-                let cancellable = gio::Cancellable::new();
-                *self.loader_cancellable.borrow_mut() = Some(cancellable.clone());
+                    let cancellable = gio::Cancellable::new();
+                    *self.loader_cancellable.borrow_mut() = Some(cancellable.clone());
 
-                match cover_loader
-                    .load_cover(&station, self.obj().size(), cancellable.clone())
-                    .await
-                {
-                    Ok(texture) => {
-                        if let Some(texture) = texture {
+                    let size = MAX_COVER_SIZE * self.obj().scale_factor();
+                    let res = cover_loader
+                        .load_cover(&favicon_url, size, cancellable.clone())
+                        .await;
+
+                    match res {
+                        Ok(texture) => {
                             self.image.set_paintable(Some(&texture));
                             self.stack.set_visible_child_name("image");
 
                             self.is_loaded.set(true);
                             self.obj().notify_is_loaded();
-                        } else {
-                            debug!("Cancelled cover load for station {:?}", station.title())
+                        }
+                        Err(e) => {
+                            if e.root_cause().to_string() != "cancelled" {
+                                warn!(
+                                    "Unable to load cover for station {:?} ({:?}): {}",
+                                    station.title(),
+                                    station.metadata().favicon.map(|f| f.to_string()),
+                                    e.root_cause().to_string()
+                                )
+                            }
                         }
                     }
-                    Err(e) => {
-                        warn!(
-                            "Unable to load cover for station {:?}: {}",
-                            station.title(),
-                            e.root_cause().to_string()
-                        )
-                    }
+                } else {
+                    // TODO -> show station fallback
                 }
+            } else {
+                // TODO -> show generic fallback
             }
         }
 
