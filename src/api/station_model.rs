@@ -86,20 +86,24 @@ impl SwStationModel {
     }
 
     pub fn remove_station(&self, station: &SwStation) {
-        let mut map = self.imp().map.borrow_mut();
+        let imp = self.imp();
+        let pos = { imp.map.borrow().get_index_of(&station.uuid()) };
 
-        match map.get_index_of(&station.uuid()) {
-            Some(pos) => {
-                map.shift_remove_full(&station.uuid());
-                self.items_changed(pos.try_into().unwrap(), 1, 0);
+        if let Some(pos) = pos {
+            {
+                imp.map.borrow_mut().shift_remove_full(&station.uuid());
             }
-            None => warn!("Station {:?} not found in model", station.metadata().name),
+            self.items_changed(pos.try_into().unwrap(), 1, 0);
+        } else {
+            warn!("Station {:?} not found in model", station.metadata().name);
         }
     }
 
     pub fn clear(&self) {
         let len = self.n_items();
-        self.imp().map.borrow_mut().clear();
+        {
+            self.imp().map.borrow_mut().clear();
+        }
         self.items_changed(0, len, 0);
     }
 }
