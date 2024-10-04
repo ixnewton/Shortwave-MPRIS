@@ -26,7 +26,7 @@ use super::models::StationEntry;
 use super::*;
 use crate::api;
 use crate::api::StationMetadata;
-use crate::api::{SwClient, SwStation, SwStationModel};
+use crate::api::{client, SwStation, SwStationModel};
 
 mod imp {
     use super::*;
@@ -38,8 +38,6 @@ mod imp {
         pub model: SwStationModel,
         #[property(get, builder(SwLibraryStatus::default()))]
         pub status: RefCell<SwLibraryStatus>,
-
-        pub client: SwClient,
     }
 
     #[glib::object_subclass]
@@ -61,6 +59,7 @@ mod imp {
                 connection::DB_PATH.to_str().unwrap()
             );
 
+            let mut stations = Vec::new();
             for entry in entries {
                 // Station metadata
                 let metadata = if entry.is_local {
@@ -101,9 +100,10 @@ mod imp {
                 };
 
                 let station = SwStation::new(&entry.uuid, entry.is_local, metadata, favicon);
-                self.model.add_station(&station);
+                stations.push(station);
             }
 
+            self.model.add_stations(stations);
             self.obj().update_library_status();
         }
     }
@@ -128,12 +128,7 @@ impl SwLibrary {
         }
 
         // Retrieve updated station metadata for those UUIDs
-        let result = self
-            .imp()
-            .client
-            .clone()
-            .station_metadata_by_uuid(uuids_to_update)
-            .await?;
+        let result = client::station_metadata_by_uuid(uuids_to_update).await?;
 
         for metadata in result {
             if let Some(station) = stations_to_update.remove(&metadata.stationuuid) {
@@ -169,15 +164,11 @@ impl SwLibrary {
         Ok(())
     }
 
-    pub fn add_stations(&self, stations: Vec<SwStation>) {
-        debug!("Add {} station(s)", stations.len());
-        for station in stations {
-            self.imp().model.add_station(&station);
+    pub fn add_station(&self, station: SwStation) {
+        let entry = StationEntry::for_station(&station);
+        queries::insert_station(entry).unwrap();
 
-            let entry = StationEntry::for_station(&station);
-            queries::insert_station(entry).unwrap();
-        }
-
+        self.imp().model.add_stations(vec![station]);
         self.update_library_status();
     }
 

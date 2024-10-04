@@ -23,8 +23,8 @@ use glib::{clone, Properties};
 use gtk::glib::WeakRef;
 use gtk::{gio, glib};
 
+use crate::api::client;
 use crate::api::CoverLoader;
-use crate::api::SwClient;
 use crate::audio::SwPlayer;
 use crate::config;
 use crate::database::SwLibrary;
@@ -212,7 +212,7 @@ impl SwApplication {
         let imp = self.imp();
 
         // Try to find a working radio-browser server
-        let rb_server = SwClient::lookup_rb_server().await;
+        let rb_server = client::lookup_rb_server().await;
 
         imp.rb_server.borrow_mut().clone_from(&rb_server);
         self.notify("rb-server");

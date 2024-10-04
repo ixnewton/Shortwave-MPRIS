@@ -20,11 +20,6 @@ use std::sync::LazyLock;
 use std::time::Duration;
 
 use async_std_resolver::{config as rconfig, resolver, resolver_from_system_conf};
-use glib::subclass::Signal;
-use glib::{clone, Properties};
-use gtk::glib;
-use gtk::prelude::*;
-use gtk::subclass::prelude::*;
 use isahc::config::RedirectPolicy;
 use isahc::prelude::*;
 use rand::prelude::SliceRandom;
@@ -45,7 +40,7 @@ static USER_AGENT: LazyLock<String> = LazyLock::new(|| {
     )
 });
 
-pub static HTTP_CLIENT: LazyLock<isahc::HttpClient> = LazyLock::new(|| {
+static HTTP_CLIENT: LazyLock<isahc::HttpClient> = LazyLock::new(|| {
     isahc::HttpClientBuilder::new()
         // Limit to reduce ram usage. We don't need 250 concurrent connections
         .max_connections(8)
@@ -60,235 +55,147 @@ pub static HTTP_CLIENT: LazyLock<isahc::HttpClient> = LazyLock::new(|| {
         .unwrap()
 });
 
-mod imp {
-    use super::*;
+pub async fn station_request(request: StationRequest) -> Result<Vec<SwStation>, Error> {
+    let url = build_url(STATION_SEARCH, Some(&request.url_encode()))?;
 
-    #[derive(Debug, Default, Properties)]
-    #[properties(wrapper_type = super::SwClient)]
-    pub struct SwClient {
-        #[property(get)]
-        model: SwStationModel,
-    }
+    let response = HTTP_CLIENT
+        .get_async(url.as_ref())
+        .await?
+        .text()
+        .await
+        .map_err(Rc::new)?;
+    let deserialized: Result<Vec<StationMetadata>, _> = serde_json::from_str(&response);
 
-    #[glib::object_subclass]
-    impl ObjectSubclass for SwClient {
-        const NAME: &'static str = "SwClient";
-        type Type = super::SwClient;
-    }
-
-    #[glib::derived_properties]
-    impl ObjectImpl for SwClient {
-        fn signals() -> &'static [Signal] {
-            static SIGNALS: LazyLock<Vec<Signal>> = LazyLock::new(|| {
-                vec![
-                    Signal::builder("ready").build(),
-                    Signal::builder("error")
-                        .param_types([Error::static_type()])
-                        .build(),
-                ]
-            });
-            SIGNALS.as_ref()
+    let stations_md = match deserialized {
+        Ok(deserialized) => deserialized,
+        Err(err) => {
+            error!("Unable to deserialize data: {}", err.to_string());
+            error!("Raw unserialized data: {}", response);
+            return Err(Error::Deserializer(err.into()));
         }
-    }
+    };
 
-    impl SwClient {
-        pub fn build_url(param: &str, options: Option<&str>) -> Result<Url, Error> {
-            let rb_server = SwApplication::default().rb_server();
-            if rb_server.is_none() {
-                return Err(Error::NoServerAvailable);
-            }
+    let stations: Vec<SwStation> = stations_md
+        .into_iter()
+        .map(|metadata| SwStation::new(&metadata.stationuuid.clone(), false, metadata, None))
+        .collect();
 
-            let mut url = Url::parse(&rb_server.unwrap())
-                .expect("Unable to parse server url")
-                .join(param)
-                .expect("Unable to join url");
+    Ok(stations)
+}
 
-            if let Some(options) = options {
-                url.set_query(Some(options))
-            }
+pub async fn station_metadata_by_uuid(uuids: Vec<String>) -> Result<Vec<StationMetadata>, Error> {
+    let url = build_url(STATION_BY_UUID, None)?;
 
-            debug!("Retrieve data: {}", url);
-            Ok(url)
-        }
+    let uuids = format!(
+        r#"{{"uuids":{}}}"#,
+        serde_json::to_string(&uuids).unwrap_or_default()
+    );
+    debug!("Post body: {}", uuids);
 
-        pub async fn test_rb_server(ip: String) -> Result<(), Error> {
-            let _stats: Option<Stats> = HTTP_CLIENT
-                .get_async(format!("https://{ip}/{STATS}"))
-                .await?
-                .json()
-                .await
-                .map_err(Rc::new)?;
-            Ok(())
+    let response = HTTP_CLIENT
+        .post_async(url.as_ref(), uuids)
+        .await?
+        .text()
+        .await
+        .map_err(Rc::new)?;
+    let deserialized: Result<Vec<StationMetadata>, _> = serde_json::from_str(&response);
+
+    match deserialized {
+        Ok(deserialized) => Ok(deserialized),
+        Err(err) => {
+            error!("Unable to deserialize data: {}", err.to_string());
+            error!("Raw unserialized data: {}", response);
+            Err(Error::Deserializer(err.into()))
         }
     }
 }
 
-glib::wrapper! {
-    pub struct SwClient(ObjectSubclass<imp::SwClient>);
-}
+pub async fn lookup_rb_server() -> Option<String> {
+    let lookup_domain = settings_manager::string(Key::ApiLookupDomain);
+    let resolver = if let Ok(resolver) = resolver_from_system_conf().await {
+        resolver
+    } else {
+        warn!("Unable to use dns resolver from system conf");
 
-impl SwClient {
-    pub fn new() -> Self {
-        glib::Object::new()
-    }
+        let config = rconfig::ResolverConfig::default();
+        let opts = rconfig::ResolverOpts::default();
+        resolver(config, opts).await
+    };
 
-    /// Processes a [StationRequest], and load the results into the
-    /// [SwStationModel] property. Emits the `error` signal on failure, or
-    /// the `ready` signal when done.
-    pub fn send_station_request(&self, request: StationRequest) {
-        let fut = clone!(
-            #[weak(rename_to = this)]
-            self,
-            async move {
-                let result = clone!(
-                    #[weak]
-                    this,
-                    #[upgrade_or_panic]
-                    async move {
-                        let url =
-                            imp::SwClient::build_url(STATION_SEARCH, Some(&request.url_encode()))?;
+    // Do forward lookup to receive a list with the api servers
+    let response = resolver.lookup_ip(lookup_domain).await.ok()?;
+    let mut ips: Vec<IpAddr> = response.iter().collect();
 
-                        let response = HTTP_CLIENT
-                            .get_async(url.as_ref())
-                            .await?
-                            .text()
-                            .await
-                            .map_err(Rc::new)?;
-                        let deserialized: Result<Vec<StationMetadata>, _> =
-                            serde_json::from_str(&response);
+    // Shuffle it to make sure we're not using always the same one
+    ips.shuffle(&mut thread_rng());
 
-                        let stations_md = match deserialized {
-                            Ok(deserialized) => deserialized,
-                            Err(err) => {
-                                error!("Unable to deserialize data: {}", err.to_string());
-                                error!("Raw unserialized data: {}", response);
-                                return Err(Error::Deserializer(err.into()));
-                            }
-                        };
-
-                        let stations: Vec<SwStation> = stations_md
-                            .into_iter()
-                            .map(|metadata| {
-                                SwStation::new(&metadata.stationuuid.clone(), false, metadata, None)
-                            })
-                            .collect();
-
-                        debug!("Found {} station(s)!", stations.len());
-                        this.model().clear();
-                        for station in &stations {
-                            this.model().add_station(station);
-                        }
-
-                        Ok(())
-                    }
-                );
-
-                if let Err(err) = result.await {
-                    this.emit_by_name::<()>("error", &[&err]);
-                } else {
-                    this.emit_by_name::<()>("ready", &[]);
-                }
-            }
-        );
-
-        glib::spawn_future_local(fut);
-    }
-
-    /// Directly returns a [StationMetadata] by using the station uuid.
-    pub async fn station_metadata_by_uuid(
-        self,
-        uuids: Vec<String>,
-    ) -> Result<Vec<StationMetadata>, Error> {
-        let url = imp::SwClient::build_url(STATION_BY_UUID, None)?;
-
-        let uuids = format!(
-            r#"{{"uuids":{}}}"#,
-            serde_json::to_string(&uuids).unwrap_or_default()
-        );
-        debug!("Post body: {}", uuids);
-
-        let response = HTTP_CLIENT
-            .post_async(url.as_ref(), uuids)
-            .await?
-            .text()
+    for ip in ips {
+        // Do a reverse lookup to get the hostname
+        let result = resolver
+            .reverse_lookup(ip)
             .await
-            .map_err(Rc::new)?;
-        let deserialized: Result<Vec<StationMetadata>, _> = serde_json::from_str(&response);
+            .ok()
+            .and_then(|r| r.into_iter().next());
+        if result.is_none() {
+            warn!("Reverse lookup failed for {} failed", ip);
+            continue;
+        }
+        let hostname = result.unwrap();
 
-        match deserialized {
-            Ok(deserialized) => Ok(deserialized),
+        // Check if the server is online / returns data
+        // If not, try using the next one in the list
+        debug!(
+            "Trying to connect to {} ({})",
+            hostname.to_string(),
+            ip.to_string()
+        );
+        match test_rb_server(hostname.to_string()).await {
+            Ok(_) => {
+                debug!(
+                    "Successfully connected to {} ({})",
+                    hostname.to_string(),
+                    ip.to_string()
+                );
+                return Some(format!("https://{hostname}/"));
+            }
             Err(err) => {
-                error!("Unable to deserialize data: {}", err.to_string());
-                error!("Raw unserialized data: {}", response);
-                Err(Error::Deserializer(err.into()))
+                warn!(
+                    "Unable to connect to {}: {}",
+                    ip.to_string(),
+                    err.to_string()
+                );
             }
         }
     }
 
-    pub async fn lookup_rb_server() -> Option<String> {
-        let lookup_domain = settings_manager::string(Key::ApiLookupDomain);
-        let resolver = if let Ok(resolver) = resolver_from_system_conf().await {
-            resolver
-        } else {
-            warn!("Unable to use dns resolver from system conf");
-
-            let config = rconfig::ResolverConfig::default();
-            let opts = rconfig::ResolverOpts::default();
-            resolver(config, opts).await
-        };
-
-        // Do forward lookup to receive a list with the api servers
-        let response = resolver.lookup_ip(lookup_domain).await.ok()?;
-        let mut ips: Vec<IpAddr> = response.iter().collect();
-
-        // Shuffle it to make sure we're not using always the same one
-        ips.shuffle(&mut thread_rng());
-
-        for ip in ips {
-            // Do a reverse lookup to get the hostname
-            let result = resolver
-                .reverse_lookup(ip)
-                .await
-                .ok()
-                .and_then(|r| r.into_iter().next());
-            if result.is_none() {
-                warn!("Reverse lookup failed for {} failed", ip);
-                continue;
-            }
-            let hostname = result.unwrap();
-
-            // Check if the server is online / returns data
-            // If not, try using the next one in the list
-            debug!(
-                "Trying to connect to {} ({})",
-                hostname.to_string(),
-                ip.to_string()
-            );
-            match imp::SwClient::test_rb_server(hostname.to_string()).await {
-                Ok(_) => {
-                    debug!(
-                        "Successfully connected to {} ({})",
-                        hostname.to_string(),
-                        ip.to_string()
-                    );
-                    return Some(format!("https://{hostname}/"));
-                }
-                Err(err) => {
-                    warn!(
-                        "Unable to connect to {}: {}",
-                        ip.to_string(),
-                        err.to_string()
-                    );
-                }
-            }
-        }
-
-        None
-    }
+    None
 }
 
-impl Default for SwClient {
-    fn default() -> Self {
-        Self::new()
+fn build_url(param: &str, options: Option<&str>) -> Result<Url, Error> {
+    let rb_server = SwApplication::default().rb_server();
+    if rb_server.is_none() {
+        return Err(Error::NoServerAvailable);
     }
+
+    let mut url = Url::parse(&rb_server.unwrap())
+        .expect("Unable to parse server url")
+        .join(param)
+        .expect("Unable to join url");
+
+    if let Some(options) = options {
+        url.set_query(Some(options))
+    }
+
+    debug!("Retrieve data: {}", url);
+    Ok(url)
+}
+
+async fn test_rb_server(ip: String) -> Result<(), Error> {
+    let _stats: Option<Stats> = HTTP_CLIENT
+        .get_async(format!("https://{ip}/{STATS}"))
+        .await?
+        .json()
+        .await
+        .map_err(Rc::new)?;
+    Ok(())
 }
