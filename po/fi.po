@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2024-09-08 19:14+0000\n"
-"PO-Revision-Date: 2024-09-09 20:19+0300\n"
+"POT-Creation-Date: 2024-09-28 13:21+0000\n"
+"PO-Revision-Date: 2024-10-04 20:17+0300\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
 "Language-Team: Finnish <lokalisointi-lista@googlegroups.com>\n"
 "Language: fi\n"
@@ -115,7 +115,7 @@ msgstr "Luo paikallinen asema"
 msgid "Change station image"
 msgstr "Vaihda aseman kuva"
 
-#: data/gtk/create_station_dialog.ui:123 src/ui/pages/search_page.rs:107
+#: data/gtk/create_station_dialog.ui:123 src/ui/pages/search_page.rs:102
 msgid "Name"
 msgstr "Nimi"
 
@@ -127,7 +127,7 @@ msgstr "Suoratoiston URL-osoite"
 msgid "Create Station"
 msgstr "Luo asema"
 
-#: data/gtk/device_dialog.ui:7 data/gtk/player_view.ui:109
+#: data/gtk/device_dialog.ui:7 data/gtk/player_view.ui:111
 msgid "Connect Device"
 msgstr "Yhdistä laite"
 
@@ -150,35 +150,6 @@ msgstr "Tuettua Google Cast -laitetta ei löytynyt"
 #: data/gtk/device_indicator.ui:7
 msgid "Disconnect From Device"
 msgstr "Katkaise yhteys laitteeseen"
-
-#: data/gtk/discover_page.ui:4
-msgid "Discover"
-msgstr "Löydä"
-
-#: data/gtk/discover_page.ui:15 data/gtk/search_page.ui:4
-#: data/gtk/search_page.ui:29
-msgid "Search"
-msgstr "Etsi"
-
-#: data/gtk/discover_page.ui:44
-msgid "Most Voted Stations"
-msgstr "Eniten ääniä keränneet asemat"
-
-#: data/gtk/discover_page.ui:61
-msgid "Trending"
-msgstr "Nousussa"
-
-#: data/gtk/discover_page.ui:78
-msgid "Other Users Are Listening To…"
-msgstr "Muut käyttäjät kuuntelevat…"
-
-#: data/gtk/featured_carousel.ui:27
-msgid "Previous"
-msgstr "Edellinen"
-
-#: data/gtk/featured_carousel.ui:40
-msgid "Next"
-msgstr "Seuraava"
 
 #: data/gtk/help_overlay.ui:11 data/gtk/settings_dialog.ui:9
 msgid "General"
@@ -230,86 +201,82 @@ msgstr "Lisää asemia"
 msgid "Main Menu"
 msgstr "Päävalikko"
 
-#: data/gtk/library_page.ui:51
-msgid "Library"
-msgstr "Kirjasto"
+#: data/gtk/library_page.ui:91
+msgid "_Add New Stations"
+msgstr "_Lisää uusia asemia"
 
-#: data/gtk/library_page.ui:75
-msgid "_Discover New Stations"
-msgstr "L_öydä uusia asemia"
-
-#: data/gtk/library_page.ui:97
+#: data/gtk/library_page.ui:113
 msgid "_Enable Gadget Player"
 msgstr "_Käytä pienoissoitinta"
 
-#: data/gtk/library_page.ui:101
+#: data/gtk/library_page.ui:117
 msgid "_Sorting"
 msgstr "_Järjestys"
 
-#: data/gtk/library_page.ui:104 data/gtk/search_page.ui:161
+#: data/gtk/library_page.ui:120 data/gtk/search_page.ui:142
 msgid "_Name"
 msgstr "_Nimi"
 
-#: data/gtk/library_page.ui:109 data/gtk/search_page.ui:166
+#: data/gtk/library_page.ui:125 data/gtk/search_page.ui:147
 msgid "_Language"
 msgstr "_Kieli"
 
-#: data/gtk/library_page.ui:114 data/gtk/search_page.ui:171
+#: data/gtk/library_page.ui:130 data/gtk/search_page.ui:152
 msgid "_Country"
 msgstr "_Maa"
 
-#: data/gtk/library_page.ui:119 data/gtk/search_page.ui:176
+#: data/gtk/library_page.ui:135 data/gtk/search_page.ui:157
 msgid "S_tate"
 msgstr "_Tila"
 
-#: data/gtk/library_page.ui:124 data/gtk/search_page.ui:181
+#: data/gtk/library_page.ui:140 data/gtk/search_page.ui:162
 msgid "_Votes"
 msgstr "_Äänet"
 
-#: data/gtk/library_page.ui:129 data/gtk/search_page.ui:186
+#: data/gtk/library_page.ui:145 data/gtk/search_page.ui:167
 msgid "_Bitrate"
 msgstr "_Bittinopeus"
 
-#: data/gtk/library_page.ui:136 data/gtk/search_page.ui:193
+#: data/gtk/library_page.ui:152 data/gtk/search_page.ui:174
 msgid "_Ascending"
 msgstr "_Nouseva"
 
-#: data/gtk/library_page.ui:141 data/gtk/search_page.ui:198
+#: data/gtk/library_page.ui:157 data/gtk/search_page.ui:179
 msgid "_Descending"
 msgstr "_Laskeva"
 
-#: data/gtk/library_page.ui:150
+#: data/gtk/library_page.ui:166
 msgid "_Open radio-browser.info <sup>↗</sup>"
 msgstr "_Avaa radio-browser.info <sup>↗</sup>"
 
-#: data/gtk/library_page.ui:155
+#: data/gtk/library_page.ui:171
 msgid "_Create New Station"
 msgstr "_Luo uusi asema"
 
-#: data/gtk/library_page.ui:162
+#: data/gtk/library_page.ui:178
 msgid "_Preferences"
 msgstr "_Asetukset"
 
-#: data/gtk/library_page.ui:166
+#: data/gtk/library_page.ui:182
 msgid "_Keyboard Shortcuts"
 msgstr "_Pikanäppäimet"
 
-#: data/gtk/library_page.ui:170
+#: data/gtk/library_page.ui:186
 msgid "_About Shortwave"
 msgstr "_Tietoja - Shortwave"
 
-#: data/gtk/player_gadget.ui:40 data/gtk/player_toolbar.ui:94
-#: data/gtk/player_view.ui:133 data/gtk/station_row.ui:71
+#: data/gtk/player_gadget.ui:40 data/gtk/player_toolbar.ui:92
+#: data/gtk/player_view.ui:135 data/gtk/station_row.ui:84
 msgid "Play"
 msgstr "Toista"
 
-#: data/gtk/player_gadget.ui:55 data/gtk/player_toolbar.ui:108
-#: data/gtk/player_view.ui:147
+#: data/gtk/player_gadget.ui:55 data/gtk/player_toolbar.ui:106
+#: data/gtk/player_view.ui:149
 msgid "Stop"
 msgstr "Pysäytä"
 
-#: data/gtk/player_gadget.ui:71 data/gtk/player_toolbar.ui:123
-#: data/gtk/player_view.ui:162
+#: data/gtk/player_gadget.ui:71 data/gtk/player_toolbar.ui:121
+#: data/gtk/player_view.ui:164
 msgid "Buffering…"
 msgstr "Puskoroidaan…"
 
@@ -317,8 +284,8 @@ msgstr "Puskoroidaan…"
 msgid "SHORTWAVE INTERNET RADIO"
 msgstr "SHORTWAVE INTERNET RADIO"
 
-#: data/gtk/player_gadget.ui:140 data/gtk/player_toolbar.ui:31
-#: data/gtk/player_view.ui:43
+#: data/gtk/player_gadget.ui:140 data/gtk/player_toolbar.ui:29
+#: data/gtk/player_view.ui:45
 msgid "No Playback"
 msgstr "Mitään ei toisteta"
 
@@ -330,15 +297,15 @@ msgstr "Sulje"
 msgid "Resize"
 msgstr "Muuta kokoa"
 
-#: data/gtk/player_view.ui:192
+#: data/gtk/player_view.ui:194
 msgid "Show Station Details"
 msgstr "Näytä aseman tiedot"
 
-#: data/gtk/player_view.ui:242
+#: data/gtk/player_view.ui:244
 msgid "No Songs"
 msgstr "Ei kappaleita"
 
-#: data/gtk/player_view.ui:253
+#: data/gtk/player_view.ui:255
 msgid ""
 "Songs that have been identified and recorded using the stream metadata will "
 "appear here."
@@ -346,32 +313,32 @@ msgstr ""
 "Kappaleet, jotka on tunnistettu ja nauhoitettu käyttäen suoravirtauksen "
 "metatietoja, näkyvät täällä."
 
-#: data/gtk/player_view.ui:285 data/gtk/recording_indicator.ui:38
+#: data/gtk/player_view.ui:287 data/gtk/recording_indicator.ui:38
 msgid "An error occurred"
 msgstr "Tapahtui virhe"
 
-#: data/gtk/search_page.ui:41 data/gtk/station_dialog.ui:167
-#: src/ui/pages/search_page.rs:111
+#: data/gtk/search_page.ui:4 data/gtk/search_page.ui:26
+msgid "Search"
+msgstr "Etsi"
+
+#: data/gtk/search_page.ui:35 data/gtk/station_dialog.ui:171
+#: src/ui/pages/search_page.rs:106
 msgid "Votes"
 msgstr "Äänet"
 
-#: data/gtk/search_page.ui:46
+#: data/gtk/search_page.ui:40
 msgid "Change the sorting of the search results"
 msgstr "Muuta hakutulosten järjestystä"
 
-#: data/gtk/search_page.ui:73
+#: data/gtk/search_page.ui:68
 msgid "No Results"
 msgstr "Ei tuloksia"
 
-#: data/gtk/search_page.ui:74
+#: data/gtk/search_page.ui:69
 msgid "Try using a different search term"
 msgstr "Yritä eri hakuehdoilla"
 
-#: data/gtk/search_page.ui:101
-msgid "Search Results"
-msgstr "Hakutulokset"
-
-#: data/gtk/search_page.ui:143
+#: data/gtk/search_page.ui:124
 msgid "Searching…"
 msgstr "Etsitään…"
 
@@ -387,49 +354,27 @@ msgstr "_Ilmoitukset"
 msgid "Show desktop notifications when a new song gets played"
 msgstr "Näytä työpöytäilmoitus kun uusi kappale alkaa soida"
 
-#: data/gtk/song_listbox.ui:29
-msgid "No Songs Detected"
-msgstr "Kappaleita ei havaittu"
-
-#: data/gtk/song_listbox.ui:40
-msgid ""
-"Songs are automatically recognized using the stream metadata.\n"
-"\n"
-"If the station does not send any metadata, no songs can be recognized."
-msgstr ""
-"Kappaleet tunnistetaan automaattisesti käyttäen suoratoiston metatietoja.\n"
-"\n"
-"Jos asema ei lähetä metatietoja, kappaleita ei voida tunnistaa."
-
-#: data/gtk/song_listbox.ui:76
-msgid "Saved songs are located in your Music folder."
-msgstr "Tallennetut kappaleet sijaitsevat Musiikki-kansiossa."
-
-#: data/gtk/song_listbox.ui:86
-msgid "_Open"
-msgstr "_Avaa"
-
 #: data/gtk/song_row.ui:16
 msgid "Save recorded song"
 msgstr "Tallenna nauhoitettu kappale"
 
-#: data/gtk/station_dialog.ui:66
+#: data/gtk/station_dialog.ui:70
 msgid "_Play Station"
 msgstr "_Toista asema"
 
-#: data/gtk/station_dialog.ui:81
+#: data/gtk/station_dialog.ui:85
 msgid "_Add to Library"
 msgstr "_Lisää kirjastoon"
 
-#: data/gtk/station_dialog.ui:97
+#: data/gtk/station_dialog.ui:101
 msgid "_Remove From Library"
 msgstr "_Poista kirjastosta"
 
-#: data/gtk/station_dialog.ui:115
+#: data/gtk/station_dialog.ui:119
 msgid "Local Station"
 msgstr "Paikallinen asema"
 
-#: data/gtk/station_dialog.ui:116
+#: data/gtk/station_dialog.ui:120
 msgid ""
 "This station exists only in your library, and is not part of the public "
 "online station database."
@@ -437,11 +382,11 @@ msgstr ""
 "Tämä asema on olemassa vain kirjastossasi, eikä se näy osana verkon julkisia "
 "asematietokantoja."
 
-#: data/gtk/station_dialog.ui:131
+#: data/gtk/station_dialog.ui:135
 msgid "Orphaned Station"
 msgstr "Hylätty asema"
 
-#: data/gtk/station_dialog.ui:132
+#: data/gtk/station_dialog.ui:136
 msgid ""
 "The information could not be updated, probably this station was removed from "
 "the public online station database."
@@ -449,48 +394,48 @@ msgstr ""
 "Tietoja ei voitu päivittää. Tämä asema todennäköisesti poistettiin verkon "
 "julkisesta asematietokannasta."
 
-#: data/gtk/station_dialog.ui:144
+#: data/gtk/station_dialog.ui:148
 msgid "Information"
 msgstr "Tiedot"
 
-#: data/gtk/station_dialog.ui:147 src/ui/pages/search_page.rs:108
+#: data/gtk/station_dialog.ui:151 src/ui/pages/search_page.rs:103
 msgid "Language"
 msgstr "Kieli"
 
-#: data/gtk/station_dialog.ui:157
+#: data/gtk/station_dialog.ui:161
 msgid "Tags"
 msgstr "Tunnisteet"
 
-#: data/gtk/station_dialog.ui:178
+#: data/gtk/station_dialog.ui:182
 msgid "Location"
 msgstr "Sijainti"
 
-#: data/gtk/station_dialog.ui:183 src/ui/pages/search_page.rs:109
+#: data/gtk/station_dialog.ui:187 src/ui/pages/search_page.rs:104
 msgid "Country"
 msgstr "Maa"
 
-#: data/gtk/station_dialog.ui:193 src/ui/pages/search_page.rs:110
+#: data/gtk/station_dialog.ui:197 src/ui/pages/search_page.rs:105
 msgid "State"
 msgstr "Tila"
 
-#: data/gtk/station_dialog.ui:227
+#: data/gtk/station_dialog.ui:231
 msgid "Audio"
 msgstr "Ääni"
 
-#: data/gtk/station_dialog.ui:231 src/ui/pages/search_page.rs:112
+#: data/gtk/station_dialog.ui:235 src/ui/pages/search_page.rs:107
 msgid "Bitrate"
 msgstr "Bittinopeus"
 
-#: data/gtk/station_dialog.ui:241
+#: data/gtk/station_dialog.ui:245
 msgid "Codec"
 msgstr "Koodekki"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:251
+#: data/gtk/station_dialog.ui:255
 msgid "Stream"
 msgstr "Suoratoisto"
 
-#: data/gtk/station_dialog.ui:260
+#: data/gtk/station_dialog.ui:264
 msgid "Copy"
 msgstr "Kopioi"
 
@@ -502,11 +447,11 @@ msgstr "Asemaa ei voi suoratoistaa. URL-osoite ei ole kelvollinen."
 msgid "Active Playback"
 msgstr "Aktiivinen toisto"
 
-#: src/device/device_discovery.rs:90
+#: src/device/device_discovery.rs:83
 msgid "Google Cast Device"
 msgstr "Google Cast -laite"
 
-#: src/device/device_discovery.rs:91
+#: src/device/device_discovery.rs:86
 msgid "Unknown Model"
 msgstr "Tuntematon malli"
 
@@ -522,50 +467,13 @@ msgstr "Valitse kuva asemalle"
 msgid "Show Details"
 msgstr "Näytä tiedot"
 
-#. TODO: Implement show-server-stats action
-#: src/ui/pages/discover_page.rs:127
-msgid "Show statistics"
-msgstr "Näytä tilastot"
-
-#: src/ui/pages/discover_page.rs:129
-msgid "Browse over 50,000 stations"
-msgstr "Selaa yli 50 000 asemaa"
-
-#: src/ui/pages/discover_page.rs:131
-msgid "Add new station"
-msgstr "Lisää uusi asema"
-
-#: src/ui/pages/discover_page.rs:133
-msgid "Your favorite station is missing?"
-msgstr "Puuttuuko suosikkiasemasi?"
-
-#: src/ui/pages/discover_page.rs:138
-msgid "Open website"
-msgstr "Avaa verkkosivu"
-
-#: src/ui/pages/discover_page.rs:140
-msgid "Powered by radio-browser.info"
-msgstr "Taustavoimana radio-browser.info"
-
-#: src/ui/pages/discover_page.rs:151 src/ui/pages/search_page.rs:215
-msgid "Station data could not be received."
-msgstr "Aseman tietoja ei voitu vastaanottaa."
-
-#: src/ui/pages/library_page.rs:94
+#: src/ui/pages/library_page.rs:111
 msgid "Welcome to {}"
 msgstr "Tervetuloa, käytössäsi on {}"
 
-#: src/ui/pages/search_page.rs:222
-msgid ""
-"The number of results is limited to {} item. Try using a more specific "
-"search term."
-msgid_plural ""
-"The number of results is limited to {} items. Try using a more specific "
-"search term."
-msgstr[0] ""
-"Hakutulokset rajataan {} kohteeseen. Yritä määrittää tarkempi hakuehto."
-msgstr[1] ""
-"Hakutulokset rajataan {} kohteeseen. Yritä määrittää tarkempi hakuehto."
+#: src/ui/pages/search_page.rs:206
+msgid "Station data could not be received."
+msgstr "Aseman tietoja ei voitu vastaanottaa."
 
 #: src/ui/recording_indicator.rs:111
 msgid "Recording in Progress"
@@ -596,9 +504,84 @@ msgid ""
 msgstr ""
 "Nykyistä kappaleta ei voi nauhoittaa kokonaan. Alkua ei saatu nauhoitettua."
 
-#: src/ui/station_dialog.rs:217
+#: src/ui/station_dialog.rs:206
 msgid "{} kbit/s"
 msgstr "{} kbit/s"
+
+#~ msgid "Discover"
+#~ msgstr "Löydä"
+
+#~ msgid "Most Voted Stations"
+#~ msgstr "Eniten ääniä keränneet asemat"
+
+#~ msgid "Trending"
+#~ msgstr "Nousussa"
+
+#~ msgid "Other Users Are Listening To…"
+#~ msgstr "Muut käyttäjät kuuntelevat…"
+
+#~ msgid "Previous"
+#~ msgstr "Edellinen"
+
+#~ msgid "Next"
+#~ msgstr "Seuraava"
+
+#~ msgid "Library"
+#~ msgstr "Kirjasto"
+
+#~ msgid "_Discover New Stations"
+#~ msgstr "L_öydä uusia asemia"
+
+#~ msgid "Search Results"
+#~ msgstr "Hakutulokset"
+
+#~ msgid "No Songs Detected"
+#~ msgstr "Kappaleita ei havaittu"
+
+#~ msgid ""
+#~ "Songs are automatically recognized using the stream metadata.\n"
+#~ "\n"
+#~ "If the station does not send any metadata, no songs can be recognized."
+#~ msgstr ""
+#~ "Kappaleet tunnistetaan automaattisesti käyttäen suoratoiston "
+#~ "metatietoja.\n"
+#~ "\n"
+#~ "Jos asema ei lähetä metatietoja, kappaleita ei voida tunnistaa."
+
+#~ msgid "Saved songs are located in your Music folder."
+#~ msgstr "Tallennetut kappaleet sijaitsevat Musiikki-kansiossa."
+
+#~ msgid "_Open"
+#~ msgstr "_Avaa"
+
+#~ msgid "Show statistics"
+#~ msgstr "Näytä tilastot"
+
+#~ msgid "Browse over 50,000 stations"
+#~ msgstr "Selaa yli 50 000 asemaa"
+
+#~ msgid "Add new station"
+#~ msgstr "Lisää uusi asema"
+
+#~ msgid "Your favorite station is missing?"
+#~ msgstr "Puuttuuko suosikkiasemasi?"
+
+#~ msgid "Open website"
+#~ msgstr "Avaa verkkosivu"
+
+#~ msgid "Powered by radio-browser.info"
+#~ msgstr "Taustavoimana radio-browser.info"
+
+#~ msgid ""
+#~ "The number of results is limited to {} item. Try using a more specific "
+#~ "search term."
+#~ msgid_plural ""
+#~ "The number of results is limited to {} items. Try using a more specific "
+#~ "search term."
+#~ msgstr[0] ""
+#~ "Hakutulokset rajataan {} kohteeseen. Yritä määrittää tarkempi hakuehto."
+#~ msgstr[1] ""
+#~ "Hakutulokset rajataan {} kohteeseen. Yritä määrittää tarkempi hakuehto."
 
 #~ msgid "Start"
 #~ msgstr "Käynnistä"
