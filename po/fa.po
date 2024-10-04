@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2024-09-28 13:21+0000\n"
-"PO-Revision-Date: 2024-09-30 19:22+0330\n"
+"POT-Creation-Date: 2024-10-04 17:47+0000\n"
+"PO-Revision-Date: 2024-10-04 23:43+0330\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
 "Language: fa\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:3
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
@@ -110,7 +110,7 @@ msgstr "ایجاد ایستگاه محلّی"
 msgid "Change station image"
 msgstr "تغییر تصویر ایستگاه"
 
-#: data/gtk/create_station_dialog.ui:123 src/ui/pages/search_page.rs:102
+#: data/gtk/create_station_dialog.ui:123
 msgid "Name"
 msgstr "نام"
 
@@ -188,7 +188,7 @@ msgstr "تغییر وضعیت پخش"
 msgid "Shortwave"
 msgstr "موج کوتاه"
 
-#: data/gtk/library_page.ui:15
+#: data/gtk/library_page.ui:15 data/gtk/search_page.ui:4
 msgid "Add Stations"
 msgstr "افزودن ایستگاه"
 
@@ -208,35 +208,35 @@ msgstr "_به کار انداختن پخش‌کنندهٔ ابزارکی"
 msgid "_Sorting"
 msgstr "_چینش"
 
-#: data/gtk/library_page.ui:120 data/gtk/search_page.ui:142
+#: data/gtk/library_page.ui:120
 msgid "_Name"
 msgstr "_نام"
 
-#: data/gtk/library_page.ui:125 data/gtk/search_page.ui:147
+#: data/gtk/library_page.ui:125
 msgid "_Language"
 msgstr "_زبان"
 
-#: data/gtk/library_page.ui:130 data/gtk/search_page.ui:152
+#: data/gtk/library_page.ui:130
 msgid "_Country"
 msgstr "_کشور"
 
-#: data/gtk/library_page.ui:135 data/gtk/search_page.ui:157
+#: data/gtk/library_page.ui:135
 msgid "S_tate"
 msgstr "ا_یالت"
 
-#: data/gtk/library_page.ui:140 data/gtk/search_page.ui:162
+#: data/gtk/library_page.ui:140
 msgid "_Votes"
 msgstr "_رأی‌ها"
 
-#: data/gtk/library_page.ui:145 data/gtk/search_page.ui:167
+#: data/gtk/library_page.ui:145
 msgid "_Bitrate"
 msgstr "_نرخ بیت"
 
-#: data/gtk/library_page.ui:152 data/gtk/search_page.ui:174
+#: data/gtk/library_page.ui:152
 msgid "_Ascending"
 msgstr "پیش‌رونده"
 
-#: data/gtk/library_page.ui:157 data/gtk/search_page.ui:179
+#: data/gtk/library_page.ui:157
 msgid "_Descending"
 msgstr "پس‌رونده"
 
@@ -312,28 +312,31 @@ msgstr ""
 msgid "An error occurred"
 msgstr "خطایی پیش آمد"
 
-#: data/gtk/search_page.ui:4 data/gtk/search_page.ui:26
+#: data/gtk/search_page.ui:23
 msgid "Search"
 msgstr "جست‌وجو"
 
-#: data/gtk/search_page.ui:35 data/gtk/station_dialog.ui:171
-#: src/ui/pages/search_page.rs:106
-msgid "Votes"
-msgstr "رأی‌ها"
+#: data/gtk/search_page.ui:39
+msgid "Browse over 50,000 stations"
+msgstr "مرور بیش از ۵۰٫۰۰۰ ایستگاه"
 
 #: data/gtk/search_page.ui:40
-msgid "Change the sorting of the search results"
-msgstr "تغییر چینش نتیجه‌های جست‌وجو"
+msgid "Find stations using radio-browser.info"
+msgstr "یافتن ایستگاه‌ها با استفاده از radio-browser.info"
 
-#: data/gtk/search_page.ui:68
+#: data/gtk/search_page.ui:56
+msgid "Create new Station"
+msgstr "ایجاد ایستگاه جدید"
+
+#: data/gtk/search_page.ui:92
 msgid "No Results"
 msgstr "بدون نتیجه"
 
-#: data/gtk/search_page.ui:69
+#: data/gtk/search_page.ui:93
 msgid "Try using a different search term"
-msgstr "تلاش با استفاده از عبارت جست‌وجویی دیگر"
+msgstr "آزمودن استفاده از عبارت جست‌وجویی دیگر"
 
-#: data/gtk/search_page.ui:124
+#: data/gtk/search_page.ui:148
 msgid "Searching…"
 msgstr "جست‌وجو کردن…"
 
@@ -393,7 +396,7 @@ msgstr ""
 msgid "Information"
 msgstr "اطّلاعات"
 
-#: data/gtk/station_dialog.ui:151 src/ui/pages/search_page.rs:103
+#: data/gtk/station_dialog.ui:151
 msgid "Language"
 msgstr "زبان"
 
@@ -401,15 +404,19 @@ msgstr "زبان"
 msgid "Tags"
 msgstr "برچسب‌ها"
 
+#: data/gtk/station_dialog.ui:171
+msgid "Votes"
+msgstr "رأی‌ها"
+
 #: data/gtk/station_dialog.ui:182
 msgid "Location"
 msgstr "مکان"
 
-#: data/gtk/station_dialog.ui:187 src/ui/pages/search_page.rs:104
+#: data/gtk/station_dialog.ui:187
 msgid "Country"
 msgstr "کشور"
 
-#: data/gtk/station_dialog.ui:197 src/ui/pages/search_page.rs:105
+#: data/gtk/station_dialog.ui:197
 msgid "State"
 msgstr "ایالت"
 
@@ -417,7 +424,7 @@ msgstr "ایالت"
 msgid "Audio"
 msgstr "صدا"
 
-#: data/gtk/station_dialog.ui:235 src/ui/pages/search_page.rs:107
+#: data/gtk/station_dialog.ui:235
 msgid "Bitrate"
 msgstr "نرخ بیت"
 
@@ -466,10 +473,6 @@ msgstr "نمایش جزییات"
 msgid "Welcome to {}"
 msgstr "به {} خوش‌آمدید"
 
-#: src/ui/pages/search_page.rs:206
-msgid "Station data could not be received."
-msgstr "داده‌های ایستگاه نتوانستند دریافت شوند."
-
 #: src/ui/recording_indicator.rs:111
 msgid "Recording in Progress"
 msgstr "در حال ضبط"
@@ -497,6 +500,12 @@ msgstr "آواز کنونی نمی‌تواند کامل ضبط شود. ابتد
 #: src/ui/station_dialog.rs:206
 msgid "{} kbit/s"
 msgstr "{} ک‌بی/ث"
+
+#~ msgid "Change the sorting of the search results"
+#~ msgstr "تغییر چینش نتیجه‌های جست‌وجو"
+
+#~ msgid "Station data could not be received."
+#~ msgstr "داده‌های ایستگاه نتوانستند دریافت شوند."
 
 #~ msgid "Discover"
 #~ msgstr "کشف"
@@ -546,9 +555,6 @@ msgstr "{} ک‌بی/ث"
 #~ msgid "Show statistics"
 #~ msgstr "نمایش آمار"
 
-#~ msgid "Browse over 50,000 stations"
-#~ msgstr "مرور بیش از ۵۰٫۰۰۰ ایستگاه"
-
 #~ msgid "Add new station"
 #~ msgstr "افزودن ایستگاه جدید"
 
@@ -557,9 +563,6 @@ msgstr "{} ک‌بی/ث"
 
 #~ msgid "Open website"
 #~ msgstr "گشودن پایگاه وب"
-
-#~ msgid "Powered by radio-browser.info"
-#~ msgstr "قدرت گرفته از radio-browser.info"
 
 #~ msgid ""
 #~ "The number of results is limited to {} item. Try using a more specific search "
