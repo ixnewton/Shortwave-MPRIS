@@ -14,9 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+use std::time::{Duration, SystemTime};
+
 use anyhow::{Error, Result};
 use async_channel::Sender;
-use cached::proc_macro::io_cached;
 use futures_util::StreamExt;
 use gdk::RGBA;
 use glycin::Loader;
@@ -62,9 +63,19 @@ impl CoverLoader {
         path.push("favicons");
         let _ = std::fs::remove_dir_all(&path);
 
-        if let Some(c) = COVER.get() {
-            let res = c.remove_expired_entries();
-            debug!("Remove expired cover cache entries: {:?}", res);
+        // Remove cached covers which are older > 30 days
+        let ttl = Duration::from_secs(86400 * 30);
+        for md in cacache::list_sync(&*path::CACHE).flatten() {
+            let now = SystemTime::now()
+                .duration_since(std::time::UNIX_EPOCH)
+                .unwrap()
+                .as_millis();
+
+            let age = Duration::from_millis((now - md.time).try_into().unwrap_or_default());
+            if age > ttl {
+                let _ = cacache::remove_hash_sync(&*path::CACHE, &md.integrity);
+                let _ = cacache::remove_sync(&*path::CACHE, &md.key);
+            }
         }
     }
 
@@ -106,7 +117,23 @@ impl CoverLoader {
     }
 
     async fn cover_texture(favicon_url: &Url, size: i32) -> Result<gdk::Texture> {
+        if let Ok(texture) = Self::cached_texture(favicon_url, size).await {
+            return Ok(texture);
+        }
+
+        Self::compute_texture(favicon_url, size).await
+    }
+
+    async fn cached_texture(favicon_url: &Url, size: i32) -> Result<gdk::Texture> {
+        let data = cacache::read(&*path::CACHE, format!("{}@{}", favicon_url, size)).await?;
+        let bytes = glib::Bytes::from_owned(data);
+        Ok(gdk::Texture::from_bytes(&bytes)?)
+    }
+
+    async fn compute_texture(favicon_url: &Url, size: i32) -> Result<gdk::Texture> {
         let cover = cover_bytes(favicon_url, size).await?;
+        cacache::write(&*path::CACHE, format!("{}@{}", favicon_url, size), &cover).await?;
+
         let bytes = glib::Bytes::from_owned(cover);
         Ok(gdk::Texture::from_bytes(&bytes)?)
     }
@@ -118,14 +145,6 @@ impl Default for CoverLoader {
     }
 }
 
-#[io_cached(
-    disk = true,
-    name = "COVER",
-    time = 604_800, // 1 week
-    key = "String",
-    convert = r#"{ format!("{}@{}", favicon_url, size) }"#,
-    map_error = r#"|e| Error::msg(format!("{:?}", e))"#
-)]
 async fn cover_bytes(favicon_url: &Url, size: i32) -> Result<Vec<u8>> {
     let file = File::for_uri(favicon_url.as_str());
 
