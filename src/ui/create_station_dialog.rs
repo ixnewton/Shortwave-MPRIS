@@ -158,9 +158,7 @@ impl SwCreateStationDialog {
             StationMetadata::new(name, url),
             favicon.and_upcast(),
         );
-        SwApplication::default()
-            .library()
-            .add_stations(vec![station]);
+        SwApplication::default().library().add_station(station);
         self.close();
     }
 

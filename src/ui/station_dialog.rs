@@ -250,9 +250,7 @@ mod imp {
             let obj = self.obj();
 
             let station = obj.station();
-            SwApplication::default()
-                .library()
-                .add_stations(vec![station]);
+            SwApplication::default().library().add_station(station);
 
             obj.close();
         }

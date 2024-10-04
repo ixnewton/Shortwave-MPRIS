@@ -67,22 +67,21 @@ impl SwStationModel {
         glib::Object::new()
     }
 
-    pub fn add_station(&self, station: &SwStation) {
-        let pos = {
+    pub fn add_stations(&self, stations: Vec<SwStation>) {
+        let added = {
             let mut map = self.imp().map.borrow_mut();
-            if map.contains_key(&station.uuid()) {
-                warn!(
-                    "Station {:?} already exists in model",
-                    station.metadata().name
-                );
-                return;
+            let mut added = 0;
+
+            for station in stations {
+                if map.insert(station.uuid(), station.clone()).is_none() {
+                    added += 1;
+                }
             }
 
-            map.insert(station.uuid(), station.clone());
-            (map.len() - 1) as u32
+            added
         };
 
-        self.items_changed(pos, 0, 1);
+        self.items_changed(self.n_items() - 1, 0, added);
     }
 
     pub fn remove_station(&self, station: &SwStation) {
