@@ -17,11 +17,10 @@
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use glib::{clone, subclass};
-use gtk::{gio, glib, CompositeTemplate};
+use gtk::{glib, CompositeTemplate};
 
 use crate::api::SwStationModel;
-use crate::api::{client, Error, StationRequest, SwStation};
-use crate::i18n::*;
+use crate::api::{client, StationRequest, SwStation};
 use crate::ui::{DisplayError, SwStationDialog, SwStationRow};
 use rand::seq::SliceRandom;
 

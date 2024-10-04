@@ -44,7 +44,7 @@ mod imp {
         #[template_child]
         fallback_label: TemplateChild<gtk::Label>,
 
-        #[property(get, set, construct_only)]
+        #[property(get, set=Self::set_size)]
         size: Cell<i32>,
         #[property(get, set=Self::set_station)]
         station: RefCell<Option<SwStation>>,
@@ -74,12 +74,6 @@ mod imp {
     impl ObjectImpl for SwStationCover {
         fn constructed(&self) {
             self.parent_constructed();
-
-            let size = self.obj().size();
-            self.image.set_size_request(size, size);
-            self.obj().set_size_request(size, size);
-
-            self.placeholder_image.set_pixel_size(size.div_euclid(2));
 
             let icon = format!("{}-symbolic", config::APP_ID);
             self.placeholder_image.set_icon_name(Some(&icon));
@@ -111,6 +105,16 @@ mod imp {
     impl BinImpl for SwStationCover {}
 
     impl SwStationCover {
+        fn set_size(&self, size: i32) {
+            self.size.set(size);
+
+            self.image.set_size_request(size, size);
+            self.obj().set_size_request(size, size);
+            self.placeholder_image.set_pixel_size(size.div_euclid(2));
+
+            self.update_font_size();
+        }
+
         fn set_station(&self, station: Option<&SwStation>) {
             *self.station.borrow_mut() = station.cloned();
 
