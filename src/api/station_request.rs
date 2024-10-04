@@ -14,12 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#[derive(Serialize, Deserialize, Default, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct StationRequest {
     pub name: Option<String>,
     pub name_exact: Option<bool>,
     pub country: Option<String>,
     pub country_exact: Option<bool>,
+    pub countrycode: Option<String>,
     pub state: Option<String>,
     pub state_exact: Option<bool>,
     pub language: Option<String>,
@@ -43,7 +44,6 @@ impl StationRequest {
         Self {
             name,
             limit: Some(limit),
-            hidebroken: Some(true),
             order: Some(String::from("votes")),
             reverse: Some(true),
             ..Self::default()
@@ -52,5 +52,33 @@ impl StationRequest {
 
     pub fn url_encode(&self) -> String {
         serde_urlencoded::to_string(self).unwrap()
+    }
+}
+
+impl Default for StationRequest {
+    fn default() -> Self {
+        Self {
+            name: None,
+            name_exact: None,
+            country: None,
+            country_exact: None,
+            countrycode: None,
+            state: None,
+            state_exact: None,
+            language: None,
+            language_exact: None,
+            tag: None,
+            tag_exact: None,
+            bitrate_min: None,
+            bitrate_max: None,
+            has_geo_info: None,
+            has_extended_info: None,
+            is_https: None,
+            order: None,
+            reverse: None,
+            offset: None,
+            limit: None,
+            hidebroken: Some(true),
+        }
     }
 }

@@ -14,38 +14,37 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use std::cell::RefCell;
-use std::rc::Rc;
-
 use adw::prelude::*;
 use adw::subclass::prelude::*;
-use gio::SimpleAction;
-use glib::{clone, closure, subclass};
+use glib::{clone, subclass};
 use gtk::{gio, glib, CompositeTemplate};
 
-use crate::api::{Error, StationRequest, SwClient, SwStation};
+use crate::api::SwStationModel;
+use crate::api::{client, Error, StationRequest, SwStation};
 use crate::i18n::*;
-use crate::ui::{SwApplicationWindow, SwStationDialog};
+use crate::ui::{DisplayError, SwStationDialog, SwStationRow};
+use rand::seq::SliceRandom;
 
 mod imp {
     use super::*;
 
-    #[derive(Debug, CompositeTemplate)]
+    #[derive(Default, Debug, CompositeTemplate)]
     #[template(resource = "/de/haeckerfelix/Shortwave/gtk/search_page.ui")]
     pub struct SwSearchPage {
         #[template_child]
-        stack: TemplateChild<gtk::Stack>,
-        #[template_child]
-        gridview: TemplateChild<gtk::GridView>,
-        #[template_child]
         search_entry: TemplateChild<gtk::SearchEntry>,
         #[template_child]
-        sorting_button_content: TemplateChild<adw::ButtonContent>,
+        stack: TemplateChild<gtk::Stack>,
+        #[template_child]
+        popular_flowbox: TemplateChild<gtk::FlowBox>,
+        #[template_child]
+        random_flowbox: TemplateChild<gtk::FlowBox>,
+        #[template_child]
+        search_gridview: TemplateChild<gtk::GridView>,
 
-        search_action_group: gio::SimpleActionGroup,
-        client: SwClient,
-
-        station_request: Rc<RefCell<StationRequest>>,
+        popular_model: SwStationModel,
+        random_model: SwStationModel,
+        search_model: SwStationModel,
     }
 
     #[glib::object_subclass]
@@ -53,23 +52,6 @@ mod imp {
         const NAME: &'static str = "SwSearchPage";
         type ParentType = adw::NavigationPage;
         type Type = super::SwSearchPage;
-
-        fn new() -> Self {
-            let search_action_group = gio::SimpleActionGroup::new();
-            let station_request =
-                Rc::new(RefCell::new(StationRequest::search_for_name(None, 1000)));
-            let client = SwClient::new();
-
-            Self {
-                stack: TemplateChild::default(),
-                gridview: TemplateChild::default(),
-                search_entry: TemplateChild::default(),
-                sorting_button_content: TemplateChild::default(),
-                search_action_group,
-                client,
-                station_request,
-            }
-        }
 
         fn class_init(klass: &mut Self::Class) {
             Self::bind_template(klass);
@@ -83,145 +65,60 @@ mod imp {
 
     impl ObjectImpl for SwSearchPage {
         fn constructed(&self) {
-            let obj = self.obj();
+            // Discover view
+            let flowbox_widget_func = |s: &glib::Object| {
+                let station: &SwStation = s.downcast_ref().unwrap();
+                let row = SwStationRow::new(station);
+                let child = gtk::FlowBoxChild::new();
+                child.set_child(Some(&row));
+                child.into()
+            };
 
-            obj.insert_action_group("search", Some(&self.search_action_group));
-            let variant = Some(glib::VariantTy::new("s").unwrap());
+            self.popular_flowbox
+                .bind_model(Some(&self.popular_model), flowbox_widget_func);
+            self.random_flowbox
+                .bind_model(Some(&self.random_model), flowbox_widget_func);
 
-            let action = SimpleAction::new_stateful("sorting", variant, &"Votes".to_variant());
-            self.search_action_group.add_action(&action);
-            action.connect_change_state(clone!(
-                #[weak(rename_to = this)]
-                self,
-                move |action, state| {
-                    if let Some(state) = state {
-                        action.set_state(state);
-                        let order = state.str().unwrap();
-
-                        let label = match order {
-                            "Name" => i18n("Name"),
-                            "Language" => i18n("Language"),
-                            "Country" => i18n("Country"),
-                            "State" => i18n("State"),
-                            "Votes" => i18n("Votes"),
-                            "Bitrate" => i18n("Bitrate"),
-                            _ => panic!("unknown sorting state change"),
-                        };
-
-                        this.sorting_button_content.set_label(&label);
-
-                        // Update station request and redo search
-                        let station_request = StationRequest {
-                            order: Some(order.to_lowercase()),
-                            ..this.station_request.borrow().clone()
-                        };
-                        *this.station_request.borrow_mut() = station_request;
-
-                        let fut = clone!(
-                            #[weak]
-                            this,
-                            async move {
-                                this.update_search().await;
-                            }
-                        );
-                        glib::spawn_future_local(fut);
-                    }
+            let child_activate_func = |flowbox: &gtk::FlowBox, child: &gtk::FlowBoxChild| {
+                let row = child.child().unwrap().downcast::<SwStationRow>().unwrap();
+                if let Some(station) = row.station() {
+                    let station_dialog = SwStationDialog::new(&station);
+                    station_dialog.present(Some(flowbox));
                 }
-            ));
+            };
 
-            let action = SimpleAction::new_stateful("order", variant, &"Descending".to_variant());
+            self.popular_flowbox
+                .connect_child_activated(child_activate_func);
+            self.random_flowbox
+                .connect_child_activated(child_activate_func);
 
-            self.search_action_group.add_action(&action);
-            action.connect_change_state(clone!(
-                #[weak(rename_to = this)]
-                self,
-                move |action, state| {
-                    if let Some(state) = state {
-                        action.set_state(state);
+            // Search grid view
+            let model = gtk::NoSelection::new(Some(self.search_model.clone()));
+            self.search_gridview.set_model(Some(&model));
 
-                        let reverse = if state.str().unwrap() == "Ascending" {
-                            this.sorting_button_content
-                                .set_icon_name("view-sort-ascending-symbolic");
-                            false
-                        } else {
-                            this.sorting_button_content
-                                .set_icon_name("view-sort-descending-symbolic");
-                            true
-                        };
-
-                        // Update station request and redo search
-                        let station_request = StationRequest {
-                            reverse: Some(reverse),
-                            ..this.station_request.borrow().clone()
-                        };
-                        *this.station_request.borrow_mut() = station_request;
-
-                        let fut = clone!(
-                            #[weak]
-                            this,
-                            async move {
-                                this.update_search().await;
-                            }
-                        );
-                        glib::spawn_future_local(fut);
-                    }
-                }
-            ));
-
-            // Automatically focus search entry
-            obj.connect_map(|this| {
-                let imp = this.imp();
-                imp.search_entry.grab_focus();
-                imp.search_entry.select_region(0, -1);
-            });
-
-            // SwClient is ready / has search results
-            self.client.connect_local(
-                "ready",
-                false,
-                clone!(
-                    #[weak(rename_to = this)]
-                    self,
-                    #[upgrade_or]
-                    None,
-                    move |_| {
-                        if this.client.model().n_items() == 0 {
-                            this.stack.set_visible_child_name("no-results");
-                        } else {
-                            this.stack.set_visible_child_name("results");
-                        }
-
-                        None
-                    }
-                ),
-            );
-
-            // SwClient error
-            self.client.connect_closure(
-                "error",
-                false,
-                closure!(|_: SwClient, err: Error| {
-                    warn!("Station data could not be received: {}", err.to_string());
-
-                    let text = i18n("Station data could not be received.");
-                    SwApplicationWindow::default().show_notification(&text);
-                }),
-            );
-
-            // Station grid view
-            let model = gtk::NoSelection::new(Some(self.client.model()));
-            self.gridview.set_model(Some(&model));
-
-            self.gridview.connect_activate(|gridview, pos| {
-                let model = gridview.model().unwrap();
-                let station = model.item(pos).unwrap().downcast::<SwStation>().unwrap();
-                let station_dialog = SwStationDialog::new(&station);
-                station_dialog.present(Some(gridview));
-            });
+            self.search_gridview
+                .connect_activate(|gv: &gtk::GridView, pos| {
+                    let model = gv.model().unwrap();
+                    let station = model.item(pos).unwrap().downcast::<SwStation>().unwrap();
+                    let station_dialog = SwStationDialog::new(&station);
+                    station_dialog.present(Some(gv));
+                });
         }
     }
 
-    impl WidgetImpl for SwSearchPage {}
+    impl WidgetImpl for SwSearchPage {
+        fn map(&self) {
+            self.parent_map();
+
+            glib::spawn_future_local(clone!(
+                #[weak(rename_to = imp)]
+                self,
+                async move {
+                    imp.update_suggested_stations().await;
+                }
+            ));
+        }
+    }
 
     impl NavigationPageImpl for SwSearchPage {}
 
@@ -232,27 +129,85 @@ mod imp {
             let text = self.search_entry.text().to_string();
             let text = if text.is_empty() { None } else { Some(text) };
 
-            let station_request = StationRequest {
-                name: text,
-                ..self.station_request.borrow().clone()
-            };
-            *self.station_request.borrow_mut() = station_request;
-
-            self.update_search().await;
-        }
-
-        async fn update_search(&self) {
             // Don't search if search entry is empty
-            if self.station_request.borrow().name.is_none() {
+            if text.is_none() {
                 self.stack.set_visible_child_name("empty");
                 return;
             }
 
+            let request = StationRequest::search_for_name(text, 1000);
+
+            debug!("Search for: {:?}", request);
+            let res = client::station_request(request).await;
             self.stack.set_visible_child_name("spinner");
 
-            let request = self.station_request.borrow().clone();
-            debug!("Search for: {:?}", request);
-            self.client.send_station_request(request);
+            res.handle_error("Unable to search for stations");
+
+            if let Ok(stations) = res {
+                if stations.is_empty() {
+                    self.stack.set_visible_child_name("no-results");
+                } else {
+                    self.stack.set_visible_child_name("results");
+                }
+
+                self.search_model.clear();
+                self.search_model.add_stations(stations);
+            }
+        }
+
+        async fn update_suggested_stations(&self) {
+            debug!("Update suggested stations...");
+            let countrycode = Self::region_code().unwrap_or("GB".into());
+
+            // Popular stations
+            let request = StationRequest {
+                limit: Some(100),
+                order: Some("votes".into()),
+                reverse: Some(true),
+                countrycode: Some(countrycode.clone()),
+                ..Default::default()
+            };
+
+            let res = client::station_request(request).await;
+            res.handle_error("Unable to load popular stations");
+
+            if let Ok(mut stations) = res {
+                // Anything more than 50k votes can be considered as botted spam
+                stations.retain(|s| s.metadata().votes < 50_000);
+
+                // Randomize the selection to avoid that always the same stations are visible
+                let stations = stations
+                    .choose_multiple(&mut rand::thread_rng(), 12)
+                    .cloned()
+                    .collect::<Vec<SwStation>>();
+
+                self.popular_model.clear();
+                self.popular_model.add_stations(stations);
+            }
+
+            // Random stations
+            let request = StationRequest {
+                limit: Some(42),
+                order: Some("random".into()),
+                countrycode: Some(countrycode),
+                ..Default::default()
+            };
+
+            let res = client::station_request(request).await;
+            res.handle_error("Unable to load suggested stations");
+
+            if let Ok(mut stations) = res {
+                stations.retain(|s| s.metadata().votes < 25_000);
+
+                self.random_model.clear();
+                self.random_model.add_stations(stations);
+            }
+        }
+
+        fn region_code() -> Option<String> {
+            let locale = sys_locale::get_locale()?;
+            let langtag = language_tags::LanguageTag::parse(&locale).ok()?;
+            langtag.region().map(|s| s.to_string())
         }
     }
 }

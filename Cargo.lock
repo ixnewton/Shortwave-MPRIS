@@ -1896,6 +1896,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "language-tags"
+version = "0.3.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d4345964bb142484797b161f473a503a434de77149dd8c7427788c6e13379388"
+
+[[package]]
 name = "lazy_static"
 version = "1.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3040,6 +3046,7 @@ dependencies = [
  "gtk4",
  "indexmap 2.5.0",
  "isahc",
+ "language-tags",
  "libadwaita",
  "libshumate",
  "log",
@@ -3055,6 +3062,7 @@ dependencies = [
  "serde_urlencoded",
  "strum",
  "strum_macros",
+ "sys-locale",
  "thiserror",
  "url",
  "uuid",
@@ -3208,6 +3216,15 @@ dependencies = [
  "proc-macro2",
  "quote",
  "unicode-ident",
+]
+
+[[package]]
+name = "sys-locale"
+version = "0.3.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e801cf239ecd6ccd71f03d270d67dd53d13e90aab208bf4b8fe4ad957ea949b0"
+dependencies = [
+ "libc",
 ]
 
 [[package]]

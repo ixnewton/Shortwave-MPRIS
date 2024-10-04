@@ -68,9 +68,9 @@ impl SwStationModel {
     }
 
     pub fn add_stations(&self, stations: Vec<SwStation>) {
-        let added = {
+        let (pos, added) = {
             let mut map = self.imp().map.borrow_mut();
-            let mut added = 0;
+            let mut added: u32 = 0;
 
             for station in stations {
                 if map.insert(station.uuid(), station.clone()).is_none() {
@@ -78,10 +78,10 @@ impl SwStationModel {
                 }
             }
 
-            added
+            (map.len() as u32 - added, added)
         };
 
-        self.items_changed(self.n_items() - 1, 0, added);
+        self.items_changed(pos, 0, added);
     }
 
     pub fn remove_station(&self, station: &SwStation) {

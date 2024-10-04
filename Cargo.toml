@@ -19,6 +19,7 @@ glycin = { version = "2.0", features = ["gdk4"] }
 indexmap = "2.2"
 Inflector = "0.11"
 isahc = { version = "1.7", features = ["json"] }
+language-tags = "0.3"
 log = "0.4"
 mdns-sd = "0.11"
 mpris-server = "0.8"
@@ -32,6 +33,7 @@ serde_json = "1.0"
 serde_urlencoded = "0.7"
 strum = "0.26"
 strum_macros = "0.26"
+sys-locale = "0.3"
 thiserror = "1.0"
 url = "2.5"
 uuid = { version = "1.8", features = ["v4"] }
