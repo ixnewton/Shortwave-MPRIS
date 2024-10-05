@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2024-09-28 13:21+0000\n"
-"PO-Revision-Date: 2024-09-29 20:53+0200\n"
+"POT-Creation-Date: 2024-10-04 17:47+0000\n"
+"PO-Revision-Date: 2024-10-05 08:08+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl_SI\n"
@@ -116,7 +116,7 @@ msgstr "Ustvari krajevno postajo"
 msgid "Change station image"
 msgstr "Spremeni sliko postaje"
 
-#: data/gtk/create_station_dialog.ui:123 src/ui/pages/search_page.rs:102
+#: data/gtk/create_station_dialog.ui:123
 msgid "Name"
 msgstr "Naziv"
 
@@ -194,7 +194,7 @@ msgstr "Preklopi predvajanje"
 msgid "Shortwave"
 msgstr "Kratki valovi"
 
-#: data/gtk/library_page.ui:15
+#: data/gtk/library_page.ui:15 data/gtk/search_page.ui:4
 msgid "Add Stations"
 msgstr "Dodaj postaje"
 
@@ -214,35 +214,35 @@ msgstr "_Omogoči predvajalnik s pripomočka"
 msgid "_Sorting"
 msgstr "_Razvrščanje"
 
-#: data/gtk/library_page.ui:120 data/gtk/search_page.ui:142
+#: data/gtk/library_page.ui:120
 msgid "_Name"
 msgstr "_Ime"
 
-#: data/gtk/library_page.ui:125 data/gtk/search_page.ui:147
+#: data/gtk/library_page.ui:125
 msgid "_Language"
 msgstr "_Jezik"
 
-#: data/gtk/library_page.ui:130 data/gtk/search_page.ui:152
+#: data/gtk/library_page.ui:130
 msgid "_Country"
 msgstr "_Država"
 
-#: data/gtk/library_page.ui:135 data/gtk/search_page.ui:157
+#: data/gtk/library_page.ui:135
 msgid "S_tate"
 msgstr "_Stanje"
 
-#: data/gtk/library_page.ui:140 data/gtk/search_page.ui:162
+#: data/gtk/library_page.ui:140
 msgid "_Votes"
 msgstr "_Glasovi"
 
-#: data/gtk/library_page.ui:145 data/gtk/search_page.ui:167
+#: data/gtk/library_page.ui:145
 msgid "_Bitrate"
 msgstr "_Bitna hitrost"
 
-#: data/gtk/library_page.ui:152 data/gtk/search_page.ui:174
+#: data/gtk/library_page.ui:152
 msgid "_Ascending"
 msgstr "_Naraščajoče"
 
-#: data/gtk/library_page.ui:157 data/gtk/search_page.ui:179
+#: data/gtk/library_page.ui:157
 msgid "_Descending"
 msgstr "_Padajoče"
 
@@ -318,28 +318,31 @@ msgstr ""
 msgid "An error occurred"
 msgstr "Prišlo je do napake"
 
-#: data/gtk/search_page.ui:4 data/gtk/search_page.ui:26
+#: data/gtk/search_page.ui:23
 msgid "Search"
 msgstr "Išči"
 
-#: data/gtk/search_page.ui:35 data/gtk/station_dialog.ui:171
-#: src/ui/pages/search_page.rs:106
-msgid "Votes"
-msgstr "Glasovi"
+#: data/gtk/search_page.ui:39
+msgid "Browse over 50,000 stations"
+msgstr "Brskajte med 50.000 postajami"
 
 #: data/gtk/search_page.ui:40
-msgid "Change the sorting of the search results"
-msgstr "Spremeni način razvrščanja zadetkov iskanja"
+msgid "Find stations using radio-browser.info"
+msgstr "Iskanje postaj z uporabo radio-browser.info"
 
-#: data/gtk/search_page.ui:68
+#: data/gtk/search_page.ui:56
+msgid "Create new Station"
+msgstr "Ustvari novo postajo"
+
+#: data/gtk/search_page.ui:92
 msgid "No Results"
 msgstr "Ni najdenih zadetkov"
 
-#: data/gtk/search_page.ui:69
+#: data/gtk/search_page.ui:93
 msgid "Try using a different search term"
 msgstr "Poskusite z drugačnim iskalnim nizom"
 
-#: data/gtk/search_page.ui:124
+#: data/gtk/search_page.ui:148
 msgid "Searching…"
 msgstr "Iskanje …"
 
@@ -398,7 +401,7 @@ msgstr ""
 msgid "Information"
 msgstr "Podrobnosti"
 
-#: data/gtk/station_dialog.ui:151 src/ui/pages/search_page.rs:103
+#: data/gtk/station_dialog.ui:151
 msgid "Language"
 msgstr "Jezik"
 
@@ -406,15 +409,19 @@ msgstr "Jezik"
 msgid "Tags"
 msgstr "Oznake"
 
+#: data/gtk/station_dialog.ui:171
+msgid "Votes"
+msgstr "Glasovi"
+
 #: data/gtk/station_dialog.ui:182
 msgid "Location"
 msgstr "Kraj"
 
-#: data/gtk/station_dialog.ui:187 src/ui/pages/search_page.rs:104
+#: data/gtk/station_dialog.ui:187
 msgid "Country"
 msgstr "Država"
 
-#: data/gtk/station_dialog.ui:197 src/ui/pages/search_page.rs:105
+#: data/gtk/station_dialog.ui:197
 msgid "State"
 msgstr "Pokrajina / zvezna država"
 
@@ -422,7 +429,7 @@ msgstr "Pokrajina / zvezna država"
 msgid "Audio"
 msgstr "Zvok"
 
-#: data/gtk/station_dialog.ui:235 src/ui/pages/search_page.rs:107
+#: data/gtk/station_dialog.ui:235
 msgid "Bitrate"
 msgstr "Bitna hitrost"
 
@@ -472,10 +479,6 @@ msgstr "Pokaži podrobnosti"
 #: src/ui/pages/library_page.rs:111
 msgid "Welcome to {}"
 msgstr "Dobrodošli v {}"
-
-#: src/ui/pages/search_page.rs:206
-msgid "Station data could not be received."
-msgstr "Podatkov postaje ni mogoče prejeti."
 
 #: src/ui/recording_indicator.rs:111
 msgid "Recording in Progress"
