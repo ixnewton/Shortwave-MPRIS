@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2024-09-28 13:21+0000\n"
-"PO-Revision-Date: 2024-09-29 08:36+0800\n"
+"POT-Creation-Date: 2024-10-04 17:47+0000\n"
+"PO-Revision-Date: 2024-10-05 08:08+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -117,7 +117,7 @@ msgstr "创建本地电台"
 msgid "Change station image"
 msgstr "修改电台图像"
 
-#: data/gtk/create_station_dialog.ui:123 src/ui/pages/search_page.rs:102
+#: data/gtk/create_station_dialog.ui:123
 msgid "Name"
 msgstr "名称"
 
@@ -195,7 +195,7 @@ msgstr "开关回放"
 msgid "Shortwave"
 msgstr "短波"
 
-#: data/gtk/library_page.ui:15
+#: data/gtk/library_page.ui:15 data/gtk/search_page.ui:4
 msgid "Add Stations"
 msgstr "添加电台"
 
@@ -215,35 +215,35 @@ msgstr "启用迷你播放器(_E)"
 msgid "_Sorting"
 msgstr "排序(_S)"
 
-#: data/gtk/library_page.ui:120 data/gtk/search_page.ui:142
+#: data/gtk/library_page.ui:120
 msgid "_Name"
 msgstr "名称(_N)"
 
-#: data/gtk/library_page.ui:125 data/gtk/search_page.ui:147
+#: data/gtk/library_page.ui:125
 msgid "_Language"
 msgstr "语言(_L)"
 
-#: data/gtk/library_page.ui:130 data/gtk/search_page.ui:152
+#: data/gtk/library_page.ui:130
 msgid "_Country"
 msgstr "国家(_C)"
 
-#: data/gtk/library_page.ui:135 data/gtk/search_page.ui:157
+#: data/gtk/library_page.ui:135
 msgid "S_tate"
 msgstr "州省(_T)"
 
-#: data/gtk/library_page.ui:140 data/gtk/search_page.ui:162
+#: data/gtk/library_page.ui:140
 msgid "_Votes"
 msgstr "票数(_V)"
 
-#: data/gtk/library_page.ui:145 data/gtk/search_page.ui:167
+#: data/gtk/library_page.ui:145
 msgid "_Bitrate"
 msgstr "位速率(_B)"
 
-#: data/gtk/library_page.ui:152 data/gtk/search_page.ui:174
+#: data/gtk/library_page.ui:152
 msgid "_Ascending"
 msgstr "升序(_A)"
 
-#: data/gtk/library_page.ui:157 data/gtk/search_page.ui:179
+#: data/gtk/library_page.ui:157
 msgid "_Descending"
 msgstr "降序(_D)"
 
@@ -317,28 +317,31 @@ msgstr "使用串流元数据识别和录制的歌曲将出现在这里。"
 msgid "An error occurred"
 msgstr "发生了错误"
 
-#: data/gtk/search_page.ui:4 data/gtk/search_page.ui:26
+#: data/gtk/search_page.ui:23
 msgid "Search"
 msgstr "搜索"
 
-#: data/gtk/search_page.ui:35 data/gtk/station_dialog.ui:171
-#: src/ui/pages/search_page.rs:106
-msgid "Votes"
-msgstr "票数"
+#: data/gtk/search_page.ui:39
+msgid "Browse over 50,000 stations"
+msgstr "浏览 50000 多个电台"
 
 #: data/gtk/search_page.ui:40
-msgid "Change the sorting of the search results"
-msgstr "更改搜索结果的排序"
+msgid "Find stations using radio-browser.info"
+msgstr "使用 radio-browser.info 查找电台"
 
-#: data/gtk/search_page.ui:68
+#: data/gtk/search_page.ui:56
+msgid "Create new Station"
+msgstr "创建新电台"
+
+#: data/gtk/search_page.ui:92
 msgid "No Results"
 msgstr "无结果"
 
-#: data/gtk/search_page.ui:69
+#: data/gtk/search_page.ui:93
 msgid "Try using a different search term"
 msgstr "尝试使用不同的搜索关键字"
 
-#: data/gtk/search_page.ui:124
+#: data/gtk/search_page.ui:148
 msgid "Searching…"
 msgstr "正在搜索…"
 
@@ -394,7 +397,7 @@ msgstr "信息无法更新，可能是因为该电台已从公共在线电台数
 msgid "Information"
 msgstr "信息"
 
-#: data/gtk/station_dialog.ui:151 src/ui/pages/search_page.rs:103
+#: data/gtk/station_dialog.ui:151
 msgid "Language"
 msgstr "语言"
 
@@ -402,15 +405,19 @@ msgstr "语言"
 msgid "Tags"
 msgstr "标签"
 
+#: data/gtk/station_dialog.ui:171
+msgid "Votes"
+msgstr "票数"
+
 #: data/gtk/station_dialog.ui:182
 msgid "Location"
 msgstr "位置"
 
-#: data/gtk/station_dialog.ui:187 src/ui/pages/search_page.rs:104
+#: data/gtk/station_dialog.ui:187
 msgid "Country"
 msgstr "国家"
 
-#: data/gtk/station_dialog.ui:197 src/ui/pages/search_page.rs:105
+#: data/gtk/station_dialog.ui:197
 msgid "State"
 msgstr "州省"
 
@@ -418,7 +425,7 @@ msgstr "州省"
 msgid "Audio"
 msgstr "音频"
 
-#: data/gtk/station_dialog.ui:235 src/ui/pages/search_page.rs:107
+#: data/gtk/station_dialog.ui:235
 msgid "Bitrate"
 msgstr "位速率"
 
@@ -472,10 +479,6 @@ msgstr "显示详情"
 msgid "Welcome to {}"
 msgstr "欢迎使用 {}"
 
-#: src/ui/pages/search_page.rs:206
-msgid "Station data could not be received."
-msgstr "无法接收电台数据。"
-
 #: src/ui/recording_indicator.rs:111
 msgid "Recording in Progress"
 msgstr "正在进行录制"
@@ -504,6 +507,12 @@ msgstr "当前歌曲无法完整录制。开头已被漏掉。"
 #: src/ui/station_dialog.rs:206
 msgid "{} kbit/s"
 msgstr "{} kbit/s"
+
+#~ msgid "Change the sorting of the search results"
+#~ msgstr "更改搜索结果的排序"
+
+#~ msgid "Station data could not be received."
+#~ msgstr "无法接收电台数据。"
 
 #~ msgid "Discover"
 #~ msgstr "发现"
@@ -552,9 +561,6 @@ msgstr "{} kbit/s"
 
 #~ msgid "Show statistics"
 #~ msgstr "显示统计信息"
-
-#~ msgid "Browse over 50,000 stations"
-#~ msgstr "浏览 50000 多个电台"
 
 #~ msgid "Add new station"
 #~ msgstr "添加新电台"
@@ -636,9 +642,6 @@ msgstr "{} kbit/s"
 
 #~ msgid "Station details"
 #~ msgstr "电台详细信息"
-
-#~ msgid "Unable to connect to radio-browser.info"
-#~ msgstr "无法连接到 radio-browser.info"
 
 #~ msgid ""
 #~ "Access to the public online station database is not available. Ensure "
