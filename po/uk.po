@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2024-09-28 13:21+0000\n"
-"PO-Revision-Date: 2024-09-28 21:06+0300\n"
+"POT-Creation-Date: 2024-10-04 17:47+0000\n"
+"PO-Revision-Date: 2024-10-05 17:38+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -116,7 +116,7 @@ msgstr "Створити локальну станцію"
 msgid "Change station image"
 msgstr "Змінити зображення для станції"
 
-#: data/gtk/create_station_dialog.ui:123 src/ui/pages/search_page.rs:102
+#: data/gtk/create_station_dialog.ui:123
 msgid "Name"
 msgstr "Назва"
 
@@ -194,7 +194,7 @@ msgstr "Перемкнути відтворення"
 msgid "Shortwave"
 msgstr "Коротка хвиля"
 
-#: data/gtk/library_page.ui:15
+#: data/gtk/library_page.ui:15 data/gtk/search_page.ui:4
 msgid "Add Stations"
 msgstr "Додати станції"
 
@@ -203,7 +203,6 @@ msgid "Main Menu"
 msgstr "Головне меню"
 
 #: data/gtk/library_page.ui:91
-#| msgid "Add Stations"
 msgid "_Add New Stations"
 msgstr "_Додати нові станції"
 
@@ -215,35 +214,35 @@ msgstr "_Увімкнути відтворення з пристроїв"
 msgid "_Sorting"
 msgstr "Вп_орядкування"
 
-#: data/gtk/library_page.ui:120 data/gtk/search_page.ui:142
+#: data/gtk/library_page.ui:120
 msgid "_Name"
 msgstr "_Назва"
 
-#: data/gtk/library_page.ui:125 data/gtk/search_page.ui:147
+#: data/gtk/library_page.ui:125
 msgid "_Language"
 msgstr "_Мова"
 
-#: data/gtk/library_page.ui:130 data/gtk/search_page.ui:152
+#: data/gtk/library_page.ui:130
 msgid "_Country"
 msgstr "К_раїна"
 
-#: data/gtk/library_page.ui:135 data/gtk/search_page.ui:157
+#: data/gtk/library_page.ui:135
 msgid "S_tate"
 msgstr "_Штат"
 
-#: data/gtk/library_page.ui:140 data/gtk/search_page.ui:162
+#: data/gtk/library_page.ui:140
 msgid "_Votes"
 msgstr "_Голоси"
 
-#: data/gtk/library_page.ui:145 data/gtk/search_page.ui:167
+#: data/gtk/library_page.ui:145
 msgid "_Bitrate"
 msgstr "_Бітова швидкість"
 
-#: data/gtk/library_page.ui:152 data/gtk/search_page.ui:174
+#: data/gtk/library_page.ui:152
 msgid "_Ascending"
 msgstr "За з_ростанням"
 
-#: data/gtk/library_page.ui:157 data/gtk/search_page.ui:179
+#: data/gtk/library_page.ui:157
 msgid "_Descending"
 msgstr "За с_паданням"
 
@@ -319,28 +318,33 @@ msgstr ""
 msgid "An error occurred"
 msgstr "Сталася помилка"
 
-#: data/gtk/search_page.ui:4 data/gtk/search_page.ui:26
+#: data/gtk/search_page.ui:23
 msgid "Search"
 msgstr "Пошук"
 
-#: data/gtk/search_page.ui:35 data/gtk/station_dialog.ui:171
-#: src/ui/pages/search_page.rs:106
-msgid "Votes"
-msgstr "Голоси"
+#: data/gtk/search_page.ui:39
+msgid "Browse over 50,000 stations"
+msgstr "Навігація списком із понад 50000 станцій"
 
 #: data/gtk/search_page.ui:40
-msgid "Change the sorting of the search results"
-msgstr "Змінити упорядкування результатів пошуку"
+#| msgid "Unable to connect to radio-browser.info"
+msgid "Find stations using radio-browser.info"
+msgstr "Пошук станцій за допомогою radio-browser.info"
 
-#: data/gtk/search_page.ui:68
+#: data/gtk/search_page.ui:56
+#| msgid "Create new station"
+msgid "Create new Station"
+msgstr "Створити станцію"
+
+#: data/gtk/search_page.ui:92
 msgid "No Results"
 msgstr "Нічого не знайдено"
 
-#: data/gtk/search_page.ui:69
+#: data/gtk/search_page.ui:93
 msgid "Try using a different search term"
 msgstr "Спробуйте інший критерій пошуку"
 
-#: data/gtk/search_page.ui:124
+#: data/gtk/search_page.ui:148
 msgid "Searching…"
 msgstr "Пошук…"
 
@@ -401,7 +405,7 @@ msgstr ""
 msgid "Information"
 msgstr "Відомості"
 
-#: data/gtk/station_dialog.ui:151 src/ui/pages/search_page.rs:103
+#: data/gtk/station_dialog.ui:151
 msgid "Language"
 msgstr "Мова"
 
@@ -409,15 +413,19 @@ msgstr "Мова"
 msgid "Tags"
 msgstr "Мітки"
 
+#: data/gtk/station_dialog.ui:171
+msgid "Votes"
+msgstr "Голоси"
+
 #: data/gtk/station_dialog.ui:182
 msgid "Location"
 msgstr "Місце"
 
-#: data/gtk/station_dialog.ui:187 src/ui/pages/search_page.rs:104
+#: data/gtk/station_dialog.ui:187
 msgid "Country"
 msgstr "Країна"
 
-#: data/gtk/station_dialog.ui:197 src/ui/pages/search_page.rs:105
+#: data/gtk/station_dialog.ui:197
 msgid "State"
 msgstr "Штат"
 
@@ -425,7 +433,7 @@ msgstr "Штат"
 msgid "Audio"
 msgstr "Звук"
 
-#: data/gtk/station_dialog.ui:235 src/ui/pages/search_page.rs:107
+#: data/gtk/station_dialog.ui:235
 msgid "Bitrate"
 msgstr "Бітова швидкість"
 
@@ -474,10 +482,6 @@ msgstr "Показати подробиці"
 msgid "Welcome to {}"
 msgstr "Вітаємо у {}"
 
-#: src/ui/pages/search_page.rs:206
-msgid "Station data could not be received."
-msgstr "Не вдалося отримати дані станції."
-
 #: src/ui/recording_indicator.rs:111
 msgid "Recording in Progress"
 msgstr "Виконуємо записування"
@@ -511,6 +515,12 @@ msgstr "Поточну композицію не може бути записа�
 #: src/ui/station_dialog.rs:206
 msgid "{} kbit/s"
 msgstr "{} кбіт/с"
+
+#~ msgid "Change the sorting of the search results"
+#~ msgstr "Змінити упорядкування результатів пошуку"
+
+#~ msgid "Station data could not be received."
+#~ msgstr "Не вдалося отримати дані станції."
 
 #~ msgid "Discover"
 #~ msgstr "Виявлення"
@@ -559,9 +569,6 @@ msgstr "{} кбіт/с"
 
 #~ msgid "Show statistics"
 #~ msgstr "Показати статистику"
-
-#~ msgid "Browse over 50,000 stations"
-#~ msgstr "Навігація списком із понад 50000 станцій"
 
 #~ msgid "Add new station"
 #~ msgstr "Додати нову станцію"
@@ -667,9 +674,6 @@ msgstr "{} кбіт/с"
 
 #~ msgid "Station details"
 #~ msgstr "Параметри станції"
-
-#~ msgid "Unable to connect to radio-browser.info"
-#~ msgstr "Не вдалося встановити з'єднання із radio-browser.info"
 
 #~ msgid ""
 #~ "Access to the public online station database is not available. Ensure "
