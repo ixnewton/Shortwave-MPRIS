@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2024-10-04 17:47+0000\n"
-"PO-Revision-Date: 2024-10-05 08:08+0800\n"
+"POT-Creation-Date: 2024-10-06 11:44+0000\n"
+"PO-Revision-Date: 2024-10-06 20:09+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Gtranslator 46.1\n"
+"X-Generator: Gtranslator 47.0\n"
 "X-DL-Team: zh_CN\n"
 "X-DL-Module: shortwave\n"
 "X-DL-Branch: master\n"
@@ -317,31 +317,48 @@ msgstr "使用串流元数据识别和录制的歌曲将出现在这里。"
 msgid "An error occurred"
 msgstr "发生了错误"
 
-#: data/gtk/search_page.ui:23
+#: data/gtk/search_page.ui:22
 msgid "Search"
 msgstr "搜索"
 
-#: data/gtk/search_page.ui:39
+#: data/gtk/search_page.ui:23
+msgid "Search stations"
+msgstr "搜索电台"
+
+#: data/gtk/search_page.ui:69
 msgid "Browse over 50,000 stations"
 msgstr "浏览 50000 多个电台"
 
-#: data/gtk/search_page.ui:40
-msgid "Find stations using radio-browser.info"
-msgstr "使用 radio-browser.info 查找电台"
-
-#: data/gtk/search_page.ui:56
+#: data/gtk/search_page.ui:78
 msgid "Create new Station"
 msgstr "创建新电台"
 
-#: data/gtk/search_page.ui:92
+#: data/gtk/search_page.ui:98
+msgid "Popular Stations"
+msgstr "流行电台"
+
+#: data/gtk/search_page.ui:119
+msgid "Discover New Stations"
+msgstr "探索新电台"
+
+#: data/gtk/search_page.ui:141
+msgid ""
+"The displayed information is provided by <a href=\"https://www.radio-browser."
+"info/\">radio-browser.info</a>. \n"
+"Shortwave has no influence on the listed stations."
+msgstr ""
+"显示的信息由 <a href=\"https://www.radio-browser.info/\">radio-browser.info</"
+"a> 提供。Shortwave 无法影响列出的电台。"
+
+#: data/gtk/search_page.ui:162
 msgid "No Results"
 msgstr "无结果"
 
-#: data/gtk/search_page.ui:93
+#: data/gtk/search_page.ui:163
 msgid "Try using a different search term"
 msgstr "尝试使用不同的搜索关键字"
 
-#: data/gtk/search_page.ui:148
+#: data/gtk/search_page.ui:218
 msgid "Searching…"
 msgstr "正在搜索…"
 
@@ -508,6 +525,9 @@ msgstr "当前歌曲无法完整录制。开头已被漏掉。"
 msgid "{} kbit/s"
 msgstr "{} kbit/s"
 
+#~ msgid "Find stations using radio-browser.info"
+#~ msgstr "使用 radio-browser.info 查找电台"
+
 #~ msgid "Change the sorting of the search results"
 #~ msgstr "更改搜索结果的排序"
 
@@ -534,9 +554,6 @@ msgstr "{} kbit/s"
 
 #~ msgid "Library"
 #~ msgstr "电台库"
-
-#~ msgid "_Discover New Stations"
-#~ msgstr "探索新电台(_D)"
 
 #~ msgid "Search Results"
 #~ msgstr "搜索结果"
@@ -714,10 +731,6 @@ msgstr "{} kbit/s"
 #~ msgid "{} · {} Vote"
 #~ msgid_plural "{} · {} Votes"
 #~ msgstr[0] "{} · {} 票"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Search for stations"
-#~ msgstr "搜索电台"
 
 #~ msgid "Languages"
 #~ msgstr "语言"
