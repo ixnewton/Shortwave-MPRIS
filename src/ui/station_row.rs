@@ -72,13 +72,22 @@ mod imp {
     impl ObjectImpl for SwStationRow {
         fn constructed(&self) {
             self.parent_constructed();
+
             self.play_button.connect_clicked(clone!(
                 #[strong(rename_to = obj)]
                 self.obj(),
                 move |_| {
-                    if let Some(station) = obj.station() {
-                        SwApplication::default().player().set_station(station);
-                    }
+                    glib::spawn_future_local(clone!(
+                        #[weak]
+                        obj,
+                        async move {
+                            if let Some(station) = obj.station() {
+                                let player = SwApplication::default().player();
+                                player.set_station(station).await;
+                                player.start_playback().await;
+                            }
+                        }
+                    ));
                 }
             ));
         }

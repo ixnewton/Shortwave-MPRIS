@@ -263,12 +263,13 @@ mod imp {
         }
 
         #[template_callback]
-        fn start_playback(&self) {
+        async fn start_playback(&self) {
             let obj = self.obj();
             let station = obj.station();
 
-            let app = SwApplication::default();
-            app.player().set_station(station);
+            let player = SwApplication::default().player();
+            player.set_station(station).await;
+            player.start_playback().await;
 
             obj.close();
         }

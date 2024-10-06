@@ -185,7 +185,7 @@ mod imp {
                 ..Default::default()
             };
 
-            let mut stations = client::station_request(request).await?;
+            let stations = client::station_request(request).await?;
             self.random_model.clear();
             self.random_model.add_stations(stations);
 

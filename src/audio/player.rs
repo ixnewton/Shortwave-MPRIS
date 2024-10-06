@@ -23,7 +23,7 @@ use glib::subclass::prelude::*;
 use glib::Properties;
 use gtk::glib;
 
-use crate::api::SwStation;
+use crate::api::{StationMetadata, SwStation};
 use crate::app::SwApplication;
 use crate::audio::*;
 use crate::device::{SwCastSender, SwDevice, SwDeviceDiscovery, SwDeviceKind};
@@ -39,9 +39,9 @@ mod imp {
     #[derive(Debug, Default, Properties)]
     #[properties(wrapper_type = super::SwPlayer)]
     pub struct SwPlayer {
-        #[property(get, set=Self::set_station)]
+        #[property(get)]
         #[property(name="has-station", get=Self::has_station, type=bool)]
-        station: RefCell<Option<SwStation>>,
+        pub station: RefCell<Option<SwStation>>,
         #[property(get, builder(SwPlaybackState::default()))]
         state: Cell<SwPlaybackState>,
         #[property(get)]
@@ -110,10 +110,6 @@ mod imp {
                 }
             ));
 
-            // Restore volume
-            let volume = settings_manager::double(Key::PlaybackVolume);
-            self.obj().set_volume(volume);
-
             // Remove device on cast disconnect
             self.cast_sender.connect_is_connected_notify(clone!(
                 #[weak (rename_to = imp)]
@@ -140,6 +136,8 @@ mod imp {
                     .await
                     .handle_error("Unable to start MPRIS media controls")
             });
+
+            self.restore_state();
         }
     }
 
@@ -156,47 +154,6 @@ mod imp {
             self.obj().device().is_some()
         }
 
-        fn set_station(&self, station: Option<&SwStation>) {
-            *self.station.borrow_mut() = station.cloned();
-            self.obj().notify_has_station();
-
-            glib::spawn_future_local(clone!(
-                #[weak(rename_to = imp)]
-                self,
-                async move {
-                    imp.obj().stop_playback().await;
-
-                    if let Some(station) = imp.obj().station() {
-                        if let Some(url) = station.stream_url() {
-                            debug!("Start playing new URI: {}", url.to_string());
-
-                            imp.backend
-                                .get()
-                                .unwrap()
-                                .borrow_mut()
-                                .set_source_uri(url.as_ref());
-
-                            imp.cast_sender
-                                .load_media(
-                                    url.as_ref(),
-                                    &station
-                                        .metadata()
-                                        .favicon
-                                        .map(|u| u.to_string())
-                                        .unwrap_or_default(),
-                                    &station.title(),
-                                )
-                                .await
-                                .handle_error("Unable to load Google Cast media");
-                        } else {
-                            let text = i18n("Station cannot be streamed. URL is not valid.");
-                            SwApplicationWindow::default().show_notification(&text);
-                        }
-                    }
-                }
-            ));
-        }
-
         fn set_volume(&self, volume: f64) {
             if self.volume.get() != volume {
                 debug!("Set volume: {}", &volume);
@@ -206,6 +163,40 @@ mod imp {
                     self.backend.get().unwrap().borrow().set_volume(volume);
                     settings_manager::set_double(Key::PlaybackVolume, volume);
                 }
+            }
+        }
+
+        fn restore_state(&self) {
+            // Restore volume
+            let volume = settings_manager::double(Key::PlaybackVolume);
+            self.set_volume(volume);
+
+            // Restore last played station
+            let json = settings_manager::string(Key::PlaybackLastStation);
+            if json.is_empty() {
+                return;
+            }
+
+            match serde_json::from_str::<StationMetadata>(&json) {
+                Ok(station_metadata) => {
+                    let station = SwStation::new(
+                        &station_metadata.stationuuid,
+                        false,
+                        station_metadata.clone(),
+                        None,
+                    );
+
+                    glib::spawn_future_local(clone!(
+                        #[weak(rename_to = imp)]
+                        self,
+                        #[strong]
+                        station,
+                        async move {
+                            imp.obj().set_station(station).await;
+                        }
+                    ));
+                }
+                Err(e) => warn!("Unable to restore last played station: {}", e.to_string()),
             }
         }
 
@@ -381,6 +372,47 @@ glib::wrapper! {
 impl SwPlayer {
     pub fn new() -> Self {
         glib::Object::new()
+    }
+
+    pub async fn set_station(&self, station: SwStation) {
+        debug!("Set station: {}", station.title());
+        let imp = self.imp();
+
+        *imp.station.borrow_mut() = Some(station.clone());
+        self.notify_station();
+        self.notify_has_station();
+
+        self.stop_playback().await;
+
+        if let Some(url) = station.stream_url() {
+            debug!("Set new playback URI: {}", url.to_string());
+            settings_manager::set_string(
+                Key::PlaybackLastStation,
+                serde_json::to_string(&station.metadata()).unwrap_or_default(),
+            );
+
+            imp.backend
+                .get()
+                .unwrap()
+                .borrow_mut()
+                .set_source_uri(url.as_ref());
+
+            self.cast_sender()
+                .load_media(
+                    url.as_ref(),
+                    &station
+                        .metadata()
+                        .favicon
+                        .map(|u| u.to_string())
+                        .unwrap_or_default(),
+                    &station.title(),
+                )
+                .await
+                .handle_error("Unable to load Google Cast media");
+        } else {
+            let text = i18n("Station cannot be streamed. URL is not valid.");
+            SwApplicationWindow::default().show_notification(&text);
+        }
     }
 
     pub async fn start_playback(&self) {

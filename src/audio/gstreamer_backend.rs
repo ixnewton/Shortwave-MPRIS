@@ -221,6 +221,12 @@ impl GstreamerBackend {
     pub fn set_state(&mut self, state: gstreamer::State) {
         debug!("Set playback state: {:?}", state);
 
+        if state == gstreamer::State::Playing {
+            debug!("Start pipeline...");
+            let mut buffering_state = self.buffering_state.lock().unwrap();
+            buffering_state.reset();
+        }
+
         if state == gstreamer::State::Null {
             crate::utils::send(
                 &self.sender,
@@ -307,29 +313,6 @@ impl GstreamerBackend {
         debug!("Set new source URI...");
         let uridecodebin = self.pipeline.by_name("uridecodebin").unwrap();
         uridecodebin.set_property("uri", source);
-
-        debug!("Start pipeline...");
-        let mut buffering_state = self.buffering_state.lock().unwrap();
-        buffering_state.reset();
-        let res = self.pipeline.set_state(State::Playing);
-
-        if res.is_err() {
-            warn!("Failed to set pipeline to playing");
-            crate::utils::send(
-                &self.sender,
-                GstreamerChange::PlaybackState(SwPlaybackState::Failure),
-            );
-            crate::utils::send(
-                &self.sender,
-                GstreamerChange::Failure("Failed to set pipeline to playing".into()),
-            );
-            let _ = self.pipeline.set_state(gstreamer::State::Null);
-            return;
-        }
-
-        let is_live = res == Ok(gstreamer::StateChangeSuccess::NoPreroll);
-        debug!("Pipeline is live: {}", is_live);
-        buffering_state.is_live = Some(is_live);
     }
 
     pub fn start_recording(&mut self, path: PathBuf) {

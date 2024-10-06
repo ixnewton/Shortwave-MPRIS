@@ -37,5 +37,8 @@
     <key name="playback-volume" type="d">
       <default>1.0</default>
     </key>
+    <key name="playback-last-station" type="s">
+      <default>""</default>
+    </key>
   </schema>
 </schemalist>
