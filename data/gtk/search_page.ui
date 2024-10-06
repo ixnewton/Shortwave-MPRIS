@@ -19,6 +19,7 @@
               <object class="GtkSearchEntry" id="search_entry">
                 <property name="hexpand">True</property>
                 <property name="search_delay">750</property>
+                <property name="sensitive">False</property>
                 <property name="tooltip_text" translatable="yes">Search</property>
                 <property name="placeholder_text" translatable="yes">Search stations</property>
                 <signal name="search_changed" handler="search_changed" swapped="true"/>
@@ -36,7 +37,7 @@
             <property name="transition_type">crossfade</property>
             <child>
               <object class="GtkStackPage">
-                <property name="name">empty</property>
+                <property name="name">discover</property>
                 <property name="child">
                   <object class="GtkScrolledWindow">
                     <child>
@@ -59,8 +60,8 @@
                                     <property name="valign">center</property>
                                     <property name="vexpand">True</property>
                                     <property name="orientation">vertical</property>
-                                    <property name="margin_top">30</property>
-                                    <property name="margin_bottom">30</property>
+                                    <property name="margin_top">32</property>
+                                    <property name="margin_bottom">32</property>
                                     <child>
                                       <object class="GtkLabel">
                                         <property name="hexpand">True</property>
@@ -156,17 +157,6 @@ Shortwave has no influence on the listed stations.</property>
             </child>
             <child>
               <object class="GtkStackPage">
-                <property name="name">no-results</property>
-                <property name="child">
-                  <object class="AdwStatusPage">
-                    <property name="title" translatable="yes">No Results</property>
-                    <property name="description" translatable="yes">Try using a different search term</property>
-                  </object>
-                </property>
-              </object>
-            </child>
-            <child>
-              <object class="GtkStackPage">
                 <property name="name">results</property>
                 <property name="child">
                   <object class="GtkScrolledWindow" id="scrolledwindow">
@@ -215,12 +205,43 @@ Shortwave has no influence on the listed stations.</property>
                 <property name="name">spinner</property>
                 <property name="child">
                   <object class="AdwStatusPage" id="loading_status_page">
-                    <property name="title" translatable="yes">Searching…</property>
+                    <property name="title" translatable="yes">Loading…</property>
                     <property name="paintable">
                       <object class="AdwSpinnerPaintable">
                         <property name="widget">loading_status_page</property>
                       </object> 
                     </property>
+                  </object>
+                </property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkStackPage">
+                <property name="name">no-results</property>
+                <property name="child">
+                  <object class="AdwStatusPage">
+                    <property name="title" translatable="yes">No Results</property>
+                    <property name="description" translatable="yes">Try using a different search term</property>
+                  </object>
+                </property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkStackPage">
+                <property name="name">failure</property>
+                <property name="child">
+                  <object class="AdwStatusPage" id="failure_statuspage">
+                    <property name="title" translatable="yes">Unable to Retrieve Station Data</property>
+                    <child>
+                      <object class="GtkButton">
+                        <property name="label" translatable="yes">Try Again</property>
+                        <property name="halign">center</property>
+                        <signal name="clicked" handler="refresh_discover_page" swapped="true"/>
+                        <style>
+                          <class name="pill"/>
+                        </style>
+                      </object>
+                    </child>
                   </object>
                 </property>
               </object>

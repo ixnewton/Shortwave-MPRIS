@@ -14,15 +14,16 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+use std::cell::Cell;
+
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use glib::{clone, subclass};
 use gtk::{glib, CompositeTemplate};
-
-use crate::api::SwStationModel;
-use crate::api::{client, StationRequest, SwStation};
-use crate::ui::{DisplayError, SwStationDialog, SwStationRow};
 use rand::seq::SliceRandom;
+
+use crate::api::{client, Error, StationRequest, SwStation, SwStationModel};
+use crate::ui::{DisplayError, SwStationDialog, SwStationRow};
 
 mod imp {
     use super::*;
@@ -40,10 +41,14 @@ mod imp {
         random_flowbox: TemplateChild<gtk::FlowBox>,
         #[template_child]
         search_gridview: TemplateChild<gtk::GridView>,
+        #[template_child]
+        failure_statuspage: TemplateChild<adw::StatusPage>,
 
         popular_model: SwStationModel,
         random_model: SwStationModel,
         search_model: SwStationModel,
+
+        loaded: Cell<bool>,
     }
 
     #[glib::object_subclass]
@@ -102,6 +107,8 @@ mod imp {
                     let station_dialog = SwStationDialog::new(&station);
                     station_dialog.present(Some(gv));
                 });
+
+            self.stack.set_visible_child_name("spinner");
         }
     }
 
@@ -109,13 +116,15 @@ mod imp {
         fn map(&self) {
             self.parent_map();
 
-            glib::spawn_future_local(clone!(
-                #[weak(rename_to = imp)]
-                self,
-                async move {
-                    imp.update_suggested_stations().await;
-                }
-            ));
+            if !self.loaded.get() {
+                glib::spawn_future_local(clone!(
+                    #[weak(rename_to = imp)]
+                    self,
+                    async move {
+                        imp.refresh_discover_page().await;
+                    }
+                ));
+            }
         }
     }
 
@@ -124,38 +133,25 @@ mod imp {
     #[gtk::template_callbacks]
     impl SwSearchPage {
         #[template_callback]
-        async fn search_changed(&self) {
-            let text = self.search_entry.text().to_string();
-            let text = if text.is_empty() { None } else { Some(text) };
-
-            // Don't search if search entry is empty
-            if text.is_none() {
-                self.stack.set_visible_child_name("empty");
-                return;
-            }
-
-            let request = StationRequest::search_for_name(text, 1000);
-
-            debug!("Search for: {:?}", request);
-            let res = client::station_request(request).await;
+        async fn refresh_discover_page(&self) {
             self.stack.set_visible_child_name("spinner");
 
-            res.handle_error("Unable to search for stations");
-
-            if let Ok(stations) = res {
-                if stations.is_empty() {
-                    self.stack.set_visible_child_name("no-results");
-                } else {
-                    self.stack.set_visible_child_name("results");
+            match self.load_discover_stations().await {
+                Ok(()) => {
+                    self.loaded.set(true);
+                    self.search_entry.set_sensitive(true);
+                    self.stack.set_visible_child_name("discover");
                 }
-
-                self.search_model.clear();
-                self.search_model.add_stations(stations);
+                Err(e) => {
+                    self.stack.set_visible_child_name("failure");
+                    self.failure_statuspage
+                        .set_description(Some(&e.to_string()));
+                }
             }
         }
 
-        async fn update_suggested_stations(&self) {
-            debug!("Update suggested stations...");
+        async fn load_discover_stations(&self) -> Result<(), Error> {
+            debug!("Update discover stations...");
             let countrycode = Self::region_code().unwrap_or("GB".into());
 
             // Popular stations
@@ -167,22 +163,19 @@ mod imp {
                 ..Default::default()
             };
 
-            let res = client::station_request(request).await;
-            res.handle_error("Unable to load popular stations");
+            let mut stations = client::station_request(request).await?;
 
-            if let Ok(mut stations) = res {
-                // Anything more than 50k votes can be considered as botted spam
-                stations.retain(|s| s.metadata().votes < 50_000);
+            // Anything more than 50k votes can be considered as botted spam
+            stations.retain(|s| s.metadata().votes < 50_000);
 
-                // Randomize the selection to avoid that always the same stations are visible
-                let stations = stations
-                    .choose_multiple(&mut rand::thread_rng(), 12)
-                    .cloned()
-                    .collect::<Vec<SwStation>>();
+            // Randomize the selection to avoid that always the same stations are visible
+            let stations = stations
+                .choose_multiple(&mut rand::thread_rng(), 12)
+                .cloned()
+                .collect::<Vec<SwStation>>();
 
-                self.popular_model.clear();
-                self.popular_model.add_stations(stations);
-            }
+            self.popular_model.clear();
+            self.popular_model.add_stations(stations);
 
             // Random stations
             let request = StationRequest {
@@ -192,14 +185,46 @@ mod imp {
                 ..Default::default()
             };
 
+            let mut stations = client::station_request(request).await?;
+            stations.retain(|s| s.metadata().votes < 25_000);
+
+            self.random_model.clear();
+            self.random_model.add_stations(stations);
+
+            Ok(())
+        }
+
+        #[template_callback]
+        async fn search_changed(&self) {
+            if !self.loaded.get() {
+                return;
+            }
+
+            let text = self.search_entry.text().to_string();
+            let text = if text.is_empty() { None } else { Some(text) };
+
+            // Don't search if search entry is empty
+            if text.is_none() {
+                self.stack.set_visible_child_name("discover");
+                return;
+            }
+
+            let request = StationRequest::search_for_name(text, 1000);
+            self.stack.set_visible_child_name("spinner");
+
+            debug!("Search for: {:?}", request);
             let res = client::station_request(request).await;
-            res.handle_error("Unable to load suggested stations");
+            res.handle_error("Unable to search for stations");
 
-            if let Ok(mut stations) = res {
-                stations.retain(|s| s.metadata().votes < 25_000);
+            if let Ok(stations) = res {
+                if stations.is_empty() {
+                    self.stack.set_visible_child_name("no-results");
+                } else {
+                    self.stack.set_visible_child_name("results");
+                }
 
-                self.random_model.clear();
-                self.random_model.add_stations(stations);
+                self.search_model.clear();
+                self.search_model.add_stations(stations);
             }
         }
 
