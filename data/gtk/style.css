@@ -144,6 +144,11 @@ cover.card {
   border-radius: 12px;
 }
 
+.station-flowbox>flowboxchild {
+  padding: 0px;
+  border-radius: 12px;
+}
+
 recording-indicator button {
   min-height: 24px;
   font-size: x-small;
@@ -161,4 +166,17 @@ volume>scale trough highlight {
 
 volume>scale trough slider {
   opacity: 0;
+}
+
+entry.discover {
+  border-radius: 999px;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+
+.card.discover {
+  color: rgba(0, 0, 0, 0.75);
+  background-image: linear-gradient(#e5cb8c, #e5a50a);
 }

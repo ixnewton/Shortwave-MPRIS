@@ -186,7 +186,7 @@ mod imp {
 
             // Random stations
             let request = StationRequest {
-                limit: Some(42),
+                limit: Some(18),
                 order: Some("random".into()),
                 countrycode: Some(countrycode),
                 ..Default::default()
