@@ -186,8 +186,6 @@ mod imp {
             };
 
             let mut stations = client::station_request(request).await?;
-            stations.retain(|s| s.metadata().votes < 25_000);
-
             self.random_model.clear();
             self.random_model.add_stations(stations);
 

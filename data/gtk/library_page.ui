@@ -137,11 +137,6 @@
             <attribute name="target">state</attribute>
           </item>
           <item>
-            <attribute name="label" translatable="yes">_Votes</attribute>
-            <attribute name="action">library.set-sorting</attribute>
-            <attribute name="target">votes</attribute>
-          </item>
-          <item>
             <attribute name="label" translatable="yes">_Bitrate</attribute>
             <attribute name="action">library.set-sorting</attribute>
             <attribute name="target">bitrate</attribute>

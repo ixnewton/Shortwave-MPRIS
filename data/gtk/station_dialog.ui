@@ -166,15 +166,6 @@
                             </style>
                           </object>
                         </child>
-                        <child>
-                          <object class="AdwActionRow" id="votes_row">
-                            <property name="title" translatable="yes">Votes</property>
-                            <property name="title_lines">1</property>
-                            <style>
-                              <class name="property"/>
-                            </style>
-                          </object>
-                        </child>
                       </object>
                     </child>
                     <child>

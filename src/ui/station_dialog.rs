@@ -61,8 +61,6 @@ mod imp {
         #[template_child]
         bitrate_row: TemplateChild<adw::ActionRow>,
         #[template_child]
-        votes_row: TemplateChild<adw::ActionRow>,
-        #[template_child]
         stream_row: TemplateChild<adw::ActionRow>,
         #[template_child]
         location_group: TemplateChild<adw::PreferencesGroup>,
@@ -168,9 +166,6 @@ mod imp {
                 self.language_row
                     .set_subtitle(&metadata.language.to_title_case());
             }
-
-            // Votes
-            self.votes_row.set_subtitle(&metadata.votes.to_string());
 
             // Location
             if !metadata.country.is_empty() {
