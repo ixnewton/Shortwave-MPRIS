@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2024-10-04 17:47+0000\n"
-"PO-Revision-Date: 2024-10-05 17:38+0300\n"
+"POT-Creation-Date: 2024-10-06 13:10+0000\n"
+"PO-Revision-Date: 2024-10-06 18:50+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -231,38 +231,34 @@ msgid "S_tate"
 msgstr "_Штат"
 
 #: data/gtk/library_page.ui:140
-msgid "_Votes"
-msgstr "_Голоси"
-
-#: data/gtk/library_page.ui:145
 msgid "_Bitrate"
 msgstr "_Бітова швидкість"
 
-#: data/gtk/library_page.ui:152
+#: data/gtk/library_page.ui:147
 msgid "_Ascending"
 msgstr "За з_ростанням"
 
-#: data/gtk/library_page.ui:157
+#: data/gtk/library_page.ui:152
 msgid "_Descending"
 msgstr "За с_паданням"
 
-#: data/gtk/library_page.ui:166
+#: data/gtk/library_page.ui:161
 msgid "_Open radio-browser.info <sup>↗</sup>"
 msgstr "В_ідкрити radio-browser.info <sup>↗</sup>"
 
-#: data/gtk/library_page.ui:171
+#: data/gtk/library_page.ui:166
 msgid "_Create New Station"
 msgstr "С_творити станцію"
 
-#: data/gtk/library_page.ui:178
+#: data/gtk/library_page.ui:173
 msgid "_Preferences"
 msgstr "_Налаштування"
 
-#: data/gtk/library_page.ui:182
+#: data/gtk/library_page.ui:177
 msgid "_Keyboard Shortcuts"
 msgstr "_Клавіатурні скорочення"
 
-#: data/gtk/library_page.ui:186
+#: data/gtk/library_page.ui:181
 msgid "_About Shortwave"
 msgstr "П_ро «Shortwave»"
 
@@ -322,31 +318,62 @@ msgstr "Сталася помилка"
 msgid "Search"
 msgstr "Пошук"
 
-#: data/gtk/search_page.ui:39
+#: data/gtk/search_page.ui:24
+#| msgctxt "shortcut window"
+#| msgid "Search for stations"
+msgid "Search stations"
+msgstr "Пошук станцій"
+
+#: data/gtk/search_page.ui:70
 msgid "Browse over 50,000 stations"
 msgstr "Навігація списком із понад 50000 станцій"
 
-#: data/gtk/search_page.ui:40
-#| msgid "Unable to connect to radio-browser.info"
-msgid "Find stations using radio-browser.info"
-msgstr "Пошук станцій за допомогою radio-browser.info"
-
-#: data/gtk/search_page.ui:56
-#| msgid "Create new station"
+#: data/gtk/search_page.ui:79
 msgid "Create new Station"
 msgstr "Створити станцію"
 
-#: data/gtk/search_page.ui:92
+#: data/gtk/search_page.ui:99
+#| msgid "_Play Station"
+msgid "Popular Stations"
+msgstr "Популярні станції"
+
+#: data/gtk/search_page.ui:120
+#| msgid "_Discover New Stations"
+msgid "Discover New Stations"
+msgstr "Виявити нові станції"
+
+#: data/gtk/search_page.ui:142
+msgid ""
+"The displayed information is provided by <a href=\"https://www.radio-browser."
+"info/\">radio-browser.info</a>. \n"
+"Shortwave has no influence on the listed stations."
+msgstr ""
+"Показані дані надано <a href=\"https://www.radio-browser."
+"info/\">radio-browser.info</a>. \n"
+"Shortwave не має впливу на показаний перелік станцій."
+
+#: data/gtk/search_page.ui:208
+#| msgid "Searching…"
+msgid "Loading…"
+msgstr "Завантаження…"
+
+#: data/gtk/search_page.ui:223
 msgid "No Results"
 msgstr "Нічого не знайдено"
 
-#: data/gtk/search_page.ui:93
+#: data/gtk/search_page.ui:224
 msgid "Try using a different search term"
 msgstr "Спробуйте інший критерій пошуку"
 
-#: data/gtk/search_page.ui:148
-msgid "Searching…"
-msgstr "Пошук…"
+#: data/gtk/search_page.ui:234
+#| msgid "_Refresh Station Data"
+msgid "Unable to Retrieve Station Data"
+msgstr "Не вдалося отримати дані станцій"
+
+#: data/gtk/search_page.ui:237
+#| msgid "Try again"
+msgid "Try Again"
+msgstr "Повторити спробу"
 
 #: data/gtk/settings_dialog.ui:12
 msgid "Features"
@@ -413,40 +440,36 @@ msgstr "Мова"
 msgid "Tags"
 msgstr "Мітки"
 
-#: data/gtk/station_dialog.ui:171
-msgid "Votes"
-msgstr "Голоси"
-
-#: data/gtk/station_dialog.ui:182
+#: data/gtk/station_dialog.ui:173
 msgid "Location"
 msgstr "Місце"
 
-#: data/gtk/station_dialog.ui:187
+#: data/gtk/station_dialog.ui:178
 msgid "Country"
 msgstr "Країна"
 
-#: data/gtk/station_dialog.ui:197
+#: data/gtk/station_dialog.ui:188
 msgid "State"
 msgstr "Штат"
 
-#: data/gtk/station_dialog.ui:231
+#: data/gtk/station_dialog.ui:222
 msgid "Audio"
 msgstr "Звук"
 
-#: data/gtk/station_dialog.ui:235
+#: data/gtk/station_dialog.ui:226
 msgid "Bitrate"
 msgstr "Бітова швидкість"
 
-#: data/gtk/station_dialog.ui:245
+#: data/gtk/station_dialog.ui:236
 msgid "Codec"
 msgstr "Кодек"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:255
+#: data/gtk/station_dialog.ui:246
 msgid "Stream"
 msgstr "Трансляція"
 
-#: data/gtk/station_dialog.ui:264
+#: data/gtk/station_dialog.ui:255
 msgid "Copy"
 msgstr "Копіювати"
 
@@ -512,9 +535,19 @@ msgid ""
 "The current song cannot be fully recorded. The beginning has been missed."
 msgstr "Поточну композицію не може бути записано повністю. Початок пропущено."
 
-#: src/ui/station_dialog.rs:206
+#: src/ui/station_dialog.rs:201
 msgid "{} kbit/s"
 msgstr "{} кбіт/с"
+
+#~ msgid "_Votes"
+#~ msgstr "_Голоси"
+
+#~| msgid "Unable to connect to radio-browser.info"
+#~ msgid "Find stations using radio-browser.info"
+#~ msgstr "Пошук станцій за допомогою radio-browser.info"
+
+#~ msgid "Votes"
+#~ msgstr "Голоси"
 
 #~ msgid "Change the sorting of the search results"
 #~ msgstr "Змінити упорядкування результатів пошуку"
@@ -542,9 +575,6 @@ msgstr "{} кбіт/с"
 
 #~ msgid "Library"
 #~ msgstr "Бібліотека"
-
-#~ msgid "_Discover New Stations"
-#~ msgstr "Ви_явити нові станції"
 
 #~ msgid "Search Results"
 #~ msgstr "Результати пошуку"
@@ -682,12 +712,6 @@ msgstr "{} кбіт/с"
 #~ "Немає доступу до відкритої бази даних інтернет-радіостанцій. "
 #~ "Переконайтеся, що користуєтеся працездатним інтернет-з'єднанням."
 
-#~ msgid "Try again"
-#~ msgstr "Повторити спробу"
-
-#~ msgid "_Refresh Station Data"
-#~ msgstr "_Освіжити дані станцій"
-
 #~ msgid "Open Application Menu"
 #~ msgstr "Відкрити меню програми"
 
@@ -750,10 +774,6 @@ msgstr "{} кбіт/с"
 
 #~ msgid "Homepage"
 #~ msgstr "Домашня сторінка"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Search for stations"
-#~ msgstr "Пошук станцій"
 
 #~ msgid "Languages"
 #~ msgstr "Мови"
