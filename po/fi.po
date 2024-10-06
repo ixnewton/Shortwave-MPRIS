@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2024-09-28 13:21+0000\n"
-"PO-Revision-Date: 2024-10-04 20:17+0300\n"
+"POT-Creation-Date: 2024-10-06 11:44+0000\n"
+"PO-Revision-Date: 2024-10-06 15:22+0300\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
 "Language-Team: Finnish <lokalisointi-lista@googlegroups.com>\n"
 "Language: fi\n"
@@ -115,7 +115,7 @@ msgstr "Luo paikallinen asema"
 msgid "Change station image"
 msgstr "Vaihda aseman kuva"
 
-#: data/gtk/create_station_dialog.ui:123 src/ui/pages/search_page.rs:102
+#: data/gtk/create_station_dialog.ui:123
 msgid "Name"
 msgstr "Nimi"
 
@@ -193,7 +193,7 @@ msgstr "Toisto päällä/pois"
 msgid "Shortwave"
 msgstr "Shortwave"
 
-#: data/gtk/library_page.ui:15
+#: data/gtk/library_page.ui:15 data/gtk/search_page.ui:4
 msgid "Add Stations"
 msgstr "Lisää asemia"
 
@@ -213,35 +213,35 @@ msgstr "_Käytä pienoissoitinta"
 msgid "_Sorting"
 msgstr "_Järjestys"
 
-#: data/gtk/library_page.ui:120 data/gtk/search_page.ui:142
+#: data/gtk/library_page.ui:120
 msgid "_Name"
 msgstr "_Nimi"
 
-#: data/gtk/library_page.ui:125 data/gtk/search_page.ui:147
+#: data/gtk/library_page.ui:125
 msgid "_Language"
 msgstr "_Kieli"
 
-#: data/gtk/library_page.ui:130 data/gtk/search_page.ui:152
+#: data/gtk/library_page.ui:130
 msgid "_Country"
 msgstr "_Maa"
 
-#: data/gtk/library_page.ui:135 data/gtk/search_page.ui:157
+#: data/gtk/library_page.ui:135
 msgid "S_tate"
 msgstr "_Tila"
 
-#: data/gtk/library_page.ui:140 data/gtk/search_page.ui:162
+#: data/gtk/library_page.ui:140
 msgid "_Votes"
 msgstr "_Äänet"
 
-#: data/gtk/library_page.ui:145 data/gtk/search_page.ui:167
+#: data/gtk/library_page.ui:145
 msgid "_Bitrate"
 msgstr "_Bittinopeus"
 
-#: data/gtk/library_page.ui:152 data/gtk/search_page.ui:174
+#: data/gtk/library_page.ui:152
 msgid "_Ascending"
 msgstr "_Nouseva"
 
-#: data/gtk/library_page.ui:157 data/gtk/search_page.ui:179
+#: data/gtk/library_page.ui:157
 msgid "_Descending"
 msgstr "_Laskeva"
 
@@ -317,28 +317,49 @@ msgstr ""
 msgid "An error occurred"
 msgstr "Tapahtui virhe"
 
-#: data/gtk/search_page.ui:4 data/gtk/search_page.ui:26
+#: data/gtk/search_page.ui:22
 msgid "Search"
 msgstr "Etsi"
 
-#: data/gtk/search_page.ui:35 data/gtk/station_dialog.ui:171
-#: src/ui/pages/search_page.rs:106
-msgid "Votes"
-msgstr "Äänet"
+#: data/gtk/search_page.ui:23
+msgid "Search stations"
+msgstr "Etsi asemia"
 
-#: data/gtk/search_page.ui:40
-msgid "Change the sorting of the search results"
-msgstr "Muuta hakutulosten järjestystä"
+#: data/gtk/search_page.ui:69
+msgid "Browse over 50,000 stations"
+msgstr "Selaa yli 50 000 asemaa"
 
-#: data/gtk/search_page.ui:68
+#: data/gtk/search_page.ui:78
+msgid "Create new Station"
+msgstr "Luo uusi asema"
+
+#: data/gtk/search_page.ui:98
+msgid "Popular Stations"
+msgstr "Suositut asemat"
+
+#: data/gtk/search_page.ui:119
+msgid "Discover New Stations"
+msgstr "Löydä uusia asemia"
+
+#: data/gtk/search_page.ui:141
+msgid ""
+"The displayed information is provided by <a href=\"https://www.radio-browser."
+"info/\">radio-browser.info</a>. \n"
+"Shortwave has no influence on the listed stations."
+msgstr ""
+"Näytettävät tiedot toimittaa <a href=\"https://www.radio-browser.info/"
+"\">radio-browser.info</a>. \n"
+"Shortwave ei vaikuta lueteltuihin asemiin."
+
+#: data/gtk/search_page.ui:162
 msgid "No Results"
 msgstr "Ei tuloksia"
 
-#: data/gtk/search_page.ui:69
+#: data/gtk/search_page.ui:163
 msgid "Try using a different search term"
 msgstr "Yritä eri hakuehdoilla"
 
-#: data/gtk/search_page.ui:124
+#: data/gtk/search_page.ui:218
 msgid "Searching…"
 msgstr "Etsitään…"
 
@@ -398,7 +419,7 @@ msgstr ""
 msgid "Information"
 msgstr "Tiedot"
 
-#: data/gtk/station_dialog.ui:151 src/ui/pages/search_page.rs:103
+#: data/gtk/station_dialog.ui:151
 msgid "Language"
 msgstr "Kieli"
 
@@ -406,15 +427,19 @@ msgstr "Kieli"
 msgid "Tags"
 msgstr "Tunnisteet"
 
+#: data/gtk/station_dialog.ui:171
+msgid "Votes"
+msgstr "Äänet"
+
 #: data/gtk/station_dialog.ui:182
 msgid "Location"
 msgstr "Sijainti"
 
-#: data/gtk/station_dialog.ui:187 src/ui/pages/search_page.rs:104
+#: data/gtk/station_dialog.ui:187
 msgid "Country"
 msgstr "Maa"
 
-#: data/gtk/station_dialog.ui:197 src/ui/pages/search_page.rs:105
+#: data/gtk/station_dialog.ui:197
 msgid "State"
 msgstr "Tila"
 
@@ -422,7 +447,7 @@ msgstr "Tila"
 msgid "Audio"
 msgstr "Ääni"
 
-#: data/gtk/station_dialog.ui:235 src/ui/pages/search_page.rs:107
+#: data/gtk/station_dialog.ui:235
 msgid "Bitrate"
 msgstr "Bittinopeus"
 
@@ -471,10 +496,6 @@ msgstr "Näytä tiedot"
 msgid "Welcome to {}"
 msgstr "Tervetuloa, käytössäsi on {}"
 
-#: src/ui/pages/search_page.rs:206
-msgid "Station data could not be received."
-msgstr "Aseman tietoja ei voitu vastaanottaa."
-
 #: src/ui/recording_indicator.rs:111
 msgid "Recording in Progress"
 msgstr "Nauhoitus käynnissä"
@@ -508,6 +529,12 @@ msgstr ""
 msgid "{} kbit/s"
 msgstr "{} kbit/s"
 
+#~ msgid "Change the sorting of the search results"
+#~ msgstr "Muuta hakutulosten järjestystä"
+
+#~ msgid "Station data could not be received."
+#~ msgstr "Aseman tietoja ei voitu vastaanottaa."
+
 #~ msgid "Discover"
 #~ msgstr "Löydä"
 
@@ -528,9 +555,6 @@ msgstr "{} kbit/s"
 
 #~ msgid "Library"
 #~ msgstr "Kirjasto"
-
-#~ msgid "_Discover New Stations"
-#~ msgstr "L_öydä uusia asemia"
 
 #~ msgid "Search Results"
 #~ msgstr "Hakutulokset"
@@ -556,9 +580,6 @@ msgstr "{} kbit/s"
 
 #~ msgid "Show statistics"
 #~ msgstr "Näytä tilastot"
-
-#~ msgid "Browse over 50,000 stations"
-#~ msgstr "Selaa yli 50 000 asemaa"
 
 #~ msgid "Add new station"
 #~ msgstr "Lisää uusi asema"
@@ -726,10 +747,6 @@ msgstr "{} kbit/s"
 #~ msgid_plural "{} · {} Votes"
 #~ msgstr[0] "{} · {} ääni"
 #~ msgstr[1] "{} · {} ääntä"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Search for stations"
-#~ msgstr "Etsi asemia"
 
 #~ msgid "Languages"
 #~ msgstr "Kielet"
