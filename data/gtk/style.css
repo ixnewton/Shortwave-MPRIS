@@ -2,14 +2,6 @@ cover {
   font-weight: bold;
 }
 
-cover.card {
-  box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.3),
-    0px 2px 12px rgba(0, 0, 0, 0.15),
-    0px 6px 32px rgba(0, 0, 0, 0.1);
-  border-radius: 12px;
-  margin: 6px;
-}
-
 /* Based on libadwaita avatar colors */
 /* https://gitlab.gnome.org/GNOME/libadwaita/-/blob/8c422b36bcc3efca6bbf63a3979bd53aededbdcd/src/stylesheet/widgets/_avatar.scss */
 .color0 {

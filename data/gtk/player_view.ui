@@ -16,6 +16,7 @@
               <object class="AdwClamp">
                 <property name="margin_start">12</property>
                 <property name="margin_end">12</property>
+                <property name="margin_top">6</property>
                 <property name="margin_bottom">18</property>
                 <property name="maximum_size">400</property>
                 <property name="tightening_threshold">0</property>
