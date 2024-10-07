@@ -6,6 +6,7 @@
         <property name="icon-name">audio-volume-low-symbolic</property>
         <property name="action-name">volume.toggle-mute</property>
         <property name="valign">center</property>
+        <property name="tooltip_text" translatable="yes">Toggle Mute</property>
         <style>
           <class name="flat" />
           <class name="circular" />
@@ -16,12 +17,16 @@
       <object class="GtkScale" id="volume_scale">
         <property name="hexpand">true</property>
         <property name="margin-end">6</property>
+        <accessibility>
+          <property name="label" translatable="yes">Volume</property>
+        </accessibility>
       </object>
     </child>
     <child>
       <object class="GtkImage" id="volume_high_image">
         <property name="icon-name">audio-volume-high-symbolic</property>
         <property name="margin-end">10</property>
+        <property name="accessible-role">presentation</property>
       </object>
     </child>
   </template>
