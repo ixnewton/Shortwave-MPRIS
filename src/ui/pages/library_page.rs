@@ -116,9 +116,9 @@ mod imp {
             library.connect_notify_local(
                 Some("status"),
                 clone!(
-                    #[weak(rename_to = this)]
+                    #[weak(rename_to = imp)]
                     self,
-                    move |_, _| this.update_stack_page()
+                    move |_, _| imp.update_stack_page()
                 ),
             );
         }

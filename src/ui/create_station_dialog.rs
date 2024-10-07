@@ -101,11 +101,11 @@ impl SwCreateStationDialog {
             Some(&SwApplicationWindow::default()),
             gio::Cancellable::NONE,
             clone!(
-                #[weak(rename_to = this)]
+                #[weak(rename_to = imp)]
                 self,
                 move |res| {
                     match res {
-                        Ok(file) => this.set_favicon(&file),
+                        Ok(file) => imp.set_favicon(&file),
                         Err(err) => error!("Could not get file {err}"),
                     }
                 }
@@ -117,18 +117,18 @@ impl SwCreateStationDialog {
         let imp = self.imp();
 
         imp.back_button.connect_clicked(clone!(
-            #[weak(rename_to = this)]
+            #[weak(rename_to = imp)]
             self,
             move |_| {
-                this.imp().stack.set_visible_child_name("start");
+                imp.imp().stack.set_visible_child_name("start");
             }
         ));
 
         imp.favicon_button.connect_clicked(clone!(
-            #[weak(rename_to = this)]
+            #[weak(rename_to = imp)]
             self,
             move |_| {
-                this.show_filechooser();
+                imp.show_filechooser();
             }
         ));
     }

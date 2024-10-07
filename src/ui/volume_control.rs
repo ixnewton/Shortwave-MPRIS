@@ -84,19 +84,19 @@ mod imp {
             adj.connect_notify_local(
                 Some("value"),
                 clone!(
-                    #[weak(rename_to = this)]
+                    #[weak(rename_to = imp)]
                     self,
                     move |adj, _| {
                         let value = adj.value();
                         if value == adj.lower() {
-                            this.volume_low_button
+                            imp.volume_low_button
                                 .set_icon_name("audio-volume-muted-symbolic");
                         } else {
-                            this.volume_low_button
+                            imp.volume_low_button
                                 .set_icon_name("audio-volume-low-symbolic");
                         }
-                        this.obj().notify_volume();
-                        this.obj().emit_by_name::<()>("volume-changed", &[&value]);
+                        imp.obj().notify_volume();
+                        imp.obj().emit_by_name::<()>("volume-changed", &[&value]);
                     }
                 ),
             );
@@ -107,11 +107,11 @@ mod imp {
                 .build();
 
             controller.connect_scroll(clone!(
-                #[weak(rename_to = this)]
+                #[weak(rename_to = imp)]
                 self,
                 #[upgrade_or_panic]
                 move |_, _, dy| {
-                    let adj = this.volume_scale.adjustment();
+                    let adj = imp.volume_scale.adjustment();
                     let delta = dy * adj.step_increment();
                     let d = (adj.value() - delta).clamp(adj.lower(), adj.upper());
                     adj.set_value(d);

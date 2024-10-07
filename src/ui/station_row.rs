@@ -101,10 +101,10 @@ mod imp {
         fn set_station(&self, station: Option<&SwStation>) {
             if let Some(station) = station {
                 station.connect_metadata_notify(clone!(
-                    #[weak(rename_to = this)]
+                    #[weak(rename_to = imp)]
                     self,
                     move |s| {
-                        this.set_metadata(s.metadata());
+                        imp.set_metadata(s.metadata());
                     }
                 ));
                 self.set_metadata(station.metadata());
