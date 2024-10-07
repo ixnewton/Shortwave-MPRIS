@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2024-10-06 13:10+0000\n"
-"PO-Revision-Date: 2024-10-07 10:39+0800\n"
+"POT-Creation-Date: 2024-10-07 18:45+0000\n"
+"PO-Revision-Date: 2024-10-08 07:56+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -129,7 +129,7 @@ msgstr "媒体流 URL"
 msgid "Create Station"
 msgstr "创建电台"
 
-#: data/gtk/device_dialog.ui:7 data/gtk/player_view.ui:111
+#: data/gtk/device_dialog.ui:7 data/gtk/player_view.ui:112
 msgid "Connect Device"
 msgstr "连接设备"
 
@@ -264,17 +264,17 @@ msgid "_About Shortwave"
 msgstr "关于短波(_A)"
 
 #: data/gtk/player_gadget.ui:40 data/gtk/player_toolbar.ui:92
-#: data/gtk/player_view.ui:135 data/gtk/station_row.ui:84
+#: data/gtk/player_view.ui:136 data/gtk/station_row.ui:86
 msgid "Play"
 msgstr "播放"
 
 #: data/gtk/player_gadget.ui:55 data/gtk/player_toolbar.ui:106
-#: data/gtk/player_view.ui:149
+#: data/gtk/player_view.ui:150
 msgid "Stop"
 msgstr "停止"
 
 #: data/gtk/player_gadget.ui:71 data/gtk/player_toolbar.ui:121
-#: data/gtk/player_view.ui:164
+#: data/gtk/player_view.ui:165
 msgid "Buffering…"
 msgstr "正在缓冲…"
 
@@ -283,7 +283,7 @@ msgid "SHORTWAVE INTERNET RADIO"
 msgstr "短波互联网电台"
 
 #: data/gtk/player_gadget.ui:140 data/gtk/player_toolbar.ui:29
-#: data/gtk/player_view.ui:45
+#: data/gtk/player_view.ui:46
 msgid "No Playback"
 msgstr "无回放"
 
@@ -295,21 +295,21 @@ msgstr "关闭"
 msgid "Resize"
 msgstr "改变大小"
 
-#: data/gtk/player_view.ui:194
+#: data/gtk/player_view.ui:195
 msgid "Show Station Details"
 msgstr "显示电台详情"
 
-#: data/gtk/player_view.ui:244
+#: data/gtk/player_view.ui:246
 msgid "No Songs"
 msgstr "无歌曲"
 
-#: data/gtk/player_view.ui:255
+#: data/gtk/player_view.ui:257
 msgid ""
 "Songs that have been identified and recorded using the stream metadata will "
 "appear here."
 msgstr "使用串流元数据识别和录制的歌曲将出现在这里。"
 
-#: data/gtk/player_view.ui:287 data/gtk/recording_indicator.ui:38
+#: data/gtk/player_view.ui:289 data/gtk/recording_indicator.ui:38
 msgid "An error occurred"
 msgstr "发生了错误"
 
@@ -394,7 +394,7 @@ msgstr "添加到库(_A)"
 msgid "_Remove From Library"
 msgstr "从库移除(_R)"
 
-#: data/gtk/station_dialog.ui:119
+#: data/gtk/station_dialog.ui:119 data/gtk/station_row.ui:57
 msgid "Local Station"
 msgstr "本地电台"
 
@@ -404,7 +404,7 @@ msgid ""
 "online station database."
 msgstr "该电台仅存在于您的库中，且不是公共在线电台数据库的一部分。"
 
-#: data/gtk/station_dialog.ui:135
+#: data/gtk/station_dialog.ui:135 data/gtk/station_row.ui:69
 msgid "Orphaned Station"
 msgstr "孤立电台"
 
@@ -459,13 +459,21 @@ msgstr "流"
 msgid "Copy"
 msgstr "复制"
 
-#: src/audio/player.rs:192
-msgid "Station cannot be streamed. URL is not valid."
-msgstr "电台无法串流。网址无效。"
+#: data/gtk/volume_control.ui:9
+msgid "Toggle Mute"
+msgstr "切换静音"
 
-#: src/audio/player.rs:260
+#: data/gtk/volume_control.ui:21
+msgid "Volume"
+msgstr "音量"
+
+#: src/audio/player.rs:251
 msgid "Active Playback"
 msgstr "活动播放"
+
+#: src/audio/player.rs:413
+msgid "Station cannot be streamed. URL is not valid."
+msgstr "电台无法串流。网址无效。"
 
 #: src/device/device_discovery.rs:83
 msgid "Google Cast Device"
@@ -505,8 +513,8 @@ msgid "Ignored"
 msgstr "已忽略"
 
 #: src/ui/recording_indicator.rs:113
-msgid "Incomplete"
-msgstr "未完成"
+msgid "No Recording"
+msgstr "无录制"
 
 #: src/ui/recording_indicator.rs:120
 msgid "The current song will be recorded until a new song is detected."
@@ -524,6 +532,9 @@ msgstr "当前歌曲无法完整录制。开头已被漏掉。"
 #: src/ui/station_dialog.rs:201
 msgid "{} kbit/s"
 msgstr "{} kbit/s"
+
+#~ msgid "Incomplete"
+#~ msgstr "未完成"
 
 #~ msgid "_Votes"
 #~ msgstr "票数(_V)"
