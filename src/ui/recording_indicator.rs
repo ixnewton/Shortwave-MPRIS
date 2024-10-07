@@ -110,7 +110,7 @@ mod imp {
             let title = match state {
                 SwSongState::Recording => i18n("Recording in Progress"),
                 SwSongState::Ignored => i18n("Ignored"),
-                SwSongState::Incomplete => i18n("Incomplete"),
+                SwSongState::Incomplete => i18n("No Recording"),
                 _ => String::new(),
             };
 
@@ -130,6 +130,8 @@ mod imp {
 
             self.state_statuspage.set_title(&title);
             self.state_statuspage.set_description(Some(&description));
+
+            self.obj().set_tooltip_text(Some(&title));
         }
 
         fn update_duration(&self) {

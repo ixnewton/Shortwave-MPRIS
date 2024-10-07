@@ -13,11 +13,11 @@
                 <property name="pixel_size">10</property>
                 <property name="margin_start">8</property>
                 <property name="margin_end">4</property>
+                <property name="accessible_role">presentation</property>
               </object>
             </child>
             <child>
               <object class="GtkLabel" id="duration_label">
-                <property name="label">00:00</property>
                 <property name="margin_end">8</property>
                 <attributes>
                   <attribute name="font-features" value="tnum"/>
