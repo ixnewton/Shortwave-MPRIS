@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2024-10-06 13:10+0000\n"
-"PO-Revision-Date: 2024-10-06 18:50+0300\n"
+"POT-Creation-Date: 2024-10-07 18:45+0000\n"
+"PO-Revision-Date: 2024-10-08 21:18+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -128,7 +128,7 @@ msgstr "Адреса трансляції"
 msgid "Create Station"
 msgstr "Створити станцію"
 
-#: data/gtk/device_dialog.ui:7 data/gtk/player_view.ui:111
+#: data/gtk/device_dialog.ui:7 data/gtk/player_view.ui:112
 msgid "Connect Device"
 msgstr "З'єднати пристрій"
 
@@ -263,17 +263,17 @@ msgid "_About Shortwave"
 msgstr "П_ро «Shortwave»"
 
 #: data/gtk/player_gadget.ui:40 data/gtk/player_toolbar.ui:92
-#: data/gtk/player_view.ui:135 data/gtk/station_row.ui:84
+#: data/gtk/player_view.ui:136 data/gtk/station_row.ui:86
 msgid "Play"
 msgstr "Пуск"
 
 #: data/gtk/player_gadget.ui:55 data/gtk/player_toolbar.ui:106
-#: data/gtk/player_view.ui:149
+#: data/gtk/player_view.ui:150
 msgid "Stop"
 msgstr "Зупинити"
 
 #: data/gtk/player_gadget.ui:71 data/gtk/player_toolbar.ui:121
-#: data/gtk/player_view.ui:164
+#: data/gtk/player_view.ui:165
 msgid "Buffering…"
 msgstr "Буферизація…"
 
@@ -282,7 +282,7 @@ msgid "SHORTWAVE INTERNET RADIO"
 msgstr "КОРОТКОХВИЛЬОВЕ ІНТЕРНЕТ-РАДІО"
 
 #: data/gtk/player_gadget.ui:140 data/gtk/player_toolbar.ui:29
-#: data/gtk/player_view.ui:45
+#: data/gtk/player_view.ui:46
 msgid "No Playback"
 msgstr "Немає відтворення"
 
@@ -294,15 +294,15 @@ msgstr "Закрити"
 msgid "Resize"
 msgstr "Змінити розмір"
 
-#: data/gtk/player_view.ui:194
+#: data/gtk/player_view.ui:195
 msgid "Show Station Details"
 msgstr "Показати параметри станції"
 
-#: data/gtk/player_view.ui:244
+#: data/gtk/player_view.ui:246
 msgid "No Songs"
 msgstr "Не виявлено жодної композиції"
 
-#: data/gtk/player_view.ui:255
+#: data/gtk/player_view.ui:257
 msgid ""
 "Songs that have been identified and recorded using the stream metadata will "
 "appear here."
@@ -310,7 +310,7 @@ msgstr ""
 "Тут буде показано композиції, які було ідентифіковано і записано за "
 "допомогою метаданих потоку."
 
-#: data/gtk/player_view.ui:287 data/gtk/recording_indicator.ui:38
+#: data/gtk/player_view.ui:289 data/gtk/recording_indicator.ui:38
 msgid "An error occurred"
 msgstr "Сталася помилка"
 
@@ -319,8 +319,6 @@ msgid "Search"
 msgstr "Пошук"
 
 #: data/gtk/search_page.ui:24
-#| msgctxt "shortcut window"
-#| msgid "Search for stations"
 msgid "Search stations"
 msgstr "Пошук станцій"
 
@@ -333,12 +331,10 @@ msgid "Create new Station"
 msgstr "Створити станцію"
 
 #: data/gtk/search_page.ui:99
-#| msgid "_Play Station"
 msgid "Popular Stations"
 msgstr "Популярні станції"
 
 #: data/gtk/search_page.ui:120
-#| msgid "_Discover New Stations"
 msgid "Discover New Stations"
 msgstr "Виявити нові станції"
 
@@ -348,12 +344,11 @@ msgid ""
 "info/\">radio-browser.info</a>. \n"
 "Shortwave has no influence on the listed stations."
 msgstr ""
-"Показані дані надано <a href=\"https://www.radio-browser."
-"info/\">radio-browser.info</a>. \n"
+"Показані дані надано <a href=\"https://www.radio-browser.info/\">radio-"
+"browser.info</a>. \n"
 "Shortwave не має впливу на показаний перелік станцій."
 
 #: data/gtk/search_page.ui:208
-#| msgid "Searching…"
 msgid "Loading…"
 msgstr "Завантаження…"
 
@@ -366,12 +361,10 @@ msgid "Try using a different search term"
 msgstr "Спробуйте інший критерій пошуку"
 
 #: data/gtk/search_page.ui:234
-#| msgid "_Refresh Station Data"
 msgid "Unable to Retrieve Station Data"
 msgstr "Не вдалося отримати дані станцій"
 
 #: data/gtk/search_page.ui:237
-#| msgid "Try again"
 msgid "Try Again"
 msgstr "Повторити спробу"
 
@@ -404,7 +397,7 @@ msgstr "Д_одати до бібліотеки"
 msgid "_Remove From Library"
 msgstr "Ви_лучити з бібліотеки"
 
-#: data/gtk/station_dialog.ui:119
+#: data/gtk/station_dialog.ui:119 data/gtk/station_row.ui:57
 msgid "Local Station"
 msgstr "Локальна станція"
 
@@ -416,7 +409,7 @@ msgstr ""
 "Запис станції є лише у вашій бібліотеці — він не є частиною "
 "загальнодоступної бази даних станцій в інтернеті."
 
-#: data/gtk/station_dialog.ui:135
+#: data/gtk/station_dialog.ui:135 data/gtk/station_row.ui:69
 msgid "Orphaned Station"
 msgstr "Осиротіла станція"
 
@@ -473,13 +466,21 @@ msgstr "Трансляція"
 msgid "Copy"
 msgstr "Копіювати"
 
-#: src/audio/player.rs:192
-msgid "Station cannot be streamed. URL is not valid."
-msgstr "Станцію не можна транслювати. Адреса є некоректною."
+#: data/gtk/volume_control.ui:9
+msgid "Toggle Mute"
+msgstr "Увімкнути або вимкнути звук"
 
-#: src/audio/player.rs:260
+#: data/gtk/volume_control.ui:21
+msgid "Volume"
+msgstr "Гучність"
+
+#: src/audio/player.rs:251
 msgid "Active Playback"
 msgstr "Активне відтворення"
+
+#: src/audio/player.rs:413
+msgid "Station cannot be streamed. URL is not valid."
+msgstr "Станцію не можна транслювати. Адреса є некоректною."
 
 #: src/device/device_discovery.rs:83
 msgid "Google Cast Device"
@@ -514,8 +515,8 @@ msgid "Ignored"
 msgstr "Проігноровано"
 
 #: src/ui/recording_indicator.rs:113
-msgid "Incomplete"
-msgstr "Неповна"
+msgid "No Recording"
+msgstr "Немає записів"
 
 #: src/ui/recording_indicator.rs:120
 msgid "The current song will be recorded until a new song is detected."
@@ -538,6 +539,9 @@ msgstr "Поточну композицію не може бути записа�
 #: src/ui/station_dialog.rs:201
 msgid "{} kbit/s"
 msgstr "{} кбіт/с"
+
+#~ msgid "Incomplete"
+#~ msgstr "Неповна"
 
 #~ msgid "_Votes"
 #~ msgstr "_Голоси"
