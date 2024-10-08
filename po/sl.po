@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2024-10-06 13:10+0000\n"
-"PO-Revision-Date: 2024-10-06 16:55+0200\n"
+"POT-Creation-Date: 2024-10-07 18:45+0000\n"
+"PO-Revision-Date: 2024-10-08 11:11+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl_SI\n"
@@ -128,7 +128,7 @@ msgstr "Naslov URL za pretakanje"
 msgid "Create Station"
 msgstr "Ustvari postajo"
 
-#: data/gtk/device_dialog.ui:7 data/gtk/player_view.ui:111
+#: data/gtk/device_dialog.ui:7 data/gtk/player_view.ui:112
 msgid "Connect Device"
 msgstr "Poveži napravo"
 
@@ -263,17 +263,17 @@ msgid "_About Shortwave"
 msgstr "_O programu"
 
 #: data/gtk/player_gadget.ui:40 data/gtk/player_toolbar.ui:92
-#: data/gtk/player_view.ui:135 data/gtk/station_row.ui:84
+#: data/gtk/player_view.ui:136 data/gtk/station_row.ui:86
 msgid "Play"
 msgstr "Predvajaj"
 
 #: data/gtk/player_gadget.ui:55 data/gtk/player_toolbar.ui:106
-#: data/gtk/player_view.ui:149
+#: data/gtk/player_view.ui:150
 msgid "Stop"
 msgstr "Ustavi"
 
 #: data/gtk/player_gadget.ui:71 data/gtk/player_toolbar.ui:121
-#: data/gtk/player_view.ui:164
+#: data/gtk/player_view.ui:165
 msgid "Buffering…"
 msgstr "Medpomnjenje …"
 
@@ -282,7 +282,7 @@ msgid "SHORTWAVE INTERNET RADIO"
 msgstr "INTERNETNI RADIO KRATKI VALOVI"
 
 #: data/gtk/player_gadget.ui:140 data/gtk/player_toolbar.ui:29
-#: data/gtk/player_view.ui:45
+#: data/gtk/player_view.ui:46
 msgid "No Playback"
 msgstr "Nič se ne predvajanja"
 
@@ -294,15 +294,15 @@ msgstr "Zapri"
 msgid "Resize"
 msgstr "Spremeni velikost"
 
-#: data/gtk/player_view.ui:194
+#: data/gtk/player_view.ui:195
 msgid "Show Station Details"
 msgstr "Pokaži podrobnosti postaje"
 
-#: data/gtk/player_view.ui:244
+#: data/gtk/player_view.ui:246
 msgid "No Songs"
 msgstr "Ni posnetkov"
 
-#: data/gtk/player_view.ui:255
+#: data/gtk/player_view.ui:257
 msgid ""
 "Songs that have been identified and recorded using the stream metadata will "
 "appear here."
@@ -310,7 +310,7 @@ msgstr ""
 "Pesmi, ki so bile prepoznane in posnete z metapodatki pretoka, bodo "
 "prikazane tukaj."
 
-#: data/gtk/player_view.ui:287 data/gtk/recording_indicator.ui:38
+#: data/gtk/player_view.ui:289 data/gtk/recording_indicator.ui:38
 msgid "An error occurred"
 msgstr "Prišlo je do napake"
 
@@ -396,7 +396,7 @@ msgstr "_Dodaj v zbirko"
 msgid "_Remove From Library"
 msgstr "_Odstrani iz zbirke"
 
-#: data/gtk/station_dialog.ui:119
+#: data/gtk/station_dialog.ui:119 data/gtk/station_row.ui:57
 msgid "Local Station"
 msgstr "Krajevna postaja"
 
@@ -407,7 +407,7 @@ msgid ""
 msgstr ""
 "Ta postaja obstaja le v zbirki in ni del javne podatkovne zbirke postaj."
 
-#: data/gtk/station_dialog.ui:135
+#: data/gtk/station_dialog.ui:135 data/gtk/station_row.ui:69
 msgid "Orphaned Station"
 msgstr "Osirotela postaja"
 
@@ -464,13 +464,21 @@ msgstr "Pretakanje"
 msgid "Copy"
 msgstr "Kopiraj"
 
-#: src/audio/player.rs:192
-msgid "Station cannot be streamed. URL is not valid."
-msgstr "Postaje ni mogoče pretakati. URL ni veljaven."
+#: data/gtk/volume_control.ui:9
+msgid "Toggle Mute"
+msgstr "Preklopi slišnost"
 
-#: src/audio/player.rs:260
+#: data/gtk/volume_control.ui:21
+msgid "Volume"
+msgstr "Glasnost"
+
+#: src/audio/player.rs:251
 msgid "Active Playback"
 msgstr "Dejavno predvajanje"
+
+#: src/audio/player.rs:413
+msgid "Station cannot be streamed. URL is not valid."
+msgstr "Postaje ni mogoče pretakati. URL ni veljaven."
 
 #: src/device/device_discovery.rs:83
 msgid "Google Cast Device"
@@ -507,8 +515,8 @@ msgid "Ignored"
 msgstr "Prezrto"
 
 #: src/ui/recording_indicator.rs:113
-msgid "Incomplete"
-msgstr "Nedokončano"
+msgid "No Recording"
+msgstr "Brez snemanja"
 
 #: src/ui/recording_indicator.rs:120
 msgid "The current song will be recorded until a new song is detected."
