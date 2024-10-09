@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2024-10-07 18:45+0000\n"
-"PO-Revision-Date: 2024-10-08 21:18+0300\n"
+"POT-Creation-Date: 2024-10-09 18:38+0000\n"
+"PO-Revision-Date: 2024-10-09 22:04+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -84,51 +84,41 @@ msgstr "Безшовна інтеграція до стільничного се
 msgid "Felix Häcker"
 msgstr "Felix Häcker"
 
-#: data/gtk/create_station_dialog.ui:8
-msgid "Create new station"
-msgstr "Створити станцію"
+#: data/gtk/create_station_dialog.ui:14
+#| msgid "Local Station"
+msgid "Add Local Station"
+msgstr "Додати місцеву станцію"
 
-#: data/gtk/create_station_dialog.ui:25
-msgid "Create New Station"
-msgstr "Створення станції"
+#: data/gtk/create_station_dialog.ui:42
+#| msgid "Change station image"
+msgid "Change Station Cover"
+msgstr "Змінити обкладинку для станції"
 
-#: data/gtk/create_station_dialog.ui:26
+#: data/gtk/create_station_dialog.ui:60
 msgid ""
-"You can decide if you want the new station to be visible for all users "
-"worldwide or if you want to create a local station."
+"This station will only be added to your library. If you want it to be "
+"available to everyone, you should add it to the <a href=\"https://www.radio-"
+"browser.info/add\">public database</a>."
 msgstr ""
-"Ви можете визначити, хочете ви, щоб нову станцію змогли побачити користувачі "
-"з усього світу, чи ви хочете створити локальну станцію."
+"Цю станцію буде додано лише до вашої бібліотеки. Якщо ви хочете зробити дані"
+" щодо неї доступними для усіх, вам слід додати її запис до <a"
+" href=\"https://www.radio-"
+"browser.info/add\">громадської бази даних</a>."
 
-#: data/gtk/create_station_dialog.ui:35
-msgid "Create _Public Station"
-msgstr "Створити з_агальнодоступу станцію"
-
-#: data/gtk/create_station_dialog.ui:46
-msgid "Create _Local Station"
-msgstr "Створити _локальну станцію"
-
-#: data/gtk/create_station_dialog.ui:71
-msgid "Create Local Station"
-msgstr "Створити локальну станцію"
-
-#: data/gtk/create_station_dialog.ui:104
-msgid "Change station image"
-msgstr "Змінити зображення для станції"
-
-#: data/gtk/create_station_dialog.ui:123
+#: data/gtk/create_station_dialog.ui:72
 msgid "Name"
 msgstr "Назва"
 
-#: data/gtk/create_station_dialog.ui:131
+#: data/gtk/create_station_dialog.ui:80
 msgid "Stream URL"
 msgstr "Адреса трансляції"
 
-#: data/gtk/create_station_dialog.ui:139
-msgid "Create Station"
-msgstr "Створити станцію"
+#: data/gtk/create_station_dialog.ui:88
+#| msgid "Add Stations"
+msgid "Add Station"
+msgstr "Додати станцію"
 
-#: data/gtk/device_dialog.ui:7 data/gtk/player_view.ui:112
+#: data/gtk/device_dialog.ui:7 data/gtk/player_view.ui:124
 msgid "Connect Device"
 msgstr "З'єднати пристрій"
 
@@ -195,85 +185,83 @@ msgid "Shortwave"
 msgstr "Коротка хвиля"
 
 #: data/gtk/library_page.ui:15 data/gtk/search_page.ui:4
-msgid "Add Stations"
-msgstr "Додати станції"
+#| msgid "Most Voted Stations"
+msgid "Browse Stations"
+msgstr "Навігація станціями"
 
-#: data/gtk/library_page.ui:22
+#: data/gtk/library_page.ui:23
 msgid "Main Menu"
 msgstr "Головне меню"
 
-#: data/gtk/library_page.ui:91
+#: data/gtk/library_page.ui:92
 msgid "_Add New Stations"
 msgstr "_Додати нові станції"
 
-#: data/gtk/library_page.ui:113
-msgid "_Enable Gadget Player"
-msgstr "_Увімкнути відтворення з пристроїв"
-
-#: data/gtk/library_page.ui:117
+#: data/gtk/library_page.ui:114
 msgid "_Sorting"
 msgstr "Вп_орядкування"
 
-#: data/gtk/library_page.ui:120
+#: data/gtk/library_page.ui:117
 msgid "_Name"
 msgstr "_Назва"
 
-#: data/gtk/library_page.ui:125
+#: data/gtk/library_page.ui:122
 msgid "_Language"
 msgstr "_Мова"
 
-#: data/gtk/library_page.ui:130
+#: data/gtk/library_page.ui:127
 msgid "_Country"
 msgstr "К_раїна"
 
-#: data/gtk/library_page.ui:135
+#: data/gtk/library_page.ui:132
 msgid "S_tate"
 msgstr "_Штат"
 
-#: data/gtk/library_page.ui:140
+#: data/gtk/library_page.ui:137
 msgid "_Bitrate"
 msgstr "_Бітова швидкість"
 
-#: data/gtk/library_page.ui:147
+#: data/gtk/library_page.ui:144
 msgid "_Ascending"
 msgstr "За з_ростанням"
 
-#: data/gtk/library_page.ui:152
+#: data/gtk/library_page.ui:149
 msgid "_Descending"
 msgstr "За с_паданням"
 
-#: data/gtk/library_page.ui:161
+#: data/gtk/library_page.ui:158
 msgid "_Open radio-browser.info <sup>↗</sup>"
 msgstr "В_ідкрити radio-browser.info <sup>↗</sup>"
 
-#: data/gtk/library_page.ui:166
-msgid "_Create New Station"
-msgstr "С_творити станцію"
-
-#: data/gtk/library_page.ui:173
+#: data/gtk/library_page.ui:165
 msgid "_Preferences"
 msgstr "_Налаштування"
 
-#: data/gtk/library_page.ui:177
+#: data/gtk/library_page.ui:169
 msgid "_Keyboard Shortcuts"
 msgstr "_Клавіатурні скорочення"
 
-#: data/gtk/library_page.ui:181
+#: data/gtk/library_page.ui:173
 msgid "_About Shortwave"
 msgstr "П_ро «Shortwave»"
 
+#: data/gtk/library_page.ui:181
+#| msgid "Local Station"
+msgid "Add _Local Station"
+msgstr "Додати _місцеву станцію"
+
 #: data/gtk/player_gadget.ui:40 data/gtk/player_toolbar.ui:92
-#: data/gtk/player_view.ui:136 data/gtk/station_row.ui:86
+#: data/gtk/player_view.ui:148 data/gtk/station_row.ui:86
 msgid "Play"
 msgstr "Пуск"
 
 #: data/gtk/player_gadget.ui:55 data/gtk/player_toolbar.ui:106
-#: data/gtk/player_view.ui:150
+#: data/gtk/player_view.ui:162
 msgid "Stop"
 msgstr "Зупинити"
 
 #: data/gtk/player_gadget.ui:71 data/gtk/player_toolbar.ui:121
-#: data/gtk/player_view.ui:165
+#: data/gtk/player_view.ui:177
 msgid "Buffering…"
 msgstr "Буферизація…"
 
@@ -282,7 +270,7 @@ msgid "SHORTWAVE INTERNET RADIO"
 msgstr "КОРОТКОХВИЛЬОВЕ ІНТЕРНЕТ-РАДІО"
 
 #: data/gtk/player_gadget.ui:140 data/gtk/player_toolbar.ui:29
-#: data/gtk/player_view.ui:46
+#: data/gtk/player_view.ui:58
 msgid "No Playback"
 msgstr "Немає відтворення"
 
@@ -291,18 +279,24 @@ msgid "Close"
 msgstr "Закрити"
 
 #: data/gtk/player_gadget.ui:210
-msgid "Resize"
-msgstr "Змінити розмір"
+#| msgid "Window"
+msgid "Restore Window"
+msgstr "Відновити вікно"
 
-#: data/gtk/player_view.ui:195
+#: data/gtk/player_view.ui:13
+#| msgid "_Enable Gadget Player"
+msgid "Enable Gadget Mode"
+msgstr "Увімкнути режим гаджета"
+
+#: data/gtk/player_view.ui:207
 msgid "Show Station Details"
 msgstr "Показати параметри станції"
 
-#: data/gtk/player_view.ui:246
+#: data/gtk/player_view.ui:258
 msgid "No Songs"
 msgstr "Не виявлено жодної композиції"
 
-#: data/gtk/player_view.ui:257
+#: data/gtk/player_view.ui:269
 msgid ""
 "Songs that have been identified and recorded using the stream metadata will "
 "appear here."
@@ -310,7 +304,7 @@ msgstr ""
 "Тут буде показано композиції, які було ідентифіковано і записано за "
 "допомогою метаданих потоку."
 
-#: data/gtk/player_view.ui:289 data/gtk/recording_indicator.ui:38
+#: data/gtk/player_view.ui:303 data/gtk/recording_indicator.ui:38
 msgid "An error occurred"
 msgstr "Сталася помилка"
 
@@ -322,23 +316,20 @@ msgstr "Пошук"
 msgid "Search stations"
 msgstr "Пошук станцій"
 
-#: data/gtk/search_page.ui:70
-msgid "Browse over 50,000 stations"
-msgstr "Навігація списком із понад 50000 станцій"
+#: data/gtk/search_page.ui:72
+#| msgid "Browse over 50,000 stations"
+msgid "Discover over 50,000 public stations"
+msgstr "Навігація списком із понад 50000 загальнодоступних станцій"
 
-#: data/gtk/search_page.ui:79
-msgid "Create new Station"
-msgstr "Створити станцію"
-
-#: data/gtk/search_page.ui:99
+#: data/gtk/search_page.ui:90
 msgid "Popular Stations"
 msgstr "Популярні станції"
 
-#: data/gtk/search_page.ui:120
+#: data/gtk/search_page.ui:111
 msgid "Discover New Stations"
 msgstr "Виявити нові станції"
 
-#: data/gtk/search_page.ui:142
+#: data/gtk/search_page.ui:133
 msgid ""
 "The displayed information is provided by <a href=\"https://www.radio-browser."
 "info/\">radio-browser.info</a>. \n"
@@ -348,23 +339,32 @@ msgstr ""
 "browser.info</a>. \n"
 "Shortwave не має впливу на показаний перелік станцій."
 
-#: data/gtk/search_page.ui:208
+#: data/gtk/search_page.ui:199
 msgid "Loading…"
 msgstr "Завантаження…"
 
-#: data/gtk/search_page.ui:223
+#: data/gtk/search_page.ui:214
 msgid "No Results"
 msgstr "Нічого не знайдено"
 
-#: data/gtk/search_page.ui:224
-msgid "Try using a different search term"
-msgstr "Спробуйте інший критерій пошуку"
+#: data/gtk/search_page.ui:215
+msgid ""
+"If the station you are looking for is missing, you can add it to the public "
+"database."
+msgstr ""
+"Якщо у списку немає станції, яку ви шукаєте, ви можете додати її до"
+" громадської бази даних."
 
-#: data/gtk/search_page.ui:234
+#: data/gtk/search_page.ui:219
+#| msgid "Add Stations"
+msgid "Add Missing Station"
+msgstr "Додати пропущену станцію"
+
+#: data/gtk/search_page.ui:236
 msgid "Unable to Retrieve Station Data"
 msgstr "Не вдалося отримати дані станцій"
 
-#: data/gtk/search_page.ui:237
+#: data/gtk/search_page.ui:239
 msgid "Try Again"
 msgstr "Повторити спробу"
 
@@ -494,9 +494,10 @@ msgstr "Невідома модель"
 msgid "translator-credits"
 msgstr "Юрій Чорноіван <yurchor@ukr.net>, 2020"
 
-#: src/ui/create_station_dialog.rs:98
-msgid "Select station image"
-msgstr "Виберіть зображення для станції"
+#: src/ui/create_station_dialog.rs:90
+#| msgid "Select station image"
+msgid "Select Station Cover"
+msgstr "Виберіть обкладинку станції"
 
 #: src/ui/display_error.rs:46
 msgid "Show Details"
@@ -540,6 +541,43 @@ msgstr "Поточну композицію не може бути записа�
 msgid "{} kbit/s"
 msgstr "{} кбіт/с"
 
+#~ msgid "Create new station"
+#~ msgstr "Створити станцію"
+
+#~ msgid "Create New Station"
+#~ msgstr "Створення станції"
+
+#~ msgid ""
+#~ "You can decide if you want the new station to be visible for all users "
+#~ "worldwide or if you want to create a local station."
+#~ msgstr ""
+#~ "Ви можете визначити, хочете ви, щоб нову станцію змогли побачити "
+#~ "користувачі з усього світу, чи ви хочете створити локальну станцію."
+
+#~ msgid "Create _Public Station"
+#~ msgstr "Створити з_агальнодоступу станцію"
+
+#~ msgid "Create _Local Station"
+#~ msgstr "Створити _локальну станцію"
+
+#~ msgid "Create Local Station"
+#~ msgstr "Створити локальну станцію"
+
+#~ msgid "Create Station"
+#~ msgstr "Створити станцію"
+
+#~ msgid "_Create New Station"
+#~ msgstr "С_творити станцію"
+
+#~ msgid "Resize"
+#~ msgstr "Змінити розмір"
+
+#~ msgid "Create new Station"
+#~ msgstr "Створити станцію"
+
+#~ msgid "Try using a different search term"
+#~ msgstr "Спробуйте інший критерій пошуку"
+
 #~ msgid "Incomplete"
 #~ msgstr "Неповна"
 
@@ -561,9 +599,6 @@ msgstr "{} кбіт/с"
 
 #~ msgid "Discover"
 #~ msgstr "Виявлення"
-
-#~ msgid "Most Voted Stations"
-#~ msgstr "Станції із найвищим рейтингом"
 
 #~ msgid "Trending"
 #~ msgstr "Тренди"
@@ -682,9 +717,6 @@ msgstr "{} кбіт/с"
 
 #~ msgid "Whether the application should use a dark theme"
 #~ msgstr "Чи слід віддавати перевагу у програмі темній темі"
-
-#~ msgid "Window"
-#~ msgstr "Вікно"
 
 #~ msgctxt "shortcut window"
 #~ msgid "Open library view"
