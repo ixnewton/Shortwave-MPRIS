@@ -2,274 +2,288 @@
 <interface>
   <template class="SwPlayerView" parent="AdwBin">
     <property name="child">
-      <object class="AdwToolbarView" id="toolbar_view">
-        <child type="top">
-          <object class="AdwHeaderBar">
-            <property name="show-title">False</property>
-          </object>
-        </child>
+      <object class="AdwBreakpointBin">
         <child>
-          <object class="GtkScrolledWindow">
-            <property name="propagate-natural-height">True</property>
-            <property name="hscrollbar_policy">never</property>
+          <object class="AdwToolbarView" id="toolbar_view">
+            <child type="top">
+              <object class="AdwHeaderBar">
+                <property name="show-title">False</property>
+                <child type="end">
+                  <object class="GtkButton">
+                    <property name="tooltip_text" translatable="yes">Enable Gadget Mode</property>
+                    <property name="action_name">win.enable-gadget-player</property>
+                    <property name="icon_name">window-shrink-symbolic</property>
+                    <binding name="visible">
+                      <lookup name="show-gadget-button">SwPlayerView</lookup>
+                    </binding>
+                  </object>
+                </child>
+              </object>
+            </child>
             <child>
-              <object class="AdwClamp">
-                <property name="margin_start">12</property>
-                <property name="margin_end">12</property>
-                <property name="margin_top">6</property>
-                <property name="margin_bottom">18</property>
-                <property name="maximum_size">400</property>
-                <property name="tightening_threshold">0</property>
+              <object class="GtkScrolledWindow">
+                <property name="propagate-natural-height">True</property>
+                <property name="hscrollbar_policy">never</property>
                 <child>
-                  <object class="GtkBox">
-                    <property name="orientation">vertical</property>
+                  <object class="AdwClamp">
+                    <property name="margin_start">12</property>
+                    <property name="margin_end">12</property>
+                    <property name="margin_top">6</property>
+                    <property name="margin_bottom">18</property>
+                    <property name="maximum_size">400</property>
+                    <property name="tightening_threshold">0</property>
                     <child>
-                      <object class="SwStationCover" id="station_cover">
-                        <property name="size">192</property>
-                        <property name="overflow">hidden</property>
-                        <property name="margin_bottom">18</property>
-                        <binding name="station">
-                          <lookup name="station" type="SwPlayer">
-                            <lookup name="player">SwPlayerView</lookup>
-                          </lookup>
-                        </binding>
-                        <style>
-                          <class name="card"/>
-                        </style>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkBox" id="stream_details">
+                      <object class="GtkBox">
                         <property name="orientation">vertical</property>
                         <child>
-                          <object class="GtkLabel" id="station_title_label">
-                            <property name="label" translatable="yes">No Playback</property>
-                            <property name="justify">center</property>
-                            <property name="ellipsize">end</property>
-                            <property name="wrap">True</property>
-                            <property name="lines">2</property>
-                            <binding name="label">
-                              <lookup name="title" type="SwStation">
-                                <lookup name="station" type="SwPlayer">
-                                  <lookup name="player">SwPlayerView</lookup>
-                                </lookup>
+                          <object class="SwStationCover" id="station_cover">
+                            <property name="size">192</property>
+                            <property name="overflow">hidden</property>
+                            <property name="margin_bottom">18</property>
+                            <binding name="station">
+                              <lookup name="station" type="SwPlayer">
+                                <lookup name="player">SwPlayerView</lookup>
                               </lookup>
                             </binding>
                             <style>
-                              <class name="title-3"/>
+                              <class name="card"/>
                             </style>
                           </object>
                         </child>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkRevealer" id="song_revealer">
-                        <binding name="reveal-child">
-                          <lookup name="has-playing-song" type="SwPlayer">
-                            <lookup name="player">SwPlayerView</lookup>
-                          </lookup>
-                        </binding>
                         <child>
-                          <object class="GtkBox">
+                          <object class="GtkBox" id="stream_details">
                             <property name="orientation">vertical</property>
-                            <property name="spacing">12</property>
                             <child>
-                              <object class="GtkLabel" id="song_label">
-                                <property name="margin_top">6</property>
+                              <object class="GtkLabel" id="station_title_label">
+                                <property name="label" translatable="yes">No Playback</property>
                                 <property name="justify">center</property>
                                 <property name="ellipsize">end</property>
                                 <property name="wrap">True</property>
                                 <property name="lines">2</property>
                                 <binding name="label">
-                                  <lookup name="title" type="SwSong">
-                                    <lookup name="playing-song" type="SwPlayer">
+                                  <lookup name="title" type="SwStation">
+                                    <lookup name="station" type="SwPlayer">
                                       <lookup name="player">SwPlayerView</lookup>
                                     </lookup>
                                   </lookup>
                                 </binding>
+                                <style>
+                                  <class name="title-3"/>
+                                </style>
                               </object>
                             </child>
-                            <child>
-                              <object class="SwRecordingIndicator" id="recording_indicator"/>
-                            </child>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkBox" id="controls_box">
-                        <property name="halign">center</property>
-                        <property name="spacing">12</property>
-                        <property name="margin_top">18</property>
-                        <property name="margin_bottom">18</property>
-                        <binding name="sensitive">
-                          <lookup name="has-station" type="SwPlayer">
-                            <lookup name="player">SwPlayerView</lookup>
-                          </lookup>
-                        </binding>
-                        <child>
-                          <object class="GtkButton" id="connect_button">
-                            <property name="tooltip_text" translatable="yes">Connect Device</property>
-                            <property name="action_name">player.show-device-connect</property>
-                            <property name="valign">center</property>
-                            <property name="icon_name">streaming-symbolic</property>
-                            <style>
-                              <class name="circular"/>
-                            </style>
                           </object>
                         </child>
                         <child>
-                          <object class="GtkStack" id="playback_button_stack">
-                            <property name="width_request">70</property>
-                            <binding name="visible_child_name">
-                              <lookup name="state" type="SwPlayer">
+                          <object class="GtkRevealer" id="song_revealer">
+                            <binding name="reveal-child">
+                              <lookup name="has-playing-song" type="SwPlayer">
                                 <lookup name="player">SwPlayerView</lookup>
                               </lookup>
                             </binding>
                             <child>
-                              <object class="GtkStackPage">
-                                <property name="name">Stopped</property>
-                                <property name="child">
-                                  <object class="GtkButton" id="start_playback_button">
-                                    <property name="action_name">player.start-playback</property>
-                                    <property name="icon_name">media-playback-start-symbolic</property>
-                                    <property name="tooltip_text" translatable="yes">Play</property>
-                                    <style>
-                                      <class name="pill"/>
-                                    </style>
+                              <object class="GtkBox">
+                                <property name="orientation">vertical</property>
+                                <property name="spacing">12</property>
+                                <child>
+                                  <object class="GtkLabel" id="song_label">
+                                    <property name="margin_top">6</property>
+                                    <property name="justify">center</property>
+                                    <property name="ellipsize">end</property>
+                                    <property name="wrap">True</property>
+                                    <property name="lines">2</property>
+                                    <binding name="label">
+                                      <lookup name="title" type="SwSong">
+                                        <lookup name="playing-song" type="SwPlayer">
+                                          <lookup name="player">SwPlayerView</lookup>
+                                        </lookup>
+                                      </lookup>
+                                    </binding>
                                   </object>
-                                </property>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkStackPage">
-                                <property name="name">Playing</property>
-                                <property name="child">
-                                  <object class="GtkButton" id="stop_playback_button">
-                                    <property name="action_name">player.stop-playback</property>
-                                    <property name="tooltip_text" translatable="yes">Stop</property>
-                                    <property name="icon_name">media-playback-stop-symbolic</property>
-                                    <style>
-                                      <class name="pill"/>
-                                    </style>
-                                  </object>
-                                </property>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkStackPage">
-                                <property name="name">Loading</property>
-                                <property name="child">
-                                  <object class="GtkButton" id="loading_button">
-                                    <property name="action_name">player.stop-playback</property>
-                                    <property name="tooltip_text" translatable="yes">Buffering…</property>
-                                    <child>
-                                      <object class="AdwSpinner" />
-                                    </child>
-                                    <style>
-                                      <class name="pill"/>
-                                    </style>
-                                  </object>
-                                </property>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkStackPage">
-                                <property name="name">Failure</property>
-                                <property name="child">
-                                  <object class="GtkMenuButton">
-                                    <property name="popover">failure_popover</property>
-                                    <property name="icon_name">dialog-error-symbolic</property>
-                                    <style>
-                                      <class name="destructive-action"/>
-                                      <class name="pill"/>
-                                    </style>
-                                  </object>
-                                </property>
+                                </child>
+                                <child>
+                                  <object class="SwRecordingIndicator" id="recording_indicator"/>
+                                </child>
                               </object>
                             </child>
                           </object>
                         </child>
                         <child>
-                          <object class="GtkButton" id="details_button">
-                            <property name="tooltip_text" translatable="yes">Show Station Details</property>
-                            <property name="action_name">player.show-station-details</property>
-                            <property name="valign">center</property>
-                            <property name="icon_name">details-symbolic</property>
-                            <style>
-                              <class name="circular"/>
-                            </style>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkRevealer" id="device_revealer">
-                        <binding name="reveal-child">
-                          <lookup name="has-device" type="SwPlayer">
-                            <lookup name="player">SwPlayerView</lookup>
-                          </lookup>
-                        </binding>
-                        <child>
-                          <object class="SwDeviceIndicator" id="device_indicator">
-                            <property name="margin_bottom">12</property>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="SwVolumeControl" id="volume_control">
-                        <property name="halign">center</property>
-                        <property name="width_request">250</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkSeparator">
-                        <property name="halign">center</property>
-                        <property name="width_request">125</property>
-                        <property name="margin_top">12</property>
-                        <property name="margin_bottom">24</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkStack" id="past_songs_stack">
-                        <property name="transition_type">crossfade</property>
-                        <property name="hhomogeneous">false</property>
-                        <property name="vhomogeneous">false</property>
-                        <property name="margin_bottom">12</property>
-                        <child>
-                          <object class="GtkBox">
-                            <property name="orientation">vertical</property>
+                          <object class="GtkBox" id="controls_box">
+                            <property name="halign">center</property>
                             <property name="spacing">12</property>
+                            <property name="margin_top">18</property>
+                            <property name="margin_bottom">18</property>
+                            <binding name="sensitive">
+                              <lookup name="has-station" type="SwPlayer">
+                                <lookup name="player">SwPlayerView</lookup>
+                              </lookup>
+                            </binding>
                             <child>
-                              <object class="GtkLabel">
-                                <property name="label" translatable="yes">No Songs</property>
-                                <property name="justify">center</property>
-                                <property name="ellipsize">end</property>
+                              <object class="GtkButton" id="connect_button">
+                                <property name="tooltip_text" translatable="yes">Connect Device</property>
+                                <property name="action_name">player.show-device-connect</property>
+                                <property name="valign">center</property>
+                                <property name="icon_name">streaming-symbolic</property>
                                 <style>
-                                  <class name="title-2"/>
-                                  <class name="dim-label"/>
+                                  <class name="circular"/>
                                 </style>
                               </object>
                             </child>
                             <child>
-                              <object class="GtkLabel">
-                                <property name="label" translatable="yes">Songs that have been identified and recorded using the stream metadata will appear here.</property>
-                                <property name="justify">center</property>
-                                <property name="wrap">True</property>
+                              <object class="GtkStack" id="playback_button_stack">
+                                <property name="width_request">70</property>
+                                <binding name="visible_child_name">
+                                  <lookup name="state" type="SwPlayer">
+                                    <lookup name="player">SwPlayerView</lookup>
+                                  </lookup>
+                                </binding>
+                                <child>
+                                  <object class="GtkStackPage">
+                                    <property name="name">Stopped</property>
+                                    <property name="child">
+                                      <object class="GtkButton" id="start_playback_button">
+                                        <property name="action_name">player.start-playback</property>
+                                        <property name="icon_name">media-playback-start-symbolic</property>
+                                        <property name="tooltip_text" translatable="yes">Play</property>
+                                        <style>
+                                          <class name="pill"/>
+                                        </style>
+                                      </object>
+                                    </property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkStackPage">
+                                    <property name="name">Playing</property>
+                                    <property name="child">
+                                      <object class="GtkButton" id="stop_playback_button">
+                                        <property name="action_name">player.stop-playback</property>
+                                        <property name="tooltip_text" translatable="yes">Stop</property>
+                                        <property name="icon_name">media-playback-stop-symbolic</property>
+                                        <style>
+                                          <class name="pill"/>
+                                        </style>
+                                      </object>
+                                    </property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkStackPage">
+                                    <property name="name">Loading</property>
+                                    <property name="child">
+                                      <object class="GtkButton" id="loading_button">
+                                        <property name="action_name">player.stop-playback</property>
+                                        <property name="tooltip_text" translatable="yes">Buffering…</property>
+                                        <child>
+                                          <object class="AdwSpinner" />
+                                        </child>
+                                        <style>
+                                          <class name="pill"/>
+                                        </style>
+                                      </object>
+                                    </property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkStackPage">
+                                    <property name="name">Failure</property>
+                                    <property name="child">
+                                      <object class="GtkMenuButton">
+                                        <property name="popover">failure_popover</property>
+                                        <property name="icon_name">dialog-error-symbolic</property>
+                                        <style>
+                                          <class name="destructive-action"/>
+                                          <class name="pill"/>
+                                        </style>
+                                      </object>
+                                    </property>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="details_button">
+                                <property name="tooltip_text" translatable="yes">Show Station Details</property>
+                                <property name="action_name">player.show-station-details</property>
+                                <property name="valign">center</property>
+                                <property name="icon_name">details-symbolic</property>
                                 <style>
-                                  <class name="dim-label"/>
+                                  <class name="circular"/>
                                 </style>
                               </object>
                             </child>
                           </object>
                         </child>
                         <child>
-                          <object class="GtkListBox" id="past_songs_listbox">
-                            <property name="selection-mode">none</property>
-                            <style>
-                              <class name="boxed-list"/>
-                            </style>
+                          <object class="GtkRevealer" id="device_revealer">
+                            <binding name="reveal-child">
+                              <lookup name="has-device" type="SwPlayer">
+                                <lookup name="player">SwPlayerView</lookup>
+                              </lookup>
+                            </binding>
+                            <child>
+                              <object class="SwDeviceIndicator" id="device_indicator">
+                                <property name="margin_bottom">12</property>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="SwVolumeControl" id="volume_control">
+                            <property name="halign">center</property>
+                            <property name="width_request">250</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkSeparator">
+                            <property name="halign">center</property>
+                            <property name="width_request">125</property>
+                            <property name="margin_top">12</property>
+                            <property name="margin_bottom">24</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkStack" id="past_songs_stack">
+                            <property name="transition_type">crossfade</property>
+                            <property name="hhomogeneous">false</property>
+                            <property name="vhomogeneous">false</property>
+                            <property name="margin_bottom">12</property>
+                            <child>
+                              <object class="GtkBox">
+                                <property name="orientation">vertical</property>
+                                <property name="spacing">12</property>
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="label" translatable="yes">No Songs</property>
+                                    <property name="justify">center</property>
+                                    <property name="ellipsize">end</property>
+                                    <style>
+                                      <class name="title-2"/>
+                                      <class name="dim-label"/>
+                                    </style>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="label" translatable="yes">Songs that have been identified and recorded using the stream metadata will appear here.</property>
+                                    <property name="justify">center</property>
+                                    <property name="wrap">True</property>
+                                    <style>
+                                      <class name="dim-label"/>
+                                    </style>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkListBox" id="past_songs_listbox">
+                                <property name="selection-mode">none</property>
+                                <style>
+                                  <class name="boxed-list"/>
+                                </style>
+                              </object>
+                            </child>
                           </object>
                         </child>
                       </object>

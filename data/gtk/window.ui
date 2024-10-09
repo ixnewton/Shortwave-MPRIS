@@ -8,10 +8,11 @@
       <object class="AdwBreakpoint" id="narrow_breakpoint">
         <condition>max-width: 625px</condition>
         <setter object="multi_layout_view" property="layout-name">narrow</setter>
+        <setter object="player_view" property="show-gadget-button">False</setter>
       </object>
     </child>
     <child>
-      <object class="AdwBreakpoint">
+      <object class="AdwBreakpoint" id="gadget_breakpoint">
         <condition>max-height: 165px</condition>
         <setter object="stack" property="visible-child">gadget_handle</setter>
       </object>

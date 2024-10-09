@@ -14,6 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+use std::cell::Cell;
+
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use glib::{clone, subclass, Properties};
@@ -46,6 +48,8 @@ mod imp {
         #[template_child]
         past_songs_listbox: TemplateChild<gtk::ListBox>,
 
+        #[property(get, set)]
+        pub show_gadget_button: Cell<bool>,
         #[property(get)]
         pub player: SwPlayer,
     }
@@ -92,6 +96,8 @@ mod imp {
                     }
                 }
             ));
+
+            self.obj().set_show_gadget_button(true);
         }
     }
 

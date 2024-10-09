@@ -129,8 +129,17 @@ mod imp {
 
             obj.insert_action_group("player", Some(&player_actions));
 
-            self.obj().setup_widgets();
-            self.obj().setup_gactions();
+            // Add devel style class for development or beta builds
+            if config::PROFILE == "development" || config::PROFILE == "beta" {
+                obj.add_css_class("devel");
+            }
+
+            // Restore window geometry
+            let width = settings_manager::integer(Key::WindowWidth);
+            let height = settings_manager::integer(Key::WindowHeight);
+            obj.set_default_size(width, height);
+
+            obj.setup_gactions();
         }
     }
 
@@ -165,43 +174,6 @@ glib::wrapper! {
 impl SwApplicationWindow {
     pub fn new() -> Self {
         glib::Object::new::<Self>()
-    }
-
-    pub fn setup_widgets(&self) {
-        let imp = self.imp();
-
-        // Animations for smooth gadget player transitions
-        let x_callback = adw::CallbackAnimationTarget::new(clone!(
-            #[weak(rename_to = obj)]
-            self,
-            move |val| {
-                obj.set_default_width(val as i32);
-            }
-        ));
-        let x_animation = adw::TimedAnimation::new(self, 0.0, 0.0, 500, x_callback);
-        x_animation.set_easing(adw::Easing::EaseOutCubic);
-        imp.window_animation_x.set(x_animation).unwrap();
-
-        let y_callback = adw::CallbackAnimationTarget::new(clone!(
-            #[weak(rename_to = obj)]
-            self,
-            move |val| {
-                obj.set_default_height(val as i32);
-            }
-        ));
-        let y_animation = adw::TimedAnimation::new(self, 0.0, 0.0, 500, y_callback);
-        y_animation.set_easing(adw::Easing::EaseOutCubic);
-        imp.window_animation_y.set(y_animation).unwrap();
-
-        // Add devel style class for development or beta builds
-        if config::PROFILE == "development" || config::PROFILE == "beta" {
-            self.add_css_class("devel");
-        }
-
-        // Restore window geometry
-        let width = settings_manager::integer(Key::WindowWidth);
-        let height = settings_manager::integer(Key::WindowHeight);
-        self.set_default_size(width, height);
     }
 
     fn setup_gactions(&self) {
@@ -247,6 +219,7 @@ impl SwApplicationWindow {
 
         if self.is_maximized() && enable {
             self.unmaximize();
+            return;
         }
 
         let mut previous_width = settings_manager::integer(Key::WindowPreviousWidth) as f64;
@@ -256,37 +229,22 @@ impl SwApplicationWindow {
         // if you switch between gadget player / normal window mode.
         let current_width = self.default_size().0;
         let current_height = self.default_size().1;
+
         settings_manager::set_integer(Key::WindowPreviousWidth, current_width);
         settings_manager::set_integer(Key::WindowPreviousHeight, current_height);
 
-        let x_animation = self.imp().window_animation_x.get().unwrap();
-        let y_animation = self.imp().window_animation_y.get().unwrap();
-
-        x_animation.reset();
-        x_animation.set_value_from(self.width() as f64);
-        y_animation.reset();
-        y_animation.set_value_from(self.height() as f64);
-
-        if enable {
-            if previous_height > 175.0 {
-                previous_width = 450.0;
-                previous_height = 105.0;
-            }
-
-            x_animation.set_value_to(previous_width);
-            y_animation.set_value_to(previous_height);
-        } else {
-            if previous_height < 175.0 {
-                previous_width = 950.0;
-                previous_height = 650.0;
-            }
-
-            x_animation.set_value_to(previous_width);
-            y_animation.set_value_to(previous_height);
+        if enable && previous_height > 175.0 {
+            previous_width = 450.0;
+            previous_height = 105.0;
+        } else if !enable && previous_height < 175.0 {
+            previous_width = 950.0;
+            previous_height = 650.0;
         }
 
-        x_animation.play();
-        y_animation.play();
+        self.set_visible(false);
+        self.set_default_height(previous_height as i32);
+        self.set_default_width(previous_width as i32);
+        self.set_visible(true);
     }
 
     pub fn show_uri(&self, uri: &str) {

@@ -206,8 +206,8 @@
                 <child>
                   <object class="GtkButton" id="resize_button">
                     <property name="action_name">win.disable-gadget-player</property>
-                    <property name="icon_name">restore-window-symbolic</property>
-                    <property name="tooltip_text" translatable="yes">Resize</property>
+                    <property name="icon_name">window-grow-symbolic</property>
+                    <property name="tooltip_text" translatable="yes">Restore Window</property>
                     <style>
                       <class name="circular" />
                       <class name="gadget-controller-button" />
