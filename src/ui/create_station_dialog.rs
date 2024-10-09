@@ -35,14 +35,6 @@ mod imp {
     #[template(resource = "/de/haeckerfelix/Shortwave/gtk/create_station_dialog.ui")]
     pub struct SwCreateStationDialog {
         #[template_child]
-        pub stack: TemplateChild<gtk::Stack>,
-        #[template_child]
-        pub create_online_button: TemplateChild<gtk::Button>,
-        #[template_child]
-        pub create_local_button: TemplateChild<gtk::Button>,
-        #[template_child]
-        pub back_button: TemplateChild<gtk::Button>,
-        #[template_child]
         pub create_button: TemplateChild<gtk::Button>,
         #[template_child]
         pub station_favicon: TemplateChild<SwFavicon>,
@@ -95,8 +87,9 @@ impl SwCreateStationDialog {
 
     fn show_filechooser(&self) {
         let file_chooser = gtk::FileDialog::builder()
-            .title(i18n("Select station image"))
+            .title(i18n("Select Station Cover"))
             .build();
+
         file_chooser.open(
             Some(&SwApplicationWindow::default()),
             gio::Cancellable::NONE,
@@ -116,14 +109,6 @@ impl SwCreateStationDialog {
     fn setup_signals(&self) {
         let imp = self.imp();
 
-        imp.back_button.connect_clicked(clone!(
-            #[weak(rename_to = imp)]
-            self,
-            move |_| {
-                imp.imp().stack.set_visible_child_name("start");
-            }
-        ));
-
         imp.favicon_button.connect_clicked(clone!(
             #[weak(rename_to = imp)]
             self,
@@ -131,17 +116,6 @@ impl SwCreateStationDialog {
                 imp.show_filechooser();
             }
         ));
-    }
-
-    #[template_callback]
-    fn create_public_station(&self) {
-        SwApplicationWindow::default().show_uri("https://www.radio-browser.info/add");
-        self.close();
-    }
-
-    #[template_callback]
-    fn create_local_station(&self) {
-        self.imp().stack.set_visible_child_name("local-station");
     }
 
     #[template_callback]

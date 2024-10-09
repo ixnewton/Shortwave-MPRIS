@@ -186,11 +186,17 @@ impl SwApplicationWindow {
                     window.show_uri("https://www.radio-browser.info/");
                 })
                 .build(),
-            // win.create-new-station
-            gio::ActionEntry::builder("create-new-station")
+            // win.add-local-station
+            gio::ActionEntry::builder("add-local-station")
                 .activate(move |window: &Self, _, _| {
                     let dialog = SwCreateStationDialog::new();
                     dialog.present(Some(window));
+                })
+                .build(),
+            // win.add-public-station
+            gio::ActionEntry::builder("add-public-station")
+                .activate(move |window: &Self, _, _| {
+                    window.show_uri("https://www.radio-browser.info/add");
                 })
                 .build(),
             // win.disable-gadget-player

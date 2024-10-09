@@ -8,11 +8,12 @@
         <child type="top">
           <object class="AdwHeaderBar">
             <child>
-              <object class="GtkButton">
+              <object class="AdwSplitButton">
                 <property name="action-name">navigation.push</property>
                 <property name="action-target">'search'</property>
                 <property name="icon_name">list-add-symbolic</property>
-                <property name="tooltip_text" translatable="yes">Add Stations</property>
+                <property name="tooltip_text" translatable="yes">Browse Stations</property>
+                <property name="menu_model">add_menu</property>
               </object>
             </child>
             <child type="end">
@@ -158,11 +159,6 @@
         <attribute name="action">win.open-radio-browser-info</attribute>
         <attribute name="use-markup">True</attribute>
       </item>
-      <item>
-        <attribute name="label" translatable="yes">_Create New Station</attribute>
-        <attribute name="action">win.create-new-station</attribute>
-        <attribute name="use-markup">True</attribute>
-      </item>
     </section>
     <section>
       <item>
@@ -176,6 +172,15 @@
       <item>
         <attribute name="label" translatable="yes">_About Shortwave</attribute>
         <attribute name="action">app.about</attribute>
+      </item>
+    </section>
+  </menu>
+  <menu id="add_menu">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">Add _Local Station</attribute>
+        <attribute name="action">win.add-local-station</attribute>
+        <attribute name="use-markup">True</attribute>
       </item>
     </section>
   </menu>

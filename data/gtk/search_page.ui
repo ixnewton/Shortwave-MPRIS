@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <template class="SwSearchPage" parent="AdwNavigationPage">
-    <property name="title" translatable="yes">Add Stations</property>
+    <property name="title" translatable="yes">Browse Stations</property>
     <property name="tag">search</property>
     <property name="child">
       <object class="AdwToolbarView">
@@ -60,27 +60,18 @@
                                     <property name="valign">center</property>
                                     <property name="vexpand">True</property>
                                     <property name="orientation">vertical</property>
-                                    <property name="margin_top">32</property>
-                                    <property name="margin_bottom">32</property>
+                                    <property name="margin_top">48</property>
+                                    <property name="margin_bottom">48</property>
+                                    <property name="margin_start">12</property>
+                                    <property name="margin_end">12</property>
                                     <child>
                                       <object class="GtkLabel">
                                         <property name="hexpand">True</property>
                                         <property name="justify">center</property>
                                         <property name="wrap">True</property>
-                                        <property name="label" translatable="yes">Browse over 50,000 stations</property>
+                                        <property name="label" translatable="yes">Discover over 50,000 public stations</property>
                                         <style>
                                           <class name="title-1"/>
-                                        </style>
-                                      </object>
-                                    </child>
-                                    <child>
-                                      <object class="GtkButton">
-                                        <property name="action-name">win.create-new-station</property>
-                                        <property name="label" translatable="yes">Create new Station</property>
-                                        <property name="use_underline">True</property>
-                                        <property name="halign">center</property>
-                                        <style>
-                                          <class name="pill"/>
                                         </style>
                                       </object>
                                     </child>
@@ -221,7 +212,18 @@ Shortwave has no influence on the listed stations.</property>
                 <property name="child">
                   <object class="AdwStatusPage">
                     <property name="title" translatable="yes">No Results</property>
-                    <property name="description" translatable="yes">Try using a different search term</property>
+                    <property name="description" translatable="yes">If the station you are looking for is missing, you can add it to the public database.</property>
+                    <child>
+                      <object class="GtkButton">
+                        <property name="action-name">win.add-public-station</property>
+                        <property name="label" translatable="yes">Add Missing Station</property>
+                        <property name="use_underline">True</property>
+                        <property name="halign">center</property>
+                        <style>
+                          <class name="pill"/>
+                        </style>
+                      </object>
+                    </child>
                   </object>
                 </property>
               </object>

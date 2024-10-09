@@ -5,156 +5,101 @@
     <property name="height_request">294</property>
     <property name="content_width">500</property>
     <property name="content_height">575</property>
-    <property name="title" translatable="yes">Create new station</property>
     <child>
-      <object class="GtkStack" id="stack">
-        <property name="transition_type">crossfade</property>
-        <child>
-          <object class="GtkStackPage">
-            <property name="name">start</property>
-            <property name="child">
-              <object class="AdwToolbarView">
-                <child type="top">
-                  <object class="AdwHeaderBar">
-                    <property name="show-title">False</property>
-                  </object>
-                </child>
-                <child>
-                  <object class="AdwStatusPage">
-                    <property name="icon-name">list-add-symbolic</property>
-                    <property name="title" translatable="yes">Create New Station</property>
-                    <property name="description" translatable="yes">You can decide if you want the new station to be visible for all users worldwide or if you want to create a local station.</property>
-                    <property name="child">
-                      <object class="GtkBox">
-                        <property name="halign">center</property>
-                        <property name="homogeneous">True</property>
-                        <property name="orientation">vertical</property>
-                        <property name="spacing">12</property>
-                        <child>
-                          <object class="GtkButton" id="create_online_button">
-                            <property name="label" translatable="yes">Create _Public Station</property>
-                            <property name="use_underline">True</property>
-                            <signal name="clicked" handler="create_public_station" swapped="true"/>
-                            <style>
-                              <class name="pill"/>
-                              <class name="suggested-action"/>
-                            </style>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="GtkButton" id="create_local_button">
-                            <property name="label" translatable="yes">Create _Local Station</property>
-                            <property name="use_underline">True</property>
-                            <signal name="clicked" handler="create_local_station" swapped="true"/>
-                            <style>
-                              <class name="pill"/>
-                            </style>
-                          </object>
-                        </child>
-                      </object>
-                    </property>
-                  </object>
-                </child>
+      <object class="AdwToolbarView">
+        <child type="top">
+          <object class="AdwHeaderBar">
+            <property name="title-widget">
+              <object class="AdwWindowTitle">
+                <property name="title" translatable="yes">Add Local Station</property>
               </object>
             </property>
           </object>
         </child>
         <child>
-          <object class="GtkStackPage">
-            <property name="name">local-station</property>
-            <property name="child">
-              <object class="AdwToolbarView">
-                <child type="top">
-                  <object class="AdwHeaderBar">
-                    <property name="title-widget">
-                      <object class="AdwWindowTitle">
-                        <property name="title" translatable="yes">Create Local Station</property>
-                      </object>
-                    </property>
-                    <child>
-                      <object class="GtkButton" id="back_button">
-                        <property name="icon-name">go-previous-symbolic</property>
-                      </object>
-                    </child>
-                  </object>
-                </child>
+          <object class="GtkScrolledWindow">
+            <property name="vexpand">True</property>
+            <child>
+              <object class="AdwClamp">
                 <child>
-                  <object class="GtkScrolledWindow">
-                    <property name="vexpand">True</property>
+                  <object class="GtkBox">
+                    <property name="orientation">vertical</property>
+                    <property name="spacing">18</property>
+                    <property name="margin_start">12</property>
+                    <property name="margin_end">12</property>
+                    <property name="margin_bottom">30</property>
+                    <property name="margin_top">18</property>
                     <child>
-                      <object class="AdwClamp">
-                        <child>
-                          <object class="GtkBox">
-                            <property name="orientation">vertical</property>
-                            <property name="spacing">18</property>
-                            <property name="margin_start">12</property>
-                            <property name="margin_end">12</property>
-                            <property name="margin_bottom">30</property>
-                            <property name="margin_top">30</property>
-                            <child>
-                              <object class="GtkOverlay">
-                                <property name="halign">center</property>
-                                <property name="valign">center</property>
-                                <property name="margin_bottom">12</property>
-                                <child type="overlay">
-                                  <object class="GtkButton" id="favicon_button">
-                                    <property name="icon_name">document-edit-symbolic</property>
-                                    <property name="halign">center</property>
-                                    <property name="valign">center</property>
-                                    <property name="tooltip_text" translatable="yes">Change station image</property>
-                                    <style>
-                                      <class name="osd"/>
-                                    </style>
-                                  </object>
-                                </child>
-                                <child>
-                                  <object class="SwFavicon" id="station_favicon">
-                                    <property name="size">Big</property>
-                                  </object>
-                                </child>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="AdwPreferencesGroup">
-                                <child>
-                                  <object class="AdwEntryRow" id="name_row">
-                                    <property name="activatable">True</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="title" translatable="yes">Name</property>
-                                    <signal name="notify::text" handler="validate_input" swapped="true"/>
-                                  </object>
-                                </child>
-                                <child>
-                                  <object class="AdwEntryRow" id="url_row">
-                                    <property name="activatable">True</property>
-                                    <property name="use_underline">True</property>
-                                    <property name="title" translatable="yes">Stream URL</property>
-                                    <signal name="notify::text" handler="validate_input" swapped="true"/>
-                                  </object>
-                                </child>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkButton" id="create_button">
-                                <property name="label" translatable="yes">Create Station</property>
-                                <property name="halign">center</property>
-                                <property name="margin_top">12</property>
-                                <property name="sensitive">False</property>
-                                <signal name="clicked" handler="create_station" swapped="true"/>
-                                <style>
-                                  <class name="pill"/>
-                                  <class name="suggested-action"/>
-                                </style>
-                              </object>
-                            </child>
+                      <object class="GtkOverlay">
+                        <property name="halign">center</property>
+                        <property name="valign">center</property>
+                        <property name="margin_bottom">12</property>
+                        <child type="overlay">
+                          <object class="GtkButton" id="favicon_button">
+                            <property name="icon_name">document-edit-symbolic</property>
+                            <property name="halign">center</property>
+                            <property name="valign">center</property>
+                            <property name="tooltip_text" translatable="yes">Change Station Cover</property>
+                            <style>
+                              <class name="osd" />
+                            </style>
                           </object>
                         </child>
+                        <child>
+                          <object class="SwFavicon" id="station_favicon">
+                            <property name="size">Big</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="use_markup">True</property>
+                        <property name="wrap">True</property>
+                        <property name="xalign">0</property>
+                        <property name="label" translatable="yes">This station will only be added to your library. If you want it to be available to everyone, you should add it to the &lt;a href="https://www.radio-browser.info/add"&gt;public database&lt;/a&gt;.</property>
+                        <style>
+                          <class name="dim-label" />
+                        </style>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="AdwPreferencesGroup">
+                        <child>
+                          <object class="AdwEntryRow" id="name_row">
+                            <property name="activatable">True</property>
+                            <property name="use_underline">True</property>
+                            <property name="title" translatable="yes">Name</property>
+                            <signal name="notify::text" handler="validate_input" swapped="true" />
+                          </object>
+                        </child>
+                        <child>
+                          <object class="AdwEntryRow" id="url_row">
+                            <property name="activatable">True</property>
+                            <property name="use_underline">True</property>
+                            <property name="title" translatable="yes">Stream URL</property>
+                            <signal name="notify::text" handler="validate_input" swapped="true" />
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="create_button">
+                        <property name="label" translatable="yes">Add Station</property>
+                        <property name="halign">center</property>
+                        <property name="margin_top">12</property>
+                        <property name="sensitive">False</property>
+                        <signal name="clicked" handler="create_station" swapped="true" />
+                        <style>
+                          <class name="pill" />
+                          <class name="suggested-action" />
+                        </style>
                       </object>
                     </child>
                   </object>
                 </child>
               </object>
-            </property>
+            </child>
           </object>
         </child>
       </object>
