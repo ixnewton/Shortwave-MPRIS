@@ -91,6 +91,7 @@
                             <property name="halign">center</property>
                             <property name="label" translatable="yes">_Add New Stations</property>
                             <property name="use_underline">True</property>
+                            <property name="can_shrink">True</property>
                             <style>
                               <class name="suggested-action"/>
                               <class name="pill"/>

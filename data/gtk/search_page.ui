@@ -218,6 +218,7 @@ Shortwave has no influence on the listed stations.</property>
                         <property name="action-name">win.add-public-station</property>
                         <property name="label" translatable="yes">Add Missing Station</property>
                         <property name="use_underline">True</property>
+                        <property name="can_shrink">True</property>
                         <property name="halign">center</property>
                         <style>
                           <class name="pill"/>
