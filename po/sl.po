@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2024-10-09 18:38+0000\n"
-"PO-Revision-Date: 2024-10-09 21:03+0200\n"
+"POT-Creation-Date: 2024-10-09 19:12+0000\n"
+"PO-Revision-Date: 2024-10-09 21:35+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl_SI\n"
@@ -84,15 +84,15 @@ msgstr "Popolna povezava programa z namiznim okoljem GNOME"
 msgid "Felix Häcker"
 msgstr "Felix Häcker"
 
-#: data/gtk/create_station_dialog.ui:14
+#: data/gtk/add_station_dialog.ui:14
 msgid "Add Local Station"
 msgstr "Dodaj krajevno postajo"
 
-#: data/gtk/create_station_dialog.ui:42
+#: data/gtk/add_station_dialog.ui:42
 msgid "Change Station Cover"
 msgstr "Spremeni sliko postaje"
 
-#: data/gtk/create_station_dialog.ui:60
+#: data/gtk/add_station_dialog.ui:60
 msgid ""
 "This station will only be added to your library. If you want it to be "
 "available to everyone, you should add it to the <a href=\"https://www.radio-"
@@ -102,15 +102,15 @@ msgstr ""
 "jo dodajte v <a href=\"https://www.radio-browser.info/add\">javno zbirko "
 "podatkov</a>."
 
-#: data/gtk/create_station_dialog.ui:72
+#: data/gtk/add_station_dialog.ui:72
 msgid "Name"
 msgstr "Naziv"
 
-#: data/gtk/create_station_dialog.ui:80
+#: data/gtk/add_station_dialog.ui:80
 msgid "Stream URL"
 msgstr "Naslov URL za pretakanje"
 
-#: data/gtk/create_station_dialog.ui:88
+#: data/gtk/add_station_dialog.ui:88
 msgid "Add Station"
 msgstr "Dodaj postajo"
 
@@ -373,54 +373,55 @@ msgstr "Pokaži obvestilo namizja, ko se začne predvajati nova skladba"
 msgid "Save recorded song"
 msgstr "Shrani posneto skladbo"
 
-#: data/gtk/station_dialog.ui:70
-msgid "_Play Station"
-msgstr "_Predvajaj postajo"
+#: data/gtk/station_dialog.ui:73
+msgid "_Play"
+msgstr "_Predvajaj"
 
-#: data/gtk/station_dialog.ui:85
+#: data/gtk/station_dialog.ui:88
 msgid "_Add to Library"
 msgstr "_Dodaj v zbirko"
 
-#: data/gtk/station_dialog.ui:101
+#: data/gtk/station_dialog.ui:104
 msgid "_Remove From Library"
 msgstr "_Odstrani iz zbirke"
 
-#: data/gtk/station_dialog.ui:119 data/gtk/station_row.ui:57
+#: data/gtk/station_dialog.ui:122 data/gtk/station_row.ui:57
 msgid "Local Station"
 msgstr "Krajevna postaja"
 
-#: data/gtk/station_dialog.ui:120
+#: data/gtk/station_dialog.ui:123
 msgid ""
 "This station exists only in your library, and is not part of the public "
-"online station database."
+"database"
 msgstr ""
-"Ta postaja obstaja le v zbirki in ni del javne podatkovne zbirke postaj."
+"Ta postaja obstaja le v vaši knjižnici in ni del javne podatkovne zbirke "
+"postaj."
 
-#: data/gtk/station_dialog.ui:135 data/gtk/station_row.ui:69
+#: data/gtk/station_dialog.ui:137 data/gtk/station_row.ui:69
 msgid "Orphaned Station"
 msgstr "Osirotela postaja"
 
-#: data/gtk/station_dialog.ui:136
+#: data/gtk/station_dialog.ui:138
 msgid ""
 "The information could not be updated, probably this station was removed from "
-"the public online station database."
+"the public database"
 msgstr ""
 "Informacij ni bilo mogoče posodobiti, verjetno je bila ta postaja "
-"odstranjena iz javne zbirke podatkov spletnih postaj."
+"odstranjena iz javne zbirke podatkov."
 
-#: data/gtk/station_dialog.ui:148
+#: data/gtk/station_dialog.ui:149
 msgid "Information"
 msgstr "Podrobnosti"
 
-#: data/gtk/station_dialog.ui:151
+#: data/gtk/station_dialog.ui:152
 msgid "Language"
 msgstr "Jezik"
 
-#: data/gtk/station_dialog.ui:161
+#: data/gtk/station_dialog.ui:162
 msgid "Tags"
 msgstr "Oznake"
 
-#: data/gtk/station_dialog.ui:173
+#: data/gtk/station_dialog.ui:174
 msgid "Location"
 msgstr "Kraj"
 
@@ -436,20 +437,20 @@ msgstr "Pokrajina / zvezna država"
 msgid "Audio"
 msgstr "Zvok"
 
-#: data/gtk/station_dialog.ui:226
+#: data/gtk/station_dialog.ui:225
 msgid "Bitrate"
 msgstr "Bitna hitrost"
 
-#: data/gtk/station_dialog.ui:236
+#: data/gtk/station_dialog.ui:235
 msgid "Codec"
 msgstr "Kodek"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:246
+#: data/gtk/station_dialog.ui:245
 msgid "Stream"
 msgstr "Pretakanje"
 
-#: data/gtk/station_dialog.ui:255
+#: data/gtk/station_dialog.ui:254
 msgid "Copy"
 msgstr "Kopiraj"
 
@@ -483,7 +484,7 @@ msgstr ""
 "Matej Urbančič <mateju@src.gnome.org>\n"
 "Martin Srebotnjak <miles@filmsi.net>"
 
-#: src/ui/create_station_dialog.rs:90
+#: src/ui/add_station_dialog.rs:90
 msgid "Select Station Cover"
 msgstr "Izberite sliko postaje"
 
