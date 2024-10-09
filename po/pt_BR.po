@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2024-10-07 18:45+0000\n"
-"PO-Revision-Date: 2024-10-08 15:59-0300\n"
+"POT-Creation-Date: 2024-10-09 15:55+0000\n"
+"PO-Revision-Date: 2024-10-09 14:52-0300\n"
 "Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
 "Language-Team: Brazilian Portuguese <https://br.gnome.org/traducao>\n"
 "Language: pt_BR\n"
@@ -139,7 +139,7 @@ msgstr "URL de reprodução"
 msgid "Create Station"
 msgstr "Criar estação"
 
-#: data/gtk/device_dialog.ui:7 data/gtk/player_view.ui:112
+#: data/gtk/device_dialog.ui:7 data/gtk/player_view.ui:124
 msgid "Connect Device"
 msgstr "Conectar dispositivo"
 
@@ -218,73 +218,69 @@ msgid "_Add New Stations"
 msgstr "_Adicionar novas estações"
 
 #: data/gtk/library_page.ui:113
-msgid "_Enable Gadget Player"
-msgstr "Habilitar r_eprodutor compacto"
-
-#: data/gtk/library_page.ui:117
 msgid "_Sorting"
 msgstr "Cla_ssificação"
 
-#: data/gtk/library_page.ui:120
+#: data/gtk/library_page.ui:116
 msgid "_Name"
 msgstr "_Nome"
 
-#: data/gtk/library_page.ui:125
+#: data/gtk/library_page.ui:121
 msgid "_Language"
 msgstr "_Idioma"
 
-#: data/gtk/library_page.ui:130
+#: data/gtk/library_page.ui:126
 msgid "_Country"
 msgstr "_País"
 
-#: data/gtk/library_page.ui:135
+#: data/gtk/library_page.ui:131
 msgid "S_tate"
 msgstr "Es_tado"
 
-#: data/gtk/library_page.ui:140
+#: data/gtk/library_page.ui:136
 msgid "_Bitrate"
 msgstr "Taxa de _bits"
 
-#: data/gtk/library_page.ui:147
+#: data/gtk/library_page.ui:143
 msgid "_Ascending"
 msgstr "_Crescente"
 
-#: data/gtk/library_page.ui:152
+#: data/gtk/library_page.ui:148
 msgid "_Descending"
 msgstr "_Decrescente"
 
-#: data/gtk/library_page.ui:161
+#: data/gtk/library_page.ui:157
 msgid "_Open radio-browser.info <sup>↗</sup>"
 msgstr "Abrir radi_o-browser.info <sup>↗</sup>"
 
-#: data/gtk/library_page.ui:166
+#: data/gtk/library_page.ui:162
 msgid "_Create New Station"
 msgstr "_Criar nova estação"
 
-#: data/gtk/library_page.ui:173
+#: data/gtk/library_page.ui:169
 msgid "_Preferences"
 msgstr "_Preferências"
 
-#: data/gtk/library_page.ui:177
+#: data/gtk/library_page.ui:173
 msgid "_Keyboard Shortcuts"
 msgstr "A_talhos de teclado"
 
-#: data/gtk/library_page.ui:181
+#: data/gtk/library_page.ui:177
 msgid "_About Shortwave"
 msgstr "Sobre o Shortw_ave"
 
 #: data/gtk/player_gadget.ui:40 data/gtk/player_toolbar.ui:92
-#: data/gtk/player_view.ui:136 data/gtk/station_row.ui:86
+#: data/gtk/player_view.ui:148 data/gtk/station_row.ui:86
 msgid "Play"
 msgstr "Reprodução"
 
 #: data/gtk/player_gadget.ui:55 data/gtk/player_toolbar.ui:106
-#: data/gtk/player_view.ui:150
+#: data/gtk/player_view.ui:162
 msgid "Stop"
 msgstr "Parar"
 
 #: data/gtk/player_gadget.ui:71 data/gtk/player_toolbar.ui:121
-#: data/gtk/player_view.ui:165
+#: data/gtk/player_view.ui:177
 msgid "Buffering…"
 msgstr "Armazenando…"
 
@@ -293,7 +289,7 @@ msgid "SHORTWAVE INTERNET RADIO"
 msgstr "SHORTWAVE RÁDIO NA INTERNET"
 
 #: data/gtk/player_gadget.ui:140 data/gtk/player_toolbar.ui:29
-#: data/gtk/player_view.ui:46
+#: data/gtk/player_view.ui:58
 msgid "No Playback"
 msgstr "Nenhuma reprodução"
 
@@ -302,18 +298,22 @@ msgid "Close"
 msgstr "Fechar"
 
 #: data/gtk/player_gadget.ui:210
-msgid "Resize"
-msgstr "Redimensionar"
+msgid "Restore Window"
+msgstr "Restaurar janela"
 
-#: data/gtk/player_view.ui:195
+#: data/gtk/player_view.ui:13
+msgid "Enable Gadget Mode"
+msgstr "Habilitar modo compacto"
+
+#: data/gtk/player_view.ui:207
 msgid "Show Station Details"
 msgstr "Mostrar detalhes da estação"
 
-#: data/gtk/player_view.ui:246
+#: data/gtk/player_view.ui:258
 msgid "No Songs"
 msgstr "Sem música"
 
-#: data/gtk/player_view.ui:257
+#: data/gtk/player_view.ui:269
 msgid ""
 "Songs that have been identified and recorded using the stream metadata will "
 "appear here."
@@ -321,7 +321,7 @@ msgstr ""
 "Músicas que são identificadas e gravadas usando o fluxo de metadados "
 "aparecerão aqui."
 
-#: data/gtk/player_view.ui:289 data/gtk/recording_indicator.ui:38
+#: data/gtk/player_view.ui:303 data/gtk/recording_indicator.ui:38
 msgid "An error occurred"
 msgstr "Ocorreu um erro"
 
@@ -551,6 +551,9 @@ msgstr ""
 msgid "{} kbit/s"
 msgstr "{} kbit/s"
 
+#~ msgid "Resize"
+#~ msgstr "Redimensionar"
+
 #~ msgid "_Votes"
 #~ msgstr "_Votos"
 
@@ -682,9 +685,6 @@ msgstr "{} kbit/s"
 
 #~ msgid "Whether the application should use a dark theme"
 #~ msgstr "Se a aplicação deve usar um tema escuro"
-
-#~ msgid "Window"
-#~ msgstr "Janela"
 
 #~ msgctxt "shortcut window"
 #~ msgid "Open library view"
