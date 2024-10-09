@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2024-10-09 18:38+0000\n"
-"PO-Revision-Date: 2024-10-09 22:04+0300\n"
+"POT-Creation-Date: 2024-10-09 19:12+0000\n"
+"PO-Revision-Date: 2024-10-09 22:16+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -84,37 +84,33 @@ msgstr "Безшовна інтеграція до стільничного се
 msgid "Felix Häcker"
 msgstr "Felix Häcker"
 
-#: data/gtk/create_station_dialog.ui:14
-#| msgid "Local Station"
+#: data/gtk/add_station_dialog.ui:14
 msgid "Add Local Station"
 msgstr "Додати місцеву станцію"
 
-#: data/gtk/create_station_dialog.ui:42
-#| msgid "Change station image"
+#: data/gtk/add_station_dialog.ui:42
 msgid "Change Station Cover"
 msgstr "Змінити обкладинку для станції"
 
-#: data/gtk/create_station_dialog.ui:60
+#: data/gtk/add_station_dialog.ui:60
 msgid ""
 "This station will only be added to your library. If you want it to be "
 "available to everyone, you should add it to the <a href=\"https://www.radio-"
 "browser.info/add\">public database</a>."
 msgstr ""
-"Цю станцію буде додано лише до вашої бібліотеки. Якщо ви хочете зробити дані"
-" щодо неї доступними для усіх, вам слід додати її запис до <a"
-" href=\"https://www.radio-"
-"browser.info/add\">громадської бази даних</a>."
+"Цю станцію буде додано лише до вашої бібліотеки. Якщо ви хочете зробити дані "
+"щодо неї доступними для усіх, вам слід додати її запис до <a href=\"https://"
+"www.radio-browser.info/add\">громадської бази даних</a>."
 
-#: data/gtk/create_station_dialog.ui:72
+#: data/gtk/add_station_dialog.ui:72
 msgid "Name"
 msgstr "Назва"
 
-#: data/gtk/create_station_dialog.ui:80
+#: data/gtk/add_station_dialog.ui:80
 msgid "Stream URL"
 msgstr "Адреса трансляції"
 
-#: data/gtk/create_station_dialog.ui:88
-#| msgid "Add Stations"
+#: data/gtk/add_station_dialog.ui:88
 msgid "Add Station"
 msgstr "Додати станцію"
 
@@ -185,7 +181,6 @@ msgid "Shortwave"
 msgstr "Коротка хвиля"
 
 #: data/gtk/library_page.ui:15 data/gtk/search_page.ui:4
-#| msgid "Most Voted Stations"
 msgid "Browse Stations"
 msgstr "Навігація станціями"
 
@@ -246,7 +241,6 @@ msgid "_About Shortwave"
 msgstr "П_ро «Shortwave»"
 
 #: data/gtk/library_page.ui:181
-#| msgid "Local Station"
 msgid "Add _Local Station"
 msgstr "Додати _місцеву станцію"
 
@@ -279,12 +273,10 @@ msgid "Close"
 msgstr "Закрити"
 
 #: data/gtk/player_gadget.ui:210
-#| msgid "Window"
 msgid "Restore Window"
 msgstr "Відновити вікно"
 
 #: data/gtk/player_view.ui:13
-#| msgid "_Enable Gadget Player"
 msgid "Enable Gadget Mode"
 msgstr "Увімкнути режим гаджета"
 
@@ -317,7 +309,6 @@ msgid "Search stations"
 msgstr "Пошук станцій"
 
 #: data/gtk/search_page.ui:72
-#| msgid "Browse over 50,000 stations"
 msgid "Discover over 50,000 public stations"
 msgstr "Навігація списком із понад 50000 загальнодоступних станцій"
 
@@ -352,11 +343,10 @@ msgid ""
 "If the station you are looking for is missing, you can add it to the public "
 "database."
 msgstr ""
-"Якщо у списку немає станції, яку ви шукаєте, ви можете додати її до"
-" громадської бази даних."
+"Якщо у списку немає станції, яку ви шукаєте, ви можете додати її до "
+"громадської бази даних."
 
 #: data/gtk/search_page.ui:219
-#| msgid "Add Stations"
 msgid "Add Missing Station"
 msgstr "Додати пропущену станцію"
 
@@ -385,55 +375,62 @@ msgstr ""
 msgid "Save recorded song"
 msgstr "Зберегти записану пісню"
 
-#: data/gtk/station_dialog.ui:70
-msgid "_Play Station"
-msgstr "_Відтворити станцію"
+#: data/gtk/station_dialog.ui:73
+#| msgid "Play"
+msgid "_Play"
+msgstr "_Пуск"
 
-#: data/gtk/station_dialog.ui:85
+#: data/gtk/station_dialog.ui:88
 msgid "_Add to Library"
 msgstr "Д_одати до бібліотеки"
 
-#: data/gtk/station_dialog.ui:101
+#: data/gtk/station_dialog.ui:104
 msgid "_Remove From Library"
 msgstr "Ви_лучити з бібліотеки"
 
-#: data/gtk/station_dialog.ui:119 data/gtk/station_row.ui:57
+#: data/gtk/station_dialog.ui:122 data/gtk/station_row.ui:57
 msgid "Local Station"
 msgstr "Локальна станція"
 
-#: data/gtk/station_dialog.ui:120
+#: data/gtk/station_dialog.ui:123
+#| msgid ""
+#| "This station exists only in your library, and is not part of the public "
+#| "online station database."
 msgid ""
 "This station exists only in your library, and is not part of the public "
-"online station database."
+"database"
 msgstr ""
 "Запис станції є лише у вашій бібліотеці — він не є частиною "
-"загальнодоступної бази даних станцій в інтернеті."
+"загальнодоступної бази даних станцій"
 
-#: data/gtk/station_dialog.ui:135 data/gtk/station_row.ui:69
+#: data/gtk/station_dialog.ui:137 data/gtk/station_row.ui:69
 msgid "Orphaned Station"
 msgstr "Осиротіла станція"
 
-#: data/gtk/station_dialog.ui:136
+#: data/gtk/station_dialog.ui:138
+#| msgid ""
+#| "The information could not be updated, probably this station was removed "
+#| "from the public online station database."
 msgid ""
 "The information could not be updated, probably this station was removed from "
-"the public online station database."
+"the public database"
 msgstr ""
-"Не вдалося оновити відомості. Ймовірно, станцію було вилучено з бази даних "
-"загальнодоступних інтернет-станцій."
+"Не вдалося оновити відомості. Ймовірно, станцію було вилучено із"
+" загальнодоступної бази даних станцій"
 
-#: data/gtk/station_dialog.ui:148
+#: data/gtk/station_dialog.ui:149
 msgid "Information"
 msgstr "Відомості"
 
-#: data/gtk/station_dialog.ui:151
+#: data/gtk/station_dialog.ui:152
 msgid "Language"
 msgstr "Мова"
 
-#: data/gtk/station_dialog.ui:161
+#: data/gtk/station_dialog.ui:162
 msgid "Tags"
 msgstr "Мітки"
 
-#: data/gtk/station_dialog.ui:173
+#: data/gtk/station_dialog.ui:174
 msgid "Location"
 msgstr "Місце"
 
@@ -449,20 +446,20 @@ msgstr "Штат"
 msgid "Audio"
 msgstr "Звук"
 
-#: data/gtk/station_dialog.ui:226
+#: data/gtk/station_dialog.ui:225
 msgid "Bitrate"
 msgstr "Бітова швидкість"
 
-#: data/gtk/station_dialog.ui:236
+#: data/gtk/station_dialog.ui:235
 msgid "Codec"
 msgstr "Кодек"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:246
+#: data/gtk/station_dialog.ui:245
 msgid "Stream"
 msgstr "Трансляція"
 
-#: data/gtk/station_dialog.ui:255
+#: data/gtk/station_dialog.ui:254
 msgid "Copy"
 msgstr "Копіювати"
 
@@ -494,8 +491,7 @@ msgstr "Невідома модель"
 msgid "translator-credits"
 msgstr "Юрій Чорноіван <yurchor@ukr.net>, 2020"
 
-#: src/ui/create_station_dialog.rs:90
-#| msgid "Select station image"
+#: src/ui/add_station_dialog.rs:90
 msgid "Select Station Cover"
 msgstr "Виберіть обкладинку станції"
 
@@ -540,6 +536,9 @@ msgstr "Поточну композицію не може бути записа�
 #: src/ui/station_dialog.rs:201
 msgid "{} kbit/s"
 msgstr "{} кбіт/с"
+
+#~ msgid "_Play Station"
+#~ msgstr "_Відтворити станцію"
 
 #~ msgid "Create new station"
 #~ msgstr "Створити станцію"
