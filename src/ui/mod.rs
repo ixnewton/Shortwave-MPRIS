@@ -18,7 +18,7 @@ pub mod pages;
 pub mod player;
 
 pub mod about_dialog;
-mod create_station_dialog;
+mod add_station_dialog;
 mod device_dialog;
 mod device_indicator;
 mod device_row;
@@ -32,7 +32,7 @@ mod station_row;
 mod volume_control;
 mod window;
 
-pub use create_station_dialog::SwCreateStationDialog;
+pub use add_station_dialog::SwAddStationDialog;
 pub use device_dialog::SwDeviceDialog;
 pub use device_indicator::SwDeviceIndicator;
 pub use device_row::SwDeviceRow;

@@ -32,10 +32,10 @@ mod imp {
     use super::*;
 
     #[derive(Debug, Default, CompositeTemplate)]
-    #[template(resource = "/de/haeckerfelix/Shortwave/gtk/create_station_dialog.ui")]
-    pub struct SwCreateStationDialog {
+    #[template(resource = "/de/haeckerfelix/Shortwave/gtk/add_station_dialog.ui")]
+    pub struct SwAddStationDialog {
         #[template_child]
-        pub create_button: TemplateChild<gtk::Button>,
+        pub add_button: TemplateChild<gtk::Button>,
         #[template_child]
         pub station_favicon: TemplateChild<SwFavicon>,
         #[template_child]
@@ -49,10 +49,10 @@ mod imp {
     }
 
     #[glib::object_subclass]
-    impl ObjectSubclass for SwCreateStationDialog {
-        const NAME: &'static str = "SwCreateStationDialog";
+    impl ObjectSubclass for SwAddStationDialog {
+        const NAME: &'static str = "SwAddStationDialog";
         type ParentType = adw::Dialog;
-        type Type = super::SwCreateStationDialog;
+        type Type = super::SwAddStationDialog;
 
         fn class_init(klass: &mut Self::Class) {
             Self::bind_template(klass);
@@ -64,20 +64,20 @@ mod imp {
         }
     }
 
-    impl ObjectImpl for SwCreateStationDialog {}
+    impl ObjectImpl for SwAddStationDialog {}
 
-    impl WidgetImpl for SwCreateStationDialog {}
+    impl WidgetImpl for SwAddStationDialog {}
 
-    impl AdwDialogImpl for SwCreateStationDialog {}
+    impl AdwDialogImpl for SwAddStationDialog {}
 }
 
 glib::wrapper! {
-    pub struct SwCreateStationDialog(ObjectSubclass<imp::SwCreateStationDialog>)
+    pub struct SwAddStationDialog(ObjectSubclass<imp::SwAddStationDialog>)
         @extends gtk::Widget, adw::Dialog;
 }
 
 #[gtk::template_callbacks]
-impl SwCreateStationDialog {
+impl SwAddStationDialog {
     pub fn new() -> Self {
         let dialog: Self = glib::Object::new();
 
@@ -119,7 +119,7 @@ impl SwCreateStationDialog {
     }
 
     #[template_callback]
-    fn create_station(&self) {
+    fn add_station(&self) {
         let imp = self.imp();
         let uuid = Uuid::new_v4().to_string();
         let name = imp.name_row.text().to_string();
@@ -146,11 +146,11 @@ impl SwCreateStationDialog {
         match Url::parse(&url) {
             Ok(_) => {
                 imp.url_row.remove_css_class("error");
-                imp.create_button.set_sensitive(has_name);
+                imp.add_button.set_sensitive(has_name);
             }
             Err(_) => {
                 imp.url_row.add_css_class("error");
-                imp.create_button.set_sensitive(false);
+                imp.add_button.set_sensitive(false);
             }
         }
     }
@@ -165,7 +165,7 @@ impl SwCreateStationDialog {
     }
 }
 
-impl Default for SwCreateStationDialog {
+impl Default for SwAddStationDialog {
     fn default() -> Self {
         Self::new()
     }

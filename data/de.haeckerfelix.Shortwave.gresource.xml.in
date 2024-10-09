@@ -2,7 +2,7 @@
 <gresources>
   <gresource prefix="@PATH_ID@">
     <file compressed="true" preprocess="xml-stripblanks" alias="metainfo.xml">@APP_ID@.metainfo.xml</file>
-    <file compressed="true" preprocess="xml-stripblanks">gtk/create_station_dialog.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">gtk/add_station_dialog.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">gtk/device_dialog.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">gtk/device_indicator.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">gtk/device_row.ui</file>

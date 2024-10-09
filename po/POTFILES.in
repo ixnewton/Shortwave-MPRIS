@@ -1,7 +1,7 @@
 data/de.haeckerfelix.Shortwave.desktop.in.in
 data/de.haeckerfelix.Shortwave.gschema.xml.in
 data/de.haeckerfelix.Shortwave.metainfo.xml.in.in
-data/gtk/create_station_dialog.ui
+data/gtk/add_station_dialog.ui
 data/gtk/device_dialog.ui
 data/gtk/device_indicator.ui
 data/gtk/device_row.ui
@@ -61,7 +61,7 @@ src/settings/mod.rs
 src/settings/settings_dialog.rs
 src/settings/settings_manager.rs
 src/ui/about_dialog.rs
-src/ui/create_station_dialog.rs
+src/ui/add_station_dialog.rs
 src/ui/device_dialog.rs
 src/ui/device_indicator.rs
 src/ui/device_row.rs

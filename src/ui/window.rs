@@ -26,7 +26,7 @@ use crate::config;
 use crate::settings::{settings_manager, Key};
 use crate::ui::pages::*;
 use crate::ui::player::{SwPlayerGadget, SwPlayerToolbar, SwPlayerView};
-use crate::ui::{DisplayError, SwCreateStationDialog, SwDeviceDialog, SwStationDialog};
+use crate::ui::{DisplayError, SwAddStationDialog, SwDeviceDialog, SwStationDialog};
 
 use super::ToastWindow;
 
@@ -189,7 +189,7 @@ impl SwApplicationWindow {
             // win.add-local-station
             gio::ActionEntry::builder("add-local-station")
                 .activate(move |window: &Self, _, _| {
-                    let dialog = SwCreateStationDialog::new();
+                    let dialog = SwAddStationDialog::new();
                     dialog.present(Some(window));
                 })
                 .build(),

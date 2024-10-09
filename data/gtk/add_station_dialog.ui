@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <template class="SwCreateStationDialog" parent="AdwDialog">
+  <template class="SwAddStationDialog" parent="AdwDialog">
     <property name="width_request">325</property>
     <property name="height_request">294</property>
     <property name="content_width">500</property>
@@ -84,12 +84,12 @@
                       </object>
                     </child>
                     <child>
-                      <object class="GtkButton" id="create_button">
+                      <object class="GtkButton" id="add_button">
                         <property name="label" translatable="yes">Add Station</property>
                         <property name="halign">center</property>
                         <property name="margin_top">12</property>
                         <property name="sensitive">False</property>
-                        <signal name="clicked" handler="create_station" swapped="true" />
+                        <signal name="clicked" handler="add_station" swapped="true" />
                         <style>
                           <class name="pill" />
                           <class name="suggested-action" />
