@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
 "POT-Creation-Date: 2024-10-09 19:12+0000\n"
-"PO-Revision-Date: 2024-10-10 07:07+0200\n"
+"PO-Revision-Date: 2024-10-10 22:09+0200\n"
 "Last-Translator: Quentin PAGÈS\n"
 "Language-Team: Occitan <totenoc@gmail.com>\n"
 "Language: oc\n"
@@ -38,6 +38,8 @@ msgid ""
 "Shortwave is an internet radio player that provides access to a station "
 "database with over 30,000 stations."
 msgstr ""
+"Shortwave es un lector de ràdio internet que provesís accès a una basa de "
+"donadas d'estacions amb mai de 30 000 estacions."
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:15
 msgid "Features:"
@@ -47,41 +49,46 @@ msgstr "Foncionalitats :"
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:64
 msgid "Create your own library where you can add your favorite stations"
 msgstr ""
+"Creatz vòstra pròpria bibliotèca ont podètz apondre vòstras estacions "
+"favoritas"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:18
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:68
 msgid "Easily search and discover new radio stations"
-msgstr ""
+msgstr "Cercatz e descobrissètz aisidament de novèlas estacions de ràdio"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:19
 msgid ""
 "Automatic recognition of songs, with the possibility to save them "
 "individually"
 msgstr ""
+"Reconeissença automatica de las cançons, amb la possibilitat de las "
+"enregistrar individualament"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:20
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:72
 msgid "Responsive application layout, compatible for small and large screens"
 msgstr ""
+"Disposicion d'aplicacion responsiva, compatibla amb d'ecrans pichons e grands"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:21
 msgid "Play audio on supported network devices (e.g. Google Chromecasts)"
 msgstr ""
+"Legir l'àudio sus de periferics de ret preses en carga (per exemple Google "
+"Chromecasts)"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:22
 msgid "Seamless integration into the GNOME desktop environment"
-msgstr ""
+msgstr "Integracion transparenta dins l'environament de burèu GNOME"
 
 #. Branding
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:28
 msgid "Felix Häcker"
-msgstr ""
+msgstr "Felix Häcker"
 
 #: data/gtk/add_station_dialog.ui:14
-#, fuzzy
-#| msgid "Add new station"
 msgid "Add Local Station"
-msgstr "Apondre una estacion novèla"
+msgstr "Apondre una estacion locala"
 
 #: data/gtk/add_station_dialog.ui:42
 msgid "Change Station Cover"
@@ -128,7 +135,7 @@ msgstr ""
 
 #: data/gtk/device_indicator.ui:7
 msgid "Disconnect From Device"
-msgstr ""
+msgstr "Se desconnectar de l’aparelh"
 
 #: data/gtk/help_overlay.ui:11 data/gtk/settings_dialog.ui:9
 msgid "General"
@@ -152,7 +159,7 @@ msgstr "Dobrir las preferéncias"
 #: data/gtk/help_overlay.ui:32
 msgctxt "shortcut window"
 msgid "Close the window"
-msgstr ""
+msgstr "Tampar la fenèstra"
 
 #: data/gtk/help_overlay.ui:38
 msgctxt "shortcut window"
@@ -161,12 +168,12 @@ msgstr "Quitar l’aplicacion"
 
 #: data/gtk/help_overlay.ui:46
 msgid "Playback"
-msgstr ""
+msgstr "Lectura"
 
 #: data/gtk/help_overlay.ui:49
 msgctxt "shortcut window"
 msgid "Toggle playback"
-msgstr ""
+msgstr "Alternar lectura e pausa"
 
 #: data/gtk/library_page.ui:4
 msgid "Shortwave"
@@ -206,7 +213,7 @@ msgstr "Es_tat"
 
 #: data/gtk/library_page.ui:137
 msgid "_Bitrate"
-msgstr ""
+msgstr "_Debit"
 
 #: data/gtk/library_page.ui:144
 msgid "_Ascending"
@@ -233,10 +240,8 @@ msgid "_About Shortwave"
 msgstr "_A prepaus de Shortwave"
 
 #: data/gtk/library_page.ui:181
-#, fuzzy
-#| msgid "Add new station"
 msgid "Add _Local Station"
-msgstr "Apondre una estacion novèla"
+msgstr "Apondre una estacion _locala"
 
 #: data/gtk/player_gadget.ui:40 data/gtk/player_toolbar.ui:92
 #: data/gtk/player_view.ui:148 data/gtk/station_row.ui:86
@@ -251,7 +256,7 @@ msgstr "Arrèst"
 #: data/gtk/player_gadget.ui:71 data/gtk/player_toolbar.ui:121
 #: data/gtk/player_view.ui:177
 msgid "Buffering…"
-msgstr ""
+msgstr "Mesa en tampon…"
 
 #: data/gtk/player_gadget.ui:118
 msgid "SHORTWAVE INTERNET RADIO"
@@ -259,21 +264,16 @@ msgstr "SHORTWAVE INTERNET RADIO"
 
 #: data/gtk/player_gadget.ui:140 data/gtk/player_toolbar.ui:29
 #: data/gtk/player_view.ui:58
-#, fuzzy
-#| msgctxt "shortcut window"
-#| msgid "Go back"
 msgid "No Playback"
-msgstr "Precedent"
+msgstr "Cap de lectura"
 
 #: data/gtk/player_gadget.ui:199
 msgid "Close"
 msgstr "Tampar"
 
 #: data/gtk/player_gadget.ui:210
-#, fuzzy
-#| msgid "Window"
 msgid "Restore Window"
-msgstr "Fenèstra"
+msgstr "Restablir la fenèstra"
 
 #: data/gtk/player_view.ui:13
 msgid "Enable Gadget Mode"
@@ -281,11 +281,11 @@ msgstr ""
 
 #: data/gtk/player_view.ui:207
 msgid "Show Station Details"
-msgstr ""
+msgstr "Afichar los detalhs de l’estacion"
 
 #: data/gtk/player_view.ui:258
 msgid "No Songs"
-msgstr ""
+msgstr "Cap de cançons"
 
 #: data/gtk/player_view.ui:269
 msgid ""
@@ -299,13 +299,11 @@ msgstr "Una error s'es producha"
 
 #: data/gtk/search_page.ui:23
 msgid "Search"
-msgstr ""
+msgstr "Recercar"
 
 #: data/gtk/search_page.ui:24
-#, fuzzy
-#| msgid "Add new station"
 msgid "Search stations"
-msgstr "Apondre una estacion novèla"
+msgstr "Cercar dins las estacions"
 
 #: data/gtk/search_page.ui:72
 msgid "Discover over 50,000 public stations"
@@ -346,11 +344,11 @@ msgstr "Apondre una estacion absenta"
 
 #: data/gtk/search_page.ui:236
 msgid "Unable to Retrieve Station Data"
-msgstr ""
+msgstr "Recuperacion impossibla de las donadas de l’estacion"
 
 #: data/gtk/search_page.ui:239
 msgid "Try Again"
-msgstr ""
+msgstr "Tornar ensajar"
 
 #: data/gtk/settings_dialog.ui:12
 msgid "Features"
@@ -362,11 +360,11 @@ msgstr "_Notificacions"
 
 #: data/gtk/settings_dialog.ui:17
 msgid "Show desktop notifications when a new song gets played"
-msgstr ""
+msgstr "Afichar una notificacion de burèu quand una cançon novèla comença"
 
 #: data/gtk/song_row.ui:16
 msgid "Save recorded song"
-msgstr ""
+msgstr "Salvar la cançon enregistrada"
 
 #: data/gtk/station_dialog.ui:73
 msgid "_Play"
@@ -374,15 +372,15 @@ msgstr "_Lectura"
 
 #: data/gtk/station_dialog.ui:88
 msgid "_Add to Library"
-msgstr ""
+msgstr "_Apondre a la bibliotèca"
 
 #: data/gtk/station_dialog.ui:104
 msgid "_Remove From Library"
-msgstr ""
+msgstr "_Suprimir de la bibliotèca"
 
 #: data/gtk/station_dialog.ui:122 data/gtk/station_row.ui:57
 msgid "Local Station"
-msgstr ""
+msgstr "Estacion locala"
 
 #: data/gtk/station_dialog.ui:123
 msgid ""
@@ -410,7 +408,7 @@ msgstr "Lenga"
 
 #: data/gtk/station_dialog.ui:162
 msgid "Tags"
-msgstr ""
+msgstr "Etiquetas"
 
 #: data/gtk/station_dialog.ui:174
 msgid "Location"
@@ -422,7 +420,7 @@ msgstr "País"
 
 #: data/gtk/station_dialog.ui:188
 msgid "State"
-msgstr ""
+msgstr "Estat"
 
 #: data/gtk/station_dialog.ui:222
 msgid "Audio"
@@ -430,16 +428,16 @@ msgstr "Àudio"
 
 #: data/gtk/station_dialog.ui:225
 msgid "Bitrate"
-msgstr ""
+msgstr "Debit"
 
 #: data/gtk/station_dialog.ui:235
 msgid "Codec"
-msgstr ""
+msgstr "Codèc"
 
 #. This is a noun/label for the station stream url
 #: data/gtk/station_dialog.ui:245
 msgid "Stream"
-msgstr ""
+msgstr "Flux continú"
 
 #: data/gtk/station_dialog.ui:254
 msgid "Copy"
@@ -447,11 +445,11 @@ msgstr "Copiar"
 
 #: data/gtk/volume_control.ui:9
 msgid "Toggle Mute"
-msgstr ""
+msgstr "Activar / Desactivar lo mòde mut"
 
 #: data/gtk/volume_control.ui:21
 msgid "Volume"
-msgstr ""
+msgstr "Volum"
 
 #: src/audio/player.rs:251
 msgid "Active Playback"
@@ -467,7 +465,7 @@ msgstr ""
 
 #: src/device/device_discovery.rs:86
 msgid "Unknown Model"
-msgstr ""
+msgstr "Modèl desconegut"
 
 #: src/ui/about_dialog.rs:44
 msgid "translator-credits"
@@ -487,15 +485,15 @@ msgstr "La benvenguda a {}"
 
 #: src/ui/recording_indicator.rs:111
 msgid "Recording in Progress"
-msgstr ""
+msgstr "Enregistrament en cors"
 
 #: src/ui/recording_indicator.rs:112
 msgid "Ignored"
-msgstr ""
+msgstr "Ignorat"
 
 #: src/ui/recording_indicator.rs:113
 msgid "No Recording"
-msgstr ""
+msgstr "Cap d’enregistrament"
 
 #: src/ui/recording_indicator.rs:120
 msgid "The current song will be recorded until a new song is detected."
