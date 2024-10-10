@@ -4,22 +4,22 @@
 # Matheus Barbosa <mdpb.matheus@gmail.com>, 2022.
 # Leônidas Araújo <leorusvellt@hotmail.com>, 2022.
 # Enrico Nicoletto <liverig@gmail.com>, 2021-2022.
-# Juliano de Souza Camargo <julianosc@pm.me>, 2023-2024.
 # Rafael Fontenelle <rafaelff@gnome.org>, 2020-2024.
+# Juliano de Souza Camargo <julianosc@pm.me>, 2023-2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2024-10-09 15:55+0000\n"
-"PO-Revision-Date: 2024-10-09 14:52-0300\n"
-"Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
+"POT-Creation-Date: 2024-10-09 19:12+0000\n"
+"PO-Revision-Date: 2024-10-10 08:07-0300\n"
+"Last-Translator: Juliano de Souza Camargo <julianosc@pm.me>\n"
 "Language-Team: Brazilian Portuguese <https://br.gnome.org/traducao>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Gtranslator 47.0\n"
 "X-DL-Team: pt_BR\n"
 "X-DL-Module: shortwave\n"
@@ -95,49 +95,35 @@ msgstr "Integração perfeita no ambiente GNOME"
 msgid "Felix Häcker"
 msgstr "Felix Häcker"
 
-#: data/gtk/create_station_dialog.ui:8
-msgid "Create new station"
-msgstr "Criar nova estação"
+#: data/gtk/add_station_dialog.ui:14
+msgid "Add Local Station"
+msgstr "Adicionar estação local"
 
-#: data/gtk/create_station_dialog.ui:25
-msgid "Create New Station"
-msgstr "Criar nova estação"
+#: data/gtk/add_station_dialog.ui:42
+msgid "Change Station Cover"
+msgstr "Alterar a imagem da estação"
 
-#: data/gtk/create_station_dialog.ui:26
+#: data/gtk/add_station_dialog.ui:60
 msgid ""
-"You can decide if you want the new station to be visible for all users "
-"worldwide or if you want to create a local station."
+"This station will only be added to your library. If you want it to be "
+"available to everyone, you should add it to the <a href=\"https://www.radio-"
+"browser.info/add\">public database</a>."
 msgstr ""
-"Você decide se deseja que a nova estação esteja visível para todos os "
-"usuários do mundo inteiro ou se deseja criar uma estação local."
+"Esta estação será adicionada somente à sua biblioteca. Se você quer que "
+"todos tenham acesso, você devia adicioná-la ao <a href=\"https://www.radio-"
+"browser.info/add\">banco de dados público</a>."
 
-#: data/gtk/create_station_dialog.ui:35
-msgid "Create _Public Station"
-msgstr "Criar estação _pública"
-
-#: data/gtk/create_station_dialog.ui:46
-msgid "Create _Local Station"
-msgstr "Criar estação _local"
-
-#: data/gtk/create_station_dialog.ui:71
-msgid "Create Local Station"
-msgstr "Criar estação local"
-
-#: data/gtk/create_station_dialog.ui:104
-msgid "Change station image"
-msgstr "Altera a imagem da estação"
-
-#: data/gtk/create_station_dialog.ui:123
+#: data/gtk/add_station_dialog.ui:72
 msgid "Name"
 msgstr "Nome"
 
-#: data/gtk/create_station_dialog.ui:131
+#: data/gtk/add_station_dialog.ui:80
 msgid "Stream URL"
 msgstr "URL de reprodução"
 
-#: data/gtk/create_station_dialog.ui:139
-msgid "Create Station"
-msgstr "Criar estação"
+#: data/gtk/add_station_dialog.ui:88
+msgid "Add Station"
+msgstr "Adicionar estação"
 
 #: data/gtk/device_dialog.ui:7 data/gtk/player_view.ui:124
 msgid "Connect Device"
@@ -206,68 +192,68 @@ msgid "Shortwave"
 msgstr "Shortwave"
 
 #: data/gtk/library_page.ui:15 data/gtk/search_page.ui:4
-msgid "Add Stations"
-msgstr "Adicionar estações"
+msgid "Browse Stations"
+msgstr "Navegue por estações"
 
-#: data/gtk/library_page.ui:22
+#: data/gtk/library_page.ui:23
 msgid "Main Menu"
 msgstr "Menu principal"
 
-#: data/gtk/library_page.ui:91
+#: data/gtk/library_page.ui:92
 msgid "_Add New Stations"
 msgstr "_Adicionar novas estações"
 
-#: data/gtk/library_page.ui:113
+#: data/gtk/library_page.ui:114
 msgid "_Sorting"
 msgstr "Cla_ssificação"
 
-#: data/gtk/library_page.ui:116
+#: data/gtk/library_page.ui:117
 msgid "_Name"
 msgstr "_Nome"
 
-#: data/gtk/library_page.ui:121
+#: data/gtk/library_page.ui:122
 msgid "_Language"
 msgstr "_Idioma"
 
-#: data/gtk/library_page.ui:126
+#: data/gtk/library_page.ui:127
 msgid "_Country"
 msgstr "_País"
 
-#: data/gtk/library_page.ui:131
+#: data/gtk/library_page.ui:132
 msgid "S_tate"
 msgstr "Es_tado"
 
-#: data/gtk/library_page.ui:136
+#: data/gtk/library_page.ui:137
 msgid "_Bitrate"
 msgstr "Taxa de _bits"
 
-#: data/gtk/library_page.ui:143
+#: data/gtk/library_page.ui:144
 msgid "_Ascending"
 msgstr "_Crescente"
 
-#: data/gtk/library_page.ui:148
+#: data/gtk/library_page.ui:149
 msgid "_Descending"
 msgstr "_Decrescente"
 
-#: data/gtk/library_page.ui:157
+#: data/gtk/library_page.ui:158
 msgid "_Open radio-browser.info <sup>↗</sup>"
 msgstr "Abrir radi_o-browser.info <sup>↗</sup>"
 
-#: data/gtk/library_page.ui:162
-msgid "_Create New Station"
-msgstr "_Criar nova estação"
-
-#: data/gtk/library_page.ui:169
+#: data/gtk/library_page.ui:165
 msgid "_Preferences"
 msgstr "_Preferências"
 
-#: data/gtk/library_page.ui:173
+#: data/gtk/library_page.ui:169
 msgid "_Keyboard Shortcuts"
 msgstr "A_talhos de teclado"
 
-#: data/gtk/library_page.ui:177
+#: data/gtk/library_page.ui:173
 msgid "_About Shortwave"
 msgstr "Sobre o Shortw_ave"
+
+#: data/gtk/library_page.ui:181
+msgid "Add _Local Station"
+msgstr "Adicionar estação _local"
 
 #: data/gtk/player_gadget.ui:40 data/gtk/player_toolbar.ui:92
 #: data/gtk/player_view.ui:148 data/gtk/station_row.ui:86
@@ -333,23 +319,19 @@ msgstr "Pesquisar"
 msgid "Search stations"
 msgstr "Pesquisar estações"
 
-#: data/gtk/search_page.ui:70
-msgid "Browse over 50,000 stations"
-msgstr "Navegue por mais de 50.000 estações"
+#: data/gtk/search_page.ui:72
+msgid "Discover over 50,000 public stations"
+msgstr "Descubra mais de 50.000 estações públicas"
 
-#: data/gtk/search_page.ui:79
-msgid "Create new Station"
-msgstr "Criar nova estação"
-
-#: data/gtk/search_page.ui:99
+#: data/gtk/search_page.ui:90
 msgid "Popular Stations"
 msgstr "Estações populares"
 
-#: data/gtk/search_page.ui:120
+#: data/gtk/search_page.ui:111
 msgid "Discover New Stations"
 msgstr "Descobrir novas estações"
 
-#: data/gtk/search_page.ui:142
+#: data/gtk/search_page.ui:133
 msgid ""
 "The displayed information is provided by <a href=\"https://www.radio-browser."
 "info/\">radio-browser.info</a>. \n"
@@ -359,23 +341,31 @@ msgstr ""
 "browser.info/\">radio-browser.info</a>. \n"
 "Shortwave não tem influência nas estações listadas."
 
-#: data/gtk/search_page.ui:208
+#: data/gtk/search_page.ui:199
 msgid "Loading…"
 msgstr "Carregando…"
 
-#: data/gtk/search_page.ui:223
+#: data/gtk/search_page.ui:214
 msgid "No Results"
 msgstr "Sem resultados"
 
-#: data/gtk/search_page.ui:224
-msgid "Try using a different search term"
-msgstr "Tente usar um termo de pesquisa diferente"
+#: data/gtk/search_page.ui:215
+msgid ""
+"If the station you are looking for is missing, you can add it to the public "
+"database."
+msgstr ""
+"Se a estação que você quer está faltando, você pode adicioná-la ao banco de "
+"dados público."
 
-#: data/gtk/search_page.ui:234
+#: data/gtk/search_page.ui:219
+msgid "Add Missing Station"
+msgstr "Adicionar estação faltante"
+
+#: data/gtk/search_page.ui:236
 msgid "Unable to Retrieve Station Data"
 msgstr "Não foi possível obter dados de estações"
 
-#: data/gtk/search_page.ui:237
+#: data/gtk/search_page.ui:239
 msgid "Try Again"
 msgstr "Tentar novamente"
 
@@ -395,55 +385,55 @@ msgstr "Mostra notificações quando uma nova música é reproduzida"
 msgid "Save recorded song"
 msgstr "Salvar gravação"
 
-#: data/gtk/station_dialog.ui:70
-msgid "_Play Station"
-msgstr "Re_produzir esta estação"
+#: data/gtk/station_dialog.ui:73
+msgid "_Play"
+msgstr "_Reproduzir"
 
-#: data/gtk/station_dialog.ui:85
+#: data/gtk/station_dialog.ui:88
 msgid "_Add to Library"
 msgstr "_Adicionar à biblioteca"
 
-#: data/gtk/station_dialog.ui:101
+#: data/gtk/station_dialog.ui:104
 msgid "_Remove From Library"
 msgstr "_Remover da biblioteca"
 
-#: data/gtk/station_dialog.ui:119 data/gtk/station_row.ui:57
+#: data/gtk/station_dialog.ui:122 data/gtk/station_row.ui:57
 msgid "Local Station"
 msgstr "Estação local"
 
-#: data/gtk/station_dialog.ui:120
+#: data/gtk/station_dialog.ui:123
 msgid ""
 "This station exists only in your library, and is not part of the public "
-"online station database."
+"database"
 msgstr ""
 "Esta estação existe somente na sua biblioteca, e não é parte do banco de "
-"dados de estações público online."
+"dados de estações público"
 
-#: data/gtk/station_dialog.ui:135 data/gtk/station_row.ui:69
+#: data/gtk/station_dialog.ui:137 data/gtk/station_row.ui:69
 msgid "Orphaned Station"
 msgstr "Estação órfã"
 
-#: data/gtk/station_dialog.ui:136
+#: data/gtk/station_dialog.ui:138
 msgid ""
 "The information could not be updated, probably this station was removed from "
-"the public online station database."
+"the public database"
 msgstr ""
-"As informações podem não estar atualizadas, provavelmente esta estação foi "
-"removida do banco de dados público de estações online."
+"As informações não foram atualizadas, provavelmente esta estação foi "
+"removida do banco de dados público"
 
-#: data/gtk/station_dialog.ui:148
+#: data/gtk/station_dialog.ui:149
 msgid "Information"
 msgstr "Informação"
 
-#: data/gtk/station_dialog.ui:151
+#: data/gtk/station_dialog.ui:152
 msgid "Language"
 msgstr "Idioma"
 
-#: data/gtk/station_dialog.ui:161
+#: data/gtk/station_dialog.ui:162
 msgid "Tags"
 msgstr "Etiquetas"
 
-#: data/gtk/station_dialog.ui:173
+#: data/gtk/station_dialog.ui:174
 msgid "Location"
 msgstr "Local"
 
@@ -459,20 +449,20 @@ msgstr "Estado"
 msgid "Audio"
 msgstr "Áudio"
 
-#: data/gtk/station_dialog.ui:226
+#: data/gtk/station_dialog.ui:225
 msgid "Bitrate"
 msgstr "Taxa de bits"
 
-#: data/gtk/station_dialog.ui:236
+#: data/gtk/station_dialog.ui:235
 msgid "Codec"
 msgstr "Codec"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:246
+#: data/gtk/station_dialog.ui:245
 msgid "Stream"
 msgstr "Reprodução"
 
-#: data/gtk/station_dialog.ui:255
+#: data/gtk/station_dialog.ui:254
 msgid "Copy"
 msgstr "Copiar"
 
@@ -508,8 +498,8 @@ msgstr ""
 "Leônidas Araújo <leorusvellt@hotmail.com>\n"
 "Juliano de Souza Camargo <julianosc@pm.me>"
 
-#: src/ui/create_station_dialog.rs:98
-msgid "Select station image"
+#: src/ui/add_station_dialog.rs:90
+msgid "Select Station Cover"
 msgstr "Selecionar a imagem da estação"
 
 #: src/ui/display_error.rs:46
@@ -551,6 +541,43 @@ msgstr ""
 msgid "{} kbit/s"
 msgstr "{} kbit/s"
 
+#~ msgid "Create new station"
+#~ msgstr "Criar nova estação"
+
+#~ msgid "Create New Station"
+#~ msgstr "Criar nova estação"
+
+#~ msgid ""
+#~ "You can decide if you want the new station to be visible for all users "
+#~ "worldwide or if you want to create a local station."
+#~ msgstr ""
+#~ "Você decide se deseja que a nova estação esteja visível para todos os "
+#~ "usuários do mundo inteiro ou se deseja criar uma estação local."
+
+#~ msgid "Create _Public Station"
+#~ msgstr "Criar estação _pública"
+
+#~ msgid "Create _Local Station"
+#~ msgstr "Criar estação _local"
+
+#~ msgid "Create Local Station"
+#~ msgstr "Criar estação local"
+
+#~ msgid "Create Station"
+#~ msgstr "Criar estação"
+
+#~ msgid "_Create New Station"
+#~ msgstr "_Criar nova estação"
+
+#~ msgid "Create new Station"
+#~ msgstr "Criar nova estação"
+
+#~ msgid "Try using a different search term"
+#~ msgstr "Tente usar um termo de pesquisa diferente"
+
+#~ msgid "_Play Station"
+#~ msgstr "Re_produzir esta estação"
+
 #~ msgid "Resize"
 #~ msgstr "Redimensionar"
 
@@ -571,9 +598,6 @@ msgstr "{} kbit/s"
 
 #~ msgid "Discover"
 #~ msgstr "Descubra"
-
-#~ msgid "Most Voted Stations"
-#~ msgstr "Estações mais votadas"
 
 #~ msgid "Trending"
 #~ msgstr "Em alta"
