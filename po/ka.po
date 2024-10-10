@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2024-09-28 13:21+0000\n"
-"PO-Revision-Date: 2024-10-04 06:21+0200\n"
+"POT-Creation-Date: 2024-10-09 19:12+0000\n"
+"PO-Revision-Date: 2024-10-10 07:48+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -83,51 +83,37 @@ msgstr "შეუმჩნეველი ინტეგრაცია GNOME-�
 msgid "Felix Häcker"
 msgstr "Felix Häcker"
 
-#: data/gtk/create_station_dialog.ui:8
-msgid "Create new station"
-msgstr "ახალი სადგურის შექმნა"
+#: data/gtk/add_station_dialog.ui:14
+msgid "Add Local Station"
+msgstr "ლოკალური სადგურის დამატება"
 
-#: data/gtk/create_station_dialog.ui:25
-msgid "Create New Station"
-msgstr "ახალი სადგურის შექმნა"
+#: data/gtk/add_station_dialog.ui:42
+msgid "Change Station Cover"
+msgstr "სადგურის ყდის შეცვლა"
 
-#: data/gtk/create_station_dialog.ui:26
+#: data/gtk/add_station_dialog.ui:60
 msgid ""
-"You can decide if you want the new station to be visible for all users "
-"worldwide or if you want to create a local station."
+"This station will only be added to your library. If you want it to be "
+"available to everyone, you should add it to the <a href=\"https://www.radio-"
+"browser.info/add\">public database</a>."
 msgstr ""
-"გადაწყვიტეთ, გამოჩნდება თქვენი სადგური მთელს დედამიწაზე თუ მხოლოდ თქვენთვის "
-"იარსებებს."
+"ეს სადგური, მხოლოდ, თქვენს ბიბლიოთეკას დაემატება. თუ გნებავთ, ის ყველასთვის "
+"იყოს ხელმისაწვდომი, ის <a href=\"https://www.radio-browser.info/add\">საჯარო "
+"მონაცემთა ბაზაში</a> უნდა დაამატოთ."
 
-#: data/gtk/create_station_dialog.ui:35
-msgid "Create _Public Station"
-msgstr "საჯარო სადგურის შექმნა"
-
-#: data/gtk/create_station_dialog.ui:46
-msgid "Create _Local Station"
-msgstr "ლოკალური სადგურის შექმნა"
-
-#: data/gtk/create_station_dialog.ui:71
-msgid "Create Local Station"
-msgstr "ლოკალური სადგურის შექმნა"
-
-#: data/gtk/create_station_dialog.ui:104
-msgid "Change station image"
-msgstr "სადგურის გამოსახულების შექმნა"
-
-#: data/gtk/create_station_dialog.ui:123 src/ui/pages/search_page.rs:102
+#: data/gtk/add_station_dialog.ui:72
 msgid "Name"
 msgstr "სახელი"
 
-#: data/gtk/create_station_dialog.ui:131
+#: data/gtk/add_station_dialog.ui:80
 msgid "Stream URL"
 msgstr "ნაკადის URL"
 
-#: data/gtk/create_station_dialog.ui:139
-msgid "Create Station"
-msgstr "სადგურის შექმნა"
+#: data/gtk/add_station_dialog.ui:88
+msgid "Add Station"
+msgstr "სადგურის დამატება"
 
-#: data/gtk/device_dialog.ui:7 data/gtk/player_view.ui:111
+#: data/gtk/device_dialog.ui:7 data/gtk/player_view.ui:124
 msgid "Connect Device"
 msgstr "მოწყობილობის მიერთება"
 
@@ -193,90 +179,82 @@ msgstr "დაკვრის გადართვა"
 msgid "Shortwave"
 msgstr "Shortwave"
 
-#: data/gtk/library_page.ui:15
-msgid "Add Stations"
-msgstr "სადგურების დამატება"
+#: data/gtk/library_page.ui:15 data/gtk/search_page.ui:4
+msgid "Browse Stations"
+msgstr "სადგურების დათვალიერება"
 
-#: data/gtk/library_page.ui:22
+#: data/gtk/library_page.ui:23
 msgid "Main Menu"
 msgstr "მთავარი მენიუ"
 
-#: data/gtk/library_page.ui:91
+#: data/gtk/library_page.ui:92
 msgid "_Add New Stations"
 msgstr "_ახალი სადგურების დამატება"
 
-#: data/gtk/library_page.ui:113
-msgid "_Enable Gadget Player"
-msgstr "გაჯ_ეტის დამკვრელის ჩართვა"
-
-#: data/gtk/library_page.ui:117
+#: data/gtk/library_page.ui:114
 msgid "_Sorting"
 msgstr "_დალაგება"
 
-#: data/gtk/library_page.ui:120 data/gtk/search_page.ui:142
+#: data/gtk/library_page.ui:117
 msgid "_Name"
 msgstr "_სახელი"
 
-#: data/gtk/library_page.ui:125 data/gtk/search_page.ui:147
+#: data/gtk/library_page.ui:122
 msgid "_Language"
 msgstr "ე_ნა"
 
-#: data/gtk/library_page.ui:130 data/gtk/search_page.ui:152
+#: data/gtk/library_page.ui:127
 msgid "_Country"
 msgstr "ქვ_ეყანა"
 
-#: data/gtk/library_page.ui:135 data/gtk/search_page.ui:157
+#: data/gtk/library_page.ui:132
 msgid "S_tate"
 msgstr "_შტატი"
 
-#: data/gtk/library_page.ui:140 data/gtk/search_page.ui:162
-msgid "_Votes"
-msgstr "_ხმა"
-
-#: data/gtk/library_page.ui:145 data/gtk/search_page.ui:167
+#: data/gtk/library_page.ui:137
 msgid "_Bitrate"
 msgstr "_სიჩქარე"
 
-#: data/gtk/library_page.ui:152 data/gtk/search_page.ui:174
+#: data/gtk/library_page.ui:144
 msgid "_Ascending"
 msgstr "აღმავალი"
 
-#: data/gtk/library_page.ui:157 data/gtk/search_page.ui:179
+#: data/gtk/library_page.ui:149
 msgid "_Descending"
 msgstr "დაღმავალი"
 
-#: data/gtk/library_page.ui:166
+#: data/gtk/library_page.ui:158
 msgid "_Open radio-browser.info <sup>↗</sup>"
 msgstr "_radio-browser.info-ის გახსნა <sup>↗</sup>"
 
-#: data/gtk/library_page.ui:171
-msgid "_Create New Station"
-msgstr "_ახალი სადგურის შექმნა"
-
-#: data/gtk/library_page.ui:178
+#: data/gtk/library_page.ui:165
 msgid "_Preferences"
 msgstr "_მორგება"
 
-#: data/gtk/library_page.ui:182
+#: data/gtk/library_page.ui:169
 msgid "_Keyboard Shortcuts"
 msgstr "კლავიატურის მალსახმობები"
 
-#: data/gtk/library_page.ui:186
+#: data/gtk/library_page.ui:173
 msgid "_About Shortwave"
 msgstr "Shortwave-ის შესახებ"
 
+#: data/gtk/library_page.ui:181
+msgid "Add _Local Station"
+msgstr "_ლოკალური სადგურის დამატება"
+
 #: data/gtk/player_gadget.ui:40 data/gtk/player_toolbar.ui:92
-#: data/gtk/player_view.ui:135 data/gtk/station_row.ui:84
+#: data/gtk/player_view.ui:148 data/gtk/station_row.ui:86
 msgid "Play"
 msgstr "დაკვრა"
 
 #: data/gtk/player_gadget.ui:55 data/gtk/player_toolbar.ui:106
-#: data/gtk/player_view.ui:149
+#: data/gtk/player_view.ui:162
 msgid "Stop"
 msgstr "შეჩერება"
 
 #: data/gtk/player_gadget.ui:71 data/gtk/player_toolbar.ui:121
-#: data/gtk/player_view.ui:164
+#: data/gtk/player_view.ui:177
 msgid "Buffering…"
 msgstr "ბუფერის შევსება…"
 
@@ -285,7 +263,7 @@ msgid "SHORTWAVE INTERNET RADIO"
 msgstr "SHORTWAVE INTERNET RADIO"
 
 #: data/gtk/player_gadget.ui:140 data/gtk/player_toolbar.ui:29
-#: data/gtk/player_view.ui:45
+#: data/gtk/player_view.ui:58
 msgid "No Playback"
 msgstr "არ ვუკრავ"
 
@@ -294,18 +272,22 @@ msgid "Close"
 msgstr "დახურვა"
 
 #: data/gtk/player_gadget.ui:210
-msgid "Resize"
-msgstr "ზომის შეცვლა"
+msgid "Restore Window"
+msgstr "ფანჯრის აღდგენა"
 
-#: data/gtk/player_view.ui:194
+#: data/gtk/player_view.ui:13
+msgid "Enable Gadget Mode"
+msgstr "გაჯეტის რეჟიმის ჩართვა"
+
+#: data/gtk/player_view.ui:207
 msgid "Show Station Details"
 msgstr "სადგურის დეტალების ჩვენება"
 
-#: data/gtk/player_view.ui:244
+#: data/gtk/player_view.ui:258
 msgid "No Songs"
 msgstr "სიმღერების გარეშე"
 
-#: data/gtk/player_view.ui:255
+#: data/gtk/player_view.ui:269
 msgid ""
 "Songs that have been identified and recorded using the stream metadata will "
 "appear here."
@@ -313,34 +295,67 @@ msgstr ""
 "სიმღერები, რომლებიც ამოცნობილი და ჩაწერილია ნაკადის მეტამონაცემების "
 "გამოყენებით, აქ გამოჩნდება."
 
-#: data/gtk/player_view.ui:287 data/gtk/recording_indicator.ui:38
+#: data/gtk/player_view.ui:303 data/gtk/recording_indicator.ui:38
 msgid "An error occurred"
 msgstr "შეცდომა"
 
-#: data/gtk/search_page.ui:4 data/gtk/search_page.ui:26
+#: data/gtk/search_page.ui:23
 msgid "Search"
 msgstr "ძებნა"
 
-#: data/gtk/search_page.ui:35 data/gtk/station_dialog.ui:171
-#: src/ui/pages/search_page.rs:106
-msgid "Votes"
-msgstr "ხმები"
+#: data/gtk/search_page.ui:24
+msgid "Search stations"
+msgstr "სადგურების ძებნა"
 
-#: data/gtk/search_page.ui:40
-msgid "Change the sorting of the search results"
-msgstr "ძებნის შედეგების დალაგების შეცვლა"
+#: data/gtk/search_page.ui:72
+msgid "Discover over 50,000 public stations"
+msgstr "აღმოაჩინეთ 50,000-ზე მეტი საჯარო სადგური"
 
-#: data/gtk/search_page.ui:68
+#: data/gtk/search_page.ui:90
+msgid "Popular Stations"
+msgstr "პოპულარული სადგურები"
+
+#: data/gtk/search_page.ui:111
+msgid "Discover New Stations"
+msgstr "აღმოაჩინეთ ახალი სადგურები"
+
+#: data/gtk/search_page.ui:133
+msgid ""
+"The displayed information is provided by <a href=\"https://www.radio-browser."
+"info/\">radio-browser.info</a>. \n"
+"Shortwave has no influence on the listed stations."
+msgstr ""
+"ნაჩვენები ინფორმაცია მოცემულია <a href=\"https://www.radio-browser.info/"
+"\">radio-browser.info</a>-ის მიერ. \n"
+"Shortwave-ს არ აქვს გავლენა ჩამოთვლილ სადგურებზე."
+
+#: data/gtk/search_page.ui:199
+msgid "Loading…"
+msgstr "ჩატვირთვა…"
+
+#: data/gtk/search_page.ui:214
 msgid "No Results"
 msgstr "შედეგების გარეშე"
 
-#: data/gtk/search_page.ui:69
-msgid "Try using a different search term"
-msgstr "სცადეთ სხვა ძებნა"
+#: data/gtk/search_page.ui:215
+msgid ""
+"If the station you are looking for is missing, you can add it to the public "
+"database."
+msgstr ""
+"თუ სადგური, რომელსაც ეძებთ, აკლია, შეგიძლიათ დაამატოთ იგი საჯარო მონაცემთა "
+"ბაზაში."
 
-#: data/gtk/search_page.ui:124
-msgid "Searching…"
-msgstr "ძებნა…"
+#: data/gtk/search_page.ui:219
+msgid "Add Missing Station"
+msgstr "ნაკლული სადგურის დამატება"
+
+#: data/gtk/search_page.ui:236
+msgid "Unable to Retrieve Station Data"
+msgstr "სადგურის მონაცემების მიღება შეუძლებელია"
+
+#: data/gtk/search_page.ui:239
+msgid "Try Again"
+msgstr "კიდევ სცადეთ"
 
 #: data/gtk/settings_dialog.ui:12
 msgid "Features"
@@ -358,94 +373,102 @@ msgstr "ახალ სიმღერაზე გადართვისა�
 msgid "Save recorded song"
 msgstr "ჩაწერილი სიმღერის შენახვა"
 
-#: data/gtk/station_dialog.ui:70
-msgid "_Play Station"
-msgstr "_სადგურის დაკვრა"
+#: data/gtk/station_dialog.ui:73
+msgid "_Play"
+msgstr "_დაკვრა"
 
-#: data/gtk/station_dialog.ui:85
+#: data/gtk/station_dialog.ui:88
 msgid "_Add to Library"
 msgstr "_ბიბლიოთეკაში ჩამატება"
 
-#: data/gtk/station_dialog.ui:101
+#: data/gtk/station_dialog.ui:104
 msgid "_Remove From Library"
 msgstr "_ბიბლიოთეკიდან წაშლა"
 
-#: data/gtk/station_dialog.ui:119
+#: data/gtk/station_dialog.ui:122 data/gtk/station_row.ui:57
 msgid "Local Station"
 msgstr "ლოკალური სადგური"
 
-#: data/gtk/station_dialog.ui:120
+#: data/gtk/station_dialog.ui:123
 msgid ""
 "This station exists only in your library, and is not part of the public "
-"online station database."
+"database"
 msgstr ""
 "სადგური არსებობს მხოლოდ თქვენს პირად ბიბლიოთეკაში და ის ონლაინ სადგურების "
-"საჯარო ბაზის ნაწილს არ წარმოადგენს.."
+"საჯარო ბაზის ნაწილს არ წარმოადგენს"
 
-#: data/gtk/station_dialog.ui:135
+#: data/gtk/station_dialog.ui:137 data/gtk/station_row.ui:69
 msgid "Orphaned Station"
 msgstr "მიტოვებული სადგური"
 
-#: data/gtk/station_dialog.ui:136
+#: data/gtk/station_dialog.ui:138
 msgid ""
 "The information could not be updated, probably this station was removed from "
-"the public online station database."
+"the public database"
 msgstr ""
 "ინფორმაციის განახლება შეუძლებელია. ალბათ სადგური წაიშალა საჯარო ონლაინ "
-"სადგურების ბაზიდან."
+"სადგურების ბაზიდან"
 
-#: data/gtk/station_dialog.ui:148
+#: data/gtk/station_dialog.ui:149
 msgid "Information"
 msgstr "ინფორმაცია"
 
-#: data/gtk/station_dialog.ui:151 src/ui/pages/search_page.rs:103
+#: data/gtk/station_dialog.ui:152
 msgid "Language"
 msgstr "ენა"
 
-#: data/gtk/station_dialog.ui:161
+#: data/gtk/station_dialog.ui:162
 msgid "Tags"
 msgstr "ჭდეები"
 
-#: data/gtk/station_dialog.ui:182
+#: data/gtk/station_dialog.ui:174
 msgid "Location"
 msgstr "მდებარეობა"
 
-#: data/gtk/station_dialog.ui:187 src/ui/pages/search_page.rs:104
+#: data/gtk/station_dialog.ui:178
 msgid "Country"
 msgstr "ქვეყანა"
 
-#: data/gtk/station_dialog.ui:197 src/ui/pages/search_page.rs:105
+#: data/gtk/station_dialog.ui:188
 msgid "State"
 msgstr "State"
 
-#: data/gtk/station_dialog.ui:231
+#: data/gtk/station_dialog.ui:222
 msgid "Audio"
 msgstr "აუდიო"
 
-#: data/gtk/station_dialog.ui:235 src/ui/pages/search_page.rs:107
+#: data/gtk/station_dialog.ui:225
 msgid "Bitrate"
 msgstr "სიჩქარე"
 
-#: data/gtk/station_dialog.ui:245
+#: data/gtk/station_dialog.ui:235
 msgid "Codec"
 msgstr "კოდეკი"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:255
+#: data/gtk/station_dialog.ui:245
 msgid "Stream"
 msgstr "ნაკადი"
 
-#: data/gtk/station_dialog.ui:264
+#: data/gtk/station_dialog.ui:254
 msgid "Copy"
 msgstr "კოპირება"
 
-#: src/audio/player.rs:192
-msgid "Station cannot be streamed. URL is not valid."
-msgstr "სადგურის ნაკადის შეცდომა. URL არასწორია."
+#: data/gtk/volume_control.ui:9
+msgid "Toggle Mute"
+msgstr "დადუმების გადართვა"
 
-#: src/audio/player.rs:260
+#: data/gtk/volume_control.ui:21
+msgid "Volume"
+msgstr "ხმის დონე"
+
+#: src/audio/player.rs:251
 msgid "Active Playback"
 msgstr "აქტიური დაკვრა"
+
+#: src/audio/player.rs:413
+msgid "Station cannot be streamed. URL is not valid."
+msgstr "სადგურის ნაკადის შეცდომა. URL არასწორია."
 
 #: src/device/device_discovery.rs:83
 msgid "Google Cast Device"
@@ -459,9 +482,9 @@ msgstr "უცნობი მოდელი"
 msgid "translator-credits"
 msgstr "მთარგმნელის შესახებ"
 
-#: src/ui/create_station_dialog.rs:98
-msgid "Select station image"
-msgstr "აირჩიეთ სადგურის სურათი"
+#: src/ui/add_station_dialog.rs:90
+msgid "Select Station Cover"
+msgstr "აირჩიეთ სადგურის ყდა"
 
 #: src/ui/display_error.rs:46
 msgid "Show Details"
@@ -470,10 +493,6 @@ msgstr "დეტალების ჩვენება"
 #: src/ui/pages/library_page.rs:111
 msgid "Welcome to {}"
 msgstr "მოგესალმებით {}-ში"
-
-#: src/ui/pages/search_page.rs:206
-msgid "Station data could not be received."
-msgstr "სადგურის მონაცემების მიღება შეუძლებელია."
 
 #: src/ui/recording_indicator.rs:111
 msgid "Recording in Progress"
@@ -484,8 +503,8 @@ msgid "Ignored"
 msgstr "გამოტოვებულია"
 
 #: src/ui/recording_indicator.rs:113
-msgid "Incomplete"
-msgstr "არასრული"
+msgid "No Recording"
+msgstr "ჩაწერის გარეშე"
 
 #: src/ui/recording_indicator.rs:120
 msgid "The current song will be recorded until a new song is detected."
@@ -502,15 +521,61 @@ msgid ""
 "The current song cannot be fully recorded. The beginning has been missed."
 msgstr "მიმდინარე სიმღერის სრულად ჩაწერა ვერ მოხერხდა. დასაწყისი აკლია."
 
-#: src/ui/station_dialog.rs:206
+#: src/ui/station_dialog.rs:201
 msgid "{} kbit/s"
 msgstr "{} კბიტ/წმ"
 
+#~ msgid "Create new station"
+#~ msgstr "ახალი სადგურის შექმნა"
+
+#~ msgid "Create New Station"
+#~ msgstr "ახალი სადგურის შექმნა"
+
+#~ msgid ""
+#~ "You can decide if you want the new station to be visible for all users "
+#~ "worldwide or if you want to create a local station."
+#~ msgstr ""
+#~ "გადაწყვიტეთ, გამოჩნდება თქვენი სადგური მთელს დედამიწაზე თუ მხოლოდ "
+#~ "თქვენთვის იარსებებს."
+
+#~ msgid "Create _Public Station"
+#~ msgstr "საჯარო სადგურის შექმნა"
+
+#~ msgid "Create _Local Station"
+#~ msgstr "ლოკალური სადგურის შექმნა"
+
+#~ msgid "Create Local Station"
+#~ msgstr "ლოკალური სადგურის შექმნა"
+
+#~ msgid "Create Station"
+#~ msgstr "სადგურის შექმნა"
+
+#~ msgid "_Votes"
+#~ msgstr "_ხმა"
+
+#~ msgid "_Create New Station"
+#~ msgstr "_ახალი სადგურის შექმნა"
+
+#~ msgid "Resize"
+#~ msgstr "ზომის შეცვლა"
+
+#~ msgid "Votes"
+#~ msgstr "ხმები"
+
+#~ msgid "Change the sorting of the search results"
+#~ msgstr "ძებნის შედეგების დალაგების შეცვლა"
+
+#~ msgid "Try using a different search term"
+#~ msgstr "სცადეთ სხვა ძებნა"
+
+#~ msgid "Station data could not be received."
+#~ msgstr "სადგურის მონაცემების მიღება შეუძლებელია."
+
+#~ msgid "Incomplete"
+#~ msgstr "არასრული"
+
 #~ msgid "Discover"
 #~ msgstr "აღმოაჩინეთ"
-
-#~ msgid "Most Voted Stations"
-#~ msgstr "აქტუალური სადგურები"
 
 #~ msgid "Trending"
 #~ msgstr "ტრენდები"
@@ -526,9 +591,6 @@ msgstr "{} კბიტ/წმ"
 
 #~ msgid "Library"
 #~ msgstr "ბიბლიოთეკა"
-
-#~ msgid "_Discover New Stations"
-#~ msgstr "ახალი სადგურების აღმოჩენა"
 
 #~ msgid "Search Results"
 #~ msgstr "ძებნის შედეგები"
@@ -553,9 +615,6 @@ msgstr "{} კბიტ/წმ"
 
 #~ msgid "Show statistics"
 #~ msgstr "სტატისტიკების ჩვენება"
-
-#~ msgid "Browse over 50,000 stations"
-#~ msgstr "50,000-ზე მეტი სადგური"
 
 #~ msgid "Add new station"
 #~ msgstr "ახალი სადგურის დამატება"
@@ -597,9 +656,6 @@ msgstr "{} კბიტ/წმ"
 #~ "აუდიო შეგიძლიათ ქსელურ მოწყობილობაზე გაუშვათ (საჭიროა Google Cast-ის "
 #~ "მხარდაჭერა)."
 
-#~ msgid "Search Again"
-#~ msgstr "თავიდან ძებნა"
-
 #~ msgid "Main View"
 #~ msgstr "მთავარი ხედი"
 
@@ -625,9 +681,6 @@ msgstr "{} კბიტ/წმ"
 
 #~ msgid "Whether the application should use a dark theme"
 #~ msgstr "გამოვიყენო თუ არა მუქი თემა"
-
-#~ msgid "Window"
-#~ msgstr "ფანჯარა"
 
 #~ msgctxt "shortcut window"
 #~ msgid "Open library view"
@@ -661,12 +714,6 @@ msgstr "{} კბიტ/წმ"
 #~ msgstr ""
 #~ "საჯარო ონლაინ სადგურის მონაცემთა ბაზაზე წვდომა მიუწვდომელია. დარწმუნდით, "
 #~ "რომ დაკავშირებული ხართ ინტერნეტთან."
-
-#~ msgid "Try again"
-#~ msgstr "კიდევ სცადეთ"
-
-#~ msgid "_Refresh Station Data"
-#~ msgstr "სადგურის ინფორმაციის _განახლება"
 
 #~ msgid "Open Application Menu"
 #~ msgstr "აპლიკაციის მენიუს გახსნა"
