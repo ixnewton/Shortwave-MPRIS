@@ -216,7 +216,15 @@ mod imp {
             self.cancel();
 
             if let Some(station) = self.obj().station() {
-                if let Some(favicon_url) = station.metadata().favicon {
+                // First check whether we have some custom cover for that station
+                // Usually only for local added stations
+                if let Some(texture) = station.custom_cover() {
+                    self.image.set_paintable(Some(&texture));
+                    self.stack.set_visible_child_name("image");
+
+                    self.is_loaded.set(true);
+                    self.obj().notify_is_loaded();
+                } else if let Some(favicon_url) = station.metadata().favicon {
                     let mut cover_loader = SwApplication::default().cover_loader();
 
                     let cancellable = gio::Cancellable::new();

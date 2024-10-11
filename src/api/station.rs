@@ -42,7 +42,7 @@ mod imp {
         #[property(get=Self::title)]
         title: PhantomData<String>,
         #[property(get, set, nullable)]
-        favicon: OnceCell<Option<gdk::Texture>>,
+        custom_cover: OnceCell<Option<gdk::Texture>>,
         #[property(get, set)]
         is_orphaned: Cell<bool>,
     }
@@ -72,13 +72,13 @@ impl SwStation {
         uuid: &str,
         is_local: bool,
         metadata: StationMetadata,
-        favicon: Option<gdk::Texture>,
+        custom_cover: Option<gdk::Texture>,
     ) -> Self {
         glib::Object::builder()
             .property("uuid", uuid)
             .property("is-local", is_local)
             .property("metadata", metadata)
-            .property("favicon", favicon)
+            .property("custom-cover", custom_cover)
             .build()
     }
 

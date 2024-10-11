@@ -33,7 +33,7 @@ pub struct StationEntry {
     /// Serialized station metadata. For local stations, this is mandatory.
     pub data: Option<String>,
 
-    /// Binary blob containing an optional local station favicon.
+    /// Binary blob containing an optional local station cover.
     pub favicon: Option<Vec<u8>>,
 }
 
@@ -43,7 +43,7 @@ impl StationEntry {
         let metadata = station.metadata();
 
         let favicon = station
-            .favicon()
+            .custom_cover()
             .map(|texture| texture.save_to_png_bytes().to_vec());
 
         Self {
