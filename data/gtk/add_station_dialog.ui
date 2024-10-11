@@ -4,7 +4,7 @@
     <property name="width_request">325</property>
     <property name="height_request">294</property>
     <property name="content_width">500</property>
-    <property name="content_height">575</property>
+    <property name="content_height">550</property>
     <child>
       <object class="AdwToolbarView">
         <child type="top">
@@ -28,26 +28,34 @@
                     <property name="margin_start">12</property>
                     <property name="margin_end">12</property>
                     <property name="margin_bottom">30</property>
-                    <property name="margin_top">18</property>
+                    <property name="margin_top">6</property>
                     <child>
                       <object class="GtkOverlay">
                         <property name="halign">center</property>
                         <property name="valign">center</property>
                         <property name="margin_bottom">12</property>
                         <child type="overlay">
-                          <object class="GtkButton" id="favicon_button">
+                          <object class="GtkButton">
                             <property name="icon_name">document-edit-symbolic</property>
                             <property name="halign">center</property>
                             <property name="valign">center</property>
                             <property name="tooltip_text" translatable="yes">Change Station Cover</property>
+                            <signal name="clicked" handler="select_cover_file" swapped="true" />
                             <style>
                               <class name="osd" />
                             </style>
                           </object>
                         </child>
                         <child>
-                          <object class="SwFavicon" id="station_favicon">
-                            <property name="size">Big</property>
+                          <object class="SwStationCover" id="station_cover">
+                            <property name="size">192</property>
+                            <property name="overflow">hidden</property>
+                            <binding name="station">
+                              <lookup name="station">SwAddStationDialog</lookup>
+                            </binding>
+                            <style>
+                              <class name="card" />
+                            </style>
                           </object>
                         </child>
                       </object>
@@ -70,7 +78,7 @@
                             <property name="activatable">True</property>
                             <property name="use_underline">True</property>
                             <property name="title" translatable="yes">Name</property>
-                            <signal name="notify::text" handler="validate_input" swapped="true" />
+                            <signal name="notify::text" handler="update_metadata" swapped="true" />
                           </object>
                         </child>
                         <child>
@@ -78,7 +86,7 @@
                             <property name="activatable">True</property>
                             <property name="use_underline">True</property>
                             <property name="title" translatable="yes">Stream URL</property>
-                            <signal name="notify::text" handler="validate_input" swapped="true" />
+                            <signal name="notify::text" handler="update_metadata" swapped="true" />
                           </object>
                         </child>
                       </object>

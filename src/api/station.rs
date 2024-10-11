@@ -42,7 +42,7 @@ mod imp {
         #[property(get=Self::title)]
         title: PhantomData<String>,
         #[property(get, set, nullable)]
-        custom_cover: OnceCell<Option<gdk::Texture>>,
+        custom_cover: RefCell<Option<gdk::Texture>>,
         #[property(get, set)]
         is_orphaned: Cell<bool>,
     }

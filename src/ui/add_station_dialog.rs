@@ -14,11 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use std::cell::RefCell;
-
 use adw::prelude::*;
 use adw::subclass::prelude::*;
-use glib::{clone, subclass};
+use glib::{clone, subclass, Properties};
 use gtk::{gdk, gio, glib, CompositeTemplate};
 use url::Url;
 use uuid::Uuid;
@@ -26,26 +24,26 @@ use uuid::Uuid;
 use crate::api::{StationMetadata, SwStation};
 use crate::app::SwApplication;
 use crate::i18n::i18n;
-use crate::ui::{SwApplicationWindow, SwFavicon};
+use crate::ui::{SwApplicationWindow, SwStationCover};
 
 mod imp {
     use super::*;
 
-    #[derive(Debug, Default, CompositeTemplate)]
+    #[derive(Debug, Properties, CompositeTemplate)]
     #[template(resource = "/de/haeckerfelix/Shortwave/gtk/add_station_dialog.ui")]
+    #[properties(wrapper_type = super::SwAddStationDialog)]
     pub struct SwAddStationDialog {
         #[template_child]
         pub add_button: TemplateChild<gtk::Button>,
         #[template_child]
-        pub station_favicon: TemplateChild<SwFavicon>,
-        #[template_child]
-        pub favicon_button: TemplateChild<gtk::Button>,
+        pub station_cover: TemplateChild<SwStationCover>,
         #[template_child]
         pub name_row: TemplateChild<adw::EntryRow>,
         #[template_child]
         pub url_row: TemplateChild<adw::EntryRow>,
 
-        pub favicon: RefCell<Option<gtk::gdk::Texture>>,
+        #[property(get)]
+        station: SwStation,
     }
 
     #[glib::object_subclass]
@@ -54,9 +52,23 @@ mod imp {
         type ParentType = adw::Dialog;
         type Type = super::SwAddStationDialog;
 
+        fn new() -> Self {
+            let uuid = Uuid::new_v4().to_string();
+            let metadata = StationMetadata::default();
+            let station = SwStation::new(&uuid, true, metadata, None);
+
+            Self {
+                add_button: TemplateChild::default(),
+                station_cover: TemplateChild::default(),
+                name_row: TemplateChild::default(),
+                url_row: TemplateChild::default(),
+                station,
+            }
+        }
+
         fn class_init(klass: &mut Self::Class) {
             Self::bind_template(klass);
-            Self::Type::bind_template_callbacks(klass);
+            Self::bind_template_callbacks(klass);
         }
 
         fn instance_init(obj: &subclass::InitializingObject<Self>) {
@@ -64,11 +76,76 @@ mod imp {
         }
     }
 
+    #[glib::derived_properties]
     impl ObjectImpl for SwAddStationDialog {}
 
     impl WidgetImpl for SwAddStationDialog {}
 
     impl AdwDialogImpl for SwAddStationDialog {}
+
+    #[gtk::template_callbacks]
+    impl SwAddStationDialog {
+        #[template_callback]
+        fn select_cover_file(&self) {
+            let file_chooser = gtk::FileDialog::builder()
+                .title(i18n("Select Station Cover"))
+                .build();
+
+            file_chooser.open(
+                Some(&SwApplicationWindow::default()),
+                gio::Cancellable::NONE,
+                clone!(
+                    #[weak(rename_to = imp)]
+                    self,
+                    move |res| {
+                        match res {
+                            Ok(file) => match gdk::Texture::from_file(&file) {
+                                Ok(texture) => imp.obj().station().set_custom_cover(Some(texture)),
+                                Err(err) => {
+                                    error!("Unable to open cover file: {}", err.to_string());
+                                }
+                            },
+                            Err(err) => error!("Could not get file {err}"),
+                        }
+                    }
+                ),
+            );
+        }
+
+        #[template_callback]
+        fn add_station(&self) {
+            SwApplication::default()
+                .library()
+                .add_station(self.obj().station());
+
+            self.obj().close();
+        }
+
+        #[template_callback]
+        fn update_metadata(&self) {
+            let name = self.name_row.text().to_string();
+            let has_name = !name.is_empty();
+            let url = Url::parse(&self.url_row.text()).ok();
+
+            match url {
+                Some(_) => {
+                    self.url_row.remove_css_class("error");
+                    self.add_button.set_sensitive(has_name);
+                }
+                None => {
+                    self.url_row.add_css_class("error");
+                    self.add_button.set_sensitive(false);
+                }
+            }
+
+            let metadata = StationMetadata {
+                name,
+                url,
+                ..Default::default()
+            };
+            self.obj().station().set_metadata(metadata);
+        }
+    }
 }
 
 glib::wrapper! {
@@ -76,92 +153,9 @@ glib::wrapper! {
         @extends gtk::Widget, adw::Dialog;
 }
 
-#[gtk::template_callbacks]
 impl SwAddStationDialog {
     pub fn new() -> Self {
-        let dialog: Self = glib::Object::new();
-
-        dialog.setup_signals();
-        dialog
-    }
-
-    fn show_filechooser(&self) {
-        let file_chooser = gtk::FileDialog::builder()
-            .title(i18n("Select Station Cover"))
-            .build();
-
-        file_chooser.open(
-            Some(&SwApplicationWindow::default()),
-            gio::Cancellable::NONE,
-            clone!(
-                #[weak(rename_to = imp)]
-                self,
-                move |res| {
-                    match res {
-                        Ok(file) => imp.set_favicon(&file),
-                        Err(err) => error!("Could not get file {err}"),
-                    }
-                }
-            ),
-        );
-    }
-
-    fn setup_signals(&self) {
-        let imp = self.imp();
-
-        imp.favicon_button.connect_clicked(clone!(
-            #[weak(rename_to = imp)]
-            self,
-            move |_| {
-                imp.show_filechooser();
-            }
-        ));
-    }
-
-    #[template_callback]
-    fn add_station(&self) {
-        let imp = self.imp();
-        let uuid = Uuid::new_v4().to_string();
-        let name = imp.name_row.text().to_string();
-        let url = Url::parse(&imp.url_row.text()).unwrap();
-        let favicon = imp.favicon.borrow().clone();
-
-        let station = SwStation::new(
-            &uuid,
-            true,
-            StationMetadata::new(name, url),
-            favicon.and_upcast(),
-        );
-        SwApplication::default().library().add_station(station);
-        self.close();
-    }
-
-    #[template_callback]
-    fn validate_input(&self) {
-        let imp = self.imp();
-
-        let has_name = !imp.name_row.text().is_empty();
-        let url = imp.url_row.text().to_string();
-
-        match Url::parse(&url) {
-            Ok(_) => {
-                imp.url_row.remove_css_class("error");
-                imp.add_button.set_sensitive(has_name);
-            }
-            Err(_) => {
-                imp.url_row.add_css_class("error");
-                imp.add_button.set_sensitive(false);
-            }
-        }
-    }
-
-    fn set_favicon(&self, file: &gio::File) {
-        if let Ok(texture) = gdk::Texture::from_file(file) {
-            self.imp()
-                .station_favicon
-                .set_paintable(Some(&texture.clone().upcast()));
-            self.imp().favicon.replace(Some(texture));
-        }
+        glib::Object::new()
     }
 }
 
