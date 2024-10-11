@@ -80,20 +80,13 @@ mod imp {
 
             self.update_initials();
             self.update_font_size();
-            self.update_color_class();
         }
     }
 
     impl WidgetImpl for SwStationCover {
         fn map(&self) {
             self.parent_map();
-            glib::spawn_future_local(clone!(
-                #[weak(rename_to = imp)]
-                self,
-                async move {
-                    imp.load_cover().await;
-                }
-            ));
+            self.update_cover();
         }
 
         fn unmap(&self) {
@@ -128,15 +121,29 @@ mod imp {
             // Set fallback initials
             self.update_initials();
             self.update_font_size();
-            self.update_color_class();
 
             // Load new cover, but only if it's mapped
             if self.obj().is_mapped() {
-                glib::spawn_future_local(clone!(
+                self.update_cover();
+            }
+
+            if let Some(station) = self.obj().station() {
+                station.connect_metadata_notify(clone!(
                     #[weak(rename_to = imp)]
                     self,
-                    async move {
-                        imp.load_cover().await;
+                    move |_| {
+                        imp.is_loaded.set(false);
+                        imp.update_cover();
+                        imp.update_initials();
+                    }
+                ));
+
+                station.connect_custom_cover_notify(clone!(
+                    #[weak(rename_to = imp)]
+                    self,
+                    move |_| {
+                        imp.is_loaded.set(false);
+                        imp.update_cover();
                     }
                 ));
             }
@@ -165,6 +172,7 @@ mod imp {
             }
 
             self.fallback_label.set_label(&initials.to_uppercase());
+            self.update_color_class();
         }
 
         fn first_char(word: &str) -> Option<char> {
@@ -206,6 +214,16 @@ mod imp {
                 self.fallback_label
                     .add_css_class(&format!("color{color_class}"));
             }
+        }
+
+        fn update_cover(&self) {
+            glib::spawn_future_local(clone!(
+                #[weak(rename_to = imp)]
+                self,
+                async move {
+                    imp.load_cover().await;
+                }
+            ));
         }
 
         async fn load_cover(&self) {
@@ -254,6 +272,10 @@ mod imp {
                             }
                         }
                     }
+                } else if station.title().is_empty() {
+                    self.stack.set_visible_child_name("placeholder");
+                } else {
+                    self.stack.set_visible_child_name("fallback");
                 }
             } else {
                 self.stack.set_visible_child_name("placeholder");
