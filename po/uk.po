@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2024-10-09 19:12+0000\n"
-"PO-Revision-Date: 2024-10-09 22:16+0300\n"
+"POT-Creation-Date: 2024-10-11 15:31+0000\n"
+"PO-Revision-Date: 2024-10-11 23:32+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -35,12 +35,15 @@ msgid "Listen to internet radio"
 msgstr "Прослуховування інтернет-радіо"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:12
+#| msgid ""
+#| "Shortwave is an internet radio player that provides access to a station "
+#| "database with over 30,000 stations."
 msgid ""
 "Shortwave is an internet radio player that provides access to a station "
-"database with over 30,000 stations."
+"database with over 50,000 stations."
 msgstr ""
 "«Коротка хвиля» — програвач інтернет-радіостанцій, який надає доступ до бази "
-"з понад 30000 станцій."
+"з понад 50000 станцій."
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:15
 msgid "Features:"
@@ -192,55 +195,55 @@ msgstr "Головне меню"
 msgid "_Add New Stations"
 msgstr "_Додати нові станції"
 
-#: data/gtk/library_page.ui:114
+#: data/gtk/library_page.ui:115
 msgid "_Sorting"
 msgstr "Вп_орядкування"
 
-#: data/gtk/library_page.ui:117
+#: data/gtk/library_page.ui:118
 msgid "_Name"
 msgstr "_Назва"
 
-#: data/gtk/library_page.ui:122
+#: data/gtk/library_page.ui:123
 msgid "_Language"
 msgstr "_Мова"
 
-#: data/gtk/library_page.ui:127
+#: data/gtk/library_page.ui:128
 msgid "_Country"
 msgstr "К_раїна"
 
-#: data/gtk/library_page.ui:132
+#: data/gtk/library_page.ui:133
 msgid "S_tate"
 msgstr "_Штат"
 
-#: data/gtk/library_page.ui:137
+#: data/gtk/library_page.ui:138
 msgid "_Bitrate"
 msgstr "_Бітова швидкість"
 
-#: data/gtk/library_page.ui:144
+#: data/gtk/library_page.ui:145
 msgid "_Ascending"
 msgstr "За з_ростанням"
 
-#: data/gtk/library_page.ui:149
+#: data/gtk/library_page.ui:150
 msgid "_Descending"
 msgstr "За с_паданням"
 
-#: data/gtk/library_page.ui:158
+#: data/gtk/library_page.ui:159
 msgid "_Open radio-browser.info <sup>↗</sup>"
 msgstr "В_ідкрити radio-browser.info <sup>↗</sup>"
 
-#: data/gtk/library_page.ui:165
+#: data/gtk/library_page.ui:166
 msgid "_Preferences"
 msgstr "_Налаштування"
 
-#: data/gtk/library_page.ui:169
+#: data/gtk/library_page.ui:170
 msgid "_Keyboard Shortcuts"
 msgstr "_Клавіатурні скорочення"
 
-#: data/gtk/library_page.ui:173
+#: data/gtk/library_page.ui:174
 msgid "_About Shortwave"
 msgstr "П_ро «Shortwave»"
 
-#: data/gtk/library_page.ui:181
+#: data/gtk/library_page.ui:182
 msgid "Add _Local Station"
 msgstr "Додати _місцеву станцію"
 
@@ -350,11 +353,11 @@ msgstr ""
 msgid "Add Missing Station"
 msgstr "Додати пропущену станцію"
 
-#: data/gtk/search_page.ui:236
+#: data/gtk/search_page.ui:237
 msgid "Unable to Retrieve Station Data"
 msgstr "Не вдалося отримати дані станцій"
 
-#: data/gtk/search_page.ui:239
+#: data/gtk/search_page.ui:240
 msgid "Try Again"
 msgstr "Повторити спробу"
 
@@ -376,26 +379,22 @@ msgid "Save recorded song"
 msgstr "Зберегти записану пісню"
 
 #: data/gtk/station_dialog.ui:73
-#| msgid "Play"
 msgid "_Play"
 msgstr "_Пуск"
 
-#: data/gtk/station_dialog.ui:88
+#: data/gtk/station_dialog.ui:89
 msgid "_Add to Library"
 msgstr "Д_одати до бібліотеки"
 
-#: data/gtk/station_dialog.ui:104
+#: data/gtk/station_dialog.ui:106
 msgid "_Remove From Library"
 msgstr "Ви_лучити з бібліотеки"
 
-#: data/gtk/station_dialog.ui:122 data/gtk/station_row.ui:57
+#: data/gtk/station_dialog.ui:125 data/gtk/station_row.ui:57
 msgid "Local Station"
 msgstr "Локальна станція"
 
-#: data/gtk/station_dialog.ui:123
-#| msgid ""
-#| "This station exists only in your library, and is not part of the public "
-#| "online station database."
+#: data/gtk/station_dialog.ui:126
 msgid ""
 "This station exists only in your library, and is not part of the public "
 "database"
@@ -403,63 +402,60 @@ msgstr ""
 "Запис станції є лише у вашій бібліотеці — він не є частиною "
 "загальнодоступної бази даних станцій"
 
-#: data/gtk/station_dialog.ui:137 data/gtk/station_row.ui:69
+#: data/gtk/station_dialog.ui:140 data/gtk/station_row.ui:69
 msgid "Orphaned Station"
 msgstr "Осиротіла станція"
 
-#: data/gtk/station_dialog.ui:138
-#| msgid ""
-#| "The information could not be updated, probably this station was removed "
-#| "from the public online station database."
+#: data/gtk/station_dialog.ui:141
 msgid ""
 "The information could not be updated, probably this station was removed from "
 "the public database"
 msgstr ""
-"Не вдалося оновити відомості. Ймовірно, станцію було вилучено із"
-" загальнодоступної бази даних станцій"
+"Не вдалося оновити відомості. Ймовірно, станцію було вилучено із "
+"загальнодоступної бази даних станцій"
 
-#: data/gtk/station_dialog.ui:149
+#: data/gtk/station_dialog.ui:152
 msgid "Information"
 msgstr "Відомості"
 
-#: data/gtk/station_dialog.ui:152
+#: data/gtk/station_dialog.ui:155
 msgid "Language"
 msgstr "Мова"
 
-#: data/gtk/station_dialog.ui:162
+#: data/gtk/station_dialog.ui:165
 msgid "Tags"
 msgstr "Мітки"
 
-#: data/gtk/station_dialog.ui:174
+#: data/gtk/station_dialog.ui:177
 msgid "Location"
 msgstr "Місце"
 
-#: data/gtk/station_dialog.ui:178
+#: data/gtk/station_dialog.ui:181
 msgid "Country"
 msgstr "Країна"
 
-#: data/gtk/station_dialog.ui:188
+#: data/gtk/station_dialog.ui:191
 msgid "State"
 msgstr "Штат"
 
-#: data/gtk/station_dialog.ui:222
+#: data/gtk/station_dialog.ui:225
 msgid "Audio"
 msgstr "Звук"
 
-#: data/gtk/station_dialog.ui:225
+#: data/gtk/station_dialog.ui:228
 msgid "Bitrate"
 msgstr "Бітова швидкість"
 
-#: data/gtk/station_dialog.ui:235
+#: data/gtk/station_dialog.ui:238
 msgid "Codec"
 msgstr "Кодек"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:245
+#: data/gtk/station_dialog.ui:248
 msgid "Stream"
 msgstr "Трансляція"
 
-#: data/gtk/station_dialog.ui:254
+#: data/gtk/station_dialog.ui:257
 msgid "Copy"
 msgstr "Копіювати"
 
