@@ -39,7 +39,7 @@
   <project_license>GPL-3.0-or-later</project_license>
 
   <!-- URLs -->
-  <url type="homepage">https://gitlab.gnome.org/World/Shortwave</url>
+  <url type="homepage">https://apps.gnome.org/Shortwave/</url>
   <url type="bugtracker">https://gitlab.gnome.org/World/Shortwave/issues</url>
   <url type="donation">https://liberapay.com/haecker-felix</url>
   <url type="translate">https://l10n.gnome.org/module/Shortwave/</url>
