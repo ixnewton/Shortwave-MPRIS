@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2024-10-09 19:12+0000\n"
-"PO-Revision-Date: 2024-10-10 09:20+0800\n"
+"POT-Creation-Date: 2024-10-11 15:31+0000\n"
+"PO-Revision-Date: 2024-10-12 07:17+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -45,9 +45,9 @@ msgstr "收听互联网广播"
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:12
 msgid ""
 "Shortwave is an internet radio player that provides access to a station "
-"database with over 30,000 stations."
+"database with over 50,000 stations."
 msgstr ""
-"短波是个提供对具有超过 30000 个电台的电台数据库访问的互联网广播播放器。"
+"短波是个提供对具有超过 50000 个电台的电台数据库访问的互联网广播播放器。"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:15
 msgid "Features:"
@@ -194,55 +194,55 @@ msgstr "主菜单"
 msgid "_Add New Stations"
 msgstr "添加新电台(_A)"
 
-#: data/gtk/library_page.ui:114
+#: data/gtk/library_page.ui:115
 msgid "_Sorting"
 msgstr "排序(_S)"
 
-#: data/gtk/library_page.ui:117
+#: data/gtk/library_page.ui:118
 msgid "_Name"
 msgstr "名称(_N)"
 
-#: data/gtk/library_page.ui:122
+#: data/gtk/library_page.ui:123
 msgid "_Language"
 msgstr "语言(_L)"
 
-#: data/gtk/library_page.ui:127
+#: data/gtk/library_page.ui:128
 msgid "_Country"
 msgstr "国家(_C)"
 
-#: data/gtk/library_page.ui:132
+#: data/gtk/library_page.ui:133
 msgid "S_tate"
 msgstr "州省(_T)"
 
-#: data/gtk/library_page.ui:137
+#: data/gtk/library_page.ui:138
 msgid "_Bitrate"
 msgstr "位速率(_B)"
 
-#: data/gtk/library_page.ui:144
+#: data/gtk/library_page.ui:145
 msgid "_Ascending"
 msgstr "升序(_A)"
 
-#: data/gtk/library_page.ui:149
+#: data/gtk/library_page.ui:150
 msgid "_Descending"
 msgstr "降序(_D)"
 
-#: data/gtk/library_page.ui:158
+#: data/gtk/library_page.ui:159
 msgid "_Open radio-browser.info <sup>↗</sup>"
 msgstr "打开 radio-browser.info(_O) <sup>↗</sup>"
 
-#: data/gtk/library_page.ui:165
+#: data/gtk/library_page.ui:166
 msgid "_Preferences"
 msgstr "首选项(_P)"
 
-#: data/gtk/library_page.ui:169
+#: data/gtk/library_page.ui:170
 msgid "_Keyboard Shortcuts"
 msgstr "键盘快捷键(_K)"
 
-#: data/gtk/library_page.ui:173
+#: data/gtk/library_page.ui:174
 msgid "_About Shortwave"
 msgstr "关于短波(_A)"
 
-#: data/gtk/library_page.ui:181
+#: data/gtk/library_page.ui:182
 msgid "Add _Local Station"
 msgstr "添加本地电台(_L)"
 
@@ -347,11 +347,11 @@ msgstr "如果缺失了您寻找的电台，您可以将其添加至公共数据
 msgid "Add Missing Station"
 msgstr "添加缺失电台"
 
-#: data/gtk/search_page.ui:236
+#: data/gtk/search_page.ui:237
 msgid "Unable to Retrieve Station Data"
 msgstr "无法获取电台数据"
 
-#: data/gtk/search_page.ui:239
+#: data/gtk/search_page.ui:240
 msgid "Try Again"
 msgstr "重试"
 
@@ -375,76 +375,76 @@ msgstr "保存录制的歌曲"
 msgid "_Play"
 msgstr "播放(_P)"
 
-#: data/gtk/station_dialog.ui:88
+#: data/gtk/station_dialog.ui:89
 msgid "_Add to Library"
 msgstr "添加到库(_A)"
 
-#: data/gtk/station_dialog.ui:104
+#: data/gtk/station_dialog.ui:106
 msgid "_Remove From Library"
 msgstr "从库移除(_R)"
 
-#: data/gtk/station_dialog.ui:122 data/gtk/station_row.ui:57
+#: data/gtk/station_dialog.ui:125 data/gtk/station_row.ui:57
 msgid "Local Station"
 msgstr "本地电台"
 
-#: data/gtk/station_dialog.ui:123
+#: data/gtk/station_dialog.ui:126
 msgid ""
 "This station exists only in your library, and is not part of the public "
 "database"
 msgstr "该电台仅存在于您的库中，且不是公共数据库的一部分"
 
-#: data/gtk/station_dialog.ui:137 data/gtk/station_row.ui:69
+#: data/gtk/station_dialog.ui:140 data/gtk/station_row.ui:69
 msgid "Orphaned Station"
 msgstr "孤立电台"
 
-#: data/gtk/station_dialog.ui:138
+#: data/gtk/station_dialog.ui:141
 msgid ""
 "The information could not be updated, probably this station was removed from "
 "the public database"
 msgstr "信息无法更新，可能是因为该电台已从公共数据库移除"
 
-#: data/gtk/station_dialog.ui:149
+#: data/gtk/station_dialog.ui:152
 msgid "Information"
 msgstr "信息"
 
-#: data/gtk/station_dialog.ui:152
+#: data/gtk/station_dialog.ui:155
 msgid "Language"
 msgstr "语言"
 
-#: data/gtk/station_dialog.ui:162
+#: data/gtk/station_dialog.ui:165
 msgid "Tags"
 msgstr "标签"
 
-#: data/gtk/station_dialog.ui:174
+#: data/gtk/station_dialog.ui:177
 msgid "Location"
 msgstr "位置"
 
-#: data/gtk/station_dialog.ui:178
+#: data/gtk/station_dialog.ui:181
 msgid "Country"
 msgstr "国家"
 
-#: data/gtk/station_dialog.ui:188
+#: data/gtk/station_dialog.ui:191
 msgid "State"
 msgstr "州省"
 
-#: data/gtk/station_dialog.ui:222
+#: data/gtk/station_dialog.ui:225
 msgid "Audio"
 msgstr "音频"
 
-#: data/gtk/station_dialog.ui:225
+#: data/gtk/station_dialog.ui:228
 msgid "Bitrate"
 msgstr "位速率"
 
-#: data/gtk/station_dialog.ui:235
+#: data/gtk/station_dialog.ui:238
 msgid "Codec"
 msgstr "编解码器"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:245
+#: data/gtk/station_dialog.ui:248
 msgid "Stream"
 msgstr "流"
 
-#: data/gtk/station_dialog.ui:254
+#: data/gtk/station_dialog.ui:257
 msgid "Copy"
 msgstr "复制"
 
