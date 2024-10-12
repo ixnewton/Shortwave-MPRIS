@@ -99,6 +99,7 @@
                                 <property name="selection_mode">none</property>
                                 <property name="row_spacing">12</property>
                                 <property name="column_spacing">12</property>
+                                <property name="max_children_per_line">3</property>
                                 <style>
                                   <class name="station-flowbox"/>
                                 </style>
@@ -120,6 +121,7 @@
                                 <property name="selection_mode">none</property>
                                 <property name="row_spacing">12</property>
                                 <property name="column_spacing">12</property>
+                                <property name="max_children_per_line">3</property>
                                 <style>
                                   <class name="station-flowbox"/>
                                 </style>
