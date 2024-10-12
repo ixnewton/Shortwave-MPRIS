@@ -432,6 +432,7 @@ impl SwPlayer {
         // Restore volume
         let volume = settings_manager::double(Key::PlaybackVolume);
         imp.set_volume(volume);
+        self.notify_volume();
 
         // Restore last played station
         let json = settings_manager::string(Key::PlaybackLastStation);
