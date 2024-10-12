@@ -21,11 +21,12 @@ use adw::prelude::*;
 use glib::clone;
 use glib::subclass::prelude::*;
 use glib::Properties;
-use gtk::glib;
+use gtk::{gio, glib};
 
 use crate::api::{StationMetadata, SwStation};
 use crate::app::SwApplication;
 use crate::audio::*;
+use crate::config;
 use crate::device::{SwCastSender, SwDevice, SwDeviceDiscovery, SwDeviceKind};
 use crate::i18n::*;
 use crate::path;
@@ -165,6 +166,9 @@ mod imp {
         }
 
         fn process_gst_message(&self, message: GstreamerChange) -> glib::ControlFlow {
+            let app = SwApplication::default();
+            let window = SwApplicationWindow::default();
+
             match message {
                 GstreamerChange::Title(title) => {
                     debug!("Stream title has changed to: {}", title);
@@ -188,7 +192,11 @@ mod imp {
 
                     // Show desktop notification
                     if settings_manager::boolean(Key::Notifications) {
-                        // TODO: self.show_song_notification();
+                        let notification = gio::Notification::new(&title);
+                        notification.set_body(Some(&self.obj().station().unwrap().title()));
+
+                        let id = format!("{}.SongNotification", config::APP_ID);
+                        app.send_notification(Some(&id), &notification);
                     }
                 }
                 GstreamerChange::PlaybackState(state) => {
@@ -203,9 +211,6 @@ mod imp {
 
                     self.state.set(state);
                     self.obj().notify_state();
-
-                    let app = SwApplication::default();
-                    let window = SwApplicationWindow::default();
 
                     // Inhibit session suspend when playback is active
                     if state == SwPlaybackState::Playing && self.inhibit_cookie.get() == 0 {
