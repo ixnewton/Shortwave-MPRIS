@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2024-10-09 19:12+0000\n"
-"PO-Revision-Date: 2024-10-10 18:39+0330\n"
+"POT-Creation-Date: 2024-10-11 15:31+0000\n"
+"PO-Revision-Date: 2024-10-12 08:46+0330\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
 "Language: fa\n"
@@ -36,10 +36,10 @@ msgstr "شنیدن رادیوهای اینترنتی"
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:12
 msgid ""
 "Shortwave is an internet radio player that provides access to a station database "
-"with over 30,000 stations."
+"with over 50,000 stations."
 msgstr ""
 "موج کوتاه پخش‌کنندهٔ رادیو اینترنتی‌ای است که دسترسی به پایگاه داده‌ای با بیش از "
-"۳۰٫۰۰۰ ایستگاه را فراهم می‌کند."
+"۵۰٫۰۰۰ ایستگاه را فراهم می‌کند."
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:15
 msgid "Features:"
@@ -186,55 +186,55 @@ msgstr "فهرست اصلی"
 msgid "_Add New Stations"
 msgstr "_افزودن ایستگاه جدید"
 
-#: data/gtk/library_page.ui:114
+#: data/gtk/library_page.ui:115
 msgid "_Sorting"
 msgstr "_چینش"
 
-#: data/gtk/library_page.ui:117
+#: data/gtk/library_page.ui:118
 msgid "_Name"
 msgstr "_نام"
 
-#: data/gtk/library_page.ui:122
+#: data/gtk/library_page.ui:123
 msgid "_Language"
 msgstr "_زبان"
 
-#: data/gtk/library_page.ui:127
+#: data/gtk/library_page.ui:128
 msgid "_Country"
 msgstr "_کشور"
 
-#: data/gtk/library_page.ui:132
+#: data/gtk/library_page.ui:133
 msgid "S_tate"
 msgstr "ا_یالت"
 
-#: data/gtk/library_page.ui:137
+#: data/gtk/library_page.ui:138
 msgid "_Bitrate"
 msgstr "_نرخ بیت"
 
-#: data/gtk/library_page.ui:144
+#: data/gtk/library_page.ui:145
 msgid "_Ascending"
 msgstr "پیش‌رونده"
 
-#: data/gtk/library_page.ui:149
+#: data/gtk/library_page.ui:150
 msgid "_Descending"
 msgstr "پس‌رونده"
 
-#: data/gtk/library_page.ui:158
+#: data/gtk/library_page.ui:159
 msgid "_Open radio-browser.info <sup>↗</sup>"
 msgstr "−گشودن radio-browser.info ‏<sup>↖</sup>"
 
-#: data/gtk/library_page.ui:165
+#: data/gtk/library_page.ui:166
 msgid "_Preferences"
 msgstr "_ترجیحات"
 
-#: data/gtk/library_page.ui:169
+#: data/gtk/library_page.ui:170
 msgid "_Keyboard Shortcuts"
 msgstr "_میان‌برهای صفحه‌کلید"
 
-#: data/gtk/library_page.ui:173
+#: data/gtk/library_page.ui:174
 msgid "_About Shortwave"
 msgstr "_دربارهٔ موج کوتاه"
 
-#: data/gtk/library_page.ui:181
+#: data/gtk/library_page.ui:182
 msgid "Add _Local Station"
 msgstr "افزودن ایستگاه _محلّی"
 
@@ -343,11 +343,11 @@ msgstr ""
 msgid "Add Missing Station"
 msgstr "افزودن ایستگاه غایب"
 
-#: data/gtk/search_page.ui:236
+#: data/gtk/search_page.ui:237
 msgid "Unable to Retrieve Station Data"
 msgstr "ناتوان در گرفتن داده‌های ایستگاه"
 
-#: data/gtk/search_page.ui:239
+#: data/gtk/search_page.ui:240
 msgid "Try Again"
 msgstr "تلاش دوباره"
 
@@ -371,30 +371,30 @@ msgstr "ذخیرهٔ آواز ضبط شده"
 msgid "_Play"
 msgstr "_پخش"
 
-#: data/gtk/station_dialog.ui:88
+#: data/gtk/station_dialog.ui:89
 msgid "_Add to Library"
 msgstr "_افزودن به کتاب‌خانه"
 
-#: data/gtk/station_dialog.ui:104
+#: data/gtk/station_dialog.ui:106
 msgid "_Remove From Library"
 msgstr "_برداشتن از کتاب‌خانه"
 
-#: data/gtk/station_dialog.ui:122 data/gtk/station_row.ui:57
+#: data/gtk/station_dialog.ui:125 data/gtk/station_row.ui:57
 msgid "Local Station"
 msgstr "ایستگاه محلّی"
 
-#: data/gtk/station_dialog.ui:123
+#: data/gtk/station_dialog.ui:126
 msgid ""
 "This station exists only in your library, and is not part of the public database"
 msgstr ""
 "ایستگاه فقط در کتاب‌خانه‌تان وجود داشته و بخشی از پایگاه دادهٔ همگانی ایستگاه‌های "
 "برخط نیست"
 
-#: data/gtk/station_dialog.ui:137 data/gtk/station_row.ui:69
+#: data/gtk/station_dialog.ui:140 data/gtk/station_row.ui:69
 msgid "Orphaned Station"
 msgstr "ایستگاه یتیم"
 
-#: data/gtk/station_dialog.ui:138
+#: data/gtk/station_dialog.ui:141
 msgid ""
 "The information could not be updated, probably this station was removed from the "
 "public database"
@@ -402,48 +402,48 @@ msgstr ""
 "اطّلاعات نتوانستند به‌روز شوند. احتمالاً این ایستگاه از پایگاه دادهٔ همگانی "
 "ایستگاه‌های برخط برداشته شده"
 
-#: data/gtk/station_dialog.ui:149
+#: data/gtk/station_dialog.ui:152
 msgid "Information"
 msgstr "اطّلاعات"
 
-#: data/gtk/station_dialog.ui:152
+#: data/gtk/station_dialog.ui:155
 msgid "Language"
 msgstr "زبان"
 
-#: data/gtk/station_dialog.ui:162
+#: data/gtk/station_dialog.ui:165
 msgid "Tags"
 msgstr "برچسب‌ها"
 
-#: data/gtk/station_dialog.ui:174
+#: data/gtk/station_dialog.ui:177
 msgid "Location"
 msgstr "مکان"
 
-#: data/gtk/station_dialog.ui:178
+#: data/gtk/station_dialog.ui:181
 msgid "Country"
 msgstr "کشور"
 
-#: data/gtk/station_dialog.ui:188
+#: data/gtk/station_dialog.ui:191
 msgid "State"
 msgstr "ایالت"
 
-#: data/gtk/station_dialog.ui:222
+#: data/gtk/station_dialog.ui:225
 msgid "Audio"
 msgstr "صدا"
 
-#: data/gtk/station_dialog.ui:225
+#: data/gtk/station_dialog.ui:228
 msgid "Bitrate"
 msgstr "نرخ بیت"
 
-#: data/gtk/station_dialog.ui:235
+#: data/gtk/station_dialog.ui:238
 msgid "Codec"
 msgstr "رمزینه"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:245
+#: data/gtk/station_dialog.ui:248
 msgid "Stream"
 msgstr "جریان"
 
-#: data/gtk/station_dialog.ui:254
+#: data/gtk/station_dialog.ui:257
 msgid "Copy"
 msgstr "رونوشت"
 
