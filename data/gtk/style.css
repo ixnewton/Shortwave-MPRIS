@@ -1,5 +1,31 @@
+/* Based on Highscore */
+/* https://gitlab.gnome.org/World/highscore/-/blob/1fd2b1f31d416bc5ca2beeb15ad9fbbce050d7a4/src/library/library.css */
 cover {
   font-weight: bold;
+}
+
+.cover-overlay-button-bg {
+  background: var(--window-bg-color);
+  color: var(--window-fg-color);
+  border-radius: 99px;
+  padding: 3px;
+  --offset: 12px;
+}
+
+.cover-overlay-button-bg.top.left {
+  transform: translate(calc(var(--offset) * -1), calc(var(--offset) * -1));
+}
+
+.cover-overlay-button-bg.top.right {
+  transform: translate(var(--offset), calc(var(--offset) * -1));
+}
+
+.cover-overlay-button-bg.bottom.left {
+  transform: translate(calc(var(--offset) * -1), var(--offset));
+}
+
+.cover-overlay-button-bg.bottom.right {
+  transform: translate(var(--offset), var(--offset));
 }
 
 /* Based on libadwaita avatar colors */

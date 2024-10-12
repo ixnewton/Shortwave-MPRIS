@@ -34,13 +34,15 @@ mod imp {
     #[properties(wrapper_type = super::SwAddStationDialog)]
     pub struct SwAddStationDialog {
         #[template_child]
-        pub add_button: TemplateChild<gtk::Button>,
+        add_button: TemplateChild<gtk::Button>,
         #[template_child]
-        pub station_cover: TemplateChild<SwStationCover>,
+        station_cover: TemplateChild<SwStationCover>,
         #[template_child]
-        pub name_row: TemplateChild<adw::EntryRow>,
+        remove_cover_button: TemplateChild<gtk::Button>,
         #[template_child]
-        pub url_row: TemplateChild<adw::EntryRow>,
+        name_row: TemplateChild<adw::EntryRow>,
+        #[template_child]
+        url_row: TemplateChild<adw::EntryRow>,
 
         #[property(get)]
         station: SwStation,
@@ -60,6 +62,7 @@ mod imp {
             Self {
                 add_button: TemplateChild::default(),
                 station_cover: TemplateChild::default(),
+                remove_cover_button: TemplateChild::default(),
                 name_row: TemplateChild::default(),
                 url_row: TemplateChild::default(),
                 station,
@@ -100,7 +103,10 @@ mod imp {
                     move |res| {
                         match res {
                             Ok(file) => match gdk::Texture::from_file(&file) {
-                                Ok(texture) => imp.obj().station().set_custom_cover(Some(texture)),
+                                Ok(texture) => {
+                                    imp.obj().station().set_custom_cover(Some(texture));
+                                    imp.remove_cover_button.set_visible(true);
+                                }
                                 Err(err) => {
                                     error!("Unable to open cover file: {}", err.to_string());
                                 }
@@ -110,6 +116,12 @@ mod imp {
                     }
                 ),
             );
+        }
+
+        #[template_callback]
+        fn remove_cover(&self) {
+            self.obj().station().set_custom_cover(gdk::Texture::NONE);
+            self.remove_cover_button.set_visible(false);
         }
 
         #[template_callback]

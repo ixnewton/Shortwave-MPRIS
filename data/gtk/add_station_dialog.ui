@@ -28,21 +28,48 @@
                     <property name="margin_start">12</property>
                     <property name="margin_end">12</property>
                     <property name="margin_bottom">30</property>
-                    <property name="margin_top">6</property>
+                    <property name="margin_top">12</property>
                     <child>
                       <object class="GtkOverlay">
                         <property name="halign">center</property>
                         <property name="valign">center</property>
                         <property name="margin_bottom">12</property>
                         <child type="overlay">
-                          <object class="GtkButton">
-                            <property name="icon_name">document-edit-symbolic</property>
-                            <property name="halign">center</property>
-                            <property name="valign">center</property>
-                            <property name="tooltip_text" translatable="yes">Change Station Cover</property>
-                            <signal name="clicked" handler="select_cover_file" swapped="true" />
+                          <object class="AdwBin">
+                            <property name="visible" bind-source="remove_cover_button" bind-property="sensitive" bind-flags="sync-create" />
+                            <property name="halign">end</property>
+                            <property name="valign">start</property>
+                            <property name="child">
+                              <object class="GtkButton" id="remove_cover_button">
+                                <property name="visible">False</property>
+                                <property name="icon_name">remove-custom-cover-symbolic</property>
+                                <signal name="clicked" handler="remove_cover" swapped="true" />
+                                <style>
+                                  <class name="circular"/>
+                                </style>
+                              </object>
+                            </property>
                             <style>
-                              <class name="osd" />
+                              <class name="cover-overlay-button-bg" />
+                            </style>
+                          </object>
+                        </child>
+                        <child type="overlay">
+                          <object class="AdwBin">
+                            <property name="halign">end</property>
+                            <property name="valign">end</property>
+                            <property name="child">
+                              <object class="GtkButton" id="set_custom_cover_btn">
+                                <property name="icon_name">document-edit-symbolic</property>
+                                <property name="tooltip_text" translatable="yes">Change Station Cover</property>
+                                <signal name="clicked" handler="select_cover_file" swapped="true" />
+                                <style>
+                                  <class name="circular"/>
+                                </style>
+                              </object>
+                            </property>
+                            <style>
+                              <class name="cover-overlay-button-bg" />
                             </style>
                           </object>
                         </child>

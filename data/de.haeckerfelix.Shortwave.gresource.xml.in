@@ -28,6 +28,7 @@
   </gresource>
   <gresource prefix="@PATH_ID@/icons/16x16/actions/">
     <file preprocess="xml-stripblanks" alias="details-symbolic.svg">icons/hicolor/scalable/actions/details-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="remove-custom-cover-symbolic.svg">icons/hicolor/scalable/actions/remove-custom-cover-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="streaming-symbolic.svg">icons/hicolor/scalable/actions/streaming-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="window-grow-symbolic.svg">icons/hicolor/scalable/actions/window-grow-symbolic.svg</file>
     <file preprocess="xml-stripblanks" alias="window-shrink-symbolic.svg">icons/hicolor/scalable/actions/window-shrink-symbolic.svg</file>
