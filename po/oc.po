@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
 "POT-Creation-Date: 2024-10-09 19:12+0000\n"
-"PO-Revision-Date: 2024-10-10 22:09+0200\n"
+"PO-Revision-Date: 2024-10-12 22:18+0200\n"
 "Last-Translator: Quentin PAGÈS\n"
 "Language-Team: Occitan <totenoc@gmail.com>\n"
 "Language: oc\n"
@@ -92,7 +92,7 @@ msgstr "Apondre una estacion locala"
 
 #: data/gtk/add_station_dialog.ui:42
 msgid "Change Station Cover"
-msgstr ""
+msgstr "Modificar la cobertura de l’estacion"
 
 #: data/gtk/add_station_dialog.ui:60
 msgid ""
@@ -100,6 +100,9 @@ msgid ""
 "available to everyone, you should add it to the <a href=\"https://www.radio-"
 "browser.info/add\">public database</a>."
 msgstr ""
+"Aquesta estacion serà solament aponduda a vòstra bibliotèca. Se volètz que "
+"siá disponibla per tot lo monde, la deuriatz apondre a la <a href=\"https://"
+"www.radio-browser.info/add\">basa de donadas publica</a>."
 
 #: data/gtk/add_station_dialog.ui:72
 msgid "Name"
@@ -131,7 +134,7 @@ msgstr "Cap d’aparelh pas disponible"
 
 #: data/gtk/device_dialog.ui:42
 msgid "No supported Google Cast device found"
-msgstr ""
+msgstr "Cap d’aparelh Google Cast pres en carga pas trobat"
 
 #: data/gtk/device_indicator.ui:7
 msgid "Disconnect From Device"
@@ -225,7 +228,7 @@ msgstr "_Descendent"
 
 #: data/gtk/library_page.ui:158
 msgid "_Open radio-browser.info <sup>↗</sup>"
-msgstr ""
+msgstr "_Dobrir radio-browser.info <sup>↗</sup>"
 
 #: data/gtk/library_page.ui:165
 msgid "_Preferences"
@@ -277,7 +280,7 @@ msgstr "Restablir la fenèstra"
 
 #: data/gtk/player_view.ui:13
 msgid "Enable Gadget Mode"
-msgstr ""
+msgstr "Activar lo mòde Gadget"
 
 #: data/gtk/player_view.ui:207
 msgid "Show Station Details"
@@ -292,6 +295,8 @@ msgid ""
 "Songs that have been identified and recorded using the stream metadata will "
 "appear here."
 msgstr ""
+"Las cançons qu'an estada identificadas e enregistradas en utilizant las "
+"metadonadas del flux apareisseràn aicí."
 
 #: data/gtk/player_view.ui:303 data/gtk/recording_indicator.ui:38
 msgid "An error occurred"
@@ -307,15 +312,15 @@ msgstr "Cercar dins las estacions"
 
 #: data/gtk/search_page.ui:72
 msgid "Discover over 50,000 public stations"
-msgstr ""
+msgstr "Descobrissètz mai de 50 000 estacions publicas"
 
 #: data/gtk/search_page.ui:90
 msgid "Popular Stations"
-msgstr ""
+msgstr "Estacions popularas"
 
 #: data/gtk/search_page.ui:111
 msgid "Discover New Stations"
-msgstr ""
+msgstr "Descobrir d’estacions novèlas"
 
 #: data/gtk/search_page.ui:133
 msgid ""
@@ -323,6 +328,9 @@ msgid ""
 "info/\">radio-browser.info</a>. \n"
 "Shortwave has no influence on the listed stations."
 msgstr ""
+"Las informacions afichadas son provesidas per <a href=\"https://www.radio-"
+"browser.info/\">radio-browser.info</a>.\n"
+"Shortwave a pas cap d'influéncia sus las estacions listadas."
 
 #: data/gtk/search_page.ui:199
 msgid "Loading…"
@@ -337,6 +345,8 @@ msgid ""
 "If the station you are looking for is missing, you can add it to the public "
 "database."
 msgstr ""
+"S’una estacion que cercatz es absenta, la podètz apondre a la basa de "
+"donadas publica."
 
 #: data/gtk/search_page.ui:219
 msgid "Add Missing Station"
@@ -387,16 +397,20 @@ msgid ""
 "This station exists only in your library, and is not part of the public "
 "database"
 msgstr ""
+"Aquesta estacion existís sonque dins vòstra bibliotèca, e fa pas partida de "
+"la basa de donadas publica"
 
 #: data/gtk/station_dialog.ui:137 data/gtk/station_row.ui:69
 msgid "Orphaned Station"
-msgstr ""
+msgstr "Estacion orfanèla"
 
 #: data/gtk/station_dialog.ui:138
 msgid ""
 "The information could not be updated, probably this station was removed from "
 "the public database"
 msgstr ""
+"Es pas estat possible d’actualizar las informacion, probablament aquesta "
+"estacion es estada suprimida de la basa de donadas publica"
 
 #: data/gtk/station_dialog.ui:149
 msgid "Information"
@@ -453,15 +467,15 @@ msgstr "Volum"
 
 #: src/audio/player.rs:251
 msgid "Active Playback"
-msgstr ""
+msgstr "Lectura"
 
 #: src/audio/player.rs:413
 msgid "Station cannot be streamed. URL is not valid."
-msgstr ""
+msgstr "Se pòt pas difusar l’estacion. L’URL es pas valida."
 
 #: src/device/device_discovery.rs:83
 msgid "Google Cast Device"
-msgstr ""
+msgstr "Aparelh Google Cast"
 
 #: src/device/device_discovery.rs:86
 msgid "Unknown Model"
@@ -473,7 +487,7 @@ msgstr "Quentin PAGÈS"
 
 #: src/ui/add_station_dialog.rs:90
 msgid "Select Station Cover"
-msgstr ""
+msgstr "Seleccionar una cobertura d’estacion"
 
 #: src/ui/display_error.rs:46
 msgid "Show Details"
@@ -498,19 +512,22 @@ msgstr "Cap d’enregistrament"
 #: src/ui/recording_indicator.rs:120
 msgid "The current song will be recorded until a new song is detected."
 msgstr ""
+"La cançon actuala s’enregistrarà fins qu’una cançon novèla siá detectada."
 
 #: src/ui/recording_indicator.rs:123
 msgid "No recording because the song title contains a word on the ignore list."
 msgstr ""
+"Pas d'enregistrament perque lo títol de la cançon conten un mot sus la lista "
+"d'ignorar."
 
 #: src/ui/recording_indicator.rs:126
 msgid ""
 "The current song cannot be fully recorded. The beginning has been missed."
-msgstr ""
+msgstr "Se pòt pas enregistrar la cançon actuala. La debuta es estada mancada."
 
 #: src/ui/station_dialog.rs:201
 msgid "{} kbit/s"
-msgstr ""
+msgstr "{} kbit/s"
 
 #~ msgid "Trending"
 #~ msgstr "Tendéncias"
