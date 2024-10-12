@@ -89,7 +89,11 @@ mod imp {
 
             match sorting {
                 SwStationSorting::Default => std::cmp::Ordering::Equal,
-                SwStationSorting::Name => station_a.metadata().name.cmp(&station_b.metadata().name),
+                SwStationSorting::Name => station_a
+                    .metadata()
+                    .name
+                    .to_lowercase()
+                    .cmp(&station_b.metadata().name.to_lowercase()),
                 SwStationSorting::Language => station_a
                     .metadata()
                     .language
