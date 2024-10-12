@@ -37,7 +37,7 @@ mod imp {
         #[property(get, set, construct_only)]
         is_local: OnceCell<bool>,
 
-        #[property(get, set)]
+        #[property(get, set=Self::set_metadata)]
         metadata: RefCell<StationMetadata>,
         #[property(get=Self::title)]
         title: PhantomData<String>,
@@ -59,6 +59,13 @@ mod imp {
     impl SwStation {
         fn title(&self) -> String {
             self.obj().metadata().name
+        }
+
+        fn set_metadata(&self, mut metadata: StationMetadata) {
+            // Ensure that the station metadata uuid always matches with the SwStation uuid property
+            // Previously we did not the `stationuuid` fields for local stations
+            metadata.stationuuid = self.obj().uuid();
+            *self.metadata.borrow_mut() = metadata;
         }
     }
 }

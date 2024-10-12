@@ -98,6 +98,10 @@ impl SwStationModel {
         }
     }
 
+    pub fn station(&self, uuid: &str) -> Option<SwStation> {
+        self.imp().map.borrow().get(uuid).cloned()
+    }
+
     pub fn clear(&self) {
         let len = self.n_items();
         {

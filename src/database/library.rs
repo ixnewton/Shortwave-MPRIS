@@ -182,8 +182,8 @@ impl SwLibrary {
         self.update_library_status();
     }
 
-    pub fn contains_station(station: &SwStation) -> bool {
-        queries::contains_station(&station.uuid()).unwrap()
+    pub fn contains_station(&self, station: &SwStation) -> bool {
+        self.model().station(&station.uuid()).is_some()
     }
 
     fn update_library_status(&self) {

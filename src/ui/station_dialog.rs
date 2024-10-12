@@ -25,7 +25,6 @@ use shumate::prelude::*;
 
 use crate::api::SwStation;
 use crate::app::SwApplication;
-use crate::database::SwLibrary;
 use crate::i18n;
 use crate::ui::SwStationCover;
 
@@ -137,7 +136,10 @@ mod imp {
             }
 
             // Action pill buttons
-            if SwLibrary::contains_station(&station) {
+            if SwApplication::default()
+                .library()
+                .contains_station(&station)
+            {
                 self.library_remove_child.set_visible(true);
             } else {
                 self.library_add_child.set_visible(true);

@@ -108,6 +108,9 @@ mod imp {
                 }
             );
             glib::spawn_future_local(fut);
+
+            // Restore previously played station / volume
+            self.player.restore_state();
         }
 
         fn shutdown(&self) {

@@ -31,14 +31,6 @@ pub fn stations() -> Result<Vec<StationEntry>, diesel::result::Error> {
     Ok(entries)
 }
 
-pub fn contains_station(uuid: &str) -> Result<bool, diesel::result::Error> {
-    let mut con = connect_db!();
-    let entries = library::table
-        .filter(library::uuid.eq(uuid))
-        .load::<StationEntry>(&mut con)?;
-    Ok(!entries.is_empty())
-}
-
 pub fn insert_station(entry: StationEntry) -> Result<(), diesel::result::Error> {
     let mut con = connect_db!();
     diesel::insert_into(library::table)

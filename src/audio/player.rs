@@ -136,8 +136,6 @@ mod imp {
                     .await
                     .handle_error("Unable to start MPRIS media controls")
             });
-
-            self.restore_state();
         }
     }
 
@@ -154,7 +152,7 @@ mod imp {
             self.obj().device().is_some()
         }
 
-        fn set_volume(&self, volume: f64) {
+        pub fn set_volume(&self, volume: f64) {
             if self.volume.get() != volume {
                 debug!("Set volume: {}", &volume);
                 self.volume.set(volume);
@@ -163,40 +161,6 @@ mod imp {
                     self.backend.get().unwrap().borrow().set_volume(volume);
                     settings_manager::set_double(Key::PlaybackVolume, volume);
                 }
-            }
-        }
-
-        fn restore_state(&self) {
-            // Restore volume
-            let volume = settings_manager::double(Key::PlaybackVolume);
-            self.set_volume(volume);
-
-            // Restore last played station
-            let json = settings_manager::string(Key::PlaybackLastStation);
-            if json.is_empty() {
-                return;
-            }
-
-            match serde_json::from_str::<StationMetadata>(&json) {
-                Ok(station_metadata) => {
-                    let station = SwStation::new(
-                        &station_metadata.stationuuid,
-                        false,
-                        station_metadata.clone(),
-                        None,
-                    );
-
-                    glib::spawn_future_local(clone!(
-                        #[weak(rename_to = imp)]
-                        self,
-                        #[strong]
-                        station,
-                        async move {
-                            imp.obj().set_station(station).await;
-                        }
-                    ));
-                }
-                Err(e) => warn!("Unable to restore last played station: {}", e.to_string()),
             }
         }
 
@@ -459,6 +423,51 @@ impl SwPlayer {
             || self.state() == SwPlaybackState::Failure
         {
             self.start_playback().await;
+        }
+    }
+
+    pub fn restore_state(&self) {
+        let imp = self.imp();
+
+        // Restore volume
+        let volume = settings_manager::double(Key::PlaybackVolume);
+        imp.set_volume(volume);
+
+        // Restore last played station
+        let json = settings_manager::string(Key::PlaybackLastStation);
+        if json.is_empty() {
+            return;
+        }
+
+        match serde_json::from_str::<StationMetadata>(&json) {
+            Ok(station_metadata) => {
+                let library_model = SwApplication::default().library().model();
+
+                let station =
+                    if let Some(station) = library_model.station(&station_metadata.stationuuid) {
+                        // Try to reuse the station object from the library,
+                        // since it's possible that it has a custom cover set
+                        station
+                    } else {
+                        SwStation::new(
+                            &station_metadata.stationuuid,
+                            false,
+                            station_metadata.clone(),
+                            None,
+                        )
+                    };
+
+                glib::spawn_future_local(clone!(
+                    #[weak(rename_to = obj)]
+                    self,
+                    #[strong]
+                    station,
+                    async move {
+                        obj.set_station(station).await;
+                    }
+                ));
+            }
+            Err(e) => warn!("Unable to restore last played station: {}", e.to_string()),
         }
     }
 
