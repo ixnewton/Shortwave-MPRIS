@@ -60,8 +60,8 @@
                                     <property name="valign">center</property>
                                     <property name="vexpand">True</property>
                                     <property name="orientation">vertical</property>
-                                    <property name="margin_top">48</property>
-                                    <property name="margin_bottom">48</property>
+                                    <property name="margin_top">42</property>
+                                    <property name="margin_bottom">42</property>
                                     <property name="margin_start">12</property>
                                     <property name="margin_end">12</property>
                                     <child>

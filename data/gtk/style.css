@@ -195,6 +195,5 @@ entry.discover {
 }
 
 .card.discover {
-  color: rgba(0, 0, 0, 0.75);
-  background-image: linear-gradient(#e5cb8c, #e5a50a);
+  background-color: #f5c211;
 }
