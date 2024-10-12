@@ -193,7 +193,7 @@ fn snapshot_thumbnail(snapshot: &gtk::Snapshot, cover: gdk::Texture, size: f32) 
     snapshot.push_clip(&Rect::new(0.0, 0.0, size, size));
 
     snapshot.append_color(
-        &RGBA::new(1.0, 1.0, 1.0, 1.0),
+        &RGBA::new(0.96, 0.96, 0.96, 1.0),
         &Rect::new(0.0, 0.0, size, size),
     );
 
