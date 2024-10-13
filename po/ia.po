@@ -1,24 +1,28 @@
 # Interlingua translation for shortwave.
 # Copyright (C) 2024 shortwave's COPYRIGHT HOLDER
 # This file is distributed under the same license as the shortwave package.
-# Emilio Sepúlveda <emism.translations@gmail.com>,  2024.
 # Emilio Sepulveda <emism.translations@gmail.com>, 2024.
+# Emilio Sepúlveda <emism.translations@gmail.com>, 2024.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: shortwave main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2024-10-03 15:37+0000\n"
-"PO-Revision-Date: 2024-10-04 17:06-0300\n"
-"Last-Translator: Emilio Sepulveda <emism.translations@gmail.com>\n"
-"Language-Team: Interlingua (International Auxiliary Language Association) "
-"<>\n"
+"POT-Creation-Date: 2024-10-11 18:02+0000\n"
+"PO-Revision-Date: 2024-10-12 18:49-0300\n"
+"Last-Translator: Emilio Sepúlveda <emism.translations@gmail.com>\n"
+"Language-Team: Interlingua\n"
 "Language: ia\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1)\n"
-"X-Generator: Gtranslator 42.0\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Gtranslator 47.0\n"
+"X-DL-Lang: ia\n"
+"X-DL-Module: shortwave\n"
+"X-DL-Branch: main\n"
+"X-DL-Domain: po\n"
+"X-DL-State: None\n"
 
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:3
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
@@ -38,7 +42,7 @@ msgstr "Ascolta le radio per internet"
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:12
 msgid ""
 "Shortwave is an internet radio player that provides access to a station "
-"database with over 30,000 stations."
+"database with over 50,000 stations."
 msgstr ""
 "Shortwave es un reproductor de radio per internet que forni accesso a un "
 "base de datos con plus de 30.000 stationes."
@@ -86,51 +90,37 @@ msgstr "Integration sin problemas al ambiente de scriptorio GNOME"
 msgid "Felix Häcker"
 msgstr "Felix Häcker"
 
-#: data/gtk/create_station_dialog.ui:8
-msgid "Create new station"
-msgstr "Crear un nove station"
+#: data/gtk/add_station_dialog.ui:14
+msgid "Add Local Station"
+msgstr "Adder un station local"
 
-#: data/gtk/create_station_dialog.ui:25
-msgid "Create New Station"
-msgstr "Crear un nove station"
+#: data/gtk/add_station_dialog.ui:42
+msgid "Change Station Cover"
+msgstr "Cambiar le copertura de station"
 
-#: data/gtk/create_station_dialog.ui:26
+#: data/gtk/add_station_dialog.ui:60
 msgid ""
-"You can decide if you want the new station to be visible for all users "
-"worldwide or if you want to create a local station."
+"This station will only be added to your library. If you want it to be "
+"available to everyone, you should add it to the <a href=\"https://www.radio-"
+"browser.info/add\">public database</a>."
 msgstr ""
-"Tu pote decider si tu vole que le nove station sia visibile pro tote le "
-"usatores in le mundo o si tu vole un station local."
+"Iste station solmente essera addite a tu bibliotheca. Si tu vole facer lo "
+"disponibile pro totos, tu deberea adder lo al <a href=\"https://www.radio-"
+"browser.info/add\">base de datos public</a>."
 
-#: data/gtk/create_station_dialog.ui:35
-msgid "Create _Public Station"
-msgstr "Crear un station _public"
-
-#: data/gtk/create_station_dialog.ui:46
-msgid "Create _Local Station"
-msgstr "Crear un station _local"
-
-#: data/gtk/create_station_dialog.ui:71
-msgid "Create Local Station"
-msgstr "Crear un station local"
-
-#: data/gtk/create_station_dialog.ui:104
-msgid "Change station image"
-msgstr "Cambiar le imagine de station"
-
-#: data/gtk/create_station_dialog.ui:123 src/ui/pages/search_page.rs:102
+#: data/gtk/add_station_dialog.ui:72
 msgid "Name"
 msgstr "Nomine"
 
-#: data/gtk/create_station_dialog.ui:131
+#: data/gtk/add_station_dialog.ui:80
 msgid "Stream URL"
 msgstr "URL de fluxo"
 
-#: data/gtk/create_station_dialog.ui:139
-msgid "Create Station"
-msgstr "Crear un station"
+#: data/gtk/add_station_dialog.ui:88
+msgid "Add Station"
+msgstr "Adder station"
 
-#: data/gtk/device_dialog.ui:7 data/gtk/player_view.ui:111
+#: data/gtk/device_dialog.ui:7 data/gtk/player_view.ui:124
 msgid "Connect Device"
 msgstr "Connecter un apparato"
 
@@ -196,90 +186,82 @@ msgstr "Commutar le reproduction"
 msgid "Shortwave"
 msgstr "Shortwave"
 
-#: data/gtk/library_page.ui:15
-msgid "Add Stations"
-msgstr "Adder stationes"
+#: data/gtk/library_page.ui:15 data/gtk/search_page.ui:4
+msgid "Browse Stations"
+msgstr "Navigar le stationes"
 
-#: data/gtk/library_page.ui:22
+#: data/gtk/library_page.ui:23
 msgid "Main Menu"
 msgstr "Menu principal"
 
-#: data/gtk/library_page.ui:91
+#: data/gtk/library_page.ui:92
 msgid "_Add New Stations"
 msgstr "_Adder nove stationes"
 
-#: data/gtk/library_page.ui:113
-msgid "_Enable Gadget Player"
-msgstr "Activar le mini reproductor"
-
-#: data/gtk/library_page.ui:117
+#: data/gtk/library_page.ui:115
 msgid "_Sorting"
 msgstr "_Ordinamento"
 
-#: data/gtk/library_page.ui:120 data/gtk/search_page.ui:142
+#: data/gtk/library_page.ui:118
 msgid "_Name"
 msgstr "_Nomine"
 
-#: data/gtk/library_page.ui:125 data/gtk/search_page.ui:147
+#: data/gtk/library_page.ui:123
 msgid "_Language"
 msgstr "_Lingua"
 
-#: data/gtk/library_page.ui:130 data/gtk/search_page.ui:152
+#: data/gtk/library_page.ui:128
 msgid "_Country"
 msgstr "_Pais"
 
-#: data/gtk/library_page.ui:135 data/gtk/search_page.ui:157
+#: data/gtk/library_page.ui:133
 msgid "S_tate"
 msgstr "S_tato"
 
-#: data/gtk/library_page.ui:140 data/gtk/search_page.ui:162
-msgid "_Votes"
-msgstr "_Votos"
-
-#: data/gtk/library_page.ui:145 data/gtk/search_page.ui:167
+#: data/gtk/library_page.ui:138
 msgid "_Bitrate"
 msgstr "Taxa de _bits"
 
-#: data/gtk/library_page.ui:152 data/gtk/search_page.ui:174
+#: data/gtk/library_page.ui:145
 msgid "_Ascending"
 msgstr "_Ascendente"
 
-#: data/gtk/library_page.ui:157 data/gtk/search_page.ui:179
+#: data/gtk/library_page.ui:150
 msgid "_Descending"
 msgstr "_Descendente"
 
-#: data/gtk/library_page.ui:166
+#: data/gtk/library_page.ui:159
 msgid "_Open radio-browser.info <sup>↗</sup>"
 msgstr "_Aperir radio-browser.info <sup>↗</sup>"
 
-#: data/gtk/library_page.ui:171
-msgid "_Create New Station"
-msgstr "_Crear un nove station"
-
-#: data/gtk/library_page.ui:178
+#: data/gtk/library_page.ui:166
 msgid "_Preferences"
 msgstr "_Preferentias"
 
-#: data/gtk/library_page.ui:182
+#: data/gtk/library_page.ui:170
 msgid "_Keyboard Shortcuts"
 msgstr "Accessos directe de _claviero"
 
-#: data/gtk/library_page.ui:186
+#: data/gtk/library_page.ui:174
 msgid "_About Shortwave"
 msgstr "_A proposito de Shortwave"
 
+#: data/gtk/library_page.ui:182
+msgid "Add _Local Station"
+msgstr "Adder un station _Local"
+
 #: data/gtk/player_gadget.ui:40 data/gtk/player_toolbar.ui:92
-#: data/gtk/player_view.ui:135 data/gtk/station_row.ui:84
+#: data/gtk/player_view.ui:148 data/gtk/station_row.ui:86
 msgid "Play"
 msgstr "Reproducer"
 
 #: data/gtk/player_gadget.ui:55 data/gtk/player_toolbar.ui:106
-#: data/gtk/player_view.ui:149
+#: data/gtk/player_view.ui:162
 msgid "Stop"
 msgstr "Stoppar"
 
 #: data/gtk/player_gadget.ui:71 data/gtk/player_toolbar.ui:121
-#: data/gtk/player_view.ui:164
+#: data/gtk/player_view.ui:177
 msgid "Buffering…"
 msgstr "Cargante in le buffer…"
 
@@ -288,7 +270,7 @@ msgid "SHORTWAVE INTERNET RADIO"
 msgstr "RADIO PER INTERNET SHORTWAVE"
 
 #: data/gtk/player_gadget.ui:140 data/gtk/player_toolbar.ui:29
-#: data/gtk/player_view.ui:45
+#: data/gtk/player_view.ui:58
 msgid "No Playback"
 msgstr "Sin reproduction"
 
@@ -297,18 +279,22 @@ msgid "Close"
 msgstr "Clauder"
 
 #: data/gtk/player_gadget.ui:210
-msgid "Resize"
-msgstr "Redimensionar"
+msgid "Restore Window"
+msgstr "Restaurar le fenestra"
 
-#: data/gtk/player_view.ui:194
+#: data/gtk/player_view.ui:13
+msgid "Enable Gadget Mode"
+msgstr "Activar le modo Gadget"
+
+#: data/gtk/player_view.ui:207
 msgid "Show Station Details"
 msgstr "Monstrar le detalios de station"
 
-#: data/gtk/player_view.ui:244
+#: data/gtk/player_view.ui:258
 msgid "No Songs"
 msgstr "Necun cantos"
 
-#: data/gtk/player_view.ui:255
+#: data/gtk/player_view.ui:269
 msgid ""
 "Songs that have been identified and recorded using the stream metadata will "
 "appear here."
@@ -316,34 +302,67 @@ msgstr ""
 "Le cantos que ha essite identificate e registrate usante le metadatos del "
 "fluxo apparera hic."
 
-#: data/gtk/player_view.ui:287 data/gtk/recording_indicator.ui:38
+#: data/gtk/player_view.ui:303 data/gtk/recording_indicator.ui:38
 msgid "An error occurred"
 msgstr "Ocurreva un error"
 
-#: data/gtk/search_page.ui:4 data/gtk/search_page.ui:26
+#: data/gtk/search_page.ui:23
 msgid "Search"
 msgstr "Cercar"
 
-#: data/gtk/search_page.ui:35 data/gtk/station_dialog.ui:171
-#: src/ui/pages/search_page.rs:106
-msgid "Votes"
-msgstr "Votos"
+#: data/gtk/search_page.ui:24
+msgid "Search stations"
+msgstr "Cercar stationes"
 
-#: data/gtk/search_page.ui:40
-msgid "Change the sorting of the search results"
-msgstr "Cambiar le ordinamento del resultatos de recerca"
+#: data/gtk/search_page.ui:72
+msgid "Discover over 50,000 public stations"
+msgstr "Discoperi plus de 50.000 stationes public"
 
-#: data/gtk/search_page.ui:68
+#: data/gtk/search_page.ui:90
+msgid "Popular Stations"
+msgstr "Stationes popular"
+
+#: data/gtk/search_page.ui:111
+msgid "Discover New Stations"
+msgstr "Discoperir nove stationes"
+
+#: data/gtk/search_page.ui:133
+msgid ""
+"The displayed information is provided by <a href=\"https://www.radio-browser."
+"info/\">radio-browser.info</a>. \n"
+"Shortwave has no influence on the listed stations."
+msgstr ""
+"Le information monstrate es fornite per <a href=\"https://www.radio-browser."
+"info/\">radio-browser.info</a>. \n"
+"Shortwave non ha influentia sur le stationes listate."
+
+#: data/gtk/search_page.ui:199
+msgid "Loading…"
+msgstr "Cargante…"
+
+#: data/gtk/search_page.ui:214
 msgid "No Results"
 msgstr "Nulle resultatos"
 
-#: data/gtk/search_page.ui:69
-msgid "Try using a different search term"
-msgstr "Tenta usante un differente termino de recerca"
+#: data/gtk/search_page.ui:215
+msgid ""
+"If the station you are looking for is missing, you can add it to the public "
+"database."
+msgstr ""
+"Si le station que tu trova es perdite, tu pote adder lo al base de datos "
+"public."
 
-#: data/gtk/search_page.ui:124
-msgid "Searching…"
-msgstr "Cercante…"
+#: data/gtk/search_page.ui:219
+msgid "Add Missing Station"
+msgstr "Adder station perdite"
+
+#: data/gtk/search_page.ui:237
+msgid "Unable to Retrieve Station Data"
+msgstr "Non poteva obtener le datos de station"
+
+#: data/gtk/search_page.ui:240
+msgid "Try Again"
+msgstr "Tenta de novo"
 
 #: data/gtk/settings_dialog.ui:12
 msgid "Features"
@@ -362,94 +381,102 @@ msgstr ""
 msgid "Save recorded song"
 msgstr "Salveguardar le canto registrate"
 
-#: data/gtk/station_dialog.ui:70
-msgid "_Play Station"
-msgstr "Re_producer le station"
+#: data/gtk/station_dialog.ui:73
+msgid "_Play"
+msgstr "Re_producer"
 
-#: data/gtk/station_dialog.ui:85
+#: data/gtk/station_dialog.ui:89
 msgid "_Add to Library"
 msgstr "_Adder al bibliotheca"
 
-#: data/gtk/station_dialog.ui:101
+#: data/gtk/station_dialog.ui:106
 msgid "_Remove From Library"
 msgstr "_Remover ab le bibliotheca"
 
-#: data/gtk/station_dialog.ui:119
+#: data/gtk/station_dialog.ui:125 data/gtk/station_row.ui:57
 msgid "Local Station"
 msgstr "Station local"
 
-#: data/gtk/station_dialog.ui:120
+#: data/gtk/station_dialog.ui:126
 msgid ""
 "This station exists only in your library, and is not part of the public "
-"online station database."
+"database"
 msgstr ""
 "Iste station solmente existe in tu bibliotheca e non es parte del base de "
-"datos public de stationes in linea."
+"datos public."
 
-#: data/gtk/station_dialog.ui:135
+#: data/gtk/station_dialog.ui:140 data/gtk/station_row.ui:69
 msgid "Orphaned Station"
 msgstr "Station orphano"
 
-#: data/gtk/station_dialog.ui:136
+#: data/gtk/station_dialog.ui:141
 msgid ""
 "The information could not be updated, probably this station was removed from "
-"the public online station database."
+"the public database"
 msgstr ""
 "Le information non pote esser actualisate, probabilemente iste station "
-"esseva removite ab le base de datos public de stationes in linea."
+"esseva removite ab le base de datos public"
 
-#: data/gtk/station_dialog.ui:148
+#: data/gtk/station_dialog.ui:152
 msgid "Information"
 msgstr "Information"
 
-#: data/gtk/station_dialog.ui:151 src/ui/pages/search_page.rs:103
+#: data/gtk/station_dialog.ui:155
 msgid "Language"
 msgstr "Lingua"
 
-#: data/gtk/station_dialog.ui:161
+#: data/gtk/station_dialog.ui:165
 msgid "Tags"
 msgstr "Etiquettas"
 
-#: data/gtk/station_dialog.ui:182
+#: data/gtk/station_dialog.ui:177
 msgid "Location"
 msgstr "Localisation"
 
-#: data/gtk/station_dialog.ui:187 src/ui/pages/search_page.rs:104
+#: data/gtk/station_dialog.ui:181
 msgid "Country"
 msgstr "Pais"
 
-#: data/gtk/station_dialog.ui:197 src/ui/pages/search_page.rs:105
+#: data/gtk/station_dialog.ui:191
 msgid "State"
 msgstr "Stato"
 
-#: data/gtk/station_dialog.ui:231
+#: data/gtk/station_dialog.ui:225
 msgid "Audio"
 msgstr "Audio"
 
-#: data/gtk/station_dialog.ui:235 src/ui/pages/search_page.rs:107
+#: data/gtk/station_dialog.ui:228
 msgid "Bitrate"
 msgstr "Taxa de bits"
 
-#: data/gtk/station_dialog.ui:245
+#: data/gtk/station_dialog.ui:238
 msgid "Codec"
 msgstr "Codec"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:255
+#: data/gtk/station_dialog.ui:248
 msgid "Stream"
 msgstr "Fluxo"
 
-#: data/gtk/station_dialog.ui:264
+#: data/gtk/station_dialog.ui:257
 msgid "Copy"
 msgstr "Copiar"
 
-#: src/audio/player.rs:192
-msgid "Station cannot be streamed. URL is not valid."
-msgstr "Le station non se pote reproducer. Le URL non es valide."
+#: data/gtk/volume_control.ui:9
+msgid "Toggle Mute"
+msgstr "Commutar le silentio"
 
-#: src/audio/player.rs:260
+#: data/gtk/volume_control.ui:21
+msgid "Volume"
+msgstr "Volumine"
+
+#: src/audio/player.rs:251
 msgid "Active Playback"
 msgstr "Reproduction active"
+
+#: src/audio/player.rs:413
+msgid "Station cannot be streamed. URL is not valid."
+msgstr "Le station non se pote reproducer. Le URL non es valide."
 
 #: src/device/device_discovery.rs:83
 msgid "Google Cast Device"
@@ -461,11 +488,11 @@ msgstr "Modello incognite"
 
 #: src/ui/about_dialog.rs:44
 msgid "translator-credits"
-msgstr ""
+msgstr "translator-credits"
 
-#: src/ui/create_station_dialog.rs:98
-msgid "Select station image"
-msgstr "Seliger le imagine de station"
+#: src/ui/add_station_dialog.rs:90
+msgid "Select Station Cover"
+msgstr "Seliger le copertura de station"
 
 #: src/ui/display_error.rs:46
 msgid "Show Details"
@@ -474,10 +501,6 @@ msgstr "Monstrar le detalios"
 #: src/ui/pages/library_page.rs:111
 msgid "Welcome to {}"
 msgstr "Benvenite a {}"
-
-#: src/ui/pages/search_page.rs:206
-msgid "Station data could not be received."
-msgstr "Le datos de station non pote esser recipite."
 
 #: src/ui/recording_indicator.rs:111
 msgid "Recording in Progress"
@@ -488,8 +511,8 @@ msgid "Ignored"
 msgstr "Ignorate"
 
 #: src/ui/recording_indicator.rs:113
-msgid "Incomplete"
-msgstr "Incomplete"
+msgid "No Recording"
+msgstr "Sin registration"
 
 #: src/ui/recording_indicator.rs:120
 msgid "The current song will be recorded until a new song is detected."
@@ -508,6 +531,52 @@ msgstr ""
 "Le canto actual non poteva esser completemente registrate. Le initio ha "
 "essite perdite."
 
-#: src/ui/station_dialog.rs:206
+#: src/ui/station_dialog.rs:201
 msgid "{} kbit/s"
 msgstr "{} kbit/s"
+
+#~ msgid "Create new station"
+#~ msgstr "Crear un nove station"
+
+#~ msgid "Create New Station"
+#~ msgstr "Crear un nove station"
+
+#~ msgid ""
+#~ "You can decide if you want the new station to be visible for all users "
+#~ "worldwide or if you want to create a local station."
+#~ msgstr ""
+#~ "Tu pote decider si tu vole que le nove station sia visibile pro tote le "
+#~ "usatores in le mundo o si tu vole un station local."
+
+#~ msgid "Create _Public Station"
+#~ msgstr "Crear un station _public"
+
+#~ msgid "Create _Local Station"
+#~ msgstr "Crear un station _local"
+
+#~ msgid "Create Local Station"
+#~ msgstr "Crear un station local"
+
+#~ msgid "_Votes"
+#~ msgstr "_Votos"
+
+#~ msgid "_Create New Station"
+#~ msgstr "_Crear un nove station"
+
+#~ msgid "Resize"
+#~ msgstr "Redimensionar"
+
+#~ msgid "Votes"
+#~ msgstr "Votos"
+
+#~ msgid "Change the sorting of the search results"
+#~ msgstr "Cambiar le ordinamento del resultatos de recerca"
+
+#~ msgid "Try using a different search term"
+#~ msgstr "Tenta usante un differente termino de recerca"
+
+#~ msgid "Station data could not be received."
+#~ msgstr "Le datos de station non pote esser recipite."
+
+#~ msgid "Incomplete"
+#~ msgstr "Incomplete"
