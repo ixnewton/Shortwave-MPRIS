@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2024-09-19 19:25+0000\n"
-"PO-Revision-Date: 2024-09-23 09:52+0200\n"
+"POT-Creation-Date: 2024-10-13 13:10+0000\n"
+"PO-Revision-Date: 2024-10-13 16:50+0200\n"
 "Last-Translator: twlvnn kraftwerk <kraft_werk@tutanota.com>\n"
 "Language-Team: Bulgarian <dict-notifications@fsa-bg.org>\n"
 "Language: bg\n"
@@ -36,9 +36,9 @@ msgstr "Радио по Интернет"
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:12
 msgid ""
 "Shortwave is an internet radio player that provides access to a station "
-"database with over 30,000 stations."
+"database with over 50,000 stations."
 msgstr ""
-"Shortwave е интернет радио плеър с до база от данни от над 30 000 станции."
+"Shortwave е интернет радио плеър с до база от данни от над 50 000 станции."
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:15
 msgid "Features:"
@@ -83,51 +83,37 @@ msgstr "Идеална интеграция с GNOME"
 msgid "Felix Häcker"
 msgstr "Felix Häcker"
 
-#: data/gtk/create_station_dialog.ui:8
-msgid "Create new station"
-msgstr "Създаване на нова станция"
+#: data/gtk/add_station_dialog.ui:14
+msgid "Add Local Station"
+msgstr "Добавяне на локална станция"
 
-#: data/gtk/create_station_dialog.ui:25
-msgid "Create New Station"
-msgstr "Създаване на нова станция"
-
-#: data/gtk/create_station_dialog.ui:26
-msgid ""
-"You can decide if you want the new station to be visible for all users "
-"worldwide or if you want to create a local station."
-msgstr ""
-"Дали новата станция да е видима за всички потребители по света или да e "
-"местна станция."
-
-#: data/gtk/create_station_dialog.ui:35
-msgid "Create _Public Station"
-msgstr "Създаване на _публична станция"
-
-#: data/gtk/create_station_dialog.ui:46
-msgid "Create _Local Station"
-msgstr "Създаване на _местна станция"
-
-#: data/gtk/create_station_dialog.ui:71
-msgid "Create Local Station"
-msgstr "Създаване на местна станция"
-
-#: data/gtk/create_station_dialog.ui:104
-msgid "Change station image"
+#: data/gtk/add_station_dialog.ui:64
+msgid "Change Station Cover"
 msgstr "Промяна на изображението на станцията"
 
-#: data/gtk/create_station_dialog.ui:123 src/ui/pages/search_page.rs:107
+#: data/gtk/add_station_dialog.ui:95
+msgid ""
+"This station will only be added to your library. If you want it to be "
+"available to everyone, you should add it to the <a href=\"https://www.radio-"
+"browser.info/add\">public database</a>."
+msgstr ""
+"Станцията ще се добави само във вашата библиотека. Ако искате да е достъпна "
+"за всички, добавете я към <a href='https://www.radio-browser.info/"
+"add'>публичната база от данни</a>."
+
+#: data/gtk/add_station_dialog.ui:107
 msgid "Name"
 msgstr "Име"
 
-#: data/gtk/create_station_dialog.ui:131
+#: data/gtk/add_station_dialog.ui:115
 msgid "Stream URL"
 msgstr "Адрес на предаването"
 
-#: data/gtk/create_station_dialog.ui:139
-msgid "Create Station"
-msgstr "Създаване на станция"
+#: data/gtk/add_station_dialog.ui:123
+msgid "Add Station"
+msgstr "Добавяне на станция"
 
-#: data/gtk/device_dialog.ui:7 data/gtk/player_view.ui:109
+#: data/gtk/device_dialog.ui:7 data/gtk/player_view.ui:124
 msgid "Connect Device"
 msgstr "Свързване на устройство"
 
@@ -150,35 +136,6 @@ msgstr "Липсва устройство за Google Cast"
 #: data/gtk/device_indicator.ui:7
 msgid "Disconnect From Device"
 msgstr "Прекъсване на връзката към устройство"
-
-#: data/gtk/discover_page.ui:4
-msgid "Discover"
-msgstr "Откриване"
-
-#: data/gtk/discover_page.ui:15 data/gtk/search_page.ui:4
-#: data/gtk/search_page.ui:29
-msgid "Search"
-msgstr "Търсене"
-
-#: data/gtk/discover_page.ui:44
-msgid "Most Voted Stations"
-msgstr "Най-гласувани станции"
-
-#: data/gtk/discover_page.ui:61
-msgid "Trending"
-msgstr "Популярни"
-
-#: data/gtk/discover_page.ui:78
-msgid "Other Users Are Listening To…"
-msgstr "Други потребители слушат…"
-
-#: data/gtk/featured_carousel.ui:27
-msgid "Previous"
-msgstr "Предишна"
-
-#: data/gtk/featured_carousel.ui:40
-msgid "Next"
-msgstr "Следваща"
 
 #: data/gtk/help_overlay.ui:11 data/gtk/settings_dialog.ui:9
 msgid "General"
@@ -222,94 +179,82 @@ msgstr "Превключване на възпроизвеждането"
 msgid "Shortwave"
 msgstr "Shortwave"
 
-#: data/gtk/library_page.ui:15
-msgid "Add Stations"
-msgstr "Добавяне на станции"
+#: data/gtk/library_page.ui:15 data/gtk/search_page.ui:4
+msgid "Browse Stations"
+msgstr "Преглед на станциите"
 
-#: data/gtk/library_page.ui:22
+#: data/gtk/library_page.ui:23
 msgid "Main Menu"
 msgstr "Основно меню"
 
-#: data/gtk/library_page.ui:51
-msgid "Library"
-msgstr "Библиотека"
+#: data/gtk/library_page.ui:92
+msgid "_Add New Stations"
+msgstr "_Добавяне на станции"
 
-#: data/gtk/library_page.ui:75
-msgid "_Discover New Stations"
-msgstr "_Откриване на нови станции"
-
-#: data/gtk/library_page.ui:97
-msgid "_Enable Gadget Player"
-msgstr "_Включване на мини плеъра"
-
-#: data/gtk/library_page.ui:101
+#: data/gtk/library_page.ui:115
 msgid "_Sorting"
 msgstr "_Подредба"
 
-#: data/gtk/library_page.ui:104 data/gtk/search_page.ui:161
+#: data/gtk/library_page.ui:118
 msgid "_Name"
 msgstr "_Име"
 
-#: data/gtk/library_page.ui:109 data/gtk/search_page.ui:166
+#: data/gtk/library_page.ui:123
 msgid "_Language"
 msgstr "_Език"
 
-#: data/gtk/library_page.ui:114 data/gtk/search_page.ui:171
+#: data/gtk/library_page.ui:128
 msgid "_Country"
 msgstr "_Държава"
 
-#: data/gtk/library_page.ui:119 data/gtk/search_page.ui:176
+#: data/gtk/library_page.ui:133
 msgid "S_tate"
 msgstr "_Щат"
 
-#: data/gtk/library_page.ui:124 data/gtk/search_page.ui:181
-msgid "_Votes"
-msgstr "_Гласове"
-
-#: data/gtk/library_page.ui:129 data/gtk/search_page.ui:186
+#: data/gtk/library_page.ui:138
 msgid "_Bitrate"
 msgstr "_Побитова скорост"
 
-#: data/gtk/library_page.ui:136 data/gtk/search_page.ui:193
+#: data/gtk/library_page.ui:145
 msgid "_Ascending"
 msgstr "_Възходящо"
 
-#: data/gtk/library_page.ui:141 data/gtk/search_page.ui:198
+#: data/gtk/library_page.ui:150
 msgid "_Descending"
 msgstr "_Низходящо"
 
-#: data/gtk/library_page.ui:150
+#: data/gtk/library_page.ui:159
 msgid "_Open radio-browser.info <sup>↗</sup>"
 msgstr "_Отваряне на radio-browser.info <sup>↗</sup>"
 
-#: data/gtk/library_page.ui:155
-msgid "_Create New Station"
-msgstr "_Създаване на нова станция"
-
-#: data/gtk/library_page.ui:162
+#: data/gtk/library_page.ui:166
 msgid "_Preferences"
 msgstr "_Настройки"
 
-#: data/gtk/library_page.ui:166
+#: data/gtk/library_page.ui:170
 msgid "_Keyboard Shortcuts"
 msgstr "_Клавишни комбинации"
 
-#: data/gtk/library_page.ui:170
+#: data/gtk/library_page.ui:174
 msgid "_About Shortwave"
 msgstr "_Относно „Shortwave“"
 
-#: data/gtk/player_gadget.ui:40 data/gtk/player_toolbar.ui:94
-#: data/gtk/player_view.ui:133 data/gtk/station_row.ui:71
+#: data/gtk/library_page.ui:182
+msgid "Add _Local Station"
+msgstr "Добавяне на _локална станция"
+
+#: data/gtk/player_gadget.ui:40 data/gtk/player_toolbar.ui:92
+#: data/gtk/player_view.ui:148 data/gtk/station_row.ui:86
 msgid "Play"
 msgstr "Изпълнение"
 
-#: data/gtk/player_gadget.ui:55 data/gtk/player_toolbar.ui:108
-#: data/gtk/player_view.ui:147
+#: data/gtk/player_gadget.ui:55 data/gtk/player_toolbar.ui:106
+#: data/gtk/player_view.ui:162
 msgid "Stop"
 msgstr "Спиране"
 
-#: data/gtk/player_gadget.ui:71 data/gtk/player_toolbar.ui:123
-#: data/gtk/player_view.ui:162
+#: data/gtk/player_gadget.ui:71 data/gtk/player_toolbar.ui:121
+#: data/gtk/player_view.ui:177
 msgid "Buffering…"
 msgstr "Буфериране…"
 
@@ -317,8 +262,8 @@ msgstr "Буфериране…"
 msgid "SHORTWAVE INTERNET RADIO"
 msgstr "ИНТЕРНЕТ РАДИО SHORTWAVE"
 
-#: data/gtk/player_gadget.ui:140 data/gtk/player_toolbar.ui:31
-#: data/gtk/player_view.ui:43
+#: data/gtk/player_gadget.ui:140 data/gtk/player_toolbar.ui:29
+#: data/gtk/player_view.ui:58
 msgid "No Playback"
 msgstr "Без възпроизвеждане"
 
@@ -327,51 +272,88 @@ msgid "Close"
 msgstr "Затваряне"
 
 #: data/gtk/player_gadget.ui:210
-msgid "Resize"
-msgstr "Преоразмеряване"
+msgid "Restore Window"
+msgstr "Възстановяване на прозорец"
 
-#: data/gtk/player_view.ui:192
+#: data/gtk/player_view.ui:13
+msgid "Enable Gadget Mode"
+msgstr "Включване на мини плеъра"
+
+#: data/gtk/player_view.ui:207
 msgid "Show Station Details"
 msgstr "Подробности за станцията"
 
-#: data/gtk/player_view.ui:242
+#: data/gtk/player_view.ui:258
 msgid "No Songs"
 msgstr "Няма намерени песни"
 
-#: data/gtk/player_view.ui:253
+#: data/gtk/player_view.ui:269
 msgid ""
 "Songs that have been identified and recorded using the stream metadata will "
 "appear here."
 msgstr "Тук са записаните и идентифицираните по метаданните на потока песни."
 
-#: data/gtk/player_view.ui:285 data/gtk/recording_indicator.ui:38
+#: data/gtk/player_view.ui:303 data/gtk/recording_indicator.ui:38
 msgid "An error occurred"
 msgstr "Възникна грешка"
 
-#: data/gtk/search_page.ui:41 data/gtk/station_dialog.ui:167
-#: src/ui/pages/search_page.rs:111
-msgid "Votes"
-msgstr "Гласове"
+#: data/gtk/search_page.ui:23
+msgid "Search"
+msgstr "Търсене"
 
-#: data/gtk/search_page.ui:46
-msgid "Change the sorting of the search results"
-msgstr "Промяна на подредбата на резултатите от търсенето"
+#: data/gtk/search_page.ui:24
+msgid "Search stations"
+msgstr "Търсене на станции"
 
-#: data/gtk/search_page.ui:73
+#: data/gtk/search_page.ui:72
+msgid "Discover over 50,000 public stations"
+msgstr "Достъп до над 50 000 станции"
+
+#: data/gtk/search_page.ui:90
+msgid "Popular Stations"
+msgstr "Популярни станции"
+
+#: data/gtk/search_page.ui:112
+msgid "Discover New Stations"
+msgstr "Откриване на нови станции"
+
+#: data/gtk/search_page.ui:135
+msgid ""
+"The displayed information is provided by <a href=\"https://www.radio-browser."
+"info/\">radio-browser.info</a>. \n"
+"Shortwave has no influence on the listed stations."
+msgstr ""
+"Показаната информация се предоставя от <a href='https://www.radio-browser."
+"info/'>radio-browser.info</a>.\n"
+"„Shortwave“ не влияе върху изброените станции."
+
+#: data/gtk/search_page.ui:201
+msgid "Loading…"
+msgstr "Зареждане…"
+
+#: data/gtk/search_page.ui:216
 msgid "No Results"
 msgstr "Няма резултати"
 
-#: data/gtk/search_page.ui:74
-msgid "Try using a different search term"
-msgstr "Опитайте с друг термин за търсене"
+#: data/gtk/search_page.ui:217
+msgid ""
+"If the station you are looking for is missing, you can add it to the public "
+"database."
+msgstr ""
+"Ако търсената станция липсва, може да я добавите към публичната база от "
+"данни със станции."
 
-#: data/gtk/search_page.ui:101
-msgid "Search Results"
-msgstr "Резултати от търсенето"
+#: data/gtk/search_page.ui:221
+msgid "Add Missing Station"
+msgstr "Добавяне на липсващи станции"
 
-#: data/gtk/search_page.ui:143
-msgid "Searching…"
-msgstr "Търсене…"
+#: data/gtk/search_page.ui:239
+msgid "Unable to Retrieve Station Data"
+msgstr "Данните за станцията не може да се получат"
+
+#: data/gtk/search_page.ui:242
+msgid "Try Again"
+msgstr "Пробване отново"
 
 #: data/gtk/settings_dialog.ui:12
 msgid "Features"
@@ -385,193 +367,139 @@ msgstr "_Известия"
 msgid "Show desktop notifications when a new song gets played"
 msgstr "Извеждане на известие на работния плот при пускане на нова песен"
 
-#: data/gtk/song_listbox.ui:29
-msgid "No Songs Detected"
-msgstr "Няма намерени песни"
-
-#: data/gtk/song_listbox.ui:40
-msgid ""
-"Songs are automatically recognized using the stream metadata.\n"
-"\n"
-"If the station does not send any metadata, no songs can be recognized."
-msgstr ""
-"Песните се разпознават автоматично с помощта на метаданните на предаването.\n"
-"\n"
-"Ако станцията не изпраща метаданни, песните няма да се разпознаят."
-
-#: data/gtk/song_listbox.ui:76
-msgid "Saved songs are located in your Music folder."
-msgstr "Запазените песни се намират в папката „Музика“."
-
-#: data/gtk/song_listbox.ui:86
-msgid "_Open"
-msgstr "_Отваряне"
-
 #: data/gtk/song_row.ui:16
 msgid "Save recorded song"
 msgstr "Запазване на записаната песен"
 
-#: data/gtk/station_dialog.ui:66
-msgid "_Play Station"
-msgstr "_Изпълнение на станцията"
+#: data/gtk/station_dialog.ui:73
+msgid "_Play"
+msgstr "_Изпълнение"
 
-#: data/gtk/station_dialog.ui:81
+#: data/gtk/station_dialog.ui:89
 msgid "_Add to Library"
 msgstr "_Добавяне в библиотеката"
 
-#: data/gtk/station_dialog.ui:97
+#: data/gtk/station_dialog.ui:106
 msgid "_Remove From Library"
 msgstr "_Премахване от библиотеката"
 
-#: data/gtk/station_dialog.ui:115
+#: data/gtk/station_dialog.ui:125 data/gtk/station_row.ui:57
 msgid "Local Station"
-msgstr "Местна станция"
+msgstr "Локална станция"
 
-#: data/gtk/station_dialog.ui:116
+#: data/gtk/station_dialog.ui:126
 msgid ""
 "This station exists only in your library, and is not part of the public "
-"online station database."
+"database"
 msgstr ""
 "Тази станция съществува само във вашата библиотека и не е част от публичната "
 "база от данни със станции."
 
-#: data/gtk/station_dialog.ui:131
+#: data/gtk/station_dialog.ui:140 data/gtk/station_row.ui:69
 msgid "Orphaned Station"
 msgstr "Изоставена станция"
 
-#: data/gtk/station_dialog.ui:132
+#: data/gtk/station_dialog.ui:141
 msgid ""
 "The information could not be updated, probably this station was removed from "
-"the public online station database."
+"the public database"
 msgstr ""
 "Информацията не може да бъде обновена, вероятно тази станция е премахната от "
 "публичната база от данни за станции."
 
-#: data/gtk/station_dialog.ui:144
+#: data/gtk/station_dialog.ui:152
 msgid "Information"
 msgstr "Информация"
 
-#: data/gtk/station_dialog.ui:147 src/ui/pages/search_page.rs:108
+#: data/gtk/station_dialog.ui:155
 msgid "Language"
 msgstr "Език"
 
-#: data/gtk/station_dialog.ui:157
+#: data/gtk/station_dialog.ui:165
 msgid "Tags"
 msgstr "Етикети"
 
-#: data/gtk/station_dialog.ui:178
+#: data/gtk/station_dialog.ui:177
 msgid "Location"
 msgstr "Местоположение"
 
-#: data/gtk/station_dialog.ui:183 src/ui/pages/search_page.rs:109
+#: data/gtk/station_dialog.ui:181
 msgid "Country"
 msgstr "Държава"
 
-#: data/gtk/station_dialog.ui:193 src/ui/pages/search_page.rs:110
+#: data/gtk/station_dialog.ui:191
 msgid "State"
 msgstr "Щат"
 
-#: data/gtk/station_dialog.ui:227
+#: data/gtk/station_dialog.ui:225
 msgid "Audio"
 msgstr "Звук"
 
-#: data/gtk/station_dialog.ui:231 src/ui/pages/search_page.rs:112
+#: data/gtk/station_dialog.ui:228
 msgid "Bitrate"
 msgstr "Побитова скорост"
 
-#: data/gtk/station_dialog.ui:241
+#: data/gtk/station_dialog.ui:238
 msgid "Codec"
 msgstr "Кодер"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:251
+#: data/gtk/station_dialog.ui:248
 msgid "Stream"
 msgstr "Поток"
 
-#: data/gtk/station_dialog.ui:260
+#: data/gtk/station_dialog.ui:257
 msgid "Copy"
 msgstr "Копиране"
 
-#: src/audio/player.rs:192
-msgid "Station cannot be streamed. URL is not valid."
-msgstr "Станцията не може да се предава. Адресът е неправилен."
+#: data/gtk/volume_control.ui:9
+msgid "Toggle Mute"
+msgstr "Заглушаване"
 
-#: src/audio/player.rs:260
+#: data/gtk/volume_control.ui:21
+msgid "Volume"
+msgstr "Сила на звука"
+
+#: src/audio/player.rs:220
 msgid "Active Playback"
 msgstr "Възпроизвеждане"
 
-#: src/device/device_discovery.rs:82
+#: src/audio/player.rs:382
+msgid "Station cannot be streamed. URL is not valid."
+msgstr "Станцията не може да се предава. Адресът е неправилен."
+
+#: src/device/device_discovery.rs:83
 msgid "Google Cast Device"
 msgstr "Устройство за Google Cast"
 
-#: src/device/device_discovery.rs:85
+#: src/device/device_discovery.rs:86
 msgid "Unknown Model"
 msgstr "Непознат модел"
 
 #: src/ui/about_dialog.rs:44
 msgid "translator-credits"
 msgstr ""
-"Twlvnn Kraftwerk &lt;<a href='mailto:kraft_werk@tutanota.com'>kraft_werk@tutanota.com</a>&gt;\n"
+"Twlvnn Kraftwerk &lt;<a href='mailto:kraft_werk@tutanota."
+"com'>kraft_werk@tutanota.com</a>&gt;\n"
 "\n"
 "\n"
 "Проектът за превод на GNOME има нужда от подкрепа.\n"
-"Научете повече за нас на <a href='https://fsa-bg.org/project/gtp'>уеб сайта</a> ни.\n"
-"Докладвайте за грешки в превода в <a href='https://fsa-bg.org/project/gtp/newticket'>съответния раздел</a>."
+"Научете повече за нас на <a href='https://fsa-bg.org/project/gtp'>уеб сайта</"
+"a> ни.\n"
+"Докладвайте за грешки в превода в <a href='https://fsa-bg.org/project/gtp/"
+"newticket'>съответния раздел</a>."
 
-#: src/ui/create_station_dialog.rs:98
-msgid "Select station image"
-msgstr "Избиране на изображение на станцията"
+#: src/ui/add_station_dialog.rs:94
+msgid "Select Station Cover"
+msgstr "Избор на изображение на станцията"
 
 #: src/ui/display_error.rs:46
 msgid "Show Details"
 msgstr "Подробности за станцията"
 
-#. TODO: Implement show-server-stats action
-#: src/ui/pages/discover_page.rs:127
-msgid "Show statistics"
-msgstr "Показване на статистиките"
-
-#: src/ui/pages/discover_page.rs:129
-msgid "Browse over 50,000 stations"
-msgstr "Разглеждайте над 50 000 станции"
-
-#: src/ui/pages/discover_page.rs:131
-msgid "Add new station"
-msgstr "Добавяне на нова станция"
-
-#: src/ui/pages/discover_page.rs:133
-msgid "Your favorite station is missing?"
-msgstr "Любимата ви станция липсва?"
-
-#: src/ui/pages/discover_page.rs:138
-msgid "Open website"
-msgstr "Отваряне на Интернет страницата"
-
-#: src/ui/pages/discover_page.rs:140
-msgid "Powered by radio-browser.info"
-msgstr "Ползва се radio-browser.info"
-
-#: src/ui/pages/discover_page.rs:151 src/ui/pages/search_page.rs:215
-msgid "Station data could not be received."
-msgstr "Данните на станцията не може да се получат."
-
-#: src/ui/pages/library_page.rs:94
+#: src/ui/pages/library_page.rs:111
 msgid "Welcome to {}"
 msgstr "Добре дошли в {}"
-
-#: src/ui/pages/search_page.rs:222
-msgid ""
-"The number of results is limited to {} item. Try using a more specific "
-"search term."
-msgid_plural ""
-"The number of results is limited to {} items. Try using a more specific "
-"search term."
-msgstr[0] ""
-"Броят на резултатите е ограничен до {} елемент. Опитайте с по-конкретен "
-"термин за търсене."
-msgstr[1] ""
-"Броят на резултатите е ограничен до {} елемента. Опитайте с по-конкретен "
-"термин за търсене."
 
 #: src/ui/recording_indicator.rs:111
 msgid "Recording in Progress"
@@ -582,8 +510,8 @@ msgid "Ignored"
 msgstr "Нежелано"
 
 #: src/ui/recording_indicator.rs:113
-msgid "Incomplete"
-msgstr "Непълно"
+msgid "No Recording"
+msgstr "Няма запис"
 
 #: src/ui/recording_indicator.rs:120
 msgid "The current song will be recorded until a new song is detected."
@@ -598,45 +526,6 @@ msgid ""
 "The current song cannot be fully recorded. The beginning has been missed."
 msgstr "Началото на текущата песен е пропуснато и тя няма да се запише изцяло."
 
-#: src/ui/station_dialog.rs:217
+#: src/ui/station_dialog.rs:203
 msgid "{} kbit/s"
 msgstr "{} kbit/s"
-
-#~ msgid "Start"
-#~ msgstr "Пускане"
-
-#~ msgid "Station Menu"
-#~ msgstr "Меню на станцията"
-
-#~ msgid "Stream to a _Device"
-#~ msgstr "Предаване към _устройство"
-
-#~ msgid "Stream to a Device"
-#~ msgstr "Предаване към устройство"
-
-#~ msgid ""
-#~ "Audio playback can be streamed to a network device (requires Google Cast "
-#~ "support)."
-#~ msgstr ""
-#~ "Звуковото възпроизвеждане може да се предава на мрежово устройство "
-#~ "(изисква Google Cast)."
-
-#~ msgid "Search Again"
-#~ msgstr "Търсене наново"
-
-#~ msgid "Main View"
-#~ msgstr "Основен прозорец"
-
-#~ msgid "Unable to access music directory. Saving song in home directory."
-#~ msgstr ""
-#~ "Папката „Музика“ не може да се отвори. Запазване на песента в домашната "
-#~ "папка."
-
-#~ msgid "Cannot save song."
-#~ msgstr "Песента не може да бъде запазена."
-
-#~ msgid "Receiving Station Data…"
-#~ msgstr "Получаване на данни за станцията…"
-
-#~ msgid "Back"
-#~ msgstr "Назад"
