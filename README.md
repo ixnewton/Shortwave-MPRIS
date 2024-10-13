@@ -3,7 +3,7 @@
 ![screenshot](data/screenshots/1.png)
 ![screenshot](data/screenshots/4.png)
 
-Shortwave is an internet radio player that provides access to a station database with over 30,000 stations.
+Shortwave is an internet radio player that provides access to a station database with over 50,000 stations.
 
 ## Getting in Touch
 If you have any questions regarding the use or development of Shortwave,
@@ -39,9 +39,9 @@ That's why we decided to call the project 'Shortwave', because internet radio st
 
 - **Why I cannot edit stations anymore?**
 
-    The edit feature is disabled because of vandalism. I cannot change this. [More information here](http://www.radio-browser.info/gui/#/) and [here](https://github.com/segler-alex/radiobrowser-api/issues/39)
+    The edit feature is disabled because of vandalism. I cannot change this. [More information here](http://www.radio-browser.info/gui/#/) and [here](https://github.com/segler-alex/radiobrowser-api/issues/39).
 
-- **Is Shortwave compatible with the Librem 5 / PinePhone?**
+- **Is Shortwave compatible with Linux phones?**
 
     Yes! We use the awesome [libadwaita](https://gitlab.gnome.org/GNOME/libadwaita) library to make the interface adaptive. The easiest way to get it on your phone is using the Flatpak package. [Flathub](https://flathub.org/apps/details/de.haeckerfelix.Shortwave) provides aarch64 packages.
 
@@ -50,9 +50,10 @@ That's why we decided to call the project 'Shortwave', because internet radio st
 
 - **Which database does Shortwave use?**
 
-    [radio-browser.info](http://www.radio-browser.info/gui/#/). It's a community database. Everybody can add information.
+    [radio-browser.info](http://www.radio-browser.info/gui/#/). It's a community database, everybody can contribute information.
     
 - **How I can get debug information?**
+
     Run Shortwave using `RUST_BACKTRACE=1 RUST_LOG=shortwave=debug flatpak run de.haeckerfelix.Shortwave` (`.Devel`).
 
 ## Translations
