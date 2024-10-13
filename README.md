@@ -46,7 +46,7 @@ That's why we decided to call the project 'Shortwave', because internet radio st
     Yes! We use the awesome [libadwaita](https://gitlab.gnome.org/GNOME/libadwaita) library to make the interface adaptive. The easiest way to get it on your phone is using the Flatpak package. [Flathub](https://flathub.org/apps/details/de.haeckerfelix.Shortwave) provides aarch64 packages.
 
 ![Adaptive Screenshot 1](data/screenshots/5.png)
-![Adaptive Screenshot 2](data/screenshots/6.png)
+![Adaptive Screenshot 2](data/screenshots/3.png)
 
 - **Which database does Shortwave use?**
 
