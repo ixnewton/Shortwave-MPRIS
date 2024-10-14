@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2024-10-09 19:12+0000\n"
-"PO-Revision-Date: 2024-10-12 22:18+0200\n"
+"POT-Creation-Date: 2024-10-12 20:19+0000\n"
+"PO-Revision-Date: 2024-10-14 11:49+0200\n"
 "Last-Translator: Quentin PAGÈS\n"
 "Language-Team: Occitan <totenoc@gmail.com>\n"
 "Language: oc\n"
@@ -36,10 +36,10 @@ msgstr "Escotar la ràdio Internet"
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:12
 msgid ""
 "Shortwave is an internet radio player that provides access to a station "
-"database with over 30,000 stations."
+"database with over 50,000 stations."
 msgstr ""
 "Shortwave es un lector de ràdio internet que provesís accès a una basa de "
-"donadas d'estacions amb mai de 30 000 estacions."
+"donadas d'estacions amb mai de 50 000 estacions."
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:15
 msgid "Features:"
@@ -90,11 +90,11 @@ msgstr "Felix Häcker"
 msgid "Add Local Station"
 msgstr "Apondre una estacion locala"
 
-#: data/gtk/add_station_dialog.ui:42
+#: data/gtk/add_station_dialog.ui:64
 msgid "Change Station Cover"
 msgstr "Modificar la cobertura de l’estacion"
 
-#: data/gtk/add_station_dialog.ui:60
+#: data/gtk/add_station_dialog.ui:95
 msgid ""
 "This station will only be added to your library. If you want it to be "
 "available to everyone, you should add it to the <a href=\"https://www.radio-"
@@ -104,15 +104,15 @@ msgstr ""
 "siá disponibla per tot lo monde, la deuriatz apondre a la <a href=\"https://"
 "www.radio-browser.info/add\">basa de donadas publica</a>."
 
-#: data/gtk/add_station_dialog.ui:72
+#: data/gtk/add_station_dialog.ui:107
 msgid "Name"
 msgstr "Nom"
 
-#: data/gtk/add_station_dialog.ui:80
+#: data/gtk/add_station_dialog.ui:115
 msgid "Stream URL"
 msgstr "URL del flux"
 
-#: data/gtk/add_station_dialog.ui:88
+#: data/gtk/add_station_dialog.ui:123
 msgid "Add Station"
 msgstr "Apondre una estacion"
 
@@ -194,55 +194,55 @@ msgstr "Menú principal"
 msgid "_Add New Stations"
 msgstr "_Apondre una estacion novèla"
 
-#: data/gtk/library_page.ui:114
+#: data/gtk/library_page.ui:115
 msgid "_Sorting"
 msgstr "_Triar"
 
-#: data/gtk/library_page.ui:117
+#: data/gtk/library_page.ui:118
 msgid "_Name"
 msgstr "_Nom"
 
-#: data/gtk/library_page.ui:122
+#: data/gtk/library_page.ui:123
 msgid "_Language"
 msgstr "_Lenga"
 
-#: data/gtk/library_page.ui:127
+#: data/gtk/library_page.ui:128
 msgid "_Country"
 msgstr "_País"
 
-#: data/gtk/library_page.ui:132
+#: data/gtk/library_page.ui:133
 msgid "S_tate"
 msgstr "Es_tat"
 
-#: data/gtk/library_page.ui:137
+#: data/gtk/library_page.ui:138
 msgid "_Bitrate"
 msgstr "_Debit"
 
-#: data/gtk/library_page.ui:144
+#: data/gtk/library_page.ui:145
 msgid "_Ascending"
 msgstr "_Ascendent"
 
-#: data/gtk/library_page.ui:149
+#: data/gtk/library_page.ui:150
 msgid "_Descending"
 msgstr "_Descendent"
 
-#: data/gtk/library_page.ui:158
+#: data/gtk/library_page.ui:159
 msgid "_Open radio-browser.info <sup>↗</sup>"
 msgstr "_Dobrir radio-browser.info <sup>↗</sup>"
 
-#: data/gtk/library_page.ui:165
+#: data/gtk/library_page.ui:166
 msgid "_Preferences"
 msgstr "_Preferéncias"
 
-#: data/gtk/library_page.ui:169
+#: data/gtk/library_page.ui:170
 msgid "_Keyboard Shortcuts"
 msgstr "Acorchis de _clavièr"
 
-#: data/gtk/library_page.ui:173
+#: data/gtk/library_page.ui:174
 msgid "_About Shortwave"
 msgstr "_A prepaus de Shortwave"
 
-#: data/gtk/library_page.ui:181
+#: data/gtk/library_page.ui:182
 msgid "Add _Local Station"
 msgstr "Apondre una estacion _locala"
 
@@ -318,11 +318,11 @@ msgstr "Descobrissètz mai de 50 000 estacions publicas"
 msgid "Popular Stations"
 msgstr "Estacions popularas"
 
-#: data/gtk/search_page.ui:111
+#: data/gtk/search_page.ui:112
 msgid "Discover New Stations"
 msgstr "Descobrir d’estacions novèlas"
 
-#: data/gtk/search_page.ui:133
+#: data/gtk/search_page.ui:135
 msgid ""
 "The displayed information is provided by <a href=\"https://www.radio-browser."
 "info/\">radio-browser.info</a>. \n"
@@ -332,15 +332,15 @@ msgstr ""
 "browser.info/\">radio-browser.info</a>.\n"
 "Shortwave a pas cap d'influéncia sus las estacions listadas."
 
-#: data/gtk/search_page.ui:199
+#: data/gtk/search_page.ui:201
 msgid "Loading…"
 msgstr "Cargament…"
 
-#: data/gtk/search_page.ui:214
+#: data/gtk/search_page.ui:216
 msgid "No Results"
 msgstr "Cap de resultat"
 
-#: data/gtk/search_page.ui:215
+#: data/gtk/search_page.ui:217
 msgid ""
 "If the station you are looking for is missing, you can add it to the public "
 "database."
@@ -348,15 +348,15 @@ msgstr ""
 "S’una estacion que cercatz es absenta, la podètz apondre a la basa de "
 "donadas publica."
 
-#: data/gtk/search_page.ui:219
+#: data/gtk/search_page.ui:221
 msgid "Add Missing Station"
 msgstr "Apondre una estacion absenta"
 
-#: data/gtk/search_page.ui:236
+#: data/gtk/search_page.ui:239
 msgid "Unable to Retrieve Station Data"
 msgstr "Recuperacion impossibla de las donadas de l’estacion"
 
-#: data/gtk/search_page.ui:239
+#: data/gtk/search_page.ui:242
 msgid "Try Again"
 msgstr "Tornar ensajar"
 
@@ -380,19 +380,19 @@ msgstr "Salvar la cançon enregistrada"
 msgid "_Play"
 msgstr "_Lectura"
 
-#: data/gtk/station_dialog.ui:88
+#: data/gtk/station_dialog.ui:89
 msgid "_Add to Library"
 msgstr "_Apondre a la bibliotèca"
 
-#: data/gtk/station_dialog.ui:104
+#: data/gtk/station_dialog.ui:106
 msgid "_Remove From Library"
 msgstr "_Suprimir de la bibliotèca"
 
-#: data/gtk/station_dialog.ui:122 data/gtk/station_row.ui:57
+#: data/gtk/station_dialog.ui:125 data/gtk/station_row.ui:57
 msgid "Local Station"
 msgstr "Estacion locala"
 
-#: data/gtk/station_dialog.ui:123
+#: data/gtk/station_dialog.ui:126
 msgid ""
 "This station exists only in your library, and is not part of the public "
 "database"
@@ -400,11 +400,11 @@ msgstr ""
 "Aquesta estacion existís sonque dins vòstra bibliotèca, e fa pas partida de "
 "la basa de donadas publica"
 
-#: data/gtk/station_dialog.ui:137 data/gtk/station_row.ui:69
+#: data/gtk/station_dialog.ui:140 data/gtk/station_row.ui:69
 msgid "Orphaned Station"
 msgstr "Estacion orfanèla"
 
-#: data/gtk/station_dialog.ui:138
+#: data/gtk/station_dialog.ui:141
 msgid ""
 "The information could not be updated, probably this station was removed from "
 "the public database"
@@ -412,48 +412,48 @@ msgstr ""
 "Es pas estat possible d’actualizar las informacion, probablament aquesta "
 "estacion es estada suprimida de la basa de donadas publica"
 
-#: data/gtk/station_dialog.ui:149
+#: data/gtk/station_dialog.ui:152
 msgid "Information"
 msgstr "Informacions"
 
-#: data/gtk/station_dialog.ui:152
+#: data/gtk/station_dialog.ui:155
 msgid "Language"
 msgstr "Lenga"
 
-#: data/gtk/station_dialog.ui:162
+#: data/gtk/station_dialog.ui:165
 msgid "Tags"
 msgstr "Etiquetas"
 
-#: data/gtk/station_dialog.ui:174
+#: data/gtk/station_dialog.ui:177
 msgid "Location"
 msgstr "Localizacion"
 
-#: data/gtk/station_dialog.ui:178
+#: data/gtk/station_dialog.ui:181
 msgid "Country"
 msgstr "País"
 
-#: data/gtk/station_dialog.ui:188
+#: data/gtk/station_dialog.ui:191
 msgid "State"
 msgstr "Estat"
 
-#: data/gtk/station_dialog.ui:222
+#: data/gtk/station_dialog.ui:225
 msgid "Audio"
 msgstr "Àudio"
 
-#: data/gtk/station_dialog.ui:225
+#: data/gtk/station_dialog.ui:228
 msgid "Bitrate"
 msgstr "Debit"
 
-#: data/gtk/station_dialog.ui:235
+#: data/gtk/station_dialog.ui:238
 msgid "Codec"
 msgstr "Codèc"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:245
+#: data/gtk/station_dialog.ui:248
 msgid "Stream"
 msgstr "Flux continú"
 
-#: data/gtk/station_dialog.ui:254
+#: data/gtk/station_dialog.ui:257
 msgid "Copy"
 msgstr "Copiar"
 
@@ -465,11 +465,11 @@ msgstr "Activar / Desactivar lo mòde mut"
 msgid "Volume"
 msgstr "Volum"
 
-#: src/audio/player.rs:251
+#: src/audio/player.rs:220
 msgid "Active Playback"
 msgstr "Lectura"
 
-#: src/audio/player.rs:413
+#: src/audio/player.rs:382
 msgid "Station cannot be streamed. URL is not valid."
 msgstr "Se pòt pas difusar l’estacion. L’URL es pas valida."
 
@@ -485,7 +485,7 @@ msgstr "Modèl desconegut"
 msgid "translator-credits"
 msgstr "Quentin PAGÈS"
 
-#: src/ui/add_station_dialog.rs:90
+#: src/ui/add_station_dialog.rs:94
 msgid "Select Station Cover"
 msgstr "Seleccionar una cobertura d’estacion"
 
@@ -525,7 +525,7 @@ msgid ""
 "The current song cannot be fully recorded. The beginning has been missed."
 msgstr "Se pòt pas enregistrar la cançon actuala. La debuta es estada mancada."
 
-#: src/ui/station_dialog.rs:201
+#: src/ui/station_dialog.rs:203
 msgid "{} kbit/s"
 msgstr "{} kbit/s"
 
