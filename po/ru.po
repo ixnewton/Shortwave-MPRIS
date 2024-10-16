@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2024-07-20 21:40+0000\n"
-"PO-Revision-Date: 2024-07-21 13:21+0300\n"
+"POT-Creation-Date: 2024-10-11 18:26+0000\n"
+"PO-Revision-Date: 2024-10-11 21:48+0300\n"
 "Last-Translator: Artur So <arturios2005@mail.ru>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
 "Language: ru\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:3
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
@@ -37,23 +37,23 @@ msgstr "Слушайте интернет-радио"
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:12
 msgid ""
 "Shortwave is an internet radio player that provides access to a station "
-"database with over 30,000 stations."
+"database with over 50,000 stations."
 msgstr ""
 "Shortwave - это интернет-радиоплеер, который предоставляет доступ к базе "
-"данных станций, насчитывающей более 30 000 станций."
+"данных станций, насчитывающей более 50 000 станций."
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:15
 msgid "Features:"
 msgstr "Возможности:"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:17
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:65
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:64
 msgid "Create your own library where you can add your favorite stations"
 msgstr ""
 "Создайте собственную библиотеку, в которую можно добавлять любимые станции"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:18
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:69
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:68
 msgid "Easily search and discover new radio stations"
 msgstr "Легкий поиск и открытие новых радиостанций"
 
@@ -66,7 +66,7 @@ msgstr ""
 "сохранения"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:20
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:73
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:72
 msgid "Responsive application layout, compatible for small and large screens"
 msgstr ""
 "Отзывчивый интерфейс приложения, совместимый с маленькими и большими экранами"
@@ -86,78 +86,59 @@ msgstr "Бесшовная интеграция в среду рабочего �
 msgid "Felix Häcker"
 msgstr "Felix Häcker"
 
-#: data/gtk/create_station_dialog.ui:8
-msgid "Create new station"
-msgstr "Создать новую станцию"
+#: data/gtk/add_station_dialog.ui:14
+msgid "Add Local Station"
+msgstr "Добавить локальную станцию"
 
-#: data/gtk/create_station_dialog.ui:25
-msgid "Create New Station"
-msgstr "Создать новую станцию"
+#: data/gtk/add_station_dialog.ui:42
+msgid "Change Station Cover"
+msgstr "Изменить обложку станции"
 
-#: data/gtk/create_station_dialog.ui:26
+#: data/gtk/add_station_dialog.ui:60
 msgid ""
-"You can decide if you want the new station to be visible for all users "
-"worldwide or if you want to create a local station."
+"This station will only be added to your library. If you want it to be "
+"available to everyone, you should add it to the <a href=\"https://www.radio-"
+"browser.info/add\">public database</a>."
 msgstr ""
-"Вы можете решить, хотите ли вы, чтобы новая станция была видна всем "
-"пользователям по всему миру, или вы хотите создать локальную станцию."
+"Эта станция будет добавлена только в вашу библиотеку. Если вы хотите, чтобы "
+"она была доступна всем, добавьте ее в <a href=\"https://www.radio-browser."
+"info/add\">общедоступную базу данных</a>."
 
-#: data/gtk/create_station_dialog.ui:35
-msgid "Create _Public Station"
-msgstr "Создать _общественную станцию"
-
-#: data/gtk/create_station_dialog.ui:46
-msgid "Create _Local Station"
-msgstr "Создать _локальную станцию"
-
-#: data/gtk/create_station_dialog.ui:71
-msgid "Create Local Station"
-msgstr "Создать локальную станцию"
-
-#: data/gtk/create_station_dialog.ui:104
-msgid "Change station image"
-msgstr "Изменить изображение станции"
-
-#: data/gtk/create_station_dialog.ui:128 src/ui/pages/search_page.rs:107
+#: data/gtk/add_station_dialog.ui:72
 msgid "Name"
 msgstr "Название"
 
-#: data/gtk/create_station_dialog.ui:136
+#: data/gtk/add_station_dialog.ui:80
 msgid "Stream URL"
 msgstr "URL трансляции"
 
-#: data/gtk/create_station_dialog.ui:144
-msgid "Create Station"
-msgstr "Создать станцию"
+#: data/gtk/add_station_dialog.ui:88
+msgid "Add Station"
+msgstr "Добавить станцию"
 
-#: data/gtk/discover_page.ui:4
-msgid "Discover"
-msgstr "Обзор"
+#: data/gtk/device_dialog.ui:7 data/gtk/player_view.ui:124
+msgid "Connect Device"
+msgstr "Подключиться к устройству"
 
-#: data/gtk/discover_page.ui:15 data/gtk/search_page.ui:4
-#: data/gtk/search_page.ui:29
-msgid "Search"
-msgstr "Поиск"
+#: data/gtk/device_dialog.ui:18
+msgid "Searching for Devices…"
+msgstr "Поиск устройств…"
 
-#: data/gtk/discover_page.ui:44
-msgid "Most Voted Stations"
-msgstr "Самые популярные станции"
+#: data/gtk/device_dialog.ui:25
+msgid "Search for Devices"
+msgstr "Поиск устройств"
 
-#: data/gtk/discover_page.ui:61
-msgid "Trending"
-msgstr "В тренде"
+#: data/gtk/device_dialog.ui:41
+msgid "No Devices Available"
+msgstr "Устройства недоступны"
 
-#: data/gtk/discover_page.ui:78
-msgid "Other Users Are Listening To…"
-msgstr "Другие пользователи слушают…"
+#: data/gtk/device_dialog.ui:42
+msgid "No supported Google Cast device found"
+msgstr "Не найдено поддерживаемое устройство Google Cast"
 
-#: data/gtk/featured_carousel.ui:27
-msgid "Previous"
-msgstr "Предыдущее"
-
-#: data/gtk/featured_carousel.ui:40
-msgid "Next"
-msgstr "Следующее"
+#: data/gtk/device_indicator.ui:7
+msgid "Disconnect From Device"
+msgstr "Отключиться от устройства"
 
 #: data/gtk/help_overlay.ui:11 data/gtk/settings_dialog.ui:9
 msgid "General"
@@ -201,132 +182,183 @@ msgstr "Переключение воспроизведения"
 msgid "Shortwave"
 msgstr "Shortwave"
 
-#: data/gtk/library_page.ui:15
-msgid "Add Stations"
-msgstr "Добавить станции"
+#: data/gtk/library_page.ui:15 data/gtk/search_page.ui:4
+msgid "Browse Stations"
+msgstr "Обзор станций"
 
-#: data/gtk/library_page.ui:22
+#: data/gtk/library_page.ui:23
 msgid "Main Menu"
 msgstr "Главное меню"
 
-#: data/gtk/library_page.ui:51
-msgid "Library"
-msgstr "Библиотека"
+#: data/gtk/library_page.ui:92
+msgid "_Add New Stations"
+msgstr "_Добавить новые станции"
 
-#: data/gtk/library_page.ui:75
-msgid "_Discover New Stations"
-msgstr "_Откройте для себя новые станции"
-
-#: data/gtk/library_page.ui:97
-msgid "_Enable Mini Player"
-msgstr "_Включить мини-плеер"
-
-#: data/gtk/library_page.ui:101
+#: data/gtk/library_page.ui:115
 msgid "_Sorting"
 msgstr "_Сортировка"
 
-#: data/gtk/library_page.ui:104 data/gtk/search_page.ui:161
+#: data/gtk/library_page.ui:118
 msgid "_Name"
 msgstr "_Название"
 
-#: data/gtk/library_page.ui:109 data/gtk/search_page.ui:166
+#: data/gtk/library_page.ui:123
 msgid "_Language"
 msgstr "_Язык"
 
-#: data/gtk/library_page.ui:114 data/gtk/search_page.ui:171
+#: data/gtk/library_page.ui:128
 msgid "_Country"
 msgstr "_Страна"
 
-#: data/gtk/library_page.ui:119 data/gtk/search_page.ui:176
+#: data/gtk/library_page.ui:133
 msgid "S_tate"
 msgstr "Ш_тат"
 
-#: data/gtk/library_page.ui:124 data/gtk/search_page.ui:181
-msgid "_Votes"
-msgstr "_Голоса"
-
-#: data/gtk/library_page.ui:129 data/gtk/search_page.ui:186
+#: data/gtk/library_page.ui:138
 msgid "_Bitrate"
 msgstr "_Битрейт"
 
-#: data/gtk/library_page.ui:136 data/gtk/search_page.ui:193
+#: data/gtk/library_page.ui:145
 msgid "_Ascending"
 msgstr "_По возрастанию"
 
-#: data/gtk/library_page.ui:141 data/gtk/search_page.ui:198
+#: data/gtk/library_page.ui:150
 msgid "_Descending"
 msgstr "_По убыванию"
 
-#: data/gtk/library_page.ui:150
+#: data/gtk/library_page.ui:159
 msgid "_Open radio-browser.info <sup>↗</sup>"
 msgstr "_Открыть radio-browser.info <sup>↗</sup>"
 
-#: data/gtk/library_page.ui:155
-msgid "_Create New Station"
-msgstr "_Создать новую станцию"
-
-#: data/gtk/library_page.ui:162
+#: data/gtk/library_page.ui:166
 msgid "_Preferences"
 msgstr "_Параметры"
 
-#: data/gtk/library_page.ui:166
+#: data/gtk/library_page.ui:170
 msgid "_Keyboard Shortcuts"
 msgstr "_Комбинации клавиш"
 
-#: data/gtk/library_page.ui:170
+#: data/gtk/library_page.ui:174
 msgid "_About Shortwave"
 msgstr "_О приложении"
 
-#: data/gtk/mini_controller.ui:27 data/gtk/sidebar_controller.ui:127
-#: data/gtk/toolbar_controller.ui:70
+#: data/gtk/library_page.ui:182
+msgid "Add _Local Station"
+msgstr "Добавить _локальную станцию"
+
+#: data/gtk/player_gadget.ui:40 data/gtk/player_toolbar.ui:92
+#: data/gtk/player_view.ui:148 data/gtk/station_row.ui:86
+msgid "Play"
+msgstr "Играть"
+
+#: data/gtk/player_gadget.ui:55 data/gtk/player_toolbar.ui:106
+#: data/gtk/player_view.ui:162
 msgid "Stop"
 msgstr "Остановить"
 
-#: data/gtk/mini_controller.ui:42
-msgid "Start"
-msgstr "Начать"
+#: data/gtk/player_gadget.ui:71 data/gtk/player_toolbar.ui:121
+#: data/gtk/player_view.ui:177
+msgid "Buffering…"
+msgstr "Буферизация…"
 
-#: data/gtk/mini_controller.ui:98
+#: data/gtk/player_gadget.ui:118
 msgid "SHORTWAVE INTERNET RADIO"
 msgstr "SHORTWAVE ИНТЕРНЕТ-РАДИО"
 
-#: data/gtk/mini_controller.ui:120 data/gtk/sidebar_controller.ui:64
-#: data/gtk/toolbar_controller.ui:29
+#: data/gtk/player_gadget.ui:140 data/gtk/player_toolbar.ui:29
+#: data/gtk/player_view.ui:58
 msgid "No Playback"
 msgstr "Нет воспроизведения"
 
-#: data/gtk/mini_controller.ui:160
+#: data/gtk/player_gadget.ui:199
 msgid "Close"
 msgstr "Закрыть"
 
-#: data/gtk/mini_controller.ui:171
-msgid "Resize"
-msgstr "Изменить размер"
+#: data/gtk/player_gadget.ui:210
+msgid "Restore Window"
+msgstr "Восстановить окно"
 
-#: data/gtk/search_page.ui:41 data/gtk/station_dialog.ui:171
-#: src/ui/pages/search_page.rs:111
-msgid "Votes"
-msgstr "Голоса"
+#: data/gtk/player_view.ui:13
+msgid "Enable Gadget Mode"
+msgstr "Включить режим гаджета"
 
-#: data/gtk/search_page.ui:46
-msgid "Change the sorting of the search results"
-msgstr "Изменить сортировку результатов поиска"
+#: data/gtk/player_view.ui:207
+msgid "Show Station Details"
+msgstr "Показать информацию о станции"
 
-#: data/gtk/search_page.ui:73
+#: data/gtk/player_view.ui:258
+msgid "No Songs"
+msgstr "Нет песен"
+
+#: data/gtk/player_view.ui:269
+msgid ""
+"Songs that have been identified and recorded using the stream metadata will "
+"appear here."
+msgstr ""
+"Здесь будут отображаться песни, которые были идентифицированы и записаны с "
+"помощью метаданных трансляции."
+
+#: data/gtk/player_view.ui:303 data/gtk/recording_indicator.ui:38
+msgid "An error occurred"
+msgstr "Произошла ошибка"
+
+#: data/gtk/search_page.ui:23
+msgid "Search"
+msgstr "Поиск"
+
+#: data/gtk/search_page.ui:24
+msgid "Search stations"
+msgstr "Поиск станций"
+
+#: data/gtk/search_page.ui:72
+msgid "Discover over 50,000 public stations"
+msgstr "Просмотр более 50000 общедоступных станций"
+
+#: data/gtk/search_page.ui:90
+msgid "Popular Stations"
+msgstr "Популярные станции"
+
+#: data/gtk/search_page.ui:111
+msgid "Discover New Stations"
+msgstr "Открывайте для себя новые станции"
+
+#: data/gtk/search_page.ui:133
+msgid ""
+"The displayed information is provided by <a href=\"https://www.radio-browser."
+"info/\">radio-browser.info</a>. \n"
+"Shortwave has no influence on the listed stations."
+msgstr ""
+"Отображаемая информация предоставлена <a href=\"https://www.radio-browser."
+"info/\">radio-browser.info</a>. \n"
+"Shortwave не оказывает влияния на перечисленные станции."
+
+#: data/gtk/search_page.ui:199
+msgid "Loading…"
+msgstr "Загрузка…"
+
+#: data/gtk/search_page.ui:214
 msgid "No Results"
 msgstr "Нет результатов"
 
-#: data/gtk/search_page.ui:74
-msgid "Try using a different search term"
-msgstr "Попробуйте использовать другие термины"
+#: data/gtk/search_page.ui:215
+msgid ""
+"If the station you are looking for is missing, you can add it to the public "
+"database."
+msgstr ""
+"Если искомая станция отсутствует, вы можете добавить ее в общедоступную базу "
+"данных."
 
-#: data/gtk/search_page.ui:101
-msgid "Search Results"
-msgstr "Результаты поиска"
+#: data/gtk/search_page.ui:219
+msgid "Add Missing Station"
+msgstr "Добавить отсутствующую станцию"
 
-#: data/gtk/search_page.ui:143
-msgid "Searching…"
-msgstr "Поиск…"
+#: data/gtk/search_page.ui:237
+msgid "Unable to Retrieve Station Data"
+msgstr "Невозможно получить данные о станции"
+
+#: data/gtk/search_page.ui:240
+msgid "Try Again"
+msgstr "Попробовать снова"
 
 #: data/gtk/settings_dialog.ui:12
 msgid "Features"
@@ -341,180 +373,114 @@ msgid "Show desktop notifications when a new song gets played"
 msgstr ""
 "Показывать уведомления на рабочем столе при воспроизведении новой песни"
 
-#: data/gtk/sidebar_controller.ui:23
-msgid "An error occurred"
-msgstr "Произошла ошибка"
-
-#: data/gtk/sidebar_controller.ui:142 data/gtk/station_row.ui:69
-#: data/gtk/toolbar_controller.ui:81
-msgid "Play"
-msgstr "Играть"
-
-#: data/gtk/sidebar_controller.ui:188
-msgid "Station Menu"
-msgstr "Меню станции"
-
-#: data/gtk/sidebar_controller.ui:202
-msgid "_Show Station Details"
-msgstr "_Показать информацию о станции"
-
-#: data/gtk/sidebar_controller.ui:206
-msgid "Stream to a _Device"
-msgstr "Трансляция на _устройство"
-
-#: data/gtk/song_listbox.ui:29
-msgid "No Songs Detected"
-msgstr "Песни не обнаружены"
-
-#: data/gtk/song_listbox.ui:40
-msgid ""
-"Songs are automatically recognized using the stream metadata.\n"
-"\n"
-"If the station does not send any metadata, no songs can be recognized."
-msgstr ""
-"Песни автоматически распознаются с помощью метаданных трансляции.\n"
-"\n"
-"Если станция не отправляет метаданные, песни не распознаются."
-
-#: data/gtk/song_listbox.ui:76
-msgid "Saved songs are located in your Music folder."
-msgstr "Сохраненные песни находятся в папке Музыка."
-
-#: data/gtk/song_listbox.ui:86
-msgid "_Open"
-msgstr "_Открыть"
-
 #: data/gtk/song_row.ui:16
 msgid "Save recorded song"
 msgstr "Сохранить записанную песню"
 
-#: data/gtk/station_dialog.ui:70
-msgid "_Play Station"
-msgstr "_Воспроизвести эту станцию"
+#: data/gtk/station_dialog.ui:73
+msgid "_Play"
+msgstr "_Воспроизвести"
 
-#: data/gtk/station_dialog.ui:85
+#: data/gtk/station_dialog.ui:89
 msgid "_Add to Library"
 msgstr "_Добавить в библиотеку"
 
-#: data/gtk/station_dialog.ui:101
+#: data/gtk/station_dialog.ui:106
 msgid "_Remove From Library"
 msgstr "_Удалить из библиотеки"
 
-#: data/gtk/station_dialog.ui:119
+#: data/gtk/station_dialog.ui:125 data/gtk/station_row.ui:57
 msgid "Local Station"
 msgstr "Локальная станция"
 
-#: data/gtk/station_dialog.ui:120
+#: data/gtk/station_dialog.ui:126
 msgid ""
 "This station exists only in your library, and is not part of the public "
-"online station database."
+"database"
 msgstr ""
 "Эта станция существует только в вашей библиотеке и не является частью "
-"общедоступной онлайн-базы данных станций."
+"общедоступной базы данных"
 
-#: data/gtk/station_dialog.ui:135
+#: data/gtk/station_dialog.ui:140 data/gtk/station_row.ui:69
 msgid "Orphaned Station"
 msgstr "Осиротевшая станция"
 
-#: data/gtk/station_dialog.ui:136
+#: data/gtk/station_dialog.ui:141
 msgid ""
 "The information could not be updated, probably this station was removed from "
-"the public online station database."
+"the public database"
 msgstr ""
 "Информация не может быть обновлена, вероятно, эта станция была удалена из "
-"общедоступной онлайн-базы данных станций."
+"общедоступной базы данных"
 
-#: data/gtk/station_dialog.ui:148
+#: data/gtk/station_dialog.ui:152
 msgid "Information"
 msgstr "Информация"
 
-#: data/gtk/station_dialog.ui:151 src/ui/pages/search_page.rs:108
+#: data/gtk/station_dialog.ui:155
 msgid "Language"
 msgstr "Язык"
 
-#: data/gtk/station_dialog.ui:161
+#: data/gtk/station_dialog.ui:165
 msgid "Tags"
 msgstr "Метки"
 
-#: data/gtk/station_dialog.ui:182
+#: data/gtk/station_dialog.ui:177
 msgid "Location"
 msgstr "Местоположение"
 
-#: data/gtk/station_dialog.ui:187 src/ui/pages/search_page.rs:109
+#: data/gtk/station_dialog.ui:181
 msgid "Country"
 msgstr "Страна"
 
-#: data/gtk/station_dialog.ui:197 src/ui/pages/search_page.rs:110
+#: data/gtk/station_dialog.ui:191
 msgid "State"
 msgstr "Штат"
 
-#: data/gtk/station_dialog.ui:231
+#: data/gtk/station_dialog.ui:225
 msgid "Audio"
 msgstr "Аудио"
 
-#: data/gtk/station_dialog.ui:235 src/ui/pages/search_page.rs:112
+#: data/gtk/station_dialog.ui:228
 msgid "Bitrate"
 msgstr "Битрейт"
 
-#: data/gtk/station_dialog.ui:245
+#: data/gtk/station_dialog.ui:238
 msgid "Codec"
 msgstr "Кодек"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:255
+#: data/gtk/station_dialog.ui:248
 msgid "Stream"
 msgstr "Трансляция"
 
-#: data/gtk/station_dialog.ui:264
+#: data/gtk/station_dialog.ui:257
 msgid "Copy"
 msgstr "Копировать"
 
-#: data/gtk/streaming_dialog.ui:8
-msgid "Stream to a Device"
-msgstr "Трансляция на устройство"
+#: data/gtk/volume_control.ui:9
+msgid "Toggle Mute"
+msgstr "Переключить звук"
 
-#: data/gtk/streaming_dialog.ui:26
-msgid ""
-"Audio playback can be streamed to a network device (requires Google Cast "
-"support)."
-msgstr ""
-"Воспроизведение аудио можно транслировать на сетевое устройство (требуется "
-"поддержка Google Cast)."
+#: data/gtk/volume_control.ui:21
+msgid "Volume"
+msgstr "Громкость"
 
-#: data/gtk/streaming_dialog.ui:41
-msgid "No Devices Found"
-msgstr "Устройства не найдены"
+#: src/audio/player.rs:251
+msgid "Active Playback"
+msgstr "Активное воспроизведение"
 
-#: data/gtk/streaming_dialog.ui:47 data/gtk/streaming_dialog.ui:73
-msgid "Search Again"
-msgstr "Искать снова"
-
-#: data/gtk/streaming_dialog.ui:67
-msgid "Search Completed"
-msgstr "Поиск завершен"
-
-#: data/gtk/streaming_dialog.ui:93
-msgid "Searching for Devices…"
-msgstr "Поиск устройств…"
-
-#: data/gtk/window.ui:36
-msgid "Main View"
-msgstr "Главный вид"
-
-#. Fallback to xdg-home when xdg-music is not available
-#: src/audio/backend/song_backend.rs:97
-msgid "Unable to access music directory. Saving song in home directory."
-msgstr ""
-"Невозможно получить доступ к папке с музыкой. Сохранение песни в домашней "
-"папке."
-
-#: src/audio/player.rs:194
+#: src/audio/player.rs:413
 msgid "Station cannot be streamed. URL is not valid."
 msgstr "Станция не может транслироваться. URL недействителен."
 
-#: src/audio/player.rs:245
-msgid "Cannot save song."
-msgstr "Невозможно сохранить песню."
+#: src/device/device_discovery.rs:83
+msgid "Google Cast Device"
+msgstr "Устройство Google Cast"
+
+#: src/device/device_discovery.rs:86
+msgid "Unknown Model"
+msgstr "Неизвестная модель"
 
 #: src/ui/about_dialog.rs:44
 msgid "translator-credits"
@@ -522,57 +488,196 @@ msgstr ""
 "Aleksey Kabanov <https://launchpad.net/~ak099>\n"
 "Aleksandr Melman"
 
-#: src/ui/create_station_dialog.rs:106
-msgid "Select station image"
-msgstr "Выбрать изображение станции"
+#: src/ui/add_station_dialog.rs:90
+msgid "Select Station Cover"
+msgstr "Выбрать обложку станции"
 
-#. TODO: Implement show-server-stats action
-#: src/ui/pages/discover_page.rs:127
-msgid "Show statistics"
-msgstr "Показать статистику"
+#: src/ui/display_error.rs:46
+msgid "Show Details"
+msgstr "Показать подробности"
 
-#: src/ui/pages/discover_page.rs:129
-msgid "Browse over 50,000 stations"
-msgstr "Просмотр более 50000 станций"
-
-#: src/ui/pages/discover_page.rs:131
-msgid "Add new station"
-msgstr "Добавить новую станцию"
-
-#: src/ui/pages/discover_page.rs:133
-msgid "Your favorite station is missing?"
-msgstr "Ваша любимая станция пропала?"
-
-#: src/ui/pages/discover_page.rs:138
-msgid "Open website"
-msgstr "Открыть веб-сайт"
-
-#: src/ui/pages/discover_page.rs:140
-msgid "Powered by radio-browser.info"
-msgstr "Работает на сайте radio-browser.info"
-
-#: src/ui/pages/discover_page.rs:151 src/ui/pages/search_page.rs:215
-msgid "Station data could not be received."
-msgstr "Данные станции не могут быть получены."
-
-#: src/ui/pages/library_page.rs:110
+#: src/ui/pages/library_page.rs:111
 msgid "Welcome to {}"
 msgstr "Добро пожаловать на {}"
 
-#: src/ui/pages/search_page.rs:222
-msgid ""
-"The number of results is limited to {} item. Try using a more specific "
-"search term."
-msgid_plural ""
-"The number of results is limited to {} items. Try using a more specific "
-"search term."
-msgstr[0] "Количество результатов ограничено до {}. Попробуйте уточнить поиск."
-msgstr[1] "Количество результатов ограничено до {}. Попробуйте уточнить поиск."
-msgstr[2] "Количество результатов ограничено до {}. Попробуйте уточнить поиск."
+#: src/ui/recording_indicator.rs:111
+msgid "Recording in Progress"
+msgstr "Запись в процессе"
 
-#: src/ui/station_dialog.rs:216
+#: src/ui/recording_indicator.rs:112
+msgid "Ignored"
+msgstr "Игнорируется"
+
+#: src/ui/recording_indicator.rs:113
+msgid "No Recording"
+msgstr "Не записывается"
+
+#: src/ui/recording_indicator.rs:120
+msgid "The current song will be recorded until a new song is detected."
+msgstr ""
+"Текущая песня будет записываться до тех пор, пока не будет обнаружена новая "
+"песня."
+
+#: src/ui/recording_indicator.rs:123
+msgid "No recording because the song title contains a word on the ignore list."
+msgstr ""
+"Не записывается, потому что в названии песни есть слово из списка "
+"игнорирования."
+
+#: src/ui/recording_indicator.rs:126
+msgid ""
+"The current song cannot be fully recorded. The beginning has been missed."
+msgstr "Текущая песня не может быть записана полностью. Пропущено начало."
+
+#: src/ui/station_dialog.rs:201
 msgid "{} kbit/s"
 msgstr "{} кБит/с"
+
+#~ msgid "Create new station"
+#~ msgstr "Создать новую станцию"
+
+#~ msgid "Create New Station"
+#~ msgstr "Создать новую станцию"
+
+#~ msgid ""
+#~ "You can decide if you want the new station to be visible for all users "
+#~ "worldwide or if you want to create a local station."
+#~ msgstr ""
+#~ "Вы можете решить, хотите ли вы, чтобы новая станция была видна всем "
+#~ "пользователям по всему миру, или вы хотите создать локальную станцию."
+
+#~ msgid "Create _Public Station"
+#~ msgstr "Создать _общественную станцию"
+
+#~ msgid "Create _Local Station"
+#~ msgstr "Создать _локальную станцию"
+
+#~ msgid "Create Local Station"
+#~ msgstr "Создать локальную станцию"
+
+#~ msgid "Create Station"
+#~ msgstr "Создать станцию"
+
+#~ msgid "Discover"
+#~ msgstr "Обзор"
+
+#~ msgid "Trending"
+#~ msgstr "В тренде"
+
+#~ msgid "Other Users Are Listening To…"
+#~ msgstr "Другие пользователи слушают…"
+
+#~ msgid "Previous"
+#~ msgstr "Предыдущее"
+
+#~ msgid "Next"
+#~ msgstr "Следующее"
+
+#~ msgid "Library"
+#~ msgstr "Библиотека"
+
+#~ msgid "_Enable Mini Player"
+#~ msgstr "_Включить мини-плеер"
+
+#~ msgid "_Votes"
+#~ msgstr "_Голоса"
+
+#~ msgid "_Create New Station"
+#~ msgstr "_Создать новую станцию"
+
+#~ msgid "Start"
+#~ msgstr "Начать"
+
+#~ msgid "Resize"
+#~ msgstr "Изменить размер"
+
+#~ msgid "Votes"
+#~ msgstr "Голоса"
+
+#~ msgid "Change the sorting of the search results"
+#~ msgstr "Изменить сортировку результатов поиска"
+
+#~ msgid "Try using a different search term"
+#~ msgstr "Попробуйте использовать другие термины"
+
+#~ msgid "Search Results"
+#~ msgstr "Результаты поиска"
+
+#~ msgid "Station Menu"
+#~ msgstr "Меню станции"
+
+#~ msgid "Stream to a _Device"
+#~ msgstr "Трансляция на _устройство"
+
+#~ msgid ""
+#~ "Songs are automatically recognized using the stream metadata.\n"
+#~ "\n"
+#~ "If the station does not send any metadata, no songs can be recognized."
+#~ msgstr ""
+#~ "Песни автоматически распознаются с помощью метаданных трансляции.\n"
+#~ "\n"
+#~ "Если станция не отправляет метаданные, песни не распознаются."
+
+#~ msgid "Saved songs are located in your Music folder."
+#~ msgstr "Сохраненные песни находятся в папке Музыка."
+
+#~ msgid "_Open"
+#~ msgstr "_Открыть"
+
+#~ msgid "Stream to a Device"
+#~ msgstr "Трансляция на устройство"
+
+#~ msgid ""
+#~ "Audio playback can be streamed to a network device (requires Google Cast "
+#~ "support)."
+#~ msgstr ""
+#~ "Воспроизведение аудио можно транслировать на сетевое устройство "
+#~ "(требуется поддержка Google Cast)."
+
+#~ msgid "Search Completed"
+#~ msgstr "Поиск завершен"
+
+#~ msgid "Main View"
+#~ msgstr "Главный вид"
+
+#~ msgid "Unable to access music directory. Saving song in home directory."
+#~ msgstr ""
+#~ "Невозможно получить доступ к папке с музыкой. Сохранение песни в домашней "
+#~ "папке."
+
+#~ msgid "Cannot save song."
+#~ msgstr "Невозможно сохранить песню."
+
+#~ msgid "Show statistics"
+#~ msgstr "Показать статистику"
+
+#~ msgid "Add new station"
+#~ msgstr "Добавить новую станцию"
+
+#~ msgid "Your favorite station is missing?"
+#~ msgstr "Ваша любимая станция пропала?"
+
+#~ msgid "Open website"
+#~ msgstr "Открыть веб-сайт"
+
+#~ msgid "Powered by radio-browser.info"
+#~ msgstr "Работает на сайте radio-browser.info"
+
+#~ msgid "Station data could not be received."
+#~ msgstr "Данные станции не могут быть получены."
+
+#~ msgid ""
+#~ "The number of results is limited to {} item. Try using a more specific "
+#~ "search term."
+#~ msgid_plural ""
+#~ "The number of results is limited to {} items. Try using a more specific "
+#~ "search term."
+#~ msgstr[0] ""
+#~ "Количество результатов ограничено до {}. Попробуйте уточнить поиск."
+#~ msgstr[1] ""
+#~ "Количество результатов ограничено до {}. Попробуйте уточнить поиск."
+#~ msgstr[2] ""
+#~ "Количество результатов ограничено до {}. Попробуйте уточнить поиск."
 
 #~ msgid "Receiving Station Data…"
 #~ msgstr "Получение данных о станции…"
@@ -588,9 +693,6 @@ msgstr "{} кБит/с"
 
 #~ msgid "Whether the application should use a dark theme"
 #~ msgstr "Должно ли приложение использовать темную тему"
-
-#~ msgid "Window"
-#~ msgstr "Окно"
 
 #~ msgctxt "shortcut window"
 #~ msgid "Open library view"
@@ -624,12 +726,6 @@ msgstr "{} кБит/с"
 #~ msgstr ""
 #~ "Доступ к общедоступной онлайн-базе данных станций недоступен. Убедитесь, "
 #~ "что вы подключены к интернету."
-
-#~ msgid "Try again"
-#~ msgstr "Попробовать снова"
-
-#~ msgid "_Refresh Station Data"
-#~ msgstr "_Обновить данные о станции"
 
 #~ msgid "Open Application Menu"
 #~ msgstr "Открыть меню приложения"
