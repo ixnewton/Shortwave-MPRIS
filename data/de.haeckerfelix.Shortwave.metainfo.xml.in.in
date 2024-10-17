@@ -75,6 +75,66 @@
 
   <!-- Releases -->
   <releases>
+    <release version="4.0.0" date="2024-10-17">
+      <description>
+        <p>
+          General
+        </p>
+        <ul>
+          <li>New MPRIS media controls implementation with improved CPU usage</li>
+          <li>Song notifications are disabled by default now</li>
+          <li>Refreshed user interface by making use of new Libadwaita widgets</li>
+          <li>Large parts of the app were reworked, providing a solid foundation for the next upcoming features</li>
+        </ul>
+        <p>
+          Playback
+        </p>
+        <ul>
+          <li>Last station now gets restored on app launch</li>
+          <li>Redesigned player sidebar, allowing to control volume more easily</li>
+          <li>New recording indicator showing whether the current playback is being recorded</li>
+          <li>Fixed buffering issue which prevented playing new stations, especially after switching stations too fast</li>
+          <li>Fixed issues which sometimes prevented that a song gets recorded</li>
+          <li>Fixed issue that volume remains muted after unmuting</li>
+        </ul>
+        <p>
+          Library
+        </p>
+        <ul>
+          <li>No more loading on startup, stations now get directly retrieved from cached data</li>
+          <li>Fixed issue which sometimes prevented loading more than 8 stations from library</li>
+        </ul>
+        <p>
+          Station Covers
+        </p>
+        <ul>
+          <li>More supported image file format for station covers</li>
+          <li>Enhanced security by loading station covers using sandboxed Glycin image library</li>
+          <li>Non square covers automatically get a blurred background</li>
+          <li>New generated fallback for stations without any cover image</li>
+          <li>Improved disk usage by automatically purging no longer needed cached data</li>
+        </ul>
+        <p>
+          Browse / Search
+        </p>
+        <ul>
+          <li>More useful station suggestions by respecting configured system language / region</li>
+          <li>Suggestions now get updated with every start, no longer always showing the same stations</li>
+          <li>More accessible search feature, no longer hidden in a subpage</li>
+          <li>Search results are no longer limited at 250 stations</li>
+          <li>Faster and more efficient search by using new grid widgets</li>
+        </ul>
+        <p>
+          Chromecast
+        </p>
+        <ul>
+          <li>Shortwave is now a registered Google Cast app, no longer relying on the generic media player</li>
+          <li>New backend which greatly improves communication stability with cast devices</li>
+          <li>Improved discovery of cast devices with lower CPU and memory usage</li>
+          <li>Now possible to change the volume of a connected cast device</li>
+        </ul>
+      </description>
+    </release>
     <release version="3.2.0" date="2023-02-07">
       <description>
         <p>
