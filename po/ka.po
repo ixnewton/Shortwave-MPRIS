@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2024-10-09 19:12+0000\n"
-"PO-Revision-Date: 2024-10-10 07:48+0200\n"
+"POT-Creation-Date: 2024-10-11 15:31+0000\n"
+"PO-Revision-Date: 2024-10-18 06:02+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -36,9 +36,9 @@ msgstr "ინტერნეტ რადიოს მოსმენა"
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:12
 msgid ""
 "Shortwave is an internet radio player that provides access to a station "
-"database with over 30,000 stations."
+"database with over 50,000 stations."
 msgstr ""
-"Shortwave ინტერნეტ-რადიოს დამკვრელია, რომელიც საშუალებას გაძლევთ 30, 000-ზე "
+"Shortwave ინტერნეტ-რადიოს დამკვრელია, რომელიც საშუალებას გაძლევთ 50, 000-ზე "
 "მეტ სადგურს მოუსმინოთ."
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:15
@@ -191,55 +191,55 @@ msgstr "მთავარი მენიუ"
 msgid "_Add New Stations"
 msgstr "_ახალი სადგურების დამატება"
 
-#: data/gtk/library_page.ui:114
+#: data/gtk/library_page.ui:115
 msgid "_Sorting"
 msgstr "_დალაგება"
 
-#: data/gtk/library_page.ui:117
+#: data/gtk/library_page.ui:118
 msgid "_Name"
 msgstr "_სახელი"
 
-#: data/gtk/library_page.ui:122
+#: data/gtk/library_page.ui:123
 msgid "_Language"
 msgstr "ე_ნა"
 
-#: data/gtk/library_page.ui:127
+#: data/gtk/library_page.ui:128
 msgid "_Country"
 msgstr "ქვ_ეყანა"
 
-#: data/gtk/library_page.ui:132
+#: data/gtk/library_page.ui:133
 msgid "S_tate"
 msgstr "_შტატი"
 
-#: data/gtk/library_page.ui:137
+#: data/gtk/library_page.ui:138
 msgid "_Bitrate"
 msgstr "_სიჩქარე"
 
-#: data/gtk/library_page.ui:144
+#: data/gtk/library_page.ui:145
 msgid "_Ascending"
 msgstr "აღმავალი"
 
-#: data/gtk/library_page.ui:149
+#: data/gtk/library_page.ui:150
 msgid "_Descending"
 msgstr "დაღმავალი"
 
-#: data/gtk/library_page.ui:158
+#: data/gtk/library_page.ui:159
 msgid "_Open radio-browser.info <sup>↗</sup>"
 msgstr "_radio-browser.info-ის გახსნა <sup>↗</sup>"
 
-#: data/gtk/library_page.ui:165
+#: data/gtk/library_page.ui:166
 msgid "_Preferences"
 msgstr "_მორგება"
 
-#: data/gtk/library_page.ui:169
+#: data/gtk/library_page.ui:170
 msgid "_Keyboard Shortcuts"
 msgstr "კლავიატურის მალსახმობები"
 
-#: data/gtk/library_page.ui:173
+#: data/gtk/library_page.ui:174
 msgid "_About Shortwave"
 msgstr "Shortwave-ის შესახებ"
 
-#: data/gtk/library_page.ui:181
+#: data/gtk/library_page.ui:182
 msgid "Add _Local Station"
 msgstr "_ლოკალური სადგურის დამატება"
 
@@ -349,11 +349,11 @@ msgstr ""
 msgid "Add Missing Station"
 msgstr "ნაკლული სადგურის დამატება"
 
-#: data/gtk/search_page.ui:236
+#: data/gtk/search_page.ui:237
 msgid "Unable to Retrieve Station Data"
 msgstr "სადგურის მონაცემების მიღება შეუძლებელია"
 
-#: data/gtk/search_page.ui:239
+#: data/gtk/search_page.ui:240
 msgid "Try Again"
 msgstr "კიდევ სცადეთ"
 
@@ -377,19 +377,19 @@ msgstr "ჩაწერილი სიმღერის შენახვა"
 msgid "_Play"
 msgstr "_დაკვრა"
 
-#: data/gtk/station_dialog.ui:88
+#: data/gtk/station_dialog.ui:89
 msgid "_Add to Library"
 msgstr "_ბიბლიოთეკაში ჩამატება"
 
-#: data/gtk/station_dialog.ui:104
+#: data/gtk/station_dialog.ui:106
 msgid "_Remove From Library"
 msgstr "_ბიბლიოთეკიდან წაშლა"
 
-#: data/gtk/station_dialog.ui:122 data/gtk/station_row.ui:57
+#: data/gtk/station_dialog.ui:125 data/gtk/station_row.ui:57
 msgid "Local Station"
 msgstr "ლოკალური სადგური"
 
-#: data/gtk/station_dialog.ui:123
+#: data/gtk/station_dialog.ui:126
 msgid ""
 "This station exists only in your library, and is not part of the public "
 "database"
@@ -397,11 +397,11 @@ msgstr ""
 "სადგური არსებობს მხოლოდ თქვენს პირად ბიბლიოთეკაში და ის ონლაინ სადგურების "
 "საჯარო ბაზის ნაწილს არ წარმოადგენს"
 
-#: data/gtk/station_dialog.ui:137 data/gtk/station_row.ui:69
+#: data/gtk/station_dialog.ui:140 data/gtk/station_row.ui:69
 msgid "Orphaned Station"
 msgstr "მიტოვებული სადგური"
 
-#: data/gtk/station_dialog.ui:138
+#: data/gtk/station_dialog.ui:141
 msgid ""
 "The information could not be updated, probably this station was removed from "
 "the public database"
@@ -409,48 +409,48 @@ msgstr ""
 "ინფორმაციის განახლება შეუძლებელია. ალბათ სადგური წაიშალა საჯარო ონლაინ "
 "სადგურების ბაზიდან"
 
-#: data/gtk/station_dialog.ui:149
+#: data/gtk/station_dialog.ui:152
 msgid "Information"
 msgstr "ინფორმაცია"
 
-#: data/gtk/station_dialog.ui:152
+#: data/gtk/station_dialog.ui:155
 msgid "Language"
 msgstr "ენა"
 
-#: data/gtk/station_dialog.ui:162
+#: data/gtk/station_dialog.ui:165
 msgid "Tags"
 msgstr "ჭდეები"
 
-#: data/gtk/station_dialog.ui:174
+#: data/gtk/station_dialog.ui:177
 msgid "Location"
 msgstr "მდებარეობა"
 
-#: data/gtk/station_dialog.ui:178
+#: data/gtk/station_dialog.ui:181
 msgid "Country"
 msgstr "ქვეყანა"
 
-#: data/gtk/station_dialog.ui:188
+#: data/gtk/station_dialog.ui:191
 msgid "State"
 msgstr "State"
 
-#: data/gtk/station_dialog.ui:222
+#: data/gtk/station_dialog.ui:225
 msgid "Audio"
 msgstr "აუდიო"
 
-#: data/gtk/station_dialog.ui:225
+#: data/gtk/station_dialog.ui:228
 msgid "Bitrate"
 msgstr "სიჩქარე"
 
-#: data/gtk/station_dialog.ui:235
+#: data/gtk/station_dialog.ui:238
 msgid "Codec"
 msgstr "კოდეკი"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:245
+#: data/gtk/station_dialog.ui:248
 msgid "Stream"
 msgstr "ნაკადი"
 
-#: data/gtk/station_dialog.ui:254
+#: data/gtk/station_dialog.ui:257
 msgid "Copy"
 msgstr "კოპირება"
 
