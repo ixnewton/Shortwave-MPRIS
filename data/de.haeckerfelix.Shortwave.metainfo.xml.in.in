@@ -75,6 +75,13 @@
 
   <!-- Releases -->
   <releases>
+    <release version="4.0.1" date="2024-10-18">
+      <description>
+        <p>
+          App metadata / branding improvements
+        </p>
+      </description>
+    </release>
     <release version="4.0.0" date="2024-10-17">
       <description>
         <p>
