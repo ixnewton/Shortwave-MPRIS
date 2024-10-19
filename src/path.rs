@@ -28,12 +28,6 @@ pub static DATA: LazyLock<PathBuf> = LazyLock::new(|| {
     path
 });
 
-pub static CONFIG: LazyLock<PathBuf> = LazyLock::new(|| {
-    let mut path = glib::user_config_dir();
-    path.push(config::NAME);
-    path
-});
-
 pub static CACHE: LazyLock<PathBuf> = LazyLock::new(|| {
     let mut path = glib::user_cache_dir();
     path.push(config::NAME);
@@ -42,7 +36,6 @@ pub static CACHE: LazyLock<PathBuf> = LazyLock::new(|| {
 
 pub fn init() -> std::io::Result<()> {
     fs::create_dir_all(DATA.to_owned())?;
-    fs::create_dir_all(CONFIG.to_owned())?;
     fs::create_dir_all(CACHE.to_owned())?;
     Ok(())
 }
