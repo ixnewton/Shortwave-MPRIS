@@ -23,7 +23,7 @@ use crate::ui::SwApplicationWindow;
 pub fn show(parent: &SwApplicationWindow) {
     let dialog = adw::AboutDialog::from_appdata(
         &format!("{}/metainfo.xml", config::PATH_ID),
-        Some("4.0.0"),
+        Some(config::VERSION),
     );
 
     let _version = match config::PROFILE {
