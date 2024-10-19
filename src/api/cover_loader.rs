@@ -198,15 +198,15 @@ fn snapshot_thumbnail(snapshot: &gtk::Snapshot, cover: gdk::Texture, size: f32) 
     );
 
     if width < size || height < size {
-        let blur_radio = size / 4.0;
+        let blur_radius = size / 4.0;
 
         let outer_rect_width;
         let outer_rect_height;
         if aspect_ratio < 1.0 {
-            outer_rect_width = size + blur_radio * 2.0;
+            outer_rect_width = size + blur_radius * 2.0;
             outer_rect_height = outer_rect_width / aspect_ratio;
         } else {
-            outer_rect_height = size + blur_radio * 2.0;
+            outer_rect_height = size + blur_radius * 2.0;
             outer_rect_width = aspect_ratio * outer_rect_height;
         }
 
@@ -217,7 +217,7 @@ fn snapshot_thumbnail(snapshot: &gtk::Snapshot, cover: gdk::Texture, size: f32) 
             outer_rect_height,
         );
 
-        snapshot.push_blur(blur_radio as f64);
+        snapshot.push_blur(blur_radius as f64);
         snapshot.append_texture(&cover, &outer_rect);
         snapshot.pop();
         snapshot.append_color(&RGBA::new(0.0, 0.0, 0.0, 0.2), &outer_rect);
