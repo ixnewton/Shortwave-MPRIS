@@ -198,7 +198,7 @@ mod imp {
                 return;
             }
 
-            let text = self.search_entry.text().to_string();
+            let text = self.search_entry.text().trim().to_string();
             let text = if text.is_empty() { None } else { Some(text) };
 
             // Don't search if search entry is empty
