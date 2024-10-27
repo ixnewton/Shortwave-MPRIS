@@ -111,12 +111,12 @@ cover {
 .gadget-controller-display {
   background-image: linear-gradient(#b6bfb6, #dae6da);
   border-radius: 12px;
-  border: 1px solid alpha(black, 1);
+  border: 1px solid black;
   padding-top: 3px;
-  box-shadow: inset 0px 1px 8px 0px alpha(black, 0.5),
-    inset 0px 0px 2px 1px alpha(black, 0.5),
-    0px 1px 0px 0px alpha(white, 0.3),
-    0px -1px 0px 0px alpha(black, 0.15);
+  box-shadow: inset 0px 1px 8px 0px color-mix(in srgb, black 50%, transparent),
+    inset 0px 0px 2px 1px color-mix(in srgb, black 50%, transparent),
+    0px 1px 0px 0px color-mix(in srgb, black 30%, transparent),
+    0px -1px 0px 0px color-mix(in srgb, black 15%, transparent);
 }
 
 .gadget-controller-button,
@@ -124,7 +124,7 @@ cover {
   background-image: url('resource://de/haeckerfelix/Shortwave/assets/images/metal.png');
   background-size: cover;
   color: black;
-  border: 1px solid alpha(black, 1);
+  border: 1px solid black;
 }
 
 .gadget-controller-volume-button>button {
@@ -139,13 +139,13 @@ cover {
 }
 
 .notice-row list {
-  background: alpha(@accent_bg_color, .3);
+  background: color-mix(in srgb, var(--accent-bg-color) 30%, transparent);
   font-weight: bold;
   box-shadow: none;
 }
 
 .error-row list {
-  background: alpha(@error_color, .3);
+  background: color-mix(in srgb, var(--error-color) 30%, transparent);
   font-weight: bold;
   box-shadow: none;
 }
@@ -173,8 +173,8 @@ recording-indicator button {
 }
 
 recording-indicator.active button {
-  color: @light_1;
-  background-color: @red_1;
+  color: var(--light-1);
+  background-color: var(--red-1);
 }
 
 volume>scale trough highlight {
