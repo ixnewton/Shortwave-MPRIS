@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2024-10-13 13:10+0000\n"
-"PO-Revision-Date: 2024-10-13 16:50+0200\n"
+"POT-Creation-Date: 2024-11-01 18:15+0000\n"
+"PO-Revision-Date: 2024-11-14 20:24+0100\n"
 "Last-Translator: twlvnn kraftwerk <kraft_werk@tutanota.com>\n"
 "Language-Team: Bulgarian <dict-notifications@fsa-bg.org>\n"
 "Language: bg\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"X-Generator: Gtranslator 46.1\n"
+"X-Generator: Gtranslator 47.0\n"
 
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:3
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
@@ -38,7 +38,7 @@ msgid ""
 "Shortwave is an internet radio player that provides access to a station "
 "database with over 50,000 stations."
 msgstr ""
-"Shortwave е интернет радио плеър с до база от данни от над 50 000 станции."
+"Shortwave е интернет радио плеър с база от данни от над 50 000 станции."
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:15
 msgid "Features:"
@@ -265,7 +265,7 @@ msgstr "ИНТЕРНЕТ РАДИО SHORTWAVE"
 #: data/gtk/player_gadget.ui:140 data/gtk/player_toolbar.ui:29
 #: data/gtk/player_view.ui:58
 msgid "No Playback"
-msgstr "Без възпроизвеждане"
+msgstr "Не е избрана станция"
 
 #: data/gtk/player_gadget.ui:199
 msgid "Close"
@@ -429,7 +429,7 @@ msgstr "Държава"
 
 #: data/gtk/station_dialog.ui:191
 msgid "State"
-msgstr "Щат"
+msgstr "Област"
 
 #: data/gtk/station_dialog.ui:225
 msgid "Audio"
