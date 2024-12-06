@@ -12,9 +12,9 @@
     <file compressed="true" preprocess="xml-stripblanks">gtk/player_toolbar.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">gtk/player_view.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">gtk/player.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">gtk/preferences_dialog.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">gtk/recording_indicator.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">gtk/search_page.ui</file>
-    <file compressed="true" preprocess="xml-stripblanks">gtk/settings_dialog.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">gtk/song_row.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">gtk/station_cover.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">gtk/station_dialog.ui</file>

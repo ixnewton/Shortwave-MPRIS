@@ -11,9 +11,9 @@ data/gtk/player.ui
 data/gtk/player_gadget.ui
 data/gtk/player_toolbar.ui
 data/gtk/player_view.ui
+data/gtk/preferences_dialog.ui
 data/gtk/recording_indicator.ui
 data/gtk/search_page.ui
-data/gtk/settings_dialog.ui
 data/gtk/song_row.ui
 data/gtk/station_cover.ui
 data/gtk/station_dialog.ui
@@ -57,7 +57,6 @@ src/main.rs
 src/path.rs
 src/settings/key.rs
 src/settings/mod.rs
-src/settings/settings_dialog.rs
 src/settings/settings_manager.rs
 src/ui/about_dialog.rs
 src/ui/add_station_dialog.rs
@@ -73,6 +72,7 @@ src/ui/player/mod.rs
 src/ui/player/player_gadget.rs
 src/ui/player/player_toolbar.rs
 src/ui/player/player_view.rs
+src/ui/preferences_dialog.rs
 src/ui/recording_indicator.rs
 src/ui/song_row.rs
 src/ui/station_cover.rs

@@ -1,4 +1,4 @@
-// Shortwave - settings_dialog.rs
+// Shortwave - preferences_dialog.rs
 // Copyright (C) 2021-2024  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
@@ -24,17 +24,17 @@ mod imp {
     use super::*;
 
     #[derive(Debug, Default, CompositeTemplate)]
-    #[template(resource = "/de/haeckerfelix/Shortwave/gtk/settings_dialog.ui")]
-    pub struct SwSettingsDialog {
+    #[template(resource = "/de/haeckerfelix/Shortwave/gtk/preferences_dialog.ui")]
+    pub struct SwPreferencesDialog {
         #[template_child]
         show_notifications_button: TemplateChild<gtk::Switch>,
     }
 
     #[glib::object_subclass]
-    impl ObjectSubclass for SwSettingsDialog {
+    impl ObjectSubclass for SwPreferencesDialog {
         const NAME: &'static str = "SwSettingsDialog";
         type ParentType = adw::PreferencesDialog;
-        type Type = super::SwSettingsDialog;
+        type Type = super::SwPreferencesDialog;
 
         fn class_init(klass: &mut Self::Class) {
             Self::bind_template(klass);
@@ -45,7 +45,7 @@ mod imp {
         }
     }
 
-    impl ObjectImpl for SwSettingsDialog {
+    impl ObjectImpl for SwPreferencesDialog {
         fn constructed(&self) {
             settings_manager::bind_property(
                 Key::Notifications,
@@ -55,19 +55,19 @@ mod imp {
         }
     }
 
-    impl WidgetImpl for SwSettingsDialog {}
+    impl WidgetImpl for SwPreferencesDialog {}
 
-    impl AdwDialogImpl for SwSettingsDialog {}
+    impl AdwDialogImpl for SwPreferencesDialog {}
 
-    impl PreferencesDialogImpl for SwSettingsDialog {}
+    impl PreferencesDialogImpl for SwPreferencesDialog {}
 }
 
 glib::wrapper! {
-    pub struct SwSettingsDialog(ObjectSubclass<imp::SwSettingsDialog>)
+    pub struct SwPreferencesDialog(ObjectSubclass<imp::SwPreferencesDialog>)
         @extends gtk::Widget, adw::Dialog, adw::PreferencesDialog;
 }
 
-impl Default for SwSettingsDialog {
+impl Default for SwPreferencesDialog {
     fn default() -> Self {
         glib::Object::new()
     }

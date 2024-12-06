@@ -28,8 +28,8 @@ use crate::api::CoverLoader;
 use crate::audio::SwPlayer;
 use crate::config;
 use crate::database::SwLibrary;
-use crate::settings::{settings_manager, SwSettingsDialog};
-use crate::ui::{about_dialog, SwApplicationWindow};
+use crate::settings::settings_manager;
+use crate::ui::{about_dialog, SwApplicationWindow, SwPreferencesDialog};
 
 mod imp {
     use super::*;
@@ -180,7 +180,7 @@ impl SwApplication {
                     #[weak]
                     window,
                     move |_, _, _| {
-                        let settings_window = SwSettingsDialog::default();
+                        let settings_window = SwPreferencesDialog::default();
                         settings_window.present(Some(&window));
                     }
                 ))

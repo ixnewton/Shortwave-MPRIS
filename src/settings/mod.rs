@@ -14,9 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-mod settings_dialog;
-pub use settings_dialog::SwSettingsDialog;
-
 mod key;
 pub use key::Key;
 
