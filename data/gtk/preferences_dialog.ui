@@ -2,25 +2,62 @@
 <interface>
   <template class="SwSettingsDialog" parent="AdwPreferencesDialog">
     <property name="content_height">400</property>
-    <property name="content_width">500</property>
+    <property name="content_width">600</property>
     <child>
       <object class="AdwPreferencesPage">
         <property name="icon_name">preferences-system-symbolic</property>
         <property name="title" translatable="yes">General</property>
         <child>
           <object class="AdwPreferencesGroup">
-            <property name="title" translatable="yes">Features</property>
+            <property name="title" translatable="yes">Playback</property>
             <child>
               <object class="AdwActionRow">
                 <property name="title" translatable="yes">_Notifications</property>
-                <property name="use_underline">True</property>
                 <property name="subtitle" translatable="yes">Show desktop notifications when a new song gets played</property>
+                <property name="use_underline">True</property>
                 <property name="activatable_widget">show_notifications_button</property>
                 <child>
                   <object class="GtkSwitch" id="show_notifications_button">
                     <property name="valign">center</property>
                   </object>
                 </child>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="AdwPreferencesGroup">
+            <property name="title" translatable="yes">Recording</property>
+            <child>
+              <object class="AdwActionRow" id="song_save_path_row">
+                <property name="title" translatable="yes">_Save Directory</property>
+                <property name="use_underline">True</property>
+                <property name="subtitle_selectable">True</property>
+                <property name="activatable">True</property>
+                <child>
+                  <object class="GtkImage">
+                    <property name="icon_name">folder-symbolic</property>
+                    <property name="margin_start">6</property>
+                    <property name="margin_end">6</property>
+                  </object>
+                </child>
+                <style>
+                  <class name="property" />
+                </style>
+              </object>
+            </child>
+            <child>
+              <object class="AdwSpinRow" id="song_duration_threshold_row">
+                <property name="title" translatable="yes">_Minimum Duration in Seconds</property>
+                <property name="subtitle" translatable="yes">Tracks shorter than the minimum length will be ignored</property>
+                <property name="use_underline">True</property>
+                <property name="adjustment">
+                  <object class="GtkAdjustment">
+                    <property name="step_increment">1.0</property>
+                    <property name="upper">600.0</property>
+                    <property name="lower">5.0</property>
+                  </object>
+                </property>
               </object>
             </child>
           </object>

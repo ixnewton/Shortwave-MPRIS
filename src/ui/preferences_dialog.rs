@@ -14,10 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+use adw::prelude::*;
 use adw::subclass::prelude::*;
-use glib::subclass;
-use gtk::{glib, CompositeTemplate};
+use glib::{clone, subclass};
+use gtk::{gio, glib, CompositeTemplate};
 
+use crate::i18n::i18n;
 use crate::settings::{settings_manager, Key};
 
 mod imp {
@@ -26,8 +28,15 @@ mod imp {
     #[derive(Debug, Default, CompositeTemplate)]
     #[template(resource = "/de/haeckerfelix/Shortwave/gtk/preferences_dialog.ui")]
     pub struct SwPreferencesDialog {
+        // Playback
         #[template_child]
         show_notifications_button: TemplateChild<gtk::Switch>,
+
+        // Recording
+        #[template_child]
+        song_save_path_row: TemplateChild<adw::ActionRow>,
+        #[template_child]
+        song_duration_threshold_row: TemplateChild<adw::SpinRow>,
     }
 
     #[glib::object_subclass]
@@ -52,6 +61,26 @@ mod imp {
                 &*self.show_notifications_button,
                 "active",
             );
+
+            settings_manager::bind_property(
+                Key::RecorderSongSavePath,
+                &*self.song_save_path_row,
+                "subtitle",
+            );
+
+            settings_manager::bind_property(
+                Key::RecorderSongDurationThreshold,
+                &*self.song_duration_threshold_row,
+                "value",
+            );
+
+            self.song_save_path_row.connect_activated(clone!(
+                #[weak(rename_to = imp)]
+                self,
+                move |_| {
+                    imp.select_recording_save_directory();
+                }
+            ));
         }
     }
 
@@ -60,6 +89,38 @@ mod imp {
     impl AdwDialogImpl for SwPreferencesDialog {}
 
     impl PreferencesDialogImpl for SwPreferencesDialog {}
+
+    impl SwPreferencesDialog {
+        pub fn select_recording_save_directory(&self) {
+            let parent = self
+                .obj()
+                .root()
+                .unwrap()
+                .downcast::<gtk::Window>()
+                .unwrap();
+
+            let dialog = gtk::FileDialog::new();
+            dialog.set_title(&i18n("Select Save Directory"));
+            dialog.set_accept_label(Some(&i18n("_Select")));
+
+            dialog.select_folder(
+                Some(&parent),
+                gio::Cancellable::NONE,
+                move |result| match result {
+                    Ok(folder) => {
+                        debug!("Selected save directory: {:?}", folder.path());
+                        settings_manager::set_string(
+                            Key::RecorderSongSavePath,
+                            folder.parse_name().to_string(),
+                        );
+                    }
+                    Err(err) => {
+                        warn!("Selected directory could not be accessed {:?}", err);
+                    }
+                },
+            );
+        }
+    }
 }
 
 glib::wrapper! {

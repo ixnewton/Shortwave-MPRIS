@@ -180,8 +180,8 @@ impl SwApplication {
                     #[weak]
                     window,
                     move |_, _, _| {
-                        let settings_window = SwPreferencesDialog::default();
-                        settings_window.present(Some(&window));
+                        let preferences_window = SwPreferencesDialog::default();
+                        preferences_window.present(Some(&window));
                     }
                 ))
                 .build(),
