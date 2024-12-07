@@ -88,6 +88,19 @@ mod imp {
                 fs::remove_dir_all(path).expect("Could not delete recording directory.");
             }
 
+            // Ensure recorder save path gsetting is set
+            if settings_manager::string(Key::RecorderSongSavePath).is_empty() {
+                settings_manager::set_string(
+                    Key::RecorderSongSavePath,
+                    glib::user_special_dir(glib::UserDirectory::Music)
+                        .unwrap_or(glib::home_dir())
+                        .as_os_str()
+                        .to_str()
+                        .unwrap()
+                        .to_string(),
+                );
+            }
+
             // Set how many songs will be saved before they are replaced with newer recordings
             self.past_songs
                 .set_max_count(settings_manager::integer(Key::RecorderSaveCount) as u32);

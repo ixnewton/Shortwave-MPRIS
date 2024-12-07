@@ -98,25 +98,11 @@ impl SwSong {
     pub fn save(&self) -> Result<(), Error> {
         debug!("Save song \"{}\"", &self.title());
 
-        let custom_path = settings_manager::string(Key::RecorderSongSavePath);
+        let directory = settings_manager::string(Key::RecorderSongSavePath);
         let filename = sanitize_filename::sanitize(self.title()) + ".ogg";
 
-        let path = if !custom_path.is_empty() {
-            let mut path = PathBuf::from(custom_path);
-            path.push(filename);
-            path
-        } else {
-            // For some unknown reasons some users don't have a xdg-music dir?
-            // See: https://gitlab.gnome.org/World/Shortwave/-/issues/676
-            let mut path = if let Some(path) = glib::user_special_dir(glib::UserDirectory::Music) {
-                path
-            } else {
-                warn!("Unable to access music directory. Saving song in home directory.");
-                glib::home_dir()
-            };
-            path.push(filename);
-            path
-        };
+        let mut path = PathBuf::from(directory);
+        path.push(filename);
 
         fs::copy(self.file().path().unwrap(), path).map_err(Rc::new)?;
         Ok(())
