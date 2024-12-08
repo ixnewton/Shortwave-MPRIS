@@ -9,8 +9,8 @@
           <object class="AdwHeaderBar">
             <child>
               <object class="AdwSplitButton">
-                <property name="action-name">navigation.push</property>
-                <property name="action-target">'search'</property>
+                <property name="action_name">navigation.push</property>
+                <property name="action_target">'search'</property>
                 <property name="icon_name">list-add-symbolic</property>
                 <property name="tooltip_text" translatable="yes">Browse Stations</property>
                 <property name="menu_model">add_menu</property>
@@ -86,8 +86,8 @@
                         <property name="hexpand">True</property>
                         <child>
                           <object class="GtkButton" id="add_button">
-                            <property name="action-name">navigation.push</property>
-                            <property name="action-target">'search'</property>                            
+                            <property name="action_name">navigation.push</property>
+                            <property name="action_target">'search'</property>                            
                             <property name="halign">center</property>
                             <property name="label" translatable="yes">_Add New Stations</property>
                             <property name="use_underline">True</property>

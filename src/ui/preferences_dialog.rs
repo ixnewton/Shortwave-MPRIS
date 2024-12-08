@@ -56,22 +56,23 @@ mod imp {
 
     impl ObjectImpl for SwPreferencesDialog {
         fn constructed(&self) {
+            // Playback
             settings_manager::bind_property(
                 Key::Notifications,
                 &*self.show_notifications_button,
                 "active",
             );
 
+            // Recording
+            let recording_mode_action = settings_manager::create_action(Key::RecordingMode);
+            let group = gio::SimpleActionGroup::new();
+            group.add_action(&recording_mode_action);
+            self.obj().insert_action_group("player", Some(&group));
+
             settings_manager::bind_property(
                 Key::RecorderSongSavePath,
                 &*self.song_save_path_row,
                 "subtitle",
-            );
-
-            settings_manager::bind_property(
-                Key::RecorderSongDurationThreshold,
-                &*self.song_duration_threshold_row,
-                "value",
             );
 
             self.song_save_path_row.connect_activated(clone!(
@@ -81,6 +82,12 @@ mod imp {
                     imp.select_recording_save_directory();
                 }
             ));
+
+            settings_manager::bind_property(
+                Key::RecorderSongDurationThreshold,
+                &*self.song_duration_threshold_row,
+                "value",
+            );
         }
     }
 

@@ -32,6 +32,11 @@ pub fn bind_property<P: IsA<glib::Object>>(key: Key, object: &P, property: &str)
         .build();
 }
 
+pub fn create_action(key: Key) -> gio::Action {
+    let settings = settings();
+    settings.create_action(key.to_string().as_str())
+}
+
 #[allow(dead_code)]
 pub fn string(key: Key) -> String {
     let settings = settings();

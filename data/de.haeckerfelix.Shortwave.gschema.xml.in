@@ -25,6 +25,9 @@
     <key name="library-sorting-type" type="s">
       <default>"ascending"</default>
     </key>
+    <key name="recording-mode" type="s">
+      <default>"decide"</default>
+    </key>
     <key name="recorder-save-count" type="i">
       <default>7</default>
     </key>

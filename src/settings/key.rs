@@ -31,6 +31,7 @@ pub enum Key {
     LibrarySortingType,
 
     // Audio
+    RecordingMode,
     RecorderSaveCount,
     RecorderSongDurationThreshold,
     RecorderSongSavePath,

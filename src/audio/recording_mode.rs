@@ -1,5 +1,5 @@
-// Shortwave - mod.rs
-// Copyright (C) 2021-2024  Felix Häcker <haeckerfelix@gnome.org>
+// Shortwave - recording_mode.rs
+// Copyright (C) 2024  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,20 +14,16 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-mod gstreamer_backend;
-mod mpris;
-mod playback_state;
-mod player;
-mod recording_mode;
-mod song;
-mod song_model;
-mod song_state;
+use gtk::glib;
+use gtk::glib::Enum;
 
-pub use gstreamer_backend::{GstreamerBackend, GstreamerChange};
-pub use mpris::MprisServer;
-pub use playback_state::SwPlaybackState;
-pub use player::SwPlayer;
-pub use recording_mode::SwRecordingMode;
-pub use song::SwSong;
-pub use song_model::SwSongModel;
-pub use song_state::SwSongState;
+#[derive(Display, Copy, Debug, Clone, EnumString, Eq, PartialEq, Enum)]
+#[repr(u32)]
+#[enum_type(name = "SwRecordingMode")]
+#[derive(Default)]
+pub enum SwRecordingMode {
+    Everything,
+    #[default]
+    Decide,
+    Nothing,
+}
