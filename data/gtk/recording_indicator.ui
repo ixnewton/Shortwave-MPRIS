@@ -35,12 +35,6 @@
       <child>
         <object class="AdwStatusPage" id="state_statuspage">
           <property name="width_request">200</property>
-          <property name="title" translatable="yes">An error occurred</property>
-          <binding name="description">
-            <lookup name="last-failure" type="SwPlayer">
-              <lookup name="player">SwRecordingIndicator</lookup>
-            </lookup>
-          </binding>
           <style>
             <class name="compact" />
           </style>
