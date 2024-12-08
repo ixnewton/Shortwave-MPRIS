@@ -17,16 +17,25 @@
 use gtk::glib;
 use gtk::glib::Enum;
 
+// TODO: Rename to SwRecordingState
 #[derive(Display, Copy, Debug, Clone, EnumString, Eq, PartialEq, Enum)]
 #[repr(u32)]
 #[enum_type(name = "SwSongState")]
 #[derive(Default)]
 pub enum SwSongState {
+    #[default]
+    None,
     Recording,
     Recorded,
-    #[default]
-    Incomplete,
-    Ignored,
+    SkippedIncomplete,
+    SkippedIgnored,
     BelowThreshold,
     Discarded,
+    Saved,
+}
+
+impl SwSongState {
+    pub fn include_in_history(&self) -> bool {
+        *self != Self::SkippedIgnored && *self != Self::BelowThreshold
+    }
 }

@@ -56,6 +56,8 @@ mod imp {
         past_songs: SwSongModel,
         #[property(get, set=Self::set_volume)]
         volume: Cell<f64>,
+        #[property(get, set=Self::set_recording_mode, builder(SwRecordingMode::default()))]
+        recording_mode: Cell<SwRecordingMode>,
 
         #[property(get)]
         #[property(name="has-device", get=Self::has_device, type=bool)]
@@ -80,30 +82,6 @@ mod imp {
     impl ObjectImpl for SwPlayer {
         fn constructed(&self) {
             self.parent_constructed();
-
-            // Cleanup recording directory
-            let mut path = path::DATA.clone();
-            path.push("recording");
-            if path.exists() {
-                fs::remove_dir_all(path).expect("Could not delete recording directory.");
-            }
-
-            // Ensure recorder save path gsetting is set
-            if settings_manager::string(Key::RecorderSongSavePath).is_empty() {
-                settings_manager::set_string(
-                    Key::RecorderSongSavePath,
-                    glib::user_special_dir(glib::UserDirectory::Music)
-                        .unwrap_or(glib::home_dir())
-                        .as_os_str()
-                        .to_str()
-                        .unwrap()
-                        .to_string(),
-                );
-            }
-
-            // Set how many songs will be saved before they are replaced with newer recordings
-            self.past_songs
-                .set_max_count(settings_manager::integer(Key::RecorderSaveCount) as u32);
 
             // Setup Gstreamer backend
             let (sender, receiver) = async_channel::bounded(10);
@@ -150,6 +128,33 @@ mod imp {
                     .await
                     .handle_error("Unable to start MPRIS media controls")
             });
+
+            // Cleanup temporary recording directory
+            let mut path = path::DATA.clone();
+            path.push("recording");
+            if path.exists() {
+                fs::remove_dir_all(path).expect("Could not delete recording directory.");
+            }
+
+            // Ensure temporary recording directory gsetting is set
+            if settings_manager::string(Key::RecorderSongSavePath).is_empty() {
+                settings_manager::set_string(
+                    Key::RecorderSongSavePath,
+                    glib::user_special_dir(glib::UserDirectory::Music)
+                        .unwrap_or(glib::home_dir())
+                        .as_os_str()
+                        .to_str()
+                        .unwrap()
+                        .to_string(),
+                );
+            }
+
+            // Set how many songs will be saved before they are replaced with newer recordings
+            let max_count = settings_manager::integer(Key::RecorderSaveCount) as u32;
+            self.past_songs.set_max_count(max_count);
+
+            // Bind recording mode setting
+            settings_manager::bind_property(Key::RecordingMode, &*self.obj(), "recording-mode");
         }
     }
 
@@ -178,6 +183,21 @@ mod imp {
             }
         }
 
+        pub fn set_recording_mode(&self, mode: SwRecordingMode) {
+            if self.recording_mode.get() != mode {
+                debug!(
+                    "Set recording mode: {} -> {}",
+                    self.recording_mode.get(),
+                    &mode
+                );
+                self.recording_mode.set(mode);
+
+                if mode == SwRecordingMode::Nothing {
+                    self.stop_recording(true);
+                }
+            }
+        }
+
         fn process_gst_message(&self, message: GstreamerChange) -> glib::ControlFlow {
             let app = SwApplication::default();
             let window = SwApplicationWindow::default();
@@ -187,17 +207,23 @@ mod imp {
                     debug!("Stream title has changed to: {}", title);
 
                     // Stop recording of old song
-                    if let Some(song) = self.stop_recording(false) {
-                        self.past_songs.add_song(&song);
-                    }
+                    self.stop_recording(false);
 
                     // Set previous song
-                    *self.previous_song.borrow_mut() = self.playing_song.borrow_mut().take();
-                    self.obj().notify_previous_song();
+                    if let Some(song) = self.playing_song.borrow_mut().take() {
+                        if song.state().include_in_history() {
+                            self.past_songs.add_song(&song);
+                        }
+
+                        *self.previous_song.borrow_mut() = Some(song);
+                        self.obj().notify_previous_song();
+                    }
 
                     // Set new song
                     let song = SwSong::new(&title, &self.obj().station().unwrap());
-                    self.start_recording(&song);
+                    if self.obj().recording_mode() != SwRecordingMode::Nothing {
+                        self.start_recording(&song);
+                    }
                     *self.playing_song.borrow_mut() = Some(song);
 
                     self.obj().notify_playing_song();
@@ -218,7 +244,7 @@ mod imp {
                         // since the song has not been recorded completely.
                         if self.backend.get().unwrap().borrow().is_recording() {
                             self.stop_recording(true);
-                            self.clear_song();
+                            self.reset_song();
                         }
                     }
 
@@ -264,8 +290,14 @@ mod imp {
             glib::ControlFlow::Continue
         }
 
-        pub fn clear_song(&self) {
-            *self.playing_song.borrow_mut() = None;
+        /// Unsets the current playing song and adds it to the past played songs history
+        pub fn reset_song(&self) {
+            if let Some(song) = self.playing_song.borrow_mut().take() {
+                if song.state().include_in_history() {
+                    self.past_songs.add_song(&song);
+                }
+            }
+
             *self.previous_song.borrow_mut() = None;
             self.obj().notify_playing_song();
             self.obj().notify_has_playing_song();
@@ -276,10 +308,14 @@ mod imp {
             // If there is no previous song, we know that the current song is the
             // first song we play from that station. This means that it would be
             // incomplete, as we couldn't record it completely from the beginning.
+            //
+            // The previous song is only set when the stream title changes, not
+            // when the recording stops, is paused, etc.
             if self.obj().previous_song().is_some() {
                 let path = song.file().path().unwrap();
                 fs::create_dir_all(path.parent().unwrap())
                     .expect("Could not create path for recording");
+
                 song.set_state(SwSongState::Recording);
                 self.backend
                     .get()
@@ -287,6 +323,7 @@ mod imp {
                     .borrow_mut()
                     .start_recording(path);
             } else {
+                song.set_state(SwSongState::SkippedIncomplete);
                 debug!(
                     "Song {:?} will not be recorded because it may be incomplete.",
                     song.title()
@@ -294,14 +331,13 @@ mod imp {
             }
         }
 
-        /// Returns song object if a complete song has been recorded
-        pub fn stop_recording(&self, discard_data: bool) -> Option<SwSong> {
+        pub fn stop_recording(&self, discard_data: bool) {
             debug!("Stop recording...");
             let backend = &mut self.backend.get().unwrap().borrow_mut();
 
             if !backend.is_recording() {
                 debug!("No recording, nothing to stop!");
-                return None;
+                return;
             }
 
             let song = if let Some(song) = self.obj().playing_song() {
@@ -309,7 +345,7 @@ mod imp {
             } else {
                 warn!("No song available, discard recorded data.");
                 backend.stop_recording(true);
-                return None;
+                return;
             };
 
             let threshold = settings_manager::integer(Key::RecorderSongDurationThreshold);
@@ -320,8 +356,6 @@ mod imp {
 
                 backend.stop_recording(true);
                 song.set_state(SwSongState::Discarded);
-
-                None
             } else if duration > threshold as u64 {
                 debug!("Save recorded data.");
 
@@ -331,7 +365,10 @@ mod imp {
                 song.set_state(SwSongState::Recorded);
                 song.set_duration(duration);
 
-                Some(song)
+                if self.obj().recording_mode() == SwRecordingMode::Everything {
+                    song.save().handle_error("Unable to save song");
+                    song.set_state(SwSongState::Saved);
+                }
             } else {
                 debug!(
                     "Discard recorded data, duration ({} sec) is below threshold ({} sec).",
@@ -340,8 +377,6 @@ mod imp {
 
                 backend.stop_recording(true);
                 song.set_state(SwSongState::BelowThreshold);
-
-                None
             }
         }
     }
@@ -420,7 +455,7 @@ impl SwPlayer {
 
         // Discard recorded data when the stream stops
         imp.stop_recording(true);
-        imp.clear_song();
+        imp.reset_song();
 
         imp.backend
             .get()

@@ -96,6 +96,11 @@ impl SwSong {
     }
 
     pub fn save(&self) -> Result<(), Error> {
+        if self.state() != SwSongState::Recorded {
+            debug!("Song not recorded, not able to save it.");
+            return Ok(());
+        }
+
         debug!("Save song \"{}\"", &self.title());
 
         let directory = settings_manager::string(Key::RecorderSongSavePath);
@@ -105,6 +110,8 @@ impl SwSong {
         path.push(filename);
 
         fs::copy(self.file().path().unwrap(), path).map_err(Rc::new)?;
+
+        self.set_state(SwSongState::Saved);
         Ok(())
     }
 }
