@@ -109,23 +109,25 @@ mod imp {
             // title
             let title = match state {
                 SwSongState::Recording => i18n("Recording in Progress"),
-                SwSongState::Ignored => i18n("Ignored"),
-                SwSongState::Incomplete => i18n("No Recording"),
-                _ => String::new(),
+                SwSongState::SkippedIgnored => i18n("Ignored Track"),
+                SwSongState::SkippedIncomplete => i18n("No Recording"),
+                SwSongState::None => i18n("No Recording"),
+                SwSongState::Discarded => i18n("Discarded Recording"),
+                SwSongState::Recorded => String::new(),
+                SwSongState::BelowThreshold => String::new(),
+                SwSongState::Saved => String::new(),
             };
 
             // description
             let description = match state {
-                SwSongState::Recording => {
-                    i18n("The current song will be recorded until a new song is detected.")
-                }
-                SwSongState::Ignored => {
-                    i18n("No recording because the song title contains a word on the ignore list.")
-                }
-                SwSongState::Incomplete => i18n(
-                    "The current song cannot be fully recorded. The beginning has been missed.",
-                ),
-                _ => String::new(),
+                SwSongState::Recording => i18n("Current track will be recorded until a new track is detected."),
+                SwSongState::SkippedIgnored => i18n("Current track contains a word that is on the ignore list."),
+                SwSongState::SkippedIncomplete => i18n("Current track wasn't played from the beginning, so it can't be fully recorded."),
+                SwSongState::None => i18n("Recording is disabled, no tracks will be saved."), 
+                SwSongState::Discarded => i18n("Recording was interrupted, previously recorded data is discarded."),
+                SwSongState::Recorded => String::new(),
+                SwSongState::BelowThreshold => String::new(),
+                SwSongState::Saved => String::new(),
             };
 
             self.state_statuspage.set_title(&title);
@@ -156,6 +158,7 @@ mod imp {
                             }
                         }
 
+                        imp.duration_label.set_text(&Self::format_duration(0));
                         glib::ControlFlow::Break
                     }
                 ),
