@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2024-10-06 13:10+0000\n"
-"PO-Revision-Date: 2024-10-07 17:12+0300\n"
+"POT-Creation-Date: 2024-10-11 15:31+0000\n"
+"PO-Revision-Date: 2024-12-14 14:03+0300\n"
 "Last-Translator: Yuras Shumovich <shumovichy@gmail.com>\n"
 "Language-Team: Belarusian <i18n-bel-gnome@googlegroups.com>\n"
 "Language: be\n"
@@ -27,7 +27,7 @@ msgstr "@NAME@"
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:12
 msgid "Gradio;Radio;Stream;Wave;"
-msgstr "Gradio;Radio;Радыё;Хваля;"
+msgstr "Gradio;Radio;Stream;Wave;Радыё;Хваля;Патокавая;Перадача;"
 
 #. General
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:10
@@ -37,10 +37,10 @@ msgstr "Слухайце інтэрнэт-радыё"
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:12
 msgid ""
 "Shortwave is an internet radio player that provides access to a station "
-"database with over 30,000 stations."
+"database with over 50,000 stations."
 msgstr ""
 "Shortwave — гэта прайгравальнік інтэрнэт-радыё з доступам да базы даных, "
-"якая змяшчае больш за 30 000 станцый."
+"якая змяшчае больш за 50 000 станцый."
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:15
 msgid "Features:"
@@ -83,51 +83,37 @@ msgstr "Поўная інтэграцыя ў працоўнае асяроддз
 msgid "Felix Häcker"
 msgstr "Фелікс Хекер (Felix Häcker)"
 
-#: data/gtk/create_station_dialog.ui:8
-msgid "Create new station"
-msgstr "Стварыць новую станцыю"
+#: data/gtk/add_station_dialog.ui:14
+msgid "Add Local Station"
+msgstr "Дадаць лакальную станцыю"
 
-#: data/gtk/create_station_dialog.ui:25
-msgid "Create New Station"
-msgstr "Стварэнне новай станцыі"
+#: data/gtk/add_station_dialog.ui:42
+msgid "Change Station Cover"
+msgstr "Змяніць вокладку станцыі"
 
-#: data/gtk/create_station_dialog.ui:26
+#: data/gtk/add_station_dialog.ui:60
 msgid ""
-"You can decide if you want the new station to be visible for all users "
-"worldwide or if you want to create a local station."
+"This station will only be added to your library. If you want it to be "
+"available to everyone, you should add it to the <a href=\"https://www.radio-"
+"browser.info/add\">public database</a>."
 msgstr ""
-"Можаце вырашыць, ці хочаце вы, каб новая станцыя была бачнай карыстальнікам "
-"ва ўсім свеце або хочаце стварыць лакальную станцыю."
+"Гэта станцыя будзе дададзена толькі ў вашу бібліятэку. Калі хочаце, каб "
+"станцыя была даступна для ўсіх, трэба дадаць яе ў <a href=\"https://www."
+"radio-browser.info/add\">агульнадаступную базу радыёстанцый</a>."
 
-#: data/gtk/create_station_dialog.ui:35
-msgid "Create _Public Station"
-msgstr "Стварыць _агульнадаступную станцыю"
-
-#: data/gtk/create_station_dialog.ui:46
-msgid "Create _Local Station"
-msgstr "Стварыць _лакальную станцыю"
-
-#: data/gtk/create_station_dialog.ui:71
-msgid "Create Local Station"
-msgstr "Стварыць лакальную станцыю"
-
-#: data/gtk/create_station_dialog.ui:104
-msgid "Change station image"
-msgstr "Змяніць выяву станцыі"
-
-#: data/gtk/create_station_dialog.ui:123
+#: data/gtk/add_station_dialog.ui:72
 msgid "Name"
 msgstr "Назва"
 
-#: data/gtk/create_station_dialog.ui:131
+#: data/gtk/add_station_dialog.ui:80
 msgid "Stream URL"
 msgstr "URL трансляцыі"
 
-#: data/gtk/create_station_dialog.ui:139
-msgid "Create Station"
-msgstr "Стварыць станцыю"
+#: data/gtk/add_station_dialog.ui:88
+msgid "Add Station"
+msgstr "Дадаць станцыю"
 
-#: data/gtk/device_dialog.ui:7 data/gtk/player_view.ui:111
+#: data/gtk/device_dialog.ui:7 data/gtk/player_view.ui:124
 msgid "Connect Device"
 msgstr "Падключыць прыладу"
 
@@ -194,85 +180,81 @@ msgid "Shortwave"
 msgstr "Shortwave"
 
 #: data/gtk/library_page.ui:15 data/gtk/search_page.ui:4
-msgid "Add Stations"
-msgstr "Дадаць станцыі"
+msgid "Browse Stations"
+msgstr "Агляд станцый"
 
-#: data/gtk/library_page.ui:22
+#: data/gtk/library_page.ui:23
 msgid "Main Menu"
 msgstr "Галоўнае меню"
 
-#: data/gtk/library_page.ui:91
+#: data/gtk/library_page.ui:92
 msgid "_Add New Stations"
 msgstr "_Дадаць новыя станцыі"
 
-#: data/gtk/library_page.ui:113
-msgid "_Enable Gadget Player"
-msgstr "_Уключыць міні-прайгравальнік"
-
-#: data/gtk/library_page.ui:117
+#: data/gtk/library_page.ui:115
 msgid "_Sorting"
 msgstr "_Сартаванне"
 
-#: data/gtk/library_page.ui:120
+#: data/gtk/library_page.ui:118
 msgid "_Name"
 msgstr "_Назва"
 
-#: data/gtk/library_page.ui:125
+#: data/gtk/library_page.ui:123
 msgid "_Language"
 msgstr "_Мова"
 
-#: data/gtk/library_page.ui:130
+#: data/gtk/library_page.ui:128
 msgid "_Country"
 msgstr "_Краіна"
 
-#: data/gtk/library_page.ui:135
+#: data/gtk/library_page.ui:133
 msgid "S_tate"
 msgstr "_Рэгіён"
 
-#: data/gtk/library_page.ui:140
+#: data/gtk/library_page.ui:138
 msgid "_Bitrate"
 msgstr "_Бітрэйт"
 
-#: data/gtk/library_page.ui:147
+#: data/gtk/library_page.ui:145
 msgid "_Ascending"
 msgstr "Па ўз_растанні"
 
-#: data/gtk/library_page.ui:152
+#: data/gtk/library_page.ui:150
 msgid "_Descending"
 msgstr "Па з_мяншэнні"
 
-#: data/gtk/library_page.ui:161
+#: data/gtk/library_page.ui:159
 msgid "_Open radio-browser.info <sup>↗</sup>"
 msgstr "_Адкрыць radio-browser.info <sup>↗</sup>"
 
 #: data/gtk/library_page.ui:166
-msgid "_Create New Station"
-msgstr "Стварыць _новую станцыю"
-
-#: data/gtk/library_page.ui:173
 msgid "_Preferences"
 msgstr "_Параметры"
 
-#: data/gtk/library_page.ui:177
+#: data/gtk/library_page.ui:170
 msgid "_Keyboard Shortcuts"
 msgstr "_Спалучэнні клавіш"
 
-#: data/gtk/library_page.ui:181
+#: data/gtk/library_page.ui:174
 msgid "_About Shortwave"
 msgstr "Пр_а Shortwave"
 
+#: data/gtk/library_page.ui:182
+msgid "Add _Local Station"
+msgstr "Дадаць _лакальную станцыю"
+
 #: data/gtk/player_gadget.ui:40 data/gtk/player_toolbar.ui:92
-#: data/gtk/player_view.ui:135 data/gtk/station_row.ui:84
+#: data/gtk/player_view.ui:148 data/gtk/station_row.ui:86
 msgid "Play"
 msgstr "Прайграваць"
 
 #: data/gtk/player_gadget.ui:55 data/gtk/player_toolbar.ui:106
-#: data/gtk/player_view.ui:149
+#: data/gtk/player_view.ui:162
 msgid "Stop"
 msgstr "Спыніць"
 
 #: data/gtk/player_gadget.ui:71 data/gtk/player_toolbar.ui:121
-#: data/gtk/player_view.ui:164
+#: data/gtk/player_view.ui:177
 msgid "Buffering…"
 msgstr "Буфераванне…"
 
@@ -281,7 +263,7 @@ msgid "SHORTWAVE INTERNET RADIO"
 msgstr "ІНТЭРНЭТ-РАДЫЁ SHORTWAVE"
 
 #: data/gtk/player_gadget.ui:140 data/gtk/player_toolbar.ui:29
-#: data/gtk/player_view.ui:45
+#: data/gtk/player_view.ui:58
 msgid "No Playback"
 msgstr "Не прайграецца"
 
@@ -290,25 +272,29 @@ msgid "Close"
 msgstr "Закрыць"
 
 #: data/gtk/player_gadget.ui:210
-msgid "Resize"
-msgstr "Змяніць памер"
+msgid "Restore Window"
+msgstr "Аднавіць акно"
 
-#: data/gtk/player_view.ui:194
+#: data/gtk/player_view.ui:13
+msgid "Enable Gadget Mode"
+msgstr "Уключыць міні-прайгравальнік"
+
+#: data/gtk/player_view.ui:207
 msgid "Show Station Details"
 msgstr "Паказаць звесткі станцыі"
 
-#: data/gtk/player_view.ui:244
+#: data/gtk/player_view.ui:258
 msgid "No Songs"
 msgstr "Няма песень"
 
-#: data/gtk/player_view.ui:255
+#: data/gtk/player_view.ui:269
 msgid ""
 "Songs that have been identified and recorded using the stream metadata will "
 "appear here."
 msgstr ""
 "Тут з'явяцца песні, якія распазнаны і запісаны праз метаданыя трансляцыі."
 
-#: data/gtk/player_view.ui:287 data/gtk/recording_indicator.ui:38
+#: data/gtk/player_view.ui:303 data/gtk/recording_indicator.ui:38
 msgid "An error occurred"
 msgstr "Узнікла памылка"
 
@@ -320,23 +306,19 @@ msgstr "Пошук"
 msgid "Search stations"
 msgstr "Пошук станцый"
 
-#: data/gtk/search_page.ui:70
-msgid "Browse over 50,000 stations"
-msgstr "Больш за 50 000 станцый"
+#: data/gtk/search_page.ui:72
+msgid "Discover over 50,000 public stations"
+msgstr "Больш за 50 000 агульнадаступных станцый"
 
-#: data/gtk/search_page.ui:79
-msgid "Create new Station"
-msgstr "Стварыць новую станцыю"
-
-#: data/gtk/search_page.ui:99
+#: data/gtk/search_page.ui:90
 msgid "Popular Stations"
 msgstr "Папулярныя станцыі"
 
-#: data/gtk/search_page.ui:120
+#: data/gtk/search_page.ui:111
 msgid "Discover New Stations"
 msgstr "Агляд станцый"
 
-#: data/gtk/search_page.ui:142
+#: data/gtk/search_page.ui:133
 msgid ""
 "The displayed information is provided by <a href=\"https://www.radio-browser."
 "info/\">radio-browser.info</a>. \n"
@@ -346,23 +328,31 @@ msgstr ""
 "info/\">radio-browser.info</a>.\n"
 "Shortwave не ўплывае на спіс станцыі."
 
-#: data/gtk/search_page.ui:208
+#: data/gtk/search_page.ui:199
 msgid "Loading…"
 msgstr "Загрузка…"
 
-#: data/gtk/search_page.ui:223
+#: data/gtk/search_page.ui:214
 msgid "No Results"
 msgstr "Няма вынікаў"
 
-#: data/gtk/search_page.ui:224
-msgid "Try using a different search term"
-msgstr "Паспрабуйце змяніць пошукавы запыт"
+#: data/gtk/search_page.ui:215
+msgid ""
+"If the station you are looking for is missing, you can add it to the public "
+"database."
+msgstr ""
+"Калі патрэбная вам станцыя адсутнічае, можаце дадаць яе ў агульнадаступную "
+"базу радыёстанцый."
 
-#: data/gtk/search_page.ui:234
+#: data/gtk/search_page.ui:219
+msgid "Add Missing Station"
+msgstr "Дадаць адсутную станцыю"
+
+#: data/gtk/search_page.ui:237
 msgid "Unable to Retrieve Station Data"
 msgstr "Не ўдалося атрымаць даныя станцыі"
 
-#: data/gtk/search_page.ui:237
+#: data/gtk/search_page.ui:240
 msgid "Try Again"
 msgstr "Паўтарыць спробу"
 
@@ -384,94 +374,102 @@ msgstr ""
 msgid "Save recorded song"
 msgstr "Захаваць запісаную песню"
 
-#: data/gtk/station_dialog.ui:70
-msgid "_Play Station"
-msgstr "_Прайграваць станцыю"
+#: data/gtk/station_dialog.ui:73
+msgid "_Play"
+msgstr "_Прайграць"
 
-#: data/gtk/station_dialog.ui:85
+#: data/gtk/station_dialog.ui:89
 msgid "_Add to Library"
 msgstr "_Дадаць у бібліятэку"
 
-#: data/gtk/station_dialog.ui:101
+#: data/gtk/station_dialog.ui:106
 msgid "_Remove From Library"
 msgstr "_Выдаліць з бібліятэкі"
 
-#: data/gtk/station_dialog.ui:119
+#: data/gtk/station_dialog.ui:125 data/gtk/station_row.ui:57
 msgid "Local Station"
 msgstr "Лакальная станцыя"
 
-#: data/gtk/station_dialog.ui:120
+#: data/gtk/station_dialog.ui:126
 msgid ""
 "This station exists only in your library, and is not part of the public "
-"online station database."
+"database"
 msgstr ""
 "Гэта станцыя існуе толькі ў вашай бібліятэцы і не ўваходзіць у "
-"агульнадаступную сеціўную базу радыёстанцый."
+"агульнадаступную базу радыёстанцый"
 
-#: data/gtk/station_dialog.ui:135
+#: data/gtk/station_dialog.ui:140 data/gtk/station_row.ui:69
 msgid "Orphaned Station"
 msgstr "Закінутая станцыя"
 
-#: data/gtk/station_dialog.ui:136
+#: data/gtk/station_dialog.ui:141
 msgid ""
 "The information could not be updated, probably this station was removed from "
-"the public online station database."
+"the public database"
 msgstr ""
 "Немагчыма абнавіць звесткі, магчыма, гэтая станцыя была выдалена з "
-"агульнадаступнай сеціўнай базы радыёстанцый.."
+"агульнадаступнай базы радыёстанцый"
 
-#: data/gtk/station_dialog.ui:148
+#: data/gtk/station_dialog.ui:152
 msgid "Information"
 msgstr "Звесткі"
 
-#: data/gtk/station_dialog.ui:151
+#: data/gtk/station_dialog.ui:155
 msgid "Language"
 msgstr "Мова"
 
-#: data/gtk/station_dialog.ui:161
+#: data/gtk/station_dialog.ui:165
 msgid "Tags"
 msgstr "Тэгі"
 
-#: data/gtk/station_dialog.ui:173
+#: data/gtk/station_dialog.ui:177
 msgid "Location"
 msgstr "Месцазнаходжанне"
 
-#: data/gtk/station_dialog.ui:178
+#: data/gtk/station_dialog.ui:181
 msgid "Country"
 msgstr "Краіна"
 
-#: data/gtk/station_dialog.ui:188
+#: data/gtk/station_dialog.ui:191
 msgid "State"
 msgstr "Рэгіён"
 
-#: data/gtk/station_dialog.ui:222
+#: data/gtk/station_dialog.ui:225
 msgid "Audio"
 msgstr "Гук"
 
-#: data/gtk/station_dialog.ui:226
+#: data/gtk/station_dialog.ui:228
 msgid "Bitrate"
 msgstr "Бітрэйт"
 
-#: data/gtk/station_dialog.ui:236
+#: data/gtk/station_dialog.ui:238
 msgid "Codec"
 msgstr "Кодэк"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:246
+#: data/gtk/station_dialog.ui:248
 msgid "Stream"
 msgstr "Трансляцыя"
 
-#: data/gtk/station_dialog.ui:255
+#: data/gtk/station_dialog.ui:257
 msgid "Copy"
 msgstr "Скапіяваць"
 
-#: src/audio/player.rs:192
-msgid "Station cannot be streamed. URL is not valid."
-msgstr "Немагчыма трансліраваць станцыю. URL несапраўдны."
+#: data/gtk/volume_control.ui:9
+msgid "Toggle Mute"
+msgstr "Укл/выкл гук"
 
-#: src/audio/player.rs:260
+#: data/gtk/volume_control.ui:21
+msgid "Volume"
+msgstr "Гучнасць"
+
+#: src/audio/player.rs:251
 msgid "Active Playback"
 msgstr "Прайграецца"
+
+#: src/audio/player.rs:413
+msgid "Station cannot be streamed. URL is not valid."
+msgstr "Немагчыма трансліраваць станцыю. URL несапраўдны."
 
 #: src/device/device_discovery.rs:83
 msgid "Google Cast Device"
@@ -485,9 +483,9 @@ msgstr "Невядомая мадэль"
 msgid "translator-credits"
 msgstr "Юрась Шумовіч <shumovichy@gmail.com>"
 
-#: src/ui/create_station_dialog.rs:98
-msgid "Select station image"
-msgstr "Выберыце выяву станцыі"
+#: src/ui/add_station_dialog.rs:90
+msgid "Select Station Cover"
+msgstr "Выберыце вокладку станцыі"
 
 #: src/ui/display_error.rs:46
 msgid "Show Details"
@@ -506,8 +504,8 @@ msgid "Ignored"
 msgstr "Ігнаруецца"
 
 #: src/ui/recording_indicator.rs:113
-msgid "Incomplete"
-msgstr "Няпоўная"
+msgid "No Recording"
+msgstr "Запіс не выконваецца"
 
 #: src/ui/recording_indicator.rs:120
 msgid "The current song will be recorded until a new song is detected."
@@ -527,11 +525,51 @@ msgstr "Немагчыма цалкам запісаць бягучую песн
 msgid "{} kbit/s"
 msgstr "{} кбіт/с"
 
+#~ msgid "Create new station"
+#~ msgstr "Стварыць новую станцыю"
+
+#~ msgid "Create New Station"
+#~ msgstr "Стварэнне новай станцыі"
+
+#~ msgid ""
+#~ "You can decide if you want the new station to be visible for all users "
+#~ "worldwide or if you want to create a local station."
+#~ msgstr ""
+#~ "Можаце вырашыць, ці хочаце вы, каб новая станцыя была бачнай "
+#~ "карыстальнікам ва ўсім свеце або хочаце стварыць лакальную станцыю."
+
+#~ msgid "Create _Public Station"
+#~ msgstr "Стварыць _агульнадаступную станцыю"
+
+#~ msgid "Create _Local Station"
+#~ msgstr "Стварыць _лакальную станцыю"
+
+#~ msgid "Create Local Station"
+#~ msgstr "Стварыць лакальную станцыю"
+
+#~ msgid "Create Station"
+#~ msgstr "Стварыць станцыю"
+
+#~ msgid "_Create New Station"
+#~ msgstr "Стварыць _новую станцыю"
+
+#~ msgid "Resize"
+#~ msgstr "Змяніць памер"
+
+#~ msgid "Create new Station"
+#~ msgstr "Стварыць новую станцыю"
+
+#~ msgid "Try using a different search term"
+#~ msgstr "Паспрабуйце змяніць пошукавы запыт"
+
+#~ msgid "_Play Station"
+#~ msgstr "_Прайграваць станцыю"
+
+#~ msgid "Incomplete"
+#~ msgstr "Няпоўная"
+
 #~ msgid "Discover"
 #~ msgstr "Агляд"
-
-#~ msgid "Most Voted Stations"
-#~ msgstr "Станцыі з найбольшай колькасцю галасоў"
 
 #~ msgid "Trending"
 #~ msgstr "Набіраюць папулярнасць"
