@@ -155,6 +155,25 @@ mod imp {
 
             // Bind recording mode setting
             settings_manager::bind_property(Key::RecordingMode, &*self.obj(), "recording-mode");
+
+            glib::timeout_add_seconds_local(
+                1,
+                clone!(
+                    #[weak(rename_to = imp)]
+                    self,
+                    #[upgrade_or_panic]
+                    move || {
+                        let backend = imp.backend.get().unwrap().borrow();
+                        if let Some(track) = imp.obj().playing_song() {
+                            if backend.is_recording() {
+                                let duration = backend.recording_duration();
+                                track.set_duration(duration);
+                            }
+                        }
+                        glib::ControlFlow::Continue
+                    }
+                ),
+            );
         }
     }
 
@@ -348,8 +367,10 @@ mod imp {
                 return;
             };
 
-            let threshold = settings_manager::integer(Key::RecorderSongDurationThreshold);
             let duration: u64 = backend.recording_duration();
+            song.set_duration(duration);
+
+            let threshold = settings_manager::integer(Key::RecorderSongDurationThreshold);
 
             if discard_data {
                 debug!("Discard recorded data.");
@@ -359,11 +380,8 @@ mod imp {
             } else if duration > threshold as u64 {
                 debug!("Save recorded data.");
 
-                let duration = backend.recording_duration();
                 backend.stop_recording(false);
-
                 song.set_state(SwSongState::Recorded);
-                song.set_duration(duration);
 
                 if self.obj().recording_mode() == SwRecordingMode::Everything {
                     song.save().handle_error("Unable to save song");
@@ -523,15 +541,6 @@ impl SwPlayer {
             }
             Err(e) => warn!("Unable to restore last played station: {}", e.to_string()),
         }
-    }
-
-    pub fn recording_duration(&self) -> u64 {
-        self.imp()
-            .backend
-            .get()
-            .unwrap()
-            .borrow()
-            .recording_duration()
     }
 
     pub async fn connect_device(&self, device: &SwDevice) -> Result<(), cast_sender::Error> {
