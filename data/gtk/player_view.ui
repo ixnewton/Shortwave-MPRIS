@@ -102,7 +102,15 @@
                                   </object>
                                 </child>
                                 <child>
-                                  <object class="SwRecordingIndicator" id="recording_indicator"/>
+                                  <object class="SwRecordingIndicator" id="recording_indicator">
+                                    <property name="halign">center</property>
+                                    <signal name="clicked" handler="recording_indicator_clicked" swapped="true" />
+                                    <binding name="track">
+                                      <lookup name="playing-song" type="SwPlayer">
+                                        <lookup name="player">SwPlayerView</lookup>
+                                      </lookup>
+                                    </binding>
+                                  </object>
                                 </child>
                               </object>
                             </child>

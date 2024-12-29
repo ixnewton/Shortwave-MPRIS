@@ -25,7 +25,8 @@ use crate::app::SwApplication;
 use crate::audio::SwPlayer;
 use crate::audio::SwSong;
 use crate::ui::{
-    SwDeviceIndicator, SwRecordingIndicator, SwSongRow, SwStationCover, SwVolumeControl,
+    SwDeviceIndicator, SwRecordingIndicator, SwSongRow, SwStationCover, SwTrackDialog,
+    SwVolumeControl,
 };
 
 mod imp {
@@ -62,6 +63,7 @@ mod imp {
 
         fn class_init(klass: &mut Self::Class) {
             Self::bind_template(klass);
+            Self::bind_template_callbacks(klass);
         }
 
         fn instance_init(obj: &subclass::InitializingObject<Self>) {
@@ -104,6 +106,17 @@ mod imp {
     impl WidgetImpl for SwPlayerView {}
 
     impl BinImpl for SwPlayerView {}
+
+    #[gtk::template_callbacks]
+    impl SwPlayerView {
+        #[template_callback]
+        fn recording_indicator_clicked(&self) {
+            if let Some(track) = self.obj().player().playing_song() {
+                let dialog = SwTrackDialog::new(&track);
+                dialog.present(Some(&*self.obj()))
+            }
+        }
+    }
 }
 
 glib::wrapper! {
@@ -111,7 +124,6 @@ glib::wrapper! {
         @extends gtk::Widget, adw::Bin;
 }
 
-#[gtk::template_callbacks]
 impl SwPlayerView {
     pub fn new() -> Self {
         glib::Object::new()

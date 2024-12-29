@@ -167,14 +167,29 @@ cover {
   border-radius: 12px;
 }
 
-recording-indicator button {
+.recording-indicator {
   min-height: 24px;
   font-size: x-small;
 }
 
-recording-indicator.active button {
+.recording-indicator.active {
   color: var(--light-1);
   background-color: var(--red-1);
+}
+
+.recording-indicator.active:hover {
+  background-image: image(color-mix(in srgb, currentColor 10%, transparent));
+}
+
+.recording-indicator.active:active {
+  background-image: image(RGB(0 0 6 / 20%));
+}
+
+.badge {
+  background-color: var(--border-color);
+  border-radius: 99999px;
+  padding: 0.2em 0.6em;
+  font-weight: bold;
 }
 
 volume>scale trough highlight {

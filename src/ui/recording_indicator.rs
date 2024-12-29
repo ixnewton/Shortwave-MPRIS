@@ -14,16 +14,16 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use std::cell::Cell;
+use std::cell::RefCell;
 
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use glib::{clone, subclass, Properties};
 use gtk::{glib, CompositeTemplate};
 
-use crate::audio::SwPlayer;
 use crate::audio::{SwSong, SwSongState};
 use crate::i18n::i18n;
+use crate::utils;
 
 mod imp {
     use super::*;
@@ -33,27 +33,20 @@ mod imp {
     #[properties(wrapper_type = super::SwRecordingIndicator)]
     pub struct SwRecordingIndicator {
         #[template_child]
-        button: TemplateChild<gtk::MenuButton>,
-        #[template_child]
-        state_statuspage: TemplateChild<adw::StatusPage>,
-        #[template_child]
         duration_label: TemplateChild<gtk::Label>,
 
-        #[property(get)]
-        player: SwPlayer,
-
-        updating_duration: Cell<bool>,
+        #[property(get, set=Self::set_track)]
+        track: RefCell<Option<SwSong>>,
     }
 
     #[glib::object_subclass]
     impl ObjectSubclass for SwRecordingIndicator {
         const NAME: &'static str = "SwRecordingIndicator";
-        type ParentType = adw::Bin;
+        type ParentType = gtk::Button;
         type Type = super::SwRecordingIndicator;
 
         fn class_init(klass: &mut Self::Class) {
             Self::bind_template(klass);
-            klass.set_css_name("recording-indicator");
         }
 
         fn instance_init(obj: &subclass::InitializingObject<Self>) {
@@ -62,122 +55,60 @@ mod imp {
     }
 
     #[glib::derived_properties]
-    impl ObjectImpl for SwRecordingIndicator {
-        fn constructed(&self) {
-            self.parent_constructed();
-
-            self.set_song(self.player.playing_song());
-            self.player.connect_playing_song_notify(clone!(
-                #[weak(rename_to = imp)]
-                self,
-                move |player| {
-                    imp.set_song(player.playing_song());
-                }
-            ));
-        }
-    }
+    impl ObjectImpl for SwRecordingIndicator {}
 
     impl WidgetImpl for SwRecordingIndicator {}
 
-    impl BinImpl for SwRecordingIndicator {}
+    impl ButtonImpl for SwRecordingIndicator {}
 
     impl SwRecordingIndicator {
-        fn set_song(&self, song: Option<SwSong>) {
-            self.duration_label.set_text(&Self::format_duration(0));
-            self.updating_duration.set(false);
+        fn set_track(&self, track: Option<SwSong>) {
+            if let Some(track) = &track {
+                track
+                    .bind_property("duration", &*self.duration_label, "label")
+                    .transform_to(|_, duration: u64| Some(utils::format_duration(duration)))
+                    .sync_create()
+                    .build();
 
-            if let Some(song) = song {
-                self.update_state(song.state());
-                song.connect_state_notify(clone!(
+                self.update_state(track.state());
+                track.connect_state_notify(clone!(
                     #[weak(rename_to = imp)]
                     self,
-                    move |song| {
-                        imp.update_state(song.state());
+                    move |track| {
+                        imp.update_state(track.state());
                     }
                 ));
+            } else {
+                self.duration_label.set_text(&utils::format_duration(0));
+                self.update_state(SwSongState::None);
             }
+
+            *self.track.borrow_mut() = track;
         }
 
         fn update_state(&self, state: SwSongState) {
             if state == SwSongState::Recording {
-                self.update_duration();
                 self.obj().add_css_class("active");
             } else {
                 self.obj().remove_css_class("active");
             }
 
-            // title
-            let title = match state {
-                SwSongState::Recording => i18n("Recording in Progress"),
-                SwSongState::SkippedIgnored => i18n("Ignored Track"),
-                SwSongState::SkippedIncomplete => i18n("No Recording"),
-                SwSongState::None => i18n("No Recording"),
-                SwSongState::Discarded => i18n("Discarded Recording"),
-                SwSongState::Recorded => String::new(),
-                SwSongState::BelowThreshold => String::new(),
-                SwSongState::Saved => String::new(),
+            let tooltip = if state == SwSongState::Recording {
+                i18n("Recording")
+            } else {
+                i18n("Not Recording")
             };
 
-            // description
-            let description = match state {
-                SwSongState::Recording => i18n("Current track will be recorded until a new track is detected."),
-                SwSongState::SkippedIgnored => i18n("Current track contains a word that is on the ignore list."),
-                SwSongState::SkippedIncomplete => i18n("Current track wasn't played from the beginning, so it can't be fully recorded."),
-                SwSongState::None => i18n("Recording is disabled, no tracks will be saved."), 
-                SwSongState::Discarded => i18n("Recording was interrupted, previously recorded data is discarded."),
-                SwSongState::Recorded => String::new(),
-                SwSongState::BelowThreshold => String::new(),
-                SwSongState::Saved => String::new(),
-            };
-
-            self.state_statuspage.set_title(&title);
-            self.state_statuspage.set_description(Some(&description));
-
-            self.obj().set_tooltip_text(Some(&title));
-        }
-
-        fn update_duration(&self) {
-            if self.updating_duration.get() {
-                return;
-            }
-            self.updating_duration.set(true);
-
-            glib::timeout_add_seconds_local(
-                1,
-                clone!(
-                    #[weak(rename_to = imp)]
-                    self,
-                    #[upgrade_or_panic]
-                    move || {
-                        if let Some(song) = imp.player.playing_song() {
-                            if song.state() == SwSongState::Recording {
-                                imp.duration_label.set_text(&Self::format_duration(
-                                    imp.player.recording_duration(),
-                                ));
-                                return glib::ControlFlow::Continue;
-                            }
-                        }
-
-                        imp.duration_label.set_text(&Self::format_duration(0));
-                        glib::ControlFlow::Break
-                    }
-                ),
-            );
-        }
-
-        fn format_duration(d: u64) -> String {
-            let dt = glib::DateTime::from_unix_local(d.try_into().unwrap_or_default()).unwrap();
-            dt.format("%M:%S").unwrap_or_default().to_string()
+            self.obj().set_tooltip_text(Some(&tooltip));
         }
     }
 }
 
 glib::wrapper! {
     pub struct SwRecordingIndicator(ObjectSubclass<imp::SwRecordingIndicator>)
-        @extends gtk::Widget, adw::Bin;
+        @extends gtk::Widget, gtk::Button;
 }
 
-#[gtk::template_callbacks]
 impl SwRecordingIndicator {
     pub fn new() -> Self {
         glib::Object::new()
