@@ -25,8 +25,8 @@ use shumate::prelude::*;
 
 use crate::api::SwStation;
 use crate::app::SwApplication;
-use crate::i18n;
-use crate::ui::SwStationCover;
+use crate::i18n::{i18n, i18n_f};
+use crate::ui::{SwStationCover, ToastWindow};
 
 mod imp {
     use super::*;
@@ -35,6 +35,8 @@ mod imp {
     #[template(resource = "/de/haeckerfelix/Shortwave/gtk/station_dialog.ui")]
     #[properties(wrapper_type = super::SwStationDialog)]
     pub struct SwStationDialog {
+        #[template_child]
+        pub toast_overlay: TemplateChild<adw::ToastOverlay>,
         #[template_child]
         station_cover: TemplateChild<SwStationCover>,
         #[template_child]
@@ -200,7 +202,7 @@ mod imp {
             // Bitrate
             if metadata.bitrate != 0 {
                 self.bitrate_row.set_visible(true);
-                let bitrate = i18n::i18n_f("{} kbit/s", &[&metadata.bitrate.to_string()]);
+                let bitrate = i18n_f("{} kbit/s", &[&metadata.bitrate.to_string()]);
                 self.bitrate_row.set_subtitle(&bitrate);
             }
 
@@ -284,6 +286,9 @@ mod imp {
                 let display = gdk::Display::default().unwrap();
                 let clipboard = display.clipboard();
                 clipboard.set_text(url_resolved.as_ref());
+
+                let toast = adw::Toast::new(&i18n("Copied"));
+                self.toast_overlay.add_toast(toast);
             }
         }
     }
@@ -297,5 +302,11 @@ glib::wrapper! {
 impl SwStationDialog {
     pub fn new(station: &SwStation) -> Self {
         glib::Object::builder().property("station", station).build()
+    }
+}
+
+impl ToastWindow for SwStationDialog {
+    fn toast_overlay(&self) -> adw::ToastOverlay {
+        self.imp().toast_overlay.clone()
     }
 }
