@@ -69,9 +69,7 @@ mod imp {
                 let mut map = self.map.borrow_mut();
 
                 if map.len() > self.obj().max_count() as usize {
-                    dbg!(&map);
-                    let len = map.split_off((self.obj().max_count()) as usize).len();
-                    dbg!(&map);
+                    let len: usize = map.split_off((self.obj().max_count()) as usize).len();
                     len
                 } else {
                     0
@@ -95,6 +93,7 @@ impl SwSongModel {
         glib::Object::new()
     }
 
+    // TODO: Check if song already exists in model, and update it if necessary / rearrange position
     pub fn add_song(&self, song: &SwSong) {
         {
             let mut map = self.imp().map.borrow_mut();
