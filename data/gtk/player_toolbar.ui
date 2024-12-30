@@ -42,20 +42,20 @@
               </object>
             </child>
             <child>
-              <object class="GtkRevealer" id="song_revealer">
+              <object class="GtkRevealer" id="track_revealer">
                 <binding name="reveal-child">
-                  <lookup name="has-playing-song" type="SwPlayer">
+                  <lookup name="has-playing-track" type="SwPlayer">
                     <lookup name="player">SwPlayerToolbar</lookup>
                   </lookup>
                 </binding>
                 <child>
-                  <object class="GtkLabel" id="song_label">
+                  <object class="GtkLabel" id="track_label">
                     <property name="margin_top">3</property>
                     <property name="ellipsize">end</property>
                     <property name="xalign">0</property>
                     <binding name="label">
-                      <lookup name="title" type="SwSong">
-                        <lookup name="playing-song" type="SwPlayer">
+                      <lookup name="title" type="SwTrack">
+                        <lookup name="playing-track" type="SwPlayer">
                           <lookup name="player">SwPlayerToolbar</lookup>
                         </lookup>
                       </lookup>

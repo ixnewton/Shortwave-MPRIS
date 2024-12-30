@@ -21,7 +21,7 @@ use adw::subclass::prelude::*;
 use glib::{clone, subclass, Properties};
 use gtk::{glib, CompositeTemplate};
 
-use crate::audio::{SwSong, SwSongState};
+use crate::audio::{SwTrack, SwTrackState};
 use crate::utils;
 
 mod imp {
@@ -35,7 +35,7 @@ mod imp {
         duration_label: TemplateChild<gtk::Label>,
 
         #[property(get, set=Self::set_track)]
-        track: RefCell<Option<SwSong>>,
+        track: RefCell<Option<SwTrack>>,
     }
 
     #[glib::object_subclass]
@@ -61,7 +61,7 @@ mod imp {
     impl ButtonImpl for SwRecordingIndicator {}
 
     impl SwRecordingIndicator {
-        fn set_track(&self, track: Option<SwSong>) {
+        fn set_track(&self, track: Option<SwTrack>) {
             if let Some(track) = &track {
                 track
                     .bind_property("duration", &*self.duration_label, "label")
@@ -79,14 +79,14 @@ mod imp {
                 ));
             } else {
                 self.duration_label.set_text(&utils::format_duration(0));
-                self.update_state(SwSongState::None);
+                self.update_state(SwTrackState::None);
             }
 
             *self.track.borrow_mut() = track;
         }
 
-        fn update_state(&self, state: SwSongState) {
-            if state == SwSongState::Recording {
+        fn update_state(&self, state: SwTrackState) {
+            if state == SwTrackState::Recording {
                 self.obj().add_css_class("active");
             } else {
                 self.obj().remove_css_class("active");

@@ -1,4 +1,4 @@
-// Shortwave - song_model.rs
+// Shortwave - track_model.rs
 // Copyright (C) 2024  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
@@ -22,33 +22,33 @@ use gtk::subclass::prelude::*;
 use gtk::{gio, glib};
 use indexmap::map::IndexMap;
 
-use crate::audio::SwSong;
+use crate::audio::SwTrack;
 
 mod imp {
     use super::*;
 
     #[derive(Debug, Properties, Default)]
-    #[properties(wrapper_type = super::SwSongModel)]
-    pub struct SwSongModel {
+    #[properties(wrapper_type = super::SwTrackModel)]
+    pub struct SwTrackModel {
         #[property(get, set)]
         max_count: Cell<u32>,
 
-        pub map: RefCell<IndexMap<String, SwSong>>,
+        pub map: RefCell<IndexMap<String, SwTrack>>,
     }
 
     #[glib::object_subclass]
-    impl ObjectSubclass for SwSongModel {
-        const NAME: &'static str = "SwSongModel";
-        type Type = super::SwSongModel;
+    impl ObjectSubclass for SwTrackModel {
+        const NAME: &'static str = "SwTrackModel";
+        type Type = super::SwTrackModel;
         type Interfaces = (gio::ListModel,);
     }
 
     #[glib::derived_properties]
-    impl ObjectImpl for SwSongModel {}
+    impl ObjectImpl for SwTrackModel {}
 
-    impl ListModelImpl for SwSongModel {
+    impl ListModelImpl for SwTrackModel {
         fn item_type(&self) -> glib::Type {
-            SwSong::static_type()
+            SwTrack::static_type()
         }
 
         fn n_items(&self) -> u32 {
@@ -63,8 +63,8 @@ mod imp {
         }
     }
 
-    impl SwSongModel {
-        pub fn purge_songs(&self) {
+    impl SwTrackModel {
+        pub fn purge_tracks(&self) {
             let removed = {
                 let mut map = self.map.borrow_mut();
 
@@ -85,32 +85,32 @@ mod imp {
 }
 
 glib::wrapper! {
-    pub struct SwSongModel(ObjectSubclass<imp::SwSongModel>) @implements gio::ListModel;
+    pub struct SwTrackModel(ObjectSubclass<imp::SwTrackModel>) @implements gio::ListModel;
 }
 
-impl SwSongModel {
+impl SwTrackModel {
     pub fn new() -> Self {
         glib::Object::new()
     }
 
-    // TODO: Check if song already exists in model, and update it if necessary / rearrange position
-    pub fn add_song(&self, song: &SwSong) {
+    // TODO: Check if track already exists in model, and update it if necessary / rearrange position
+    pub fn add_track(&self, track: &SwTrack) {
         {
             let mut map = self.imp().map.borrow_mut();
-            if map.contains_key(&song.uuid()) {
-                warn!("song {:?} already exists in model", song.title());
+            if map.contains_key(&track.uuid()) {
+                warn!("Track {:?} already exists in model", track.title());
                 return;
             }
 
-            map.shift_insert(0, song.uuid(), song.clone());
+            map.shift_insert(0, track.uuid(), track.clone());
         }
 
         self.items_changed(0, 0, 1);
-        self.imp().purge_songs();
+        self.imp().purge_tracks();
     }
 }
 
-impl Default for SwSongModel {
+impl Default for SwTrackModel {
     fn default() -> Self {
         Self::new()
     }

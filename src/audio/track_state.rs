@@ -1,4 +1,4 @@
-// Shortwave - song_state.rs
+// Shortwave - track_state.rs
 // Copyright (C) 2024  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
@@ -22,9 +22,9 @@ use crate::i18n::i18n;
 // TODO: Rename to SwRecordingState
 #[derive(Display, Copy, Debug, Clone, EnumString, Eq, PartialEq, Enum)]
 #[repr(u32)]
-#[enum_type(name = "SwSongState")]
+#[enum_type(name = "SwTrackState")]
 #[derive(Default)]
-pub enum SwSongState {
+pub enum SwTrackState {
     #[default]
     None,
     Recording,
@@ -36,38 +36,42 @@ pub enum SwSongState {
     Saved,
 }
 
-impl SwSongState {
+impl SwTrackState {
     pub fn include_in_history(&self) -> bool {
         *self != Self::SkippedIgnored && *self != Self::BelowThreshold
     }
 
     pub fn title(&self) -> String {
         match self {
-            SwSongState::Recording => i18n("Recording…"),
-            SwSongState::SkippedIgnored => i18n("Ignored Track"),
-            SwSongState::SkippedIncomplete => i18n("Not Recorded"),
-            SwSongState::None => i18n("Not Recorded"),
-            SwSongState::Discarded => i18n("Discarded Recording"),
-            SwSongState::Recorded => i18n("Recorded"),
-            SwSongState::BelowThreshold => i18n("Below Threshold"),
-            SwSongState::Saved => i18n("Saved"),
+            SwTrackState::Recording => i18n("Recording…"),
+            SwTrackState::SkippedIgnored => i18n("Ignored Track"),
+            SwTrackState::SkippedIncomplete => i18n("Not Recorded"),
+            SwTrackState::None => i18n("Not Recorded"),
+            SwTrackState::Discarded => i18n("Discarded Recording"),
+            SwTrackState::Recorded => i18n("Recorded"),
+            SwTrackState::BelowThreshold => i18n("Below Threshold"),
+            SwTrackState::Saved => i18n("Saved"),
         }
     }
 
     pub fn description(&self) -> String {
         match self {
-            SwSongState::Recording => i18n("Track will be recorded until a new track gets played"),
-            SwSongState::SkippedIgnored => i18n("Track contains a word that is on the ignore list"),
-            SwSongState::SkippedIncomplete => {
+            SwTrackState::Recording => i18n("Track will be recorded until a new track gets played"),
+            SwTrackState::SkippedIgnored => {
+                i18n("Track contains a word that is on the ignore list")
+            }
+            SwTrackState::SkippedIncomplete => {
                 i18n("Track wasn't played from the beginning, so it can't be fully recorded")
             }
-            SwSongState::None => i18n("Recording is deactivated in preferences"),
-            SwSongState::Discarded => i18n("Recording was interrupted, recorded data is discarded"),
-            SwSongState::Recorded => i18n("Track has been temporarily recorded and can be saved"),
-            SwSongState::BelowThreshold => {
+            SwTrackState::None => i18n("Recording is deactivated in preferences"),
+            SwTrackState::Discarded => {
+                i18n("Recording was interrupted, recorded data is discarded")
+            }
+            SwTrackState::Recorded => i18n("Track has been temporarily recorded and can be saved"),
+            SwTrackState::BelowThreshold => {
                 i18n("Track has been discarded as the duration was below the set threshold")
             }
-            SwSongState::Saved => i18n("Track was saved in the configured directory"),
+            SwTrackState::Saved => i18n("Track was saved in the configured directory"),
         }
     }
 }

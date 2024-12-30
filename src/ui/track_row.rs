@@ -1,4 +1,4 @@
-// Shortwave - song_row.rs
+// Shortwave - track_row.rs
 // Copyright (C) 2021-2024  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
@@ -21,8 +21,8 @@ use adw::subclass::prelude::*;
 use glib::{subclass, Properties};
 use gtk::{glib, CompositeTemplate};
 
-use crate::audio::SwSong;
-use crate::audio::SwSongState;
+use crate::audio::SwTrack;
+use crate::audio::SwTrackState;
 use crate::ui::SwTrackDialog;
 use crate::utils;
 
@@ -30,9 +30,9 @@ mod imp {
     use super::*;
 
     #[derive(Debug, Default, Properties, CompositeTemplate)]
-    #[properties(wrapper_type = super::SwSongRow)]
-    #[template(resource = "/de/haeckerfelix/Shortwave/gtk/song_row.ui")]
-    pub struct SwSongRow {
+    #[properties(wrapper_type = super::SwTrackRow)]
+    #[template(resource = "/de/haeckerfelix/Shortwave/gtk/track_row.ui")]
+    pub struct SwTrackRow {
         #[template_child]
         pub save_button: TemplateChild<gtk::Button>,
         #[template_child]
@@ -41,14 +41,14 @@ mod imp {
         pub button_stack: TemplateChild<gtk::Stack>,
 
         #[property(get, set, construct_only)]
-        pub track: OnceCell<SwSong>,
+        pub track: OnceCell<SwTrack>,
     }
 
     #[glib::object_subclass]
-    impl ObjectSubclass for SwSongRow {
-        const NAME: &'static str = "SwSongRow";
+    impl ObjectSubclass for SwTrackRow {
+        const NAME: &'static str = "SwTrackRow";
         type ParentType = adw::ActionRow;
-        type Type = super::SwSongRow;
+        type Type = super::SwTrackRow;
 
         fn class_init(klass: &mut Self::Class) {
             Self::bind_template(klass);
@@ -60,7 +60,7 @@ mod imp {
     }
 
     #[glib::derived_properties]
-    impl ObjectImpl for SwSongRow {
+    impl ObjectImpl for SwTrackRow {
         fn constructed(&self) {
             self.parent_constructed();
             let obj = self.obj();
@@ -80,13 +80,13 @@ mod imp {
 
             track
                 .bind_property("state", &*self.obj(), "subtitle")
-                .transform_to(|b, state: SwSongState| {
-                    let track = b.source().unwrap().downcast::<SwSong>().unwrap();
+                .transform_to(|b, state: SwTrackState| {
+                    let track = b.source().unwrap().downcast::<SwTrack>().unwrap();
                     let title = state.title();
 
-                    let string = if state == SwSongState::Recorded {
+                    let string = if state == SwTrackState::Recorded {
                         utils::format_duration(track.duration())
-                    } else if state == SwSongState::Saved {
+                    } else if state == SwTrackState::Saved {
                         format!("{} - {title}", utils::format_duration(track.duration()))
                     } else {
                         title
@@ -98,25 +98,25 @@ mod imp {
 
             track
                 .bind_property("state", &*self.save_button, "visible")
-                .transform_to(|_, state: SwSongState| Some(state == SwSongState::Recorded))
+                .transform_to(|_, state: SwTrackState| Some(state == SwTrackState::Recorded))
                 .sync_create()
                 .build();
 
             track
                 .bind_property("state", &*self.play_button, "visible")
-                .transform_to(|_, state: SwSongState| Some(state == SwSongState::Saved))
+                .transform_to(|_, state: SwTrackState| Some(state == SwTrackState::Saved))
                 .sync_create()
                 .build();
         }
     }
 
-    impl WidgetImpl for SwSongRow {}
+    impl WidgetImpl for SwTrackRow {}
 
-    impl ListBoxRowImpl for SwSongRow {}
+    impl ListBoxRowImpl for SwTrackRow {}
 
-    impl PreferencesRowImpl for SwSongRow {}
+    impl PreferencesRowImpl for SwTrackRow {}
 
-    impl ActionRowImpl for SwSongRow {
+    impl ActionRowImpl for SwTrackRow {
         fn activate(&self) {
             let dialog = SwTrackDialog::new(&self.obj().track());
             dialog.present(Some(&*self.obj()));
@@ -125,12 +125,12 @@ mod imp {
 }
 
 glib::wrapper! {
-    pub struct SwSongRow(ObjectSubclass<imp::SwSongRow>)
+    pub struct SwTrackRow(ObjectSubclass<imp::SwTrackRow>)
         @extends gtk::Widget, gtk::ListBoxRow, adw::PreferencesRow, adw::ActionRow;
 }
 
-impl SwSongRow {
-    pub fn new(track: SwSong) -> Self {
+impl SwTrackRow {
+    pub fn new(track: SwTrack) -> Self {
         glib::Object::builder().property("track", &track).build()
     }
 }

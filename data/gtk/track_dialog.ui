@@ -55,7 +55,7 @@
                                 <property name="margin_top">6</property>
                                 <property name="selectable">True</property>
                                 <binding name="label">
-                                  <lookup name="title" type="SwSong">
+                                  <lookup name="title" type="SwTrack">
                                     <lookup name="track">SwTrackDialog</lookup>
                                   </lookup>
                                 </binding>
@@ -104,7 +104,7 @@
                                     <property name="title" translatable="yes">Station</property>
                                     <binding name="subtitle">
                                       <lookup name="title" type="SwStation">
-                                        <lookup name="station" type="SwSong">
+                                        <lookup name="station" type="SwTrack">
                                           <lookup name="track">SwTrackDialog</lookup>
                                         </lookup>
                                       </lookup>
@@ -113,7 +113,7 @@
                                       <object class="SwStationCover">
                                         <property name="size">32</property>
                                         <binding name="station">
-                                          <lookup name="station" type="SwSong">
+                                          <lookup name="station" type="SwTrack">
                                             <lookup name="track">SwTrackDialog</lookup>
                                           </lookup>
                                         </binding>

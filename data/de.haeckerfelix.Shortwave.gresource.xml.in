@@ -15,7 +15,7 @@
     <file compressed="true" preprocess="xml-stripblanks">gtk/preferences_dialog.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">gtk/recording_indicator.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">gtk/search_page.ui</file>
-    <file compressed="true" preprocess="xml-stripblanks">gtk/song_row.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">gtk/track_row.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">gtk/station_cover.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">gtk/station_dialog.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">gtk/station_row.ui</file>

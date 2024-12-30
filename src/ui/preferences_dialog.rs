@@ -34,9 +34,9 @@ mod imp {
 
         // Recording
         #[template_child]
-        song_save_path_row: TemplateChild<adw::ActionRow>,
+        track_save_path_row: TemplateChild<adw::ActionRow>,
         #[template_child]
-        song_duration_threshold_row: TemplateChild<adw::SpinRow>,
+        track_duration_threshold_row: TemplateChild<adw::SpinRow>,
     }
 
     #[glib::object_subclass]
@@ -71,11 +71,11 @@ mod imp {
 
             settings_manager::bind_property(
                 Key::RecorderSongSavePath,
-                &*self.song_save_path_row,
+                &*self.track_save_path_row,
                 "subtitle",
             );
 
-            self.song_save_path_row.connect_activated(clone!(
+            self.track_save_path_row.connect_activated(clone!(
                 #[weak(rename_to = imp)]
                 self,
                 move |_| {
@@ -85,7 +85,7 @@ mod imp {
 
             settings_manager::bind_property(
                 Key::RecorderSongDurationThreshold,
-                &*self.song_duration_threshold_row,
+                &*self.track_duration_threshold_row,
                 "value",
             );
         }

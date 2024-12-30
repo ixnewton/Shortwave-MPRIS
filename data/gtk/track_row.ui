@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <template class="SwSongRow" parent="AdwActionRow">
+  <template class="SwTrackRow" parent="AdwActionRow">
     <property name="activatable">True</property>
     <property name="title_lines">3</property>
     <property name="use_markup">False</property>

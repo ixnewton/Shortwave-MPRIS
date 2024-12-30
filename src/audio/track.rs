@@ -1,4 +1,4 @@
-// Shortwave - song.rs
+// Shortwave - track.rs
 // Copyright (C) 2021-2024  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
@@ -25,7 +25,7 @@ use glib::{clone, Properties};
 use gtk::{gio, glib};
 use uuid::Uuid;
 
-use super::SwSongState;
+use super::SwTrackState;
 use crate::api::{Error, SwStation};
 use crate::settings::{settings_manager, Key};
 use crate::ui::{DisplayError, SwApplicationWindow};
@@ -34,8 +34,8 @@ mod imp {
     use super::*;
 
     #[derive(Debug, Default, Properties)]
-    #[properties(wrapper_type = super::SwSong)]
-    pub struct SwSong {
+    #[properties(wrapper_type = super::SwTrack)]
+    pub struct SwTrack {
         #[property(get)]
         uuid: RefCell<String>,
         #[property(get, set, construct_only)]
@@ -44,20 +44,20 @@ mod imp {
         station: OnceCell<SwStation>,
         #[property(get)]
         file: OnceCell<gio::File>,
-        #[property(get, set, builder(SwSongState::default()))]
-        state: Cell<SwSongState>,
+        #[property(get, set, builder(SwTrackState::default()))]
+        state: Cell<SwTrackState>,
         #[property(get, set)]
         duration: Cell<u64>,
     }
 
     #[glib::object_subclass]
-    impl ObjectSubclass for SwSong {
-        const NAME: &'static str = "SwSong";
-        type Type = super::SwSong;
+    impl ObjectSubclass for SwTrack {
+        const NAME: &'static str = "SwTrack";
+        type Type = super::SwTrack;
     }
 
     #[glib::derived_properties]
-    impl ObjectImpl for SwSong {
+    impl ObjectImpl for SwTrack {
         fn constructed(&self) {
             self.parent_constructed();
 
@@ -72,7 +72,7 @@ mod imp {
         }
 
         fn dispose(&self) {
-            if self.obj().state() == SwSongState::Recorded {
+            if self.obj().state() == SwTrackState::Recorded {
                 self.obj()
                     .file()
                     .delete(gio::Cancellable::NONE)
@@ -83,10 +83,10 @@ mod imp {
 }
 
 glib::wrapper! {
-    pub struct SwSong(ObjectSubclass<imp::SwSong>);
+    pub struct SwTrack(ObjectSubclass<imp::SwTrack>);
 }
 
-impl SwSong {
+impl SwTrack {
     pub fn new(title: &str, station: &SwStation) -> Self {
         glib::Object::builder()
             .property("title", title)
@@ -117,12 +117,12 @@ impl SwSong {
     }
 
     pub fn save(&self) -> Result<(), Error> {
-        if self.state() != SwSongState::Recorded {
-            debug!("Song not recorded, not able to save it.");
+        if self.state() != SwTrackState::Recorded {
+            debug!("Track not recorded, not able to save it.");
             return Ok(());
         }
 
-        debug!("Save song \"{}\"", &self.title());
+        debug!("Save track \"{}\"", &self.title());
 
         let directory = settings_manager::string(Key::RecorderSongSavePath);
         let filename = sanitize_filename::sanitize(self.title()) + ".ogg";
@@ -132,7 +132,7 @@ impl SwSong {
 
         fs::copy(self.file().path().unwrap(), path).map_err(Rc::new)?;
 
-        self.set_state(SwSongState::Saved);
+        self.set_state(SwTrackState::Saved);
         Ok(())
     }
 

@@ -23,9 +23,9 @@ use gtk::{glib, CompositeTemplate};
 
 use crate::app::SwApplication;
 use crate::audio::SwPlayer;
-use crate::audio::SwSong;
+use crate::audio::SwTrack;
 use crate::ui::{
-    SwDeviceIndicator, SwRecordingIndicator, SwSongRow, SwStationCover, SwTrackDialog,
+    SwDeviceIndicator, SwRecordingIndicator, SwStationCover, SwTrackDialog, SwTrackRow,
     SwVolumeControl,
 };
 
@@ -45,9 +45,9 @@ mod imp {
         #[template_child]
         volume_control: TemplateChild<SwVolumeControl>,
         #[template_child]
-        past_songs_stack: TemplateChild<gtk::Stack>,
+        past_tracks_stack: TemplateChild<gtk::Stack>,
         #[template_child]
-        past_songs_listbox: TemplateChild<gtk::ListBox>,
+        past_tracks_listbox: TemplateChild<gtk::ListBox>,
 
         #[property(get, set)]
         pub show_gadget_button: Cell<bool>,
@@ -83,18 +83,18 @@ mod imp {
                 .bidirectional()
                 .build();
 
-            self.past_songs_listbox
-                .bind_model(Some(&player.past_songs()), |song| {
-                    SwSongRow::new(song.clone().downcast::<SwSong>().unwrap().clone()).into()
+            self.past_tracks_listbox
+                .bind_model(Some(&player.past_tracks()), |track| {
+                    SwTrackRow::new(track.clone().downcast::<SwTrack>().unwrap().clone()).into()
                 });
 
-            player.past_songs().connect_items_changed(clone!(
+            player.past_tracks().connect_items_changed(clone!(
                 #[weak(rename_to = imp)]
                 self,
                 move |_, _, _, added| {
                     if added > 0 {
-                        imp.past_songs_stack
-                            .set_visible_child(&*imp.past_songs_listbox);
+                        imp.past_tracks_stack
+                            .set_visible_child(&*imp.past_tracks_listbox);
                     }
                 }
             ));
@@ -111,7 +111,7 @@ mod imp {
     impl SwPlayerView {
         #[template_callback]
         fn recording_indicator_clicked(&self) {
-            if let Some(track) = self.obj().player().playing_song() {
+            if let Some(track) = self.obj().player().playing_track() {
                 let dialog = SwTrackDialog::new(&track);
                 dialog.present(Some(&*self.obj()))
             }

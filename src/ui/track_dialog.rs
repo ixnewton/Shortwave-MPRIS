@@ -22,8 +22,8 @@ use glib::{subclass, Properties};
 use gtk::{gio, glib, CompositeTemplate};
 
 use super::{SwStationDialog, ToastWindow};
-use crate::audio::SwSong;
-use crate::audio::SwSongState;
+use crate::audio::SwTrack;
+use crate::audio::SwTrackState;
 use crate::utils;
 
 mod imp {
@@ -46,8 +46,8 @@ mod imp {
         #[template_child]
         play_row: TemplateChild<adw::ButtonRow>,
 
-        #[property(get, set, construct_only, type=SwSong)]
-        track: RefCell<Option<SwSong>>,
+        #[property(get, set, construct_only, type=SwTrack)]
+        track: RefCell<Option<SwTrack>>,
     }
 
     #[glib::object_subclass]
@@ -76,13 +76,13 @@ mod imp {
 
             track
                 .bind_property("state", &*self.subtitle_label, "label")
-                .transform_to(|_, state: SwSongState| Some(state.title()))
+                .transform_to(|_, state: SwTrackState| Some(state.title()))
                 .sync_create()
                 .build();
 
             track
                 .bind_property("state", &*self.description_label, "label")
-                .transform_to(|_, state: SwSongState| Some(state.description()))
+                .transform_to(|_, state: SwTrackState| Some(state.description()))
                 .sync_create()
                 .build();
 
@@ -90,7 +90,7 @@ mod imp {
                 .bind_property("duration", &*self.duration_label, "label")
                 .transform_to(|b, d: u64| {
                     let duration = utils::format_duration(d);
-                    let track = b.source().unwrap().downcast::<SwSong>().unwrap();
+                    let track = b.source().unwrap().downcast::<SwTrack>().unwrap();
                     let file = track.file();
 
                     Some(
@@ -110,12 +110,12 @@ mod imp {
 
             track
                 .bind_property("state", &*self.duration_label, "visible")
-                .transform_to(|_, state: SwSongState| {
+                .transform_to(|_, state: SwTrackState| {
                     Some(
-                        state == SwSongState::Recording
-                            || state == SwSongState::Recorded
-                            || state == SwSongState::Saved
-                            || state == SwSongState::BelowThreshold,
+                        state == SwTrackState::Recording
+                            || state == SwTrackState::Recorded
+                            || state == SwTrackState::Saved
+                            || state == SwTrackState::BelowThreshold,
                     )
                 })
                 .sync_create()
@@ -123,13 +123,13 @@ mod imp {
 
             track
                 .bind_property("state", &*self.save_row, "visible")
-                .transform_to(|_, state: SwSongState| Some(state == SwSongState::Recorded))
+                .transform_to(|_, state: SwTrackState| Some(state == SwTrackState::Recorded))
                 .sync_create()
                 .build();
 
             track
                 .bind_property("state", &*self.play_row, "visible")
-                .transform_to(|_, state: SwSongState| Some(state == SwSongState::Saved))
+                .transform_to(|_, state: SwTrackState| Some(state == SwTrackState::Saved))
                 .sync_create()
                 .build();
         }
@@ -155,7 +155,7 @@ glib::wrapper! {
 }
 
 impl SwTrackDialog {
-    pub fn new(track: &SwSong) -> Self {
+    pub fn new(track: &SwTrack) -> Self {
         glib::Object::builder().property("track", track).build()
     }
 }

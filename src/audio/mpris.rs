@@ -75,7 +75,7 @@ impl MprisServer {
             }
         ));
 
-        player.connect_playing_song_notify(clone!(
+        player.connect_playing_track_notify(clone!(
             #[strong]
             server,
             move |_| {
@@ -146,8 +146,8 @@ impl MprisServer {
         let player = SwApplication::default().player();
         let mut metadata = Metadata::builder();
 
-        if let Some(song) = player.playing_song() {
-            metadata = metadata.title(song.title());
+        if let Some(track) = player.playing_track() {
+            metadata = metadata.title(track.title());
         }
 
         if let Some(station) = player.station() {
