@@ -22,6 +22,7 @@ use glib::{subclass, Properties};
 use gtk::{gio, glib, CompositeTemplate};
 
 use super::{SwStationDialog, ToastWindow};
+use crate::app::SwApplication;
 use crate::audio::SwTrack;
 use crate::audio::SwTrackState;
 use crate::utils;
@@ -42,9 +43,11 @@ mod imp {
         #[template_child]
         description_label: TemplateChild<gtk::Label>,
         #[template_child]
-        save_row: TemplateChild<adw::ButtonRow>,
+        save_button: TemplateChild<gtk::Button>,
         #[template_child]
-        play_row: TemplateChild<adw::ButtonRow>,
+        play_button: TemplateChild<gtk::Button>,
+        #[template_child]
+        recording_label: TemplateChild<gtk::Label>,
 
         #[property(get, set, construct_only, type=SwTrack)]
         track: RefCell<Option<SwTrack>>,
@@ -122,16 +125,21 @@ mod imp {
                 .build();
 
             track
-                .bind_property("state", &*self.save_row, "visible")
-                .transform_to(|_, state: SwTrackState| Some(state == SwTrackState::Recorded))
+                .bind_property("state", &*self.save_button, "visible")
+                .transform_to(|_, state: SwTrackState| Some(state != SwTrackState::Saved))
                 .sync_create()
                 .build();
 
             track
-                .bind_property("state", &*self.play_row, "visible")
+                .bind_property("state", &*self.play_button, "visible")
                 .transform_to(|_, state: SwTrackState| Some(state == SwTrackState::Saved))
                 .sync_create()
                 .build();
+
+            self.recording_label.connect_activate_link(|_, _| {
+                SwApplication::default().activate_action("show-preferences", None);
+                glib::Propagation::Stop
+            });
         }
     }
 

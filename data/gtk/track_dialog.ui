@@ -97,6 +97,8 @@
                             </child>
                             <child>
                               <object class="AdwPreferencesGroup">
+                                <property name="margin_bottom">18</property>
+                                <property name="separate_rows">True</property>
                                 <child>
                                   <object class="AdwActionRow" id="station_row">
                                     <property name="activatable">True</property>
@@ -129,41 +131,56 @@
                                     </style>
                                   </object>
                                 </child>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="AdwPreferencesGroup">
-                                <property name="separate_rows">True</property>
                                 <child>
-                                  <object class="AdwButtonRow" id="save_row">
+                                  <object class="AdwActionRow" id="save_track_row">
                                     <property name="title" translatable="yes">Save Track</property>
-                                    <property name="action_name">track.save</property>
-                                    <style>
-                                      <class name="suggested-action" />
-                                    </style>
-                                  </object>
-                                </child>
-                                <child>
-                                  <object class="AdwButtonRow" id="play_row">
-                                    <property name="title" translatable="yes">Play Track</property>
-                                    <property name="action_name">track.play</property>
-                                    <style>
-                                      <class name="suggested-action" />
-                                    </style>
+                                    <property name="subtitle" translatable="yes">Save this track when recording is complete</property>
+                                    <property name="use_underline">True</property>
+                                    <property name="activatable_widget">save_track_row_switch</property>
+                                    <property name="sensitive">False</property>
+                                    <property name="visible">False</property>
+                                    <child>
+                                      <object class="GtkSwitch" id="save_track_row_switch">
+                                        <property name="valign">center</property>
+                                      </object>
+                                    </child>
                                   </object>
                                 </child>
                               </object>
                             </child>
                             <child>
-                              <object class="AdwPreferencesGroup">
-                                <property name="separate_rows">True</property>
-                                <child>
-                                  <object class="AdwButtonRow" id="preferences_row">
-                                    <property name="title" translatable="yes">Recording Preferences</property>
-                                    <property name="action_name">app.show-preferences</property>
-                                    <property name="end_icon_name">go-next-symbolic</property>
-                                  </object>
-                                </child>
+                              <object class="GtkButton" id="save_button">
+                                <property name="label" translatable="yes">Save Track</property>
+                                <property name="action_name">track.save</property>
+                                <property name="halign">center</property>
+                                <style>
+                                  <class name="suggested-action" />
+                                  <class name="pill" />
+                                </style>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="play_button">
+                                <property name="label" translatable="yes">Play Track</property>
+                                <property name="action_name">track.play</property>
+                                <property name="halign">center</property>
+                                <style>
+                                  <class name="suggested-action" />
+                                  <class name="pill" />
+                                </style>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkLabel" id="recording_label">
+                                <property name="label" translatable="yes">Recording behaviour can be changed in &lt;a href=""&gt;preferences&lt;/a&gt;</property>
+                                <property name="wrap">True</property>
+                                <property name="use_markup">True</property>
+                                <property name="justify">center</property>
+                                <property name="margin_top">6</property>
+                                <style>
+                                  <class name="dim-label" />
+                                  <class name="caption" />
+                                </style>
                               </object>
                             </child>
                           </object>
