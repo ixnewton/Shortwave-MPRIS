@@ -2,7 +2,7 @@
 <interface>
   <template class="SwSettingsDialog" parent="AdwPreferencesDialog">
     <property name="content_height">600</property>
-    <property name="content_width">600</property>
+    <property name="content_width">500</property>
     <child>
       <object class="AdwPreferencesPage">
         <property name="icon_name">preferences-system-symbolic</property>
