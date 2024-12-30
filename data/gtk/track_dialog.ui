@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <template class="SwTrackDialog" parent="AdwDialog">
+    <property name="width_request">325</property>
+    <property name="height_request">294</property>
+    <property name="content_width">500</property>
+    <property name="content_height">600</property>
+    <child>
+      <object class="AdwToastOverlay" id="toast_overlay">
+        <child>
+          <object class="AdwToolbarView">
+            <child type="top">
+              <object class="AdwHeaderBar" />
+            </child>
+            <child>
+              <object class="GtkStack" id="dialog_stack">
+                <child>
+                  <object class="GtkScrolledWindow">
+                    <property name="hscrollbar_policy">never</property>
+                    <child>
+                      <object class="AdwClamp">
+                        <child>
+                          <object class="GtkBox">
+                            <property name="orientation">vertical</property>
+                            <property name="margin_start">12</property>
+                            <property name="margin_end">12</property>
+                            <property name="margin_top">6</property>
+                            <property name="margin_bottom">18</property>
+                            <property name="spacing">12</property>
+                            <child>
+                              <object class="GtkBox">
+                                <property name="height_request">192</property>
+                                <property name="width_request">192</property>
+                                <property name="halign">center</property>
+                                <child>
+                                  <object class="GtkImage">
+                                    <property name="accessible_role">presentation</property>
+                                    <property name="icon_name">folder-music-symbolic</property>
+                                    <property name="hexpand">True</property>
+                                    <property name="pixel_size">64</property>
+                                    <style>
+                                      <class name="dim-label" />
+                                    </style>
+                                  </object>
+                                </child>
+                                <style>
+                                  <class name="card" />
+                                </style>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkLabel" id="title_label">
+                                <property name="wrap">True</property>
+                                <property name="justify">center</property>
+                                <property name="margin_top">6</property>
+                                <property name="selectable">True</property>
+                                <binding name="label">
+                                  <lookup name="title" type="SwSong">
+                                    <lookup name="track">SwTrackDialog</lookup>
+                                  </lookup>
+                                </binding>
+                                <style>
+                                  <class name="title-2" />
+                                </style>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkLabel" id="subtitle_label">
+                                <property name="wrap">True</property>
+                                <property name="justify">center</property>
+                                <property name="halign">center</property>
+                                <style>
+                                  <class name="heading" />
+                                  <class name="badge" />
+                                </style>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkLabel" id="duration_label">
+                                <attributes>
+                                  <attribute name="font-features" value="tnum" />
+                                </attributes>
+                                <style>
+                                  <class name="heading" />
+                                </style>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkLabel" id="description_label">
+                                <property name="wrap">True</property>
+                                <property name="justify">center</property>
+                                <property name="margin_bottom">6</property>
+                                <style>
+                                  <class name="dim-label" />
+                                </style>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="AdwPreferencesGroup">
+                                <child>
+                                  <object class="AdwActionRow" id="station_row">
+                                    <property name="activatable">True</property>
+                                    <signal name="activated" handler="show_station_details" swapped="true" />
+                                    <property name="title" translatable="yes">Station</property>
+                                    <binding name="subtitle">
+                                      <lookup name="title" type="SwStation">
+                                        <lookup name="station" type="SwSong">
+                                          <lookup name="track">SwTrackDialog</lookup>
+                                        </lookup>
+                                      </lookup>
+                                    </binding>
+                                    <child type="prefix">
+                                      <object class="SwStationCover">
+                                        <property name="size">32</property>
+                                        <binding name="station">
+                                          <lookup name="station" type="SwSong">
+                                            <lookup name="track">SwTrackDialog</lookup>
+                                          </lookup>
+                                        </binding>
+                                      </object>
+                                    </child>
+                                    <child type="suffix">
+                                      <object class="GtkImage">
+                                        <property name="icon_name">go-next-symbolic</property>
+                                      </object>
+                                    </child>
+                                    <style>
+                                      <class name="property" />
+                                    </style>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="AdwPreferencesGroup">
+                                <property name="separate_rows">True</property>
+                                <child>
+                                  <object class="AdwButtonRow" id="save_row">
+                                    <property name="title" translatable="yes">Save Track</property>
+                                    <property name="action_name">track.save</property>
+                                    <style>
+                                      <class name="suggested-action" />
+                                    </style>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="AdwButtonRow" id="play_row">
+                                    <property name="title" translatable="yes">Play Track</property>
+                                    <property name="action_name">track.play</property>
+                                    <style>
+                                      <class name="suggested-action" />
+                                    </style>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="AdwPreferencesGroup">
+                                <property name="separate_rows">True</property>
+                                <child>
+                                  <object class="AdwButtonRow" id="preferences_row">
+                                    <property name="title" translatable="yes">Recording Preferences</property>
+                                    <property name="action_name">app.show-preferences</property>
+                                    <property name="end_icon_name">go-next-symbolic</property>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>

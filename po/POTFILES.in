@@ -18,6 +18,7 @@ data/gtk/song_row.ui
 data/gtk/station_cover.ui
 data/gtk/station_dialog.ui
 data/gtk/station_row.ui
+data/gtk/track_dialog.ui
 data/gtk/volume_control.ui
 data/gtk/window.ui
 src/api/client.rs
@@ -79,6 +80,7 @@ src/ui/song_row.rs
 src/ui/station_cover.rs
 src/ui/station_dialog.rs
 src/ui/station_row.rs
+src/ui/track_dialog.rs
 src/ui/volume_control.rs
 src/ui/window.rs
 src/utils.rs

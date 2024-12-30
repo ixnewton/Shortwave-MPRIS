@@ -188,8 +188,7 @@ cover {
 .badge {
   background-color: var(--border-color);
   border-radius: 99999px;
-  padding: 0.2em 0.6em;
-  font-weight: bold;
+  padding: 0.3em 0.7em;
 }
 
 volume>scale trough highlight {
