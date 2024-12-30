@@ -56,22 +56,26 @@ impl SwTrackState {
 
     pub fn description(&self) -> String {
         match self {
-            SwTrackState::Recording => i18n("Track will be recorded until a new track gets played"),
+            SwTrackState::Recording => {
+                i18n("The track will be recorded until a new track gets played")
+            }
             SwTrackState::SkippedIgnored => {
-                i18n("Track contains a word that is on the ignore list")
+                i18n("The track contains a word that is on the ignore list")
             }
             SwTrackState::SkippedIncomplete => {
-                i18n("Track wasn't played from the beginning, so it can't be fully recorded")
+                i18n("The track wasn't played from the beginning, so it can't be fully recorded")
             }
             SwTrackState::None => i18n("Recording is deactivated in preferences"),
             SwTrackState::Discarded => {
                 i18n("Recording was interrupted, recorded data is discarded")
             }
-            SwTrackState::Recorded => i18n("Track has been temporarily recorded and can be saved"),
-            SwTrackState::BelowThreshold => {
-                i18n("Track has been discarded as the duration was below the set threshold")
+            SwTrackState::Recorded => {
+                i18n("The track has been temporarily recorded and can be saved")
             }
-            SwTrackState::Saved => i18n("Track was saved in the configured directory"),
+            SwTrackState::BelowThreshold => {
+                i18n("The track has been discarded as the duration was below the set threshold")
+            }
+            SwTrackState::Saved => i18n("The track was saved in the configured directory"),
         }
     }
 }
