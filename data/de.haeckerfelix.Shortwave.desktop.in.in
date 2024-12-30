@@ -1,5 +1,7 @@
 [Desktop Entry]
 Name=@NAME@
+GenericName=Internet Radio Player
+Comment=Listen to internet radio
 # Translators: Do NOT translate or transliterate this text (this is an icon file name)!
 Icon=@APP_ID@
 Exec=@PKGNAME@
