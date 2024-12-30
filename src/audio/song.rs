@@ -21,17 +21,16 @@ use std::rc::Rc;
 
 use adw::prelude::*;
 use glib::subclass::prelude::*;
-use glib::Properties;
+use glib::{clone, Properties};
 use gtk::{gio, glib};
 use uuid::Uuid;
 
 use super::SwSongState;
 use crate::api::{Error, SwStation};
 use crate::settings::{settings_manager, Key};
+use crate::ui::{DisplayError, SwApplicationWindow};
 
 mod imp {
-    use crate::ui::DisplayError;
-
     use super::*;
 
     #[derive(Debug, Default, Properties)]
@@ -95,6 +94,28 @@ impl SwSong {
             .build()
     }
 
+    pub fn insert_actions<W: IsA<gtk::Widget>>(&self, widget: &W) {
+        let actions = gio::SimpleActionGroup::new();
+
+        let save = gio::SimpleAction::new("save", None);
+        save.connect_activate(clone!(
+            #[weak(rename_to = obj)]
+            self,
+            move |_, _| obj.save().handle_error("Unable to save track")
+        ));
+        actions.add_action(&save);
+
+        let play = gio::SimpleAction::new("play", None);
+        play.connect_activate(clone!(
+            #[weak(rename_to = obj)]
+            self,
+            move |_, _| obj.play()
+        ));
+        actions.add_action(&play);
+
+        widget.insert_action_group("track", Some(&actions));
+    }
+
     pub fn save(&self) -> Result<(), Error> {
         if self.state() != SwSongState::Recorded {
             debug!("Song not recorded, not able to save it.");
@@ -113,5 +134,13 @@ impl SwSong {
 
         self.set_state(SwSongState::Saved);
         Ok(())
+    }
+
+    pub fn play(&self) {
+        let launcher = gtk::FileLauncher::new(Some(&self.file()));
+        let window = SwApplicationWindow::default();
+        launcher.launch(Some(&window), gio::Cancellable::NONE, |res| {
+            res.handle_error("Unable to play track");
+        });
     }
 }
