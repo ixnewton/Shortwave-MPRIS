@@ -22,7 +22,6 @@ use glib::{clone, subclass, Properties};
 use gtk::{glib, CompositeTemplate};
 
 use crate::audio::{SwSong, SwSongState};
-use crate::i18n::i18n;
 use crate::utils;
 
 mod imp {
@@ -93,13 +92,7 @@ mod imp {
                 self.obj().remove_css_class("active");
             }
 
-            let tooltip = if state == SwSongState::Recording {
-                i18n("Recording")
-            } else {
-                i18n("Not Recording")
-            };
-
-            self.obj().set_tooltip_text(Some(&tooltip));
+            self.obj().set_tooltip_text(Some(&state.title()));
         }
     }
 }
