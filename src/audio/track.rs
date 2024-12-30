@@ -48,6 +48,8 @@ mod imp {
         state: Cell<SwTrackState>,
         #[property(get, set)]
         duration: Cell<u64>,
+
+        pub actions: OnceCell<gio::SimpleActionGroup>,
     }
 
     #[glib::object_subclass]
@@ -61,14 +63,46 @@ mod imp {
         fn constructed(&self) {
             self.parent_constructed();
 
+            // uuid
             let uuid = Uuid::new_v4().to_string();
             *self.uuid.borrow_mut() = uuid;
 
+            // track path
             let mut path = crate::path::DATA.clone();
             path.push("recording");
             path.push(self.obj().uuid().to_string() + ".ogg");
 
             self.file.set(gio::File::for_path(path)).unwrap();
+
+            // actions
+            let actions = gio::SimpleActionGroup::new();
+
+            let save = gio::SimpleAction::new("save", None);
+            save.connect_activate(clone!(
+                #[weak(rename_to = imp)]
+                self,
+                move |_, _| imp.obj().save().handle_error("Unable to save track")
+            ));
+            save.set_enabled(false);
+            actions.add_action(&save);
+
+            self.obj().connect_state_notify(clone!(
+                #[weak]
+                save,
+                move |track| {
+                    save.set_enabled(track.state() == SwTrackState::Recorded);
+                }
+            ));
+
+            let play = gio::SimpleAction::new("play", None);
+            play.connect_activate(clone!(
+                #[weak(rename_to = imp)]
+                self,
+                move |_, _| imp.obj().play()
+            ));
+            actions.add_action(&play);
+
+            self.actions.set(actions).unwrap();
         }
 
         fn dispose(&self) {
@@ -95,25 +129,7 @@ impl SwTrack {
     }
 
     pub fn insert_actions<W: IsA<gtk::Widget>>(&self, widget: &W) {
-        let actions = gio::SimpleActionGroup::new();
-
-        let save = gio::SimpleAction::new("save", None);
-        save.connect_activate(clone!(
-            #[weak(rename_to = obj)]
-            self,
-            move |_, _| obj.save().handle_error("Unable to save track")
-        ));
-        actions.add_action(&save);
-
-        let play = gio::SimpleAction::new("play", None);
-        play.connect_activate(clone!(
-            #[weak(rename_to = obj)]
-            self,
-            move |_, _| obj.play()
-        ));
-        actions.add_action(&play);
-
-        widget.insert_action_group("track", Some(&actions));
+        widget.insert_action_group("track", Some(self.imp().actions.get().unwrap()));
     }
 
     pub fn save(&self) -> Result<(), Error> {
