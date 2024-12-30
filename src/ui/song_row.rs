@@ -18,11 +18,13 @@ use std::cell::OnceCell;
 
 use adw::prelude::*;
 use adw::subclass::prelude::*;
-use glib::{clone, subclass, Properties};
-use gtk::{gio, glib, CompositeTemplate};
+use glib::{subclass, Properties};
+use gtk::{glib, CompositeTemplate};
 
 use crate::audio::SwSong;
-use crate::ui::{DisplayError, SwApplicationWindow};
+use crate::audio::SwSongState;
+use crate::ui::SwTrackDialog;
+use crate::utils;
 
 mod imp {
     use super::*;
@@ -34,12 +36,12 @@ mod imp {
         #[template_child]
         pub save_button: TemplateChild<gtk::Button>,
         #[template_child]
-        pub open_button: TemplateChild<gtk::Button>,
+        pub play_button: TemplateChild<gtk::Button>,
         #[template_child]
         pub button_stack: TemplateChild<gtk::Stack>,
 
         #[property(get, set, construct_only)]
-        pub song: OnceCell<SwSong>,
+        pub track: OnceCell<SwSong>,
     }
 
     #[glib::object_subclass]
@@ -63,41 +65,46 @@ mod imp {
             self.parent_constructed();
             let obj = self.obj();
 
-            let dt = glib::DateTime::from_unix_local(obj.song().duration() as i64).unwrap();
-            let duration = dt.format("%M:%S").unwrap_or_default().to_string();
+            let track = self.obj().track();
+            track.insert_actions(&*obj);
 
-            obj.set_title(&obj.song().title());
-            obj.set_tooltip_text(Some(&obj.song().title()));
-            obj.set_subtitle(&duration);
+            track
+                .bind_property("title", &*self.obj(), "title")
+                .sync_create()
+                .build();
 
-            self.save_button.connect_clicked(clone!(
-                #[weak(rename_to = imp)]
-                self,
-                move |_| {
-                    let res = imp.obj().song().save();
-                    res.handle_error("Unable to save song");
+            track
+                .bind_property("title", &*self.obj(), "tooltip-text")
+                .sync_create()
+                .build();
 
-                    if res.is_ok() {
-                        // Display play button instead of save button
-                        imp.button_stack.set_visible_child_name("open");
-                        imp.obj()
-                            .set_activatable_widget(Some(&imp.open_button.get()));
-                    }
-                }
-            ));
+            track
+                .bind_property("state", &*self.obj(), "subtitle")
+                .transform_to(|b, state: SwSongState| {
+                    let track = b.source().unwrap().downcast::<SwSong>().unwrap();
+                    let title = state.title();
 
-            self.open_button.connect_clicked(clone!(
-                #[weak(rename_to = imp)]
-                self,
-                move |_| {
-                    let file = imp.obj().song().file();
-                    let launcher = gtk::FileLauncher::new(Some(&file));
-                    let window = SwApplicationWindow::default();
-                    launcher.launch(Some(&window), gio::Cancellable::NONE, |res| {
-                        res.handle_error("Unable to open directory");
-                    });
-                }
-            ));
+                    let string = if state == SwSongState::Recorded || state == SwSongState::Saved {
+                        format!("{title} ({})", utils::format_duration(track.duration()))
+                    } else {
+                        title
+                    };
+                    Some(string)
+                })
+                .sync_create()
+                .build();
+
+            track
+                .bind_property("state", &*self.save_button, "visible")
+                .transform_to(|_, state: SwSongState| Some(state == SwSongState::Recorded))
+                .sync_create()
+                .build();
+
+            track
+                .bind_property("state", &*self.play_button, "visible")
+                .transform_to(|_, state: SwSongState| Some(state == SwSongState::Saved))
+                .sync_create()
+                .build();
         }
     }
 
@@ -107,7 +114,12 @@ mod imp {
 
     impl PreferencesRowImpl for SwSongRow {}
 
-    impl ActionRowImpl for SwSongRow {}
+    impl ActionRowImpl for SwSongRow {
+        fn activate(&self) {
+            let dialog = SwTrackDialog::new(&self.obj().track());
+            dialog.present(Some(&*self.obj()));
+        }
+    }
 }
 
 glib::wrapper! {
@@ -116,7 +128,7 @@ glib::wrapper! {
 }
 
 impl SwSongRow {
-    pub fn new(song: SwSong) -> Self {
-        glib::Object::builder().property("song", &song).build()
+    pub fn new(track: SwSong) -> Self {
+        glib::Object::builder().property("track", &track).build()
     }
 }
