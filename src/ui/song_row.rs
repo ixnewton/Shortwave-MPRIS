@@ -84,8 +84,10 @@ mod imp {
                     let track = b.source().unwrap().downcast::<SwSong>().unwrap();
                     let title = state.title();
 
-                    let string = if state == SwSongState::Recorded || state == SwSongState::Saved {
-                        format!("{title} ({})", utils::format_duration(track.duration()))
+                    let string = if state == SwSongState::Recorded {
+                        utils::format_duration(track.duration())
+                    } else if state == SwSongState::Saved {
+                        format!("{} - {title}", utils::format_duration(track.duration()))
                     } else {
                         title
                     };

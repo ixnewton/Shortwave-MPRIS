@@ -63,7 +63,7 @@ impl SwSongState {
             }
             SwSongState::None => i18n("Recording is deactivated in preferences"),
             SwSongState::Discarded => i18n("Recording was interrupted, recorded data is discarded"),
-            SwSongState::Recorded => i18n("Track has been recorded and can be saved"),
+            SwSongState::Recorded => i18n("Track has been temporarily recorded and can be saved"),
             SwSongState::BelowThreshold => {
                 i18n("Track has been discarded as the duration was below the set threshold")
             }

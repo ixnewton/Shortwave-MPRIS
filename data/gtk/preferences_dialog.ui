@@ -47,7 +47,7 @@
             <child>
               <object class="AdwActionRow">
                 <property name="title" translatable="yes">Decide for Each _Track</property>
-                <property name="subtitle" translatable="yes">Tracks are temporarily stored and can be saved if desired</property>
+                <property name="subtitle" translatable="yes">Tracks are temporarily recorded and can be saved if desired</property>
                 <property name="use_underline">True</property>
                 <property name="activatable_widget">record_decide_checkbutton</property>
                 <child type="prefix">
