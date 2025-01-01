@@ -31,8 +31,8 @@
             <property name="description" translatable="yes">Tracks are automatically recognised based on the station stream metadata and can be recorded.</property>
             <child>
               <object class="AdwActionRow">
-                <property name="title" translatable="yes">Record _Everything</property>
-                <property name="subtitle" translatable="yes">All recordings are automatically saved in the track directory</property>
+                <property name="title" translatable="yes">Save _Everything</property>
+                <property name="subtitle" translatable="yes">All recorded tracks are automatically saved in the track directory</property>
                 <property name="use_underline">True</property>
                 <property name="activatable_widget">record_everything_checkbutton</property>
                 <child type="prefix">
