@@ -43,6 +43,8 @@ mod imp {
         #[template_child]
         description_label: TemplateChild<gtk::Label>,
         #[template_child]
+        cancel_button: TemplateChild<gtk::Button>,
+        #[template_child]
         save_button: TemplateChild<gtk::Button>,
         #[template_child]
         play_button: TemplateChild<gtk::Button>,
@@ -125,8 +127,16 @@ mod imp {
                 .build();
 
             track
+                .bind_property("state", &*self.cancel_button, "visible")
+                .transform_to(|_, state: SwTrackState| Some(state == SwTrackState::Recording))
+                .sync_create()
+                .build();
+
+            track
                 .bind_property("state", &*self.save_button, "visible")
-                .transform_to(|_, state: SwTrackState| Some(state != SwTrackState::Saved))
+                .transform_to(|_, state: SwTrackState| {
+                    Some(state != SwTrackState::Saved && state != SwTrackState::Recording)
+                })
                 .sync_create()
                 .build();
 

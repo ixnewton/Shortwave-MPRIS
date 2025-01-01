@@ -171,6 +171,17 @@
                               </object>
                             </child>
                             <child>
+                              <object class="GtkButton" id="cancel_button">
+                                <property name="label" translatable="yes">Cancel Recording</property>
+                                <property name="action_name">track.cancel</property>
+                                <property name="halign">center</property>
+                                <style>
+                                  <class name="destructive-action" />
+                                  <class name="pill" />
+                                </style>
+                              </object>
+                            </child>
+                            <child>
                               <object class="GtkLabel" id="recording_label">
                                 <property name="label" translatable="yes">Recording behaviour can be changed in &lt;a href=""&gt;preferences&lt;/a&gt;</property>
                                 <property name="wrap">True</property>

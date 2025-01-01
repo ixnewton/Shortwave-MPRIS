@@ -212,7 +212,7 @@ mod imp {
                 self.recording_mode.set(mode);
 
                 if mode == SwRecordingMode::Nothing {
-                    self.stop_recording(true);
+                    self.obj().cancel_recording();
                 }
             }
         }
@@ -376,7 +376,8 @@ mod imp {
                 debug!("Discard recorded data.");
 
                 backend.stop_recording(true);
-                track.set_state(SwTrackState::Discarded);
+                track.set_state(SwTrackState::Cancelled);
+                track.set_duration(0);
             } else if duration > threshold as u64 {
                 debug!("Save recorded data.");
 
@@ -495,6 +496,10 @@ impl SwPlayer {
         {
             self.start_playback().await;
         }
+    }
+
+    pub fn cancel_recording(&self) {
+        self.imp().stop_recording(true);
     }
 
     pub fn restore_state(&self) {

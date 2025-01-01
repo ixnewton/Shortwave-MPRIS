@@ -32,7 +32,7 @@ pub enum SwTrackState {
     SkippedIncomplete,
     SkippedIgnored,
     BelowThreshold,
-    Discarded,
+    Cancelled,
     Saved,
 }
 
@@ -47,7 +47,7 @@ impl SwTrackState {
             SwTrackState::SkippedIgnored => i18n("Ignored Track"),
             SwTrackState::SkippedIncomplete => i18n("Not Recorded"),
             SwTrackState::None => i18n("Not Recorded"),
-            SwTrackState::Discarded => i18n("Discarded Recording"),
+            SwTrackState::Cancelled => i18n("Cancelled Recording"),
             SwTrackState::Recorded => i18n("Recorded"),
             SwTrackState::BelowThreshold => i18n("Below Threshold"),
             SwTrackState::Saved => i18n("Saved"),
@@ -66,8 +66,8 @@ impl SwTrackState {
                 i18n("The track wasn't played from the beginning, so it can't be fully recorded")
             }
             SwTrackState::None => i18n("Recording is deactivated in preferences"),
-            SwTrackState::Discarded => {
-                i18n("Recording was interrupted, recorded data is discarded")
+            SwTrackState::Cancelled => {
+                i18n("Recording has been cancelled, recorded data is discarded")
             }
             SwTrackState::Recorded => {
                 i18n("The track has been temporarily recorded and can be saved")

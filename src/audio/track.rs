@@ -27,6 +27,7 @@ use uuid::Uuid;
 
 use super::SwTrackState;
 use crate::api::{Error, SwStation};
+use crate::audio::SwPlayer;
 use crate::settings::{settings_manager, Key};
 use crate::ui::{DisplayError, SwApplicationWindow};
 
@@ -77,30 +78,54 @@ mod imp {
             // actions
             let actions = gio::SimpleActionGroup::new();
 
-            let save = gio::SimpleAction::new("save", None);
-            save.connect_activate(clone!(
+            let cancel_action = gio::SimpleAction::new("cancel", None);
+            cancel_action.connect_activate(clone!(
+                #[weak(rename_to = imp)]
+                self,
+                move |_, _| {
+                    let player = SwPlayer::default();
+                    if let Some(track) = player.playing_track() {
+                        if track.uuid() == imp.obj().uuid() {
+                            player.cancel_recording();
+                        }
+                    }
+                }
+            ));
+            cancel_action.set_enabled(false);
+            actions.add_action(&cancel_action);
+
+            self.obj().connect_state_notify(clone!(
+                #[weak]
+                cancel_action,
+                move |track| {
+                    cancel_action.set_enabled(track.state() == SwTrackState::Recording);
+                }
+            ));
+
+            let save_action = gio::SimpleAction::new("save", None);
+            save_action.connect_activate(clone!(
                 #[weak(rename_to = imp)]
                 self,
                 move |_, _| imp.obj().save().handle_error("Unable to save track")
             ));
-            save.set_enabled(false);
-            actions.add_action(&save);
+            save_action.set_enabled(false);
+            actions.add_action(&save_action);
 
             self.obj().connect_state_notify(clone!(
                 #[weak]
-                save,
+                save_action,
                 move |track| {
-                    save.set_enabled(track.state() == SwTrackState::Recorded);
+                    save_action.set_enabled(track.state() == SwTrackState::Recorded);
                 }
             ));
 
-            let play = gio::SimpleAction::new("play", None);
-            play.connect_activate(clone!(
+            let play_action = gio::SimpleAction::new("play", None);
+            play_action.connect_activate(clone!(
                 #[weak(rename_to = imp)]
                 self,
                 move |_, _| imp.obj().play()
             ));
-            actions.add_action(&play);
+            actions.add_action(&play_action);
 
             self.actions.set(actions).unwrap();
         }
