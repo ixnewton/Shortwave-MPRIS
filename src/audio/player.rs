@@ -384,7 +384,9 @@ mod imp {
                 backend.stop_recording(false);
                 track.set_state(SwRecordingState::Recorded);
 
-                if self.obj().recording_mode() == SwRecordingMode::Everything {
+                if self.obj().recording_mode() == SwRecordingMode::Everything
+                    || track.save_when_recorded()
+                {
                     track.save().handle_error("Unable to save track");
                 }
             } else {
