@@ -38,9 +38,9 @@ src/audio/mpris.rs
 src/audio/playback_state.rs
 src/audio/player.rs
 src/audio/recording_mode.rs
+src/audio/recording_state.rs
 src/audio/track.rs
 src/audio/track_model.rs
-src/audio/track_state.rs
 src/database/connection.rs
 src/database/library.rs
 src/database/library_status.rs

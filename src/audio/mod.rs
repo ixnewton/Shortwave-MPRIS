@@ -19,15 +19,15 @@ mod mpris;
 mod playback_state;
 mod player;
 mod recording_mode;
+mod recording_state;
 mod track;
 mod track_model;
-mod track_state;
 
 pub use gstreamer_backend::{GstreamerBackend, GstreamerChange};
 pub use mpris::MprisServer;
 pub use playback_state::SwPlaybackState;
 pub use player::SwPlayer;
 pub use recording_mode::SwRecordingMode;
+pub use recording_state::SwRecordingState;
 pub use track::SwTrack;
 pub use track_model::SwTrackModel;
-pub use track_state::SwTrackState;
