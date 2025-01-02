@@ -1,5 +1,5 @@
 // Shortwave - player.rs
-// Copyright (C) 2021-2024  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2021-2025  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -230,7 +230,7 @@ mod imp {
 
                     // Set previous track
                     if let Some(track) = self.playing_track.borrow_mut().take() {
-                        if track.state().include_in_history() {
+                        if track.state().include_in_past_tracks() {
                             self.past_tracks.add_track(&track);
                         }
 
@@ -312,7 +312,7 @@ mod imp {
         /// Unsets the current playing track and adds it to the past played tracks history
         pub fn reset_track(&self) {
             if let Some(track) = self.playing_track.borrow_mut().take() {
-                if track.state().include_in_history() {
+                if track.state().include_in_past_tracks() {
                     self.past_tracks.add_track(&track);
                 }
             }
@@ -335,14 +335,14 @@ mod imp {
                 fs::create_dir_all(path.parent().unwrap())
                     .expect("Could not create path for recording");
 
-                track.set_state(SwTrackState::Recording);
+                track.set_state(SwRecordingState::Recording);
                 self.backend
                     .get()
                     .unwrap()
                     .borrow_mut()
                     .start_recording(path);
             } else {
-                track.set_state(SwTrackState::SkippedIncomplete);
+                track.set_state(SwRecordingState::IdleIncomplete);
                 debug!(
                     "Track {:?} will not be recorded because it may be incomplete.",
                     track.title()
@@ -376,17 +376,16 @@ mod imp {
                 debug!("Discard recorded data.");
 
                 backend.stop_recording(true);
-                track.set_state(SwTrackState::Cancelled);
+                track.set_state(SwRecordingState::DiscardedCancelled);
                 track.set_duration(0);
             } else if duration > threshold as u64 {
                 debug!("Save recorded data.");
 
                 backend.stop_recording(false);
-                track.set_state(SwTrackState::Recorded);
+                track.set_state(SwRecordingState::Recorded);
 
                 if self.obj().recording_mode() == SwRecordingMode::Everything {
                     track.save().handle_error("Unable to save track");
-                    track.set_state(SwTrackState::Saved);
                 }
             } else {
                 debug!(
@@ -395,7 +394,7 @@ mod imp {
                 );
 
                 backend.stop_recording(true);
-                track.set_state(SwTrackState::BelowThreshold);
+                track.set_state(SwRecordingState::DiscardedBelowThreshold);
             }
         }
     }

@@ -21,7 +21,7 @@ use adw::subclass::prelude::*;
 use glib::{clone, subclass, Properties};
 use gtk::{glib, CompositeTemplate};
 
-use crate::audio::{SwTrack, SwTrackState};
+use crate::audio::{SwRecordingState, SwTrack};
 use crate::utils;
 
 mod imp {
@@ -79,14 +79,14 @@ mod imp {
                 ));
             } else {
                 self.duration_label.set_text(&utils::format_duration(0));
-                self.update_state(SwTrackState::None);
+                self.update_state(SwRecordingState::IdleDisabled);
             }
 
             *self.track.borrow_mut() = track;
         }
 
-        fn update_state(&self, state: SwTrackState) {
-            if state == SwTrackState::Recording {
+        fn update_state(&self, state: SwRecordingState) {
+            if state == SwRecordingState::Recording {
                 self.obj().add_css_class("active");
             } else {
                 self.obj().remove_css_class("active");
