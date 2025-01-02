@@ -1,5 +1,5 @@
 // Shortwave - track_dialog.rs
-// Copyright (C) 2024  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2024-2025  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -23,8 +23,7 @@ use gtk::{gio, glib, CompositeTemplate};
 
 use super::{SwStationDialog, ToastWindow};
 use crate::app::SwApplication;
-use crate::audio::SwTrack;
-use crate::audio::SwTrackState;
+use crate::audio::{SwPlayer, SwRecordingMode, SwRecordingState, SwTrack};
 use crate::utils;
 
 mod imp {
@@ -37,11 +36,17 @@ mod imp {
         #[template_child]
         pub toast_overlay: TemplateChild<adw::ToastOverlay>,
         #[template_child]
+        saved_label: TemplateChild<gtk::Label>,
+        #[template_child]
         subtitle_label: TemplateChild<gtk::Label>,
         #[template_child]
         duration_label: TemplateChild<gtk::Label>,
         #[template_child]
         description_label: TemplateChild<gtk::Label>,
+        #[template_child]
+        save_track_row: TemplateChild<adw::ActionRow>,
+        #[template_child]
+        save_track_switch: TemplateChild<gtk::Switch>,
         #[template_child]
         cancel_button: TemplateChild<gtk::Button>,
         #[template_child]
@@ -75,19 +80,25 @@ mod imp {
     impl ObjectImpl for SwTrackDialog {
         fn constructed(&self) {
             self.parent_constructed();
+            let player = SwPlayer::default();
 
             let track = self.obj().track();
             track.insert_actions(&*self.obj());
 
             track
                 .bind_property("state", &*self.subtitle_label, "label")
-                .transform_to(|_, state: SwTrackState| Some(state.title()))
+                .transform_to(|_, state: SwRecordingState| Some(state.title()))
+                .sync_create()
+                .build();
+
+            track
+                .bind_property("is-saved", &*self.saved_label, "visible")
                 .sync_create()
                 .build();
 
             track
                 .bind_property("state", &*self.description_label, "label")
-                .transform_to(|_, state: SwTrackState| Some(state.description()))
+                .transform_to(|_, state: SwRecordingState| Some(state.description()))
                 .sync_create()
                 .build();
 
@@ -115,36 +126,68 @@ mod imp {
 
             track
                 .bind_property("state", &*self.duration_label, "visible")
-                .transform_to(|_, state: SwTrackState| {
+                .transform_to(|_, state: SwRecordingState| {
                     Some(
-                        state == SwTrackState::Recording
-                            || state == SwTrackState::Recorded
-                            || state == SwTrackState::Saved
-                            || state == SwTrackState::BelowThreshold,
+                        state == SwRecordingState::Recording
+                            || state == SwRecordingState::Recorded
+                            || state == SwRecordingState::DiscardedBelowThreshold,
                     )
                 })
                 .sync_create()
                 .build();
 
             track
-                .bind_property("state", &*self.cancel_button, "visible")
-                .transform_to(|_, state: SwTrackState| Some(state == SwTrackState::Recording))
+                .bind_property("save-when-recorded", &*self.save_track_switch, "active")
+                .sync_create()
+                .bidirectional()
+                .build();
+
+            track
+                .bind_property("state", &*self.save_track_row, "sensitive")
+                .transform_to(|_, state: SwRecordingState| {
+                    Some(state == SwRecordingState::Recording)
+                })
+                .sync_create()
+                .build();
+
+            player
+                .bind_property("recording-mode", &*self.save_track_row, "visible")
+                .transform_to(|_, state: SwRecordingMode| Some(state == SwRecordingMode::Decide))
                 .sync_create()
                 .build();
 
             track
-                .bind_property("state", &*self.save_button, "visible")
-                .transform_to(|_, state: SwTrackState| {
-                    Some(state != SwTrackState::Saved && state != SwTrackState::Recording)
+                .bind_property("state", &*self.cancel_button, "visible")
+                .transform_to(|_, state: SwRecordingState| {
+                    Some(state == SwRecordingState::Recording)
                 })
                 .sync_create()
                 .build();
 
             track
-                .bind_property("state", &*self.play_button, "visible")
-                .transform_to(|_, state: SwTrackState| Some(state == SwTrackState::Saved))
+                .bind_property("state", &*self.save_button, "visible")
+                .transform_to(|_, state: SwRecordingState| {
+                    Some(state != SwRecordingState::Recording)
+                })
                 .sync_create()
                 .build();
+
+            track
+                .bind_property("is-saved", &*self.save_button, "visible")
+                .transform_to(|b, is_saved: bool| {
+                    let track = b.source().unwrap().downcast::<SwTrack>().unwrap();
+                    Some(!is_saved && track.state() != SwRecordingState::Recording)
+                })
+                .sync_create()
+                .build();
+
+            track
+                .bind_property("is-saved", &*self.play_button, "visible")
+                .sync_create()
+                .build();
+
+            // TODO: Display sth when track is saved
+            // -> green "Saved" badge before duration badge
 
             self.recording_label.connect_activate_link(|_, _| {
                 SwApplication::default().activate_action("show-preferences", None);
