@@ -120,9 +120,10 @@
                                 <property name="separate_rows">True</property>
                                 <child>
                                   <object class="AdwActionRow" id="station_row">
-                                    <property name="activatable">True</property>
-                                    <signal name="activated" handler="show_station_details" swapped="true" />
                                     <property name="title" translatable="yes">Station</property>
+                                    <property name="activatable">True</property>
+                                    <property name="use_markup">False</property>
+                                    <signal name="activated" handler="show_station_details" swapped="true" />
                                     <binding name="subtitle">
                                       <lookup name="title" type="SwStation">
                                         <lookup name="station" type="SwTrack">
