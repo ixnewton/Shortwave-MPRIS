@@ -5,30 +5,25 @@
     <property name="title_lines">3</property>
     <property name="use_markup">False</property>
     <child>
-      <object class="GtkStack" id="button_stack">
+      <object class="GtkButton" id="save_button">
+        <property name="tooltip_text" translatable="yes">Save Track</property>
         <property name="valign">center</property>
-        <child>
-          <object class="GtkButton" id="save_button">
-            <property name="tooltip_text" translatable="yes">Save Track</property>
-            <property name="valign">center</property>
-            <property name="icon_name">document-save-symbolic</property>
-            <property name="action_name">track.save</property>
-            <style>
-              <class name="flat" />
-            </style>
-          </object>
-        </child>
-        <child>
-          <object class="GtkButton" id="play_button">
-            <property name="tooltip_text" translatable="yes">Play Track</property>
-            <property name="valign">center</property>
-            <property name="icon_name">media-playback-start-symbolic</property>
-            <property name="action_name">track.play</property>
-            <style>
-              <class name="flat" />
-            </style>
-          </object>
-        </child>
+        <property name="icon_name">document-save-symbolic</property>
+        <property name="action_name">track.save</property>
+        <style>
+          <class name="flat" />
+        </style>
+      </object>
+    </child>
+    <child>
+      <object class="GtkButton" id="saved_checkmark_button">
+        <property name="tooltip_text" translatable="yes">Saved</property>
+        <property name="valign">center</property>
+        <property name="icon_name">check-plain-symbolic</property>
+        <property name="sensitive">False</property>
+        <style>
+          <class name="flat" />
+        </style>
       </object>
     </child>
   </template>

@@ -1,5 +1,5 @@
 // Shortwave - track_row.rs
-// Copyright (C) 2021-2024  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2021-2025  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -21,8 +21,8 @@ use adw::subclass::prelude::*;
 use glib::{subclass, Properties};
 use gtk::{glib, CompositeTemplate};
 
+use crate::audio::SwRecordingState;
 use crate::audio::SwTrack;
-use crate::audio::SwTrackState;
 use crate::ui::SwTrackDialog;
 use crate::utils;
 
@@ -36,9 +36,7 @@ mod imp {
         #[template_child]
         pub save_button: TemplateChild<gtk::Button>,
         #[template_child]
-        pub play_button: TemplateChild<gtk::Button>,
-        #[template_child]
-        pub button_stack: TemplateChild<gtk::Stack>,
+        pub saved_checkmark_button: TemplateChild<gtk::Button>,
 
         #[property(get, set, construct_only)]
         pub track: OnceCell<SwTrack>,
@@ -80,14 +78,12 @@ mod imp {
 
             track
                 .bind_property("state", &*self.obj(), "subtitle")
-                .transform_to(|b, state: SwTrackState| {
+                .transform_to(|b, state: SwRecordingState| {
                     let track = b.source().unwrap().downcast::<SwTrack>().unwrap();
                     let title = state.title();
 
-                    let string = if state == SwTrackState::Recorded {
+                    let string = if state == SwRecordingState::Recorded {
                         utils::format_duration(track.duration())
-                    } else if state == SwTrackState::Saved {
-                        format!("{} - {title}", utils::format_duration(track.duration()))
                     } else {
                         title
                     };
@@ -98,13 +94,24 @@ mod imp {
 
             track
                 .bind_property("state", &*self.save_button, "visible")
-                .transform_to(|_, state: SwTrackState| Some(state == SwTrackState::Recorded))
+                .transform_to(|b: &glib::Binding, state: SwRecordingState| {
+                    let track = b.source().unwrap().downcast::<SwTrack>().unwrap();
+                    Some(state == SwRecordingState::Recorded && !track.is_saved())
+                })
                 .sync_create()
                 .build();
 
             track
-                .bind_property("state", &*self.play_button, "visible")
-                .transform_to(|_, state: SwTrackState| Some(state == SwTrackState::Saved))
+                .bind_property("is-saved", &*self.save_button, "visible")
+                .transform_to(|b: &glib::Binding, is_saved: bool| {
+                    let track = b.source().unwrap().downcast::<SwTrack>().unwrap();
+                    Some(track.state() == SwRecordingState::Recorded && !is_saved)
+                })
+                .sync_create()
+                .build();
+
+            track
+                .bind_property("is-saved", &*self.saved_checkmark_button, "visible")
                 .sync_create()
                 .build();
         }
