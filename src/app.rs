@@ -91,10 +91,7 @@ mod imp {
                     .activate(move |app: &super::SwApplication, _, uuid| {
                         app.activate();
 
-                        let uuid = uuid
-                            .map(|v| v.str().unwrap_or_default())
-                            .unwrap_or_default();
-
+                        let uuid = uuid.and_then(|v| v.str()).unwrap_or_default();
                         let player = SwPlayer::default();
                         let window = SwApplicationWindow::default();
 
@@ -109,12 +106,9 @@ mod imp {
                 gio::ActionEntry::builder("save-track")
                     .parameter_type(Some(VariantTy::STRING))
                     .activate(move |app: &super::SwApplication, _, uuid| {
-                        app.activate();
+                        app.ensure_activated();
 
-                        let uuid = uuid
-                            .map(|v| v.str().unwrap_or_default())
-                            .unwrap_or_default();
-
+                        let uuid = uuid.and_then(|v| v.str()).unwrap_or_default();
                         let player = SwPlayer::default();
                         let window = SwApplicationWindow::default();
 
@@ -134,12 +128,9 @@ mod imp {
                 gio::ActionEntry::builder("cancel-recording")
                     .parameter_type(Some(VariantTy::STRING))
                     .activate(move |app: &super::SwApplication, _, uuid| {
-                        app.activate();
+                        app.ensure_activated();
 
-                        let uuid = uuid
-                            .map(|v| v.str().unwrap_or_default())
-                            .unwrap_or_default();
-
+                        let uuid = uuid.and_then(|v| v.str()).unwrap_or_default();
                         let player = SwPlayer::default();
                         let window = SwApplicationWindow::default();
 
@@ -159,7 +150,6 @@ mod imp {
                 gio::ActionEntry::builder("show-preferences")
                     .activate(move |app: &super::SwApplication, _, _| {
                         app.activate();
-
                         let window = SwApplicationWindow::default();
                         let preferences_window = SwPreferencesDialog::default();
                         preferences_window.present(Some(&window));
@@ -168,7 +158,7 @@ mod imp {
                 // app.quit
                 gio::ActionEntry::builder("quit")
                     .activate(move |app: &super::SwApplication, _, _| {
-                        app.activate();
+                        app.ensure_activated();
                         SwApplicationWindow::default().close();
                     })
                     .build(),
@@ -275,6 +265,13 @@ impl SwApplication {
 
         window.present();
         window
+    }
+
+    // Ensures that the app is activated, and the application window exists
+    fn ensure_activated(&self) {
+        if self.imp().window.get().is_none() {
+            self.activate();
+        }
     }
 
     async fn lookup_rb_server(&self) {
