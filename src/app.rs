@@ -1,5 +1,5 @@
 // Shortwave - app.rs
-// Copyright (C) 2021-2024  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2021-2025  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -149,7 +149,7 @@ mod imp {
                 // app.show-preferences
                 gio::ActionEntry::builder("show-preferences")
                     .activate(move |app: &super::SwApplication, _, _| {
-                        app.activate();
+                        app.ensure_activated();
                         let window = SwApplicationWindow::default();
                         let preferences_window = SwPreferencesDialog::default();
                         preferences_window.present(Some(&window));
@@ -165,7 +165,7 @@ mod imp {
                 // app.about
                 gio::ActionEntry::builder("about")
                     .activate(move |app: &super::SwApplication, _, _| {
-                        app.activate();
+                        app.ensure_activated();
                         let window = SwApplicationWindow::default();
                         about_dialog::show(&window);
                     })
