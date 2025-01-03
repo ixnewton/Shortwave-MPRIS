@@ -20,16 +20,17 @@ use adw::prelude::*;
 use adw::subclass::prelude::*;
 use gio::subclass::prelude::ApplicationImpl;
 use glib::{clone, Properties};
-use gtk::glib::WeakRef;
+use gtk::glib::{VariantTy, WeakRef};
 use gtk::{gio, glib};
 
 use crate::api::client;
 use crate::api::CoverLoader;
-use crate::audio::SwPlayer;
+use crate::audio::{SwPlayer, SwRecordingState};
 use crate::config;
 use crate::database::SwLibrary;
+use crate::i18n::i18n;
 use crate::settings::settings_manager;
-use crate::ui::{about_dialog, SwApplicationWindow, SwPreferencesDialog};
+use crate::ui::{about_dialog, SwApplicationWindow, SwPreferencesDialog, SwTrackDialog};
 
 mod imp {
     use super::*;
@@ -79,7 +80,116 @@ mod imp {
     impl ObjectImpl for SwApplication {}
 
     impl ApplicationImpl for SwApplication {
+        fn startup(&self) {
+            self.parent_startup();
+            let obj = self.obj();
+
+            obj.add_action_entries([
+                // app.show-track
+                gio::ActionEntry::builder("show-track")
+                    .parameter_type(Some(VariantTy::STRING))
+                    .activate(move |app: &super::SwApplication, _, uuid| {
+                        app.activate();
+
+                        let uuid = uuid
+                            .map(|v| v.str().unwrap_or_default())
+                            .unwrap_or_default();
+
+                        let player = SwPlayer::default();
+                        let window = SwApplicationWindow::default();
+
+                        if let Some(track) = player.track_by_uuid(uuid) {
+                            SwTrackDialog::new(&track).present(Some(&window));
+                        } else {
+                            window.show_notification(&i18n("Track no longer available"));
+                        }
+                    })
+                    .build(),
+                // app.save-track
+                gio::ActionEntry::builder("save-track")
+                    .parameter_type(Some(VariantTy::STRING))
+                    .activate(move |app: &super::SwApplication, _, uuid| {
+                        app.activate();
+
+                        let uuid = uuid
+                            .map(|v| v.str().unwrap_or_default())
+                            .unwrap_or_default();
+
+                        let player = SwPlayer::default();
+                        let window = SwApplicationWindow::default();
+
+                        // Check if track uuid matches current playing track uuid
+                        if let Some(track) = player.playing_track() {
+                            if track.uuid() == uuid && track.state() == SwRecordingState::Recording
+                            {
+                                track.set_save_when_recorded(true);
+                                return;
+                            }
+                        }
+
+                        window.show_notification(&i18n("This track is currently not recorded"));
+                    })
+                    .build(),
+                // app.cancel-recording
+                gio::ActionEntry::builder("cancel-recording")
+                    .parameter_type(Some(VariantTy::STRING))
+                    .activate(move |app: &super::SwApplication, _, uuid| {
+                        app.activate();
+
+                        let uuid = uuid
+                            .map(|v| v.str().unwrap_or_default())
+                            .unwrap_or_default();
+
+                        let player = SwPlayer::default();
+                        let window = SwApplicationWindow::default();
+
+                        // Check if track uuid matches current playing track uuid
+                        if let Some(track) = player.playing_track() {
+                            if track.uuid() == uuid && track.state() == SwRecordingState::Recording
+                            {
+                                player.cancel_recording();
+                                return;
+                            }
+                        }
+
+                        window.show_notification(&i18n("This track is currently not recorded"));
+                    })
+                    .build(),
+                // app.show-preferences
+                gio::ActionEntry::builder("show-preferences")
+                    .activate(move |app: &super::SwApplication, _, _| {
+                        app.activate();
+
+                        let window = SwApplicationWindow::default();
+                        let preferences_window = SwPreferencesDialog::default();
+                        preferences_window.present(Some(&window));
+                    })
+                    .build(),
+                // app.quit
+                gio::ActionEntry::builder("quit")
+                    .activate(move |app: &super::SwApplication, _, _| {
+                        app.activate();
+                        SwApplicationWindow::default().close();
+                    })
+                    .build(),
+                // app.about
+                gio::ActionEntry::builder("about")
+                    .activate(move |app: &super::SwApplication, _, _| {
+                        app.activate();
+                        let window = SwApplicationWindow::default();
+                        about_dialog::show(&window);
+                    })
+                    .build(),
+            ]);
+
+            obj.set_accels_for_action("app.show-preferences", &["<primary>comma"]);
+            obj.set_accels_for_action("app.quit", &["<primary>q"]);
+            obj.set_accels_for_action("window.close", &["<primary>w"]);
+        }
+
         fn activate(&self) {
+            self.parent_activate();
+
             debug!("gio::Application -> activate()");
             let app = self.obj();
 
@@ -95,9 +205,6 @@ mod imp {
             let window = app.create_window();
             let _ = self.window.set(window.downgrade());
             info!("Created application window.");
-
-            // Setup app level GActions
-            app.setup_gactions();
 
             // Find radiobrowser server and update library data
             let fut = clone!(
@@ -168,47 +275,6 @@ impl SwApplication {
 
         window.present();
         window
-    }
-
-    fn setup_gactions(&self) {
-        let window = SwApplicationWindow::default();
-
-        self.add_action_entries([
-            // app.show-preferences
-            gio::ActionEntry::builder("show-preferences")
-                .activate(clone!(
-                    #[weak]
-                    window,
-                    move |_, _, _| {
-                        let preferences_window = SwPreferencesDialog::default();
-                        preferences_window.present(Some(&window));
-                    }
-                ))
-                .build(),
-            // app.quit
-            gio::ActionEntry::builder("quit")
-                .activate(clone!(
-                    #[weak]
-                    window,
-                    move |_, _, _| {
-                        window.close();
-                    }
-                ))
-                .build(),
-            // app.about
-            gio::ActionEntry::builder("about")
-                .activate(clone!(
-                    #[weak]
-                    window,
-                    move |_, _, _| {
-                        about_dialog::show(&window);
-                    }
-                ))
-                .build(),
-        ]);
-        self.set_accels_for_action("app.show-preferences", &["<primary>comma"]);
-        self.set_accels_for_action("app.quit", &["<primary>q"]);
-        self.set_accels_for_action("window.close", &["<primary>w"]);
     }
 
     async fn lookup_rb_server(&self) {

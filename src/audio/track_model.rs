@@ -108,6 +108,10 @@ impl SwTrackModel {
         self.items_changed(0, 0, 1);
         self.imp().purge_tracks();
     }
+
+    pub fn track_by_uuid(&self, uuid: &str) -> Option<SwTrack> {
+        self.imp().map.borrow().get(uuid).cloned()
+    }
 }
 
 impl Default for SwTrackModel {

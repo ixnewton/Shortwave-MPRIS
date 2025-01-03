@@ -243,18 +243,15 @@ mod imp {
                     if self.obj().recording_mode() != SwRecordingMode::Nothing {
                         self.start_recording(&track);
                     }
-                    *self.playing_track.borrow_mut() = Some(track);
+                    *self.playing_track.borrow_mut() = Some(track.clone());
 
                     self.obj().notify_playing_track();
                     self.obj().notify_has_playing_track();
 
                     // Show desktop notification
                     if settings_manager::boolean(Key::Notifications) {
-                        let notification = gio::Notification::new(&title);
-                        notification.set_body(Some(&self.obj().station().unwrap().title()));
-
                         let id = format!("{}.TrackNotification", config::APP_ID);
-                        app.send_notification(Some(&id), &notification);
+                        app.send_notification(Some(&id), &self.track_notification(&track));
                     }
                 }
                 GstreamerChange::PlaybackState(state) => {
@@ -398,6 +395,39 @@ mod imp {
                 backend.stop_recording(true);
                 track.set_state(SwRecordingState::DiscardedBelowThreshold);
             }
+        }
+
+        fn track_notification(&self, track: &SwTrack) -> gio::Notification {
+            let notification = gio::Notification::new(&track.title());
+            notification.set_body(Some(&track.station().title()));
+
+            let icon = gio::ThemedIcon::new("emblem-music-symbolic");
+            notification.set_icon(&icon);
+
+            let target: glib::Variant = track.uuid().into();
+            notification.set_default_action_and_target_value("app.show-track", Some(&target));
+
+            if track.state() == SwRecordingState::Recording {
+                if self.obj().recording_mode() == SwRecordingMode::Decide {
+                    notification.add_button_with_target_value(
+                        &i18n("Save Track"),
+                        "app.save-track",
+                        Some(&target),
+                    );
+                }
+
+                if self.obj().recording_mode() == SwRecordingMode::Everything
+                    || self.obj().recording_mode() == SwRecordingMode::Decide
+                {
+                    notification.add_button_with_target_value(
+                        &i18n("Don't Record"),
+                        "app.cancel-recording",
+                        Some(&target),
+                    );
+                }
+            }
+
+            notification
         }
     }
 }
@@ -595,6 +625,16 @@ impl SwPlayer {
             debug!("Restore previous volume: {}", volume);
             self.set_volume(volume);
         }
+    }
+
+    pub fn track_by_uuid(&self, uuid: &str) -> Option<SwTrack> {
+        if let Some(track) = self.playing_track() {
+            if track.uuid() == uuid {
+                return Some(track.clone());
+            }
+        }
+
+        self.past_tracks().track_by_uuid(uuid)
     }
 }
 
