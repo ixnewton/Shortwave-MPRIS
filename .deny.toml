@@ -1,6 +1,9 @@
 [advisories]
 version = 2
 yanked = "deny"
+ignore = [
+   { id = "RUSTSEC-2024-0384", reason = "we depend on isahc, as there is currently no other non-tokio async http client available" },
+]
 
 [licenses]
 version = 2
