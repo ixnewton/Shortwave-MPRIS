@@ -4,8 +4,29 @@
     <key name="api-lookup-domain" type="s">
       <default>"all.api.radio-browser.info"</default>
     </key>
-    <key name="notifications" type="b">
-      <default>false</default>
+    <key name="library-sorting" type="s">
+      <default>"name"</default>
+    </key>
+    <key name="library-sorting-type" type="s">
+      <default>"ascending"</default>
+    </key>
+    <key name="playback-last-station" type="s">
+      <default>""</default>
+    </key>
+    <key name="playback-past-tracks-count" type="i">
+      <default>10</default>
+    </key>
+    <key name="playback-volume" type="d">
+      <default>1.0</default>
+    </key>
+    <key name="recording-minimum-duration" type="i">
+      <default>30</default>
+    </key>
+    <key name="recording-mode" type="s">
+      <default>"decide"</default>
+    </key>
+    <key name="recording-track-directory" type="s">
+      <default>""</default>
     </key>
     <key name="window-width" type="i">
       <default>950</default>
@@ -19,29 +40,8 @@
     <key name="window-previous-height" type="i">
       <default>650</default>
     </key>
-    <key name="library-sorting" type="s">
-      <default>"name"</default>
-    </key>
-    <key name="library-sorting-type" type="s">
-      <default>"ascending"</default>
-    </key>
-    <key name="recording-mode" type="s">
-      <default>"decide"</default>
-    </key>
-    <key name="recorder-save-count" type="i">
-      <default>7</default>
-    </key>
-    <key name="recorder-song-duration-threshold" type="i">
-      <default>30</default>
-    </key>
-    <key name="recorder-song-save-path" type="s">
-      <default>""</default>
-    </key>
-    <key name="playback-volume" type="d">
-      <default>1.0</default>
-    </key>
-    <key name="playback-last-station" type="s">
-      <default>""</default>
+    <key name="notifications" type="b">
+      <default>false</default>
     </key>
   </schema>
 </schemalist>

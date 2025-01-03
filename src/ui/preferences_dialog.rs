@@ -70,7 +70,7 @@ mod imp {
             self.obj().insert_action_group("player", Some(&group));
 
             settings_manager::bind_property(
-                Key::RecorderSongSavePath,
+                Key::RecordingTrackDirectory,
                 &*self.track_save_path_row,
                 "subtitle",
             );
@@ -84,7 +84,7 @@ mod imp {
             ));
 
             settings_manager::bind_property(
-                Key::RecorderSongDurationThreshold,
+                Key::RecordingMinimumDuration,
                 &*self.track_duration_threshold_row,
                 "value",
             );
@@ -117,7 +117,7 @@ mod imp {
                     Ok(folder) => {
                         debug!("Selected save directory: {:?}", folder.path());
                         settings_manager::set_string(
-                            Key::RecorderSongSavePath,
+                            Key::RecordingTrackDirectory,
                             folder.parse_name().to_string(),
                         );
                     }

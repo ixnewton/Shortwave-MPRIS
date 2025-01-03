@@ -1,5 +1,5 @@
 // Shortwave - key.rs
-// Copyright (C) 2021-2024  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2021-2025  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -17,24 +17,27 @@
 #[derive(Display, Debug, Clone, EnumString)]
 #[strum(serialize_all = "kebab_case")]
 pub enum Key {
-    // Client Backend
+    // API
     ApiLookupDomain,
 
+    // Library
+    LibrarySorting,
+    LibrarySortingType,
+
+    // Playback
+    PlaybackLastStation,
+    PlaybackPastTracksCount,
+    PlaybackVolume,
+
+    // Recording
+    RecordingMinimumDuration,
+    RecordingMode,
+    RecordingTrackDirectory,
+
     // User Interface
-    Notifications,
     WindowWidth,
     WindowHeight,
     WindowPreviousWidth,
     WindowPreviousHeight,
-
-    LibrarySorting,
-    LibrarySortingType,
-
-    // Audio
-    RecordingMode,
-    RecorderSaveCount,
-    RecorderSongDurationThreshold,
-    RecorderSongSavePath,
-    PlaybackVolume,
-    PlaybackLastStation,
+    Notifications,
 }

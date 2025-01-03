@@ -182,7 +182,7 @@ impl SwTrack {
 
         debug!("Save track \"{}\"", &self.title());
 
-        let directory = settings_manager::string(Key::RecorderSongSavePath);
+        let directory = settings_manager::string(Key::RecordingTrackDirectory);
         let filename = sanitize_filename::sanitize(self.title()) + ".ogg";
 
         let mut path = PathBuf::from(directory);

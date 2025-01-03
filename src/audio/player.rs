@@ -137,9 +137,9 @@ mod imp {
             }
 
             // Ensure temporary recording directory gsetting is set
-            if settings_manager::string(Key::RecorderSongSavePath).is_empty() {
+            if settings_manager::string(Key::RecordingTrackDirectory).is_empty() {
                 settings_manager::set_string(
-                    Key::RecorderSongSavePath,
+                    Key::RecordingTrackDirectory,
                     glib::user_special_dir(glib::UserDirectory::Music)
                         .unwrap_or(glib::home_dir())
                         .as_os_str()
@@ -150,7 +150,7 @@ mod imp {
             }
 
             // Set how many tracks will be saved before they are replaced with newer recordings
-            let max_count = settings_manager::integer(Key::RecorderSaveCount) as u32;
+            let max_count = settings_manager::integer(Key::PlaybackPastTracksCount) as u32;
             self.past_tracks.set_max_count(max_count);
 
             // Bind recording mode setting
@@ -367,7 +367,7 @@ mod imp {
             let duration: u64 = backend.recording_duration();
             track.set_duration(duration);
 
-            let threshold = settings_manager::integer(Key::RecorderSongDurationThreshold);
+            let threshold = settings_manager::integer(Key::RecordingMinimumDuration);
 
             if discard_data {
                 debug!("Discard recorded data.");
