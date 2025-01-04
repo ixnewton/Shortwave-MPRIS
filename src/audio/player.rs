@@ -245,92 +245,115 @@ mod imp {
         }
 
         fn process_gst_message(&self, message: GstreamerChange) -> glib::ControlFlow {
+            match message {
+                GstreamerChange::Title(title) => self.gst_title_change(&title),
+                GstreamerChange::PlaybackState(state) => self.gst_playback_change(&state),
+                GstreamerChange::Volume(volume) => self.gst_volume_change(volume),
+                GstreamerChange::Failure(f) => self.gst_failure(&f),
+            }
+
+            glib::ControlFlow::Continue
+        }
+
+        fn gst_title_change(&self, title: &str) {
+            debug!("Stream title has changed to: {}", title);
+            let track = SwTrack::new(title, &self.obj().station().unwrap());
+
+            // Stop recording of old track
+            self.stop_recording(RecordingStopReason::TrackChange);
+
+            // Set previous track
+            let mut is_playing_track_from_beginning = false;
+            if let Some(track) = self.playing_track.borrow_mut().take() {
+                if track.state().include_in_past_tracks() {
+                    self.past_tracks.add_track(&track);
+                }
+
+                *self.previous_track.borrow_mut() = Some(track);
+                self.obj().notify_previous_track();
+                is_playing_track_from_beginning = true;
+            }
+
+            if self.obj().recording_mode() != SwRecordingMode::Nothing {
+                // If there is no previous track, we know that the current track is the
+                // first track we play from that station. This means that it would be
+                // incomplete, as we couldn't record it completely from the beginning.
+                if is_playing_track_from_beginning {
+                    self.start_recording(&track);
+                } else {
+                    track.set_state(SwRecordingState::IdleIncomplete);
+                    debug!(
+                        "Track {:?} will not be recorded because it may be incomplete.",
+                        track.title()
+                    );
+                }
+            }
+
+            // Set new track
+            *self.playing_track.borrow_mut() = Some(track.clone());
+            self.obj().notify_playing_track();
+            self.obj().notify_has_playing_track();
+
+            // Show desktop notification
+            if settings_manager::boolean(Key::Notifications) {
+                let id = format!("{}.TrackNotification", config::APP_ID);
+                SwApplication::default()
+                    .send_notification(Some(&id), &self.track_notification(&track));
+            }
+        }
+
+        fn gst_playback_change(&self, state: &SwPlaybackState) {
             let app = SwApplication::default();
             let window = SwApplicationWindow::default();
 
-            match message {
-                GstreamerChange::Title(title) => {
-                    debug!("Stream title has changed to: {}", title);
-
-                    // Stop recording of old track
-                    self.stop_recording(RecordingStopReason::TrackChange);
-
-                    // Set previous track
-                    if let Some(track) = self.playing_track.borrow_mut().take() {
-                        if track.state().include_in_past_tracks() {
-                            self.past_tracks.add_track(&track);
-                        }
-
-                        *self.previous_track.borrow_mut() = Some(track);
-                        self.obj().notify_previous_track();
-                    }
-
-                    // Set new track
-                    let track = SwTrack::new(&title, &self.obj().station().unwrap());
-                    if self.obj().recording_mode() != SwRecordingMode::Nothing {
-                        self.start_recording(&track);
-                    }
-                    *self.playing_track.borrow_mut() = Some(track.clone());
-
-                    self.obj().notify_playing_track();
-                    self.obj().notify_has_playing_track();
-
-                    // Show desktop notification
-                    if settings_manager::boolean(Key::Notifications) {
-                        let id = format!("{}.TrackNotification", config::APP_ID);
-                        app.send_notification(Some(&id), &self.track_notification(&track));
-                    }
-                }
-                GstreamerChange::PlaybackState(state) => {
-                    if state == SwPlaybackState::Failure {
-                        // Discard recorded data when a failure occurs,
-                        // since the track has not been recorded completely.
-                        if self.backend.get().unwrap().borrow().is_recording() {
-                            self.stop_recording(RecordingStopReason::StreamFailure);
-                            self.reset_track();
-                        }
-                    }
-
-                    self.state.set(state);
-                    self.obj().notify_state();
-
-                    // Inhibit session suspend when playback is active
-                    if state == SwPlaybackState::Playing && self.inhibit_cookie.get() == 0 {
-                        let cookie = app.inhibit(
-                            Some(&window),
-                            gtk::ApplicationInhibitFlags::SUSPEND,
-                            Some(&i18n("Active Playback")),
-                        );
-                        self.inhibit_cookie.set(cookie);
-                        debug!("Install inhibitor")
-                    } else if state != SwPlaybackState::Playing && self.inhibit_cookie.get() != 0 {
-                        app.uninhibit(self.inhibit_cookie.get());
-                        self.inhibit_cookie.set(0);
-                        debug!("Remove inhibitor");
-                    }
-                }
-                GstreamerChange::Volume(volume) => {
-                    if self.obj().device().is_some() {
-                        return glib::ControlFlow::Continue;
-                    }
-
-                    // Check if the volume differs. For some reason gstreamer sends us slightly
-                    // different floats, so we round up here (only the the first two digits are
-                    // important for use here).
-                    let new_val = format!("{:.2}", volume);
-                    let old_val = format!("{:.2}", self.volume.get());
-
-                    if new_val != old_val {
-                        self.volume.set(volume);
-                        self.obj().notify_volume();
-                    }
-                }
-                GstreamerChange::Failure(f) => {
-                    *self.last_failure.borrow_mut() = f;
-                    self.obj().notify_last_failure();
+            if state == &SwPlaybackState::Failure {
+                // Discard recorded data when a failure occurs,
+                // since the track has not been recorded completely.
+                if self.backend.get().unwrap().borrow().is_recording() {
+                    self.stop_recording(RecordingStopReason::StreamFailure);
+                    self.reset_track();
                 }
             }
-            glib::ControlFlow::Continue
+
+            self.state.set(*state);
+            self.obj().notify_state();
+
+            // Inhibit session suspend when playback is active
+            if state == &SwPlaybackState::Playing && self.inhibit_cookie.get() == 0 {
+                let cookie = app.inhibit(
+                    Some(&window),
+                    gtk::ApplicationInhibitFlags::SUSPEND,
+                    Some(&i18n("Active Playback")),
+                );
+                self.inhibit_cookie.set(cookie);
+                debug!("Install inhibitor")
+            } else if state != &SwPlaybackState::Playing && self.inhibit_cookie.get() != 0 {
+                app.uninhibit(self.inhibit_cookie.get());
+                self.inhibit_cookie.set(0);
+                debug!("Remove inhibitor");
+            }
+        }
+
+        fn gst_volume_change(&self, volume: f64) {
+            if self.obj().device().is_some() {
+                return;
+            }
+
+            // Check if the volume differs. For some reason gstreamer sends us slightly
+            // different floats, so we round up here (only the the first two digits are
+            // important for use here).
+            let new_val = format!("{:.2}", volume);
+            let old_val = format!("{:.2}", self.volume.get());
+
+            if new_val != old_val {
+                self.volume.set(volume);
+                self.obj().notify_volume();
+            }
+        }
+
+        fn gst_failure(&self, failure: &str) {
+            *self.last_failure.borrow_mut() = failure.to_string();
+            self.obj().notify_last_failure();
         }
 
         /// Unsets the current playing track and adds it to the past played tracks history
@@ -348,30 +371,16 @@ mod imp {
         }
 
         pub fn start_recording(&self, track: &SwTrack) {
-            // If there is no previous track, we know that the current track is the
-            // first track we play from that station. This means that it would be
-            // incomplete, as we couldn't record it completely from the beginning.
-            //
-            // The previous track is only set when the stream title changes, not
-            // when the recording stops, is paused, etc.
-            if self.obj().previous_track().is_some() {
-                let path = track.file().path().unwrap();
-                fs::create_dir_all(path.parent().unwrap())
-                    .expect("Could not create path for recording");
+            let path = track.file().path().unwrap();
+            fs::create_dir_all(path.parent().unwrap())
+                .expect("Could not create path for recording");
 
-                track.set_state(SwRecordingState::Recording);
-                self.backend
-                    .get()
-                    .unwrap()
-                    .borrow_mut()
-                    .start_recording(path);
-            } else {
-                track.set_state(SwRecordingState::IdleIncomplete);
-                debug!(
-                    "Track {:?} will not be recorded because it may be incomplete.",
-                    track.title()
-                );
-            }
+            track.set_state(SwRecordingState::Recording);
+            self.backend
+                .get()
+                .unwrap()
+                .borrow_mut()
+                .start_recording(path);
         }
 
         pub fn stop_recording(&self, reason: RecordingStopReason) {
