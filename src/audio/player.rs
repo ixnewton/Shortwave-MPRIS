@@ -163,12 +163,23 @@ mod imp {
                     self,
                     #[upgrade_or_panic]
                     move || {
-                        let backend = imp.backend.get().unwrap().borrow();
+                        let mut stop_recording = false;
                         if let Some(track) = imp.obj().playing_track() {
+                            let backend = imp.backend.get().unwrap().borrow();
                             if backend.is_recording() {
                                 let duration = backend.recording_duration();
                                 track.set_duration(duration);
+
+                                // Stop recording if recorded duration exceeds maximum
+                                let max = settings_manager::integer(Key::RecordingMaximumDuration);
+                                if duration >= max as u64 {
+                                    stop_recording = true;
+                                }
                             }
+                        }
+
+                        if stop_recording {
+                            imp.stop_recording(false);
                         }
                         glib::ControlFlow::Continue
                     }
