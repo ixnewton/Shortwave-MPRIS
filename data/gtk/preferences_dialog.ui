@@ -15,9 +15,9 @@
                 <property name="title" translatable="yes">_Notifications</property>
                 <property name="subtitle" translatable="yes">Show desktop notifications when a new track gets played</property>
                 <property name="use_underline">True</property>
-                <property name="activatable_widget">show_notifications_button</property>
+                <property name="activatable_widget">notifications_switch</property>
                 <child>
-                  <object class="GtkSwitch" id="show_notifications_button">
+                  <object class="GtkSwitch" id="notifications_switch">
                     <property name="valign">center</property>
                   </object>
                 </child>
@@ -28,10 +28,32 @@
         <child>
           <object class="AdwPreferencesGroup">
             <property name="title" translatable="yes">Recording</property>
-            <property name="description" translatable="yes">Tracks are automatically recognised based on the station stream metadata and can be recorded.</property>
+            <property name="description" translatable="yes">Tracks are automatically recognised based on the station stream metadata and can be saved.</property>
+            <child>
+              <object class="AdwActionRow" id="recording_track_directory_row">
+                <property name="title" translatable="yes">Track _Directory</property>
+                <property name="use_underline">True</property>
+                <property name="subtitle_selectable">True</property>
+                <property name="activatable">True</property>
+                <child>
+                  <object class="GtkImage">
+                    <property name="icon_name">folder-symbolic</property>
+                    <property name="margin_start">6</property>
+                    <property name="margin_end">6</property>
+                  </object>
+                </child>
+                <style>
+                  <class name="property" />
+                </style>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="AdwPreferencesGroup">
             <child>
               <object class="AdwActionRow">
-                <property name="title" translatable="yes">Save _Everything</property>
+                <property name="title" translatable="yes">Save _All Tracks</property>
                 <property name="subtitle" translatable="yes">All recorded tracks are automatically saved in the track directory</property>
                 <property name="use_underline">True</property>
                 <property name="activatable_widget">record_everything_checkbutton</property>
@@ -81,28 +103,28 @@
         <child>
           <object class="AdwPreferencesGroup">
             <child>
-              <object class="AdwActionRow" id="track_save_path_row">
-                <property name="title" translatable="yes">Track _Directory</property>
+              <object class="AdwSpinRow" id="recording_maximum_duration_row">
+                <property name="title" translatable="yes">M_aximum Duration</property>
+                <property name="subtitle" translatable="yes">Recording ends when the maximum duration is reached</property>
                 <property name="use_underline">True</property>
-                <property name="subtitle_selectable">True</property>
-                <property name="activatable">True</property>
-                <child>
-                  <object class="GtkImage">
-                    <property name="icon_name">folder-symbolic</property>
-                    <property name="margin_start">6</property>
-                    <property name="margin_end">6</property>
+                <property name="width_chars">7</property>
+                <signal name="output" handler="on_maximum_duration_output" />
+                <property name="adjustment">
+                  <object class="GtkAdjustment">
+                    <property name="step_increment">60</property>
+                    <property name="upper">1800</property>
+                    <property name="lower">60</property>
                   </object>
-                </child>
-                <style>
-                  <class name="property" />
-                </style>
+                </property>
               </object>
             </child>
             <child>
-              <object class="AdwSpinRow" id="track_duration_threshold_row">
-                <property name="title" translatable="yes">_Minimum Duration in Seconds</property>
-                <property name="subtitle" translatable="yes">Tracks shorter than the minimum length will be ignored</property>
+              <object class="AdwSpinRow" id="recording_minimum_duration_row">
+                <property name="title" translatable="yes">M_inimum Duration</property>
+                <property name="subtitle" translatable="yes">Tracks shorter than the minimum duration will be ignored</property>
                 <property name="use_underline">True</property>
+                <property name="width_chars">7</property>
+                <signal name="output" handler="on_minimum_duration_output" />
                 <property name="adjustment">
                   <object class="GtkAdjustment">
                     <property name="step_increment">1.0</property>

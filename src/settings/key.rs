@@ -30,6 +30,7 @@ pub enum Key {
     PlaybackVolume,
 
     // Recording
+    RecordingMaximumDuration,
     RecordingMinimumDuration,
     RecordingMode,
     RecordingTrackDirectory,

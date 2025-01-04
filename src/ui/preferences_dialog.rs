@@ -19,7 +19,7 @@ use adw::subclass::prelude::*;
 use glib::{clone, subclass};
 use gtk::{gio, glib, CompositeTemplate};
 
-use crate::i18n::i18n;
+use crate::i18n::{i18n, ni18n_f};
 use crate::settings::{settings_manager, Key};
 
 mod imp {
@@ -30,13 +30,15 @@ mod imp {
     pub struct SwPreferencesDialog {
         // Playback
         #[template_child]
-        show_notifications_button: TemplateChild<gtk::Switch>,
+        notifications_switch: TemplateChild<gtk::Switch>,
 
         // Recording
         #[template_child]
-        track_save_path_row: TemplateChild<adw::ActionRow>,
+        recording_track_directory_row: TemplateChild<adw::ActionRow>,
         #[template_child]
-        track_duration_threshold_row: TemplateChild<adw::SpinRow>,
+        recording_maximum_duration_row: TemplateChild<adw::SpinRow>,
+        #[template_child]
+        recording_minimum_duration_row: TemplateChild<adw::SpinRow>,
     }
 
     #[glib::object_subclass]
@@ -47,6 +49,7 @@ mod imp {
 
         fn class_init(klass: &mut Self::Class) {
             Self::bind_template(klass);
+            Self::bind_template_callbacks(klass);
         }
 
         fn instance_init(obj: &subclass::InitializingObject<Self>) {
@@ -59,7 +62,7 @@ mod imp {
             // Playback
             settings_manager::bind_property(
                 Key::Notifications,
-                &*self.show_notifications_button,
+                &*self.notifications_switch,
                 "active",
             );
 
@@ -71,11 +74,11 @@ mod imp {
 
             settings_manager::bind_property(
                 Key::RecordingTrackDirectory,
-                &*self.track_save_path_row,
+                &*self.recording_track_directory_row,
                 "subtitle",
             );
 
-            self.track_save_path_row.connect_activated(clone!(
+            self.recording_track_directory_row.connect_activated(clone!(
                 #[weak(rename_to = imp)]
                 self,
                 move |_| {
@@ -84,8 +87,25 @@ mod imp {
             ));
 
             settings_manager::bind_property(
+                Key::RecordingMaximumDuration,
+                &*self.recording_maximum_duration_row,
+                "value",
+            );
+
+            self.recording_maximum_duration_row.connect_input(|row| {
+                let mut text = row.text().to_string();
+                text.retain(|c| c.is_numeric());
+
+                if let Ok(value) = text.parse::<f64>() {
+                    Some(Ok(value * 60.0))
+                } else {
+                    None
+                }
+            });
+
+            settings_manager::bind_property(
                 Key::RecordingMinimumDuration,
-                &*self.track_duration_threshold_row,
+                &*self.recording_minimum_duration_row,
                 "value",
             );
         }
@@ -97,6 +117,7 @@ mod imp {
 
     impl PreferencesDialogImpl for SwPreferencesDialog {}
 
+    #[gtk::template_callbacks]
     impl SwPreferencesDialog {
         pub fn select_recording_save_directory(&self) {
             let parent = self
@@ -126,6 +147,24 @@ mod imp {
                     }
                 },
             );
+        }
+
+        #[template_callback]
+        fn on_maximum_duration_output(row: &adw::SpinRow) -> bool {
+            let value = (row.value() / 60.0) as u32;
+            let text = ni18n_f("{} min", "{} min", value, &[&value.to_string()]);
+            row.set_text(&text);
+            row.set_width_chars(text.len() as i32);
+            true
+        }
+
+        #[template_callback]
+        fn on_minimum_duration_output(row: &adw::SpinRow) -> bool {
+            let value = row.value() as u32;
+            let text = ni18n_f("{} sec", "{} sec", value, &[&value.to_string()]);
+            row.set_text(&text);
+            row.set_width_chars(text.len() as i32);
+            true
         }
     }
 }
