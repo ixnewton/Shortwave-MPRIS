@@ -37,6 +37,22 @@ use crate::ui::SwApplicationWindow;
 mod imp {
     use super::*;
 
+    #[derive(PartialEq, Debug)]
+    pub enum RecordingStopReason {
+        TrackChange,
+        StoppedPlayback,
+        Cancelled,
+        ReachedMaximumDuration,
+        StreamFailure,
+    }
+
+    impl RecordingStopReason {
+        fn discard_data(&self) -> bool {
+            // Save recorded data only on track save or when track reaches maximum duration
+            *self != Self::TrackChange && *self != Self::ReachedMaximumDuration
+        }
+    }
+
     #[derive(Debug, Default, Properties)]
     #[properties(wrapper_type = super::SwPlayer)]
     pub struct SwPlayer {
@@ -179,7 +195,7 @@ mod imp {
                         }
 
                         if stop_recording {
-                            imp.stop_recording(false);
+                            imp.stop_recording(RecordingStopReason::ReachedMaximumDuration);
                         }
                         glib::ControlFlow::Continue
                     }
@@ -237,7 +253,7 @@ mod imp {
                     debug!("Stream title has changed to: {}", title);
 
                     // Stop recording of old track
-                    self.stop_recording(false);
+                    self.stop_recording(RecordingStopReason::TrackChange);
 
                     // Set previous track
                     if let Some(track) = self.playing_track.borrow_mut().take() {
@@ -270,7 +286,7 @@ mod imp {
                         // Discard recorded data when a failure occurs,
                         // since the track has not been recorded completely.
                         if self.backend.get().unwrap().borrow().is_recording() {
-                            self.stop_recording(true);
+                            self.stop_recording(RecordingStopReason::StreamFailure);
                             self.reset_track();
                         }
                     }
@@ -358,54 +374,62 @@ mod imp {
             }
         }
 
-        pub fn stop_recording(&self, discard_data: bool) {
-            debug!("Stop recording...");
+        pub fn stop_recording(&self, reason: RecordingStopReason) {
             let backend = &mut self.backend.get().unwrap().borrow_mut();
 
             if !backend.is_recording() {
-                debug!("No recording, nothing to stop!");
+                debug!("No recording to stop!");
                 return;
             }
 
-            let track = if let Some(track) = self.obj().playing_track() {
-                track
-            } else {
+            let Some(track) = self.obj().playing_track() else {
                 warn!("No track available, discard recorded data.");
                 backend.stop_recording(true);
                 return;
             };
 
-            let duration: u64 = backend.recording_duration();
-            track.set_duration(duration);
+            let mode = self.obj().recording_mode();
+            let minimum_duration = settings_manager::integer(Key::RecordingMinimumDuration);
 
-            let threshold = settings_manager::integer(Key::RecordingMinimumDuration);
+            let mut duration = backend.recording_duration();
+            let mut discard_data = reason.discard_data();
 
-            if discard_data {
-                debug!("Discard recorded data.");
-
-                backend.stop_recording(true);
-                track.set_state(SwRecordingState::DiscardedCancelled);
-                track.set_duration(0);
-            } else if duration > threshold as u64 {
-                debug!("Save recorded data.");
-
-                backend.stop_recording(false);
-                track.set_state(SwRecordingState::Recorded);
-
-                if self.obj().recording_mode() == SwRecordingMode::Everything
-                    || track.save_when_recorded()
-                {
-                    track.save().handle_error("Unable to save track");
-                }
+            let mut new_state = if reason.discard_data() {
+                duration = 0;
+                SwRecordingState::DiscardedCancelled
             } else {
+                SwRecordingState::Recorded
+            };
+
+            // Check whether recorded track meets minimum duration
+            if new_state == SwRecordingState::Recorded && duration < minimum_duration as u64 {
                 debug!(
                     "Discard recorded data, duration ({} sec) is below threshold ({} sec).",
-                    duration, threshold
+                    duration, minimum_duration
                 );
 
-                backend.stop_recording(true);
-                track.set_state(SwRecordingState::DiscardedBelowThreshold);
+                discard_data = true;
+                new_state = SwRecordingState::DiscardedBelowThreshold;
             }
+
+            track.set_state(new_state);
+            track.set_duration(duration);
+
+            // Check whether recorded track should be saved immediately
+            let save_track = mode == SwRecordingMode::Everything || track.save_when_recorded();
+            if track.state() == SwRecordingState::Recorded && save_track {
+                track.save().handle_error("Unable to save track");
+            }
+
+            debug!(
+                "Stop recording track {:?}, reason: {:?}, new state: {}, discard: {}, duration: {}",
+                track.title(),
+                reason,
+                track.state(),
+                discard_data,
+                track.duration(),
+            );
+            backend.stop_recording(discard_data);
         }
 
         fn track_notification(&self, track: &SwTrack) -> gio::Notification {
@@ -515,7 +539,7 @@ impl SwPlayer {
         let imp = self.imp();
 
         // Discard recorded data when the stream stops
-        imp.stop_recording(true);
+        imp.stop_recording(imp::RecordingStopReason::StoppedPlayback);
         imp.reset_track();
 
         imp.backend
@@ -541,7 +565,8 @@ impl SwPlayer {
     }
 
     pub fn cancel_recording(&self) {
-        self.imp().stop_recording(true);
+        let imp = self.imp();
+        imp.stop_recording(imp::RecordingStopReason::Cancelled);
     }
 
     pub fn restore_state(&self) {

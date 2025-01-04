@@ -186,9 +186,6 @@ mod imp {
                 .sync_create()
                 .build();
 
-            // TODO: Display sth when track is saved
-            // -> green "Saved" badge before duration badge
-
             self.recording_label.connect_activate_link(|_, _| {
                 SwApplication::default().activate_action("show-preferences", None);
                 glib::Propagation::Stop
