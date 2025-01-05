@@ -76,7 +76,7 @@ mod imp {
     impl ObjectImpl for SwPlayerView {
         fn constructed(&self) {
             self.parent_constructed();
-            let player = SwApplication::default().player();
+            let player = self.obj().player();
 
             player
                 .bind_property("volume", &*self.volume_control, "volume")

@@ -58,9 +58,9 @@ mod imp {
     impl ObjectImpl for SwPlayerGadget {
         fn constructed(&self) {
             self.parent_constructed();
-            let player = SwApplication::default().player();
 
-            player
+            self.obj()
+                .player()
                 .bind_property("volume", &*self.volume_control, "volume")
                 .sync_create()
                 .bidirectional()
