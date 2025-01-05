@@ -138,12 +138,6 @@ mod imp {
             obj.set_accels_for_action("app.quit", &["<primary>q"]);
             obj.set_accels_for_action("window.close", &["<primary>w"]);
             obj.set_accels_for_action("player.toggle-playback", &["<primary>space"]);
-
-            settings_manager::bind_property(
-                Key::BackgroundPlayback,
-                &*self.obj(),
-                "background-playback",
-            );
         }
     }
 
@@ -163,6 +157,12 @@ mod imp {
 
             // Restore previously played station / volume
             self.player.restore_state();
+
+            settings_manager::bind_property(
+                Key::BackgroundPlayback,
+                &*self.obj(),
+                "background-playback",
+            );
         }
 
         fn activate(&self) {
@@ -204,6 +204,7 @@ mod imp {
 
     impl SwApplication {
         fn set_background_playback(&self, enabled: bool) {
+            dbg!(&enabled);
             self.background_playback.set(enabled);
 
             if enabled {
