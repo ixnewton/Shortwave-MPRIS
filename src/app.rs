@@ -25,10 +25,11 @@ use gtk::{gio, glib};
 
 use crate::api::client;
 use crate::api::CoverLoader;
-use crate::audio::{SwPlayer, SwRecordingState};
+use crate::audio::{SwPlaybackState, SwPlayer, SwRecordingState};
 use crate::config;
 use crate::database::SwLibrary;
 use crate::i18n::i18n;
+use crate::settings::*;
 use crate::ui::{SwApplicationWindow, SwTrackDialog};
 
 mod imp {
@@ -43,9 +44,12 @@ mod imp {
         player: SwPlayer,
         #[property(get)]
         rb_server: RefCell<Option<String>>,
+        #[property(get, set=Self::set_background_playback)]
+        background_playback: Cell<bool>,
 
         pub cover_loader: CoverLoader,
         pub inhibit_cookie: Cell<u32>,
+        pub background_hold: RefCell<Option<gio::ApplicationHoldGuard>>,
     }
 
     #[glib::object_subclass]
@@ -56,11 +60,9 @@ mod imp {
     }
 
     #[glib::derived_properties]
-    impl ObjectImpl for SwApplication {}
-
-    impl ApplicationImpl for SwApplication {
-        fn startup(&self) {
-            self.parent_startup();
+    impl ObjectImpl for SwApplication {
+        fn constructed(&self) {
+            self.parent_constructed();
             let obj = self.obj();
 
             obj.add_action_entries([
@@ -129,6 +131,18 @@ mod imp {
             obj.set_accels_for_action("window.close", &["<primary>w"]);
             obj.set_accels_for_action("player.toggle-playback", &["<primary>space"]);
 
+            settings_manager::bind_property(
+                Key::BackgroundPlayback,
+                &*self.obj(),
+                "background-playback",
+            );
+        }
+    }
+
+    impl ApplicationImpl for SwApplication {
+        fn startup(&self) {
+            self.parent_startup();
+
             // Find radiobrowser server and update library data
             let fut = clone!(
                 #[weak(rename_to = imp)]
@@ -163,11 +177,34 @@ mod imp {
         }
     }
 
-    impl GtkApplicationImpl for SwApplication {}
+    impl GtkApplicationImpl for SwApplication {
+        fn window_removed(&self, window: &gtk::Window) {
+            self.parent_window_removed(window);
+            let obj = self.obj();
+
+            if obj.active_window().is_none()
+                && obj.background_playback()
+                && obj.player().state() != SwPlaybackState::Playing
+            {
+                debug!("No active playback, quit application.");
+                obj.quit();
+            }
+        }
+    }
 
     impl AdwApplicationImpl for SwApplication {}
 
     impl SwApplication {
+        fn set_background_playback(&self, enabled: bool) {
+            self.background_playback.set(enabled);
+
+            if enabled {
+                self.background_hold.replace(Some(self.obj().hold()));
+            } else {
+                self.background_hold.replace(None);
+            }
+        }
+
         async fn lookup_rb_server(&self) {
             // Try to find a working radio-browser server
             let rb_server = client::lookup_rb_server().await;
@@ -184,6 +221,11 @@ mod imp {
             }
         }
 
+        fn present_window(&self) {
+            self.ensure_window().present();
+            info!("Application window presented.");
+        }
+
         pub fn ensure_window(&self) -> SwApplicationWindow {
             if let Some(window) = self.obj().active_window() {
                 window.downcast::<SwApplicationWindow>().unwrap()
@@ -194,11 +236,6 @@ mod imp {
                 self.obj().add_window(&window);
                 window
             }
-        }
-
-        fn present_window(&self) {
-            self.ensure_window().present();
-            info!("Application window presented.");
         }
     }
 }
