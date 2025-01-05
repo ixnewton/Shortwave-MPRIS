@@ -92,15 +92,13 @@ mod imp {
             player.past_tracks().connect_items_changed(clone!(
                 #[weak(rename_to = imp)]
                 self,
-                move |_, _, _, added| {
-                    if added > 0 {
-                        imp.past_tracks_stack
-                            .set_visible_child(&*imp.past_tracks_listbox);
-                    }
+                move |_, _, _, _| {
+                    imp.update_past_tracks_stack();
                 }
             ));
 
             self.obj().set_show_gadget_button(true);
+            self.update_past_tracks_stack();
         }
     }
 
@@ -110,6 +108,13 @@ mod imp {
 
     #[gtk::template_callbacks]
     impl SwPlayerView {
+        fn update_past_tracks_stack(&self) {
+            if self.obj().player().past_tracks().n_items() > 0 {
+                self.past_tracks_stack
+                    .set_visible_child(&*self.past_tracks_listbox);
+            }
+        }
+
         fn player(&self) -> SwPlayer {
             SwApplication::default().player()
         }
