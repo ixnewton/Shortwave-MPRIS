@@ -29,7 +29,7 @@ use crate::api::{Error, SwStation};
 use crate::app::SwApplication;
 use crate::audio::SwRecordingState;
 use crate::settings::{settings_manager, Key};
-use crate::ui::{DisplayError, SwApplicationWindow};
+use crate::ui::DisplayError;
 
 mod imp {
     use super::*;
@@ -201,11 +201,12 @@ impl SwTrack {
         if let Some(file) = self.saved_to() {
             debug!("Play track \"{}\"", &self.title());
 
-            let launcher = gtk::FileLauncher::new(Some(&file));
-            let window = SwApplicationWindow::default();
-            launcher.launch(Some(&window), gio::Cancellable::NONE, |res| {
-                res.handle_error("Unable to play track");
-            });
+            if let Some(win) = SwApplication::default().active_window() {
+                let launcher = gtk::FileLauncher::new(Some(&file));
+                launcher.launch(Some(&win), gio::Cancellable::NONE, |res| {
+                    res.handle_error("Unable to play track");
+                });
+            }
         } else {
             debug!("Track not saved, not able to play it.");
         }

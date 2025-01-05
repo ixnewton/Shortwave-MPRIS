@@ -1,5 +1,5 @@
 // Shortwave - display_error.rs
-// Copyright (C) 2021-2024  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2021-2025  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@ use std::fmt::Display;
 
 use adw::prelude::*;
 
+use crate::app::SwApplication;
 use crate::{i18n::i18n, ui::SwApplicationWindow};
 
 pub trait ToastWindow: IsA<gtk::Widget> {
@@ -34,7 +35,12 @@ pub trait DisplayError<E> {
 
 impl<E: Display, T> DisplayError<E> for Result<T, E> {
     fn handle_error(&self, title: impl AsRef<str>) {
-        self.handle_error_in(title, &SwApplicationWindow::default());
+        let win = SwApplication::default()
+            .active_window()
+            .unwrap()
+            .downcast::<SwApplicationWindow>()
+            .unwrap();
+        self.handle_error_in(title, &win);
     }
 
     fn handle_error_in(&self, title: impl AsRef<str>, widget: &impl ToastWindow) {

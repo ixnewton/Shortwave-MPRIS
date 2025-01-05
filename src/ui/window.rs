@@ -206,11 +206,7 @@ impl SwApplicationWindow {
 
 impl Default for SwApplicationWindow {
     fn default() -> Self {
-        SwApplication::default()
-            .active_window()
-            .unwrap()
-            .downcast()
-            .unwrap()
+        Self::new()
     }
 }
 

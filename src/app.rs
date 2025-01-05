@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use std::cell::RefCell;
+use std::cell::{Cell, RefCell};
 
 use adw::prelude::*;
 use adw::subclass::prelude::*;
@@ -38,13 +38,14 @@ mod imp {
     #[properties(wrapper_type = super::SwApplication)]
     pub struct SwApplication {
         #[property(get)]
-        pub library: SwLibrary,
+        library: SwLibrary,
         #[property(get)]
-        pub player: SwPlayer,
+        player: SwPlayer,
         #[property(get)]
-        pub rb_server: RefCell<Option<String>>,
+        rb_server: RefCell<Option<String>>,
 
         pub cover_loader: CoverLoader,
+        pub inhibit_cookie: Cell<u32>,
     }
 
     #[glib::object_subclass]
@@ -183,7 +184,7 @@ mod imp {
             }
         }
 
-        fn ensure_window(&self) -> SwApplicationWindow {
+        pub fn ensure_window(&self) -> SwApplicationWindow {
             if let Some(window) = self.obj().active_window() {
                 window.downcast::<SwApplicationWindow>().unwrap()
             } else {
@@ -233,6 +234,26 @@ impl SwApplication {
 
     pub fn cover_loader(&self) -> CoverLoader {
         self.imp().cover_loader.clone()
+    }
+
+    pub fn set_inhibit(&self, inhibit: bool) {
+        let imp = self.imp();
+
+        if inhibit && imp.inhibit_cookie.get() == 0 {
+            debug!("Install inhibitor");
+
+            let cookie = self.inhibit(
+                Some(&self.imp().ensure_window()),
+                gtk::ApplicationInhibitFlags::SUSPEND,
+                Some(&i18n("Active Playback")),
+            );
+            imp.inhibit_cookie.set(cookie);
+        } else if imp.inhibit_cookie.get() != 0 {
+            debug!("Remove inhibitor");
+
+            self.uninhibit(imp.inhibit_cookie.get());
+            imp.inhibit_cookie.set(0);
+        }
     }
 }
 

@@ -1,5 +1,5 @@
 // Shortwave - station_dialog.rs
-// Copyright (C) 2021-2023  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2021-2025  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ use uuid::Uuid;
 use crate::api::{StationMetadata, SwStation};
 use crate::app::SwApplication;
 use crate::i18n::i18n;
-use crate::ui::{SwApplicationWindow, SwStationCover};
+use crate::ui::SwStationCover;
 
 mod imp {
     use super::*;
@@ -94,8 +94,15 @@ mod imp {
                 .title(i18n("Select Station Cover"))
                 .build();
 
+            let parent = self
+                .obj()
+                .root()
+                .unwrap()
+                .downcast::<gtk::Window>()
+                .unwrap();
+
             file_chooser.open(
-                Some(&SwApplicationWindow::default()),
+                Some(&parent),
                 gio::Cancellable::NONE,
                 clone!(
                     #[weak(rename_to = imp)]

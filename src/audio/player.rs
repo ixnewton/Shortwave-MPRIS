@@ -32,7 +32,6 @@ use crate::i18n::*;
 use crate::path;
 use crate::settings::{settings_manager, Key};
 use crate::ui::DisplayError;
-use crate::ui::SwApplicationWindow;
 
 mod imp {
     use super::*;
@@ -85,7 +84,6 @@ mod imp {
 
         pub backend: OnceCell<RefCell<GstreamerBackend>>,
         pub mpris_server: OnceCell<MprisServer>,
-        pub inhibit_cookie: Cell<u32>,
     }
 
     #[glib::object_subclass]
@@ -303,9 +301,6 @@ mod imp {
         }
 
         fn gst_playback_change(&self, state: &SwPlaybackState) {
-            let app = SwApplication::default();
-            let window = SwApplicationWindow::default();
-
             if state == &SwPlaybackState::Failure {
                 // Discard recorded data when a failure occurs,
                 // since the track has not been recorded completely.
@@ -319,19 +314,7 @@ mod imp {
             self.obj().notify_state();
 
             // Inhibit session suspend when playback is active
-            if state == &SwPlaybackState::Playing && self.inhibit_cookie.get() == 0 {
-                let cookie = app.inhibit(
-                    Some(&window),
-                    gtk::ApplicationInhibitFlags::SUSPEND,
-                    Some(&i18n("Active Playback")),
-                );
-                self.inhibit_cookie.set(cookie);
-                debug!("Install inhibitor")
-            } else if state != &SwPlaybackState::Playing && self.inhibit_cookie.get() != 0 {
-                app.uninhibit(self.inhibit_cookie.get());
-                self.inhibit_cookie.set(0);
-                debug!("Remove inhibitor");
-            }
+            SwApplication::default().set_inhibit(state == &SwPlaybackState::Playing);
         }
 
         fn gst_volume_change(&self, volume: f64) {
@@ -521,8 +504,7 @@ impl SwPlayer {
                 .await
                 .handle_error("Unable to load Google Cast media");
         } else {
-            let text = i18n("Station cannot be streamed. URL is not valid.");
-            SwApplicationWindow::default().show_notification(&text);
+            error!("Station cannot be streamed. URL is not valid.");
         }
     }
 
