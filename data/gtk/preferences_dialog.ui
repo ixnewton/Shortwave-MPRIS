@@ -12,6 +12,19 @@
             <property name="title" translatable="yes">Playback</property>
             <child>
               <object class="AdwActionRow">
+                <property name="title" translatable="yes">_Background Playback</property>
+                <property name="subtitle" translatable="yes">Playback continues when window is closed</property>
+                <property name="use_underline">True</property>
+                <property name="activatable_widget">background_playback_switch</property>
+                <child>
+                  <object class="GtkSwitch" id="background_playback_switch">
+                    <property name="valign">center</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwActionRow">
                 <property name="title" translatable="yes">_Notifications</property>
                 <property name="subtitle" translatable="yes">Show desktop notifications when a new track gets played</property>
                 <property name="use_underline">True</property>
@@ -84,7 +97,7 @@
             </child>
             <child>
               <object class="AdwActionRow">
-                <property name="title" translatable="yes">Record _Nothing</property>
+                <property name="title" translatable="yes">Record N_othing</property>
                 <property name="subtitle" translatable="yes">Stations are played without recording</property>
                 <property name="use_underline">True</property>
                 <property name="activatable_widget">record_nothing_checkbutton</property>

@@ -1,5 +1,5 @@
 // Shortwave - preferences_dialog.rs
-// Copyright (C) 2021-2024  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2021-2025  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -29,6 +29,8 @@ mod imp {
     #[template(resource = "/de/haeckerfelix/Shortwave/gtk/preferences_dialog.ui")]
     pub struct SwPreferencesDialog {
         // Playback
+        #[template_child]
+        background_playback_switch: TemplateChild<gtk::Switch>,
         #[template_child]
         notifications_switch: TemplateChild<gtk::Switch>,
 
@@ -60,6 +62,12 @@ mod imp {
     impl ObjectImpl for SwPreferencesDialog {
         fn constructed(&self) {
             // Playback
+            settings_manager::bind_property(
+                Key::BackgroundPlayback,
+                &*self.background_playback_switch,
+                "active",
+            );
+
             settings_manager::bind_property(
                 Key::Notifications,
                 &*self.notifications_switch,
@@ -174,8 +182,14 @@ glib::wrapper! {
         @extends gtk::Widget, adw::Dialog, adw::PreferencesDialog;
 }
 
+impl SwPreferencesDialog {
+    pub fn new() -> Self {
+        glib::Object::new()
+    }
+}
+
 impl Default for SwPreferencesDialog {
     fn default() -> Self {
-        glib::Object::new()
+        Self::new()
     }
 }

@@ -43,6 +43,9 @@
     <key name="window-previous-height" type="i">
       <default>650</default>
     </key>
+    <key name="background-playback" type="b">
+      <default>true</default>
+    </key>
     <key name="notifications" type="b">
       <default>false</default>
     </key>
