@@ -190,11 +190,8 @@ mod imp {
             self.parent_window_removed(window);
             let obj = self.obj();
 
-            if obj.active_window().is_none()
-                && obj.background_playback()
-                && obj.player().state() != SwPlaybackState::Playing
-            {
-                debug!("No active playback, quit application.");
+            if obj.active_window().is_none() && obj.player().state() != SwPlaybackState::Playing {
+                debug!("All windows closed, no active playback -> quit application, no need to run in background.");
                 obj.quit();
             }
         }
@@ -204,7 +201,7 @@ mod imp {
 
     impl SwApplication {
         fn set_background_playback(&self, enabled: bool) {
-            dbg!(&enabled);
+            debug!("Enable background playback: {}", enabled);
             self.background_playback.set(enabled);
 
             if enabled {

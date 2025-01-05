@@ -16,11 +16,14 @@
 
 use adw::prelude::*;
 use adw::subclass::prelude::*;
-use glib::subclass;
+use ashpd::desktop::background::Background;
+use glib::{clone, subclass};
 use gtk::{gio, glib, CompositeTemplate};
 
 use crate::app::SwApplication;
+use crate::audio::SwPlaybackState;
 use crate::config;
+use crate::i18n::i18n;
 use crate::settings::{settings_manager, Key};
 use crate::ui::pages::*;
 use crate::ui::player::{SwPlayerGadget, SwPlayerToolbar, SwPlayerView};
@@ -135,7 +138,33 @@ mod imp {
             settings_manager::set_integer(Key::WindowWidth, width);
             settings_manager::set_integer(Key::WindowHeight, height);
 
-            self.parent_close_request()
+            let app = SwApplication::default();
+            let player = app.player();
+
+            if app.background_playback()
+                && player.state() == SwPlaybackState::Playing
+                && self.obj().is_visible()
+            {
+                let future = clone!(
+                    #[weak(rename_to = imp)]
+                    self,
+                    async move {
+                        imp.verify_background_portal_permissions().await;
+                    }
+                );
+                glib::spawn_future_local(future);
+
+                // We can't close the window immediately here, since we have to check first
+                // whether we have background permissions. We just hide it, so we can show
+                // it again if necessary.
+                debug!("Hide window");
+                self.obj().set_visible(false);
+
+                glib::Propagation::Stop
+            } else {
+                debug!("Close window");
+                glib::Propagation::Proceed
+            }
         }
     }
 
@@ -143,7 +172,64 @@ mod imp {
 
     impl AdwApplicationWindowImpl for SwApplicationWindow {}
 
-    impl SwApplicationWindow {}
+    impl SwApplicationWindow {
+        async fn verify_background_portal_permissions(&self) {
+            // Verify whether app has permissions for background playback
+            let has_permissions = Self::background_portal_permissions().await;
+            let mut close_window = has_permissions;
+
+            if !has_permissions {
+                debug!("No background portal permissions, show window again.");
+                self.obj().set_visible(true);
+
+                let dialog = adw::AlertDialog::new(
+                    Some(&i18n("No Permission for Background Playback")),
+                    Some(&i18n(
+                        "“Run in Background” must be allowed in system settings. ",
+                    )),
+                );
+
+                dialog.add_response("cancel", &i18n("Cancel"));
+                dialog.add_response("disable", &i18n("Disable Background Playback"));
+                dialog.set_close_response("cancel");
+                dialog.set_response_appearance("disable", adw::ResponseAppearance::Destructive);
+
+                let res = dialog.choose_future(&*self.obj()).await;
+                if res == "disable" {
+                    SwApplication::default().set_background_playback(false);
+                    close_window = true;
+                }
+            }
+
+            if close_window {
+                self.obj().close();
+            }
+        }
+
+        async fn background_portal_permissions() -> bool {
+            if !ashpd::is_sandboxed().await {
+                debug!("App is not sandboxed, background playback is allowed.");
+                return true;
+            }
+
+            if let Ok(res) = Background::request()
+                .reason("Play radio station in the background")
+                .send()
+                .await
+            {
+                match res.response() {
+                    Ok(response) => response.run_in_background(),
+                    Err(err) => {
+                        warn!("{}", err.to_string());
+                        false
+                    }
+                }
+            } else {
+                warn!("Unable to check background permissions, falling back to true.");
+                true
+            }
+        }
+    }
 }
 
 glib::wrapper! {
