@@ -70,8 +70,10 @@ mod imp {
                 gio::ActionEntry::builder("show-track")
                     .parameter_type(Some(VariantTy::STRING))
                     .activate(move |app: &super::SwApplication, _, uuid| {
+                        app.activate();
+
                         let uuid = uuid.and_then(|v| v.str()).unwrap_or_default();
-                        let window = app.imp().ensure_window();
+                        let window = app.application_window();
 
                         if let Some(track) = app.player().track_by_uuid(uuid) {
                             SwTrackDialog::new(&track).present(Some(&window));
@@ -84,14 +86,17 @@ mod imp {
                 gio::ActionEntry::builder("save-track")
                     .parameter_type(Some(VariantTy::STRING))
                     .activate(move |app: &super::SwApplication, _, uuid| {
+                        app.activate();
+
                         let uuid = uuid.and_then(|v| v.str()).unwrap_or_default();
-                        let window = app.imp().ensure_window();
+                        let window = app.application_window();
 
                         // Check if track uuid matches current playing track uuid
                         if let Some(track) = app.player().playing_track() {
                             if track.uuid() == uuid && track.state() == SwRecordingState::Recording
                             {
                                 track.set_save_when_recorded(true);
+                                SwTrackDialog::new(&track).present(Some(&window));
                                 return;
                             }
                         }
@@ -103,14 +108,17 @@ mod imp {
                 gio::ActionEntry::builder("cancel-recording")
                     .parameter_type(Some(VariantTy::STRING))
                     .activate(move |app: &super::SwApplication, _, uuid| {
+                        app.activate();
+
+                        let window: SwApplicationWindow = app.application_window();
                         let uuid = uuid.and_then(|v| v.str()).unwrap_or_default();
-                        let window: SwApplicationWindow = app.imp().ensure_window();
 
                         // Check if track uuid matches current playing track uuid
                         if let Some(track) = app.player().playing_track() {
                             if track.uuid() == uuid && track.state() == SwRecordingState::Recording
                             {
                                 app.player().cancel_recording();
+                                SwTrackDialog::new(&track).present(Some(&window));
                                 return;
                             }
                         }
@@ -159,9 +167,9 @@ mod imp {
 
         fn activate(&self) {
             self.parent_activate();
-            debug!("gio::Application -> activate()");
 
-            self.present_window();
+            debug!("gio::Application -> activate()");
+            self.obj().application_window().present();
         }
 
         fn shutdown(&self) {
@@ -220,23 +228,6 @@ mod imp {
                 warn!("Unable to find radio-browser.info server.");
             }
         }
-
-        fn present_window(&self) {
-            self.ensure_window().present();
-            info!("Application window presented.");
-        }
-
-        pub fn ensure_window(&self) -> SwApplicationWindow {
-            if let Some(window) = self.obj().active_window() {
-                window.downcast::<SwApplicationWindow>().unwrap()
-            } else {
-                let window = SwApplicationWindow::new();
-                info!("Created application window.");
-
-                self.obj().add_window(&window);
-                window
-            }
-        }
     }
 }
 
@@ -269,6 +260,18 @@ impl SwApplication {
         app.run()
     }
 
+    pub fn application_window(&self) -> SwApplicationWindow {
+        if let Some(window) = self.active_window() {
+            window.downcast::<SwApplicationWindow>().unwrap()
+        } else {
+            let window = SwApplicationWindow::new();
+            self.add_window(&window);
+
+            info!("Created application window.");
+            window
+        }
+    }
+
     pub fn cover_loader(&self) -> CoverLoader {
         self.imp().cover_loader.clone()
     }
@@ -280,7 +283,7 @@ impl SwApplication {
             debug!("Install inhibitor");
 
             let cookie = self.inhibit(
-                Some(&self.imp().ensure_window()),
+                Some(&self.application_window()),
                 gtk::ApplicationInhibitFlags::SUSPEND,
                 Some(&i18n("Active Playback")),
             );
