@@ -20,7 +20,6 @@ use glib::subclass;
 use gtk::{gio, glib, CompositeTemplate};
 
 use crate::app::SwApplication;
-use crate::audio::SwPlayer;
 use crate::config;
 use crate::settings::{settings_manager, Key};
 use crate::ui::pages::*;
@@ -62,19 +61,19 @@ mod imp {
 
             // player
             klass.install_action_async("player.start-playback", None, |_, _, _| async move {
-                SwPlayer::default().start_playback().await;
+                SwApplication::default().player().start_playback().await;
             });
             klass.install_action_async("player.stop-playback", None, |_, _, _| async move {
-                SwPlayer::default().stop_playback().await;
+                SwApplication::default().player().stop_playback().await;
             });
             klass.install_action_async("player.toggle-playback", None, |_, _, _| async move {
-                SwPlayer::default().toggle_playback().await;
+                SwApplication::default().player().toggle_playback().await;
             });
             klass.install_action("player.show-device-connect", None, move |win, _, _| {
                 SwDeviceDialog::new().present(Some(win));
             });
             klass.install_action("player.show-station-details", None, move |win, _, _| {
-                if let Some(station) = SwPlayer::default().station() {
+                if let Some(station) = SwApplication::default().player().station() {
                     SwStationDialog::new(&station).present(Some(win));
                 }
             });

@@ -1,5 +1,5 @@
 // Shortwave - player_toolbar.rs
-// Copyright (C) 2024  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2024-2025  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,11 +14,14 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+use std::marker::PhantomData;
+
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use glib::{subclass, Properties};
 use gtk::{glib, CompositeTemplate};
 
+use crate::app::SwApplication;
 use crate::audio::SwPlayer;
 use crate::ui::SwStationCover;
 
@@ -32,8 +35,8 @@ mod imp {
         #[template_child]
         station_cover: TemplateChild<SwStationCover>,
 
-        #[property(get)]
-        pub player: SwPlayer,
+        #[property(get=Self::player)]
+        pub player: PhantomData<SwPlayer>,
     }
 
     #[glib::object_subclass]
@@ -57,6 +60,12 @@ mod imp {
     impl WidgetImpl for SwPlayerToolbar {}
 
     impl BinImpl for SwPlayerToolbar {}
+
+    impl SwPlayerToolbar {
+        fn player(&self) -> SwPlayer {
+            SwApplication::default().player()
+        }
+    }
 }
 
 glib::wrapper! {

@@ -34,7 +34,7 @@ use crate::ui::{SwApplicationWindow, SwTrackDialog};
 mod imp {
     use super::*;
 
-    #[derive(Properties)]
+    #[derive(Default, Properties)]
     #[properties(wrapper_type = super::SwApplication)]
     pub struct SwApplication {
         #[property(get)]
@@ -52,21 +52,6 @@ mod imp {
         const NAME: &'static str = "SwApplication";
         type ParentType = adw::Application;
         type Type = super::SwApplication;
-
-        fn new() -> Self {
-            let library = SwLibrary::default();
-            let player = SwPlayer::new();
-            let rb_server = RefCell::default();
-
-            let cover_loader = CoverLoader::new();
-
-            Self {
-                library,
-                player,
-                rb_server,
-                cover_loader,
-            }
-        }
     }
 
     #[glib::derived_properties]

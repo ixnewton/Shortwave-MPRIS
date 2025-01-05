@@ -1,5 +1,5 @@
 // Shortwave - device_indicator.rs
-// Copyright (C) 2024  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2024-2025  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,11 +14,14 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+use std::marker::PhantomData;
+
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use glib::{subclass, Properties};
 use gtk::{glib, CompositeTemplate};
 
+use crate::app::SwApplication;
 use crate::audio::SwPlayer;
 
 mod imp {
@@ -33,8 +36,8 @@ mod imp {
         #[template_child]
         device_label: TemplateChild<gtk::Label>,
 
-        #[property(get)]
-        player: SwPlayer,
+        #[property(get=Self::player)]
+        pub player: PhantomData<SwPlayer>,
     }
 
     #[glib::object_subclass]
@@ -63,11 +66,17 @@ mod imp {
 
     #[gtk::template_callbacks]
     impl SwDeviceIndicator {
+        fn player(&self) -> SwPlayer {
+            SwApplication::default().player()
+        }
+
         #[template_callback]
         async fn disconnect(&self) {
-            self.obj().set_sensitive(false);
-            self.player.disconnect_device().await;
-            self.obj().set_sensitive(true);
+            let obj = self.obj();
+
+            obj.set_sensitive(false);
+            obj.player().disconnect_device().await;
+            obj.set_sensitive(true);
         }
     }
 }

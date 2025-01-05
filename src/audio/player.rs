@@ -685,6 +685,6 @@ impl SwPlayer {
 
 impl Default for SwPlayer {
     fn default() -> Self {
-        SwApplication::default().player()
+        Self::new()
     }
 }

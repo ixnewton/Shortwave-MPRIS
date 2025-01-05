@@ -23,7 +23,7 @@ use glib::subclass;
 use glib::Properties;
 use gtk::{glib, CompositeTemplate};
 
-use crate::audio::SwPlayer;
+use crate::app::SwApplication;
 use crate::device::SwDevice;
 use crate::ui::DisplayError;
 use crate::ui::SwDeviceDialog;
@@ -91,7 +91,10 @@ mod imp {
                             dialog.set_sensitive(false);
                             imp.spinner.set_visible(true);
 
-                            let res = SwPlayer::default().connect_device(&device).await;
+                            let res = SwApplication::default()
+                                .player()
+                                .connect_device(&device)
+                                .await;
                             res.handle_error_in("Unable to connect with device", &dialog);
 
                             if res.is_ok() {

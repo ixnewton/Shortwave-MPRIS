@@ -25,9 +25,9 @@ use glib::{clone, Properties};
 use gtk::{gio, glib};
 use uuid::Uuid;
 
-use super::SwRecordingState;
 use crate::api::{Error, SwStation};
-use crate::audio::SwPlayer;
+use crate::app::SwApplication;
+use crate::audio::SwRecordingState;
 use crate::settings::{settings_manager, Key};
 use crate::ui::{DisplayError, SwApplicationWindow};
 
@@ -90,7 +90,7 @@ mod imp {
                 #[weak(rename_to = imp)]
                 self,
                 move |_, _| {
-                    let player = SwPlayer::default();
+                    let player = SwApplication::default().player();
                     if let Some(track) = player.playing_track() {
                         if track.uuid() == imp.obj().uuid() {
                             player.cancel_recording();

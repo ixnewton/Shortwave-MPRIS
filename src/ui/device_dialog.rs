@@ -1,5 +1,5 @@
 // Shortwave - device_dialog.rs
-// Copyright (C) 2024  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2024-2025  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,16 +14,17 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+use std::marker::PhantomData;
+
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use glib::{clone, subclass, Properties};
 use gtk::{glib, CompositeTemplate};
 
+use crate::app::SwApplication;
 use crate::audio::SwPlayer;
 use crate::device::SwDevice;
-use crate::ui::SwDeviceRow;
-
-use super::ToastWindow;
+use crate::ui::{SwDeviceRow, ToastWindow};
 
 mod imp {
     use super::*;
@@ -49,8 +50,8 @@ mod imp {
         #[template_child]
         pub devices_page: TemplateChild<gtk::ScrolledWindow>,
 
-        #[property(get)]
-        pub player: SwPlayer,
+        #[property(get=Self::player)]
+        pub player: PhantomData<SwPlayer>,
     }
 
     #[glib::object_subclass]
@@ -111,13 +112,17 @@ mod imp {
 
     #[gtk::template_callbacks]
     impl SwDeviceDialog {
+        fn player(&self) -> SwPlayer {
+            SwApplication::default().player()
+        }
+
         #[template_callback]
         async fn scan(&self) {
-            self.player.device_discovery().scan().await;
+            self.obj().player().device_discovery().scan().await;
         }
 
         fn update_dialog_stack(&self) {
-            if self.player.device_discovery().devices().n_items() > 0 {
+            if self.obj().player().device_discovery().devices().n_items() > 0 {
                 self.dialog_stack.set_visible_child(&*self.devices_page);
             } else {
                 self.dialog_stack.set_visible_child(&*self.no_devices_page);
@@ -125,7 +130,7 @@ mod imp {
         }
 
         fn update_scan_stack(&self) {
-            if self.player.device_discovery().is_scanning() {
+            if self.obj().player().device_discovery().is_scanning() {
                 self.scan_stack.set_visible_child(&*self.scan_spinner);
             } else {
                 self.scan_stack.set_visible_child(&*self.scan_button);

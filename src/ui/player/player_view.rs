@@ -1,5 +1,5 @@
 // Shortwave - player_view.rs
-// Copyright (C) 2024  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2024-2025  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 use std::cell::Cell;
+use std::marker::PhantomData;
 
 use adw::prelude::*;
 use adw::subclass::prelude::*;
@@ -51,8 +52,8 @@ mod imp {
 
         #[property(get, set)]
         pub show_gadget_button: Cell<bool>,
-        #[property(get)]
-        pub player: SwPlayer,
+        #[property(get=Self::player)]
+        pub player: PhantomData<SwPlayer>,
     }
 
     #[glib::object_subclass]
@@ -109,6 +110,10 @@ mod imp {
 
     #[gtk::template_callbacks]
     impl SwPlayerView {
+        fn player(&self) -> SwPlayer {
+            SwApplication::default().player()
+        }
+
         #[template_callback]
         fn recording_indicator_clicked(&self) {
             if let Some(track) = self.obj().player().playing_track() {

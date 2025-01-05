@@ -1,5 +1,5 @@
 // Shortwave - mpris.rs
-// Copyright (C) 2024  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2024-2025  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@ use glib::clone;
 use gtk::{glib, prelude::ApplicationExt};
 use mpris_server::{zbus::Result, Metadata, PlaybackStatus, Player};
 
-use super::{SwPlaybackState, SwPlayer};
+use super::SwPlaybackState;
 use crate::{app::SwApplication, config};
 
 #[derive(Debug, Clone)]
@@ -44,7 +44,7 @@ impl MprisServer {
         let server = Self {
             player: Rc::new(player),
         };
-        let player = SwPlayer::default();
+        let player = SwApplication::default().player();
 
         // Shortwave side callbacks
         player.connect_state_notify(clone!(

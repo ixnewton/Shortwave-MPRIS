@@ -23,7 +23,7 @@ use gtk::{gio, glib, CompositeTemplate};
 
 use super::{SwStationDialog, ToastWindow};
 use crate::app::SwApplication;
-use crate::audio::{SwPlayer, SwRecordingMode, SwRecordingState, SwTrack};
+use crate::audio::{SwRecordingMode, SwRecordingState, SwTrack};
 use crate::utils;
 
 mod imp {
@@ -80,7 +80,7 @@ mod imp {
     impl ObjectImpl for SwTrackDialog {
         fn constructed(&self) {
             self.parent_constructed();
-            let player = SwPlayer::default();
+            let player = SwApplication::default().player();
 
             let track = self.obj().track();
             track.insert_actions(&*self.obj());
@@ -186,8 +186,12 @@ mod imp {
                 .sync_create()
                 .build();
 
-            self.recording_label.connect_activate_link(|_, _| {
-                SwApplication::default().activate_action("show-preferences", None);
+            self.recording_label.connect_activate_link(|label, _| {
+                label
+                    .root()
+                    .unwrap()
+                    .activate_action("win.show-preferences", None)
+                    .unwrap();
                 glib::Propagation::Stop
             });
         }
