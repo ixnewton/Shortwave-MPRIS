@@ -35,12 +35,10 @@ pub trait DisplayError<E> {
 
 impl<E: Display, T> DisplayError<E> for Result<T, E> {
     fn handle_error(&self, title: impl AsRef<str>) {
-        let win = SwApplication::default()
-            .active_window()
-            .unwrap()
-            .downcast::<SwApplicationWindow>()
-            .unwrap();
-        self.handle_error_in(title, &win);
+        if let Some(window) = SwApplication::default().active_window() {
+            let window = window.downcast::<SwApplicationWindow>().unwrap();
+            self.handle_error_in(title, &window);
+        }
     }
 
     fn handle_error_in(&self, title: impl AsRef<str>, widget: &impl ToastWindow) {
