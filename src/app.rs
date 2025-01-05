@@ -14,13 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use std::cell::{OnceCell, RefCell};
+use std::cell::RefCell;
 
 use adw::prelude::*;
 use adw::subclass::prelude::*;
 use gio::subclass::prelude::ApplicationImpl;
 use glib::{clone, Properties};
-use gtk::glib::{VariantTy, WeakRef};
+use gtk::glib::VariantTy;
 use gtk::{gio, glib};
 
 use crate::api::client;
@@ -29,8 +29,7 @@ use crate::audio::{SwPlayer, SwRecordingState};
 use crate::config;
 use crate::database::SwLibrary;
 use crate::i18n::i18n;
-use crate::settings::settings_manager;
-use crate::ui::{about_dialog, SwApplicationWindow, SwPreferencesDialog, SwTrackDialog};
+use crate::ui::{SwApplicationWindow, SwTrackDialog};
 
 mod imp {
     use super::*;
@@ -45,9 +44,7 @@ mod imp {
         #[property(get)]
         pub rb_server: RefCell<Option<String>>,
 
-        pub window: OnceCell<WeakRef<SwApplicationWindow>>,
         pub cover_loader: CoverLoader,
-        pub settings: gio::Settings,
     }
 
     #[glib::object_subclass]
@@ -61,17 +58,13 @@ mod imp {
             let player = SwPlayer::new();
             let rb_server = RefCell::default();
 
-            let window = OnceCell::new();
             let cover_loader = CoverLoader::new();
-            let settings = settings_manager::settings();
 
             Self {
                 library,
                 player,
                 rb_server,
-                window,
                 cover_loader,
-                settings,
             }
         }
     }
@@ -89,13 +82,10 @@ mod imp {
                 gio::ActionEntry::builder("show-track")
                     .parameter_type(Some(VariantTy::STRING))
                     .activate(move |app: &super::SwApplication, _, uuid| {
-                        app.activate();
-
                         let uuid = uuid.and_then(|v| v.str()).unwrap_or_default();
-                        let player = SwPlayer::default();
-                        let window = SwApplicationWindow::default();
+                        let window = app.imp().ensure_window();
 
-                        if let Some(track) = player.track_by_uuid(uuid) {
+                        if let Some(track) = app.player().track_by_uuid(uuid) {
                             SwTrackDialog::new(&track).present(Some(&window));
                         } else {
                             window.show_notification(&i18n("Track no longer available"));
@@ -106,14 +96,11 @@ mod imp {
                 gio::ActionEntry::builder("save-track")
                     .parameter_type(Some(VariantTy::STRING))
                     .activate(move |app: &super::SwApplication, _, uuid| {
-                        app.ensure_activated();
-
                         let uuid = uuid.and_then(|v| v.str()).unwrap_or_default();
-                        let player = SwPlayer::default();
-                        let window = SwApplicationWindow::default();
+                        let window = app.imp().ensure_window();
 
                         // Check if track uuid matches current playing track uuid
-                        if let Some(track) = player.playing_track() {
+                        if let Some(track) = app.player().playing_track() {
                             if track.uuid() == uuid && track.state() == SwRecordingState::Recording
                             {
                                 track.set_save_when_recorded(true);
@@ -128,17 +115,14 @@ mod imp {
                 gio::ActionEntry::builder("cancel-recording")
                     .parameter_type(Some(VariantTy::STRING))
                     .activate(move |app: &super::SwApplication, _, uuid| {
-                        app.ensure_activated();
-
                         let uuid = uuid.and_then(|v| v.str()).unwrap_or_default();
-                        let player = SwPlayer::default();
-                        let window = SwApplicationWindow::default();
+                        let window: SwApplicationWindow = app.imp().ensure_window();
 
                         // Check if track uuid matches current playing track uuid
-                        if let Some(track) = player.playing_track() {
+                        if let Some(track) = app.player().playing_track() {
                             if track.uuid() == uuid && track.state() == SwRecordingState::Recording
                             {
-                                player.cancel_recording();
+                                app.player().cancel_recording();
                                 return;
                             }
                         }
@@ -146,62 +130,25 @@ mod imp {
                         window.show_notification(&i18n("This track is currently not recorded"));
                     })
                     .build(),
-                // app.show-preferences
-                gio::ActionEntry::builder("show-preferences")
-                    .activate(move |app: &super::SwApplication, _, _| {
-                        app.ensure_activated();
-                        let window = SwApplicationWindow::default();
-                        let preferences_window = SwPreferencesDialog::default();
-                        preferences_window.present(Some(&window));
-                    })
-                    .build(),
                 // app.quit
                 gio::ActionEntry::builder("quit")
                     .activate(move |app: &super::SwApplication, _, _| {
-                        app.ensure_activated();
-                        SwApplicationWindow::default().close();
-                    })
-                    .build(),
-                // app.about
-                gio::ActionEntry::builder("about")
-                    .activate(move |app: &super::SwApplication, _, _| {
-                        app.ensure_activated();
-                        let window = SwApplicationWindow::default();
-                        about_dialog::show(&window);
+                        app.quit();
                     })
                     .build(),
             ]);
 
-            obj.set_accels_for_action("app.show-preferences", &["<primary>comma"]);
+            obj.set_accels_for_action("win.show-preferences", &["<primary>comma"]);
             obj.set_accels_for_action("app.quit", &["<primary>q"]);
             obj.set_accels_for_action("window.close", &["<primary>w"]);
-        }
-
-        fn activate(&self) {
-            self.parent_activate();
-
-            debug!("gio::Application -> activate()");
-            let app = self.obj();
-
-            // If the window already exists,
-            // present it instead creating a new one again.
-            if let Some(weak_window) = self.window.get() {
-                weak_window.upgrade().unwrap().present();
-                info!("Application window presented.");
-                return;
-            }
-
-            // No window available -> we have to create one
-            let window = app.create_window();
-            let _ = self.window.set(window.downgrade());
-            info!("Created application window.");
+            obj.set_accels_for_action("player.toggle-playback", &["<primary>space"]);
 
             // Find radiobrowser server and update library data
             let fut = clone!(
-                #[weak]
-                app,
+                #[weak(rename_to = imp)]
+                self,
                 async move {
-                    app.lookup_rb_server().await;
+                    imp.lookup_rb_server().await;
                 }
             );
             glib::spawn_future_local(fut);
@@ -210,8 +157,17 @@ mod imp {
             self.player.restore_state();
         }
 
+        fn activate(&self) {
+            self.parent_activate();
+            debug!("gio::Application -> activate()");
+
+            self.present_window();
+        }
+
         fn shutdown(&self) {
             self.parent_shutdown();
+            debug!("gio::Application -> shutdown()");
+
             glib::spawn_future_local(async {
                 super::SwApplication::default()
                     .cover_loader()
@@ -224,6 +180,41 @@ mod imp {
     impl GtkApplicationImpl for SwApplication {}
 
     impl AdwApplicationImpl for SwApplication {}
+
+    impl SwApplication {
+        async fn lookup_rb_server(&self) {
+            // Try to find a working radio-browser server
+            let rb_server = client::lookup_rb_server().await;
+
+            self.rb_server.borrow_mut().clone_from(&rb_server);
+            self.obj().notify("rb-server");
+
+            if let Some(rb_server) = &rb_server {
+                info!("Using radio-browser.info REST api: {rb_server}");
+                // Refresh library data
+                let _ = self.library.update_data().await;
+            } else {
+                warn!("Unable to find radio-browser.info server.");
+            }
+        }
+
+        fn ensure_window(&self) -> SwApplicationWindow {
+            if let Some(window) = self.obj().active_window() {
+                window.downcast::<SwApplicationWindow>().unwrap()
+            } else {
+                let window = SwApplicationWindow::new();
+                info!("Created application window.");
+
+                self.obj().add_window(&window);
+                window
+            }
+        }
+
+        fn present_window(&self) {
+            self.ensure_window().present();
+            info!("Application window presented.");
+        }
+    }
 }
 
 glib::wrapper! {
@@ -257,39 +248,6 @@ impl SwApplication {
 
     pub fn cover_loader(&self) -> CoverLoader {
         self.imp().cover_loader.clone()
-    }
-
-    fn create_window(&self) -> SwApplicationWindow {
-        let window = SwApplicationWindow::new();
-        self.add_window(&window);
-
-        window.present();
-        window
-    }
-
-    // Ensures that the app is activated, and the application window exists
-    fn ensure_activated(&self) {
-        if self.imp().window.get().is_none() {
-            self.activate();
-        }
-    }
-
-    async fn lookup_rb_server(&self) {
-        let imp = self.imp();
-
-        // Try to find a working radio-browser server
-        let rb_server = client::lookup_rb_server().await;
-
-        imp.rb_server.borrow_mut().clone_from(&rb_server);
-        self.notify("rb-server");
-
-        if let Some(rb_server) = &rb_server {
-            info!("Using radio-browser.info REST api: {rb_server}");
-            // Refresh library data
-            let _ = imp.library.update_data().await;
-        } else {
-            warn!("Unable to find radio-browser.info server.");
-        }
     }
 }
 

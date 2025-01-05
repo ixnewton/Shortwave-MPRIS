@@ -24,7 +24,7 @@
             <child>
               <object class="GtkShortcutsShortcut">
                 <property name="title" translatable="yes" context="shortcut window">Open preferences</property>
-                <property name="action_name">app.show-preferences</property>
+                <property name="action_name">win.show-preferences</property>
               </object>
             </child>
             <child>

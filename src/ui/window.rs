@@ -1,5 +1,5 @@
 // Shortwave - window.rs
-// Copyright (C) 2021-2024  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2021-2025  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,21 +14,21 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use std::cell::OnceCell;
-
 use adw::prelude::*;
 use adw::subclass::prelude::*;
-use glib::{clone, subclass};
+use glib::subclass;
 use gtk::{gio, glib, CompositeTemplate};
 
 use crate::app::SwApplication;
+use crate::audio::SwPlayer;
 use crate::config;
 use crate::settings::{settings_manager, Key};
 use crate::ui::pages::*;
 use crate::ui::player::{SwPlayerGadget, SwPlayerToolbar, SwPlayerView};
-use crate::ui::{DisplayError, SwAddStationDialog, SwDeviceDialog, SwStationDialog};
-
-use super::ToastWindow;
+use crate::ui::{
+    about_dialog, DisplayError, SwAddStationDialog, SwDeviceDialog, SwPreferencesDialog,
+    SwStationDialog, ToastWindow,
+};
 
 mod imp {
     use super::*;
@@ -37,21 +37,18 @@ mod imp {
     #[template(resource = "/de/haeckerfelix/Shortwave/gtk/window.ui")]
     pub struct SwApplicationWindow {
         #[template_child]
-        pub library_page: TemplateChild<SwLibraryPage>,
+        library_page: TemplateChild<SwLibraryPage>,
         #[template_child]
-        pub search_page: TemplateChild<SwSearchPage>,
+        search_page: TemplateChild<SwSearchPage>,
 
         #[template_child]
-        pub player_gadget: TemplateChild<SwPlayerGadget>,
+        player_gadget: TemplateChild<SwPlayerGadget>,
         #[template_child]
-        pub player_toolbar: TemplateChild<SwPlayerToolbar>,
+        player_toolbar: TemplateChild<SwPlayerToolbar>,
         #[template_child]
-        pub player_view: TemplateChild<SwPlayerView>,
+        player_view: TemplateChild<SwPlayerView>,
         #[template_child]
         pub toast_overlay: TemplateChild<adw::ToastOverlay>,
-
-        pub window_animation_x: OnceCell<adw::TimedAnimation>,
-        pub window_animation_y: OnceCell<adw::TimedAnimation>,
     }
 
     #[glib::object_subclass]
@@ -62,6 +59,48 @@ mod imp {
 
         fn class_init(klass: &mut Self::Class) {
             Self::bind_template(klass);
+
+            // player
+            klass.install_action_async("player.start-playback", None, |_, _, _| async move {
+                SwPlayer::default().start_playback().await;
+            });
+            klass.install_action_async("player.stop-playback", None, |_, _, _| async move {
+                SwPlayer::default().stop_playback().await;
+            });
+            klass.install_action_async("player.toggle-playback", None, |_, _, _| async move {
+                SwPlayer::default().toggle_playback().await;
+            });
+            klass.install_action("player.show-device-connect", None, move |win, _, _| {
+                SwDeviceDialog::new().present(Some(win));
+            });
+            klass.install_action("player.show-station-details", None, move |win, _, _| {
+                if let Some(station) = SwPlayer::default().station() {
+                    SwStationDialog::new(&station).present(Some(win));
+                }
+            });
+
+            // win
+            klass.install_action("win.open-radio-browser-info", None, move |win, _, _| {
+                win.show_uri("https://www.radio-browser.info/");
+            });
+            klass.install_action("win.add-local-station", None, move |win, _, _| {
+                SwAddStationDialog::new().present(Some(win));
+            });
+            klass.install_action("win.add-public-station", None, move |win, _, _| {
+                win.show_uri("https://www.radio-browser.info/add");
+            });
+            klass.install_action("win.enable-gadget-player", None, move |win, _, _| {
+                win.enable_gadget_player(true);
+            });
+            klass.install_action("win.disable-gadget-player", None, move |win, _, _| {
+                win.enable_gadget_player(false);
+            });
+            klass.install_action("win.show-preferences", None, move |win, _, _| {
+                SwPreferencesDialog::new().present(Some(win));
+            });
+            klass.install_action("win.about", None, move |win, _, _| {
+                about_dialog::show(win);
+            });
         }
 
         fn instance_init(obj: &subclass::InitializingObject<Self>) {
@@ -74,61 +113,6 @@ mod imp {
             self.parent_constructed();
             let obj = self.obj();
 
-            let player_actions = gio::SimpleActionGroup::new();
-
-            // player.start-playback
-            let a = gio::SimpleAction::new("start-playback", None);
-            a.connect_activate(move |_, _| {
-                glib::spawn_future_local(async move {
-                    SwApplication::default().player().start_playback().await;
-                });
-            });
-            player_actions.add_action(&a);
-
-            // player.stop-playback
-            let a = gio::SimpleAction::new("stop-playback", None);
-            a.connect_activate(move |_, _| {
-                glib::spawn_future_local(async move {
-                    SwApplication::default().player().stop_playback().await;
-                });
-            });
-            player_actions.add_action(&a);
-
-            // player.toggle-playback
-            let a = gio::SimpleAction::new("toggle-playback", None);
-            a.connect_activate(move |_, _| {
-                glib::spawn_future_local(async move {
-                    SwApplication::default().player().toggle_playback().await;
-                });
-            });
-            player_actions.add_action(&a);
-
-            // player.show-device-connect
-            let a = gio::SimpleAction::new("show-device-connect", None);
-            a.connect_activate(clone!(
-                #[weak(rename_to = imp)]
-                self,
-                move |_, _| {
-                    SwDeviceDialog::new().present(Some(&*imp.obj()));
-                }
-            ));
-            player_actions.add_action(&a);
-
-            // player.show-station-details
-            let a = gio::SimpleAction::new("show-station-details", None);
-            a.connect_activate(clone!(
-                #[weak(rename_to = imp)]
-                self,
-                move |_, _| {
-                    if let Some(station) = SwApplication::default().player().station() {
-                        SwStationDialog::new(&station).present(Some(&*imp.obj()));
-                    }
-                }
-            ));
-            player_actions.add_action(&a);
-
-            obj.insert_action_group("player", Some(&player_actions));
-
             // Add devel style class for development or beta builds
             if config::PROFILE == "development" || config::PROFILE == "beta" {
                 obj.add_css_class("devel");
@@ -138,8 +122,6 @@ mod imp {
             let width = settings_manager::integer(Key::WindowWidth);
             let height = settings_manager::integer(Key::WindowHeight);
             obj.set_default_size(width, height);
-
-            obj.setup_gactions();
         }
     }
 
@@ -153,6 +135,7 @@ mod imp {
 
             settings_manager::set_integer(Key::WindowWidth, width);
             settings_manager::set_integer(Key::WindowHeight, height);
+
             self.parent_close_request()
         }
     }
@@ -174,45 +157,6 @@ glib::wrapper! {
 impl SwApplicationWindow {
     pub fn new() -> Self {
         glib::Object::new::<Self>()
-    }
-
-    fn setup_gactions(&self) {
-        let app = SwApplication::default();
-
-        self.add_action_entries([
-            // win.open-radio-browser-info
-            gio::ActionEntry::builder("open-radio-browser-info")
-                .activate(|window: &Self, _, _| {
-                    window.show_uri("https://www.radio-browser.info/");
-                })
-                .build(),
-            // win.add-local-station
-            gio::ActionEntry::builder("add-local-station")
-                .activate(move |window: &Self, _, _| {
-                    let dialog = SwAddStationDialog::new();
-                    dialog.present(Some(window));
-                })
-                .build(),
-            // win.add-public-station
-            gio::ActionEntry::builder("add-public-station")
-                .activate(move |window: &Self, _, _| {
-                    window.show_uri("https://www.radio-browser.info/add");
-                })
-                .build(),
-            // win.disable-gadget-player
-            gio::ActionEntry::builder("disable-gadget-player")
-                .activate(move |window: &Self, _, _| {
-                    window.enable_gadget_player(false);
-                })
-                .build(),
-            // win.enable-gadget-player
-            gio::ActionEntry::builder("enable-gadget-player")
-                .activate(move |window: &Self, _, _| {
-                    window.enable_gadget_player(true);
-                })
-                .build(),
-        ]);
-        app.set_accels_for_action("player.toggle-playback", &["<primary>space"]);
     }
 
     pub fn show_notification(&self, text: &str) {
