@@ -185,20 +185,21 @@ mod imp {
                 let dialog = adw::AlertDialog::new(
                     Some(&i18n("No Permission for Background Playback")),
                     Some(&i18n(
-                        "“Run in Background” must be allowed in system settings. ",
+                        "“Run in Background” must be allowed for this app in system settings.",
                     )),
                 );
 
-                dialog.add_response("cancel", &i18n("Cancel"));
+                dialog.add_response("try-anyway", &i18n("Try Anyway"));
                 dialog.add_response("disable", &i18n("Disable Background Playback"));
-                dialog.set_close_response("cancel");
-                dialog.set_response_appearance("disable", adw::ResponseAppearance::Destructive);
+                dialog.set_close_response("try-anyway");
 
                 let res = dialog.choose_future(&*self.obj()).await;
                 if res == "disable" {
                     SwApplication::default().set_background_playback(false);
-                    close_window = true;
+                } else {
+                    self.obj().set_visible(false);
                 }
+                close_window = true;
             }
 
             if close_window {
