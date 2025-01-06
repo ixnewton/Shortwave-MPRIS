@@ -16,7 +16,6 @@
 
 use adw::prelude::*;
 use adw::subclass::prelude::*;
-use ashpd::desktop::background::Background;
 use glib::{clone, subclass};
 use gtk::{gio, glib, CompositeTemplate};
 
@@ -31,6 +30,7 @@ use crate::ui::{
     about_dialog, DisplayError, SwAddStationDialog, SwDeviceDialog, SwPreferencesDialog,
     SwStationDialog, ToastWindow,
 };
+use crate::utils;
 
 mod imp {
     use super::*;
@@ -175,7 +175,7 @@ mod imp {
     impl SwApplicationWindow {
         async fn verify_background_portal_permissions(&self) {
             // Verify whether app has permissions for background playback
-            let has_permissions = Self::background_portal_permissions().await;
+            let has_permissions = utils::background_portal_permissions().await;
             let mut close_window = has_permissions;
 
             if !has_permissions {
@@ -204,30 +204,6 @@ mod imp {
 
             if close_window {
                 self.obj().close();
-            }
-        }
-
-        async fn background_portal_permissions() -> bool {
-            if !ashpd::is_sandboxed().await {
-                debug!("App is not sandboxed, background playback is allowed.");
-                return true;
-            }
-
-            if let Ok(res) = Background::request()
-                .reason("Play radio station in the background")
-                .send()
-                .await
-            {
-                match res.response() {
-                    Ok(response) => response.run_in_background(),
-                    Err(err) => {
-                        warn!("{}", err.to_string());
-                        false
-                    }
-                }
-            } else {
-                warn!("Unable to check background permissions, falling back to true.");
-                true
             }
         }
     }

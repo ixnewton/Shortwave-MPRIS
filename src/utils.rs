@@ -1,3 +1,20 @@
+// Shortwave - utils.rs
+// Copyright (C) 2021-2025  Felix Häcker <haeckerfelix@gnome.org>
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+use ashpd::desktop::background::Background;
 use gtk::glib;
 
 pub fn send<T: 'static>(sender: &async_channel::Sender<T>, message: T) {
@@ -19,4 +36,42 @@ pub fn send<T: 'static>(sender: &async_channel::Sender<T>, message: T) {
 pub fn format_duration(d: u64) -> String {
     let dt = glib::DateTime::from_unix_local(d.try_into().unwrap_or_default()).unwrap();
     dt.format("%M:%S").unwrap_or_default().to_string()
+}
+
+/// Ellipsizes a string at the end so that it is `max_len` characters long
+/// Source: https://gitlab.gnome.org/World/pika-backup/-/blob/6bd7d0df56479ee769a249b466d5ac226f88056b/src/ui/utils.rs#L344
+pub fn ellipsize_end<S: std::fmt::Display>(x: S, max_len: usize) -> String {
+    let mut text = x.to_string();
+
+    if text.len() <= max_len {
+        text
+    } else {
+        text.truncate(max_len.max(1) - 1);
+        text.push('…');
+        text
+    }
+}
+
+pub async fn background_portal_permissions() -> bool {
+    if !ashpd::is_sandboxed().await {
+        debug!("App is not sandboxed, background playback is allowed.");
+        return true;
+    }
+
+    if let Ok(res) = Background::request()
+        .reason("Play radio station in the background")
+        .send()
+        .await
+    {
+        match res.response() {
+            Ok(response) => response.run_in_background(),
+            Err(err) => {
+                warn!("{}", err.to_string());
+                false
+            }
+        }
+    } else {
+        warn!("Unable to check background permissions, falling back to true.");
+        true
+    }
 }

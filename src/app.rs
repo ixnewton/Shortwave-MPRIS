@@ -14,10 +14,11 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use std::cell::{Cell, RefCell};
+use std::cell::{Cell, OnceCell, RefCell};
 
 use adw::prelude::*;
 use adw::subclass::prelude::*;
+use ashpd::desktop::background::BackgroundProxy;
 use gio::subclass::prelude::ApplicationImpl;
 use glib::{clone, Properties};
 use gtk::glib::VariantTy;
@@ -28,11 +29,13 @@ use crate::api::CoverLoader;
 use crate::audio::{SwPlaybackState, SwPlayer, SwRecordingState};
 use crate::config;
 use crate::database::SwLibrary;
-use crate::i18n::i18n;
+use crate::i18n::{i18n, i18n_f};
 use crate::settings::*;
 use crate::ui::{SwApplicationWindow, SwTrackDialog};
 
 mod imp {
+    use crate::utils;
+
     use super::*;
 
     #[derive(Default, Properties)]
@@ -50,6 +53,7 @@ mod imp {
         pub cover_loader: CoverLoader,
         pub inhibit_cookie: Cell<u32>,
         pub background_hold: RefCell<Option<gio::ApplicationHoldGuard>>,
+        pub background_proxy: OnceCell<BackgroundProxy<'static>>,
     }
 
     #[glib::object_subclass]
@@ -145,12 +149,15 @@ mod imp {
         fn startup(&self) {
             self.parent_startup();
 
-            // Find radiobrowser server and update library data
             let fut = clone!(
                 #[weak(rename_to = imp)]
                 self,
                 async move {
+                    // Find radiobrowser server and update library data
                     imp.lookup_rb_server().await;
+
+                    // Setup background portal proxy
+                    imp.setup_background_portal_proxy().await;
                 }
             );
             glib::spawn_future_local(fut);
@@ -208,6 +215,74 @@ mod imp {
                 self.background_hold.replace(Some(self.obj().hold()));
             } else {
                 self.background_hold.replace(None);
+            }
+        }
+
+        async fn setup_background_portal_proxy(&self) {
+            if !ashpd::is_sandboxed().await {
+                debug!("Not sandboxed, not setting up background portal proxy.");
+                return;
+            }
+
+            match ashpd::desktop::background::BackgroundProxy::new().await {
+                Ok(proxy) => {
+                    let _ = self.background_proxy.set(proxy);
+
+                    self.obj().player().connect_state_notify(clone!(
+                        #[weak(rename_to = imp)]
+                        self,
+                        move |_| {
+                            imp.update_background_portal_status();
+                        }
+                    ));
+
+                    self.obj().player().connect_station_notify(clone!(
+                        #[weak(rename_to = imp)]
+                        self,
+                        move |_| {
+                            imp.update_background_portal_status();
+                        }
+                    ));
+
+                    self.update_background_portal_status();
+                }
+                Err(err) => warn!(
+                    "Unable to setup background portal proxy: {}",
+                    err.to_string()
+                ),
+            };
+        }
+
+        fn update_background_portal_status(&self) {
+            let mut message = i18n("No Playback");
+
+            if let Some(station) = self.obj().player().station() {
+                if self.obj().player().state() == SwPlaybackState::Playing {
+                    message = i18n_f("Playing “{}”", &[&station.title()]);
+                }
+            }
+
+            let fut = clone!(
+                #[weak(rename_to = imp)]
+                self,
+                #[strong]
+                message,
+                async move {
+                    imp.set_background_portal_status(&message).await;
+                }
+            );
+            glib::spawn_future_local(fut);
+        }
+
+        async fn set_background_portal_status(&self, message: &str) {
+            let message = utils::ellipsize_end(message, 96);
+            if let Some(proxy) = self.background_proxy.get() {
+                if let Err(err) = proxy.set_status(&message).await {
+                    warn!(
+                        "Unable to update background portal status message: {}",
+                        err.to_string()
+                    );
+                }
             }
         }
 
