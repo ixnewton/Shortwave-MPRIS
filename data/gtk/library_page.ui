@@ -174,6 +174,10 @@
         <attribute name="label" translatable="yes">_About Shortwave</attribute>
         <attribute name="action">win.about</attribute>
       </item>
+      <item>
+        <attribute name="label" translatable="yes">_Quit</attribute>
+        <attribute name="action">app.quit</attribute>
+      </item>
     </section>
   </menu>
   <menu id="add_menu">
