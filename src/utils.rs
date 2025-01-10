@@ -17,6 +17,8 @@
 use ashpd::desktop::background::Background;
 use gtk::glib;
 
+use crate::i18n::{i18n, ni18n_f};
+
 pub fn send<T: 'static>(sender: &async_channel::Sender<T>, message: T) {
     let fut = glib::clone!(
         #[strong]
@@ -33,9 +35,46 @@ pub fn send<T: 'static>(sender: &async_channel::Sender<T>, message: T) {
     glib::spawn_future_local(fut);
 }
 
-pub fn format_duration(d: u64) -> String {
-    let dt = glib::DateTime::from_unix_local(d.try_into().unwrap_or_default()).unwrap();
-    dt.format("%M:%S").unwrap_or_default().to_string()
+pub fn format_duration(d: u64, short: bool) -> String {
+    if short {
+        let dt = glib::DateTime::from_unix_local(d.try_into().unwrap_or_default()).unwrap();
+        dt.format("%M:%S").unwrap_or_default().to_string()
+    } else {
+        let time: u32 = d.try_into().unwrap();
+        let sec = time % 60;
+        let time = time - sec;
+        let min = (time % (60 * 60)) / 60;
+        let time = time - (min * 60);
+        let hour = time / (60 * 60);
+
+        let hours = if hour != 0 {
+            ni18n_f("{} hour", "{} hours", hour, &[&hour.to_string()])
+        } else {
+            String::new()
+        };
+
+        let mins = if min != 0 {
+            ni18n_f("{} minute", "{} minutes", min, &[&min.to_string()])
+        } else {
+            String::new()
+        };
+
+        let secs = if sec != 0 {
+            ni18n_f("{} second", "{} seconds", sec, &[&sec.to_string()])
+        } else {
+            String::new()
+        };
+
+        if hour > 0 {
+            format!("{hours} {mins} {secs}")
+        } else if min > 0 {
+            format!("{mins} {secs}")
+        } else if sec > 0 {
+            secs
+        } else {
+            i18n("0 seconds")
+        }
+    }
 }
 
 /// Ellipsizes a string at the end so that it is `max_len` characters long

@@ -83,7 +83,7 @@ mod imp {
                     let title = state.title();
 
                     let string = if state == SwRecordingState::Recorded {
-                        utils::format_duration(track.duration())
+                        utils::format_duration(track.duration(), true)
                     } else {
                         title
                     };

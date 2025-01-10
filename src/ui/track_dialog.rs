@@ -105,7 +105,7 @@ mod imp {
             track
                 .bind_property("duration", &*self.duration_label, "label")
                 .transform_to(|b, d: u64| {
-                    let duration = utils::format_duration(d);
+                    let duration = utils::format_duration(d, false);
                     let track = b.source().unwrap().downcast::<SwTrack>().unwrap();
                     let file = track.file();
 

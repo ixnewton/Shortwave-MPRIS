@@ -65,7 +65,7 @@ mod imp {
             if let Some(track) = &track {
                 track
                     .bind_property("duration", &*self.duration_label, "label")
-                    .transform_to(|_, duration: u64| Some(utils::format_duration(duration)))
+                    .transform_to(|_, duration: u64| Some(utils::format_duration(duration, true)))
                     .sync_create()
                     .build();
 
@@ -78,7 +78,8 @@ mod imp {
                     }
                 ));
             } else {
-                self.duration_label.set_text(&utils::format_duration(0));
+                self.duration_label
+                    .set_text(&utils::format_duration(0, true));
                 self.update_state(SwRecordingState::IdleDisabled);
             }
 
