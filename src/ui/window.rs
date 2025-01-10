@@ -73,11 +73,25 @@ mod imp {
                 SwApplication::default().player().toggle_playback().await;
             });
             klass.install_action("player.show-device-connect", None, move |win, _, _| {
-                SwDeviceDialog::new().present(Some(win));
+                let is_visible = win
+                    .visible_dialog()
+                    .map(|d| d.downcast::<SwDeviceDialog>().is_ok())
+                    .unwrap_or(false);
+
+                if !is_visible {
+                    SwDeviceDialog::new().present(Some(win));
+                }
             });
             klass.install_action("player.show-station-details", None, move |win, _, _| {
                 if let Some(station) = SwApplication::default().player().station() {
-                    SwStationDialog::new(&station).present(Some(win));
+                    let is_visible = win
+                        .visible_dialog()
+                        .map(|d| d.downcast::<SwStationDialog>().is_ok())
+                        .unwrap_or(false);
+
+                    if !is_visible {
+                        SwStationDialog::new(&station).present(Some(win));
+                    }
                 }
             });
 
@@ -86,7 +100,14 @@ mod imp {
                 win.show_uri("https://www.radio-browser.info/");
             });
             klass.install_action("win.add-local-station", None, move |win, _, _| {
-                SwAddStationDialog::new().present(Some(win));
+                let is_visible = win
+                    .visible_dialog()
+                    .map(|d| d.downcast::<SwAddStationDialog>().is_ok())
+                    .unwrap_or(false);
+
+                if !is_visible {
+                    SwAddStationDialog::new().present(Some(win));
+                }
             });
             klass.install_action("win.add-public-station", None, move |win, _, _| {
                 win.show_uri("https://www.radio-browser.info/add");
@@ -98,10 +119,24 @@ mod imp {
                 win.enable_gadget_player(false);
             });
             klass.install_action("win.show-preferences", None, move |win, _, _| {
-                SwPreferencesDialog::new().present(Some(win));
+                let is_visible = win
+                    .visible_dialog()
+                    .map(|d| d.downcast::<SwPreferencesDialog>().is_ok())
+                    .unwrap_or(false);
+
+                if !is_visible {
+                    SwPreferencesDialog::new().present(Some(win));
+                }
             });
             klass.install_action("win.about", None, move |win, _, _| {
-                about_dialog::show(win);
+                let is_visible = win
+                    .visible_dialog()
+                    .map(|d| d.downcast::<adw::AboutDialog>().is_ok())
+                    .unwrap_or(false);
+
+                if !is_visible {
+                    about_dialog::show(win);
+                }
             });
         }
 

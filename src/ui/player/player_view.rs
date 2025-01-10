@@ -26,8 +26,7 @@ use crate::app::SwApplication;
 use crate::audio::SwPlayer;
 use crate::audio::SwTrack;
 use crate::ui::{
-    SwDeviceIndicator, SwRecordingIndicator, SwStationCover, SwTrackDialog, SwTrackRow,
-    SwVolumeControl,
+    SwDeviceIndicator, SwRecordingIndicator, SwStationCover, SwTrackRow, SwVolumeControl,
 };
 
 mod imp {
@@ -122,8 +121,7 @@ mod imp {
         #[template_callback]
         fn recording_indicator_clicked(&self) {
             if let Some(track) = self.obj().player().playing_track() {
-                let dialog = SwTrackDialog::new(&track);
-                dialog.present(Some(&*self.obj()))
+                SwApplication::default().show_track_dialog(&track);
             }
         }
     }

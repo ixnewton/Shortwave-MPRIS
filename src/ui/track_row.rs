@@ -23,10 +23,11 @@ use gtk::{glib, CompositeTemplate};
 
 use crate::audio::SwRecordingState;
 use crate::audio::SwTrack;
-use crate::ui::SwTrackDialog;
 use crate::utils;
 
 mod imp {
+    use crate::app::SwApplication;
+
     use super::*;
 
     #[derive(Debug, Default, Properties, CompositeTemplate)]
@@ -125,8 +126,7 @@ mod imp {
 
     impl ActionRowImpl for SwTrackRow {
         fn activate(&self) {
-            let dialog = SwTrackDialog::new(&self.obj().track());
-            dialog.present(Some(&*self.obj()));
+            SwApplication::default().show_track_dialog(&self.obj().track());
         }
     }
 }

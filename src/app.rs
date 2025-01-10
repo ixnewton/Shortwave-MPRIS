@@ -26,7 +26,7 @@ use gtk::{gio, glib};
 
 use crate::api::client;
 use crate::api::CoverLoader;
-use crate::audio::{SwPlaybackState, SwPlayer, SwRecordingState};
+use crate::audio::{SwPlaybackState, SwPlayer, SwRecordingState, SwTrack};
 use crate::config;
 use crate::database::SwLibrary;
 use crate::i18n::{i18n, i18n_f};
@@ -80,7 +80,7 @@ mod imp {
                         let window = app.application_window();
 
                         if let Some(track) = app.player().track_by_uuid(uuid) {
-                            SwTrackDialog::new(&track).present(Some(&window));
+                            app.show_track_dialog(&track);
                         } else {
                             window.show_notification(&i18n("Track no longer available"));
                         }
@@ -100,7 +100,7 @@ mod imp {
                             if track.uuid() == uuid && track.state() == SwRecordingState::Recording
                             {
                                 track.set_save_when_recorded(true);
-                                SwTrackDialog::new(&track).present(Some(&window));
+                                app.show_track_dialog(&track);
                                 return;
                             }
                         }
@@ -122,7 +122,7 @@ mod imp {
                             if track.uuid() == uuid && track.state() == SwRecordingState::Recording
                             {
                                 app.player().cancel_recording();
-                                SwTrackDialog::new(&track).present(Some(&window));
+                                app.show_track_dialog(&track);
                                 return;
                             }
                         }
@@ -367,6 +367,19 @@ impl SwApplication {
             self.uninhibit(imp.inhibit_cookie.get());
             imp.inhibit_cookie.set(0);
         }
+    }
+
+    pub fn show_track_dialog(&self, track: &SwTrack) {
+        let win = self.application_window();
+
+        // Avoid having multiple track dialogs opened
+        if let Some(dialog) = win.visible_dialog() {
+            if let Ok(track_dialog) = dialog.downcast::<SwTrackDialog>() {
+                track_dialog.close();
+            }
+        }
+
+        SwTrackDialog::new(track).present(Some(&win));
     }
 }
 
