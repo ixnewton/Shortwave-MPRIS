@@ -4,7 +4,7 @@
     <property name="width_request">325</property>
     <property name="height_request">294</property>
     <property name="content_width">500</property>
-    <property name="content_height">600</property>
+    <property name="content_height">650</property>
     <child>
       <object class="AdwToastOverlay" id="toast_overlay">
         <child>

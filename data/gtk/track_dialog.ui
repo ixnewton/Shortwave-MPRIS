@@ -4,7 +4,7 @@
     <property name="width_request">325</property>
     <property name="height_request">294</property>
     <property name="content_width">500</property>
-    <property name="content_height">600</property>
+    <property name="content_height">650</property>
     <child>
       <object class="AdwToastOverlay" id="toast_overlay">
         <child>
@@ -25,7 +25,6 @@
                             <property name="margin_start">12</property>
                             <property name="margin_end">12</property>
                             <property name="margin_top">6</property>
-                            <property name="margin_bottom">18</property>
                             <property name="spacing">12</property>
                             <child>
                               <object class="GtkBox">
@@ -49,19 +48,35 @@
                               </object>
                             </child>
                             <child>
-                              <object class="GtkLabel" id="title_label">
-                                <property name="wrap">True</property>
-                                <property name="justify">center</property>
-                                <property name="margin_top">6</property>
-                                <property name="selectable">True</property>
-                                <binding name="label">
-                                  <lookup name="title" type="SwTrack">
-                                    <lookup name="track">SwTrackDialog</lookup>
-                                  </lookup>
-                                </binding>
-                                <style>
-                                  <class name="title-2" />
-                                </style>
+                              <object class="GtkCenterBox">
+                                <property name="halign">center</property>
+                                <child type="center">
+                                  <object class="GtkLabel" id="title_label">
+                                    <property name="wrap">True</property>
+                                    <property name="justify">center</property>
+                                    <property name="margin_top">6</property>
+                                    <binding name="label">
+                                      <lookup name="title" type="SwTrack">
+                                        <lookup name="track">SwTrackDialog</lookup>
+                                      </lookup>
+                                    </binding>
+                                    <style>
+                                      <class name="title-2" />
+                                    </style>
+                                  </object>
+                                </child>
+                                <child type="end">
+                                  <object class="GtkButton">
+                                    <property name="icon_name">document-edit-symbolic</property>
+                                    <property name="valign">center</property>
+                                    <property name="visible">False</property>
+                                    <property name="margin_start">12</property>
+                                    <property name="tooltip_text" translatable="yes">Edit</property>
+                                    <style>
+                                      <class name="circular" />
+                                    </style>
+                                  </object>
+                                </child>
                               </object>
                             </child>
                             <child>
@@ -69,26 +84,12 @@
                                 <property name="spacing">6</property>
                                 <property name="halign">center</property>
                                 <child>
-                                  <object class="GtkLabel" id="saved_label">
-                                    <property name="label" translatable="yes">Saved</property>
-                                    <property name="wrap">True</property>
-                                    <property name="justify">center</property>
-                                    <property name="halign">center</property>
-                                    <style>
-                                      <class name="heading" />
-                                      <class name="badge" />
-                                      <class name="accent" />
-                                    </style>
-                                  </object>
-                                </child>
-                                <child>
                                   <object class="GtkLabel" id="subtitle_label">
                                     <property name="wrap">True</property>
                                     <property name="justify">center</property>
                                     <property name="halign">center</property>
                                     <style>
-                                      <class name="heading" />
-                                      <class name="badge" />
+                                      <class name="title-4" />
                                     </style>
                                   </object>
                                 </child>
@@ -109,14 +110,65 @@
                                 <property name="wrap">True</property>
                                 <property name="justify">center</property>
                                 <property name="margin_bottom">6</property>
+                                <property name="visible" bind-source="saved_label" bind-property="visible" bind-flags="sync-create|invert-boolean" />
                                 <style>
                                   <class name="dim-label" />
                                 </style>
                               </object>
                             </child>
                             <child>
+                              <object class="GtkLabel" id="saved_label">
+                                <property name="label" translatable="yes">The recorded track has been saved</property>
+                                <property name="wrap">True</property>
+                                <property name="justify">center</property>
+                                <property name="margin_bottom">6</property>
+                                <binding name="visible">
+                                  <lookup name="is-saved" type="SwTrack">
+                                    <lookup name="track">SwTrackDialog</lookup>
+                                  </lookup>
+                                </binding>
+                                <style>
+                                  <class name="dim-label" />
+                                </style>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="save_button">
+                                <property name="label" translatable="yes">Save Track</property>
+                                <property name="action_name">track.save</property>
+                                <property name="halign">center</property>
+                                <style>
+                                  <class name="suggested-action" />
+                                  <class name="pill" />
+                                </style>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="play_button">
+                                <property name="label" translatable="yes">Play Track</property>
+                                <property name="action_name">track.play</property>
+                                <property name="halign">center</property>
+                                <style>
+                                  <class name="suggested-action" />
+                                  <class name="pill" />
+                                </style>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="cancel_button">
+                                <property name="label" translatable="yes">Cancel Recording</property>
+                                <property name="action_name">track.cancel</property>
+                                <property name="halign">center</property>
+                                <style>
+                                  <class name="destructive-action" />
+                                  <class name="pill" />
+                                </style>
+                              </object>
+                            </child>
+                            <child>
                               <object class="AdwPreferencesGroup">
-                                <property name="margin_bottom">18</property>
+                                <property name="margin_top">12</property>
+                                <property name="margin_bottom">12</property>
                                 <property name="separate_rows">True</property>
                                 <child>
                                   <object class="AdwActionRow" id="station_row">
@@ -167,45 +219,12 @@
                               </object>
                             </child>
                             <child>
-                              <object class="GtkButton" id="save_button">
-                                <property name="label" translatable="yes">Save Track</property>
-                                <property name="action_name">track.save</property>
-                                <property name="halign">center</property>
-                                <style>
-                                  <class name="suggested-action" />
-                                  <class name="pill" />
-                                </style>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkButton" id="play_button">
-                                <property name="label" translatable="yes">Play Track</property>
-                                <property name="action_name">track.play</property>
-                                <property name="halign">center</property>
-                                <style>
-                                  <class name="suggested-action" />
-                                  <class name="pill" />
-                                </style>
-                              </object>
-                            </child>
-                            <child>
-                              <object class="GtkButton" id="cancel_button">
-                                <property name="label" translatable="yes">Cancel Recording</property>
-                                <property name="action_name">track.cancel</property>
-                                <property name="halign">center</property>
-                                <style>
-                                  <class name="destructive-action" />
-                                  <class name="pill" />
-                                </style>
-                              </object>
-                            </child>
-                            <child>
                               <object class="GtkLabel" id="recording_label">
                                 <property name="label" translatable="yes">Recording behaviour can be changed in &lt;a href=""&gt;preferences&lt;/a&gt;</property>
                                 <property name="wrap">True</property>
                                 <property name="use_markup">True</property>
                                 <property name="justify">center</property>
-                                <property name="margin_top">6</property>
+                                <property name="margin_bottom">18</property>
                                 <style>
                                   <class name="dim-label" />
                                   <class name="caption" />

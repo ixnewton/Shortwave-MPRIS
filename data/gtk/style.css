@@ -185,12 +185,6 @@ cover {
   background-image: image(RGB(0 0 6 / 20%));
 }
 
-.badge {
-  background-color: var(--border-color);
-  border-radius: 99999px;
-  padding: 0.3em 0.7em;
-}
-
 volume>scale trough highlight {
   min-height: 12px;
   min-width: 12px;
