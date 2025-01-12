@@ -52,6 +52,29 @@
             </child>
           </object>
         </child>
+        <child>
+          <object class="GtkShortcutsGroup">
+            <property name="title" translatable="yes">Volume</property>
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="title" translatable="yes" context="shortcut window">Toggle mute</property>
+                <property name="accelerator">&lt;Ctrl&gt;m</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="title" translatable="yes" context="shortcut window">Increase volume</property>
+                <property name="accelerator">&lt;Ctrl&gt;plus</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkShortcutsShortcut">
+                <property name="title" translatable="yes" context="shortcut window">Decrease volume</property>
+                <property name="accelerator">&lt;Ctrl&gt;minus</property>
+              </object>
+            </child>
+          </object>
+        </child>
       </object>
     </child>
   </object>

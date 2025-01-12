@@ -21,7 +21,7 @@ use std::marker::PhantomData;
 use adw::subclass::prelude::*;
 use glib::clone;
 use glib::{subclass::Signal, Properties};
-use gtk::{gio, glib, prelude::*, CompositeTemplate};
+use gtk::{gdk, gio, glib, prelude::*, CompositeTemplate};
 
 mod imp {
     use std::sync::LazyLock;
@@ -61,6 +61,14 @@ mod imp {
             klass.set_accessible_role(gtk::AccessibleRole::Group);
 
             klass.install_property_action("volume.toggle-mute", "toggle-mute");
+
+            klass.install_action("volume.increase", None, |obj, _, _| {
+                obj.set_volume((obj.volume() + 0.05).clamp(0.0, 1.0));
+            });
+
+            klass.install_action("volume.decrease", None, |obj, _, _| {
+                obj.set_volume((obj.volume() - 0.05).clamp(0.0, 1.0));
+            });
         }
 
         fn instance_init(obj: &glib::subclass::InitializingObject<Self>) {
@@ -101,12 +109,12 @@ mod imp {
                 ),
             );
 
-            let controller = gtk::EventControllerScroll::builder()
+            let event_controller = gtk::EventControllerScroll::builder()
                 .name("volume-scroll")
                 .flags(gtk::EventControllerScrollFlags::VERTICAL)
                 .build();
 
-            controller.connect_scroll(clone!(
+            event_controller.connect_scroll(clone!(
                 #[weak(rename_to = imp)]
                 self,
                 #[upgrade_or_panic]
@@ -118,7 +126,33 @@ mod imp {
                     glib::Propagation::Stop
                 }
             ));
-            self.volume_scale.add_controller(controller);
+            self.volume_scale.add_controller(event_controller);
+
+            let shortcut_controller = gtk::ShortcutController::new();
+            shortcut_controller.set_scope(gtk::ShortcutScope::Global);
+
+            shortcut_controller.add_shortcut(gtk::Shortcut::new(
+                Some(gtk::KeyvalTrigger::new(
+                    gdk::Key::m,
+                    gdk::ModifierType::CONTROL_MASK,
+                )),
+                Some(gtk::NamedAction::new("volume.toggle-mute")),
+            ));
+            shortcut_controller.add_shortcut(gtk::Shortcut::new(
+                Some(gtk::KeyvalTrigger::new(
+                    gdk::Key::plus,
+                    gdk::ModifierType::CONTROL_MASK,
+                )),
+                Some(gtk::NamedAction::new("volume.increase")),
+            ));
+            shortcut_controller.add_shortcut(gtk::Shortcut::new(
+                Some(gtk::KeyvalTrigger::new(
+                    gdk::Key::minus,
+                    gdk::ModifierType::CONTROL_MASK,
+                )),
+                Some(gtk::NamedAction::new("volume.decrease")),
+            ));
+            self.obj().add_controller(shortcut_controller);
         }
 
         fn dispose(&self) {
