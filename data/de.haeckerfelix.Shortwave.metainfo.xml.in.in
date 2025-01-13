@@ -75,6 +75,38 @@
 
   <!-- Releases -->
   <releases>
+    <release version="5.0.0" date="2025-01-30">
+      <description>
+        <p>
+          Shortwave now supports background playback, allowing the playback to continue when you close the window. If you don't want this feature, you can disable it in the preferences.
+        </p>
+        <p>
+          The recording feature has also been completely overhauled. You can now choose from three different modes:
+        </p>
+        <ul>
+          <li>Save All Tracks: Automatically save all recorded tracks</li>
+          <li>Decide for Each Track: Temporarily record tracks and save only the ones you want</li>
+          <li>Record Nothing: Stations are played without recording</li>
+        </ul>
+        <p>
+          Additional Recording Enhancements:
+        </p>
+        <ul>
+          <li>Directory in which recorded tracks are saved can be changed</li>
+          <li>Minimum and maximum duration of recorded tracks can be configured</li>
+          <li>Tracks can already be marked to be saved during recording</li>
+          <li>Ongoing recordings can be cancelled</li>
+          <li>Improved desktop notifications, with the direct option to mark tracks to be saved</li>
+          <li>New dialog window for tracks with detailed information</li>
+        </ul>
+        <p>
+          Other Improvements:
+        </p>
+        <ul>
+          <li>Volume can now be changed via keyboard shortcuts</li>
+        </ul>
+      </description>
+    </release>
     <release version="4.0.1" date="2024-10-18">
       <description>
         <p>
