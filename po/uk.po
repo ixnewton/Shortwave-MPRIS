@@ -2,13 +2,13 @@
 # Copyright (C) 2020 shortwave's COPYRIGHT HOLDER
 # This file is distributed under the same license as the shortwave package.
 #
-# Yuri Chornoivan <yurchor@ukr.net>, 2020, 2021, 2022, 2023, 2024.
+# Yuri Chornoivan <yurchor@ukr.net>, 2020, 2021, 2022, 2023, 2024, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2024-10-11 15:31+0000\n"
-"PO-Revision-Date: 2024-10-11 23:32+0300\n"
+"POT-Creation-Date: 2025-01-13 04:55+0000\n"
+"PO-Revision-Date: 2025-01-13 10:12+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -24,20 +24,22 @@ msgstr ""
 msgid "@NAME@"
 msgstr "@NAME@"
 
-#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: data/de.haeckerfelix.Shortwave.desktop.in.in:12
-msgid "Gradio;Radio;Stream;Wave;"
-msgstr "Gradio;Radio;Stream;Wave;градіо;жрадіо;радіо;потік;трансляція;хвиля;"
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:4
+msgid "Internet Radio Player"
+msgstr "Програвач інтернет-радіо"
 
 #. General
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:5
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:10
 msgid "Listen to internet radio"
 msgstr "Прослуховування інтернет-радіо"
 
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:14
+msgid "Gradio;Radio;Stream;Wave;"
+msgstr "Gradio;Radio;Stream;Wave;градіо;жрадіо;радіо;потік;трансляція;хвиля;"
+
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:12
-#| msgid ""
-#| "Shortwave is an internet radio player that provides access to a station "
-#| "database with over 30,000 stations."
 msgid ""
 "Shortwave is an internet radio player that provides access to a station "
 "database with over 50,000 stations."
@@ -61,8 +63,11 @@ msgid "Easily search and discover new radio stations"
 msgstr "Простий пошук і виявлення нових радіостанцій"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:19
+#| msgid ""
+#| "Automatic recognition of songs, with the possibility to save them "
+#| "individually"
 msgid ""
-"Automatic recognition of songs, with the possibility to save them "
+"Automatic recognition of tracks, with the possibility to save them "
 "individually"
 msgstr "Автоматичне виявлення пісень із можливістю їхнього збереження окремо"
 
@@ -91,11 +96,11 @@ msgstr "Felix Häcker"
 msgid "Add Local Station"
 msgstr "Додати місцеву станцію"
 
-#: data/gtk/add_station_dialog.ui:42
+#: data/gtk/add_station_dialog.ui:64
 msgid "Change Station Cover"
 msgstr "Змінити обкладинку для станції"
 
-#: data/gtk/add_station_dialog.ui:60
+#: data/gtk/add_station_dialog.ui:95
 msgid ""
 "This station will only be added to your library. If you want it to be "
 "available to everyone, you should add it to the <a href=\"https://www.radio-"
@@ -105,19 +110,19 @@ msgstr ""
 "щодо неї доступними для усіх, вам слід додати її запис до <a href=\"https://"
 "www.radio-browser.info/add\">громадської бази даних</a>."
 
-#: data/gtk/add_station_dialog.ui:72
+#: data/gtk/add_station_dialog.ui:107
 msgid "Name"
 msgstr "Назва"
 
-#: data/gtk/add_station_dialog.ui:80
+#: data/gtk/add_station_dialog.ui:115
 msgid "Stream URL"
 msgstr "Адреса трансляції"
 
-#: data/gtk/add_station_dialog.ui:88
+#: data/gtk/add_station_dialog.ui:123
 msgid "Add Station"
 msgstr "Додати станцію"
 
-#: data/gtk/device_dialog.ui:7 data/gtk/player_view.ui:124
+#: data/gtk/device_dialog.ui:7 data/gtk/player_view.ui:132
 msgid "Connect Device"
 msgstr "З'єднати пристрій"
 
@@ -141,7 +146,7 @@ msgstr "Не знайдено підтримуваних пристроїв Goog
 msgid "Disconnect From Device"
 msgstr "Від'єднати від пристрою"
 
-#: data/gtk/help_overlay.ui:11 data/gtk/settings_dialog.ui:9
+#: data/gtk/help_overlay.ui:11 data/gtk/preferences_dialog.ui:9
 msgid "General"
 msgstr "Загальні"
 
@@ -170,7 +175,7 @@ msgctxt "shortcut window"
 msgid "Quit the application"
 msgstr "Вийти з програми"
 
-#: data/gtk/help_overlay.ui:46
+#: data/gtk/help_overlay.ui:46 data/gtk/preferences_dialog.ui:12
 msgid "Playback"
 msgstr "Відтворення"
 
@@ -178,6 +183,26 @@ msgstr "Відтворення"
 msgctxt "shortcut window"
 msgid "Toggle playback"
 msgstr "Перемкнути відтворення"
+
+#: data/gtk/help_overlay.ui:57 data/gtk/volume_control.ui:21
+msgid "Volume"
+msgstr "Гучність"
+
+#: data/gtk/help_overlay.ui:60
+#| msgid "Toggle Mute"
+msgctxt "shortcut window"
+msgid "Toggle mute"
+msgstr "Увімкнути або вимкнути звук"
+
+#: data/gtk/help_overlay.ui:66
+msgctxt "shortcut window"
+msgid "Increase volume"
+msgstr "Збільшити гучність"
+
+#: data/gtk/help_overlay.ui:72
+msgctxt "shortcut window"
+msgid "Decrease volume"
+msgstr "Зменшити гучність"
 
 #: data/gtk/library_page.ui:4
 msgid "Shortwave"
@@ -243,22 +268,26 @@ msgstr "_Клавіатурні скорочення"
 msgid "_About Shortwave"
 msgstr "П_ро «Shortwave»"
 
-#: data/gtk/library_page.ui:182
+#: data/gtk/library_page.ui:178
+msgid "_Quit"
+msgstr "Ви_йти"
+
+#: data/gtk/library_page.ui:186
 msgid "Add _Local Station"
 msgstr "Додати _місцеву станцію"
 
 #: data/gtk/player_gadget.ui:40 data/gtk/player_toolbar.ui:92
-#: data/gtk/player_view.ui:148 data/gtk/station_row.ui:86
+#: data/gtk/player_view.ui:156 data/gtk/station_row.ui:86
 msgid "Play"
 msgstr "Пуск"
 
 #: data/gtk/player_gadget.ui:55 data/gtk/player_toolbar.ui:106
-#: data/gtk/player_view.ui:162
+#: data/gtk/player_view.ui:170
 msgid "Stop"
 msgstr "Зупинити"
 
 #: data/gtk/player_gadget.ui:71 data/gtk/player_toolbar.ui:121
-#: data/gtk/player_view.ui:177
+#: data/gtk/player_view.ui:185
 msgid "Buffering…"
 msgstr "Буферизація…"
 
@@ -267,7 +296,7 @@ msgid "SHORTWAVE INTERNET RADIO"
 msgstr "КОРОТКОХВИЛЬОВЕ ІНТЕРНЕТ-РАДІО"
 
 #: data/gtk/player_gadget.ui:140 data/gtk/player_toolbar.ui:29
-#: data/gtk/player_view.ui:58
+#: data/gtk/player_view.ui:58 src/app.rs:257
 msgid "No Playback"
 msgstr "Немає відтворення"
 
@@ -283,25 +312,105 @@ msgstr "Відновити вікно"
 msgid "Enable Gadget Mode"
 msgstr "Увімкнути режим гаджета"
 
-#: data/gtk/player_view.ui:207
+#: data/gtk/player_view.ui:215
 msgid "Show Station Details"
 msgstr "Показати параметри станції"
 
-#: data/gtk/player_view.ui:258
-msgid "No Songs"
-msgstr "Не виявлено жодної композиції"
+#: data/gtk/player_view.ui:266
+msgid "No Tracks"
+msgstr "Немає композицій"
 
-#: data/gtk/player_view.ui:269
-msgid ""
-"Songs that have been identified and recorded using the stream metadata will "
-"appear here."
-msgstr ""
-"Тут буде показано композиції, які було ідентифіковано і записано за "
-"допомогою метаданих потоку."
+#: data/gtk/player_view.ui:277
+#| msgid "Detected songs will appear here."
+msgid "Played tracks will appear here"
+msgstr "Тут буде показано відтворені композиції"
 
-#: data/gtk/player_view.ui:303 data/gtk/recording_indicator.ui:38
+#: data/gtk/player_view.ui:311
 msgid "An error occurred"
 msgstr "Сталася помилка"
+
+#: data/gtk/preferences_dialog.ui:15
+#| msgid "No Playback"
+msgid "_Background Playback"
+msgstr "_Фонове відтворення"
+
+#: data/gtk/preferences_dialog.ui:16
+msgid "Playback continues when window is closed"
+msgstr "Відтворення продовжується після закриття вікна"
+
+#: data/gtk/preferences_dialog.ui:28
+msgid "_Notifications"
+msgstr "_Сповіщення"
+
+#: data/gtk/preferences_dialog.ui:29
+#| msgid "Show desktop notifications when a new song gets played"
+msgid "Show desktop notifications when a new track gets played"
+msgstr ""
+"Показувати сповіщення на стільниці при переході до наступної композиції"
+
+#: data/gtk/preferences_dialog.ui:43
+#| msgid "No Recording"
+msgid "Recording"
+msgstr "Запис"
+
+#: data/gtk/preferences_dialog.ui:44
+#| msgid ""
+#| "Songs are automatically recognized using the stream metadata.\n"
+#| "\n"
+#| "If the station does not send any metadata, no songs can be recognized."
+msgid ""
+"Tracks are automatically recognised based on the station stream metadata and "
+"can be saved."
+msgstr ""
+"Композиції буде автоматично розпізнано і збережено на основі метаданих"
+" потоку станції."
+
+#: data/gtk/preferences_dialog.ui:47
+msgid "Track _Directory"
+msgstr "К_аталог композицій"
+
+#: data/gtk/preferences_dialog.ui:69
+msgid "Save _All Tracks"
+msgstr "Зберегти _усі композиції"
+
+#: data/gtk/preferences_dialog.ui:70
+msgid "All recorded tracks are automatically saved in the track directory"
+msgstr ""
+"Усі записані композиції буде автоматично збережено до каталогу записів"
+
+#: data/gtk/preferences_dialog.ui:84
+msgid "Decide for Each _Track"
+msgstr "Вирішувати для кожної _композиції"
+
+#: data/gtk/preferences_dialog.ui:85
+msgid "Tracks are temporarily recorded and can be saved if desired"
+msgstr "Якщо потрібно, можна тимчасово записувати композиції і зберігати їх"
+
+#: data/gtk/preferences_dialog.ui:100
+#| msgid "No Recording"
+msgid "Record N_othing"
+msgstr "Ні_чого не записувати"
+
+#: data/gtk/preferences_dialog.ui:101
+msgid "Stations are played without recording"
+msgstr "Станції відтворюватимуться без запису"
+
+#: data/gtk/preferences_dialog.ui:120
+msgid "M_aximum Duration"
+msgstr "М_аксимальна тривалість"
+
+#: data/gtk/preferences_dialog.ui:121
+msgid "Recording ends when the maximum duration is reached"
+msgstr "Записування завершується, якщо досягнуто максимальної тривалості"
+
+#: data/gtk/preferences_dialog.ui:136
+msgid "M_inimum Duration"
+msgstr "_Мінімальна тривалість"
+
+#: data/gtk/preferences_dialog.ui:137
+msgid "Tracks shorter than the minimum duration will be ignored"
+msgstr ""
+"Композиції, тривалість яких є меншою за порогове значення, буде проігноровано"
 
 #: data/gtk/search_page.ui:23
 msgid "Search"
@@ -319,11 +428,11 @@ msgstr "Навігація списком із понад 50000 загально
 msgid "Popular Stations"
 msgstr "Популярні станції"
 
-#: data/gtk/search_page.ui:111
+#: data/gtk/search_page.ui:112
 msgid "Discover New Stations"
 msgstr "Виявити нові станції"
 
-#: data/gtk/search_page.ui:133
+#: data/gtk/search_page.ui:135
 msgid ""
 "The displayed information is provided by <a href=\"https://www.radio-browser."
 "info/\">radio-browser.info</a>. \n"
@@ -333,15 +442,15 @@ msgstr ""
 "browser.info</a>. \n"
 "Shortwave не має впливу на показаний перелік станцій."
 
-#: data/gtk/search_page.ui:199
+#: data/gtk/search_page.ui:201
 msgid "Loading…"
 msgstr "Завантаження…"
 
-#: data/gtk/search_page.ui:214
+#: data/gtk/search_page.ui:216
 msgid "No Results"
 msgstr "Нічого не знайдено"
 
-#: data/gtk/search_page.ui:215
+#: data/gtk/search_page.ui:217
 msgid ""
 "If the station you are looking for is missing, you can add it to the public "
 "database."
@@ -349,52 +458,35 @@ msgstr ""
 "Якщо у списку немає станції, яку ви шукаєте, ви можете додати її до "
 "громадської бази даних."
 
-#: data/gtk/search_page.ui:219
+#: data/gtk/search_page.ui:221
 msgid "Add Missing Station"
 msgstr "Додати пропущену станцію"
 
-#: data/gtk/search_page.ui:237
+#: data/gtk/search_page.ui:239
 msgid "Unable to Retrieve Station Data"
 msgstr "Не вдалося отримати дані станцій"
 
-#: data/gtk/search_page.ui:240
+#: data/gtk/search_page.ui:242
 msgid "Try Again"
 msgstr "Повторити спробу"
 
-#: data/gtk/settings_dialog.ui:12
-msgid "Features"
-msgstr "Можливості"
-
-#: data/gtk/settings_dialog.ui:15
-msgid "_Notifications"
-msgstr "_Сповіщення"
-
-#: data/gtk/settings_dialog.ui:17
-msgid "Show desktop notifications when a new song gets played"
-msgstr ""
-"Показувати сповіщення на стільниці при переході до наступної композиції"
-
-#: data/gtk/song_row.ui:16
-msgid "Save recorded song"
-msgstr "Зберегти записану пісню"
-
-#: data/gtk/station_dialog.ui:73
+#: data/gtk/station_dialog.ui:75
 msgid "_Play"
 msgstr "_Пуск"
 
-#: data/gtk/station_dialog.ui:89
+#: data/gtk/station_dialog.ui:91
 msgid "_Add to Library"
 msgstr "Д_одати до бібліотеки"
 
-#: data/gtk/station_dialog.ui:106
+#: data/gtk/station_dialog.ui:108
 msgid "_Remove From Library"
 msgstr "Ви_лучити з бібліотеки"
 
-#: data/gtk/station_dialog.ui:125 data/gtk/station_row.ui:57
+#: data/gtk/station_dialog.ui:127 data/gtk/station_row.ui:57
 msgid "Local Station"
 msgstr "Локальна станція"
 
-#: data/gtk/station_dialog.ui:126
+#: data/gtk/station_dialog.ui:128
 msgid ""
 "This station exists only in your library, and is not part of the public "
 "database"
@@ -402,11 +494,11 @@ msgstr ""
 "Запис станції є лише у вашій бібліотеці — він не є частиною "
 "загальнодоступної бази даних станцій"
 
-#: data/gtk/station_dialog.ui:140 data/gtk/station_row.ui:69
+#: data/gtk/station_dialog.ui:142 data/gtk/station_row.ui:69
 msgid "Orphaned Station"
 msgstr "Осиротіла станція"
 
-#: data/gtk/station_dialog.ui:141
+#: data/gtk/station_dialog.ui:143
 msgid ""
 "The information could not be updated, probably this station was removed from "
 "the public database"
@@ -414,66 +506,183 @@ msgstr ""
 "Не вдалося оновити відомості. Ймовірно, станцію було вилучено із "
 "загальнодоступної бази даних станцій"
 
-#: data/gtk/station_dialog.ui:152
+#: data/gtk/station_dialog.ui:154
 msgid "Information"
 msgstr "Відомості"
 
-#: data/gtk/station_dialog.ui:155
+#: data/gtk/station_dialog.ui:157
 msgid "Language"
 msgstr "Мова"
 
-#: data/gtk/station_dialog.ui:165
+#: data/gtk/station_dialog.ui:167
 msgid "Tags"
 msgstr "Мітки"
 
-#: data/gtk/station_dialog.ui:177
+#: data/gtk/station_dialog.ui:179
 msgid "Location"
 msgstr "Місце"
 
-#: data/gtk/station_dialog.ui:181
+#: data/gtk/station_dialog.ui:183
 msgid "Country"
 msgstr "Країна"
 
-#: data/gtk/station_dialog.ui:191
+#: data/gtk/station_dialog.ui:193
 msgid "State"
 msgstr "Штат"
 
-#: data/gtk/station_dialog.ui:225
+#: data/gtk/station_dialog.ui:227
 msgid "Audio"
 msgstr "Звук"
 
-#: data/gtk/station_dialog.ui:228
+#: data/gtk/station_dialog.ui:230
 msgid "Bitrate"
 msgstr "Бітова швидкість"
 
-#: data/gtk/station_dialog.ui:238
+#: data/gtk/station_dialog.ui:240
 msgid "Codec"
 msgstr "Кодек"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:248
+#: data/gtk/station_dialog.ui:250
 msgid "Stream"
 msgstr "Трансляція"
 
-#: data/gtk/station_dialog.ui:257
+#: data/gtk/station_dialog.ui:256
 msgid "Copy"
 msgstr "Копіювати"
+
+#: data/gtk/track_dialog.ui:74
+msgid "Edit"
+msgstr "Змінити"
+
+#: data/gtk/track_dialog.ui:121
+msgid "The recorded track has been saved"
+msgstr "Записану композицію збережено"
+
+#: data/gtk/track_dialog.ui:137 data/gtk/track_dialog.ui:208
+#: data/gtk/track_row.ui:9 src/audio/player.rs:440
+msgid "Save Track"
+msgstr "Зберегти доріжку"
+
+#: data/gtk/track_dialog.ui:148
+#| msgid "Playback"
+msgid "Play Track"
+msgstr "Відтворити доріжку"
+
+#: data/gtk/track_dialog.ui:159
+#| msgid "No Recording"
+msgid "Cancel Recording"
+msgstr "Скасувати записування"
+
+#: data/gtk/track_dialog.ui:175
+#| msgid "Add Station"
+msgid "Station"
+msgstr "Станція"
+
+#: data/gtk/track_dialog.ui:209
+msgid "Save this track when recording is complete"
+msgstr "Зберегти цю композицію, коли записування буде завершено"
+
+#: data/gtk/track_dialog.ui:223
+msgid "Recording behaviour can be changed in <a href=\"\">preferences</a>"
+msgstr ""
+"Поведінку щодо записування можна змінити у <a href=\"\">налаштуваннях</a>"
+
+#: data/gtk/track_row.ui:20
+msgid "Saved"
+msgstr "Збережено"
 
 #: data/gtk/volume_control.ui:9
 msgid "Toggle Mute"
 msgstr "Увімкнути або вимкнути звук"
 
-#: data/gtk/volume_control.ui:21
-msgid "Volume"
-msgstr "Гучність"
+#: src/app.rs:85
+msgid "Track no longer available"
+msgstr "Композиція недоступна"
 
-#: src/audio/player.rs:251
+#: src/app.rs:108 src/app.rs:130
+msgid "This track is currently not recorded"
+msgstr "Цю композицію не записано"
+
+#: src/app.rs:261
+msgid "Playing “{}”"
+msgstr "Відтворення «{}»"
+
+#: src/app.rs:361
 msgid "Active Playback"
 msgstr "Активне відтворення"
 
-#: src/audio/player.rs:413
-msgid "Station cannot be streamed. URL is not valid."
-msgstr "Станцію не можна транслювати. Адреса є некоректною."
+#: src/audio/player.rs:450
+#| msgid "No Recording"
+msgid "Don't Record"
+msgstr "Не записувати"
+
+#: src/audio/recording_state.rs:49 src/audio/recording_state.rs:51
+#| msgid "No Recording"
+msgid "Not Recorded"
+msgstr "Не записано"
+
+#: src/audio/recording_state.rs:50
+#| msgid "Ignored"
+msgid "Ignored Track"
+msgstr "Ігнорована композиція"
+
+#: src/audio/recording_state.rs:53
+#| msgid "No Recording"
+msgid "Recording…"
+msgstr "Записування…"
+
+#: src/audio/recording_state.rs:54
+#| msgid "No Recording"
+msgid "Recorded"
+msgstr "Записано"
+
+#: src/audio/recording_state.rs:56
+msgid "Below Threshold"
+msgstr "Нижче порогового значення"
+
+#: src/audio/recording_state.rs:57
+#| msgid "_Cancel"
+msgid "Cancelled"
+msgstr "Скасовано"
+
+#: src/audio/recording_state.rs:63
+msgid "Recording is deactivated in preferences"
+msgstr "Записування вимкнено у налаштуваннях"
+
+#: src/audio/recording_state.rs:65
+#| msgid ""
+#| "No recording because the song title contains a word on the ignore list."
+msgid "The track contains a word that is on the ignore list"
+msgstr "Назва доріжки містить слово, яке перебуває у списку ігнорування"
+
+#: src/audio/recording_state.rs:68
+msgid ""
+"The track wasn't played from the beginning, so it can't be fully recorded"
+msgstr ""
+"Відтворення композиції відбувалося не з початку, тому її не може бути"
+" записано повністю"
+
+#: src/audio/recording_state.rs:71
+#| msgid "The current song will be recorded until a new song is detected."
+msgid "The track will be recorded until a new track gets played"
+msgstr ""
+"Запис поточної композиції відбуватиметься, доки не буде виявлено перехід до "
+"нової композиції"
+
+#: src/audio/recording_state.rs:73
+msgid "The track has been temporarily recorded"
+msgstr "Композицію було тимчасово записано"
+
+#: src/audio/recording_state.rs:75
+msgid ""
+"The track has been discarded as the duration was below the set threshold"
+msgstr ""
+"Композицію відкинуто, оскільки її тривалість була меншою за порогове значення"
+
+#: src/audio/recording_state.rs:77
+msgid "Recording has been cancelled"
+msgstr "Записування було скасовано"
 
 #: src/device/device_discovery.rs:83
 msgid "Google Cast Device"
@@ -487,11 +696,11 @@ msgstr "Невідома модель"
 msgid "translator-credits"
 msgstr "Юрій Чорноіван <yurchor@ukr.net>, 2020"
 
-#: src/ui/add_station_dialog.rs:90
+#: src/ui/add_station_dialog.rs:94
 msgid "Select Station Cover"
 msgstr "Виберіть обкладинку станції"
 
-#: src/ui/display_error.rs:46
+#: src/ui/display_error.rs:50
 msgid "Show Details"
 msgstr "Показати подробиці"
 
@@ -499,39 +708,111 @@ msgstr "Показати подробиці"
 msgid "Welcome to {}"
 msgstr "Вітаємо у {}"
 
-#: src/ui/recording_indicator.rs:111
-msgid "Recording in Progress"
-msgstr "Виконуємо записування"
+#: src/ui/preferences_dialog.rs:139
+msgid "Select Save Directory"
+msgstr "Виберіть каталог для збереження"
 
-#: src/ui/recording_indicator.rs:112
-msgid "Ignored"
-msgstr "Проігноровано"
+#: src/ui/preferences_dialog.rs:140
+msgid "_Select"
+msgstr "_Вибрати"
 
-#: src/ui/recording_indicator.rs:113
-msgid "No Recording"
-msgstr "Немає записів"
+#: src/ui/preferences_dialog.rs:163
+msgid "{} min"
+msgid_plural "{} min"
+msgstr[0] "{} хв"
+msgstr[1] "{} хв"
+msgstr[2] "{} хв"
+msgstr[3] "{} хв"
 
-#: src/ui/recording_indicator.rs:120
-msgid "The current song will be recorded until a new song is detected."
-msgstr ""
-"Запис поточної композиції відбуватиметься, доки не буде виявлено перехід до "
-"нової композиції."
+#: src/ui/preferences_dialog.rs:172
+msgid "{} sec"
+msgid_plural "{} sec"
+msgstr[0] "{} сек"
+msgstr[1] "{} сек"
+msgstr[2] "{} сек"
+msgstr[3] "{} сек"
 
-#: src/ui/recording_indicator.rs:123
-msgid ""
-"No recording because the song title contains a word on the ignore list."
-msgstr ""
-"Не записуємо, оскільки у заголовку композиції міститься слово зі списку "
-"ігнорування."
-
-#: src/ui/recording_indicator.rs:126
-msgid ""
-"The current song cannot be fully recorded. The beginning has been missed."
-msgstr "Поточну композицію не може бути записано повністю. Початок пропущено."
-
-#: src/ui/station_dialog.rs:201
+#: src/ui/station_dialog.rs:205
 msgid "{} kbit/s"
 msgstr "{} кбіт/с"
+
+#: src/ui/station_dialog.rs:290
+msgid "Copied"
+msgstr "Скопійовано"
+
+#: src/ui/window.rs:221
+msgid "No Permission for Background Playback"
+msgstr "Немає прав доступу для фонового відтворення"
+
+#: src/ui/window.rs:223
+msgid "“Run in Background” must be allowed for this app in system settings."
+msgstr ""
+"Для цієї програми має бути увімкнено режим «Запустити у фоновому режимі» у"
+" Системних параметрах."
+
+#: src/ui/window.rs:227
+#| msgid "Try Again"
+msgid "Try Anyway"
+msgstr "Спробувати попри все"
+
+#: src/ui/window.rs:228
+msgid "Disable Background Playback"
+msgstr "Вимкнути фонове відтворення"
+
+#: src/utils.rs:51
+msgid "{} hour"
+msgid_plural "{} hours"
+msgstr[0] "{} год"
+msgstr[1] "{} год"
+msgstr[2] "{} год"
+msgstr[3] "{} год"
+
+#: src/utils.rs:57
+msgid "{} minute"
+msgid_plural "{} minutes"
+msgstr[0] "{} хвилина"
+msgstr[1] "{} хвилини"
+msgstr[2] "{} хвилин"
+msgstr[3] "{} хвилина"
+
+#: src/utils.rs:63
+msgid "{} second"
+msgid_plural "{} seconds"
+msgstr[0] "{} секунда"
+msgstr[1] "{} секунди"
+msgstr[2] "{} секунд"
+msgstr[3] "{} секунда"
+
+#: src/utils.rs:75
+msgid "0 seconds"
+msgstr "0 секунд"
+
+#~ msgid "No Songs"
+#~ msgstr "Не виявлено жодної композиції"
+
+#~ msgid ""
+#~ "Songs that have been identified and recorded using the stream metadata "
+#~ "will appear here."
+#~ msgstr ""
+#~ "Тут буде показано композиції, які було ідентифіковано і записано за "
+#~ "допомогою метаданих потоку."
+
+#~ msgid "Features"
+#~ msgstr "Можливості"
+
+#~ msgid "Save recorded song"
+#~ msgstr "Зберегти записану пісню"
+
+#~ msgid "Station cannot be streamed. URL is not valid."
+#~ msgstr "Станцію не можна транслювати. Адреса є некоректною."
+
+#~ msgid "Recording in Progress"
+#~ msgstr "Виконуємо записування"
+
+#~ msgid ""
+#~ "The current song cannot be fully recorded. The beginning has been missed."
+#~ msgstr ""
+#~ "Поточну композицію не може бути записано повністю. Початок пропущено."
 
 #~ msgid "_Play Station"
 #~ msgstr "_Відтворити станцію"
@@ -615,15 +896,6 @@ msgstr "{} кбіт/с"
 
 #~ msgid "No Songs Detected"
 #~ msgstr "Не виявлено жодної пісні"
-
-#~ msgid ""
-#~ "Songs are automatically recognized using the stream metadata.\n"
-#~ "\n"
-#~ "If the station does not send any metadata, no songs can be recognized."
-#~ msgstr ""
-#~ "Пісні автоматично визначатимуться за метаданими потоку даних.\n"
-#~ "\n"
-#~ "Якщо станція не надсилає метаданих, пісні розпізнано не буде."
 
 #~ msgid "Saved songs are located in your Music folder."
 #~ msgstr "Збережені пісні можна буде знайти у теці «Музика»."
@@ -746,9 +1018,6 @@ msgstr "{} кбіт/с"
 #~ msgid "Open Application Menu"
 #~ msgstr "Відкрити меню програми"
 
-#~ msgid "Detected songs will appear here."
-#~ msgstr "Виявлені пісні буде показано тут."
-
 #~ msgid "_How does this work?"
 #~ msgstr "_Як це працює?"
 
@@ -760,9 +1029,6 @@ msgstr "{} кбіт/с"
 
 #~ msgid "An invalid station was removed from the library."
 #~ msgstr "З бібліотеки вилучено некоректний запис станції."
-
-#~ msgid "_Cancel"
-#~ msgstr "_Скасувати"
 
 #~ msgid "_Connect"
 #~ msgstr "З'_єднатись"
