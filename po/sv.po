@@ -1,15 +1,15 @@
 # Swedish translation for shortwave.
-# Copyright © 2020-2024 shortwave's COPYRIGHT HOLDER
+# Copyright © 2020-2025 shortwave's COPYRIGHT HOLDER
 # This file is distributed under the same license as the shortwave package.
-# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2020, 2021, 2022, 2023, 2024.
+# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2020, 2021, 2022, 2023, 2024, 2025.
 # Luna Jernberg <droidbittin@gmail.com>, 2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: shortwave\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2024-10-13 17:07+0000\n"
-"PO-Revision-Date: 2024-10-16 00:57+0200\n"
+"POT-Creation-Date: 2025-01-13 04:55+0000\n"
+"PO-Revision-Date: 2025-01-16 18:00+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -24,15 +24,20 @@ msgstr ""
 msgid "@NAME@"
 msgstr "@NAME@"
 
-#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: data/de.haeckerfelix.Shortwave.desktop.in.in:12
-msgid "Gradio;Radio;Stream;Wave;"
-msgstr "Gradio;Radio;Ström;Stream;Wave;"
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:4
+msgid "Internet Radio Player"
+msgstr "Internetradiospelare"
 
 #. General
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:5
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:10
 msgid "Listen to internet radio"
 msgstr "Lyssna på internetradio"
+
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:14
+msgid "Gradio;Radio;Stream;Wave;"
+msgstr "Gradio;Radio;Ström;Stream;Wave;"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:12
 msgid ""
@@ -58,10 +63,10 @@ msgstr "Sök och upptäck enkelt nya radiostationer"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:19
 msgid ""
-"Automatic recognition of songs, with the possibility to save them "
+"Automatic recognition of tracks, with the possibility to save them "
 "individually"
 msgstr ""
-"Automatisk igenkänning av låtar, med möjligheten att spara dem individuellt"
+"Automatisk igenkänning av spår, med möjligheten att spara dem individuellt"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:20
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:72
@@ -111,7 +116,7 @@ msgstr "Ström-URL"
 msgid "Add Station"
 msgstr "Lägg till station"
 
-#: data/gtk/device_dialog.ui:7 data/gtk/player_view.ui:124
+#: data/gtk/device_dialog.ui:7 data/gtk/player_view.ui:132
 msgid "Connect Device"
 msgstr "Anslut enhet"
 
@@ -135,7 +140,7 @@ msgstr "Ingen Google Cast-enhet som stöds hittades"
 msgid "Disconnect From Device"
 msgstr "Koppla bort från enhet"
 
-#: data/gtk/help_overlay.ui:11 data/gtk/settings_dialog.ui:9
+#: data/gtk/help_overlay.ui:11 data/gtk/preferences_dialog.ui:9
 msgid "General"
 msgstr "Allmänt"
 
@@ -164,7 +169,7 @@ msgctxt "shortcut window"
 msgid "Quit the application"
 msgstr "Avsluta programmet"
 
-#: data/gtk/help_overlay.ui:46
+#: data/gtk/help_overlay.ui:46 data/gtk/preferences_dialog.ui:12
 msgid "Playback"
 msgstr "Uppspelning"
 
@@ -172,6 +177,25 @@ msgstr "Uppspelning"
 msgctxt "shortcut window"
 msgid "Toggle playback"
 msgstr "Starta/stoppa uppspelning"
+
+#: data/gtk/help_overlay.ui:57 data/gtk/volume_control.ui:21
+msgid "Volume"
+msgstr "Volym"
+
+#: data/gtk/help_overlay.ui:60
+msgctxt "shortcut window"
+msgid "Toggle mute"
+msgstr "Tysta/aktivera ljud"
+
+#: data/gtk/help_overlay.ui:66
+msgctxt "shortcut window"
+msgid "Increase volume"
+msgstr "Öka volymen"
+
+#: data/gtk/help_overlay.ui:72
+msgctxt "shortcut window"
+msgid "Decrease volume"
+msgstr "Sänk volymen"
 
 #: data/gtk/library_page.ui:4
 msgid "Shortwave"
@@ -237,22 +261,26 @@ msgstr "_Tangentbordsgenvägar"
 msgid "_About Shortwave"
 msgstr "_Om Shortwave"
 
-#: data/gtk/library_page.ui:182
+#: data/gtk/library_page.ui:178
+msgid "_Quit"
+msgstr "A_vsluta"
+
+#: data/gtk/library_page.ui:186
 msgid "Add _Local Station"
 msgstr "Lägg till _lokal station"
 
 #: data/gtk/player_gadget.ui:40 data/gtk/player_toolbar.ui:92
-#: data/gtk/player_view.ui:148 data/gtk/station_row.ui:86
+#: data/gtk/player_view.ui:156 data/gtk/station_row.ui:86
 msgid "Play"
 msgstr "Spela upp"
 
 #: data/gtk/player_gadget.ui:55 data/gtk/player_toolbar.ui:106
-#: data/gtk/player_view.ui:162
+#: data/gtk/player_view.ui:170
 msgid "Stop"
 msgstr "Stoppa"
 
 #: data/gtk/player_gadget.ui:71 data/gtk/player_toolbar.ui:121
-#: data/gtk/player_view.ui:177
+#: data/gtk/player_view.ui:185
 msgid "Buffering…"
 msgstr "Buffrar…"
 
@@ -261,7 +289,7 @@ msgid "SHORTWAVE INTERNET RADIO"
 msgstr "SHORTWAVE INTERNETRADIO"
 
 #: data/gtk/player_gadget.ui:140 data/gtk/player_toolbar.ui:29
-#: data/gtk/player_view.ui:58
+#: data/gtk/player_view.ui:58 src/app.rs:257
 msgid "No Playback"
 msgstr "Ingen uppspelning"
 
@@ -277,25 +305,92 @@ msgstr "Återställ fönster"
 msgid "Enable Gadget Mode"
 msgstr "Aktivera miniläge"
 
-#: data/gtk/player_view.ui:207
+#: data/gtk/player_view.ui:215
 msgid "Show Station Details"
 msgstr "Visa stationsdetaljer"
 
-#: data/gtk/player_view.ui:258
-msgid "No Songs"
-msgstr "Inga låtar"
+#: data/gtk/player_view.ui:266
+msgid "No Tracks"
+msgstr "Inga spår"
 
-#: data/gtk/player_view.ui:269
-msgid ""
-"Songs that have been identified and recorded using the stream metadata will "
-"appear here."
-msgstr ""
-"Låtar som har identifierats och spelats in med strömmetadata kommer visas "
-"här."
+#: data/gtk/player_view.ui:277
+msgid "Played tracks will appear here"
+msgstr "Spelade spår kommer dyka upp här"
 
-#: data/gtk/player_view.ui:303 data/gtk/recording_indicator.ui:38
+#: data/gtk/player_view.ui:311
 msgid "An error occurred"
 msgstr "Ett fel uppstod"
+
+#: data/gtk/preferences_dialog.ui:15
+msgid "_Background Playback"
+msgstr "Uppspelning i _bakgrunden"
+
+#: data/gtk/preferences_dialog.ui:16
+msgid "Playback continues when window is closed"
+msgstr "Uppspelning fortsätter då fönstret stängs"
+
+#: data/gtk/preferences_dialog.ui:28
+msgid "_Notifications"
+msgstr "_Aviseringar"
+
+#: data/gtk/preferences_dialog.ui:29
+msgid "Show desktop notifications when a new track gets played"
+msgstr "Visa skrivbordsaviseringar när ett nytt spår spelas"
+
+#: data/gtk/preferences_dialog.ui:43
+msgid "Recording"
+msgstr "Inspelning"
+
+#: data/gtk/preferences_dialog.ui:44
+msgid ""
+"Tracks are automatically recognised based on the station stream metadata and "
+"can be saved."
+msgstr ""
+"Låtar känns automatiskt igen med stationsströmmens metadata och kan sparas."
+
+#: data/gtk/preferences_dialog.ui:47
+msgid "Track _Directory"
+msgstr "Spår_katalog"
+
+#: data/gtk/preferences_dialog.ui:69
+msgid "Save _All Tracks"
+msgstr "Spara _alla spår"
+
+#: data/gtk/preferences_dialog.ui:70
+msgid "All recorded tracks are automatically saved in the track directory"
+msgstr "Alla inspelade spår sparas automatiskt i spårkatalogen"
+
+#: data/gtk/preferences_dialog.ui:84
+msgid "Decide for Each _Track"
+msgstr "Avgör för varje _spår"
+
+#: data/gtk/preferences_dialog.ui:85
+msgid "Tracks are temporarily recorded and can be saved if desired"
+msgstr "Spår spelas in tillfälligt och kan sparas om så önskas"
+
+#: data/gtk/preferences_dialog.ui:100
+msgid "Record N_othing"
+msgstr "Spela _inte in något"
+
+#: data/gtk/preferences_dialog.ui:101
+msgid "Stations are played without recording"
+msgstr "Stationer spelas upp utan inspelning"
+
+#: data/gtk/preferences_dialog.ui:120
+msgid "M_aximum Duration"
+msgstr "M_aximal längd"
+
+#: data/gtk/preferences_dialog.ui:121
+msgid "Recording ends when the maximum duration is reached"
+msgstr "Inspelning avslutas när maximal längd har uppnåtts"
+
+#: data/gtk/preferences_dialog.ui:136
+msgid "M_inimum Duration"
+msgstr "M_inimal längd"
+
+#: data/gtk/preferences_dialog.ui:137
+msgid "Tracks shorter than the minimum duration will be ignored"
+msgstr "Spår kortare än minimal längd kommer ignoreras"
 
 #: data/gtk/search_page.ui:23
 msgid "Search"
@@ -319,8 +414,8 @@ msgstr "Upptäck nya stationer"
 
 #: data/gtk/search_page.ui:135
 msgid ""
-"The displayed information is provided by <a href=\"https://www.radio-browser."
-"info/\">radio-browser.info</a>. \n"
+"The displayed information is provided by <a href=\"https://www.radio-"
+"browser.info/\">radio-browser.info</a>. \n"
 "Shortwave has no influence on the listed stations."
 msgstr ""
 "Den visade informationen tillhandahålls av <a href=\"https://www.radio-"
@@ -355,39 +450,23 @@ msgstr "Kunde inte hämta stationsdata"
 msgid "Try Again"
 msgstr "Försök igen"
 
-#: data/gtk/settings_dialog.ui:12
-msgid "Features"
-msgstr "Funktioner"
-
-#: data/gtk/settings_dialog.ui:15
-msgid "_Notifications"
-msgstr "_Aviseringar"
-
-#: data/gtk/settings_dialog.ui:17
-msgid "Show desktop notifications when a new song gets played"
-msgstr "Visa skrivbordsaviseringar när en ny låt spelas"
-
-#: data/gtk/song_row.ui:16
-msgid "Save recorded song"
-msgstr "Spara inspelad låt"
-
-#: data/gtk/station_dialog.ui:73
+#: data/gtk/station_dialog.ui:75
 msgid "_Play"
 msgstr "_Spela upp"
 
-#: data/gtk/station_dialog.ui:89
+#: data/gtk/station_dialog.ui:91
 msgid "_Add to Library"
 msgstr "_Lägg till i bibliotek"
 
-#: data/gtk/station_dialog.ui:106
+#: data/gtk/station_dialog.ui:108
 msgid "_Remove From Library"
 msgstr "_Ta bort från bibliotek"
 
-#: data/gtk/station_dialog.ui:125 data/gtk/station_row.ui:57
+#: data/gtk/station_dialog.ui:127 data/gtk/station_row.ui:57
 msgid "Local Station"
 msgstr "Lokal station"
 
-#: data/gtk/station_dialog.ui:126
+#: data/gtk/station_dialog.ui:128
 msgid ""
 "This station exists only in your library, and is not part of the public "
 "database"
@@ -395,11 +474,11 @@ msgstr ""
 "Denna station finns endast i ditt bibliotek och är inte del av den "
 "offentliga databasen"
 
-#: data/gtk/station_dialog.ui:140 data/gtk/station_row.ui:69
+#: data/gtk/station_dialog.ui:142 data/gtk/station_row.ui:69
 msgid "Orphaned Station"
 msgstr "Övergiven station"
 
-#: data/gtk/station_dialog.ui:141
+#: data/gtk/station_dialog.ui:143
 msgid ""
 "The information could not be updated, probably this station was removed from "
 "the public database"
@@ -407,66 +486,166 @@ msgstr ""
 "Informationen kunde inte uppdateras, troligen har denna station tagits bort "
 "från den offentliga databasen"
 
-#: data/gtk/station_dialog.ui:152
+#: data/gtk/station_dialog.ui:154
 msgid "Information"
 msgstr "Information"
 
-#: data/gtk/station_dialog.ui:155
+#: data/gtk/station_dialog.ui:157
 msgid "Language"
 msgstr "Språk"
 
-#: data/gtk/station_dialog.ui:165
+#: data/gtk/station_dialog.ui:167
 msgid "Tags"
 msgstr "Taggar"
 
-#: data/gtk/station_dialog.ui:177
+#: data/gtk/station_dialog.ui:179
 msgid "Location"
 msgstr "Plats"
 
-#: data/gtk/station_dialog.ui:181
+#: data/gtk/station_dialog.ui:183
 msgid "Country"
 msgstr "Land"
 
-#: data/gtk/station_dialog.ui:191
+#: data/gtk/station_dialog.ui:193
 msgid "State"
 msgstr "Län"
 
-#: data/gtk/station_dialog.ui:225
+#: data/gtk/station_dialog.ui:227
 msgid "Audio"
 msgstr "Ljud"
 
-#: data/gtk/station_dialog.ui:228
+#: data/gtk/station_dialog.ui:230
 msgid "Bitrate"
 msgstr "Bithastighet"
 
-#: data/gtk/station_dialog.ui:238
+#: data/gtk/station_dialog.ui:240
 msgid "Codec"
 msgstr "Kodek"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:248
+#: data/gtk/station_dialog.ui:250
 msgid "Stream"
 msgstr "Ström"
 
-#: data/gtk/station_dialog.ui:257
+#: data/gtk/station_dialog.ui:256
 msgid "Copy"
 msgstr "Kopiera"
+
+#: data/gtk/track_dialog.ui:74
+msgid "Edit"
+msgstr "Redigera"
+
+#: data/gtk/track_dialog.ui:121
+msgid "The recorded track has been saved"
+msgstr "Det inspelade spåret har sparats"
+
+#: data/gtk/track_dialog.ui:137 data/gtk/track_dialog.ui:208
+#: data/gtk/track_row.ui:9 src/audio/player.rs:440
+msgid "Save Track"
+msgstr "Spara spår"
+
+#: data/gtk/track_dialog.ui:148
+msgid "Play Track"
+msgstr "Spela upp spår"
+
+#: data/gtk/track_dialog.ui:159
+msgid "Cancel Recording"
+msgstr "Avbryt inspelning"
+
+#: data/gtk/track_dialog.ui:175
+msgid "Station"
+msgstr "Station"
+
+#: data/gtk/track_dialog.ui:209
+msgid "Save this track when recording is complete"
+msgstr "Spara detta spår när inspelningen är klar"
+
+# TODO: behavior
+#: data/gtk/track_dialog.ui:223
+msgid "Recording behaviour can be changed in <a href=\"\">preferences</a>"
+msgstr "Inspelningsbeteende kan ändras i <a href=\"\">inställningar</a>"
+
+#: data/gtk/track_row.ui:20
+msgid "Saved"
+msgstr "Sparat"
 
 #: data/gtk/volume_control.ui:9
 msgid "Toggle Mute"
 msgstr "Tysta/aktivera ljud"
 
-#: data/gtk/volume_control.ui:21
-msgid "Volume"
-msgstr "Volym"
+#: src/app.rs:85
+msgid "Track no longer available"
+msgstr "Spår inte längre tillgängligt"
 
-#: src/audio/player.rs:220
+#: src/app.rs:108 src/app.rs:130
+msgid "This track is currently not recorded"
+msgstr "Detta spår spelas för närvarande inte in"
+
+#: src/app.rs:261
+msgid "Playing “{}”"
+msgstr "Spelar upp ”{}”"
+
+#: src/app.rs:361
 msgid "Active Playback"
 msgstr "Aktiv uppspelning"
 
-#: src/audio/player.rs:382
-msgid "Station cannot be streamed. URL is not valid."
-msgstr "Stationen kan inte strömmas. Ogiltig URL."
+#: src/audio/player.rs:450
+msgid "Don't Record"
+msgstr "Spela inte in"
+
+#: src/audio/recording_state.rs:49 src/audio/recording_state.rs:51
+msgid "Not Recorded"
+msgstr "Inte inspelat"
+
+#: src/audio/recording_state.rs:50
+msgid "Ignored Track"
+msgstr "Ignorerat spår"
+
+#: src/audio/recording_state.rs:53
+msgid "Recording…"
+msgstr "Spelar in…"
+
+#: src/audio/recording_state.rs:54
+msgid "Recorded"
+msgstr "Inspelat"
+
+#: src/audio/recording_state.rs:56
+msgid "Below Threshold"
+msgstr "Under tröskelvärde"
+
+#: src/audio/recording_state.rs:57
+msgid "Cancelled"
+msgstr "Avbrutet"
+
+#: src/audio/recording_state.rs:63
+msgid "Recording is deactivated in preferences"
+msgstr "Inspelning är inaktiverad i inställningarna"
+
+#: src/audio/recording_state.rs:65
+msgid "The track contains a word that is on the ignore list"
+msgstr "Spåret innehåller ett ord i ignoreringslistan"
+
+#: src/audio/recording_state.rs:68
+msgid ""
+"The track wasn't played from the beginning, so it can't be fully recorded"
+msgstr "Spåret spelades inte upp från början, så det kan inte spelas in helt"
+
+#: src/audio/recording_state.rs:71
+msgid "The track will be recorded until a new track gets played"
+msgstr "Spåret kommer spelas in ända till ett nytt spår spelas upp"
+
+#: src/audio/recording_state.rs:73
+msgid "The track has been temporarily recorded"
+msgstr "Spåret har spelats in tillfälligt"
+
+#: src/audio/recording_state.rs:75
+msgid ""
+"The track has been discarded as the duration was below the set threshold"
+msgstr "Spåret har förkastas då längden var kortare än det satta tröskelvärdet"
+
+#: src/audio/recording_state.rs:77
+msgid "Recording has been cancelled"
+msgstr "Inspelning har avbrutits"
 
 #: src/device/device_discovery.rs:83
 msgid "Google Cast Device"
@@ -489,7 +668,7 @@ msgstr ""
 msgid "Select Station Cover"
 msgstr "Välj stationsomslag"
 
-#: src/ui/display_error.rs:46
+#: src/ui/display_error.rs:50
 msgid "Show Details"
 msgstr "Visa detaljer"
 
@@ -497,35 +676,98 @@ msgstr "Visa detaljer"
 msgid "Welcome to {}"
 msgstr "Välkommen till {}"
 
-#: src/ui/recording_indicator.rs:111
-msgid "Recording in Progress"
-msgstr "Inspelning pågår"
+#: src/ui/preferences_dialog.rs:139
+msgid "Select Save Directory"
+msgstr "Välj sparkatalog"
 
-#: src/ui/recording_indicator.rs:112
-msgid "Ignored"
-msgstr "Ignorerad"
+#: src/ui/preferences_dialog.rs:140
+msgid "_Select"
+msgstr "_Välj"
 
-#: src/ui/recording_indicator.rs:113
-msgid "No Recording"
-msgstr "Ingen inspelning"
+#: src/ui/preferences_dialog.rs:163
+msgid "{} min"
+msgid_plural "{} min"
+msgstr[0] "{} min"
+msgstr[1] "{} min"
 
-#: src/ui/recording_indicator.rs:120
-msgid "The current song will be recorded until a new song is detected."
-msgstr "Aktuell låt kommer spelas in till en ny låt upptäcks."
+#: src/ui/preferences_dialog.rs:172
+msgid "{} sec"
+msgid_plural "{} sec"
+msgstr[0] "{} s"
+msgstr[1] "{} s"
 
-#: src/ui/recording_indicator.rs:123
-msgid "No recording because the song title contains a word on the ignore list."
-msgstr ""
-"Ingen inspelning för att låttiteln innehåller ett ord i ignoreringslistan."
-
-#: src/ui/recording_indicator.rs:126
-msgid ""
-"The current song cannot be fully recorded. The beginning has been missed."
-msgstr "Aktuell låt kan inte spelas in helt. Början missades."
-
-#: src/ui/station_dialog.rs:203
+#: src/ui/station_dialog.rs:205
 msgid "{} kbit/s"
 msgstr "{} kbit/s"
+
+#: src/ui/station_dialog.rs:290
+msgid "Copied"
+msgstr "Kopierat"
+
+#: src/ui/window.rs:221
+msgid "No Permission for Background Playback"
+msgstr "Inget tillstånd för uppspelning i bakgrunden"
+
+#: src/ui/window.rs:223
+msgid "“Run in Background” must be allowed for this app in system settings."
+msgstr ""
+"”Kör i bakgrunden” måste tillåtas för detta program i systeminställningarna."
+
+#: src/ui/window.rs:227
+msgid "Try Anyway"
+msgstr "Försök ändå"
+
+#: src/ui/window.rs:228
+msgid "Disable Background Playback"
+msgstr "Inaktivera uppspelning i bakgrunden"
+
+#: src/utils.rs:51
+msgid "{} hour"
+msgid_plural "{} hours"
+msgstr[0] "{} timme"
+msgstr[1] "{} timmar"
+
+#: src/utils.rs:57
+msgid "{} minute"
+msgid_plural "{} minutes"
+msgstr[0] "{} minut"
+msgstr[1] "{} minuter"
+
+#: src/utils.rs:63
+msgid "{} second"
+msgid_plural "{} seconds"
+msgstr[0] "{} sekund"
+msgstr[1] "{} sekunder"
+
+#: src/utils.rs:75
+msgid "0 seconds"
+msgstr "0 sekunder"
+
+#~ msgid "No Songs"
+#~ msgstr "Inga låtar"
+
+#~ msgid ""
+#~ "Songs that have been identified and recorded using the stream metadata "
+#~ "will appear here."
+#~ msgstr ""
+#~ "Låtar som har identifierats och spelats in med strömmetadata kommer visas "
+#~ "här."
+
+#~ msgid "Features"
+#~ msgstr "Funktioner"
+
+#~ msgid "Save recorded song"
+#~ msgstr "Spara inspelad låt"
+
+#~ msgid "Station cannot be streamed. URL is not valid."
+#~ msgstr "Stationen kan inte strömmas. Ogiltig URL."
+
+#~ msgid "Recording in Progress"
+#~ msgstr "Inspelning pågår"
+
+#~ msgid ""
+#~ "The current song cannot be fully recorded. The beginning has been missed."
+#~ msgstr "Aktuell låt kan inte spelas in helt. Början missades."
 
 #~ msgid "Create new station"
 #~ msgstr "Skapa ny station"
@@ -608,15 +850,6 @@ msgstr "{} kbit/s"
 
 #~ msgid "No Songs Detected"
 #~ msgstr "Inga låtar upptäcktes"
-
-#~ msgid ""
-#~ "Songs are automatically recognized using the stream metadata.\n"
-#~ "\n"
-#~ "If the station does not send any metadata, no songs can be recognized."
-#~ msgstr ""
-#~ "Låtar känns automatiskt igen med strömmens metadata.\n"
-#~ "\n"
-#~ "Om stationen inte sänder några metadata så kan inga låtar kännas igen."
 
 #~ msgid "Saved songs are located in your Music folder."
 #~ msgstr "Sparade låtar finns i din mapp Musik."
@@ -728,9 +961,6 @@ msgstr "{} kbit/s"
 #~ msgid "Open Application Menu"
 #~ msgstr "Öppna programmeny"
 
-#~ msgid "Detected songs will appear here."
-#~ msgstr "Upptäckta låtar kommer dyka upp här."
-
 #~ msgid "_How does this work?"
 #~ msgstr "_Hur fungerar detta?"
 
@@ -742,9 +972,6 @@ msgstr "{} kbit/s"
 
 #~ msgid "An invalid station was removed from the library."
 #~ msgstr "En ogiltig station togs bort från biblioteket."
-
-#~ msgid "_Cancel"
-#~ msgstr "A_vbryt"
 
 #~ msgid "_Connect"
 #~ msgstr "_Anslut"
