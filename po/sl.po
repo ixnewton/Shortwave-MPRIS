@@ -3,39 +3,44 @@
 # This file is distributed under the same license as the shortwave package.
 #
 # Matej Urbančič <mateju@svn.gnome.org>, 2020–2022.
-# Martin Srebotnjak <miles@filmsi.net>, 2011, 2022, 2024.
+# Martin Srebotnjak <miles@filmsi.net>, 2011, 2022, 2024, 2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2024-10-11 15:31+0000\n"
-"PO-Revision-Date: 2024-10-12 17:06+0200\n"
+"POT-Creation-Date: 2025-01-13 04:55+0000\n"
+"PO-Revision-Date: 2025-01-17 10:59+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl_SI\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
-"%100==4 ? 3 : 0);\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || "
+"n%100==4 ? 3 : 0);\n"
 "X-Poedit-SourceCharset: utf-8\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:3
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
 msgid "@NAME@"
 msgstr "Kratki valovi"
 
-#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: data/de.haeckerfelix.Shortwave.desktop.in.in:12
-msgid "Gradio;Radio;Stream;Wave;"
-msgstr "Gradio;radio;tok;stream;wave;pretok;glasba;kratki;valovi;"
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:4
+msgid "Internet Radio Player"
+msgstr "Internetni radijski predvajalnik"
 
 #. General
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:5
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:10
 msgid "Listen to internet radio"
 msgstr "Poslušanje spletnih radijskih postaj"
+
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:14
+msgid "Gradio;Radio;Stream;Wave;"
+msgstr "Gradio;radio;tok;stream;wave;pretok;glasba;kratki;valovi;"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:12
 msgid ""
@@ -60,10 +65,11 @@ msgid "Easily search and discover new radio stations"
 msgstr "Enostavno iskanje in odkrivanje novih radijskih postaj"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:19
+#, fuzzy
 msgid ""
-"Automatic recognition of songs, with the possibility to save them "
+"Automatic recognition of tracks, with the possibility to save them "
 "individually"
-msgstr "Samodejno prepoznavanje skladb z možnostjo posamičnega shranjevanja"
+msgstr "Samodejno prepoznavanje stez z možnostjo posamičnega shranjevanja"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:20
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:72
@@ -88,11 +94,11 @@ msgstr "Felix Häcker"
 msgid "Add Local Station"
 msgstr "Dodaj krajevno postajo"
 
-#: data/gtk/add_station_dialog.ui:42
+#: data/gtk/add_station_dialog.ui:64
 msgid "Change Station Cover"
 msgstr "Spremeni sliko postaje"
 
-#: data/gtk/add_station_dialog.ui:60
+#: data/gtk/add_station_dialog.ui:95
 msgid ""
 "This station will only be added to your library. If you want it to be "
 "available to everyone, you should add it to the <a href=\"https://www.radio-"
@@ -102,19 +108,19 @@ msgstr ""
 "jo dodajte v <a href=\"https://www.radio-browser.info/add\">javno zbirko "
 "podatkov</a>."
 
-#: data/gtk/add_station_dialog.ui:72
+#: data/gtk/add_station_dialog.ui:107
 msgid "Name"
 msgstr "Naziv"
 
-#: data/gtk/add_station_dialog.ui:80
+#: data/gtk/add_station_dialog.ui:115
 msgid "Stream URL"
 msgstr "Naslov URL za pretakanje"
 
-#: data/gtk/add_station_dialog.ui:88
+#: data/gtk/add_station_dialog.ui:123
 msgid "Add Station"
 msgstr "Dodaj postajo"
 
-#: data/gtk/device_dialog.ui:7 data/gtk/player_view.ui:124
+#: data/gtk/device_dialog.ui:7 data/gtk/player_view.ui:132
 msgid "Connect Device"
 msgstr "Poveži napravo"
 
@@ -138,7 +144,7 @@ msgstr "Podprte naprave Google Cast ni možno najti"
 msgid "Disconnect From Device"
 msgstr "Prekini povezavo z napravo"
 
-#: data/gtk/help_overlay.ui:11 data/gtk/settings_dialog.ui:9
+#: data/gtk/help_overlay.ui:11 data/gtk/preferences_dialog.ui:9
 msgid "General"
 msgstr "Splošno"
 
@@ -167,7 +173,7 @@ msgctxt "shortcut window"
 msgid "Quit the application"
 msgstr "Konča izvajanje programa"
 
-#: data/gtk/help_overlay.ui:46
+#: data/gtk/help_overlay.ui:46 data/gtk/preferences_dialog.ui:12
 msgid "Playback"
 msgstr "Predvajanje"
 
@@ -175,6 +181,25 @@ msgstr "Predvajanje"
 msgctxt "shortcut window"
 msgid "Toggle playback"
 msgstr "Preklopi predvajanje"
+
+#: data/gtk/help_overlay.ui:57 data/gtk/volume_control.ui:21
+msgid "Volume"
+msgstr "Glasnost"
+
+#: data/gtk/help_overlay.ui:60
+msgctxt "shortcut window"
+msgid "Toggle mute"
+msgstr "Preklopi slišnost"
+
+#: data/gtk/help_overlay.ui:66
+msgctxt "shortcut window"
+msgid "Increase volume"
+msgstr "Poveča glasnost"
+
+#: data/gtk/help_overlay.ui:72
+msgctxt "shortcut window"
+msgid "Decrease volume"
+msgstr "Zmanjša glasnost"
 
 #: data/gtk/library_page.ui:4
 msgid "Shortwave"
@@ -240,22 +265,26 @@ msgstr "_Tipkovne bližnjice"
 msgid "_About Shortwave"
 msgstr "_O programu"
 
-#: data/gtk/library_page.ui:182
+#: data/gtk/library_page.ui:178
+msgid "_Quit"
+msgstr "_Izhod"
+
+#: data/gtk/library_page.ui:186
 msgid "Add _Local Station"
 msgstr "Dodaj _krajevno postajo"
 
 #: data/gtk/player_gadget.ui:40 data/gtk/player_toolbar.ui:92
-#: data/gtk/player_view.ui:148 data/gtk/station_row.ui:86
+#: data/gtk/player_view.ui:156 data/gtk/station_row.ui:86
 msgid "Play"
 msgstr "Predvajaj"
 
 #: data/gtk/player_gadget.ui:55 data/gtk/player_toolbar.ui:106
-#: data/gtk/player_view.ui:162
+#: data/gtk/player_view.ui:170
 msgid "Stop"
 msgstr "Ustavi"
 
 #: data/gtk/player_gadget.ui:71 data/gtk/player_toolbar.ui:121
-#: data/gtk/player_view.ui:177
+#: data/gtk/player_view.ui:185
 msgid "Buffering…"
 msgstr "Medpomnjenje …"
 
@@ -264,7 +293,7 @@ msgid "SHORTWAVE INTERNET RADIO"
 msgstr "INTERNETNI RADIO KRATKI VALOVI"
 
 #: data/gtk/player_gadget.ui:140 data/gtk/player_toolbar.ui:29
-#: data/gtk/player_view.ui:58
+#: data/gtk/player_view.ui:58 src/app.rs:257
 msgid "No Playback"
 msgstr "Nič se ne predvajanja"
 
@@ -280,25 +309,102 @@ msgstr "Obnovi okno"
 msgid "Enable Gadget Mode"
 msgstr "Omogoči način pripomočka"
 
-#: data/gtk/player_view.ui:207
+#: data/gtk/player_view.ui:215
 msgid "Show Station Details"
 msgstr "Pokaži podrobnosti postaje"
 
-#: data/gtk/player_view.ui:258
-msgid "No Songs"
-msgstr "Ni posnetkov"
+#: data/gtk/player_view.ui:266
+#, fuzzy
+msgid "No Tracks"
+msgstr "Ni stez"
 
-#: data/gtk/player_view.ui:269
-msgid ""
-"Songs that have been identified and recorded using the stream metadata will "
-"appear here."
-msgstr ""
-"Pesmi, ki so bile prepoznane in posnete z metapodatki pretoka, bodo "
-"prikazane tukaj."
+#: data/gtk/player_view.ui:277
+msgid "Played tracks will appear here"
+msgstr "Predvajani posnetki bodo prikazane tukaj"
 
-#: data/gtk/player_view.ui:303 data/gtk/recording_indicator.ui:38
+#: data/gtk/player_view.ui:311
 msgid "An error occurred"
 msgstr "Prišlo je do napake"
+
+#: data/gtk/preferences_dialog.ui:15
+msgid "_Background Playback"
+msgstr "Predvajanje v _ozadju"
+
+#: data/gtk/preferences_dialog.ui:16
+msgid "Playback continues when window is closed"
+msgstr "Predvajanje se nadaljuje, ko je okno zaprto"
+
+#: data/gtk/preferences_dialog.ui:28
+msgid "_Notifications"
+msgstr "_Obvestila"
+
+#: data/gtk/preferences_dialog.ui:29
+#, fuzzy
+msgid "Show desktop notifications when a new track gets played"
+msgstr "Pokaži obvestilo namizja, ko se začne predvajati nova steza"
+
+#: data/gtk/preferences_dialog.ui:43
+msgid "Recording"
+msgstr "Snemanje"
+
+#: data/gtk/preferences_dialog.ui:44
+#, fuzzy
+msgid ""
+"Tracks are automatically recognised based on the station stream metadata and "
+"can be saved."
+msgstr ""
+"Skladbe se samodejno prepoznajo na podlagi metapodatkov toka postaj in jih "
+"je mogoče shraniti."
+
+#: data/gtk/preferences_dialog.ui:47
+#, fuzzy
+msgid "Track _Directory"
+msgstr "_Mapa stez"
+
+#: data/gtk/preferences_dialog.ui:69
+#, fuzzy
+msgid "Save _All Tracks"
+msgstr "Shrani _vse skladbe"
+
+#: data/gtk/preferences_dialog.ui:70
+#, fuzzy
+msgid "All recorded tracks are automatically saved in the track directory"
+msgstr "Vse posnete skladbe se samodejno shranijo v mapo skladb"
+
+#: data/gtk/preferences_dialog.ui:84
+#, fuzzy
+msgid "Decide for Each _Track"
+msgstr "Odloči se za vsako _stezo posebej"
+
+#: data/gtk/preferences_dialog.ui:85
+#, fuzzy
+msgid "Tracks are temporarily recorded and can be saved if desired"
+msgstr "Steze se začasno posnamejo in jih je mogoče po želji shraniti"
+
+#: data/gtk/preferences_dialog.ui:100
+msgid "Record N_othing"
+msgstr "Ne snemaj ni_česar"
+
+#: data/gtk/preferences_dialog.ui:101
+msgid "Stations are played without recording"
+msgstr "Postaje se predvajajo brez snemanja"
+
+#: data/gtk/preferences_dialog.ui:120
+msgid "M_aximum Duration"
+msgstr "Naj_daljše trajanje"
+
+#: data/gtk/preferences_dialog.ui:121
+msgid "Recording ends when the maximum duration is reached"
+msgstr "Snemanje se konča, ko je doseženo najdaljše trajanje"
+
+#: data/gtk/preferences_dialog.ui:136
+msgid "M_inimum Duration"
+msgstr "Naj_krajše trajanje"
+
+#: data/gtk/preferences_dialog.ui:137
+#, fuzzy
+msgid "Tracks shorter than the minimum duration will be ignored"
+msgstr "Skladbe, krajše od najkrajšega trajanja, bodo prezrte"
 
 #: data/gtk/search_page.ui:23
 msgid "Search"
@@ -316,11 +422,11 @@ msgstr "Raziščite več kot 50.000 javnih postaj"
 msgid "Popular Stations"
 msgstr "Priljubljene postaje"
 
-#: data/gtk/search_page.ui:111
+#: data/gtk/search_page.ui:112
 msgid "Discover New Stations"
 msgstr "Odkrijte nove postaje"
 
-#: data/gtk/search_page.ui:133
+#: data/gtk/search_page.ui:135
 msgid ""
 "The displayed information is provided by <a href=\"https://www.radio-browser."
 "info/\">radio-browser.info</a>. \n"
@@ -330,66 +436,50 @@ msgstr ""
 "\">radio-browser.info</a>. \n"
 "Kratki valovi nimajo vpliva na navedene postaje."
 
-#: data/gtk/search_page.ui:199
+#: data/gtk/search_page.ui:201
 msgid "Loading…"
 msgstr "Nalaganje …"
 
-#: data/gtk/search_page.ui:214
+#: data/gtk/search_page.ui:216
 msgid "No Results"
 msgstr "Ni najdenih zadetkov"
 
-#: data/gtk/search_page.ui:215
+#: data/gtk/search_page.ui:217
 msgid ""
 "If the station you are looking for is missing, you can add it to the public "
 "database."
 msgstr ""
 "Če postaja, ki jo iščete, manjka, jo lahko dodate v javno zbirko podatkov."
 
-#: data/gtk/search_page.ui:219
+#: data/gtk/search_page.ui:221
 msgid "Add Missing Station"
 msgstr "Dodaj manjkajočo postajo"
 
-#: data/gtk/search_page.ui:237
+#: data/gtk/search_page.ui:239
 msgid "Unable to Retrieve Station Data"
 msgstr "Podatkov o postaji ni mogoče pridobiti"
 
-#: data/gtk/search_page.ui:240
+#: data/gtk/search_page.ui:242
 msgid "Try Again"
 msgstr "Poskusi znova"
 
-#: data/gtk/settings_dialog.ui:12
-msgid "Features"
-msgstr "Zmožnosti"
-
-#: data/gtk/settings_dialog.ui:15
-msgid "_Notifications"
-msgstr "_Obvestila"
-
-#: data/gtk/settings_dialog.ui:17
-msgid "Show desktop notifications when a new song gets played"
-msgstr "Pokaži obvestilo namizja, ko se začne predvajati nova skladba"
-
-#: data/gtk/song_row.ui:16
-msgid "Save recorded song"
-msgstr "Shrani posneto skladbo"
-
-#: data/gtk/station_dialog.ui:73
+#: data/gtk/station_dialog.ui:75
 msgid "_Play"
 msgstr "_Predvajaj"
 
-#: data/gtk/station_dialog.ui:89
+#: data/gtk/station_dialog.ui:91
 msgid "_Add to Library"
 msgstr "_Dodaj v zbirko"
 
-#: data/gtk/station_dialog.ui:106
+#: data/gtk/station_dialog.ui:108
 msgid "_Remove From Library"
 msgstr "_Odstrani iz zbirke"
 
-#: data/gtk/station_dialog.ui:125 data/gtk/station_row.ui:57
+#: data/gtk/station_dialog.ui:127 data/gtk/station_row.ui:57
 msgid "Local Station"
 msgstr "Krajevna postaja"
 
-#: data/gtk/station_dialog.ui:126
+#: data/gtk/station_dialog.ui:128
 msgid ""
 "This station exists only in your library, and is not part of the public "
 "database"
@@ -397,11 +487,11 @@ msgstr ""
 "Ta postaja obstaja le v vaši knjižnici in ni del javne podatkovne zbirke "
 "postaj."
 
-#: data/gtk/station_dialog.ui:140 data/gtk/station_row.ui:69
+#: data/gtk/station_dialog.ui:142 data/gtk/station_row.ui:69
 msgid "Orphaned Station"
 msgstr "Osirotela postaja"
 
-#: data/gtk/station_dialog.ui:141
+#: data/gtk/station_dialog.ui:143
 msgid ""
 "The information could not be updated, probably this station was removed from "
 "the public database"
@@ -409,66 +499,180 @@ msgstr ""
 "Informacij ni bilo mogoče posodobiti, verjetno je bila ta postaja "
 "odstranjena iz javne zbirke podatkov."
 
-#: data/gtk/station_dialog.ui:152
+#: data/gtk/station_dialog.ui:154
 msgid "Information"
 msgstr "Podrobnosti"
 
-#: data/gtk/station_dialog.ui:155
+#: data/gtk/station_dialog.ui:157
 msgid "Language"
 msgstr "Jezik"
 
-#: data/gtk/station_dialog.ui:165
+#: data/gtk/station_dialog.ui:167
 msgid "Tags"
 msgstr "Oznake"
 
-#: data/gtk/station_dialog.ui:177
+#: data/gtk/station_dialog.ui:179
 msgid "Location"
 msgstr "Kraj"
 
-#: data/gtk/station_dialog.ui:181
+#: data/gtk/station_dialog.ui:183
 msgid "Country"
 msgstr "Država"
 
-#: data/gtk/station_dialog.ui:191
+#: data/gtk/station_dialog.ui:193
 msgid "State"
 msgstr "Pokrajina / zvezna država"
 
-#: data/gtk/station_dialog.ui:225
+#: data/gtk/station_dialog.ui:227
 msgid "Audio"
 msgstr "Zvok"
 
-#: data/gtk/station_dialog.ui:228
+#: data/gtk/station_dialog.ui:230
 msgid "Bitrate"
 msgstr "Bitna hitrost"
 
-#: data/gtk/station_dialog.ui:238
+#: data/gtk/station_dialog.ui:240
 msgid "Codec"
 msgstr "Kodek"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:248
+#: data/gtk/station_dialog.ui:250
 msgid "Stream"
 msgstr "Pretakanje"
 
-#: data/gtk/station_dialog.ui:257
+#: data/gtk/station_dialog.ui:256
 msgid "Copy"
 msgstr "Kopiraj"
+
+#: data/gtk/track_dialog.ui:74
+msgid "Edit"
+msgstr "Uredi"
+
+#: data/gtk/track_dialog.ui:121
+#, fuzzy
+msgid "The recorded track has been saved"
+msgstr "Posneta skladba je bila shranjena"
+
+#: data/gtk/track_dialog.ui:137 data/gtk/track_dialog.ui:208
+#: data/gtk/track_row.ui:9 src/audio/player.rs:440
+msgid "Save Track"
+msgstr "Shrani posnetek"
+
+#: data/gtk/track_dialog.ui:148
+#, fuzzy
+msgid "Play Track"
+msgstr "Predvajaj skladbo"
+
+#: data/gtk/track_dialog.ui:159
+msgid "Cancel Recording"
+msgstr "Prekliči snemanje"
+
+#: data/gtk/track_dialog.ui:175
+msgid "Station"
+msgstr "Postaja"
+
+#: data/gtk/track_dialog.ui:209
+#, fuzzy
+msgid "Save this track when recording is complete"
+msgstr "Shranite to skladbo, ko je snemanje končano"
+
+#: data/gtk/track_dialog.ui:223
+msgid "Recording behaviour can be changed in <a href=\"\">preferences</a>"
+msgstr "Vedenje snemanja lahko spremenite v <a href=\"\">nastavitvah</a>"
+
+#: data/gtk/track_row.ui:20
+msgid "Saved"
+msgstr "Shranjeno"
 
 #: data/gtk/volume_control.ui:9
 msgid "Toggle Mute"
 msgstr "Preklopi slišnost"
 
-#: data/gtk/volume_control.ui:21
-msgid "Volume"
-msgstr "Glasnost"
+#: src/app.rs:85
+#, fuzzy
+msgid "Track no longer available"
+msgstr "Skladba ni več na voljo"
 
-#: src/audio/player.rs:251
+#: src/app.rs:108 src/app.rs:130
+#, fuzzy
+msgid "This track is currently not recorded"
+msgstr "Ta skladba trenutno ni posneta"
+
+#: src/app.rs:261
+msgid "Playing “{}”"
+msgstr "Predvajanje »{}«"
+
+#: src/app.rs:361
 msgid "Active Playback"
 msgstr "Dejavno predvajanje"
 
-#: src/audio/player.rs:413
-msgid "Station cannot be streamed. URL is not valid."
-msgstr "Postaje ni mogoče pretakati. URL ni veljaven."
+#: src/audio/player.rs:450
+msgid "Don't Record"
+msgstr "Ne snemaj"
+
+#: src/audio/recording_state.rs:49 src/audio/recording_state.rs:51
+msgid "Not Recorded"
+msgstr "Ni posneto"
+
+#: src/audio/recording_state.rs:50
+#, fuzzy
+msgid "Ignored Track"
+msgstr "Prezrta skladba"
+
+#: src/audio/recording_state.rs:53
+msgid "Recording…"
+msgstr "Poteka snemanje …"
+
+#: src/audio/recording_state.rs:54
+msgid "Recorded"
+msgstr "Posneto"
+
+#: src/audio/recording_state.rs:56
+msgid "Below Threshold"
+msgstr "Pod pragom"
+
+#: src/audio/recording_state.rs:57
+msgid "Cancelled"
+msgstr "Preklicano"
+
+#: src/audio/recording_state.rs:63
+msgid "Recording is deactivated in preferences"
+msgstr "Snemanje je izklopljeno v nastavitvah"
+
+#: src/audio/recording_state.rs:65
+#, fuzzy
+#| msgid ""
+#| "No recording because the song title contains a word on the ignore list."
+msgid "The track contains a word that is on the ignore list"
+msgstr "Brez snemanja, ker naslov pesmi vsebuje besedo na seznamu prezrtih."
+
+#: src/audio/recording_state.rs:68
+#, fuzzy
+msgid ""
+"The track wasn't played from the beginning, so it can't be fully recorded"
+msgstr ""
+"Skladba ni bila predvajana od začetka, zato je ni mogoče v celoti posneti"
+
+#: src/audio/recording_state.rs:71
+#, fuzzy
+#| msgid "The current song will be recorded until a new song is detected."
+msgid "The track will be recorded until a new track gets played"
+msgstr "Trenutna skladba se bo snemala, dokler ne bo zaznana nova skladba."
+
+#: src/audio/recording_state.rs:73
+#, fuzzy
+msgid "The track has been temporarily recorded"
+msgstr "Skladba je bila začasno posneta"
+
+#: src/audio/recording_state.rs:75
+#, fuzzy
+msgid ""
+"The track has been discarded as the duration was below the set threshold"
+msgstr "Skladba je bila zavržena, ker je bilo trajanje pod določenim pragom"
+
+#: src/audio/recording_state.rs:77
+msgid "Recording has been cancelled"
+msgstr "Snemanje je bilo preklicano"
 
 #: src/device/device_discovery.rs:83
 msgid "Google Cast Device"
@@ -484,11 +688,11 @@ msgstr ""
 "Matej Urbančič <mateju@src.gnome.org>\n"
 "Martin Srebotnjak <miles@filmsi.net>"
 
-#: src/ui/add_station_dialog.rs:90
+#: src/ui/add_station_dialog.rs:94
 msgid "Select Station Cover"
 msgstr "Izberite sliko postaje"
 
-#: src/ui/display_error.rs:46
+#: src/ui/display_error.rs:50
 msgid "Show Details"
 msgstr "Pokaži podrobnosti"
 
@@ -496,31 +700,80 @@ msgstr "Pokaži podrobnosti"
 msgid "Welcome to {}"
 msgstr "Dobrodošli v {}"
 
-#: src/ui/recording_indicator.rs:111
-msgid "Recording in Progress"
-msgstr "Snemanje v teku"
+#: src/ui/preferences_dialog.rs:139
+msgid "Select Save Directory"
+msgstr "Izberite mapo za shranjevanje"
 
-#: src/ui/recording_indicator.rs:112
-msgid "Ignored"
-msgstr "Prezrto"
+#: src/ui/preferences_dialog.rs:140
+msgid "_Select"
+msgstr "_Izberi"
 
-#: src/ui/recording_indicator.rs:113
-msgid "No Recording"
-msgstr "Brez snemanja"
+#: src/ui/preferences_dialog.rs:163
+msgid "{} min"
+msgid_plural "{} min"
+msgstr[0] "{} min"
+msgstr[1] "{} min"
+msgstr[2] "{} min"
+msgstr[3] "{} min"
 
-#: src/ui/recording_indicator.rs:120
-msgid "The current song will be recorded until a new song is detected."
-msgstr "Trenutna skladba se bo snemala, dokler ne bo zaznana nova skladba."
+#: src/ui/preferences_dialog.rs:172
+msgid "{} sec"
+msgid_plural "{} sec"
+msgstr[0] "{} s"
+msgstr[1] "{} s"
+msgstr[2] "{} s"
+msgstr[3] "{} s"
 
-#: src/ui/recording_indicator.rs:123
-msgid "No recording because the song title contains a word on the ignore list."
-msgstr "Brez snemanja, ker naslov pesmi vsebuje besedo na seznamu prezrtih."
-
-#: src/ui/recording_indicator.rs:126
-msgid ""
-"The current song cannot be fully recorded. The beginning has been missed."
-msgstr "Trenutne pesmi ni mogoče v celoti posneti. Začetek je bil zamujen."
-
-#: src/ui/station_dialog.rs:201
+#: src/ui/station_dialog.rs:205
 msgid "{} kbit/s"
 msgstr "{} kbit/s"
+
+#: src/ui/station_dialog.rs:290
+msgid "Copied"
+msgstr "Kopirano"
+
+#: src/ui/window.rs:221
+msgid "No Permission for Background Playback"
+msgstr "Ni pravic za predvajanje v ozadju"
+
+#: src/ui/window.rs:223
+msgid "“Run in Background” must be allowed for this app in system settings."
+msgstr ""
+"»Izvajaj v ozadju« mora biti za ta program dovoljeno v sistemskih "
+"nastavitvah."
+
+#: src/ui/window.rs:227
+msgid "Try Anyway"
+msgstr "Poskusi vseeno"
+
+#: src/ui/window.rs:228
+msgid "Disable Background Playback"
+msgstr "Onemogoči predvajanje v ozadju"
+
+#: src/utils.rs:51
+msgid "{} hour"
+msgid_plural "{} hours"
+msgstr[0] "{} ur"
+msgstr[1] "{} ura"
+msgstr[2] "{} uri"
+msgstr[3] "{} ure"
+
+#: src/utils.rs:57
+msgid "{} minute"
+msgid_plural "{} minutes"
+msgstr[0] "{} minut"
+msgstr[1] "{} minuta"
+msgstr[2] "{} minuti"
+msgstr[3] "{} minute"
+
+#: src/utils.rs:63
+msgid "{} second"
+msgid_plural "{} seconds"
+msgstr[0] "{} s"
+msgstr[1] "{} s"
+msgstr[2] "{} s"
+msgstr[3] "{} s"
+
+#: src/utils.rs:75
+msgid "0 seconds"
+msgstr "0 s"
