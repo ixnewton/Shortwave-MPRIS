@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
 "POT-Creation-Date: 2025-01-13 04:55+0000\n"
-"PO-Revision-Date: 2025-01-17 10:59+0100\n"
+"PO-Revision-Date: 2025-01-17 17:04+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "Language: sl_SI\n"
@@ -40,14 +40,16 @@ msgstr "Poslušanje spletnih radijskih postaj"
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:14
 msgid "Gradio;Radio;Stream;Wave;"
-msgstr "Gradio;radio;tok;stream;wave;pretok;glasba;kratki;valovi;"
+msgstr ""
+"Gradio;radio;tok;stream;wave;pretok;glasba;kratki;valovi;skladbe;komadi;"
+"komad;"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:12
 msgid ""
 "Shortwave is an internet radio player that provides access to a station "
 "database with over 50,000 stations."
 msgstr ""
-"Program Kratkovalovni je internetni radijski predvajalnik, ki omogoča dostop "
+"Program Kratki valovi je internetni radijski predvajalnik, ki omogoča dostop "
 "do podatkovne zbirke več kot 50.000 postaj."
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:15
@@ -65,11 +67,10 @@ msgid "Easily search and discover new radio stations"
 msgstr "Enostavno iskanje in odkrivanje novih radijskih postaj"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:19
-#, fuzzy
 msgid ""
 "Automatic recognition of tracks, with the possibility to save them "
 "individually"
-msgstr "Samodejno prepoznavanje stez z možnostjo posamičnega shranjevanja"
+msgstr "Samodejno prepoznavanje skladb z možnostjo posamičnega shranjevanja"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:20
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:72
@@ -79,11 +80,11 @@ msgstr ""
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:21
 msgid "Play audio on supported network devices (e.g. Google Chromecasts)"
-msgstr "Predvajanje glasbe na podprtih napravah (na primer Google Chromecast)"
+msgstr "Predvajanje glasbe na podprtih napravah (npr. Google Chromecast)"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:22
 msgid "Seamless integration into the GNOME desktop environment"
-msgstr "Popolna povezava programa z namiznim okoljem GNOME"
+msgstr "Popolna vključenost programa v namizno okolje GNOME"
 
 #. Branding
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:28
@@ -314,13 +315,12 @@ msgid "Show Station Details"
 msgstr "Pokaži podrobnosti postaje"
 
 #: data/gtk/player_view.ui:266
-#, fuzzy
 msgid "No Tracks"
-msgstr "Ni stez"
+msgstr "Ni skladb"
 
 #: data/gtk/player_view.ui:277
 msgid "Played tracks will appear here"
-msgstr "Predvajani posnetki bodo prikazane tukaj"
+msgstr "Predvajane skladbe bodo prikazane tukaj"
 
 #: data/gtk/player_view.ui:311
 msgid "An error occurred"
@@ -339,16 +339,14 @@ msgid "_Notifications"
 msgstr "_Obvestila"
 
 #: data/gtk/preferences_dialog.ui:29
-#, fuzzy
 msgid "Show desktop notifications when a new track gets played"
-msgstr "Pokaži obvestilo namizja, ko se začne predvajati nova steza"
+msgstr "Pokaži obvestilo namizja, ko se začne predvajati nova skladba"
 
 #: data/gtk/preferences_dialog.ui:43
 msgid "Recording"
 msgstr "Snemanje"
 
 #: data/gtk/preferences_dialog.ui:44
-#, fuzzy
 msgid ""
 "Tracks are automatically recognised based on the station stream metadata and "
 "can be saved."
@@ -357,29 +355,24 @@ msgstr ""
 "je mogoče shraniti."
 
 #: data/gtk/preferences_dialog.ui:47
-#, fuzzy
 msgid "Track _Directory"
-msgstr "_Mapa stez"
+msgstr "_Mapa skladb"
 
 #: data/gtk/preferences_dialog.ui:69
-#, fuzzy
 msgid "Save _All Tracks"
 msgstr "Shrani _vse skladbe"
 
 #: data/gtk/preferences_dialog.ui:70
-#, fuzzy
 msgid "All recorded tracks are automatically saved in the track directory"
 msgstr "Vse posnete skladbe se samodejno shranijo v mapo skladb"
 
 #: data/gtk/preferences_dialog.ui:84
-#, fuzzy
 msgid "Decide for Each _Track"
-msgstr "Odloči se za vsako _stezo posebej"
+msgstr "Odloči se za vsako _skladbo posebej"
 
 #: data/gtk/preferences_dialog.ui:85
-#, fuzzy
 msgid "Tracks are temporarily recorded and can be saved if desired"
-msgstr "Steze se začasno posnamejo in jih je mogoče po želji shraniti"
+msgstr "Skladbe se začasno posnamejo in jih je mogoče po želji shraniti"
 
 #: data/gtk/preferences_dialog.ui:100
 msgid "Record N_othing"
@@ -402,7 +395,6 @@ msgid "M_inimum Duration"
 msgstr "Naj_krajše trajanje"
 
 #: data/gtk/preferences_dialog.ui:137
-#, fuzzy
 msgid "Tracks shorter than the minimum duration will be ignored"
 msgstr "Skladbe, krajše od najkrajšega trajanja, bodo prezrte"
 
@@ -538,7 +530,7 @@ msgstr "Kodek"
 #. This is a noun/label for the station stream url
 #: data/gtk/station_dialog.ui:250
 msgid "Stream"
-msgstr "Pretakanje"
+msgstr "Tok"
 
 #: data/gtk/station_dialog.ui:256
 msgid "Copy"
@@ -549,17 +541,15 @@ msgid "Edit"
 msgstr "Uredi"
 
 #: data/gtk/track_dialog.ui:121
-#, fuzzy
 msgid "The recorded track has been saved"
 msgstr "Posneta skladba je bila shranjena"
 
 #: data/gtk/track_dialog.ui:137 data/gtk/track_dialog.ui:208
 #: data/gtk/track_row.ui:9 src/audio/player.rs:440
 msgid "Save Track"
-msgstr "Shrani posnetek"
+msgstr "Shrani skladbo"
 
 #: data/gtk/track_dialog.ui:148
-#, fuzzy
 msgid "Play Track"
 msgstr "Predvajaj skladbo"
 
@@ -572,9 +562,8 @@ msgid "Station"
 msgstr "Postaja"
 
 #: data/gtk/track_dialog.ui:209
-#, fuzzy
 msgid "Save this track when recording is complete"
-msgstr "Shranite to skladbo, ko je snemanje končano"
+msgstr "Shrani to skladbo, ko je snemanje končano"
 
 #: data/gtk/track_dialog.ui:223
 msgid "Recording behaviour can be changed in <a href=\"\">preferences</a>"
@@ -589,12 +578,10 @@ msgid "Toggle Mute"
 msgstr "Preklopi slišnost"
 
 #: src/app.rs:85
-#, fuzzy
 msgid "Track no longer available"
 msgstr "Skladba ni več na voljo"
 
 #: src/app.rs:108 src/app.rs:130
-#, fuzzy
 msgid "This track is currently not recorded"
 msgstr "Ta skladba trenutno ni posneta"
 
@@ -615,7 +602,6 @@ msgid "Not Recorded"
 msgstr "Ni posneto"
 
 #: src/audio/recording_state.rs:50
-#, fuzzy
 msgid "Ignored Track"
 msgstr "Prezrta skladba"
 
@@ -640,32 +626,24 @@ msgid "Recording is deactivated in preferences"
 msgstr "Snemanje je izklopljeno v nastavitvah"
 
 #: src/audio/recording_state.rs:65
-#, fuzzy
-#| msgid ""
-#| "No recording because the song title contains a word on the ignore list."
 msgid "The track contains a word that is on the ignore list"
-msgstr "Brez snemanja, ker naslov pesmi vsebuje besedo na seznamu prezrtih."
+msgstr "Brez snemanja, ker naslov skladbe vsebuje besedo na seznamu prezrtih."
 
 #: src/audio/recording_state.rs:68
-#, fuzzy
 msgid ""
 "The track wasn't played from the beginning, so it can't be fully recorded"
 msgstr ""
 "Skladba ni bila predvajana od začetka, zato je ni mogoče v celoti posneti"
 
 #: src/audio/recording_state.rs:71
-#, fuzzy
-#| msgid "The current song will be recorded until a new song is detected."
 msgid "The track will be recorded until a new track gets played"
-msgstr "Trenutna skladba se bo snemala, dokler ne bo zaznana nova skladba."
+msgstr "Trenutna skladba se bo snemala, dokler ne bo zaznana nova skladba"
 
 #: src/audio/recording_state.rs:73
-#, fuzzy
 msgid "The track has been temporarily recorded"
 msgstr "Skladba je bila začasno posneta"
 
 #: src/audio/recording_state.rs:75
-#, fuzzy
 msgid ""
 "The track has been discarded as the duration was below the set threshold"
 msgstr "Skladba je bila zavržena, ker je bilo trajanje pod določenim pragom"
@@ -744,7 +722,7 @@ msgstr ""
 
 #: src/ui/window.rs:227
 msgid "Try Anyway"
-msgstr "Poskusi vseeno"
+msgstr "Vseeno poskusi"
 
 #: src/ui/window.rs:228
 msgid "Disable Background Playback"
