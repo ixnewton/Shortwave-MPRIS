@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2024-10-11 15:31+0000\n"
-"PO-Revision-Date: 2024-10-12 14:39+0300\n"
+"POT-Creation-Date: 2025-01-13 04:55+0000\n"
+"PO-Revision-Date: 2025-01-19 11:50+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew\n"
 "Language: he\n"
@@ -17,22 +17,27 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n==2 ? 1 : n>10 && n%10==0 ? "
 "2 : 3);\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.5\n"
 
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:3
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
 msgid "@NAME@"
 msgstr "@NAME@"
 
-#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: data/de.haeckerfelix.Shortwave.desktop.in.in:12
-msgid "Gradio;Radio;Stream;Wave;"
-msgstr "רדיו;תחנות;תחנה;מוזיקה;הזרמה;גל;תדר;חדשות;"
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:4
+msgid "Internet Radio Player"
+msgstr "נגן רדיו מהאינטרנט"
 
 #. General
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:5
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:10
 msgid "Listen to internet radio"
 msgstr "האזנה לתחנת רדיו"
+
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:14
+msgid "Gradio;Radio;Stream;Wave;"
+msgstr "רדיו;תחנות;תחנה;מוזיקה;הזרמה;גל;תדר;חדשות;"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:12
 msgid ""
@@ -58,9 +63,9 @@ msgstr "חיפוש קל לגילוי תחנות רדיו חדשות"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:19
 msgid ""
-"Automatic recognition of songs, with the possibility to save them "
+"Automatic recognition of tracks, with the possibility to save them "
 "individually"
-msgstr "זיהוי אוטומטי של שירים, עם אפשרות לשמור אותם בנפרד"
+msgstr "זיהוי אוטומטי של רצועות, עם אפשרות לשמור אותן בנפרד"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:20
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:72
@@ -84,11 +89,11 @@ msgstr "Felix Häcker"
 msgid "Add Local Station"
 msgstr "הוספת תחנה מקומית"
 
-#: data/gtk/add_station_dialog.ui:42
+#: data/gtk/add_station_dialog.ui:64
 msgid "Change Station Cover"
 msgstr "שינוי תמונת תחנה"
 
-#: data/gtk/add_station_dialog.ui:60
+#: data/gtk/add_station_dialog.ui:95
 msgid ""
 "This station will only be added to your library. If you want it to be "
 "available to everyone, you should add it to the <a href=\"https://www.radio-"
@@ -97,19 +102,19 @@ msgstr ""
 "התחנה הזאת תתווסף רק לספרייה שלך. כדי שתהיה זמינה לכולם, יש להוסיף אותה ל<a "
 "href=\"https://www.radio-browser.info/add\">מסד הנתונים הציבורי</a>."
 
-#: data/gtk/add_station_dialog.ui:72
+#: data/gtk/add_station_dialog.ui:107
 msgid "Name"
 msgstr "שם"
 
-#: data/gtk/add_station_dialog.ui:80
+#: data/gtk/add_station_dialog.ui:115
 msgid "Stream URL"
 msgstr "כתובת URL להזרמה"
 
-#: data/gtk/add_station_dialog.ui:88
+#: data/gtk/add_station_dialog.ui:123
 msgid "Add Station"
 msgstr "הוספת תחנה"
 
-#: data/gtk/device_dialog.ui:7 data/gtk/player_view.ui:124
+#: data/gtk/device_dialog.ui:7 data/gtk/player_view.ui:132
 msgid "Connect Device"
 msgstr "חיבור התקן"
 
@@ -133,7 +138,7 @@ msgstr "לא נמצאו התקני Google Cast נתמכים"
 msgid "Disconnect From Device"
 msgstr "ניתוק מההתקן"
 
-#: data/gtk/help_overlay.ui:11 data/gtk/settings_dialog.ui:9
+#: data/gtk/help_overlay.ui:11 data/gtk/preferences_dialog.ui:9
 msgid "General"
 msgstr "כללי"
 
@@ -162,7 +167,7 @@ msgctxt "shortcut window"
 msgid "Quit the application"
 msgstr "יציאה מהיישום"
 
-#: data/gtk/help_overlay.ui:46
+#: data/gtk/help_overlay.ui:46 data/gtk/preferences_dialog.ui:12
 msgid "Playback"
 msgstr "ניגון"
 
@@ -170,6 +175,25 @@ msgstr "ניגון"
 msgctxt "shortcut window"
 msgid "Toggle playback"
 msgstr "שינוי מצב הניגון"
+
+#: data/gtk/help_overlay.ui:57 data/gtk/volume_control.ui:21
+msgid "Volume"
+msgstr "עוצמת שמע"
+
+#: data/gtk/help_overlay.ui:60
+msgctxt "shortcut window"
+msgid "Toggle mute"
+msgstr "החלפת מצב השתקה"
+
+#: data/gtk/help_overlay.ui:66
+msgctxt "shortcut window"
+msgid "Increase volume"
+msgstr "הגברת עוצמת שמע"
+
+#: data/gtk/help_overlay.ui:72
+msgctxt "shortcut window"
+msgid "Decrease volume"
+msgstr "החלשת עוצמת שמע"
 
 #: data/gtk/library_page.ui:4
 msgid "Shortwave"
@@ -235,22 +259,26 @@ msgstr "_צירופי מקשים"
 msgid "_About Shortwave"
 msgstr "_על אודות Shortwave"
 
-#: data/gtk/library_page.ui:182
+#: data/gtk/library_page.ui:178
+msgid "_Quit"
+msgstr "י_ציאה"
+
+#: data/gtk/library_page.ui:186
 msgid "Add _Local Station"
 msgstr "הוספת תחנה מ_קומית"
 
 #: data/gtk/player_gadget.ui:40 data/gtk/player_toolbar.ui:92
-#: data/gtk/player_view.ui:148 data/gtk/station_row.ui:86
+#: data/gtk/player_view.ui:156 data/gtk/station_row.ui:86
 msgid "Play"
 msgstr "השמעה"
 
 #: data/gtk/player_gadget.ui:55 data/gtk/player_toolbar.ui:106
-#: data/gtk/player_view.ui:162
+#: data/gtk/player_view.ui:170
 msgid "Stop"
 msgstr "עצירה"
 
 #: data/gtk/player_gadget.ui:71 data/gtk/player_toolbar.ui:121
-#: data/gtk/player_view.ui:177
+#: data/gtk/player_view.ui:185
 msgid "Buffering…"
 msgstr "מתבצעת אגירה…"
 
@@ -259,7 +287,7 @@ msgid "SHORTWAVE INTERNET RADIO"
 msgstr "אינטרנט רדיו SHORTWAVE"
 
 #: data/gtk/player_gadget.ui:140 data/gtk/player_toolbar.ui:29
-#: data/gtk/player_view.ui:58
+#: data/gtk/player_view.ui:58 src/app.rs:257
 msgid "No Playback"
 msgstr "אין השמעה"
 
@@ -275,23 +303,92 @@ msgstr "שחזור חלון"
 msgid "Enable Gadget Mode"
 msgstr "הפעלת מצב גאדג׳ט"
 
-#: data/gtk/player_view.ui:207
+#: data/gtk/player_view.ui:215
 msgid "Show Station Details"
 msgstr "הצגת פרטי התחנה"
 
-#: data/gtk/player_view.ui:258
-msgid "No Songs"
-msgstr "אין שירים"
+#: data/gtk/player_view.ui:266
+msgid "No Tracks"
+msgstr "אין רצועות"
 
-#: data/gtk/player_view.ui:269
-msgid ""
-"Songs that have been identified and recorded using the stream metadata will "
-"appear here."
-msgstr "שירים שזוהו והוקלטו באמצעות נתוני העל של התזרים יופיעו כאן."
+#: data/gtk/player_view.ui:277
+msgid "Played tracks will appear here"
+msgstr "רצועות שנוגנו תופענה כאן"
 
-#: data/gtk/player_view.ui:303 data/gtk/recording_indicator.ui:38
+#: data/gtk/player_view.ui:311
 msgid "An error occurred"
 msgstr "אירעה שגיאה"
+
+#: data/gtk/preferences_dialog.ui:15
+msgid "_Background Playback"
+msgstr "נגינה ב_רקע"
+
+#: data/gtk/preferences_dialog.ui:16
+msgid "Playback continues when window is closed"
+msgstr "הנגינה נמשכת כשהחלון סגור"
+
+#: data/gtk/preferences_dialog.ui:28
+msgid "_Notifications"
+msgstr "ה_תרעות"
+
+#: data/gtk/preferences_dialog.ui:29
+msgid "Show desktop notifications when a new track gets played"
+msgstr "הצגת התראות בשולחן העבודה כשרצועה חדשה מתנגנת"
+
+#: data/gtk/preferences_dialog.ui:43
+msgid "Recording"
+msgstr "הקלטה"
+
+#: data/gtk/preferences_dialog.ui:44
+msgid ""
+"Tracks are automatically recognised based on the station stream metadata and "
+"can be saved."
+msgstr ""
+"רצועות מזוהות אוטומטית באמצעות מידע על מידע של תזרים התחנה וניתן לשמור אותן."
+
+#: data/gtk/preferences_dialog.ui:47
+msgid "Track _Directory"
+msgstr "_תיקיית רצועות"
+
+#: data/gtk/preferences_dialog.ui:69
+msgid "Save _All Tracks"
+msgstr "שמירת _כל הרצועות"
+
+#: data/gtk/preferences_dialog.ui:70
+msgid "All recorded tracks are automatically saved in the track directory"
+msgstr "כל הרצועות המוקלטות נשמרות אוטומטית בתיקיית הרצועות"
+
+#: data/gtk/preferences_dialog.ui:84
+msgid "Decide for Each _Track"
+msgstr "להחליט _לכל רצועה"
+
+#: data/gtk/preferences_dialog.ui:85
+msgid "Tracks are temporarily recorded and can be saved if desired"
+msgstr "הרצועות מוקלטות באופן זמני וניתן לשמור אותן בהתאם לרצון"
+
+#: data/gtk/preferences_dialog.ui:100
+msgid "Record N_othing"
+msgstr "לא להקליט _כלום"
+
+#: data/gtk/preferences_dialog.ui:101
+msgid "Stations are played without recording"
+msgstr "תחנות מתנגנות ללא הקלטה"
+
+#: data/gtk/preferences_dialog.ui:120
+msgid "M_aximum Duration"
+msgstr "מ_שך מרבי"
+
+#: data/gtk/preferences_dialog.ui:121
+msgid "Recording ends when the maximum duration is reached"
+msgstr "ההקלטה מסתיימת עם הגעה לאורך המרבי"
+
+#: data/gtk/preferences_dialog.ui:136
+msgid "M_inimum Duration"
+msgstr "משך מ_זערי"
+
+#: data/gtk/preferences_dialog.ui:137
+msgid "Tracks shorter than the minimum duration will be ignored"
+msgstr "רצועות קצרות מהמשך המזערי לא תיכללנה"
 
 # "shortcut window"
 #: data/gtk/search_page.ui:23
@@ -310,11 +407,11 @@ msgstr "חשיפה ללמעלה מ־50,000 תחנות"
 msgid "Popular Stations"
 msgstr "תחנות נפוצות"
 
-#: data/gtk/search_page.ui:111
+#: data/gtk/search_page.ui:112
 msgid "Discover New Stations"
 msgstr "גילוי תחנות חדשות"
 
-#: data/gtk/search_page.ui:133
+#: data/gtk/search_page.ui:135
 msgid ""
 "The displayed information is provided by <a href=\"https://www.radio-browser."
 "info/\">radio-browser.info</a>. \n"
@@ -324,75 +421,59 @@ msgstr ""
 "\">radio-browser.info</a>. \n"
 "ל־Shortwave אין השפעה על התחנות המוצגות."
 
-#: data/gtk/search_page.ui:199
+#: data/gtk/search_page.ui:201
 msgid "Loading…"
 msgstr "בטעינה…"
 
-#: data/gtk/search_page.ui:214
+#: data/gtk/search_page.ui:216
 msgid "No Results"
 msgstr "אין תוצאות"
 
-#: data/gtk/search_page.ui:215
+#: data/gtk/search_page.ui:217
 msgid ""
 "If the station you are looking for is missing, you can add it to the public "
 "database."
 msgstr "אם התחנה שחיפשת חסרה, אפשר להוסיף אותה למסד הנתונים הציבורי."
 
-#: data/gtk/search_page.ui:219
+#: data/gtk/search_page.ui:221
 msgid "Add Missing Station"
 msgstr "הוספת תחנה חסרה"
 
-#: data/gtk/search_page.ui:237
+#: data/gtk/search_page.ui:239
 msgid "Unable to Retrieve Station Data"
 msgstr "לא ניתן למשוך נתונים על התחנה"
 
-#: data/gtk/search_page.ui:240
+#: data/gtk/search_page.ui:242
 msgid "Try Again"
 msgstr "לנסות שוב"
 
-#: data/gtk/settings_dialog.ui:12
-msgid "Features"
-msgstr "תכונות"
-
-#: data/gtk/settings_dialog.ui:15
-msgid "_Notifications"
-msgstr "ה_תרעות"
-
-#: data/gtk/settings_dialog.ui:17
-msgid "Show desktop notifications when a new song gets played"
-msgstr "הצגת התרעות בשולחן העבודה ברגע ששיר חדש מתנגן"
-
-#: data/gtk/song_row.ui:16
-msgid "Save recorded song"
-msgstr "שמירת שיר מוקלט"
-
-#: data/gtk/station_dialog.ui:73
+#: data/gtk/station_dialog.ui:75
 msgid "_Play"
 msgstr "ה_שמעה"
 
-#: data/gtk/station_dialog.ui:89
+#: data/gtk/station_dialog.ui:91
 msgid "_Add to Library"
 msgstr "הו_ספה לספרייה"
 
-#: data/gtk/station_dialog.ui:106
+#: data/gtk/station_dialog.ui:108
 msgid "_Remove From Library"
 msgstr "ה_סרה מהספרייה"
 
-#: data/gtk/station_dialog.ui:125 data/gtk/station_row.ui:57
+#: data/gtk/station_dialog.ui:127 data/gtk/station_row.ui:57
 msgid "Local Station"
 msgstr "תחנה מקומית"
 
-#: data/gtk/station_dialog.ui:126
+#: data/gtk/station_dialog.ui:128
 msgid ""
 "This station exists only in your library, and is not part of the public "
 "database"
 msgstr "תחנה זו קיימת רק בספרייה שלך, ואינה חלק ממסד הנתונים הציבורי של תחנות"
 
-#: data/gtk/station_dialog.ui:140 data/gtk/station_row.ui:69
+#: data/gtk/station_dialog.ui:142 data/gtk/station_row.ui:69
 msgid "Orphaned Station"
 msgstr "תחנה יתומה"
 
-#: data/gtk/station_dialog.ui:141
+#: data/gtk/station_dialog.ui:143
 msgid ""
 "The information could not be updated, probably this station was removed from "
 "the public database"
@@ -400,66 +481,165 @@ msgstr ""
 "אי אפשר לעדכן את המידע, כנראה כיוון שהתחנה הזאת הוסרה ממסד הנתונים הציבורי "
 "המקוון על תחנות"
 
-#: data/gtk/station_dialog.ui:152
+#: data/gtk/station_dialog.ui:154
 msgid "Information"
 msgstr "מידע"
 
-#: data/gtk/station_dialog.ui:155
+#: data/gtk/station_dialog.ui:157
 msgid "Language"
 msgstr "שפה"
 
-#: data/gtk/station_dialog.ui:165
+#: data/gtk/station_dialog.ui:167
 msgid "Tags"
 msgstr "תגיות"
 
-#: data/gtk/station_dialog.ui:177
+#: data/gtk/station_dialog.ui:179
 msgid "Location"
 msgstr "מיקום"
 
-#: data/gtk/station_dialog.ui:181
+#: data/gtk/station_dialog.ui:183
 msgid "Country"
 msgstr "ארץ"
 
-#: data/gtk/station_dialog.ui:191
+#: data/gtk/station_dialog.ui:193
 msgid "State"
 msgstr "מדינה"
 
-#: data/gtk/station_dialog.ui:225
+#: data/gtk/station_dialog.ui:227
 msgid "Audio"
 msgstr "שמע"
 
-#: data/gtk/station_dialog.ui:228
+#: data/gtk/station_dialog.ui:230
 msgid "Bitrate"
 msgstr "קצב סיביות"
 
-#: data/gtk/station_dialog.ui:238
+#: data/gtk/station_dialog.ui:240
 msgid "Codec"
 msgstr "מקודד"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:248
+#: data/gtk/station_dialog.ui:250
 msgid "Stream"
 msgstr "הזרמה"
 
-#: data/gtk/station_dialog.ui:257
+#: data/gtk/station_dialog.ui:256
 msgid "Copy"
 msgstr "העתקה"
+
+#: data/gtk/track_dialog.ui:74
+msgid "Edit"
+msgstr "עריכה"
+
+#: data/gtk/track_dialog.ui:121
+msgid "The recorded track has been saved"
+msgstr "הרצועה המוקלטת נשמרה"
+
+#: data/gtk/track_dialog.ui:137 data/gtk/track_dialog.ui:208
+#: data/gtk/track_row.ui:9 src/audio/player.rs:440
+msgid "Save Track"
+msgstr "שמירת רצועה"
+
+#: data/gtk/track_dialog.ui:148
+msgid "Play Track"
+msgstr "נגינת רצועה"
+
+#: data/gtk/track_dialog.ui:159
+msgid "Cancel Recording"
+msgstr "ביטול הקלטה"
+
+#: data/gtk/track_dialog.ui:175
+msgid "Station"
+msgstr "תחנה"
+
+#: data/gtk/track_dialog.ui:209
+msgid "Save this track when recording is complete"
+msgstr "לשמור את הרצועה הזאת כשההקלטה מסתיימת"
+
+#: data/gtk/track_dialog.ui:223
+msgid "Recording behaviour can be changed in <a href=\"\">preferences</a>"
+msgstr "אפשר לשנות את התנהגות ההקלטה ב<a href=\"\">העדפות</a>"
+
+#: data/gtk/track_row.ui:20
+msgid "Saved"
+msgstr "נשמרה"
 
 #: data/gtk/volume_control.ui:9
 msgid "Toggle Mute"
 msgstr "החלפת מצב השתקה"
 
-#: data/gtk/volume_control.ui:21
-msgid "Volume"
-msgstr "עוצמת שמע"
+#: src/app.rs:85
+msgid "Track no longer available"
+msgstr "הרצועה אינה זמינה עוד"
 
-#: src/audio/player.rs:251
+#: src/app.rs:108 src/app.rs:130
+msgid "This track is currently not recorded"
+msgstr "הרצועה הזאת לא מוקלטת כרגע"
+
+#: src/app.rs:261
+msgid "Playing “{}”"
+msgstr "„{}” מתגנן"
+
+#: src/app.rs:361
 msgid "Active Playback"
 msgstr "נגינה פעילה"
 
-#: src/audio/player.rs:413
-msgid "Station cannot be streamed. URL is not valid."
-msgstr "תחנה לא ניתנת לניגון. כתובת URL לא תקפה."
+#: src/audio/player.rs:450
+msgid "Don't Record"
+msgstr "לא להקליט"
+
+#: src/audio/recording_state.rs:49 src/audio/recording_state.rs:51
+msgid "Not Recorded"
+msgstr "לא הוקלט"
+
+#: src/audio/recording_state.rs:50
+msgid "Ignored Track"
+msgstr "רצועה שנפסחה"
+
+#: src/audio/recording_state.rs:53
+msgid "Recording…"
+msgstr "מתבצעת הקלטה…"
+
+#: src/audio/recording_state.rs:54
+msgid "Recorded"
+msgstr "הוקלט"
+
+#: src/audio/recording_state.rs:56
+msgid "Below Threshold"
+msgstr "מתחת לסף"
+
+#: src/audio/recording_state.rs:57
+msgid "Cancelled"
+msgstr "בוטלה"
+
+#: src/audio/recording_state.rs:63
+msgid "Recording is deactivated in preferences"
+msgstr "ההקלטה מושבתת בהעדפות"
+
+#: src/audio/recording_state.rs:65
+msgid "The track contains a word that is on the ignore list"
+msgstr "הרצועה מכילה מילה ברשימת ההתעלמות"
+
+#: src/audio/recording_state.rs:68
+msgid ""
+"The track wasn't played from the beginning, so it can't be fully recorded"
+msgstr "הרצועה לא התנגנה בהתחלה, לכאן לא ניתן להקליט אותה במלואה"
+
+#: src/audio/recording_state.rs:71
+msgid "The track will be recorded until a new track gets played"
+msgstr "הרצועה תוקלט עד שרצועה חדשה תנוגן"
+
+#: src/audio/recording_state.rs:73
+msgid "The track has been temporarily recorded"
+msgstr "הרצועה הזאת הוקלטה באופן זמני"
+
+#: src/audio/recording_state.rs:75
+msgid ""
+"The track has been discarded as the duration was below the set threshold"
+msgstr "הרצועה נפסחה כיוון שמשך ההשמעה היה מתחת לסף שהוגדר"
+
+#: src/audio/recording_state.rs:77
+msgid "Recording has been cancelled"
+msgstr "ההקלטה בוטלה"
 
 #: src/device/device_discovery.rs:83
 msgid "Google Cast Device"
@@ -475,11 +655,11 @@ msgstr ""
 "יוסף אור בוצ׳קו <yoseforb@gmail.com>\n"
 "מיזם תרגום GNOME לעברית https://l10n.gnome.org/teams/he/"
 
-#: src/ui/add_station_dialog.rs:90
+#: src/ui/add_station_dialog.rs:94
 msgid "Select Station Cover"
 msgstr "בחירת תמונת תחנה"
 
-#: src/ui/display_error.rs:46
+#: src/ui/display_error.rs:50
 msgid "Show Details"
 msgstr "הצגת פרטים"
 
@@ -487,34 +667,105 @@ msgstr "הצגת פרטים"
 msgid "Welcome to {}"
 msgstr "ברוך בואך אל ‏{}‏"
 
-#: src/ui/recording_indicator.rs:111
-msgid "Recording in Progress"
-msgstr "מתבצעת הקלטה"
+#: src/ui/preferences_dialog.rs:139
+msgid "Select Save Directory"
+msgstr "בחירת תיקיית שמירה"
 
-#: src/ui/recording_indicator.rs:112
-msgid "Ignored"
-msgstr "נתעלמו"
+#: src/ui/preferences_dialog.rs:140
+msgid "_Select"
+msgstr "_בחירה"
 
-#: src/ui/recording_indicator.rs:113
-msgid "No Recording"
-msgstr "אין הקלטה"
+#: src/ui/preferences_dialog.rs:163
+msgid "{} min"
+msgid_plural "{} min"
+msgstr[0] "דקה"
+msgstr[1] "2 דק׳"
+msgstr[2] "{} דק׳"
+msgstr[3] "{} דק׳"
 
-#: src/ui/recording_indicator.rs:120
-msgid "The current song will be recorded until a new song is detected."
-msgstr "השיר הנוכחי יוקלט עד שיזוהה שיר חדש."
+#: src/ui/preferences_dialog.rs:172
+msgid "{} sec"
+msgid_plural "{} sec"
+msgstr[0] "שנ׳"
+msgstr[1] "2 שנ׳"
+msgstr[2] "{} שנ׳"
+msgstr[3] "{} שנ׳"
 
-#: src/ui/recording_indicator.rs:123
-msgid "No recording because the song title contains a word on the ignore list."
-msgstr "אין הקלטה כיוון שכותרת השיר מכילה מילה ברשימת ההתעלמות."
-
-#: src/ui/recording_indicator.rs:126
-msgid ""
-"The current song cannot be fully recorded. The beginning has been missed."
-msgstr "אי אפשר להקליט את השיר הנוכחי במלואו. ההתחלה הוחמצה."
-
-#: src/ui/station_dialog.rs:201
+#: src/ui/station_dialog.rs:205
 msgid "{} kbit/s"
 msgstr "{} ק״ב/שנייה"
+
+#: src/ui/station_dialog.rs:290
+msgid "Copied"
+msgstr "הועתק"
+
+#: src/ui/window.rs:221
+msgid "No Permission for Background Playback"
+msgstr "אין הרשאה לנגינה ברקע"
+
+#: src/ui/window.rs:223
+msgid "“Run in Background” must be allowed for this app in system settings."
+msgstr "יש להרשות „הרצה ברקע” ליישום הזה בהגדרות המערכת."
+
+#: src/ui/window.rs:227
+msgid "Try Anyway"
+msgstr "לנסות בכל זאת"
+
+#: src/ui/window.rs:228
+msgid "Disable Background Playback"
+msgstr "השבתת נגינה ברקע"
+
+#: src/utils.rs:51
+msgid "{} hour"
+msgid_plural "{} hours"
+msgstr[0] "שעה"
+msgstr[1] "שעתיים"
+msgstr[2] "{} שעות"
+msgstr[3] "{} שעות"
+
+#: src/utils.rs:57
+msgid "{} minute"
+msgid_plural "{} minutes"
+msgstr[0] "דקה"
+msgstr[1] "שתי דקות"
+msgstr[2] "{} דקות"
+msgstr[3] "{} דקות"
+
+#: src/utils.rs:63
+msgid "{} second"
+msgid_plural "{} seconds"
+msgstr[0] "שנייה"
+msgstr[1] "שתי שניות"
+msgstr[2] "{} שניות"
+msgstr[3] "{} שניות"
+
+#: src/utils.rs:75
+msgid "0 seconds"
+msgstr "0 שניות"
+
+#~ msgid "No Songs"
+#~ msgstr "אין שירים"
+
+#~ msgid ""
+#~ "Songs that have been identified and recorded using the stream metadata "
+#~ "will appear here."
+#~ msgstr "שירים שזוהו והוקלטו באמצעות נתוני העל של התזרים יופיעו כאן."
+
+#~ msgid "Features"
+#~ msgstr "תכונות"
+
+#~ msgid "Save recorded song"
+#~ msgstr "שמירת שיר מוקלט"
+
+#~ msgid "Station cannot be streamed. URL is not valid."
+#~ msgstr "תחנה לא ניתנת לניגון. כתובת URL לא תקפה."
+
+#~ msgid "Recording in Progress"
+#~ msgstr "מתבצעת הקלטה"
+
+#~ msgid ""
+#~ "The current song cannot be fully recorded. The beginning has been missed."
+#~ msgstr "אי אפשר להקליט את השיר הנוכחי במלואו. ההתחלה הוחמצה."
 
 #~ msgid "Create new station"
 #~ msgstr "יצירת תחנה חדשה"
@@ -582,15 +833,6 @@ msgstr "{} ק״ב/שנייה"
 
 #~ msgid "No Songs Detected"
 #~ msgstr "לא זוהו שירים"
-
-#~ msgid ""
-#~ "Songs are automatically recognized using the stream metadata.\n"
-#~ "\n"
-#~ "If the station does not send any metadata, no songs can be recognized."
-#~ msgstr ""
-#~ "שירים מזוהים באופן אוטומטי באמצעות מידע על מידע של תזרים.\n"
-#~ "\n"
-#~ "במידה והתחנה לא שולחת מידע על מידע, השירים לא יזוהו."
 
 #~ msgid "Saved songs are located in your Music folder."
 #~ msgstr "שירים שמורים נשמרים בתיקייה מוזיקה שלך."
@@ -706,9 +948,6 @@ msgstr "{} ק״ב/שנייה"
 #~ msgid "Open Application Menu"
 #~ msgstr "פתיחת תפריט היישום"
 
-#~ msgid "Detected songs will appear here."
-#~ msgstr "שירים מזוהים יופיעו כאן."
-
 #~ msgid "_How does this work?"
 #~ msgstr "_איך זה עובד?"
 
@@ -720,9 +959,6 @@ msgstr "{} ק״ב/שנייה"
 
 #~ msgid "An invalid station was removed from the library."
 #~ msgstr "תחנה שאינה ברת תוקף הוסרה מהספרייה."
-
-#~ msgid "_Cancel"
-#~ msgstr "_ביטול"
 
 #~ msgid "_Connect"
 #~ msgstr "_התחברות"
