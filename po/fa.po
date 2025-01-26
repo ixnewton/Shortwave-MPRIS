@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2025-01-13 04:55+0000\n"
-"PO-Revision-Date: 2025-01-13 15:40+0330\n"
+"POT-Creation-Date: 2025-01-26 21:21+0000\n"
+"PO-Revision-Date: 2025-01-27 01:16+0330\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
 "Language: fa\n"
@@ -374,20 +374,20 @@ msgid "Stations are played without recording"
 msgstr "ایستگاه‌ها بدون ضبط کردن پخش می‌شوند"
 
 #: data/gtk/preferences_dialog.ui:120
-msgid "M_aximum Duration"
-msgstr "_بیشینهٔ طول"
-
-#: data/gtk/preferences_dialog.ui:121
-msgid "Recording ends when the maximum duration is reached"
-msgstr "ضبط‌ها هنگام رسیدن به بیشینهٔ طول پایان می‌یابند"
-
-#: data/gtk/preferences_dialog.ui:136
 msgid "M_inimum Duration"
 msgstr "_کمینهٔ طول"
 
-#: data/gtk/preferences_dialog.ui:137
+#: data/gtk/preferences_dialog.ui:121
 msgid "Tracks shorter than the minimum duration will be ignored"
 msgstr "از قطعه‌های کوتاه‌تر از کمینهٔ طول چشم‌پوشی می‌شود"
+
+#: data/gtk/preferences_dialog.ui:136
+msgid "M_aximum Duration"
+msgstr "_بیشینهٔ طول"
+
+#: data/gtk/preferences_dialog.ui:137
+msgid "Recording ends when the maximum duration is reached"
+msgstr "ضبط‌ها هنگام رسیدن به بیشینهٔ طول پایان می‌یابند"
 
 #: data/gtk/search_page.ui:23
 msgid "Search"
@@ -535,7 +535,7 @@ msgid "The recorded track has been saved"
 msgstr "قطعهٔ ضبط شده ذخیره شد"
 
 #: data/gtk/track_dialog.ui:137 data/gtk/track_dialog.ui:208
-#: data/gtk/track_row.ui:9 src/audio/player.rs:440
+#: data/gtk/track_row.ui:9 src/audio/player.rs:442
 msgid "Save Track"
 msgstr "ذخیرهٔ قطعه"
 
@@ -583,59 +583,63 @@ msgstr "پخش کردن «{}»"
 msgid "Active Playback"
 msgstr "فعّال کردن پخش"
 
-#: src/audio/player.rs:450
+#: src/audio/player.rs:452
 msgid "Don't Record"
 msgstr "ضبط نکردن"
 
-#: src/audio/recording_state.rs:49 src/audio/recording_state.rs:51
+#: src/audio/recording_state.rs:54 src/audio/recording_state.rs:56
 msgid "Not Recorded"
 msgstr "ضبط نشده"
 
-#: src/audio/recording_state.rs:50
+#: src/audio/recording_state.rs:55
 msgid "Ignored Track"
 msgstr "چشم‌پوشی از قطعه"
 
-#: src/audio/recording_state.rs:53
+#: src/audio/recording_state.rs:58
 msgid "Recording…"
 msgstr "ضبط کردن…"
 
-#: src/audio/recording_state.rs:54
+#: src/audio/recording_state.rs:59 src/audio/recording_state.rs:60
 msgid "Recorded"
 msgstr "ضبط شده"
 
-#: src/audio/recording_state.rs:56
+#: src/audio/recording_state.rs:62
 msgid "Below Threshold"
 msgstr "زیر آستانه"
 
-#: src/audio/recording_state.rs:57
+#: src/audio/recording_state.rs:63
 msgid "Cancelled"
 msgstr "لغو شده"
 
-#: src/audio/recording_state.rs:63
+#: src/audio/recording_state.rs:69
 msgid "Recording is deactivated in preferences"
 msgstr "ضبط کردن در ترجیحات غیرفعّال شده"
 
-#: src/audio/recording_state.rs:65
+#: src/audio/recording_state.rs:71
 msgid "The track contains a word that is on the ignore list"
 msgstr "قطعه شامل واژه‌ای در سیاههٔ چشم‌پوشی است."
 
-#: src/audio/recording_state.rs:68
+#: src/audio/recording_state.rs:74
 msgid "The track wasn't played from the beginning, so it can't be fully recorded"
 msgstr "قطعه از ابتدا پخش نشده و نمی‌تواند کامل ضبط شود"
 
-#: src/audio/recording_state.rs:71
+#: src/audio/recording_state.rs:77
 msgid "The track will be recorded until a new track gets played"
-msgstr "قطعه تا زمان پخش قطعه‌ای جدید ضبط خواهد شد."
+msgstr "قطعه تا زمان پخش قطعه‌ای جدید ضبط خواهد شد"
 
-#: src/audio/recording_state.rs:73
+#: src/audio/recording_state.rs:79
 msgid "The track has been temporarily recorded"
 msgstr "قطعه به صورت موقّتی ضبط شده"
 
-#: src/audio/recording_state.rs:75
+#: src/audio/recording_state.rs:81
+msgid "The maximum recording duration has been reached"
+msgstr "رسیدن به پایان بیشینهٔ زمان ضبط"
+
+#: src/audio/recording_state.rs:84
 msgid "The track has been discarded as the duration was below the set threshold"
 msgstr "از آن‌جا که طول قطعه زیر آستانهٔ تنظیم شده بود دور انداخته شد"
 
-#: src/audio/recording_state.rs:77
+#: src/audio/recording_state.rs:86
 msgid "Recording has been cancelled"
 msgstr "ضبط کردن لغو شد"
 
@@ -647,9 +651,13 @@ msgstr "افزارهٔ پخش گوگل"
 msgid "Unknown Model"
 msgstr "مدل ناشناخته"
 
-#: src/ui/about_dialog.rs:44
+#: src/ui/about_dialog.rs:41
 msgid "translator-credits"
 msgstr "دانیال بهزادی <dani.behzi@ubuntu.com>"
+
+#: src/ui/about_dialog.rs:42
+msgid "Donate"
+msgstr "اعانه"
 
 #: src/ui/add_station_dialog.rs:94
 msgid "Select Station Cover"
