@@ -389,19 +389,21 @@ mod imp {
             let mut new_state = if reason.discard_data() {
                 duration = 0;
                 SwRecordingState::DiscardedCancelled
+            } else if reason == RecordingStopReason::ReachedMaximumDuration {
+                SwRecordingState::RecordedReachedMaxDuration
             } else {
                 SwRecordingState::Recorded
             };
 
             // Check whether recorded track meets minimum duration
-            if new_state == SwRecordingState::Recorded && duration < minimum_duration as u64 {
+            if new_state.is_recorded() && duration < minimum_duration as u64 {
                 debug!(
                     "Discard recorded data, duration ({} sec) is below threshold ({} sec).",
                     duration, minimum_duration
                 );
 
                 discard_data = true;
-                new_state = SwRecordingState::DiscardedBelowThreshold;
+                new_state = SwRecordingState::DiscardedBelowMinDuration;
             }
 
             track.set_state(new_state);
@@ -409,7 +411,7 @@ mod imp {
 
             // Check whether recorded track should be saved immediately
             let save_track = mode == SwRecordingMode::Everything || track.save_when_recorded();
-            if track.state() == SwRecordingState::Recorded && save_track {
+            if track.state().is_recorded() && save_track {
                 track.save().handle_error("Unable to save track");
             }
 

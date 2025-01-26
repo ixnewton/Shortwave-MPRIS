@@ -116,7 +116,7 @@ mod imp {
                 #[weak]
                 cancel_action,
                 move |track| {
-                    save_action.set_enabled(track.state() == SwRecordingState::Recorded);
+                    save_action.set_enabled(track.state().is_recorded());
                     cancel_action.set_enabled(track.state() == SwRecordingState::Recording);
                 }
             ));
@@ -142,7 +142,7 @@ mod imp {
         }
 
         fn dispose(&self) {
-            if self.obj().state() == SwRecordingState::Recorded {
+            if self.obj().state().is_recorded() {
                 self.obj()
                     .file()
                     .delete(gio::Cancellable::NONE)
@@ -175,7 +175,7 @@ impl SwTrack {
     }
 
     pub fn save(&self) -> Result<(), Error> {
-        if self.state() != SwRecordingState::Recorded {
+        if !self.state().is_recorded() {
             debug!("Track not recorded, not able to save it.");
             return Ok(());
         }

@@ -128,9 +128,9 @@ mod imp {
                 .bind_property("state", &*self.duration_label, "visible")
                 .transform_to(|_, state: SwRecordingState| {
                     Some(
-                        state == SwRecordingState::Recording
-                            || state == SwRecordingState::Recorded
-                            || state == SwRecordingState::DiscardedBelowThreshold,
+                        state.is_recorded()
+                            || state == SwRecordingState::Recording
+                            || state == SwRecordingState::DiscardedBelowMinDuration,
                     )
                 })
                 .sync_create()

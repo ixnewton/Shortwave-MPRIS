@@ -83,7 +83,7 @@ mod imp {
                     let track = b.source().unwrap().downcast::<SwTrack>().unwrap();
                     let title = state.title();
 
-                    let string = if state == SwRecordingState::Recorded {
+                    let string = if state.is_recorded() {
                         utils::format_duration(track.duration(), true)
                     } else {
                         title
@@ -97,7 +97,7 @@ mod imp {
                 .bind_property("state", &*self.save_button, "visible")
                 .transform_to(|b: &glib::Binding, state: SwRecordingState| {
                     let track = b.source().unwrap().downcast::<SwTrack>().unwrap();
-                    Some(state == SwRecordingState::Recorded && !track.is_saved())
+                    Some(state.is_recorded() && !track.is_saved())
                 })
                 .sync_create()
                 .build();
@@ -106,7 +106,7 @@ mod imp {
                 .bind_property("is-saved", &*self.save_button, "visible")
                 .transform_to(|b: &glib::Binding, is_saved: bool| {
                     let track = b.source().unwrap().downcast::<SwTrack>().unwrap();
-                    Some(track.state() == SwRecordingState::Recorded && !is_saved)
+                    Some(track.state().is_recorded() && !is_saved)
                 })
                 .sync_create()
                 .build();

@@ -33,15 +33,20 @@ pub enum SwRecordingState {
     // Recording
     Recording,
     Recorded,
+    RecordedReachedMaxDuration,
 
     // Discarded
-    DiscardedBelowThreshold,
+    DiscardedBelowMinDuration,
     DiscardedCancelled,
 }
 
 impl SwRecordingState {
     pub fn include_in_past_tracks(&self) -> bool {
-        *self != Self::IdleIgnoredTrack && *self != Self::DiscardedBelowThreshold
+        *self != Self::IdleIgnoredTrack && *self != Self::DiscardedBelowMinDuration
+    }
+
+    pub fn is_recorded(&self) -> bool {
+        *self == Self::Recorded || *self == Self::RecordedReachedMaxDuration
     }
 
     pub fn title(&self) -> String {
@@ -52,8 +57,9 @@ impl SwRecordingState {
 
             SwRecordingState::Recording => i18n("Recording…"),
             SwRecordingState::Recorded => i18n("Recorded"),
+            SwRecordingState::RecordedReachedMaxDuration => i18n("Recorded"),
 
-            SwRecordingState::DiscardedBelowThreshold => i18n("Below Threshold"),
+            SwRecordingState::DiscardedBelowMinDuration => i18n("Below Threshold"),
             SwRecordingState::DiscardedCancelled => i18n("Cancelled"),
         }
     }
@@ -71,7 +77,10 @@ impl SwRecordingState {
                 i18n("The track will be recorded until a new track gets played")
             }
             SwRecordingState::Recorded => i18n("The track has been temporarily recorded"),
-            SwRecordingState::DiscardedBelowThreshold => {
+            SwRecordingState::RecordedReachedMaxDuration => {
+                i18n("The maximum recording duration has been reached")
+            }
+            SwRecordingState::DiscardedBelowMinDuration => {
                 i18n("The track has been discarded as the duration was below the set threshold")
             }
             SwRecordingState::DiscardedCancelled => i18n("Recording has been cancelled"),
