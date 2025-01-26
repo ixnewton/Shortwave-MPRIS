@@ -116,22 +116,6 @@
         <child>
           <object class="AdwPreferencesGroup">
             <child>
-              <object class="AdwSpinRow" id="recording_maximum_duration_row">
-                <property name="title" translatable="yes">M_aximum Duration</property>
-                <property name="subtitle" translatable="yes">Recording ends when the maximum duration is reached</property>
-                <property name="use_underline">True</property>
-                <property name="width_chars">7</property>
-                <signal name="output" handler="on_maximum_duration_output" />
-                <property name="adjustment">
-                  <object class="GtkAdjustment">
-                    <property name="step_increment">60</property>
-                    <property name="upper">1800</property>
-                    <property name="lower">60</property>
-                  </object>
-                </property>
-              </object>
-            </child>
-            <child>
               <object class="AdwSpinRow" id="recording_minimum_duration_row">
                 <property name="title" translatable="yes">M_inimum Duration</property>
                 <property name="subtitle" translatable="yes">Tracks shorter than the minimum duration will be ignored</property>
@@ -143,6 +127,22 @@
                     <property name="step_increment">1.0</property>
                     <property name="upper">600.0</property>
                     <property name="lower">5.0</property>
+                  </object>
+                </property>
+              </object>
+            </child>
+            <child>
+              <object class="AdwSpinRow" id="recording_maximum_duration_row">
+                <property name="title" translatable="yes">M_aximum Duration</property>
+                <property name="subtitle" translatable="yes">Recording ends when the maximum duration is reached</property>
+                <property name="use_underline">True</property>
+                <property name="width_chars">7</property>
+                <signal name="output" handler="on_maximum_duration_output" />
+                <property name="adjustment">
+                  <object class="GtkAdjustment">
+                    <property name="step_increment">60</property>
+                    <property name="upper">1800</property>
+                    <property name="lower">60</property>
                   </object>
                 </property>
               </object>
