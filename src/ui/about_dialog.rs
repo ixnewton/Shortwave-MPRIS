@@ -1,5 +1,5 @@
 // Shortwave - about_window.rs
-// Copyright (C) 2021-2024  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2021-2025  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -26,15 +26,12 @@ pub fn show(parent: &SwApplicationWindow) {
         Some(config::VERSION),
     );
 
-    let _version = match config::PROFILE {
-        "development" => {
-            dialog.set_debug_info(&format!("Git Commit: {}", config::VCS_TAG));
-            format!("{}-devel", config::VERSION)
-        }
-        _ => config::VERSION.to_string(),
-    };
+    if config::PROFILE == "development" {
+        dialog.set_version(&format!("{}-{} (devel)", config::VERSION, config::VCS_TAG));
+    } else {
+        dialog.set_version(config::VERSION);
+    }
 
-    dialog.set_version(config::VERSION);
     dialog.set_developers(&[
         "Felix Häcker <haeckerfelix@gnome.org>",
         "Maximiliano Sandoval <msandova@gnome.org>",
@@ -42,6 +39,7 @@ pub fn show(parent: &SwApplicationWindow) {
     ]);
     dialog.set_designers(&["Tobias Bernard"]);
     dialog.set_translator_credits(&i18n("translator-credits"));
+    dialog.add_link(&i18n("Donate"), "https://liberapay.com/haecker-felix");
 
     dialog.present(Some(parent));
 }
