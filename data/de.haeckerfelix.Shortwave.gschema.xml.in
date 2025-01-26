@@ -32,7 +32,7 @@
       <default>""</default>
     </key>
     <key name="window-width" type="i">
-      <default>950</default>
+      <default>975</default>
     </key>
     <key name="window-height" type="i">
       <default>675</default>
