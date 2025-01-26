@@ -1,4 +1,4 @@
-// Shortwave - about_window.rs
+// Shortwave - about_dialog.rs
 // Copyright (C) 2021-2025  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
