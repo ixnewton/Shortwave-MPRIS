@@ -3,21 +3,22 @@
 # This file is distributed under the same license as the shortwave package.
 # Yosef Or Boczko <yoseforb@gmail.com>, 2022-2024.
 #
+# SPDX-FileCopyrightText: 2025 Yaron Shahrabani <sh.yaron@gmail.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2025-01-13 04:55+0000\n"
-"PO-Revision-Date: 2025-01-19 11:50+0200\n"
+"POT-Creation-Date: 2025-01-26 21:21+0000\n"
+"PO-Revision-Date: 2025-01-27 10:13+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
-"Language-Team: Hebrew\n"
+"Language-Team: צוות התרגום של KDE ישראל\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n==2 ? 1 : n>10 && n%10==0 ? "
-"2 : 3);\n"
-"X-Generator: Poedit 3.5\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n==2 ? 1 : n>10 && n%10==0 ? 2 : "
+"3);\n"
+"X-Generator: Lokalize 24.12.1\n"
 
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:3
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
@@ -375,20 +376,20 @@ msgid "Stations are played without recording"
 msgstr "תחנות מתנגנות ללא הקלטה"
 
 #: data/gtk/preferences_dialog.ui:120
-msgid "M_aximum Duration"
-msgstr "מ_שך מרבי"
-
-#: data/gtk/preferences_dialog.ui:121
-msgid "Recording ends when the maximum duration is reached"
-msgstr "ההקלטה מסתיימת עם הגעה לאורך המרבי"
-
-#: data/gtk/preferences_dialog.ui:136
 msgid "M_inimum Duration"
 msgstr "משך מ_זערי"
 
-#: data/gtk/preferences_dialog.ui:137
+#: data/gtk/preferences_dialog.ui:121
 msgid "Tracks shorter than the minimum duration will be ignored"
 msgstr "רצועות קצרות מהמשך המזערי לא תיכללנה"
+
+#: data/gtk/preferences_dialog.ui:136
+msgid "M_aximum Duration"
+msgstr "מ_שך מרבי"
+
+#: data/gtk/preferences_dialog.ui:137
+msgid "Recording ends when the maximum duration is reached"
+msgstr "ההקלטה מסתיימת עם הגעה לאורך המרבי"
 
 # "shortcut window"
 #: data/gtk/search_page.ui:23
@@ -535,7 +536,7 @@ msgid "The recorded track has been saved"
 msgstr "הרצועה המוקלטת נשמרה"
 
 #: data/gtk/track_dialog.ui:137 data/gtk/track_dialog.ui:208
-#: data/gtk/track_row.ui:9 src/audio/player.rs:440
+#: data/gtk/track_row.ui:9 src/audio/player.rs:442
 msgid "Save Track"
 msgstr "שמירת רצועה"
 
@@ -583,61 +584,66 @@ msgstr "„{}” מתגנן"
 msgid "Active Playback"
 msgstr "נגינה פעילה"
 
-#: src/audio/player.rs:450
+#: src/audio/player.rs:452
 msgid "Don't Record"
 msgstr "לא להקליט"
 
-#: src/audio/recording_state.rs:49 src/audio/recording_state.rs:51
+#: src/audio/recording_state.rs:54 src/audio/recording_state.rs:56
 msgid "Not Recorded"
 msgstr "לא הוקלט"
 
-#: src/audio/recording_state.rs:50
+#: src/audio/recording_state.rs:55
 msgid "Ignored Track"
 msgstr "רצועה שנפסחה"
 
-#: src/audio/recording_state.rs:53
+#: src/audio/recording_state.rs:58
 msgid "Recording…"
 msgstr "מתבצעת הקלטה…"
 
-#: src/audio/recording_state.rs:54
+#: src/audio/recording_state.rs:59 src/audio/recording_state.rs:60
 msgid "Recorded"
 msgstr "הוקלט"
 
-#: src/audio/recording_state.rs:56
+#: src/audio/recording_state.rs:62
 msgid "Below Threshold"
 msgstr "מתחת לסף"
 
-#: src/audio/recording_state.rs:57
+#: src/audio/recording_state.rs:63
 msgid "Cancelled"
 msgstr "בוטלה"
 
-#: src/audio/recording_state.rs:63
+#: src/audio/recording_state.rs:69
 msgid "Recording is deactivated in preferences"
 msgstr "ההקלטה מושבתת בהעדפות"
 
-#: src/audio/recording_state.rs:65
+#: src/audio/recording_state.rs:71
 msgid "The track contains a word that is on the ignore list"
 msgstr "הרצועה מכילה מילה ברשימת ההתעלמות"
 
-#: src/audio/recording_state.rs:68
+#: src/audio/recording_state.rs:74
 msgid ""
 "The track wasn't played from the beginning, so it can't be fully recorded"
 msgstr "הרצועה לא התנגנה בהתחלה, לכאן לא ניתן להקליט אותה במלואה"
 
-#: src/audio/recording_state.rs:71
+#: src/audio/recording_state.rs:77
 msgid "The track will be recorded until a new track gets played"
 msgstr "הרצועה תוקלט עד שרצועה חדשה תנוגן"
 
-#: src/audio/recording_state.rs:73
+#: src/audio/recording_state.rs:79
 msgid "The track has been temporarily recorded"
 msgstr "הרצועה הזאת הוקלטה באופן זמני"
 
-#: src/audio/recording_state.rs:75
+#: src/audio/recording_state.rs:81
+#| msgid "The recorded track has been saved"
+msgid "The maximum recording duration has been reached"
+msgstr "הגעת לתקורת משך ההקלטה האפשרי"
+
+#: src/audio/recording_state.rs:84
 msgid ""
 "The track has been discarded as the duration was below the set threshold"
 msgstr "הרצועה נפסחה כיוון שמשך ההשמעה היה מתחת לסף שהוגדר"
 
-#: src/audio/recording_state.rs:77
+#: src/audio/recording_state.rs:86
 msgid "Recording has been cancelled"
 msgstr "ההקלטה בוטלה"
 
@@ -649,11 +655,15 @@ msgstr "התקן Google Cast"
 msgid "Unknown Model"
 msgstr "דגם לא ידוע"
 
-#: src/ui/about_dialog.rs:44
+#: src/ui/about_dialog.rs:41
 msgid "translator-credits"
 msgstr ""
 "יוסף אור בוצ׳קו <yoseforb@gmail.com>\n"
 "מיזם תרגום GNOME לעברית https://l10n.gnome.org/teams/he/"
+
+#: src/ui/about_dialog.rs:42
+msgid "Donate"
+msgstr "תרומה"
 
 #: src/ui/add_station_dialog.rs:94
 msgid "Select Station Cover"
