@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2025-01-13 04:55+0000\n"
-"PO-Revision-Date: 2025-01-14 14:47+0100\n"
+"POT-Creation-Date: 2025-01-26 21:21+0000\n"
+"PO-Revision-Date: 2025-01-27 02:46+0100\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -380,20 +380,20 @@ msgid "Stations are played without recording"
 msgstr "სადგურები ჩაწერის გარეშე იკვრება"
 
 #: data/gtk/preferences_dialog.ui:120
-msgid "M_aximum Duration"
-msgstr "მ_აქსიმალური ხანგრძლივობა"
-
-#: data/gtk/preferences_dialog.ui:121
-msgid "Recording ends when the maximum duration is reached"
-msgstr "ჩაწერა დასრულდება, როცა მიღწეული იქნება მაქს. ხანგრძლივობა"
-
-#: data/gtk/preferences_dialog.ui:136
 msgid "M_inimum Duration"
 msgstr "მ_ინიმალური ხანგრძლივობა"
 
-#: data/gtk/preferences_dialog.ui:137
+#: data/gtk/preferences_dialog.ui:121
 msgid "Tracks shorter than the minimum duration will be ignored"
 msgstr "მინიმალურ ხანგრძლივობაზე მოკლე ტრეკები გამოტოვებული იქნება"
+
+#: data/gtk/preferences_dialog.ui:136
+msgid "M_aximum Duration"
+msgstr "მ_აქსიმალური ხანგრძლივობა"
+
+#: data/gtk/preferences_dialog.ui:137
+msgid "Recording ends when the maximum duration is reached"
+msgstr "ჩაწერა დასრულდება, როცა მიღწეული იქნება მაქს. ხანგრძლივობა"
 
 #: data/gtk/search_page.ui:23
 msgid "Search"
@@ -543,7 +543,7 @@ msgid "The recorded track has been saved"
 msgstr "ჩაწერილი ტრეკი შენახულია"
 
 #: data/gtk/track_dialog.ui:137 data/gtk/track_dialog.ui:208
-#: data/gtk/track_row.ui:9 src/audio/player.rs:440
+#: data/gtk/track_row.ui:9 src/audio/player.rs:442
 msgid "Save Track"
 msgstr "ტრკის შენახვა"
 
@@ -592,61 +592,65 @@ msgstr "იკვრება “{}”"
 msgid "Active Playback"
 msgstr "აქტიური დაკვრა"
 
-#: src/audio/player.rs:450
+#: src/audio/player.rs:452
 msgid "Don't Record"
 msgstr "ჩაწერის გარეშე"
 
-#: src/audio/recording_state.rs:49 src/audio/recording_state.rs:51
+#: src/audio/recording_state.rs:54 src/audio/recording_state.rs:56
 msgid "Not Recorded"
 msgstr "ჩაწერილი არაა"
 
-#: src/audio/recording_state.rs:50
+#: src/audio/recording_state.rs:55
 msgid "Ignored Track"
 msgstr "გამოტოვებული ტრეკი"
 
-#: src/audio/recording_state.rs:53
+#: src/audio/recording_state.rs:58
 msgid "Recording…"
 msgstr "ჩაწერა…"
 
-#: src/audio/recording_state.rs:54
+#: src/audio/recording_state.rs:59 src/audio/recording_state.rs:60
 msgid "Recorded"
 msgstr "ჩანაწერი"
 
-#: src/audio/recording_state.rs:56
+#: src/audio/recording_state.rs:62
 msgid "Below Threshold"
 msgstr "ზღვარს ქვემოთ"
 
-#: src/audio/recording_state.rs:57
+#: src/audio/recording_state.rs:63
 msgid "Cancelled"
 msgstr "გაუქმებულია"
 
-#: src/audio/recording_state.rs:63
+#: src/audio/recording_state.rs:69
 msgid "Recording is deactivated in preferences"
 msgstr "ჩაწერა გამორთულია მორგების ფანჯარაში"
 
-#: src/audio/recording_state.rs:65
+#: src/audio/recording_state.rs:71
 msgid "The track contains a word that is on the ignore list"
 msgstr "სიმღერის სახელი გამოსატოვებელი სიიდან შეიცავს სიტყვას"
 
-#: src/audio/recording_state.rs:68
+#: src/audio/recording_state.rs:74
 msgid ""
 "The track wasn't played from the beginning, so it can't be fully recorded"
 msgstr "ეს ტრეკი თავიდან არ დაგიკრავთ, ამიტომ სრულად ვერ ჩაიწერთ"
 
-#: src/audio/recording_state.rs:71
+#: src/audio/recording_state.rs:77
 msgid "The track will be recorded until a new track gets played"
 msgstr "მიმდინარე სიმღერა ჩაიწერება, სანამ ახალ სიმღერის დაკვრა არ დაიწყება"
 
-#: src/audio/recording_state.rs:73
+#: src/audio/recording_state.rs:79
 msgid "The track has been temporarily recorded"
 msgstr "ეს ტრეკი დროებითად ჩაიწერა"
 
-#: src/audio/recording_state.rs:75
+#: src/audio/recording_state.rs:81
+msgid "The maximum recording duration has been reached"
+msgstr "მიღწეულია ჩანაწერის მაქსიმალური ხანგრძლივობა"
+
+#: src/audio/recording_state.rs:84
 msgid ""
 "The track has been discarded as the duration was below the set threshold"
 msgstr "ეს ტრეკი მოვაცილე, რადგან მისი ხანგრძლივობა დასაშვებზე მოკლეა"
 
-#: src/audio/recording_state.rs:77
+#: src/audio/recording_state.rs:86
 msgid "Recording has been cancelled"
 msgstr "ჩაწერა გაუქმდა"
 
@@ -658,9 +662,13 @@ msgstr "Google Cast მოწყობილობა"
 msgid "Unknown Model"
 msgstr "უცნობი მოდელი"
 
-#: src/ui/about_dialog.rs:44
+#: src/ui/about_dialog.rs:41
 msgid "translator-credits"
 msgstr "მთარგმნელის შესახებ"
+
+#: src/ui/about_dialog.rs:42
+msgid "Donate"
+msgstr "შემოწირულობა"
 
 #: src/ui/add_station_dialog.rs:94
 msgid "Select Station Cover"
