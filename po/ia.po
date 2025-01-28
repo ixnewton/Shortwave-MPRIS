@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2025-01-13 04:55+0000\n"
-"PO-Revision-Date: 2025-01-13 20:18-0300\n"
+"POT-Creation-Date: 2025-01-26 21:21+0000\n"
+"PO-Revision-Date: 2025-01-28 18:16-0300\n"
 "Last-Translator: Emilio Sepúlveda <emism.translations@gmail.com>\n"
 "Language-Team: Interlingua\n"
 "Language: ia\n"
@@ -22,7 +22,7 @@ msgstr ""
 "X-DL-Module: shortwave\n"
 "X-DL-Branch: main\n"
 "X-DL-Domain: po\n"
-"X-DL-State: None\n"
+"X-DL-State: Translating\n"
 
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:3
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
@@ -390,20 +390,20 @@ msgid "Stations are played without recording"
 msgstr "Le stationes son reproducite sin registration"
 
 #: data/gtk/preferences_dialog.ui:120
-msgid "M_aximum Duration"
-msgstr "Dur_ation maxime"
-
-#: data/gtk/preferences_dialog.ui:121
-msgid "Recording ends when the maximum duration is reached"
-msgstr "Le registration fini quando le duration maxime es attingite"
-
-#: data/gtk/preferences_dialog.ui:136
 msgid "M_inimum Duration"
 msgstr "Duration m_inime"
 
-#: data/gtk/preferences_dialog.ui:137
+#: data/gtk/preferences_dialog.ui:121
 msgid "Tracks shorter than the minimum duration will be ignored"
 msgstr "Le pistas de un duration minor al minime sera ignorate"
+
+#: data/gtk/preferences_dialog.ui:136
+msgid "M_aximum Duration"
+msgstr "Dur_ation maxime"
+
+#: data/gtk/preferences_dialog.ui:137
+msgid "Recording ends when the maximum duration is reached"
+msgstr "Le registration fini quando le duration maxime es attingite"
 
 #: data/gtk/search_page.ui:23
 msgid "Search"
@@ -553,7 +553,7 @@ msgid "The recorded track has been saved"
 msgstr "Le pista registrate ha essite salvate"
 
 #: data/gtk/track_dialog.ui:137 data/gtk/track_dialog.ui:208
-#: data/gtk/track_row.ui:9 src/audio/player.rs:440
+#: data/gtk/track_row.ui:9 src/audio/player.rs:442
 msgid "Save Track"
 msgstr "Salvar pista"
 
@@ -603,64 +603,68 @@ msgstr "“{}” in reproduction "
 msgid "Active Playback"
 msgstr "Reproduction active"
 
-#: src/audio/player.rs:450
+#: src/audio/player.rs:452
 msgid "Don't Record"
 msgstr "Non registrar"
 
-#: src/audio/recording_state.rs:49 src/audio/recording_state.rs:51
+#: src/audio/recording_state.rs:54 src/audio/recording_state.rs:56
 msgid "Not Recorded"
 msgstr "Non registrate"
 
-#: src/audio/recording_state.rs:50
+#: src/audio/recording_state.rs:55
 msgid "Ignored Track"
 msgstr "Pista ignorate"
 
-#: src/audio/recording_state.rs:53
+#: src/audio/recording_state.rs:58
 msgid "Recording…"
 msgstr "Registrante…"
 
-#: src/audio/recording_state.rs:54
+#: src/audio/recording_state.rs:59 src/audio/recording_state.rs:60
 msgid "Recorded"
 msgstr "Registrate"
 
-#: src/audio/recording_state.rs:56
+#: src/audio/recording_state.rs:62
 msgid "Below Threshold"
 msgstr "Infra limine"
 
-#: src/audio/recording_state.rs:57
+#: src/audio/recording_state.rs:63
 msgid "Cancelled"
 msgstr "Cancellate"
 
-#: src/audio/recording_state.rs:63
+#: src/audio/recording_state.rs:69
 msgid "Recording is deactivated in preferences"
 msgstr "Le registration es disactivate in preferentias"
 
-#: src/audio/recording_state.rs:65
+#: src/audio/recording_state.rs:71
 msgid "The track contains a word that is on the ignore list"
 msgstr "Le pista contine un parola que sta sur le lista de ignorar"
 
-#: src/audio/recording_state.rs:68
+#: src/audio/recording_state.rs:74
 msgid ""
 "The track wasn't played from the beginning, so it can't be fully recorded"
 msgstr ""
 "Le pista non ha essite reproducite desde le initio, assi ille non pote esser "
 "completemente registrate"
 
-#: src/audio/recording_state.rs:71
+#: src/audio/recording_state.rs:77
 msgid "The track will be recorded until a new track gets played"
 msgstr "Le pista actual essera registrate usque un nove pista sia detegite."
 
-#: src/audio/recording_state.rs:73
+#: src/audio/recording_state.rs:79
 msgid "The track has been temporarily recorded"
 msgstr "Le pista ha essite temporalmente registrate"
 
-#: src/audio/recording_state.rs:75
+#: src/audio/recording_state.rs:81
+msgid "The maximum recording duration has been reached"
+msgstr "Le duration maxime de registration ha essite attingite"
+
+#: src/audio/recording_state.rs:84
 msgid ""
 "The track has been discarded as the duration was below the set threshold"
 msgstr ""
 "Le pista ha essite abandonate a causa del duration infra le limine definite"
 
-#: src/audio/recording_state.rs:77
+#: src/audio/recording_state.rs:86
 msgid "Recording has been cancelled"
 msgstr "Le registration ha essite cancellate"
 
@@ -672,9 +676,13 @@ msgstr "Dispositivo Google Cast"
 msgid "Unknown Model"
 msgstr "Modello incognite"
 
-#: src/ui/about_dialog.rs:44
+#: src/ui/about_dialog.rs:41
 msgid "translator-credits"
 msgstr "translator-credits"
+
+#: src/ui/about_dialog.rs:42
+msgid "Donate"
+msgstr "Facer un donation"
 
 #: src/ui/add_station_dialog.rs:94
 msgid "Select Station Cover"
