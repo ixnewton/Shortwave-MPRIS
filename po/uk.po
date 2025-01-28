@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2025-01-13 04:55+0000\n"
-"PO-Revision-Date: 2025-01-13 10:12+0200\n"
+"POT-Creation-Date: 2025-01-26 21:21+0000\n"
+"PO-Revision-Date: 2025-01-28 22:22+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -63,9 +63,6 @@ msgid "Easily search and discover new radio stations"
 msgstr "Простий пошук і виявлення нових радіостанцій"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:19
-#| msgid ""
-#| "Automatic recognition of songs, with the possibility to save them "
-#| "individually"
 msgid ""
 "Automatic recognition of tracks, with the possibility to save them "
 "individually"
@@ -189,7 +186,6 @@ msgid "Volume"
 msgstr "Гучність"
 
 #: data/gtk/help_overlay.ui:60
-#| msgid "Toggle Mute"
 msgctxt "shortcut window"
 msgid "Toggle mute"
 msgstr "Увімкнути або вимкнути звук"
@@ -321,7 +317,6 @@ msgid "No Tracks"
 msgstr "Немає композицій"
 
 #: data/gtk/player_view.ui:277
-#| msgid "Detected songs will appear here."
 msgid "Played tracks will appear here"
 msgstr "Тут буде показано відтворені композиції"
 
@@ -330,7 +325,6 @@ msgid "An error occurred"
 msgstr "Сталася помилка"
 
 #: data/gtk/preferences_dialog.ui:15
-#| msgid "No Playback"
 msgid "_Background Playback"
 msgstr "_Фонове відтворення"
 
@@ -343,27 +337,21 @@ msgid "_Notifications"
 msgstr "_Сповіщення"
 
 #: data/gtk/preferences_dialog.ui:29
-#| msgid "Show desktop notifications when a new song gets played"
 msgid "Show desktop notifications when a new track gets played"
 msgstr ""
 "Показувати сповіщення на стільниці при переході до наступної композиції"
 
 #: data/gtk/preferences_dialog.ui:43
-#| msgid "No Recording"
 msgid "Recording"
 msgstr "Запис"
 
 #: data/gtk/preferences_dialog.ui:44
-#| msgid ""
-#| "Songs are automatically recognized using the stream metadata.\n"
-#| "\n"
-#| "If the station does not send any metadata, no songs can be recognized."
 msgid ""
 "Tracks are automatically recognised based on the station stream metadata and "
 "can be saved."
 msgstr ""
-"Композиції буде автоматично розпізнано і збережено на основі метаданих"
-" потоку станції."
+"Композиції буде автоматично розпізнано і збережено на основі метаданих "
+"потоку станції."
 
 #: data/gtk/preferences_dialog.ui:47
 msgid "Track _Directory"
@@ -387,7 +375,6 @@ msgid "Tracks are temporarily recorded and can be saved if desired"
 msgstr "Якщо потрібно, можна тимчасово записувати композиції і зберігати їх"
 
 #: data/gtk/preferences_dialog.ui:100
-#| msgid "No Recording"
 msgid "Record N_othing"
 msgstr "Ні_чого не записувати"
 
@@ -396,21 +383,21 @@ msgid "Stations are played without recording"
 msgstr "Станції відтворюватимуться без запису"
 
 #: data/gtk/preferences_dialog.ui:120
-msgid "M_aximum Duration"
-msgstr "М_аксимальна тривалість"
-
-#: data/gtk/preferences_dialog.ui:121
-msgid "Recording ends when the maximum duration is reached"
-msgstr "Записування завершується, якщо досягнуто максимальної тривалості"
-
-#: data/gtk/preferences_dialog.ui:136
 msgid "M_inimum Duration"
 msgstr "_Мінімальна тривалість"
 
-#: data/gtk/preferences_dialog.ui:137
+#: data/gtk/preferences_dialog.ui:121
 msgid "Tracks shorter than the minimum duration will be ignored"
 msgstr ""
 "Композиції, тривалість яких є меншою за порогове значення, буде проігноровано"
+
+#: data/gtk/preferences_dialog.ui:136
+msgid "M_aximum Duration"
+msgstr "М_аксимальна тривалість"
+
+#: data/gtk/preferences_dialog.ui:137
+msgid "Recording ends when the maximum duration is reached"
+msgstr "Записування завершується, якщо досягнуто максимальної тривалості"
 
 #: data/gtk/search_page.ui:23
 msgid "Search"
@@ -560,22 +547,19 @@ msgid "The recorded track has been saved"
 msgstr "Записану композицію збережено"
 
 #: data/gtk/track_dialog.ui:137 data/gtk/track_dialog.ui:208
-#: data/gtk/track_row.ui:9 src/audio/player.rs:440
+#: data/gtk/track_row.ui:9 src/audio/player.rs:442
 msgid "Save Track"
 msgstr "Зберегти доріжку"
 
 #: data/gtk/track_dialog.ui:148
-#| msgid "Playback"
 msgid "Play Track"
 msgstr "Відтворити доріжку"
 
 #: data/gtk/track_dialog.ui:159
-#| msgid "No Recording"
 msgid "Cancel Recording"
 msgstr "Скасувати записування"
 
 #: data/gtk/track_dialog.ui:175
-#| msgid "Add Station"
 msgid "Station"
 msgstr "Станція"
 
@@ -612,75 +596,71 @@ msgstr "Відтворення «{}»"
 msgid "Active Playback"
 msgstr "Активне відтворення"
 
-#: src/audio/player.rs:450
-#| msgid "No Recording"
+#: src/audio/player.rs:452
 msgid "Don't Record"
 msgstr "Не записувати"
 
-#: src/audio/recording_state.rs:49 src/audio/recording_state.rs:51
-#| msgid "No Recording"
+#: src/audio/recording_state.rs:54 src/audio/recording_state.rs:56
 msgid "Not Recorded"
 msgstr "Не записано"
 
-#: src/audio/recording_state.rs:50
-#| msgid "Ignored"
+#: src/audio/recording_state.rs:55
 msgid "Ignored Track"
 msgstr "Ігнорована композиція"
 
-#: src/audio/recording_state.rs:53
-#| msgid "No Recording"
+#: src/audio/recording_state.rs:58
 msgid "Recording…"
 msgstr "Записування…"
 
-#: src/audio/recording_state.rs:54
-#| msgid "No Recording"
+#: src/audio/recording_state.rs:59 src/audio/recording_state.rs:60
 msgid "Recorded"
 msgstr "Записано"
 
-#: src/audio/recording_state.rs:56
+#: src/audio/recording_state.rs:62
 msgid "Below Threshold"
 msgstr "Нижче порогового значення"
 
-#: src/audio/recording_state.rs:57
-#| msgid "_Cancel"
+#: src/audio/recording_state.rs:63
 msgid "Cancelled"
 msgstr "Скасовано"
 
-#: src/audio/recording_state.rs:63
+#: src/audio/recording_state.rs:69
 msgid "Recording is deactivated in preferences"
 msgstr "Записування вимкнено у налаштуваннях"
 
-#: src/audio/recording_state.rs:65
-#| msgid ""
-#| "No recording because the song title contains a word on the ignore list."
+#: src/audio/recording_state.rs:71
 msgid "The track contains a word that is on the ignore list"
 msgstr "Назва доріжки містить слово, яке перебуває у списку ігнорування"
 
-#: src/audio/recording_state.rs:68
+#: src/audio/recording_state.rs:74
 msgid ""
 "The track wasn't played from the beginning, so it can't be fully recorded"
 msgstr ""
-"Відтворення композиції відбувалося не з початку, тому її не може бути"
-" записано повністю"
+"Відтворення композиції відбувалося не з початку, тому її не може бути "
+"записано повністю"
 
-#: src/audio/recording_state.rs:71
-#| msgid "The current song will be recorded until a new song is detected."
+#: src/audio/recording_state.rs:77
 msgid "The track will be recorded until a new track gets played"
 msgstr ""
 "Запис поточної композиції відбуватиметься, доки не буде виявлено перехід до "
 "нової композиції"
 
-#: src/audio/recording_state.rs:73
+#: src/audio/recording_state.rs:79
 msgid "The track has been temporarily recorded"
 msgstr "Композицію було тимчасово записано"
 
-#: src/audio/recording_state.rs:75
+#: src/audio/recording_state.rs:81
+#| msgid "The recorded track has been saved"
+msgid "The maximum recording duration has been reached"
+msgstr "Досягнуто максимальної тривалості запису даних"
+
+#: src/audio/recording_state.rs:84
 msgid ""
 "The track has been discarded as the duration was below the set threshold"
 msgstr ""
 "Композицію відкинуто, оскільки її тривалість була меншою за порогове значення"
 
-#: src/audio/recording_state.rs:77
+#: src/audio/recording_state.rs:86
 msgid "Recording has been cancelled"
 msgstr "Записування було скасовано"
 
@@ -692,9 +672,13 @@ msgstr "Пристрій Google Cast"
 msgid "Unknown Model"
 msgstr "Невідома модель"
 
-#: src/ui/about_dialog.rs:44
+#: src/ui/about_dialog.rs:41
 msgid "translator-credits"
 msgstr "Юрій Чорноіван <yurchor@ukr.net>, 2020"
+
+#: src/ui/about_dialog.rs:42
+msgid "Donate"
+msgstr "Підтримати фінансово"
 
 #: src/ui/add_station_dialog.rs:94
 msgid "Select Station Cover"
@@ -747,11 +731,10 @@ msgstr "Немає прав доступу для фонового відтво�
 #: src/ui/window.rs:223
 msgid "“Run in Background” must be allowed for this app in system settings."
 msgstr ""
-"Для цієї програми має бути увімкнено режим «Запустити у фоновому режимі» у"
-" Системних параметрах."
+"Для цієї програми має бути увімкнено режим «Запустити у фоновому режимі» у "
+"Системних параметрах."
 
 #: src/ui/window.rs:227
-#| msgid "Try Again"
 msgid "Try Anyway"
 msgstr "Спробувати попри все"
 
