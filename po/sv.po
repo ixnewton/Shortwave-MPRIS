@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2025-01-13 04:55+0000\n"
-"PO-Revision-Date: 2025-01-16 18:00+0100\n"
+"POT-Creation-Date: 2025-01-26 21:21+0000\n"
+"PO-Revision-Date: 2025-01-26 22:22+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -377,20 +377,20 @@ msgid "Stations are played without recording"
 msgstr "Stationer spelas upp utan inspelning"
 
 #: data/gtk/preferences_dialog.ui:120
-msgid "M_aximum Duration"
-msgstr "M_aximal längd"
-
-#: data/gtk/preferences_dialog.ui:121
-msgid "Recording ends when the maximum duration is reached"
-msgstr "Inspelning avslutas när maximal längd har uppnåtts"
-
-#: data/gtk/preferences_dialog.ui:136
 msgid "M_inimum Duration"
 msgstr "M_inimal längd"
 
-#: data/gtk/preferences_dialog.ui:137
+#: data/gtk/preferences_dialog.ui:121
 msgid "Tracks shorter than the minimum duration will be ignored"
 msgstr "Spår kortare än minimal längd kommer ignoreras"
+
+#: data/gtk/preferences_dialog.ui:136
+msgid "M_aximum Duration"
+msgstr "M_aximal längd"
+
+#: data/gtk/preferences_dialog.ui:137
+msgid "Recording ends when the maximum duration is reached"
+msgstr "Inspelning avslutas när maximal längd har uppnåtts"
 
 #: data/gtk/search_page.ui:23
 msgid "Search"
@@ -540,7 +540,7 @@ msgid "The recorded track has been saved"
 msgstr "Det inspelade spåret har sparats"
 
 #: data/gtk/track_dialog.ui:137 data/gtk/track_dialog.ui:208
-#: data/gtk/track_row.ui:9 src/audio/player.rs:440
+#: data/gtk/track_row.ui:9 src/audio/player.rs:442
 msgid "Save Track"
 msgstr "Spara spår"
 
@@ -589,61 +589,65 @@ msgstr "Spelar upp ”{}”"
 msgid "Active Playback"
 msgstr "Aktiv uppspelning"
 
-#: src/audio/player.rs:450
+#: src/audio/player.rs:452
 msgid "Don't Record"
 msgstr "Spela inte in"
 
-#: src/audio/recording_state.rs:49 src/audio/recording_state.rs:51
+#: src/audio/recording_state.rs:54 src/audio/recording_state.rs:56
 msgid "Not Recorded"
 msgstr "Inte inspelat"
 
-#: src/audio/recording_state.rs:50
+#: src/audio/recording_state.rs:55
 msgid "Ignored Track"
 msgstr "Ignorerat spår"
 
-#: src/audio/recording_state.rs:53
+#: src/audio/recording_state.rs:58
 msgid "Recording…"
 msgstr "Spelar in…"
 
-#: src/audio/recording_state.rs:54
+#: src/audio/recording_state.rs:59 src/audio/recording_state.rs:60
 msgid "Recorded"
 msgstr "Inspelat"
 
-#: src/audio/recording_state.rs:56
+#: src/audio/recording_state.rs:62
 msgid "Below Threshold"
 msgstr "Under tröskelvärde"
 
-#: src/audio/recording_state.rs:57
+#: src/audio/recording_state.rs:63
 msgid "Cancelled"
 msgstr "Avbrutet"
 
-#: src/audio/recording_state.rs:63
+#: src/audio/recording_state.rs:69
 msgid "Recording is deactivated in preferences"
 msgstr "Inspelning är inaktiverad i inställningarna"
 
-#: src/audio/recording_state.rs:65
+#: src/audio/recording_state.rs:71
 msgid "The track contains a word that is on the ignore list"
 msgstr "Spåret innehåller ett ord i ignoreringslistan"
 
-#: src/audio/recording_state.rs:68
+#: src/audio/recording_state.rs:74
 msgid ""
 "The track wasn't played from the beginning, so it can't be fully recorded"
 msgstr "Spåret spelades inte upp från början, så det kan inte spelas in helt"
 
-#: src/audio/recording_state.rs:71
+#: src/audio/recording_state.rs:77
 msgid "The track will be recorded until a new track gets played"
 msgstr "Spåret kommer spelas in ända till ett nytt spår spelas upp"
 
-#: src/audio/recording_state.rs:73
+#: src/audio/recording_state.rs:79
 msgid "The track has been temporarily recorded"
 msgstr "Spåret har spelats in tillfälligt"
 
-#: src/audio/recording_state.rs:75
+#: src/audio/recording_state.rs:81
+msgid "The maximum recording duration has been reached"
+msgstr "Den maximala inspelningslängden har uppnåtts"
+
+#: src/audio/recording_state.rs:84
 msgid ""
 "The track has been discarded as the duration was below the set threshold"
 msgstr "Spåret har förkastas då längden var kortare än det satta tröskelvärdet"
 
-#: src/audio/recording_state.rs:77
+#: src/audio/recording_state.rs:86
 msgid "Recording has been cancelled"
 msgstr "Inspelning har avbrutits"
 
@@ -655,7 +659,7 @@ msgstr "Google Cast-enhet"
 msgid "Unknown Model"
 msgstr "Okänd modell"
 
-#: src/ui/about_dialog.rs:44
+#: src/ui/about_dialog.rs:41
 msgid "translator-credits"
 msgstr ""
 "Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
@@ -663,6 +667,10 @@ msgstr ""
 "\n"
 "Skicka synpunkter på översättningen till\n"
 "<tp-sv@listor.tp-sv.se>"
+
+#: src/ui/about_dialog.rs:42
+msgid "Donate"
+msgstr "Donera"
 
 #: src/ui/add_station_dialog.rs:94
 msgid "Select Station Cover"
