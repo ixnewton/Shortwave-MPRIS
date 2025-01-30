@@ -40,7 +40,7 @@
         </child>
         <child>
           <object class="AdwPreferencesGroup">
-            <property name="title" translatable="yes">Recording</property>
+            <property name="title" translatable="yes" comments="Translators: This is a noun / preferences group title">Recording</property>
             <property name="description" translatable="yes">Tracks are automatically recognised based on the station stream metadata and can be saved.</property>
             <child>
               <object class="AdwActionRow" id="recording_track_directory_row">
