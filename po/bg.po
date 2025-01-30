@@ -1,37 +1,42 @@
 # Bulgarian translation of shortwave po-file.
-# Copyright (C) 2024 shortwave's COPYRIGHT HOLDER
+# Copyright (C) 2024, 2025 shortwave's COPYRIGHT HOLDER
 # This file is distributed under the same license as the shortwave package.
-# twlvnn kraftwerk <kraft_werk@tutanota.com>, 2024.
+# twlvnn kraftwerk <kraft_werk@tutanota.com>, 2024, 2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: shortwave main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2024-11-01 18:15+0000\n"
-"PO-Revision-Date: 2024-11-14 20:24+0100\n"
+"POT-Creation-Date: 2025-01-26 21:21+0000\n"
+"PO-Revision-Date: 2025-01-30 21:19+0100\n"
 "Last-Translator: twlvnn kraftwerk <kraft_werk@tutanota.com>\n"
 "Language-Team: Bulgarian <dict-notifications@fsa-bg.org>\n"
 "Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"X-Generator: Gtranslator 47.0\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.5\n"
 
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:3
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
 msgid "@NAME@"
 msgstr "@NAME@"
 
-#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: data/de.haeckerfelix.Shortwave.desktop.in.in:12
-msgid "Gradio;Radio;Stream;Wave;"
-msgstr "радио;предаване;поток;вълни;gradio;radio;stream;wave;"
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:4
+msgid "Internet Radio Player"
+msgstr "Интернет радио плеър"
 
 #. General
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:5
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:10
 msgid "Listen to internet radio"
 msgstr "Радио по Интернет"
+
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:14
+msgid "Gradio;Radio;Stream;Wave;"
+msgstr "радио;предаване;поток;вълни;gradio;radio;stream;wave;"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:12
 msgid ""
@@ -58,7 +63,7 @@ msgstr "Лесно търсене и откриване на нови радио
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:19
 msgid ""
-"Automatic recognition of songs, with the possibility to save them "
+"Automatic recognition of tracks, with the possibility to save them "
 "individually"
 msgstr ""
 "Автоматично разпознаване на песните с възможност да ги запазите индивидуално"
@@ -113,7 +118,7 @@ msgstr "Адрес на предаването"
 msgid "Add Station"
 msgstr "Добавяне на станция"
 
-#: data/gtk/device_dialog.ui:7 data/gtk/player_view.ui:124
+#: data/gtk/device_dialog.ui:7 data/gtk/player_view.ui:132
 msgid "Connect Device"
 msgstr "Свързване на устройство"
 
@@ -137,7 +142,7 @@ msgstr "Липсва устройство за Google Cast"
 msgid "Disconnect From Device"
 msgstr "Прекъсване на връзката към устройство"
 
-#: data/gtk/help_overlay.ui:11 data/gtk/settings_dialog.ui:9
+#: data/gtk/help_overlay.ui:11 data/gtk/preferences_dialog.ui:9
 msgid "General"
 msgstr "Общи"
 
@@ -166,7 +171,7 @@ msgctxt "shortcut window"
 msgid "Quit the application"
 msgstr "Спиране на програмата"
 
-#: data/gtk/help_overlay.ui:46
+#: data/gtk/help_overlay.ui:46 data/gtk/preferences_dialog.ui:12
 msgid "Playback"
 msgstr "Възпроизвеждане"
 
@@ -174,6 +179,25 @@ msgstr "Възпроизвеждане"
 msgctxt "shortcut window"
 msgid "Toggle playback"
 msgstr "Превключване на възпроизвеждането"
+
+#: data/gtk/help_overlay.ui:57 data/gtk/volume_control.ui:21
+msgid "Volume"
+msgstr "Сила на звука"
+
+#: data/gtk/help_overlay.ui:60
+msgctxt "shortcut window"
+msgid "Toggle mute"
+msgstr "Превключване на заглушаването"
+
+#: data/gtk/help_overlay.ui:66
+msgctxt "shortcut window"
+msgid "Increase volume"
+msgstr "Увеличаване на звука"
+
+#: data/gtk/help_overlay.ui:72
+msgctxt "shortcut window"
+msgid "Decrease volume"
+msgstr "Намаляване на звука"
 
 #: data/gtk/library_page.ui:4
 msgid "Shortwave"
@@ -239,22 +263,26 @@ msgstr "_Клавишни комбинации"
 msgid "_About Shortwave"
 msgstr "_Относно „Shortwave“"
 
-#: data/gtk/library_page.ui:182
+#: data/gtk/library_page.ui:178
+msgid "_Quit"
+msgstr "_Спиране на програмата"
+
+#: data/gtk/library_page.ui:186
 msgid "Add _Local Station"
 msgstr "Добавяне на _локална станция"
 
 #: data/gtk/player_gadget.ui:40 data/gtk/player_toolbar.ui:92
-#: data/gtk/player_view.ui:148 data/gtk/station_row.ui:86
+#: data/gtk/player_view.ui:156 data/gtk/station_row.ui:86
 msgid "Play"
 msgstr "Изпълнение"
 
 #: data/gtk/player_gadget.ui:55 data/gtk/player_toolbar.ui:106
-#: data/gtk/player_view.ui:162
+#: data/gtk/player_view.ui:170
 msgid "Stop"
 msgstr "Спиране"
 
 #: data/gtk/player_gadget.ui:71 data/gtk/player_toolbar.ui:121
-#: data/gtk/player_view.ui:177
+#: data/gtk/player_view.ui:185
 msgid "Buffering…"
 msgstr "Буфериране…"
 
@@ -263,7 +291,7 @@ msgid "SHORTWAVE INTERNET RADIO"
 msgstr "ИНТЕРНЕТ РАДИО SHORTWAVE"
 
 #: data/gtk/player_gadget.ui:140 data/gtk/player_toolbar.ui:29
-#: data/gtk/player_view.ui:58
+#: data/gtk/player_view.ui:58 src/app.rs:257
 msgid "No Playback"
 msgstr "Не е избрана станция"
 
@@ -279,23 +307,94 @@ msgstr "Възстановяване на прозорец"
 msgid "Enable Gadget Mode"
 msgstr "Включване на мини плеъра"
 
-#: data/gtk/player_view.ui:207
+#: data/gtk/player_view.ui:215
 msgid "Show Station Details"
 msgstr "Подробности за станцията"
 
-#: data/gtk/player_view.ui:258
-msgid "No Songs"
-msgstr "Няма намерени песни"
+#: data/gtk/player_view.ui:266
+msgid "No Tracks"
+msgstr "Няма песни"
 
-#: data/gtk/player_view.ui:269
-msgid ""
-"Songs that have been identified and recorded using the stream metadata will "
-"appear here."
-msgstr "Тук са записаните и идентифицираните по метаданните на потока песни."
+#: data/gtk/player_view.ui:277
+msgid "Played tracks will appear here"
+msgstr "Изпълняваните песни ще се появят тук"
 
-#: data/gtk/player_view.ui:303 data/gtk/recording_indicator.ui:38
+#: data/gtk/player_view.ui:311
 msgid "An error occurred"
 msgstr "Възникна грешка"
+
+#: data/gtk/preferences_dialog.ui:15
+msgid "_Background Playback"
+msgstr "_Възпроизвеждане във фона"
+
+#: data/gtk/preferences_dialog.ui:16
+msgid "Playback continues when window is closed"
+msgstr "Възпроизвеждането продължава, когато прозорецът е затворен"
+
+#: data/gtk/preferences_dialog.ui:28
+msgid "_Notifications"
+msgstr "_Известия"
+
+#: data/gtk/preferences_dialog.ui:29
+msgid "Show desktop notifications when a new track gets played"
+msgstr "Извеждане на известие на работния плот при пускане на нова песен"
+
+#: data/gtk/preferences_dialog.ui:43
+msgid "Recording"
+msgstr "Записване"
+
+#: data/gtk/preferences_dialog.ui:44
+msgid ""
+"Tracks are automatically recognised based on the station stream metadata and "
+"can be saved."
+msgstr ""
+"Песните се разпознават автоматично въз основа на метаданните на потока от "
+"станциите и могат да бъдат запазени."
+
+#: data/gtk/preferences_dialog.ui:47
+msgid "Track _Directory"
+msgstr "_Папка за песни"
+
+#: data/gtk/preferences_dialog.ui:69
+msgid "Save _All Tracks"
+msgstr "Запазване на _всички песни"
+
+#: data/gtk/preferences_dialog.ui:70
+msgid "All recorded tracks are automatically saved in the track directory"
+msgstr "Всички записани песни се запазват автоматично в папката с песни"
+
+#: data/gtk/preferences_dialog.ui:84
+msgid "Decide for Each _Track"
+msgstr "Решаване за всяка _песен"
+
+#: data/gtk/preferences_dialog.ui:85
+msgid "Tracks are temporarily recorded and can be saved if desired"
+msgstr "Песните се записват временно и може да се запазят"
+
+#: data/gtk/preferences_dialog.ui:100
+msgid "Record N_othing"
+msgstr "_Без записване"
+
+#: data/gtk/preferences_dialog.ui:101
+msgid "Stations are played without recording"
+msgstr "Станциите се изпълняват без записване"
+
+#: data/gtk/preferences_dialog.ui:120
+msgid "M_inimum Duration"
+msgstr "_Минимална продължителност"
+
+#: data/gtk/preferences_dialog.ui:121
+msgid "Tracks shorter than the minimum duration will be ignored"
+msgstr ""
+"Песните, които са по-кратки от минималната продължителност, ще се прескачат"
+
+#: data/gtk/preferences_dialog.ui:136
+msgid "M_aximum Duration"
+msgstr "_Максимум продължителност"
+
+#: data/gtk/preferences_dialog.ui:137
+msgid "Recording ends when the maximum duration is reached"
+msgstr "Записът приключва при достигане на максималната продължителност"
 
 #: data/gtk/search_page.ui:23
 msgid "Search"
@@ -319,12 +418,12 @@ msgstr "Откриване на нови станции"
 
 #: data/gtk/search_page.ui:135
 msgid ""
-"The displayed information is provided by <a href=\"https://www.radio-browser."
-"info/\">radio-browser.info</a>. \n"
+"The displayed information is provided by <a href=\"https://www.radio-"
+"browser.info/\">radio-browser.info</a>. \n"
 "Shortwave has no influence on the listed stations."
 msgstr ""
-"Показаната информация се предоставя от <a href='https://www.radio-browser."
-"info/'>radio-browser.info</a>.\n"
+"Показаната информация се предоставя от <a href='https://www.radio-"
+"browser.info/'>radio-browser.info</a>.\n"
 "„Shortwave“ не влияе върху изброените станции."
 
 #: data/gtk/search_page.ui:201
@@ -355,118 +454,208 @@ msgstr "Данните за станцията не може да се полу�
 msgid "Try Again"
 msgstr "Пробване отново"
 
-#: data/gtk/settings_dialog.ui:12
-msgid "Features"
-msgstr "Функции"
-
-#: data/gtk/settings_dialog.ui:15
-msgid "_Notifications"
-msgstr "_Известия"
-
-#: data/gtk/settings_dialog.ui:17
-msgid "Show desktop notifications when a new song gets played"
-msgstr "Извеждане на известие на работния плот при пускане на нова песен"
-
-#: data/gtk/song_row.ui:16
-msgid "Save recorded song"
-msgstr "Запазване на записаната песен"
-
-#: data/gtk/station_dialog.ui:73
+#: data/gtk/station_dialog.ui:75
 msgid "_Play"
 msgstr "_Изпълнение"
 
-#: data/gtk/station_dialog.ui:89
+#: data/gtk/station_dialog.ui:91
 msgid "_Add to Library"
 msgstr "_Добавяне в библиотеката"
 
-#: data/gtk/station_dialog.ui:106
+#: data/gtk/station_dialog.ui:108
 msgid "_Remove From Library"
 msgstr "_Премахване от библиотеката"
 
-#: data/gtk/station_dialog.ui:125 data/gtk/station_row.ui:57
+#: data/gtk/station_dialog.ui:127 data/gtk/station_row.ui:57
 msgid "Local Station"
 msgstr "Локална станция"
 
-#: data/gtk/station_dialog.ui:126
+#: data/gtk/station_dialog.ui:128
 msgid ""
 "This station exists only in your library, and is not part of the public "
 "database"
 msgstr ""
 "Тази станция съществува само във вашата библиотека и не е част от публичната "
-"база от данни със станции."
+"база от данни със станции"
 
-#: data/gtk/station_dialog.ui:140 data/gtk/station_row.ui:69
+#: data/gtk/station_dialog.ui:142 data/gtk/station_row.ui:69
 msgid "Orphaned Station"
 msgstr "Изоставена станция"
 
-#: data/gtk/station_dialog.ui:141
+#: data/gtk/station_dialog.ui:143
 msgid ""
 "The information could not be updated, probably this station was removed from "
 "the public database"
 msgstr ""
 "Информацията не може да бъде обновена, вероятно тази станция е премахната от "
-"публичната база от данни за станции."
+"публичната база от данни за станции"
 
-#: data/gtk/station_dialog.ui:152
+#: data/gtk/station_dialog.ui:154
 msgid "Information"
 msgstr "Информация"
 
-#: data/gtk/station_dialog.ui:155
+#: data/gtk/station_dialog.ui:157
 msgid "Language"
 msgstr "Език"
 
-#: data/gtk/station_dialog.ui:165
+#: data/gtk/station_dialog.ui:167
 msgid "Tags"
 msgstr "Етикети"
 
-#: data/gtk/station_dialog.ui:177
+#: data/gtk/station_dialog.ui:179
 msgid "Location"
 msgstr "Местоположение"
 
-#: data/gtk/station_dialog.ui:181
+#: data/gtk/station_dialog.ui:183
 msgid "Country"
 msgstr "Държава"
 
-#: data/gtk/station_dialog.ui:191
+#: data/gtk/station_dialog.ui:193
 msgid "State"
 msgstr "Област"
 
-#: data/gtk/station_dialog.ui:225
+#: data/gtk/station_dialog.ui:227
 msgid "Audio"
 msgstr "Звук"
 
-#: data/gtk/station_dialog.ui:228
+#: data/gtk/station_dialog.ui:230
 msgid "Bitrate"
 msgstr "Побитова скорост"
 
-#: data/gtk/station_dialog.ui:238
+#: data/gtk/station_dialog.ui:240
 msgid "Codec"
 msgstr "Кодер"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:248
+#: data/gtk/station_dialog.ui:250
 msgid "Stream"
 msgstr "Поток"
 
-#: data/gtk/station_dialog.ui:257
+#: data/gtk/station_dialog.ui:256
 msgid "Copy"
 msgstr "Копиране"
+
+#: data/gtk/track_dialog.ui:74
+msgid "Edit"
+msgstr "Редактиране"
+
+#: data/gtk/track_dialog.ui:121
+msgid "The recorded track has been saved"
+msgstr "Записаната песен е запазена"
+
+#: data/gtk/track_dialog.ui:137 data/gtk/track_dialog.ui:208
+#: data/gtk/track_row.ui:9 src/audio/player.rs:442
+msgid "Save Track"
+msgstr "Запазване на песента"
+
+#: data/gtk/track_dialog.ui:148
+msgid "Play Track"
+msgstr "Изпълняване"
+
+#: data/gtk/track_dialog.ui:159
+msgid "Cancel Recording"
+msgstr "Прекратяване на записването"
+
+#: data/gtk/track_dialog.ui:175
+msgid "Station"
+msgstr "Станция"
+
+#: data/gtk/track_dialog.ui:209
+msgid "Save this track when recording is complete"
+msgstr "Запазване на песента след приключване на записа"
+
+#: data/gtk/track_dialog.ui:223
+msgid "Recording behaviour can be changed in <a href=\"\">preferences</a>"
+msgstr ""
+"Поведението на записването може да бъде променено в <a href=''>настройки</a>"
+
+#: data/gtk/track_row.ui:20
+msgid "Saved"
+msgstr "Запазено"
 
 #: data/gtk/volume_control.ui:9
 msgid "Toggle Mute"
 msgstr "Заглушаване"
 
-#: data/gtk/volume_control.ui:21
-msgid "Volume"
-msgstr "Сила на звука"
+#: src/app.rs:85
+msgid "Track no longer available"
+msgstr "Песента вече не е налична"
 
-#: src/audio/player.rs:220
+#: src/app.rs:108 src/app.rs:130
+msgid "This track is currently not recorded"
+msgstr "Тази песен в момента не е записана"
+
+#: src/app.rs:261
+msgid "Playing “{}”"
+msgstr "В момента слушате „{}“"
+
+#: src/app.rs:361
 msgid "Active Playback"
 msgstr "Възпроизвеждане"
 
-#: src/audio/player.rs:382
-msgid "Station cannot be streamed. URL is not valid."
-msgstr "Станцията не може да се предава. Адресът е неправилен."
+#: src/audio/player.rs:452
+msgid "Don't Record"
+msgstr "Без записване"
+
+#: src/audio/recording_state.rs:54 src/audio/recording_state.rs:56
+msgid "Not Recorded"
+msgstr "Няма запис"
+
+#: src/audio/recording_state.rs:55
+msgid "Ignored Track"
+msgstr "Нежелано"
+
+#: src/audio/recording_state.rs:58
+msgid "Recording…"
+msgstr "Записване…"
+
+#: src/audio/recording_state.rs:59 src/audio/recording_state.rs:60
+msgid "Recorded"
+msgstr "Записано"
+
+#: src/audio/recording_state.rs:62
+msgid "Below Threshold"
+msgstr "Под прага"
+
+#: src/audio/recording_state.rs:63
+msgid "Cancelled"
+msgstr "Отменено"
+
+#: src/audio/recording_state.rs:69
+msgid "Recording is deactivated in preferences"
+msgstr "Записването е изключено в настройките"
+
+#: src/audio/recording_state.rs:71
+msgid "The track contains a word that is on the ignore list"
+msgstr "Песента съдържа дума, която е в списъка с нежеланите"
+
+#: src/audio/recording_state.rs:74
+msgid ""
+"The track wasn't played from the beginning, so it can't be fully recorded"
+msgstr ""
+"Песента не е пусната от началото, така че не може да бъде записана изцяло"
+
+#: src/audio/recording_state.rs:77
+msgid "The track will be recorded until a new track gets played"
+msgstr "Песента ще се записва докато не се засече нова"
+
+#: src/audio/recording_state.rs:79
+msgid "The track has been temporarily recorded"
+msgstr "Песента беше временно записана"
+
+#: src/audio/recording_state.rs:81
+msgid "The maximum recording duration has been reached"
+msgstr "Максималната продължителност на запис е надвишена"
+
+#: src/audio/recording_state.rs:84
+msgid ""
+"The track has been discarded as the duration was below the set threshold"
+msgstr ""
+"Песента е отхвърлена, тъй като продължителността ѝ е под зададения праг"
+
+#: src/audio/recording_state.rs:86
+msgid "Recording has been cancelled"
+msgstr "Записването е прекратено"
 
 #: src/device/device_discovery.rs:83
 msgid "Google Cast Device"
@@ -476,11 +665,11 @@ msgstr "Устройство за Google Cast"
 msgid "Unknown Model"
 msgstr "Непознат модел"
 
-#: src/ui/about_dialog.rs:44
+#: src/ui/about_dialog.rs:41
 msgid "translator-credits"
 msgstr ""
-"Twlvnn Kraftwerk &lt;<a href='mailto:kraft_werk@tutanota."
-"com'>kraft_werk@tutanota.com</a>&gt;\n"
+"Twlvnn Kraftwerk &lt;<a "
+"href='mailto:kraft_werk@tutanota.com'>kraft_werk@tutanota.com</a>&gt;\n"
 "\n"
 "\n"
 "Проектът за превод на GNOME има нужда от подкрепа.\n"
@@ -489,11 +678,15 @@ msgstr ""
 "Докладвайте за грешки в превода в <a href='https://fsa-bg.org/project/gtp/"
 "newticket'>съответния раздел</a>."
 
+#: src/ui/about_dialog.rs:42
+msgid "Donate"
+msgstr "Даряване"
+
 #: src/ui/add_station_dialog.rs:94
 msgid "Select Station Cover"
 msgstr "Избор на изображение на станцията"
 
-#: src/ui/display_error.rs:46
+#: src/ui/display_error.rs:50
 msgid "Show Details"
 msgstr "Подробности за станцията"
 
@@ -501,31 +694,70 @@ msgstr "Подробности за станцията"
 msgid "Welcome to {}"
 msgstr "Добре дошли в {}"
 
-#: src/ui/recording_indicator.rs:111
-msgid "Recording in Progress"
-msgstr "Тече запис"
+#: src/ui/preferences_dialog.rs:139
+msgid "Select Save Directory"
+msgstr "Избиране на папка за запазване"
 
-#: src/ui/recording_indicator.rs:112
-msgid "Ignored"
-msgstr "Нежелано"
+#: src/ui/preferences_dialog.rs:140
+msgid "_Select"
+msgstr "_Избиране"
 
-#: src/ui/recording_indicator.rs:113
-msgid "No Recording"
-msgstr "Няма запис"
+#: src/ui/preferences_dialog.rs:163
+msgid "{} min"
+msgid_plural "{} min"
+msgstr[0] "{} мин"
+msgstr[1] "{} мин"
 
-#: src/ui/recording_indicator.rs:120
-msgid "The current song will be recorded until a new song is detected."
-msgstr "Текущата песен ще се записва докато не се засече нова."
+#: src/ui/preferences_dialog.rs:172
+msgid "{} sec"
+msgid_plural "{} sec"
+msgstr[0] "{} сек"
+msgstr[1] "{} сек"
 
-#: src/ui/recording_indicator.rs:123
-msgid "No recording because the song title contains a word on the ignore list."
-msgstr "Не се записва, защото в заглавието на песента има от нежеланите думи."
-
-#: src/ui/recording_indicator.rs:126
-msgid ""
-"The current song cannot be fully recorded. The beginning has been missed."
-msgstr "Началото на текущата песен е пропуснато и тя няма да се запише изцяло."
-
-#: src/ui/station_dialog.rs:203
+#: src/ui/station_dialog.rs:205
 msgid "{} kbit/s"
 msgstr "{} kbit/s"
+
+#: src/ui/station_dialog.rs:290
+msgid "Copied"
+msgstr "Копирано"
+
+#: src/ui/window.rs:221
+msgid "No Permission for Background Playback"
+msgstr "Липсват права̀ за възпроизвеждане във фона"
+
+#: src/ui/window.rs:223
+msgid "“Run in Background” must be allowed for this app in system settings."
+msgstr ""
+"Работата във „Фонов режим“ трябва да бъде позволена за тази програма в "
+"системните настройки."
+
+#: src/ui/window.rs:227
+msgid "Try Anyway"
+msgstr "Пробване въпреки това"
+
+#: src/ui/window.rs:228
+msgid "Disable Background Playback"
+msgstr "Изключване на възпроизвеждането във фона"
+
+#: src/utils.rs:51
+msgid "{} hour"
+msgid_plural "{} hours"
+msgstr[0] "{} час"
+msgstr[1] "{} часа"
+
+#: src/utils.rs:57
+msgid "{} minute"
+msgid_plural "{} minutes"
+msgstr[0] "{} минута"
+msgstr[1] "{} минути"
+
+#: src/utils.rs:63
+msgid "{} second"
+msgid_plural "{} seconds"
+msgstr[0] "{} секунда"
+msgstr[1] "{} секунди"
+
+#: src/utils.rs:75
+msgid "0 seconds"
+msgstr "0 секунди"
