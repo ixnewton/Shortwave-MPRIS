@@ -32,6 +32,7 @@ impl MprisServer {
     pub async fn start() -> Result<Self> {
         let player = Player::builder(config::APP_ID)
             .desktop_entry(config::APP_ID)
+            .identity(config::NAME)
             .can_play(true)
             .can_pause(false)
             .can_seek(false)
