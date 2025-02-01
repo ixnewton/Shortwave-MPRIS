@@ -34,7 +34,11 @@ impl MprisServer {
             .desktop_entry(config::APP_ID)
             .identity(config::NAME)
             .can_play(true)
-            .can_pause(false)
+            // This is not true, but MPRIS has no concept of play/stop
+            // for live streams, so we only can use play/pause here
+            .can_pause(true)
+            .can_go_next(false)
+            .can_go_previous(false)
             .can_seek(false)
             .can_set_fullscreen(false)
             .can_raise(true)
