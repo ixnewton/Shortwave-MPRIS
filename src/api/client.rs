@@ -123,7 +123,7 @@ pub async fn lookup_rb_server() -> Option<String> {
         // Check if the server is online / returns data
         // If not, try using the next one in the list
         debug!("Trying to connect to {} ({})", hostname, ip.to_string());
-        match server_stats(&hostname).await {
+        match server_stats(hostname).await {
             Ok(stats) => {
                 debug!(
                     "Successfully connected to {} ({}), server version {}, {} stations",

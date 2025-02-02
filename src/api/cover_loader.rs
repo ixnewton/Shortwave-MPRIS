@@ -14,11 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-use async_compat::CompatExt;
+use std::sync::LazyLock;
 use std::time::{Duration, SystemTime};
 
 use anyhow::{Error, Result};
 use async_channel::Sender;
+use async_compat::CompatExt;
 use futures_util::StreamExt;
 use gdk::RGBA;
 use glycin::Loader;
@@ -28,6 +29,13 @@ use gtk::prelude::TextureExt;
 use gtk::prelude::*;
 use gtk::{gdk, gio, glib, gsk};
 use url::Url;
+
+static HTTP_CLIENT: LazyLock<reqwest::Client> = LazyLock::new(|| {
+    reqwest::ClientBuilder::new()
+        .timeout(Duration::from_secs(5))
+        .build()
+        .unwrap()
+});
 
 use crate::{config, path};
 #[derive(Debug, Clone)]
@@ -78,7 +86,7 @@ impl CoverRequest {
     }
 
     async fn cover_bytes(&self) -> Result<(gdk::Texture, Vec<u8>)> {
-        self.download_tmp_file().await?;
+        self.download_tmp_file().compat().await?;
 
         let loader = Loader::new(self.tmp_file.clone());
         let image = loader.load().await?;
@@ -101,8 +109,9 @@ impl CoverRequest {
     }
 
     async fn download_tmp_file(&self) -> Result<()> {
-        let response = reqwest::get(self.favicon_url.as_str()).compat().await?;
-        let body_bytes = response.bytes().compat().await?;
+        let request = HTTP_CLIENT.get(self.favicon_url.as_str()).build()?;
+        let response = HTTP_CLIENT.execute(request).await?;
+        let body_bytes = response.bytes().await?;
 
         // We have to write the data to the disk in order to be able to load them using Glycin
         // TODO: Load bytes directly
