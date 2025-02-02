@@ -121,6 +121,12 @@ impl MprisServer {
             });
         });
 
+        server.player.connect_pause(|_| {
+            glib::spawn_future_local(async move {
+                SwApplication::default().player().stop_playback().await;
+            });
+        });
+
         server.player.connect_stop(|_| {
             glib::spawn_future_local(async move {
                 SwApplication::default().player().stop_playback().await;
@@ -205,7 +211,7 @@ impl MprisServer {
         }
 
         let playback_status = match player.state() {
-            SwPlaybackState::Stopped => PlaybackStatus::Stopped,
+            SwPlaybackState::Stopped => PlaybackStatus::Paused, // Map Stopped to Paused for MPRIS
             SwPlaybackState::Playing => PlaybackStatus::Playing,
             SwPlaybackState::Loading => PlaybackStatus::Playing,
             SwPlaybackState::Failure => PlaybackStatus::Stopped,
