@@ -320,7 +320,6 @@ impl SwApplication {
             config::VERSION,
             config::PROFILE
         );
-        info!("Isahc version: {}", isahc::version());
 
         // Create new GObject and downcast it into SwApplication
         let app = glib::Object::builder::<SwApplication>()

@@ -32,7 +32,7 @@ pub enum Error {
     Io(#[from] Rc<std::io::Error>),
 
     #[error("Network error: {0}")]
-    Network(#[from] isahc::Error),
+    Network(#[from] Rc<reqwest::Error>),
 
     #[error("Unsupported url scheme")]
     UnsupportedUrlScheme,
