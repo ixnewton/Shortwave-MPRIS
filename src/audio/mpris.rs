@@ -37,8 +37,8 @@ impl MprisServer {
             // This is not true, but MPRIS has no concept of play/stop
             // for live streams, so we only can use play/pause here
             .can_pause(true)
-            .can_go_next(false)
-            .can_go_previous(false)
+            .can_go_next(true)
+            .can_go_previous(true)
             .can_seek(false)
             .can_set_fullscreen(false)
             .can_raise(true)
@@ -137,6 +137,29 @@ impl MprisServer {
 
         server.player.connect_quit(|_| {
             SwApplication::default().quit();
+        });
+
+        // Add handlers for next/previous track in favorites
+        server.player.connect_next(|_| {
+            glib::spawn_future_local(async move {
+                let library = SwApplication::default().library();
+                let player = SwApplication::default().player();
+                if let Some(next_station) = library.get_next_favorite() {
+                    player.set_station(next_station).await;
+                    player.start_playback().await;
+                }
+            });
+        });
+
+        server.player.connect_previous(|_| {
+            glib::spawn_future_local(async move {
+                let library = SwApplication::default().library();
+                let player = SwApplication::default().player();
+                if let Some(prev_station) = library.get_previous_favorite() {
+                    player.set_station(prev_station).await;
+                    player.start_playback().await;
+                }
+            });
         });
 
         glib::spawn_future_local(server.player.run());

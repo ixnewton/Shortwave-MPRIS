@@ -27,6 +27,7 @@ use super::*;
 use crate::api;
 use crate::api::StationMetadata;
 use crate::api::{client, SwStation, SwStationModel};
+use crate::app::SwApplication;
 
 mod imp {
     use super::*;
@@ -196,6 +197,72 @@ impl SwLibrary {
         }
 
         self.notify_status();
+    }
+
+    pub fn get_next_favorite(&self) -> Option<SwStation> {
+        let model = self.model();
+        let current_station = SwApplication::default().player().station();
+        
+        if model.n_items() == 0 {
+            return None;
+        }
+
+        // If no current station, return the first one
+        if current_station.is_none() {
+            return model.item(0).map(|obj| obj.downcast::<SwStation>().ok()).flatten();
+        }
+
+        let current_station = current_station.unwrap();
+        
+        // Find current station index
+        for i in 0..model.n_items() {
+            if let Some(obj) = model.item(i) {
+                if let Ok(station) = obj.downcast::<SwStation>() {
+                    if station.uuid() == current_station.uuid() {
+                        // Return next station, or wrap around to first
+                        let next_idx = if i + 1 < model.n_items() { i + 1 } else { 0 };
+                        return model.item(next_idx).map(|obj| obj.downcast::<SwStation>().ok()).flatten();
+                    }
+                }
+            }
+        }
+        
+        // Current station not found in favorites, return first
+        model.item(0).map(|obj| obj.downcast::<SwStation>().ok()).flatten()
+    }
+
+    pub fn get_previous_favorite(&self) -> Option<SwStation> {
+        let model = self.model();
+        let current_station = SwApplication::default().player().station();
+        
+        if model.n_items() == 0 {
+            return None;
+        }
+
+        // If no current station, return the last one
+        if current_station.is_none() {
+            let last_idx = model.n_items() - 1;
+            return model.item(last_idx).map(|obj| obj.downcast::<SwStation>().ok()).flatten();
+        }
+
+        let current_station = current_station.unwrap();
+        
+        // Find current station index
+        for i in 0..model.n_items() {
+            if let Some(obj) = model.item(i) {
+                if let Ok(station) = obj.downcast::<SwStation>() {
+                    if station.uuid() == current_station.uuid() {
+                        // Return previous station, or wrap around to last
+                        let prev_idx = if i > 0 { i - 1 } else { model.n_items() - 1 };
+                        return model.item(prev_idx).map(|obj| obj.downcast::<SwStation>().ok()).flatten();
+                    }
+                }
+            }
+        }
+        
+        // Current station not found in favorites, return last
+        let last_idx = model.n_items() - 1;
+        model.item(last_idx).map(|obj| obj.downcast::<SwStation>().ok()).flatten()
     }
 }
 
