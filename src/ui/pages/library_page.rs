@@ -41,7 +41,7 @@ mod imp {
         #[template_child]
         stack: TemplateChild<gtk::Stack>,
         #[template_child]
-        gridview: TemplateChild<gtk::GridView>,
+        pub(super) gridview: TemplateChild<gtk::GridView>,
 
         #[property(get, set, builder(SwStationSorting::default()))]
         sorting: Cell<SwStationSorting>,
@@ -143,4 +143,13 @@ mod imp {
 glib::wrapper! {
     pub struct SwLibraryPage(ObjectSubclass<imp::SwLibraryPage>)
         @extends gtk::Widget, adw::NavigationPage;
+}
+
+impl SwLibraryPage {
+    pub fn sorted_model(&self) -> Option<gtk::SortListModel> {
+        let selection_model = self.imp().gridview.model()?;
+        let no_selection = selection_model.downcast::<gtk::NoSelection>().ok()?;
+        let model = no_selection.model()?;
+        model.downcast::<gtk::SortListModel>().ok()
+    }
 }

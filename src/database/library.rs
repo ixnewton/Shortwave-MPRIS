@@ -200,7 +200,12 @@ impl SwLibrary {
     }
 
     pub fn get_next_favorite(&self) -> Option<SwStation> {
-        let model = self.model();
+        // Get the sorted model from the library page
+        let window = SwApplication::default().active_window()?;
+        let window = window.downcast::<crate::ui::SwApplicationWindow>().ok()?;
+        let library_page = window.library_page();
+        let model = library_page.sorted_model()?;
+        
         let current_station = SwApplication::default().player().station();
         
         if model.n_items() == 0 {
@@ -232,7 +237,12 @@ impl SwLibrary {
     }
 
     pub fn get_previous_favorite(&self) -> Option<SwStation> {
-        let model = self.model();
+        // Get the sorted model from the library page
+        let window = SwApplication::default().active_window()?;
+        let window = window.downcast::<crate::ui::SwApplicationWindow>().ok()?;
+        let library_page = window.library_page();
+        let model = library_page.sorted_model()?;
+        
         let current_station = SwApplication::default().player().station();
         
         if model.n_items() == 0 {

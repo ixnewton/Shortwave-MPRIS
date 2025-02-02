@@ -24,10 +24,10 @@ use crate::audio::SwPlaybackState;
 use crate::config;
 use crate::i18n::i18n;
 use crate::settings::{settings_manager, Key};
-use crate::ui::pages::*;
+use crate::ui::pages::{SwLibraryPage, SwSearchPage};
 use crate::ui::player::{SwPlayerGadget, SwPlayerToolbar, SwPlayerView};
 use crate::ui::{
-    about_dialog, DisplayError, SwAddStationDialog, SwDeviceDialog, SwPreferencesDialog,
+    about_dialog, SwAddStationDialog, SwDeviceDialog, SwPreferencesDialog,
     SwStationDialog, ToastWindow,
 };
 use crate::utils;
@@ -39,16 +39,16 @@ mod imp {
     #[template(resource = "/de/haeckerfelix/Shortwave/gtk/window.ui")]
     pub struct SwApplicationWindow {
         #[template_child]
-        library_page: TemplateChild<SwLibraryPage>,
+        pub(super) library_page: TemplateChild<SwLibraryPage>,
         #[template_child]
-        search_page: TemplateChild<SwSearchPage>,
+        pub(super) search_page: TemplateChild<SwSearchPage>,
 
         #[template_child]
-        player_gadget: TemplateChild<SwPlayerGadget>,
+        pub(super) player_gadget: TemplateChild<SwPlayerGadget>,
         #[template_child]
-        player_toolbar: TemplateChild<SwPlayerToolbar>,
+        pub(super) player_toolbar: TemplateChild<SwPlayerToolbar>,
         #[template_child]
-        player_view: TemplateChild<SwPlayerView>,
+        pub(super) player_view: TemplateChild<SwPlayerView>,
         #[template_child]
         pub toast_overlay: TemplateChild<adw::ToastOverlay>,
     }
@@ -253,52 +253,35 @@ glib::wrapper! {
 
 impl SwApplicationWindow {
     pub fn new() -> Self {
-        glib::Object::new::<Self>()
+        glib::Object::builder().build()
     }
 
     pub fn show_notification(&self, text: &str) {
-        let toast = adw::Toast::new(text);
-        self.imp().toast_overlay.add_toast(toast);
+        self.imp().toast_overlay.add_toast(adw::Toast::new(text));
     }
 
     pub fn enable_gadget_player(&self, enable: bool) {
-        debug!("Enable gadget player: {:?}", enable);
-
-        if self.is_maximized() && enable {
-            self.unmaximize();
-            return;
+        if enable {
+            self.imp().player_gadget.set_visible(true);
+            self.imp().player_toolbar.set_visible(false);
+        } else {
+            self.imp().player_gadget.set_visible(false);
+            self.imp().player_toolbar.set_visible(true);
         }
-
-        let mut previous_width = settings_manager::integer(Key::WindowPreviousWidth) as f64;
-        let mut previous_height = settings_manager::integer(Key::WindowPreviousHeight) as f64;
-
-        // Save current window size as previous size, so you can restore it
-        // if you switch between gadget player / normal window mode.
-        let current_width = self.default_size().0;
-        let current_height = self.default_size().1;
-
-        settings_manager::set_integer(Key::WindowPreviousWidth, current_width);
-        settings_manager::set_integer(Key::WindowPreviousHeight, current_height);
-
-        if enable && previous_height > 175.0 {
-            previous_width = 450.0;
-            previous_height = 105.0;
-        } else if !enable && previous_height < 175.0 {
-            previous_width = 950.0;
-            previous_height = 650.0;
-        }
-
-        self.set_visible(false);
-        self.set_default_height(previous_height as i32);
-        self.set_default_width(previous_width as i32);
-        self.set_visible(true);
     }
 
     pub fn show_uri(&self, uri: &str) {
-        let launcher = gtk::UriLauncher::new(uri);
-        launcher.launch(Some(self), gio::Cancellable::NONE, |res| {
-            res.handle_error("Unable to launch URI");
+        let window = self.clone();
+        let window_clone = window.clone();
+        gtk::UriLauncher::new(uri).launch(Some(&window), None::<&gio::Cancellable>, move |res| {
+            if let Err(err) = res {
+                window_clone.show_notification(&err.to_string());
+            }
         });
+    }
+
+    pub fn library_page(&self) -> SwLibraryPage {
+        self.imp().library_page.get()
     }
 }
 
