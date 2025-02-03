@@ -27,8 +27,8 @@ use crate::settings::{settings_manager, Key};
 use crate::ui::pages::{SwLibraryPage, SwSearchPage};
 use crate::ui::player::{SwPlayerGadget, SwPlayerToolbar, SwPlayerView};
 use crate::ui::{
-    about_dialog, SwAddStationDialog, SwDeviceDialog, SwPreferencesDialog,
-    SwStationDialog, ToastWindow,
+    about_dialog, SwAddStationDialog, SwDeviceDialog, SwPreferencesDialog, SwStationDialog,
+    ToastWindow,
 };
 use crate::utils;
 
