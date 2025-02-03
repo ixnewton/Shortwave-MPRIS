@@ -45,3 +45,9 @@ shumate = { version = "0.6", package = "libshumate"}
 gettext-rs = { version = "0.7", features = ["gettext-system"] }
 adw = { version = "0.7", package = "libadwaita", features = ["v1_6"] }
 gtk = { version = "0.9", package = "gtk4", features = ["gnome_46"] }
+
+[dependencies.openssl]
+version = "=0.10.70"
+
+[dependencies.libsqlite3-sys]
+version = "=0.25.2"
