@@ -15,6 +15,7 @@ cacache = "13.1"
 cast-sender = "0.2"
 diesel = { version = "2.2", features = ["sqlite", "r2d2"] }
 diesel_migrations = "2.2"
+futures-lite = "2.1"
 futures-util = "0.3"
 glycin = { version = "2.0", features = ["gdk4"] }
 indexmap = "2.7"
@@ -47,7 +48,14 @@ adw = { version = "0.7", package = "libadwaita", features = ["v1_6"] }
 gtk = { version = "0.9", package = "gtk4", features = ["gnome_46"] }
 
 [dependencies.openssl]
-version = "=0.10.70"
+version = "0.10.70"
 
 [dependencies.libsqlite3-sys]
 version = "=0.25.2"
+
+[dependencies.native-tls]
+version = "0.2.13"
+
+[dependencies.reqwest]
+version = "0.11"
+features = ["native-tls"]
