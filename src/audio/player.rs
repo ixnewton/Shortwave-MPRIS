@@ -597,7 +597,7 @@ impl SwPlayer {
                 glib::spawn_future_local(clone!(
                     #[weak(rename_to = obj)]
                     self,
-                    #[strong]
+                    #[weak]
                     station,
                     async move {
                         obj.set_station(station).await;
