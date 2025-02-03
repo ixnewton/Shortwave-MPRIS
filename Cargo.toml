@@ -48,6 +48,9 @@ gettext-rs = { version = "0.7", features = ["gettext-system"] }
 adw = { version = "0.7", package = "libadwaita", features = ["v1_6"] }
 gtk = { version = "0.9", package = "gtk4", features = ["gnome_46"] }
 
+[patch.crates-io]
+smol-timeout = { path = "patches/smol-timeout" }
+
 [dependencies.openssl]
 version = "0.10.70"
 
