@@ -1,5 +1,5 @@
 // Shortwave - track_model.rs
-// Copyright (C) 2024  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2024-2025  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -93,19 +93,35 @@ impl SwTrackModel {
         glib::Object::new()
     }
 
-    // TODO: Check if track already exists in model, and update it if necessary / rearrange position
     pub fn add_track(&self, track: &SwTrack) {
-        {
+        // If the new track is the same as the last played track
+        // -> replace it instead of adding the same track again
+        let mut replace_last_track = false;
+        if let Some(last_track) = self.item(0) {
+            let last_track = last_track.downcast::<SwTrack>().unwrap();
+            if last_track.title() == track.title() && !last_track.state().is_recorded() {
+                replace_last_track = true;
+            }
+        }
+
+        let (removed, added) = {
             let mut map = self.imp().map.borrow_mut();
             if map.contains_key(&track.uuid()) {
                 warn!("Track {:?} already exists in model", track.title());
                 return;
             }
 
-            map.shift_insert(0, track.uuid(), track.clone());
-        }
+            if replace_last_track {
+                map.shift_remove_index(0).unwrap();
+                map.shift_insert(0, track.uuid(), track.clone());
+                (1, 1)
+            } else {
+                map.shift_insert(0, track.uuid(), track.clone());
+                (0, 1)
+            }
+        };
 
-        self.items_changed(0, 0, 1);
+        self.items_changed(0, removed, added);
         self.imp().purge_tracks();
     }
 
