@@ -1,5 +1,5 @@
 // Shortwave - client.rs
-// Copyright (C) 2021-2024  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2021-2025  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -19,11 +19,13 @@ use std::rc::Rc;
 use std::sync::LazyLock;
 use std::time::Duration;
 
+use async_compat::Compat;
 use async_std_resolver::{config as rconfig, resolver, resolver_from_system_conf};
-use isahc::config::RedirectPolicy;
-use isahc::prelude::*;
 use rand::prelude::SliceRandom;
 use rand::thread_rng;
+use reqwest::header::{self, HeaderMap};
+use reqwest::Request;
+use serde::de;
 use url::Url;
 
 use crate::api::*;
@@ -40,17 +42,17 @@ static USER_AGENT: LazyLock<String> = LazyLock::new(|| {
     )
 });
 
-static HTTP_CLIENT: LazyLock<isahc::HttpClient> = LazyLock::new(|| {
-    isahc::HttpClientBuilder::new()
-        // Limit to reduce ram usage. We don't need 250 concurrent connections
-        .max_connections(8)
-        // Icons are fetched from different urls.
-        // There's a lot of probability we aren't going to reuse the same connection
-        .connection_cache_size(8)
+static HTTP_CLIENT: LazyLock<reqwest::Client> = LazyLock::new(|| {
+    let mut headers = HeaderMap::new();
+    headers.insert(
+        "content-type",
+        header::HeaderValue::from_static("application/json"),
+    );
+
+    reqwest::ClientBuilder::new()
+        .user_agent(USER_AGENT.as_str())
+        .default_headers(headers)
         .timeout(Duration::from_secs(15))
-        .redirect_policy(RedirectPolicy::Follow)
-        .default_header("content-type", "application/json")
-        .default_header("User-Agent", USER_AGENT.as_str())
         .build()
         .unwrap()
 });
@@ -58,22 +60,8 @@ static HTTP_CLIENT: LazyLock<isahc::HttpClient> = LazyLock::new(|| {
 pub async fn station_request(request: StationRequest) -> Result<Vec<SwStation>, Error> {
     let url = build_url(STATION_SEARCH, Some(&request.url_encode()))?;
 
-    let response = HTTP_CLIENT
-        .get_async(url.as_ref())
-        .await?
-        .text()
-        .await
-        .map_err(Rc::new)?;
-    let deserialized: Result<Vec<StationMetadata>, _> = serde_json::from_str(&response);
-
-    let stations_md = match deserialized {
-        Ok(deserialized) => deserialized,
-        Err(err) => {
-            error!("Unable to deserialize data: {}", err.to_string());
-            error!("Raw unserialized data: {}", response);
-            return Err(Error::Deserializer(err.into()));
-        }
-    };
+    let request = HTTP_CLIENT.get(url.as_ref()).build().map_err(Rc::new)?;
+    let stations_md = send_request_compat::<Vec<StationMetadata>>(request).await?;
 
     let stations: Vec<SwStation> = stations_md
         .into_iter()
@@ -92,22 +80,8 @@ pub async fn station_metadata_by_uuid(uuids: Vec<String>) -> Result<Vec<StationM
     );
     debug!("Post body: {}", uuids);
 
-    let response = HTTP_CLIENT
-        .post_async(url.as_ref(), uuids)
-        .await?
-        .text()
-        .await
-        .map_err(Rc::new)?;
-    let deserialized: Result<Vec<StationMetadata>, _> = serde_json::from_str(&response);
-
-    match deserialized {
-        Ok(deserialized) => Ok(deserialized),
-        Err(err) => {
-            error!("Unable to deserialize data: {}", err.to_string());
-            error!("Raw unserialized data: {}", response);
-            Err(Error::Deserializer(err.into()))
-        }
-    }
+    let request = HTTP_CLIENT.post(url).body(uuids).build().map_err(Rc::new)?;
+    send_request_compat(request).await
 }
 
 pub async fn lookup_rb_server() -> Option<String> {
@@ -136,35 +110,31 @@ pub async fn lookup_rb_server() -> Option<String> {
             .await
             .ok()
             .and_then(|r| r.into_iter().next());
+
         if result.is_none() {
-            warn!("Reverse lookup failed for {} failed", ip);
+            warn!("Reverse lookup for {} failed", ip);
             continue;
         }
-        let hostname = result.unwrap();
+
+        // We need to strip the trailing "." from the domain name, otherwise TLS hostname verification fails
+        let domain = result.unwrap().to_string();
+        let hostname = domain.trim_end_matches(".");
 
         // Check if the server is online / returns data
         // If not, try using the next one in the list
-        debug!(
-            "Trying to connect to {} ({})",
-            hostname.to_string(),
-            ip.to_string()
-        );
-        match test_rb_server(hostname.to_string()).await {
-            Ok(_) => {
+        debug!("Trying to connect to {} ({})", hostname, ip.to_string());
+        match server_stats(hostname).await {
+            Ok(stats) => {
                 debug!(
-                    "Successfully connected to {} ({})",
-                    hostname.to_string(),
-                    ip.to_string()
+                    "Successfully connected to {} ({}), server version {}, {} stations",
+                    hostname,
+                    ip.to_string(),
+                    stats.software_version,
+                    stats.stations
                 );
                 return Some(format!("https://{hostname}/"));
             }
-            Err(err) => {
-                warn!(
-                    "Unable to connect to {}: {}",
-                    ip.to_string(),
-                    err.to_string()
-                );
-            }
+            Err(err) => warn!("Unable to connect to {hostname}: {}", err.to_string()),
         }
     }
 
@@ -190,12 +160,30 @@ fn build_url(param: &str, options: Option<&str>) -> Result<Url, Error> {
     Ok(url)
 }
 
-async fn test_rb_server(ip: String) -> Result<(), Error> {
-    let _stats: Option<Stats> = HTTP_CLIENT
-        .get_async(format!("https://{ip}/{STATS}"))
-        .await?
-        .json()
-        .await
+async fn server_stats(host: &str) -> Result<Stats, Error> {
+    let request = HTTP_CLIENT
+        .get(format!("https://{host}/{STATS}"))
+        .build()
         .map_err(Rc::new)?;
-    Ok(())
+
+    send_request_compat(request).await
+}
+
+async fn send_request<T: de::DeserializeOwned>(request: Request) -> Result<T, Error> {
+    let response = HTTP_CLIENT.execute(request).await.map_err(Rc::new)?;
+    let json = response.text().await.map_err(Rc::new)?;
+    let deserialized = serde_json::from_str(&json);
+
+    match deserialized {
+        Ok(d) => Ok(d),
+        Err(err) => {
+            error!("Unable to deserialize data: {}", err.to_string());
+            error!("Raw unserialized data: {}", json);
+            Err(Error::Deserializer(err.into()))
+        }
+    }
+}
+
+async fn send_request_compat<T: de::DeserializeOwned>(request: Request) -> Result<T, Error> {
+    Compat::new(async move { send_request(request).await }).await
 }

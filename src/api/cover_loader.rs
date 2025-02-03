@@ -1,5 +1,5 @@
 // Shortwave - cover_loader.rs
-// Copyright (C) 2024  Felix Häcker <haeckerfelix@gnome.org>
+// Copyright (C) 2024-2025  Felix Häcker <haeckerfelix@gnome.org>
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -14,10 +14,12 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+use std::sync::LazyLock;
 use std::time::{Duration, SystemTime};
 
 use anyhow::{Error, Result};
 use async_channel::Sender;
+use async_compat::CompatExt;
 use futures_util::StreamExt;
 use gdk::RGBA;
 use glycin::Loader;
@@ -28,14 +30,107 @@ use gtk::prelude::*;
 use gtk::{gdk, gio, glib, gsk};
 use url::Url;
 
-use crate::path;
+static HTTP_CLIENT: LazyLock<reqwest::Client> = LazyLock::new(|| {
+    reqwest::ClientBuilder::new()
+        .timeout(Duration::from_secs(5))
+        .build()
+        .unwrap()
+});
 
+use crate::{config, path};
 #[derive(Debug, Clone)]
 struct CoverRequest {
     favicon_url: Url,
     size: i32,
     sender: Sender<Result<gdk::Texture>>,
     cancellable: gio::Cancellable,
+    tmp_file: gio::File,
+    tmp_stream: gio::FileIOStream,
+}
+
+impl CoverRequest {
+    pub async fn handle_request(self) {
+        let res = gio::CancellableFuture::new(self.cover_texture(), self.cancellable.clone()).await;
+        let msg = match res {
+            Ok(res) => res,
+            Err(Cancelled) => Err(Error::msg("cancelled")),
+        };
+
+        let _ = self.delete_tmp_file().await;
+        self.sender.send(msg).await.unwrap();
+    }
+
+    async fn cover_texture(&self) -> Result<gdk::Texture> {
+        if let Ok(texture) = self.cached_texture().await {
+            return Ok(texture);
+        }
+
+        self.compute_texture().await
+    }
+
+    async fn cached_texture(&self) -> Result<gdk::Texture> {
+        let key = format!("{}@{}", self.favicon_url, self.size);
+        let data = cacache::read(&*path::CACHE, key).await?;
+        let bytes = glib::Bytes::from_owned(data);
+
+        Ok(gdk::Texture::from_bytes(&bytes)?)
+    }
+
+    async fn compute_texture(&self) -> Result<gdk::Texture> {
+        let (cover_texture, cover_bytes) = self.cover_bytes().await?;
+
+        let key = format!("{}@{}", self.favicon_url, self.size);
+        cacache::write(&*path::CACHE, key, &cover_bytes).await?;
+
+        Ok(cover_texture)
+    }
+
+    async fn cover_bytes(&self) -> Result<(gdk::Texture, Vec<u8>)> {
+        self.download_tmp_file().compat().await?;
+
+        let loader = Loader::new(self.tmp_file.clone());
+        let image = loader.load().await?;
+        let texture = image.next_frame().await?.texture();
+
+        let snapshot = gtk::Snapshot::new();
+        snapshot_thumbnail(&snapshot, texture, self.size as f32);
+
+        let node = snapshot.to_node().unwrap();
+        let renderer = gsk::CairoRenderer::new();
+        let display = gdk::Display::default().expect("No default display available");
+        renderer.realize_for_display(&display)?;
+
+        let rect = Rect::new(0.0, 0.0, self.size as f32, self.size as f32);
+        let texture = renderer.render_texture(node, Some(&rect));
+        renderer.unrealize();
+
+        let png_bytes = texture.save_to_png_bytes().to_vec();
+        Ok((texture, png_bytes))
+    }
+
+    async fn download_tmp_file(&self) -> Result<()> {
+        let request = HTTP_CLIENT.get(self.favicon_url.as_str()).build()?;
+        let response = HTTP_CLIENT.execute(request).await?;
+        let body_bytes = response.bytes().await?;
+
+        // We have to write the data to the disk in order to be able to load them using Glycin
+        // TODO: Load bytes directly
+        // TODO: https://gitlab.gnome.org/GNOME/glycin/-/issues/98
+        let bytes = glib::Bytes::from_owned(body_bytes);
+        self.tmp_stream
+            .output_stream()
+            .write_bytes_future(&bytes, glib::Priority::LOW)
+            .await?;
+
+        Ok(())
+    }
+
+    async fn delete_tmp_file(&self) -> Result<()> {
+        self.tmp_stream.close_future(glib::Priority::LOW).await?;
+        self.tmp_file.delete_future(glib::Priority::LOW).await?;
+
+        Ok(())
+    }
 }
 
 #[derive(Debug, Clone)]
@@ -47,7 +142,7 @@ impl CoverLoader {
     pub fn new() -> Self {
         let (request_sender, request_receiver) = async_channel::unbounded::<CoverRequest>();
         let request_stream = request_receiver
-            .map(Self::handle_request)
+            .map(|r| r.handle_request())
             .buffer_unordered(usize::max(glib::num_processors() as usize / 2, 2));
 
         glib::spawn_future_local(async move {
@@ -87,11 +182,19 @@ impl CoverLoader {
     ) -> Result<gdk::Texture> {
         let (sender, receiver) = async_channel::bounded(1);
 
+        let (tmp_file, tmp_stream) = File::new_tmp_future(
+            Some(&format!("{}-Cover-XXXXXX", config::NAME)),
+            glib::Priority::LOW,
+        )
+        .await?;
+
         let request = CoverRequest {
             favicon_url: favicon_url.clone(),
             size,
             sender,
             cancellable: cancellable.clone(),
+            tmp_file,
+            tmp_stream,
         };
         self.request_sender
             .send(request)
@@ -100,71 +203,12 @@ impl CoverLoader {
 
         receiver.recv().await?
     }
-
-    async fn handle_request(request: CoverRequest) {
-        let res = gio::CancellableFuture::new(
-            Self::cover_texture(&request.favicon_url, request.size),
-            request.cancellable.clone(),
-        )
-        .await;
-
-        let msg = match res {
-            Ok(res) => res,
-            Err(Cancelled) => Err(Error::msg("cancelled")),
-        };
-
-        request.sender.send(msg).await.unwrap();
-    }
-
-    async fn cover_texture(favicon_url: &Url, size: i32) -> Result<gdk::Texture> {
-        if let Ok(texture) = Self::cached_texture(favicon_url, size).await {
-            return Ok(texture);
-        }
-
-        Self::compute_texture(favicon_url, size).await
-    }
-
-    async fn cached_texture(favicon_url: &Url, size: i32) -> Result<gdk::Texture> {
-        let data = cacache::read(&*path::CACHE, format!("{}@{}", favicon_url, size)).await?;
-        let bytes = glib::Bytes::from_owned(data);
-        Ok(gdk::Texture::from_bytes(&bytes)?)
-    }
-
-    async fn compute_texture(favicon_url: &Url, size: i32) -> Result<gdk::Texture> {
-        let cover = cover_bytes(favicon_url, size).await?;
-        cacache::write(&*path::CACHE, format!("{}@{}", favicon_url, size), &cover).await?;
-
-        let bytes = glib::Bytes::from_owned(cover);
-        Ok(gdk::Texture::from_bytes(&bytes)?)
-    }
 }
 
 impl Default for CoverLoader {
     fn default() -> Self {
         Self::new()
     }
-}
-
-async fn cover_bytes(favicon_url: &Url, size: i32) -> Result<Vec<u8>> {
-    let file = File::for_uri(favicon_url.as_str());
-
-    let loader = Loader::new(file);
-    let image = loader.load().await?;
-    let texture = image.next_frame().await?.texture();
-
-    let snapshot = gtk::Snapshot::new();
-    snapshot_thumbnail(&snapshot, texture, size as f32);
-
-    let node = snapshot.to_node().unwrap();
-    let renderer = gsk::CairoRenderer::new();
-    let display = gdk::Display::default().expect("No default display available");
-    renderer.realize_for_display(&display)?;
-
-    let rect = Rect::new(0.0, 0.0, size as f32, size as f32);
-    let texture = renderer.render_texture(node, Some(&rect));
-    renderer.unrealize();
-
-    Ok(texture.save_to_png_bytes().to_vec())
 }
 
 // Ported from Highscore (Alice Mikhaylenko)

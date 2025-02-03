@@ -104,6 +104,7 @@
         </p>
         <ul>
           <li>Volume can now be changed via keyboard shortcuts</li>
+          <li>Fixed an issue which prevented station covers from loading in certain desktop environments</li>
         </ul>
       </description>
     </release>

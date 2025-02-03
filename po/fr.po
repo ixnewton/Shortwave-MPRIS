@@ -4,13 +4,14 @@
 # Thibault Martin <mail@thibaultmart.in>, 2020.
 # Charles Monzat <charles.monzat@free.fr>, 2022.
 # Claude Paroz <claude@2xlibre.net>, 2021-2022.
+# Alexandre Franke <afranke@gnome.org>, 2025
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2024-10-12 15:06+0000\n"
-"PO-Revision-Date: 2024-10-16 13:00+0200\n"
+"POT-Creation-Date: 2025-01-26 21:21+0000\n"
+"PO-Revision-Date: 2025-01-30 12:46+0100\n"
 "Last-Translator: Irénée Thirion <irenee.thirion@e.email>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "Language: fr\n"
@@ -25,15 +26,20 @@ msgstr ""
 msgid "@NAME@"
 msgstr "@NAME@"
 
-#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: data/de.haeckerfelix.Shortwave.desktop.in.in:12
-msgid "Gradio;Radio;Stream;Wave;"
-msgstr "Gradio;radio;stream;flux;wave;diffusion;"
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:4
+msgid "Internet Radio Player"
+msgstr "Lecteur de radios internet"
 
 #. General
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:5
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:10
 msgid "Listen to internet radio"
 msgstr "Écouter une radio internet"
+
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:14
+msgid "Gradio;Radio;Stream;Wave;"
+msgstr "Gradio;radio;stream;flux;wave;diffusion;"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:12
 msgid ""
@@ -59,10 +65,10 @@ msgstr "Cherchez et découvrez de nouvelles stations de radio"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:19
 msgid ""
-"Automatic recognition of songs, with the possibility to save them "
+"Automatic recognition of tracks, with the possibility to save them "
 "individually"
 msgstr ""
-"Reconnaissance automatique des chansons, avec possibilité de les enregistrer "
+"Reconnaissance automatique des pistes, avec possibilité de les enregistrer "
 "individuellement"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:20
@@ -115,7 +121,7 @@ msgstr "URL du flux"
 msgid "Add Station"
 msgstr "Ajouter une station"
 
-#: data/gtk/device_dialog.ui:7 data/gtk/player_view.ui:124
+#: data/gtk/device_dialog.ui:7 data/gtk/player_view.ui:132
 msgid "Connect Device"
 msgstr "Connecter un appareil"
 
@@ -139,7 +145,7 @@ msgstr "Aucun service Google Cast pris en charge trouvé"
 msgid "Disconnect From Device"
 msgstr "Déconnecter de l’appareil"
 
-#: data/gtk/help_overlay.ui:11 data/gtk/settings_dialog.ui:9
+#: data/gtk/help_overlay.ui:11 data/gtk/preferences_dialog.ui:9
 msgid "General"
 msgstr "Général"
 
@@ -168,7 +174,7 @@ msgctxt "shortcut window"
 msgid "Quit the application"
 msgstr "Quitter l’application"
 
-#: data/gtk/help_overlay.ui:46
+#: data/gtk/help_overlay.ui:46 data/gtk/preferences_dialog.ui:12
 msgid "Playback"
 msgstr "Lecture"
 
@@ -176,6 +182,25 @@ msgstr "Lecture"
 msgctxt "shortcut window"
 msgid "Toggle playback"
 msgstr "Basculer la lecture"
+
+#: data/gtk/help_overlay.ui:57 data/gtk/volume_control.ui:21
+msgid "Volume"
+msgstr "Volume"
+
+#: data/gtk/help_overlay.ui:60
+msgctxt "shortcut window"
+msgid "Toggle mute"
+msgstr "Basculer la sourdine"
+
+#: data/gtk/help_overlay.ui:66
+msgctxt "shortcut window"
+msgid "Increase volume"
+msgstr "Augmenter le volume"
+
+#: data/gtk/help_overlay.ui:72
+msgctxt "shortcut window"
+msgid "Decrease volume"
+msgstr "Réduire le volume"
 
 #: data/gtk/library_page.ui:4
 msgid "Shortwave"
@@ -241,22 +266,26 @@ msgstr "_Raccourcis clavier"
 msgid "_About Shortwave"
 msgstr "À _propos de Shortwave"
 
-#: data/gtk/library_page.ui:182
+#: data/gtk/library_page.ui:178
+msgid "_Quit"
+msgstr "_Quitter"
+
+#: data/gtk/library_page.ui:186
 msgid "Add _Local Station"
 msgstr "Ajouter une station _locale"
 
 #: data/gtk/player_gadget.ui:40 data/gtk/player_toolbar.ui:92
-#: data/gtk/player_view.ui:148 data/gtk/station_row.ui:86
+#: data/gtk/player_view.ui:156 data/gtk/station_row.ui:86
 msgid "Play"
 msgstr "Lecture"
 
 #: data/gtk/player_gadget.ui:55 data/gtk/player_toolbar.ui:106
-#: data/gtk/player_view.ui:162
+#: data/gtk/player_view.ui:170
 msgid "Stop"
 msgstr "Arrêter"
 
 #: data/gtk/player_gadget.ui:71 data/gtk/player_toolbar.ui:121
-#: data/gtk/player_view.ui:177
+#: data/gtk/player_view.ui:185
 msgid "Buffering…"
 msgstr "Chargement…"
 
@@ -265,7 +294,7 @@ msgid "SHORTWAVE INTERNET RADIO"
 msgstr "RADIO INTERNET SHORTWAVE"
 
 #: data/gtk/player_gadget.ui:140 data/gtk/player_toolbar.ui:29
-#: data/gtk/player_view.ui:58
+#: data/gtk/player_view.ui:58 src/app.rs:257
 msgid "No Playback"
 msgstr "Pas de lecture"
 
@@ -281,25 +310,97 @@ msgstr "Restaurer la fenêtre"
 msgid "Enable Gadget Mode"
 msgstr "Activer le mode gadget"
 
-#: data/gtk/player_view.ui:207
+#: data/gtk/player_view.ui:215
 msgid "Show Station Details"
 msgstr "Montrer les informations de la station"
 
-#: data/gtk/player_view.ui:258
-msgid "No Songs"
-msgstr "Pas de chanson"
+#: data/gtk/player_view.ui:266
+msgid "No Tracks"
+msgstr "Aucune piste"
 
-#: data/gtk/player_view.ui:269
-msgid ""
-"Songs that have been identified and recorded using the stream metadata will "
-"appear here."
-msgstr ""
-"Les chansons identifiées et enregistrées en utilisant les métadonnées du "
-"flux apparaîtront ici."
+#: data/gtk/player_view.ui:277
+msgid "Played tracks will appear here"
+msgstr "Les pistes lues apparaitront ici"
 
-#: data/gtk/player_view.ui:303 data/gtk/recording_indicator.ui:38
+#: data/gtk/player_view.ui:311
 msgid "An error occurred"
 msgstr "Une erreur s’est produite"
+
+#: data/gtk/preferences_dialog.ui:15
+msgid "_Background Playback"
+msgstr "Lecture en arrière-_plan"
+
+#: data/gtk/preferences_dialog.ui:16
+msgid "Playback continues when window is closed"
+msgstr "La lecture continue quand la fenêtre est fermée"
+
+#: data/gtk/preferences_dialog.ui:28
+msgid "_Notifications"
+msgstr "_Notifications"
+
+#: data/gtk/preferences_dialog.ui:29
+msgid "Show desktop notifications when a new track gets played"
+msgstr "Afficher une notification système lorsqu’une nouvelle piste commence"
+
+#: data/gtk/preferences_dialog.ui:43
+msgid "Recording"
+msgstr "Enregistrement"
+
+#: data/gtk/preferences_dialog.ui:44
+msgid ""
+"Tracks are automatically recognised based on the station stream metadata and "
+"can be saved."
+msgstr ""
+"Les pistes sont automatiquement reconnues d’après les métadonnées du flux de "
+"la station et peuvent être enregistrées."
+
+#: data/gtk/preferences_dialog.ui:47
+msgid "Track _Directory"
+msgstr "_Répertoire des pistes"
+
+#: data/gtk/preferences_dialog.ui:69
+msgid "Save _All Tracks"
+msgstr "Conserver _toutes les pistes"
+
+#: data/gtk/preferences_dialog.ui:70
+msgid "All recorded tracks are automatically saved in the track directory"
+msgstr ""
+"Toutes les pistes enregistrées sont automatiquement conservées dans le "
+"répertoire des pistes"
+
+#: data/gtk/preferences_dialog.ui:84
+msgid "Decide for Each _Track"
+msgstr "Décider pour chaque _piste"
+
+#: data/gtk/preferences_dialog.ui:85
+msgid "Tracks are temporarily recorded and can be saved if desired"
+msgstr ""
+"Les pistes sont temporairement enregistrées et peuvent être conservées si "
+"désiré"
+
+#: data/gtk/preferences_dialog.ui:100
+msgid "Record N_othing"
+msgstr "Ne _rien enregistrer"
+
+#: data/gtk/preferences_dialog.ui:101
+msgid "Stations are played without recording"
+msgstr "Les stations sont lues sans enregistrement"
+
+#: data/gtk/preferences_dialog.ui:120
+msgid "M_inimum Duration"
+msgstr "Durée m_inimale"
+
+#: data/gtk/preferences_dialog.ui:121
+msgid "Tracks shorter than the minimum duration will be ignored"
+msgstr "Les pistes plus courtes que la durée minimale seront ignorées"
+
+#: data/gtk/preferences_dialog.ui:136
+msgid "M_aximum Duration"
+msgstr "Durée m_aximale"
+
+#: data/gtk/preferences_dialog.ui:137
+msgid "Recording ends when the maximum duration is reached"
+msgstr "L’enregistrement s’arrête lorsque la durée maximale est atteinte"
 
 #: data/gtk/search_page.ui:23
 msgid "Search"
@@ -359,39 +460,23 @@ msgstr "Impossible d’analyser les données de la station"
 msgid "Try Again"
 msgstr "Réessayer"
 
-#: data/gtk/settings_dialog.ui:12
-msgid "Features"
-msgstr "Fonctionnalités"
-
-#: data/gtk/settings_dialog.ui:15
-msgid "_Notifications"
-msgstr "_Notifications"
-
-#: data/gtk/settings_dialog.ui:17
-msgid "Show desktop notifications when a new song gets played"
-msgstr "Afficher une notification système lorsqu’une nouvelle chanson commence"
-
-#: data/gtk/song_row.ui:16
-msgid "Save recorded song"
-msgstr "Conserver une chanson enregistrée"
-
-#: data/gtk/station_dialog.ui:73
+#: data/gtk/station_dialog.ui:75
 msgid "_Play"
 msgstr "_Lecture"
 
-#: data/gtk/station_dialog.ui:89
+#: data/gtk/station_dialog.ui:91
 msgid "_Add to Library"
 msgstr "_Ajouter à la bibliothèque"
 
-#: data/gtk/station_dialog.ui:106
+#: data/gtk/station_dialog.ui:108
 msgid "_Remove From Library"
 msgstr "_Enlever de la bibliothèque"
 
-#: data/gtk/station_dialog.ui:125 data/gtk/station_row.ui:57
+#: data/gtk/station_dialog.ui:127 data/gtk/station_row.ui:57
 msgid "Local Station"
 msgstr "Station locale"
 
-#: data/gtk/station_dialog.ui:126
+#: data/gtk/station_dialog.ui:128
 msgid ""
 "This station exists only in your library, and is not part of the public "
 "database"
@@ -399,11 +484,11 @@ msgstr ""
 "Cette station existe uniquement dans votre bibliothèque et ne fait pas "
 "partie de la base de données publique"
 
-#: data/gtk/station_dialog.ui:140 data/gtk/station_row.ui:69
+#: data/gtk/station_dialog.ui:142 data/gtk/station_row.ui:69
 msgid "Orphaned Station"
 msgstr "Station orpheline"
 
-#: data/gtk/station_dialog.ui:141
+#: data/gtk/station_dialog.ui:143
 msgid ""
 "The information could not be updated, probably this station was removed from "
 "the public database"
@@ -411,66 +496,174 @@ msgstr ""
 "L’information n’a pas pu être mise à jour, il est probable que cette station "
 "ait été enlevée de la base de données publique"
 
-#: data/gtk/station_dialog.ui:152
+#: data/gtk/station_dialog.ui:154
 msgid "Information"
 msgstr "Informations"
 
-#: data/gtk/station_dialog.ui:155
+#: data/gtk/station_dialog.ui:157
 msgid "Language"
 msgstr "Langue"
 
-#: data/gtk/station_dialog.ui:165
+#: data/gtk/station_dialog.ui:167
 msgid "Tags"
 msgstr "Étiquettes"
 
-#: data/gtk/station_dialog.ui:177
+#: data/gtk/station_dialog.ui:179
 msgid "Location"
 msgstr "Emplacement"
 
-#: data/gtk/station_dialog.ui:181
+#: data/gtk/station_dialog.ui:183
 msgid "Country"
 msgstr "Pays"
 
-#: data/gtk/station_dialog.ui:191
+#: data/gtk/station_dialog.ui:193
 msgid "State"
 msgstr "État"
 
-#: data/gtk/station_dialog.ui:225
+#: data/gtk/station_dialog.ui:227
 msgid "Audio"
 msgstr "Audio"
 
-#: data/gtk/station_dialog.ui:228
+#: data/gtk/station_dialog.ui:230
 msgid "Bitrate"
 msgstr "Débit binaire"
 
-#: data/gtk/station_dialog.ui:238
+#: data/gtk/station_dialog.ui:240
 msgid "Codec"
 msgstr "Codec"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:248
+#: data/gtk/station_dialog.ui:250
 msgid "Stream"
 msgstr "Flux"
 
-#: data/gtk/station_dialog.ui:257
+#: data/gtk/station_dialog.ui:256
 msgid "Copy"
 msgstr "Copier"
+
+#: data/gtk/track_dialog.ui:74
+msgid "Edit"
+msgstr "Modifier"
+
+#: data/gtk/track_dialog.ui:121
+msgid "The recorded track has been saved"
+msgstr "La piste enregistrée a été conservée"
+
+#: data/gtk/track_dialog.ui:137 data/gtk/track_dialog.ui:208
+#: data/gtk/track_row.ui:9 src/audio/player.rs:442
+msgid "Save Track"
+msgstr "Conserver la piste"
+
+#: data/gtk/track_dialog.ui:148
+msgid "Play Track"
+msgstr "Lire la piste"
+
+#: data/gtk/track_dialog.ui:159
+msgid "Cancel Recording"
+msgstr "Annuler l’enregistrement"
+
+#: data/gtk/track_dialog.ui:175
+msgid "Station"
+msgstr "Station"
+
+#: data/gtk/track_dialog.ui:209
+msgid "Save this track when recording is complete"
+msgstr "Conserver cette piste lorsque l’enregistrement est complet"
+
+#: data/gtk/track_dialog.ui:223
+msgid "Recording behaviour can be changed in <a href=\"\">preferences</a>"
+msgstr ""
+"Le comportement d’enregistrement peut être changé dans <a "
+"href=\"\">préférences</a>"
+
+#: data/gtk/track_row.ui:20
+msgid "Saved"
+msgstr "Conservée"
 
 #: data/gtk/volume_control.ui:9
 msgid "Toggle Mute"
 msgstr "Basculer la sourdine"
 
-#: data/gtk/volume_control.ui:21
-msgid "Volume"
-msgstr "Volume"
+#: src/app.rs:85
+msgid "Track no longer available"
+msgstr "La piste n’est plus disponible"
 
-#: src/audio/player.rs:220
+#: src/app.rs:108 src/app.rs:130
+msgid "This track is currently not recorded"
+msgstr "Cette piste n’est pas en cours d’enregistrement"
+
+#: src/app.rs:261
+msgid "Playing “{}”"
+msgstr "Lecture de « {} »"
+
+#: src/app.rs:361
 msgid "Active Playback"
 msgstr "Lecture active"
 
-#: src/audio/player.rs:382
-msgid "Station cannot be streamed. URL is not valid."
-msgstr "La station ne peut être diffusée. L’URL n’est pas correcte."
+#: src/audio/player.rs:452
+msgid "Don't Record"
+msgstr "Ne pas enregistrer"
+
+#: src/audio/recording_state.rs:54 src/audio/recording_state.rs:56
+msgid "Not Recorded"
+msgstr "Pas enregistrée"
+
+#: src/audio/recording_state.rs:55
+msgid "Ignored Track"
+msgstr "Piste ignorée"
+
+#: src/audio/recording_state.rs:58
+msgid "Recording…"
+msgstr "Enregistrement…"
+
+#: src/audio/recording_state.rs:59 src/audio/recording_state.rs:60
+msgid "Recorded"
+msgstr "Enregistrée"
+
+#: src/audio/recording_state.rs:62
+msgid "Below Threshold"
+msgstr "Sous le seuil"
+
+#: src/audio/recording_state.rs:63
+msgid "Cancelled"
+msgstr "Annulée"
+
+#: src/audio/recording_state.rs:69
+msgid "Recording is deactivated in preferences"
+msgstr "L’enregistrement est désactivé dans les préférences"
+
+#: src/audio/recording_state.rs:71
+msgid "The track contains a word that is on the ignore list"
+msgstr "La piste contient un mot qui est dans la liste à ignorer"
+
+#: src/audio/recording_state.rs:74
+msgid ""
+"The track wasn't played from the beginning, so it can't be fully recorded"
+msgstr ""
+"La piste n’a pas été lue depuis le début, son enregistrement complet est "
+"impossible"
+
+#: src/audio/recording_state.rs:77
+msgid "The track will be recorded until a new track gets played"
+msgstr "La piste sera enregistrée jusqu’à ce qu’une nouvelle chanson soit lue"
+
+#: src/audio/recording_state.rs:79
+msgid "The track has been temporarily recorded"
+msgstr "La piste a été temporairement enregistrée"
+
+#: src/audio/recording_state.rs:81
+msgid "The maximum recording duration has been reached"
+msgstr "La durée maximale d’enregistrement a été atteinte"
+
+#: src/audio/recording_state.rs:84
+msgid ""
+"The track has been discarded as the duration was below the set threshold"
+msgstr ""
+"La piste a été abandonnée car la durée était inférieure au seuil défini"
+
+#: src/audio/recording_state.rs:86
+msgid "Recording has been cancelled"
+msgstr "L’enregistrement a été annulé"
 
 #: src/device/device_discovery.rs:83
 msgid "Google Cast Device"
@@ -480,7 +673,7 @@ msgstr "Appareil Google Cast"
 msgid "Unknown Model"
 msgstr "Modèle inconnu"
 
-#: src/ui/about_dialog.rs:44
+#: src/ui/about_dialog.rs:41
 msgid "translator-credits"
 msgstr ""
 "Thibault Martin\n"
@@ -490,11 +683,15 @@ msgstr ""
 "Louise Perrot\n"
 "Irénée Thirion"
 
+#: src/ui/about_dialog.rs:42
+msgid "Donate"
+msgstr "Faire un don"
+
 #: src/ui/add_station_dialog.rs:94
 msgid "Select Station Cover"
 msgstr "Choisir l’image de la station"
 
-#: src/ui/display_error.rs:46
+#: src/ui/display_error.rs:50
 msgid "Show Details"
 msgstr "Montrer les informations"
 
@@ -502,38 +699,70 @@ msgstr "Montrer les informations"
 msgid "Welcome to {}"
 msgstr "Bienvenue dans {}"
 
-#: src/ui/recording_indicator.rs:111
-msgid "Recording in Progress"
-msgstr "Enregistrement en cours"
+#: src/ui/preferences_dialog.rs:139
+msgid "Select Save Directory"
+msgstr "Sélectionner le répertoire d’enregistrement"
 
-#: src/ui/recording_indicator.rs:112
-msgid "Ignored"
-msgstr "Ignoré"
+#: src/ui/preferences_dialog.rs:140
+msgid "_Select"
+msgstr "_Sélectionner"
 
-#: src/ui/recording_indicator.rs:113
-msgid "No Recording"
-msgstr "Aucun enregistrement"
+#: src/ui/preferences_dialog.rs:163
+msgid "{} min"
+msgid_plural "{} min"
+msgstr[0] "{} min"
+msgstr[1] "{} min"
 
-#: src/ui/recording_indicator.rs:120
-msgid "The current song will be recorded until a new song is detected."
-msgstr ""
-"La chanson actuelle sera enregistrée jusqu’à ce qu’une nouvelle chanson soit "
-"détectée."
+#: src/ui/preferences_dialog.rs:172
+msgid "{} sec"
+msgid_plural "{} sec"
+msgstr[0] "{} sec"
+msgstr[1] "{} sec"
 
-#: src/ui/recording_indicator.rs:123
-msgid "No recording because the song title contains a word on the ignore list."
-msgstr ""
-"Aucun enregistrement car le titre de la chanson contient un mot dans la "
-"liste à ignorer."
-
-#: src/ui/recording_indicator.rs:126
-msgid ""
-"The current song cannot be fully recorded. The beginning has been missed."
-msgstr ""
-"La chanson actuelle n’a pas pu être enregistrée entièrement. Il manque le "
-"début."
-
-#: src/ui/station_dialog.rs:203
+#: src/ui/station_dialog.rs:205
 msgid "{} kbit/s"
 msgstr "{} kbit/s"
 
+#: src/ui/station_dialog.rs:290
+msgid "Copied"
+msgstr "Copiée"
+
+#: src/ui/window.rs:221
+msgid "No Permission for Background Playback"
+msgstr "Aucune permission pour la lecture en arrière-plan"
+
+#: src/ui/window.rs:223
+msgid "“Run in Background” must be allowed for this app in system settings."
+msgstr ""
+"« Exécuter en arrière-plan » doit être autorisé pour cette application dans les "
+"paramètres système."
+
+#: src/ui/window.rs:227
+msgid "Try Anyway"
+msgstr "Essayer quand même"
+
+#: src/ui/window.rs:228
+msgid "Disable Background Playback"
+msgstr "Désactiver la lecture en arrière-plan"
+
+#: src/utils.rs:51
+msgid "{} hour"
+msgid_plural "{} hours"
+msgstr[0] "{} heure"
+msgstr[1] "{} heures"
+
+#: src/utils.rs:57
+msgid "{} minute"
+msgid_plural "{} minutes"
+msgstr[0] "{} minute"
+msgstr[1] "{} minutes"
+
+#: src/utils.rs:63
+msgid "{} second"
+msgid_plural "{} seconds"
+msgstr[0] "{} seconde"
+msgstr[1] "{} secondes"
+
+#: src/utils.rs:75
+msgid "0 seconds"
+msgstr "0 seconde"

@@ -105,6 +105,7 @@ mod imp {
                             }
                         }
 
+                        // Translators: "This track is not being recorded at the moment"
                         window.show_notification(&i18n("This track is currently not recorded"));
                     })
                     .build(),
@@ -127,6 +128,7 @@ mod imp {
                             }
                         }
 
+                        // Translators: "This track is not being recorded at the moment"
                         window.show_notification(&i18n("This track is currently not recorded"));
                     })
                     .build(),
@@ -320,7 +322,6 @@ impl SwApplication {
             config::VERSION,
             config::PROFILE
         );
-        info!("Isahc version: {}", isahc::version());
 
         // Create new GObject and downcast it into SwApplication
         let app = glib::Object::builder::<SwApplication>()

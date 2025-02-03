@@ -9,6 +9,7 @@ license = "GPL-3.0-or-later"
 anyhow = "1.0"
 ashpd = { version = "0.10", default-features = false, features=["gtk4", "async-std"] }
 async-channel = "2.3"
+async-compat = "0.2"
 async-io = "2.4"
 async-std-resolver = "0.24"
 cacache = "13.1"
@@ -20,7 +21,6 @@ futures-util = "0.3"
 glycin = { version = "2.0", features = ["gdk4"] }
 indexmap = "2.7"
 Inflector = "0.11"
-isahc = { version = "1.7", default-features = false, features = ["json", "text-decoding"] }
 language-tags = "0.3"
 log = "0.4"
 mdns-sd = "0.13"
@@ -28,6 +28,7 @@ mpris-server = "0.8"
 pretty_env_logger = "0.5"
 rand = "0.8"
 regex = "1.11"
+reqwest = { version = "0.12", features = ["native-tls"] }
 sanitize-filename = "0.6"
 serde = "1.0"
 serde_derive = "1.0"
@@ -55,7 +56,3 @@ version = "=0.25.2"
 
 [dependencies.native-tls]
 version = "0.2.13"
-
-[dependencies.reqwest]
-version = "0.11"
-features = ["native-tls"]
