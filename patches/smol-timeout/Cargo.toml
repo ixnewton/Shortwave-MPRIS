@@ -1,0 +1,11 @@
+[package]
+name = "smol-timeout"
+version = "0.6.0"
+edition = "2021"
+authors = ["Felix Häcker <haeckerfelix@gnome.org>"]
+description = "Timeout utilities using async-io"
+license = "MIT"
+
+[dependencies]
+async-io = "2.4"
+futures-lite = "2.1"
