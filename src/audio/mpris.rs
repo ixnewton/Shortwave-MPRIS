@@ -151,8 +151,11 @@ impl MprisServer {
                 let library = SwApplication::default().library();
                 let player = SwApplication::default().player();
                 if let Some(next_station) = library.get_next_favorite() {
+                    let was_playing = matches!(player.state(), SwPlaybackState::Playing);
                     player.set_station(next_station).await;
-                    player.start_playback().await;
+                    if was_playing {
+                        player.start_playback().await;
+                    }
                 }
             });
         });
@@ -162,8 +165,11 @@ impl MprisServer {
                 let library = SwApplication::default().library();
                 let player = SwApplication::default().player();
                 if let Some(prev_station) = library.get_previous_favorite() {
+                    let was_playing = matches!(player.state(), SwPlaybackState::Playing);
                     player.set_station(prev_station).await;
-                    player.start_playback().await;
+                    if was_playing {
+                        player.start_playback().await;
+                    }
                 }
             });
         });
