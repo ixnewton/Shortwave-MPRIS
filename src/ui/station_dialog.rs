@@ -158,17 +158,19 @@ mod imp {
                 self.orphaned_station_group.set_visible(true);
             }
 
-            // Tags
-            if !metadata.tags.is_empty() {
-                self.tags_row.set_visible(true);
-                self.tags_row.set_subtitle(&metadata.formatted_tags());
-            }
-
             // Language
             if !metadata.language.is_empty() {
+                self.information_group.set_visible(true);
                 self.language_row.set_visible(true);
                 self.language_row
                     .set_subtitle(&metadata.language.to_title_case());
+            }
+
+            // Tags
+            if !metadata.tags.is_empty() {
+                self.information_group.set_visible(true);
+                self.tags_row.set_visible(true);
+                self.tags_row.set_subtitle(&metadata.formatted_tags());
             }
 
             // Location

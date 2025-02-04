@@ -31,7 +31,7 @@
                             <property name="size">192</property>
                             <property name="overflow">hidden</property>
                             <style>
-                              <class name="card"/>
+                              <class name="card" />
                             </style>
                           </object>
                         </child>
@@ -47,7 +47,7 @@
                                 <property name="justify">center</property>
                                 <property name="wrap">True</property>
                                 <style>
-                                  <class name="title-2"/>
+                                  <class name="title-2" />
                                 </style>
                               </object>
                             </child>
@@ -75,9 +75,9 @@
                                     <property name="label" translatable="yes">_Play</property>
                                     <property name="use_underline">True</property>
                                     <property name="can_shrink">True</property>
-                                    <signal name="clicked" handler="start_playback" swapped="true"/>
+                                    <signal name="clicked" handler="start_playback" swapped="true" />
                                     <style>
-                                      <class name="pill"/>
+                                      <class name="pill" />
                                     </style>
                                   </object>
                                 </child>
@@ -91,9 +91,9 @@
                                     <property name="label" translatable="yes">_Add to Library</property>
                                     <property name="use_underline">True</property>
                                     <property name="can_shrink">True</property>
-                                    <signal name="clicked" handler="add_station" swapped="true"/>
+                                    <signal name="clicked" handler="add_station" swapped="true" />
                                     <style>
-                                      <class name="pill"/>
+                                      <class name="pill" />
                                     </style>
                                   </object>
                                 </child>
@@ -108,9 +108,9 @@
                                     <property name="label" translatable="yes">_Remove From Library</property>
                                     <property name="use_underline">True</property>
                                     <property name="can_shrink">True</property>
-                                    <signal name="clicked" handler="remove_station" swapped="true"/>
+                                    <signal name="clicked" handler="remove_station" swapped="true" />
                                     <style>
-                                      <class name="pill"/>
+                                      <class name="pill" />
                                     </style>
                                   </object>
                                 </child>
@@ -129,8 +129,8 @@
                               </object>
                             </child>
                             <style>
-                              <class name="notice-row"/>
-                              <class name="card"/>
+                              <class name="notice-row" />
+                              <class name="card" />
                             </style>
                           </object>
                         </child>
@@ -144,21 +144,22 @@
                               </object>
                             </child>
                             <style>
-                              <class name="error-row"/>
-                              <class name="card"/>
+                              <class name="error-row" />
+                              <class name="card" />
                             </style>
                           </object>
                         </child>
                         <child>
                           <object class="AdwPreferencesGroup" id="information_group">
                             <property name="title" translatable="yes">Information</property>
+                            <property name="visible">False</property>
                             <child>
                               <object class="AdwActionRow" id="language_row">
                                 <property name="title" translatable="yes">Language</property>
                                 <property name="title_lines">1</property>
                                 <property name="visible">False</property>
                                 <style>
-                                  <class name="property"/>
+                                  <class name="property" />
                                 </style>
                               </object>
                             </child>
@@ -168,7 +169,7 @@
                                 <property name="title_lines">1</property>
                                 <property name="visible">False</property>
                                 <style>
-                                  <class name="property"/>
+                                  <class name="property" />
                                 </style>
                               </object>
                             </child>
@@ -184,7 +185,7 @@
                                 <property name="title_lines">1</property>
                                 <property name="visible">False</property>
                                 <style>
-                                  <class name="property"/>
+                                  <class name="property" />
                                 </style>
                               </object>
                             </child>
@@ -194,7 +195,7 @@
                                 <property name="title_lines">1</property>
                                 <property name="visible">False</property>
                                 <style>
-                                  <class name="property"/>
+                                  <class name="property" />
                                 </style>
                               </object>
                             </child>
@@ -231,7 +232,7 @@
                                 <property name="title_lines">1</property>
                                 <property name="visible">False</property>
                                 <style>
-                                  <class name="property"/>
+                                  <class name="property" />
                                 </style>
                               </object>
                             </child>
@@ -241,7 +242,7 @@
                                 <property name="title_lines">1</property>
                                 <property name="visible">False</property>
                                 <style>
-                                  <class name="property"/>
+                                  <class name="property" />
                                 </style>
                               </object>
                             </child>
@@ -254,14 +255,14 @@
                                     <property name="icon_name">edit-copy-symbolic</property>
                                     <property name="valign">center</property>
                                     <property name="tooltip_text" translatable="yes">Copy</property>
-                                    <signal name="clicked" handler="copy_stream_clipboard" swapped="true"/>
+                                    <signal name="clicked" handler="copy_stream_clipboard" swapped="true" />
                                     <style>
-                                      <class name="flat"/>
+                                      <class name="flat" />
                                     </style>
                                   </object>
                                 </child>
                                 <style>
-                                  <class name="property"/>
+                                  <class name="property" />
                                 </style>
                               </object>
                             </child>
