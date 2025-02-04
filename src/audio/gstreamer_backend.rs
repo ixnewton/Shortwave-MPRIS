@@ -373,7 +373,12 @@ impl GstreamerBackend {
         debug!("Started recording to {:?}", path);
     }
 
-    pub fn stop_recording(&mut self, discard_data: bool) {
+    pub fn stop_recording(&mut self, discard_buffered_data: bool) {
+        debug!(
+            "Stop recording... (Discard buffered data: {:?})",
+            &discard_buffered_data
+        );
+
         let recorderbin = self.recorderbin.lock().unwrap().take();
         let recorderbin = match recorderbin {
             None => {
@@ -383,15 +388,11 @@ impl GstreamerBackend {
             Some(bin) => bin,
         };
 
-        debug!(
-            "Stop recording... (Discard recorded data: {:?})",
-            &discard_data
-        );
-
         // Get the source pad of the tee that is connected to the recorderbin
         let recorderbin_sinkpad = recorderbin
             .static_pad("sink")
             .expect("Failed to get sink pad from recorderbin");
+
         let tee_srcpad = match recorderbin_sinkpad.peer() {
             Some(peer) => peer,
             None => return,
@@ -421,7 +422,7 @@ impl GstreamerBackend {
                     let _ = tee_srcpad.unlink(&recorderbin_sinkpad);
                     tee.release_request_pad(tee_srcpad);
 
-                    if !discard_data {
+                    if !discard_buffered_data {
                         // Asynchronously send the end-of-stream event to the sinkpad as this might block for a
                         // while and our closure here might've been called from the main UI thread
                         let recorderbin_sinkpad = recorderbin_sinkpad.clone();

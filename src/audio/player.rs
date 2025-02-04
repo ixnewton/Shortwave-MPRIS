@@ -375,7 +375,7 @@ mod imp {
             }
 
             let Some(track) = self.obj().playing_track() else {
-                warn!("No track available, discard recorded data.");
+                warn!("No track for recorded data available, unable to discard.");
                 backend.stop_recording(true);
                 return;
             };
@@ -424,6 +424,13 @@ mod imp {
                 track.duration(),
             );
             backend.stop_recording(discard_data);
+
+            if discard_data {
+                debug!("Discard recorded data: {}", track.file().parse_name());
+                if let Err(err) = track.file().delete(gio::Cancellable::NONE) {
+                    warn!("Unable to discard recorded data: {}", err.to_string());
+                }
+            }
         }
 
         fn track_notification(&self, track: &SwTrack) -> gio::Notification {
