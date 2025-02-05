@@ -78,7 +78,7 @@
     <release version="5.0.0" date="2025-02-05">
       <description>
         <p>
-          Shortwave now supports background playback, allowing the playback to continue when you close the window. If you don't want this feature, you can disable it in the preferences.
+          Shortwave now supports background playback, allowing the playback to continue when you close the window. If desired, the old behaviour can be restored in the preferences.
         </p>
         <p>
           The recording feature has also been completely overhauled. You can now choose from three different modes:
