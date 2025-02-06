@@ -56,7 +56,7 @@ mod imp {
             let sorter = gtk::StringSorter::new(Some(&gtk::PropertyExpression::new(
                 SwStation::static_type(),
                 None::<&Expression>,
-                "name",
+                "title",
             )));
             let sorted_model = gtk::SortListModel::new(Some(list_store), Some(sorter));
             *self.sorted_model.borrow_mut() = Some(sorted_model);
@@ -192,7 +192,7 @@ impl SwLibrary {
 
             let current_station = current_station.unwrap();
 
-            // Find current station index
+            // Find current station index in the sorted model
             for i in 0..n_items {
                 if let Some(obj) = model.item(i) {
                     if let Ok(station) = obj.downcast::<SwStation>() {
@@ -236,7 +236,7 @@ impl SwLibrary {
 
             let current_station = current_station.unwrap();
 
-            // Find current station index
+            // Find current station index in the sorted model
             for i in 0..n_items {
                 if let Some(obj) = model.item(i) {
                     if let Ok(station) = obj.downcast::<SwStation>() {
