@@ -24,7 +24,7 @@ use gtk::{
 };
 
 use crate::{
-    api::{StationMetadata, SwStation, SwStationModel, SwStationSorter},
+    api::{SwStation, SwStationModel, SwStationSorter},
     database::{models::StationEntry, queries, SwLibraryStatus},
     settings::{settings_manager, Key},
 };
@@ -59,7 +59,7 @@ mod imp {
             settings_manager::bind_property(Key::LibrarySorting, &sorter, "sorting");
             settings_manager::bind_property(Key::LibrarySortingType, &sorter, "sorting-type");
             *self.sorter.borrow_mut() = sorter.clone();
-            
+
             let sorted_model = gtk::SortListModel::new(Some(list_store), Some(sorter));
             *self.sorted_model.borrow_mut() = Some(sorted_model);
 
@@ -68,10 +68,7 @@ mod imp {
                 let mut station_vec = Vec::new();
                 for entry in stations {
                     let data = entry.data.unwrap_or_default();
-                    let meta = match serde_json::from_str(&data) {
-                        Ok(meta) => meta,
-                        Err(_) => StationMetadata::default(),
-                    };
+                    let meta = serde_json::from_str(&data).unwrap_or_default();
 
                     let station = SwStation::new(
                         &entry.uuid,
@@ -114,15 +111,15 @@ impl SwLibrary {
 
         let imp = imp::SwLibrary::from_obj(self);
         imp.stations.borrow_mut().push(station.clone());
-        
+
         // Update the sorted model
         if let Some(model) = imp.sorted_model.borrow().as_ref() {
             let store = model.model().unwrap().downcast::<gio::ListStore>().unwrap();
             store.append(&station);
         }
-        
+
         imp.model.add_stations(vec![station]);
-        
+
         // Update status
         let imp = imp::SwLibrary::from_obj(self);
         if imp.model.n_items() == 0 {
@@ -135,13 +132,13 @@ impl SwLibrary {
 
     pub fn remove_stations(&self, stations: Vec<SwStation>) {
         debug!("Remove {} station(s)", stations.len());
-        
+
         let imp = imp::SwLibrary::from_obj(self);
         let mut stations_list = imp.stations.borrow_mut();
-        
+
         // Remove from internal list
         stations_list.retain(|s| !stations.iter().any(|rs| rs.uuid() == s.uuid()));
-        
+
         // Update the sorted model
         if let Some(model) = imp.sorted_model.borrow().as_ref() {
             let store = model.model().unwrap().downcast::<gio::ListStore>().unwrap();
@@ -159,7 +156,7 @@ impl SwLibrary {
             imp.model.remove_station(station);
             queries::delete_station(&station.uuid()).unwrap();
         }
-        
+
         // Update status
         let imp = imp::SwLibrary::from_obj(self);
         if imp.model.n_items() == 0 {
@@ -172,7 +169,10 @@ impl SwLibrary {
 
     pub fn contains_station(&self, station: &SwStation) -> bool {
         let imp = imp::SwLibrary::from_obj(self);
-        imp.stations.borrow().iter().any(|s| s.uuid() == station.uuid())
+        imp.stations
+            .borrow()
+            .iter()
+            .any(|s| s.uuid() == station.uuid())
     }
 
     pub fn get_next_favorite(&self) -> Option<SwStation> {
@@ -285,7 +285,7 @@ impl SwLibrary {
 
     pub async fn update_data(&self) -> Result<(), crate::api::Error> {
         let mut stations_to_update = Vec::new();
-        
+
         // Collect all non-local stations
         for station in self.model().snapshot() {
             let station: &SwStation = station.downcast_ref().unwrap();

@@ -17,13 +17,16 @@
 use std::rc::Rc;
 
 use glib::clone;
-use gtk::{glib, prelude::{ApplicationExt, GtkApplicationExt, WidgetExt}};
+use gtk::{
+    glib,
+    prelude::{ApplicationExt, GtkApplicationExt, WidgetExt},
+};
 use mpris_server::{zbus::Result, Metadata, PlaybackStatus, Player};
 
 use crate::app::SwApplication;
 use crate::audio::playback_state::SwPlaybackState;
-use crate::utils;
 use crate::config;
+use crate::utils;
 
 #[derive(Debug, Clone)]
 pub struct MprisServer {
@@ -154,16 +157,12 @@ impl MprisServer {
                 let library = app.library();
                 let player = app.player();
 
-                // Check background playback permissions if needed
-                // If there's no active window or it's not visible, we need background permissions
-                if app.background_playback() && app.active_window().map_or(true, |w| !w.is_visible()) {
-                    if !utils::background_portal_permissions().await {
-                        debug!("No background portal permissions for next command");
-                        return;
-                    }
-                }
-
-                if let Some(next_station) = library.get_next_favorite() {
+                if app.background_playback()
+                    && app.active_window().map_or(true, |w| !w.is_visible())
+                    && !utils::background_portal_permissions().await
+                {
+                    debug!("No background portal permissions for next command");
+                } else if let Some(next_station) = library.get_next_favorite() {
                     let was_playing = matches!(player.state(), SwPlaybackState::Playing);
                     player.set_station(next_station).await;
                     if was_playing {
@@ -179,16 +178,12 @@ impl MprisServer {
                 let library = app.library();
                 let player = app.player();
 
-                // Check background playback permissions if needed
-                // If there's no active window or it's not visible, we need background permissions
-                if app.background_playback() && app.active_window().map_or(true, |w| !w.is_visible()) {
-                    if !utils::background_portal_permissions().await {
-                        debug!("No background portal permissions for previous command");
-                        return;
-                    }
-                }
-
-                if let Some(prev_station) = library.get_previous_favorite() {
+                if app.background_playback()
+                    && app.active_window().map_or(true, |w| !w.is_visible())
+                    && !utils::background_portal_permissions().await
+                {
+                    debug!("No background portal permissions for previous command");
+                } else if let Some(prev_station) = library.get_previous_favorite() {
                     let was_playing = matches!(player.state(), SwPlaybackState::Playing);
                     player.set_station(prev_station).await;
                     if was_playing {
