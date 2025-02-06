@@ -15,7 +15,6 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 static STATION_SEARCH: &str = "json/stations/search";
-static STATION_BY_UUID: &str = "json/stations/byuuid";
 static STATS: &str = "json/stats";
 
 pub mod client;

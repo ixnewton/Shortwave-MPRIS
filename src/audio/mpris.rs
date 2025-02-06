@@ -17,11 +17,13 @@
 use std::rc::Rc;
 
 use glib::clone;
-use gtk::{glib, prelude::ApplicationExt};
+use gtk::{glib, prelude::{ApplicationExt, GtkApplicationExt, WidgetExt}};
 use mpris_server::{zbus::Result, Metadata, PlaybackStatus, Player};
 
-use super::SwPlaybackState;
-use crate::{app::SwApplication, config};
+use crate::app::SwApplication;
+use crate::audio::playback_state::SwPlaybackState;
+use crate::utils;
+use crate::config;
 
 #[derive(Debug, Clone)]
 pub struct MprisServer {
@@ -148,8 +150,19 @@ impl MprisServer {
         // Add handlers for next/previous track in favorites
         server.player.connect_next(|_| {
             glib::spawn_future_local(async move {
-                let library = SwApplication::default().library();
-                let player = SwApplication::default().player();
+                let app = SwApplication::default();
+                let library = app.library();
+                let player = app.player();
+
+                // Check background playback permissions if needed
+                // If there's no active window or it's not visible, we need background permissions
+                if app.background_playback() && app.active_window().map_or(true, |w| !w.is_visible()) {
+                    if !utils::background_portal_permissions().await {
+                        debug!("No background portal permissions for next command");
+                        return;
+                    }
+                }
+
                 if let Some(next_station) = library.get_next_favorite() {
                     let was_playing = matches!(player.state(), SwPlaybackState::Playing);
                     player.set_station(next_station).await;
@@ -162,8 +175,19 @@ impl MprisServer {
 
         server.player.connect_previous(|_| {
             glib::spawn_future_local(async move {
-                let library = SwApplication::default().library();
-                let player = SwApplication::default().player();
+                let app = SwApplication::default();
+                let library = app.library();
+                let player = app.player();
+
+                // Check background playback permissions if needed
+                // If there's no active window or it's not visible, we need background permissions
+                if app.background_playback() && app.active_window().map_or(true, |w| !w.is_visible()) {
+                    if !utils::background_portal_permissions().await {
+                        debug!("No background portal permissions for previous command");
+                        return;
+                    }
+                }
+
                 if let Some(prev_station) = library.get_previous_favorite() {
                     let was_playing = matches!(player.state(), SwPlaybackState::Playing);
                     player.set_station(prev_station).await;

@@ -71,19 +71,6 @@ pub async fn station_request(request: StationRequest) -> Result<Vec<SwStation>, 
     Ok(stations)
 }
 
-pub async fn station_metadata_by_uuid(uuids: Vec<String>) -> Result<Vec<StationMetadata>, Error> {
-    let url = build_url(STATION_BY_UUID, None)?;
-
-    let uuids = format!(
-        r#"{{"uuids":{}}}"#,
-        serde_json::to_string(&uuids).unwrap_or_default()
-    );
-    debug!("Post body: {}", uuids);
-
-    let request = HTTP_CLIENT.post(url).body(uuids).build().map_err(Rc::new)?;
-    send_request_compat(request).await
-}
-
 pub async fn lookup_rb_server() -> Option<String> {
     let lookup_domain = settings_manager::string(Key::ApiLookupDomain);
     let resolver = if let Ok(resolver) = resolver_from_system_conf().await {

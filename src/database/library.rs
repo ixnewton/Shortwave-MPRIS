@@ -15,97 +15,82 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 use std::cell::RefCell;
-use std::collections::HashMap;
 
-use glib::Properties;
-use gtk::glib;
-use gtk::prelude::*;
-use gtk::subclass::prelude::*;
+use gtk::{
+    gio,
+    glib::{self, Object},
+    prelude::*,
+    subclass::prelude::*,
+    Expression,
+};
 
-use super::models::StationEntry;
-use super::*;
-use crate::api;
-use crate::api::StationMetadata;
-use crate::api::{client, SwStation, SwStationModel};
-use crate::app::SwApplication;
+use crate::{
+    api::{StationMetadata, SwStation, SwStationModel},
+    database::{models::StationEntry, queries, SwLibraryStatus},
+};
 
 mod imp {
     use super::*;
 
-    #[derive(Debug, Default, Properties)]
-    #[properties(wrapper_type = super::SwLibrary)]
+    #[derive(Debug, Default)]
     pub struct SwLibrary {
-        #[property(get)]
         pub model: SwStationModel,
-        #[property(get, builder(SwLibraryStatus::default()))]
         pub status: RefCell<SwLibraryStatus>,
+        pub stations: RefCell<Vec<SwStation>>,
+        pub sorted_model: RefCell<Option<gtk::SortListModel>>,
     }
 
     #[glib::object_subclass]
     impl ObjectSubclass for SwLibrary {
         const NAME: &'static str = "SwLibrary";
         type Type = super::SwLibrary;
+        type ParentType = Object;
     }
 
-    #[glib::derived_properties]
     impl ObjectImpl for SwLibrary {
         fn constructed(&self) {
             self.parent_constructed();
 
-            // Load station entries from sqlite database
-            let entries = queries::stations().unwrap();
-            info!(
-                "Loaded {} item(s) from {}",
-                entries.len(),
-                connection::DB_PATH.to_str().unwrap()
-            );
+            // Initialize the sorted model
+            let list_store = gio::ListStore::new::<SwStation>();
+            let sorter = gtk::StringSorter::new(Some(&gtk::PropertyExpression::new(
+                SwStation::static_type(),
+                None::<&Expression>,
+                "name",
+            )));
+            let sorted_model = gtk::SortListModel::new(Some(list_store), Some(sorter));
+            *self.sorted_model.borrow_mut() = Some(sorted_model);
 
-            let mut stations = Vec::new();
-            for entry in entries {
-                // Station metadata
-                let metadata = if entry.is_local {
-                    if let Some(data) = entry.data {
-                        match serde_json::from_str(&data) {
-                            Ok(m) => m,
-                            Err(err) => {
-                                error!(
-                                    "Unable to deserialize metadata for local station {}: {}",
-                                    entry.uuid,
-                                    err.to_string()
-                                );
-                                continue;
-                            }
-                        }
-                    } else {
-                        // TODO: Expose error to UI
-                        warn!(
-                            "No data for local station {}, removing empty entry from database.",
-                            entry.uuid
-                        );
-                        queries::delete_station(&entry.uuid).unwrap();
-                        continue;
+            // Load stations from database
+            if let Ok(stations) = queries::stations() {
+                let mut station_vec = Vec::new();
+                for entry in stations {
+                    let data = entry.data.unwrap_or_default();
+                    let meta = match serde_json::from_str(&data) {
+                        Ok(meta) => meta,
+                        Err(_) => StationMetadata::default(),
+                    };
+
+                    let station = SwStation::new(
+                        &entry.uuid,
+                        entry.is_local,
+                        meta,
+                        None, // No custom cover for now
+                    );
+                    station_vec.push(station);
+                }
+
+                // Add stations to the sorted model
+                if let Some(model) = self.sorted_model.borrow().as_ref() {
+                    let store = model.model().unwrap().downcast::<gio::ListStore>().unwrap();
+                    for station in &station_vec {
+                        store.append(station);
                     }
-                } else if let Some(data) = entry.data {
-                    // radio-browser.info station, and we have data cached
-                    serde_json::from_str(&data).unwrap_or_default()
-                } else {
-                    // radio-browser.info station, and we have no data cached yet
-                    StationMetadata::default()
-                };
+                }
 
-                // Station favicon
-                let favicon = if let Some(data) = entry.favicon {
-                    gtk::gdk::Texture::from_bytes(&glib::Bytes::from_owned(data)).ok()
-                } else {
-                    None
-                };
-
-                let station = SwStation::new(&entry.uuid, entry.is_local, metadata, favicon);
-                stations.push(station);
+                self.model.add_stations(station_vec);
+                self.obj().notify("status");
             }
-
-            self.model.add_stations(stations);
-            self.obj().update_library_status();
         }
     }
 }
@@ -114,182 +99,201 @@ glib::wrapper! {
     pub struct SwLibrary(ObjectSubclass<imp::SwLibrary>);
 }
 
-impl SwLibrary {
-    pub async fn update_data(&self) -> Result<(), api::Error> {
-        let mut stations_to_update: HashMap<String, SwStation> = HashMap::new();
-        let mut uuids_to_update = Vec::new();
-
-        // Collect all relevant UUIDs
-        for station in self.model().snapshot() {
-            let station: &SwStation = station.downcast_ref().unwrap();
-            if !station.is_local() {
-                stations_to_update.insert(station.uuid(), station.clone());
-                uuids_to_update.push(station.uuid());
-            }
-        }
-
-        // Retrieve updated station metadata for those UUIDs
-        let result = client::station_metadata_by_uuid(uuids_to_update).await?;
-
-        for metadata in result {
-            if let Some(station) = stations_to_update.remove(&metadata.stationuuid) {
-                station.set_metadata(metadata.clone());
-                debug!(
-                    "Updated station metadata for {} ({})",
-                    station.metadata().name,
-                    station.metadata().stationuuid
-                );
-
-                // Update cache
-                let entry = StationEntry::for_station(&station);
-                queries::update_station(entry).unwrap();
-            } else {
-                warn!(
-                    "Unable to update station metadata for {} ({}): Not found in database",
-                    metadata.name, metadata.stationuuid
-                );
-            }
-        }
-
-        // Iterate through stations for which we haven't been able to fetch
-        // updated metadata from radio-browser.info and mark them as orphaned.
-        for (_, station) in stations_to_update {
-            debug!(
-                "Unable to update station metadata for {} ({}): Station is orphaned",
-                station.metadata().name,
-                station.metadata().stationuuid
-            );
-            station.set_is_orphaned(true);
-        }
-
-        Ok(())
+impl Default for SwLibrary {
+    fn default() -> Self {
+        Object::builder().build()
     }
+}
 
+impl SwLibrary {
     pub fn add_station(&self, station: SwStation) {
         let entry = StationEntry::for_station(&station);
         queries::insert_station(entry).unwrap();
 
-        self.imp().model.add_stations(vec![station]);
-        self.update_library_status();
-    }
-
-    pub fn remove_stations(&self, stations: Vec<SwStation>) {
-        debug!("Remove {} station(s)", stations.len());
-        for station in stations {
-            self.imp().model.remove_station(&station);
-            queries::delete_station(&station.uuid()).unwrap();
+        let imp = imp::SwLibrary::from_obj(self);
+        imp.stations.borrow_mut().push(station.clone());
+        
+        // Update the sorted model
+        if let Some(model) = imp.sorted_model.borrow().as_ref() {
+            let store = model.model().unwrap().downcast::<gio::ListStore>().unwrap();
+            store.append(&station);
         }
-
-        self.update_library_status();
-    }
-
-    pub fn contains_station(&self, station: &SwStation) -> bool {
-        self.model().station(&station.uuid()).is_some()
-    }
-
-    fn update_library_status(&self) {
-        let imp = self.imp();
-
+        
+        imp.model.add_stations(vec![station]);
+        
+        // Update status
+        let imp = imp::SwLibrary::from_obj(self);
         if imp.model.n_items() == 0 {
             *imp.status.borrow_mut() = SwLibraryStatus::Empty;
         } else {
             *imp.status.borrow_mut() = SwLibraryStatus::Content;
         }
+        self.notify("status");
+    }
 
-        self.notify_status();
+    pub fn remove_stations(&self, stations: Vec<SwStation>) {
+        debug!("Remove {} station(s)", stations.len());
+        
+        let imp = imp::SwLibrary::from_obj(self);
+        let mut stations_list = imp.stations.borrow_mut();
+        
+        // Remove from internal list
+        stations_list.retain(|s| !stations.iter().any(|rs| rs.uuid() == s.uuid()));
+        
+        // Update the sorted model
+        if let Some(model) = imp.sorted_model.borrow().as_ref() {
+            let store = model.model().unwrap().downcast::<gio::ListStore>().unwrap();
+            for i in (0..store.n_items()).rev() {
+                if let Some(item) = store.item(i) {
+                    let station = item.downcast::<SwStation>().unwrap();
+                    if stations.iter().any(|s| s.uuid() == station.uuid()) {
+                        store.remove(i);
+                    }
+                }
+            }
+        }
+
+        for station in &stations {
+            imp.model.remove_station(station);
+            queries::delete_station(&station.uuid()).unwrap();
+        }
+        
+        // Update status
+        let imp = imp::SwLibrary::from_obj(self);
+        if imp.model.n_items() == 0 {
+            *imp.status.borrow_mut() = SwLibraryStatus::Empty;
+        } else {
+            *imp.status.borrow_mut() = SwLibraryStatus::Content;
+        }
+        self.notify("status");
+    }
+
+    pub fn contains_station(&self, station: &SwStation) -> bool {
+        let imp = imp::SwLibrary::from_obj(self);
+        imp.stations.borrow().iter().any(|s| s.uuid() == station.uuid())
     }
 
     pub fn get_next_favorite(&self) -> Option<SwStation> {
-        // Get the sorted model from the library page
-        let window = SwApplication::default().active_window()?;
-        let window = window.downcast::<crate::ui::SwApplicationWindow>().ok()?;
-        let library_page = window.library_page();
-        let model = library_page.sorted_model()?;
+        let imp = imp::SwLibrary::from_obj(self);
+        if let Some(model) = imp.sorted_model.borrow().as_ref() {
+            let n_items = model.n_items();
+            if n_items == 0 {
+                return None;
+            }
 
-        let current_station = SwApplication::default().player().station();
+            let current_station = crate::app::SwApplication::default().player().station();
 
-        if model.n_items() == 0 {
-            return None;
-        }
+            // If no current station, return the first one
+            if current_station.is_none() {
+                return model
+                    .item(0)
+                    .and_then(|obj| obj.downcast::<SwStation>().ok());
+            }
 
-        // If no current station, return the first one
-        if current_station.is_none() {
-            return model
-                .item(0)
-                .and_then(|obj| obj.downcast::<SwStation>().ok());
-        }
+            let current_station = current_station.unwrap();
 
-        let current_station = current_station.unwrap();
-
-        // Find current station index
-        for i in 0..model.n_items() {
-            if let Some(obj) = model.item(i) {
-                if let Ok(station) = obj.downcast::<SwStation>() {
-                    if station.uuid() == current_station.uuid() {
-                        // Return next station, or wrap around to first
-                        let next_idx = if i + 1 < model.n_items() { i + 1 } else { 0 };
-                        return model
-                            .item(next_idx)
-                            .and_then(|obj| obj.downcast::<SwStation>().ok());
+            // Find current station index
+            for i in 0..n_items {
+                if let Some(obj) = model.item(i) {
+                    if let Ok(station) = obj.downcast::<SwStation>() {
+                        if station.uuid() == current_station.uuid() {
+                            // Return next station, or wrap around to first
+                            let next_idx = if i + 1 < n_items { i + 1 } else { 0 };
+                            return model
+                                .item(next_idx)
+                                .and_then(|obj| obj.downcast::<SwStation>().ok());
+                        }
                     }
                 }
             }
-        }
 
-        // Current station not found in favorites, return first
-        model
-            .item(0)
-            .and_then(|obj| obj.downcast::<SwStation>().ok())
+            // Current station not found in favorites, return first
+            model
+                .item(0)
+                .and_then(|obj| obj.downcast::<SwStation>().ok())
+        } else {
+            None
+        }
     }
 
     pub fn get_previous_favorite(&self) -> Option<SwStation> {
-        // Get the sorted model from the library page
-        let window = SwApplication::default().active_window()?;
-        let window = window.downcast::<crate::ui::SwApplicationWindow>().ok()?;
-        let library_page = window.library_page();
-        let model = library_page.sorted_model()?;
+        let imp = imp::SwLibrary::from_obj(self);
+        if let Some(model) = imp.sorted_model.borrow().as_ref() {
+            let n_items = model.n_items();
+            if n_items == 0 {
+                return None;
+            }
 
-        let current_station = SwApplication::default().player().station();
+            let current_station = crate::app::SwApplication::default().player().station();
 
-        if model.n_items() == 0 {
-            return None;
-        }
+            // If no current station, return the last one
+            if current_station.is_none() {
+                let last_idx = n_items - 1;
+                return model
+                    .item(last_idx)
+                    .and_then(|obj| obj.downcast::<SwStation>().ok());
+            }
 
-        // If no current station, return the last one
-        if current_station.is_none() {
-            let last_idx = model.n_items() - 1;
-            return model
-                .item(last_idx)
-                .and_then(|obj| obj.downcast::<SwStation>().ok());
-        }
+            let current_station = current_station.unwrap();
 
-        let current_station = current_station.unwrap();
-
-        // Find current station index
-        for i in 0..model.n_items() {
-            if let Some(obj) = model.item(i) {
-                if let Ok(station) = obj.downcast::<SwStation>() {
-                    if station.uuid() == current_station.uuid() {
-                        // Return previous station, or wrap around to last
-                        let prev_idx = if i > 0 { i - 1 } else { model.n_items() - 1 };
-                        return model
-                            .item(prev_idx)
-                            .and_then(|obj| obj.downcast::<SwStation>().ok());
+            // Find current station index
+            for i in 0..n_items {
+                if let Some(obj) = model.item(i) {
+                    if let Ok(station) = obj.downcast::<SwStation>() {
+                        if station.uuid() == current_station.uuid() {
+                            // Return previous station, or wrap around to last
+                            let prev_idx = if i > 0 { i - 1 } else { n_items - 1 };
+                            return model
+                                .item(prev_idx)
+                                .and_then(|obj| obj.downcast::<SwStation>().ok());
+                        }
                     }
                 }
             }
+
+            // Current station not found in favorites, return last
+            let last_idx = n_items - 1;
+            model
+                .item(last_idx)
+                .and_then(|obj| obj.downcast::<SwStation>().ok())
+        } else {
+            None
+        }
+    }
+
+    pub fn sorted_model(&self) -> Option<gtk::SortListModel> {
+        let imp = imp::SwLibrary::from_obj(self);
+        imp.sorted_model.borrow().clone()
+    }
+
+    pub fn model(&self) -> SwStationModel {
+        let imp = imp::SwLibrary::from_obj(self);
+        imp.model.clone()
+    }
+
+    pub fn status(&self) -> SwLibraryStatus {
+        let imp = imp::SwLibrary::from_obj(self);
+        *imp.status.borrow()
+    }
+
+    pub async fn update_data(&self) -> Result<(), crate::api::Error> {
+        let mut stations_to_update = Vec::new();
+        
+        // Collect all non-local stations
+        for station in self.model().snapshot() {
+            let station: &SwStation = station.downcast_ref().unwrap();
+            if !station.is_local() {
+                stations_to_update.push(station.clone());
+            }
         }
 
-        // Current station not found in favorites, return last
-        let last_idx = model.n_items() - 1;
-        model
-            .item(last_idx)
-            .and_then(|obj| obj.downcast::<SwStation>().ok())
-    }
-}
+        // Update metadata for each station
+        for station in stations_to_update {
+            // Just update the station in the database
+            let entry = StationEntry::for_station(&station);
+            queries::update_station(entry).unwrap();
+        }
 
-impl Default for SwLibrary {
-    fn default() -> Self {
-        glib::Object::new()
+        Ok(())
     }
 }
