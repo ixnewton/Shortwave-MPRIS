@@ -21,12 +21,12 @@ use gtk::{
     glib::{self, Object},
     prelude::*,
     subclass::prelude::*,
-    Expression,
 };
 
 use crate::{
-    api::{StationMetadata, SwStation, SwStationModel},
+    api::{StationMetadata, SwStation, SwStationModel, SwStationSorter},
     database::{models::StationEntry, queries, SwLibraryStatus},
+    settings::{settings_manager, Key},
 };
 
 mod imp {
@@ -38,6 +38,7 @@ mod imp {
         pub status: RefCell<SwLibraryStatus>,
         pub stations: RefCell<Vec<SwStation>>,
         pub sorted_model: RefCell<Option<gtk::SortListModel>>,
+        pub sorter: RefCell<SwStationSorter>,
     }
 
     #[glib::object_subclass]
@@ -51,13 +52,14 @@ mod imp {
         fn constructed(&self) {
             self.parent_constructed();
 
-            // Initialize the sorted model
+            // Initialize the sorted model with the station sorter
             let list_store = gio::ListStore::new::<SwStation>();
-            let sorter = gtk::StringSorter::new(Some(&gtk::PropertyExpression::new(
-                SwStation::static_type(),
-                None::<&Expression>,
-                "title",
-            )));
+            let sorter = SwStationSorter::new();
+            // Bind sorter properties to settings
+            settings_manager::bind_property(Key::LibrarySorting, &sorter, "sorting");
+            settings_manager::bind_property(Key::LibrarySortingType, &sorter, "sorting-type");
+            *self.sorter.borrow_mut() = sorter.clone();
+            
             let sorted_model = gtk::SortListModel::new(Some(list_store), Some(sorter));
             *self.sorted_model.borrow_mut() = Some(sorted_model);
 
@@ -274,6 +276,11 @@ impl SwLibrary {
     pub fn status(&self) -> SwLibraryStatus {
         let imp = imp::SwLibrary::from_obj(self);
         *imp.status.borrow()
+    }
+
+    pub fn sorter(&self) -> SwStationSorter {
+        let imp = imp::SwLibrary::from_obj(self);
+        imp.sorter.borrow().clone()
     }
 
     pub async fn update_data(&self) -> Result<(), crate::api::Error> {
