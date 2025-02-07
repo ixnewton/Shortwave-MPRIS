@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2025-01-13 04:55+0000\n"
-"PO-Revision-Date: 2025-01-13 21:48+0200\n"
+"POT-Creation-Date: 2025-01-26 21:21+0000\n"
+"PO-Revision-Date: 2025-02-07 16:26+0200\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
 "Language-Team: Finnish <lokalisointi-lista@googlegroups.com>\n"
 "Language: fi\n"
@@ -382,20 +382,20 @@ msgid "Stations are played without recording"
 msgstr "Asemat toistetaan ilman nauhoitusta"
 
 #: data/gtk/preferences_dialog.ui:120
-msgid "M_aximum Duration"
-msgstr "_Enimmäiskesto"
-
-#: data/gtk/preferences_dialog.ui:121
-msgid "Recording ends when the maximum duration is reached"
-msgstr "Nauhoitus päättyy, kun enimmäiskesto täyttyy"
-
-#: data/gtk/preferences_dialog.ui:136
 msgid "M_inimum Duration"
 msgstr "_Vähimmäiskesto"
 
-#: data/gtk/preferences_dialog.ui:137
+#: data/gtk/preferences_dialog.ui:121
 msgid "Tracks shorter than the minimum duration will be ignored"
 msgstr "Kappaleita, jotka ovat alle vähimmäiskestorajan, ei huomioida"
+
+#: data/gtk/preferences_dialog.ui:136
+msgid "M_aximum Duration"
+msgstr "_Enimmäiskesto"
+
+#: data/gtk/preferences_dialog.ui:137
+msgid "Recording ends when the maximum duration is reached"
+msgstr "Nauhoitus päättyy, kun enimmäiskesto täyttyy"
 
 #: data/gtk/search_page.ui:23
 msgid "Search"
@@ -543,7 +543,7 @@ msgid "The recorded track has been saved"
 msgstr "Nauhoitettu kappale on tallennettu"
 
 #: data/gtk/track_dialog.ui:137 data/gtk/track_dialog.ui:208
-#: data/gtk/track_row.ui:9 src/audio/player.rs:440
+#: data/gtk/track_row.ui:9 src/audio/player.rs:442
 msgid "Save Track"
 msgstr "Tallenna kappale"
 
@@ -591,63 +591,67 @@ msgstr "Toistetaan “{}”"
 msgid "Active Playback"
 msgstr "Aktiivinen toisto"
 
-#: src/audio/player.rs:450
+#: src/audio/player.rs:452
 msgid "Don't Record"
 msgstr "Älä nauhoita"
 
-#: src/audio/recording_state.rs:49 src/audio/recording_state.rs:51
+#: src/audio/recording_state.rs:54 src/audio/recording_state.rs:56
 msgid "Not Recorded"
 msgstr "Ei nauhoitettu"
 
-#: src/audio/recording_state.rs:50
+#: src/audio/recording_state.rs:55
 msgid "Ignored Track"
 msgstr "Sivuutettu kappale"
 
-#: src/audio/recording_state.rs:53
+#: src/audio/recording_state.rs:58
 msgid "Recording…"
 msgstr "Nauhoitetaan…"
 
-#: src/audio/recording_state.rs:54
+#: src/audio/recording_state.rs:59 src/audio/recording_state.rs:60
 msgid "Recorded"
 msgstr "Nauhoitettu"
 
-#: src/audio/recording_state.rs:56
+#: src/audio/recording_state.rs:62
 msgid "Below Threshold"
 msgstr "Alle rajan"
 
-#: src/audio/recording_state.rs:57
+#: src/audio/recording_state.rs:63
 msgid "Cancelled"
 msgstr "Peruttu"
 
-#: src/audio/recording_state.rs:63
+#: src/audio/recording_state.rs:69
 msgid "Recording is deactivated in preferences"
 msgstr "Nauhoitus on poistettu käytöstä asetuksissa"
 
-#: src/audio/recording_state.rs:65
+#: src/audio/recording_state.rs:71
 msgid "The track contains a word that is on the ignore list"
 msgstr "Kappale sisältää sivuutusluettelossa olevan sanan"
 
-#: src/audio/recording_state.rs:68
+#: src/audio/recording_state.rs:74
 msgid ""
 "The track wasn't played from the beginning, so it can't be fully recorded"
 msgstr ""
 "Kappaletta ei toistettu alusta saakka, joten sitä ei voi täysin nauhoittaa"
 
-#: src/audio/recording_state.rs:71
+#: src/audio/recording_state.rs:77
 msgid "The track will be recorded until a new track gets played"
 msgstr ""
 "Nykyinen kappale nauhoitetaan siihen saakka, kunnes uusi kappale toistetaan"
 
-#: src/audio/recording_state.rs:73
+#: src/audio/recording_state.rs:79
 msgid "The track has been temporarily recorded"
 msgstr "Kappale on nauhoitettu väliaikaisesti"
 
-#: src/audio/recording_state.rs:75
+#: src/audio/recording_state.rs:81
+msgid "The maximum recording duration has been reached"
+msgstr "Nauhoituksen enimmäisraja tuli vastaan"
+
+#: src/audio/recording_state.rs:84
 msgid ""
 "The track has been discarded as the duration was below the set threshold"
 msgstr "Kappale hylättiin, koska sen kesto oli alle asetetun vähimmäisrajan"
 
-#: src/audio/recording_state.rs:77
+#: src/audio/recording_state.rs:86
 msgid "Recording has been cancelled"
 msgstr "Nauhoitus on peruttu"
 
@@ -659,9 +663,13 @@ msgstr "Google Cast -laite"
 msgid "Unknown Model"
 msgstr "Tuntematon malli"
 
-#: src/ui/about_dialog.rs:44
+#: src/ui/about_dialog.rs:41
 msgid "translator-credits"
 msgstr "Jiri Grönroos"
+
+#: src/ui/about_dialog.rs:42
+msgid "Donate"
+msgstr "Lahjoita"
 
 #: src/ui/add_station_dialog.rs:94
 msgid "Select Station Cover"
