@@ -21,7 +21,7 @@
         "--talk-name=org.gtk.vfs.*",
         "--filesystem=xdg-run/gvfsd",
         "--filesystem=xdg-music",
-        "--env=RUST_LOG=shortwave,cast_sender=debug",
+        "--env=RUST_LOG=shortwave=debug,cast_sender=debug",
         "--env=RUST_BACKTRACE=1"
     ],
     "build-options": {

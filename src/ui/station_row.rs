@@ -74,7 +74,7 @@ mod imp {
             self.parent_constructed();
 
             self.play_button.connect_clicked(clone!(
-                #[strong(rename_to = obj)]
+                #[weak(rename_to = obj)]
                 self.obj(),
                 move |_| {
                     glib::spawn_future_local(clone!(

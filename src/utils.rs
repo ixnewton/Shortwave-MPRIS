@@ -17,7 +17,7 @@
 use ashpd::desktop::background::Background;
 use gtk::glib;
 
-use crate::i18n::{i18n_f, ni18n_f};
+use crate::i18n::{gettext_f, ni18n_f};
 
 pub fn send<T: 'static>(sender: &async_channel::Sender<T>, message: T) {
     let fut = glib::clone!(
@@ -67,9 +67,14 @@ pub fn format_duration(d: u64, short: bool) -> String {
         };
 
         if hour > 0 {
-            i18n_f("{} {} {}", &[&hours, &mins, &secs])
+            // Translators: Do NOT translate the content between '{' and '}', this is a variable name.
+            gettext_f(
+                "{hours} {mins} {secs}",
+                &[("hours", &hours), ("mins", &mins), ("secs", &secs)],
+            )
         } else if min > 0 {
-            i18n_f("{} {}", &[&mins, &secs])
+            // Translators: Do NOT translate the content between '{' and '}', this is a variable name.
+            gettext_f("{mins} {secs}", &[("mins", &mins), ("secs", &secs)])
         } else if sec > 0 {
             secs
         } else {

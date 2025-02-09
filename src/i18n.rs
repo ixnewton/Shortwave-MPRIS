@@ -30,6 +30,16 @@ fn freplace(input: String, args: &[&str]) -> String {
     output
 }
 
+fn freplace_dict(s: String, args: &[(&str, &str)]) -> String {
+    let mut s = s;
+
+    for (k, v) in args {
+        s = s.replace(&format!("{{{k}}}"), v);
+    }
+
+    s
+}
+
 #[allow(dead_code)]
 fn kreplace(input: String, kwargs: &[(&str, &str)]) -> String {
     let mut s = input;
@@ -124,4 +134,9 @@ pub fn pni18n_k(
 ) -> String {
     let s = npgettext(ctx, single, multiple, number);
     kreplace(s, kwargs)
+}
+
+pub fn gettext_f(msgid: &str, args: &[(&str, &str)]) -> String {
+    let s = gettext(msgid);
+    freplace_dict(s, args)
 }
