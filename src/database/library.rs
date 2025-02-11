@@ -87,6 +87,8 @@ mod imp {
                     }
                 }
 
+                // Add stations to internal lists
+                self.stations.borrow_mut().extend(station_vec.clone());
                 self.model.add_stations(station_vec);
                 self.obj().notify("status");
             }
