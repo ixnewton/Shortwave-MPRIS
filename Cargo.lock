@@ -80,6 +80,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "assert_matches"
+version = "1.5.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9b34d609dfbaf33d6889b2b7106d3ca345eacad44200913df5ba02bfd31d2ba9"
+
+[[package]]
 name = "async-broadcast"
 version = "0.7.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3327,6 +3333,7 @@ dependencies = [
  "Inflector",
  "anyhow",
  "ashpd",
+ "assert_matches",
  "async-channel 2.3.1",
  "async-compat",
  "async-io",
@@ -3351,6 +3358,7 @@ dependencies = [
  "mdns-sd",
  "mpris-server",
  "native-tls",
+ "once_cell",
  "openssl",
  "pretty_env_logger",
  "rand",

@@ -93,6 +93,23 @@ mod imp {
                 self.obj().notify("status");
             }
         }
+
+        fn properties() -> &'static [glib::ParamSpec] {
+            use once_cell::sync::Lazy;
+            static PROPERTIES: Lazy<Vec<glib::ParamSpec>> = Lazy::new(|| {
+                vec![glib::ParamSpecEnum::builder::<SwLibraryStatus>("status")
+                    .read_only()
+                    .build()]
+            });
+            PROPERTIES.as_ref()
+        }
+
+        fn property(&self, _id: usize, pspec: &glib::ParamSpec) -> glib::Value {
+            match pspec.name() {
+                "status" => self.status.borrow().to_value(),
+                _ => unimplemented!(),
+            }
+        }
     }
 }
 
