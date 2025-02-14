@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2025-01-26 21:21+0000\n"
-"PO-Revision-Date: 2025-02-04 10:00+0800\n"
+"POT-Creation-Date: 2025-02-13 05:11+0000\n"
+"PO-Revision-Date: 2025-02-14 19:57+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -342,6 +342,7 @@ msgstr "通知(_N)"
 msgid "Show desktop notifications when a new track gets played"
 msgstr "当播放新音轨时显示桌面通知"
 
+#. Translators: This is a noun / preferences group title
 #: data/gtk/preferences_dialog.ui:43
 msgid "Recording"
 msgstr "录制"
@@ -487,44 +488,44 @@ msgstr "信息无法更新，可能是因为该电台已从公共数据库移除
 msgid "Information"
 msgstr "信息"
 
-#: data/gtk/station_dialog.ui:157
+#: data/gtk/station_dialog.ui:158
 msgid "Language"
 msgstr "语言"
 
-#: data/gtk/station_dialog.ui:167
+#: data/gtk/station_dialog.ui:168
 msgid "Tags"
 msgstr "标签"
 
-#: data/gtk/station_dialog.ui:179
+#: data/gtk/station_dialog.ui:180
 msgid "Location"
 msgstr "位置"
 
-#: data/gtk/station_dialog.ui:183
+#: data/gtk/station_dialog.ui:184
 msgid "Country"
 msgstr "国家"
 
-#: data/gtk/station_dialog.ui:193
+#: data/gtk/station_dialog.ui:194
 msgid "State"
 msgstr "州省"
 
-#: data/gtk/station_dialog.ui:227
+#: data/gtk/station_dialog.ui:228
 msgid "Audio"
 msgstr "音频"
 
-#: data/gtk/station_dialog.ui:230
+#: data/gtk/station_dialog.ui:231
 msgid "Bitrate"
 msgstr "位速率"
 
-#: data/gtk/station_dialog.ui:240
+#: data/gtk/station_dialog.ui:241
 msgid "Codec"
 msgstr "编解码器"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:250
+#: data/gtk/station_dialog.ui:251
 msgid "Stream"
 msgstr "媒体流"
 
-#: data/gtk/station_dialog.ui:256
+#: data/gtk/station_dialog.ui:257
 msgid "Copy"
 msgstr "复制"
 
@@ -537,7 +538,7 @@ msgid "The recorded track has been saved"
 msgstr "录制的音轨已被保存"
 
 #: data/gtk/track_dialog.ui:137 data/gtk/track_dialog.ui:208
-#: data/gtk/track_row.ui:9 src/audio/player.rs:442
+#: data/gtk/track_row.ui:9 src/audio/player.rs:449
 msgid "Save Track"
 msgstr "保存音轨"
 
@@ -574,18 +575,18 @@ msgid "Track no longer available"
 msgstr "音轨不再可用"
 
 #: src/app.rs:108 src/app.rs:130
-msgid "This track is currently not recorded"
+msgid "This track is currently not being recorded"
 msgstr "此音轨当前未被录制"
 
 #: src/app.rs:261
 msgid "Playing “{}”"
 msgstr "正在播放“{}”"
 
-#: src/app.rs:361
+#: src/app.rs:360
 msgid "Active Playback"
 msgstr "活动播放"
 
-#: src/audio/player.rs:452
+#: src/audio/player.rs:459
 msgid "Don't Record"
 msgstr "不要录制"
 
@@ -698,11 +699,11 @@ msgid "{} sec"
 msgid_plural "{} sec"
 msgstr[0] "{} 秒"
 
-#: src/ui/station_dialog.rs:205
+#: src/ui/station_dialog.rs:207
 msgid "{} kbit/s"
 msgstr "{} kbit/s"
 
-#: src/ui/station_dialog.rs:290
+#: src/ui/station_dialog.rs:292
 msgid "Copied"
 msgstr "已复制"
 
@@ -732,14 +733,13 @@ msgid "{} minute"
 msgid_plural "{} minutes"
 msgstr[0] "{} 分钟"
 
-#: src/utils.rs:63
+#: src/utils.rs:62
 msgid "{} second"
 msgid_plural "{} seconds"
 msgstr[0] "{} 秒"
 
-#: src/utils.rs:75
-msgid "0 seconds"
-msgstr "0 秒"
+#~ msgid "0 seconds"
+#~ msgstr "0 秒"
 
 #~ msgid "No Songs"
 #~ msgstr "无歌曲"
