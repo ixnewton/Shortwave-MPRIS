@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2025-01-26 21:21+0000\n"
-"PO-Revision-Date: 2025-01-29 16:49-0300\n"
+"POT-Creation-Date: 2025-02-13 05:11+0000\n"
+"PO-Revision-Date: 2025-02-14 23:02-0300\n"
 "Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
 "Language-Team: Brazilian Portuguese <https://br.gnome.org/traducao>\n"
 "Language: pt_BR\n"
@@ -352,6 +352,7 @@ msgid "Show desktop notifications when a new track gets played"
 msgstr ""
 "Mostra notificações da área de trabalho quando uma nova faixa é reproduzida"
 
+#. Translators: This is a noun / preferences group title
 #: data/gtk/preferences_dialog.ui:43
 msgid "Recording"
 msgstr "Gravação"
@@ -507,44 +508,44 @@ msgstr ""
 msgid "Information"
 msgstr "Informação"
 
-#: data/gtk/station_dialog.ui:157
+#: data/gtk/station_dialog.ui:158
 msgid "Language"
 msgstr "Idioma"
 
-#: data/gtk/station_dialog.ui:167
+#: data/gtk/station_dialog.ui:168
 msgid "Tags"
 msgstr "Etiquetas"
 
-#: data/gtk/station_dialog.ui:179
+#: data/gtk/station_dialog.ui:180
 msgid "Location"
 msgstr "Local"
 
-#: data/gtk/station_dialog.ui:183
+#: data/gtk/station_dialog.ui:184
 msgid "Country"
 msgstr "País"
 
-#: data/gtk/station_dialog.ui:193
+#: data/gtk/station_dialog.ui:194
 msgid "State"
 msgstr "Estado"
 
-#: data/gtk/station_dialog.ui:227
+#: data/gtk/station_dialog.ui:228
 msgid "Audio"
 msgstr "Áudio"
 
-#: data/gtk/station_dialog.ui:230
+#: data/gtk/station_dialog.ui:231
 msgid "Bitrate"
 msgstr "Taxa de bits"
 
-#: data/gtk/station_dialog.ui:240
+#: data/gtk/station_dialog.ui:241
 msgid "Codec"
 msgstr "Codec"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:250
+#: data/gtk/station_dialog.ui:251
 msgid "Stream"
 msgstr "Reprodução"
 
-#: data/gtk/station_dialog.ui:256
+#: data/gtk/station_dialog.ui:257
 msgid "Copy"
 msgstr "Copiar"
 
@@ -557,7 +558,7 @@ msgid "The recorded track has been saved"
 msgstr "A faixa gravada foi salva"
 
 #: data/gtk/track_dialog.ui:137 data/gtk/track_dialog.ui:208
-#: data/gtk/track_row.ui:9 src/audio/player.rs:442
+#: data/gtk/track_row.ui:9 src/audio/player.rs:449
 msgid "Save Track"
 msgstr "Salvar faixar"
 
@@ -596,18 +597,18 @@ msgid "Track no longer available"
 msgstr "A faixa não está mais disponível"
 
 #: src/app.rs:108 src/app.rs:130
-msgid "This track is currently not recorded"
-msgstr "Esta faixa não está gravada no momento"
+msgid "This track is currently not being recorded"
+msgstr "Esta faixa não está sendo gravada no momento"
 
 #: src/app.rs:261
 msgid "Playing “{}”"
 msgstr "Reproduzindo “{}”"
 
-#: src/app.rs:361
+#: src/app.rs:360
 msgid "Active Playback"
 msgstr "Reprodução ativa"
 
-#: src/audio/player.rs:452
+#: src/audio/player.rs:459
 msgid "Don't Record"
 msgstr "Não gravar"
 
@@ -724,11 +725,11 @@ msgid_plural "{} sec"
 msgstr[0] "{} seg"
 msgstr[1] "{} seg"
 
-#: src/ui/station_dialog.rs:205
+#: src/ui/station_dialog.rs:207
 msgid "{} kbit/s"
 msgstr "{} kbit/s"
 
-#: src/ui/station_dialog.rs:290
+#: src/ui/station_dialog.rs:292
 msgid "Copied"
 msgstr "Copiada"
 
@@ -762,15 +763,14 @@ msgid_plural "{} minutes"
 msgstr[0] "{} minuto"
 msgstr[1] "{} minutos"
 
-#: src/utils.rs:63
+#: src/utils.rs:62
 msgid "{} second"
 msgid_plural "{} seconds"
 msgstr[0] "{} segundo"
 msgstr[1] "{} segundos"
 
-#: src/utils.rs:75
-msgid "0 seconds"
-msgstr "0 segundos"
+#~ msgid "0 seconds"
+#~ msgstr "0 segundos"
 
 #~ msgid "No Songs"
 #~ msgstr "Sem música"
