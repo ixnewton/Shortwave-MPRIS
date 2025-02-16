@@ -4,15 +4,15 @@
 #
 # Muhammet Kara <muhammetk@gmail.com>, 2021.
 # Sabri Ünal <yakushabb@gmail.com>, 2020, 2022-2024.
-# Emin Tufan Çetin <etcetin@gmail.com>, 2020-2024.
+# Emin Tufan Çetin <etcetin@gmail.com>, 2020-2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2025-01-26 21:21+0000\n"
-"PO-Revision-Date: 2025-01-26 16:28+0300\n"
-"Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
+"POT-Creation-Date: 2025-02-13 05:11+0000\n"
+"PO-Revision-Date: 2025-02-16 08:00+0300\n"
+"Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Turkish <takim@gnome.org.tr>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
@@ -340,6 +340,7 @@ msgstr "_Bildirimler"
 msgid "Show desktop notifications when a new track gets played"
 msgstr "Yeni parça çalınırken masaüstü bildirimi göster"
 
+#. Translators: This is a noun / preferences group title
 #: data/gtk/preferences_dialog.ui:43
 msgid "Recording"
 msgstr "Kayıt"
@@ -492,44 +493,44 @@ msgstr ""
 msgid "Information"
 msgstr "Bilgi"
 
-#: data/gtk/station_dialog.ui:157
+#: data/gtk/station_dialog.ui:158
 msgid "Language"
 msgstr "Dil"
 
-#: data/gtk/station_dialog.ui:167
+#: data/gtk/station_dialog.ui:168
 msgid "Tags"
 msgstr "Etiketler"
 
-#: data/gtk/station_dialog.ui:179
+#: data/gtk/station_dialog.ui:180
 msgid "Location"
 msgstr "Konum"
 
-#: data/gtk/station_dialog.ui:183
+#: data/gtk/station_dialog.ui:184
 msgid "Country"
 msgstr "Ülke"
 
-#: data/gtk/station_dialog.ui:193
+#: data/gtk/station_dialog.ui:194
 msgid "State"
 msgstr "Eyalet"
 
-#: data/gtk/station_dialog.ui:227
+#: data/gtk/station_dialog.ui:228
 msgid "Audio"
 msgstr "Ses"
 
-#: data/gtk/station_dialog.ui:230
+#: data/gtk/station_dialog.ui:231
 msgid "Bitrate"
 msgstr "Bit oranı"
 
-#: data/gtk/station_dialog.ui:240
+#: data/gtk/station_dialog.ui:241
 msgid "Codec"
 msgstr "Kodlayıcı"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:250
+#: data/gtk/station_dialog.ui:251
 msgid "Stream"
 msgstr "Akış"
 
-#: data/gtk/station_dialog.ui:256
+#: data/gtk/station_dialog.ui:257
 msgid "Copy"
 msgstr "Kopyala"
 
@@ -542,7 +543,7 @@ msgid "The recorded track has been saved"
 msgstr "Kayıttaki parça kaydedildi"
 
 #: data/gtk/track_dialog.ui:137 data/gtk/track_dialog.ui:208
-#: data/gtk/track_row.ui:9 src/audio/player.rs:442
+#: data/gtk/track_row.ui:9 src/audio/player.rs:449
 msgid "Save Track"
 msgstr "Parçayı Kaydet"
 
@@ -579,18 +580,18 @@ msgid "Track no longer available"
 msgstr "Parça artık kullanılabilir değil"
 
 #: src/app.rs:108 src/app.rs:130
-msgid "This track is currently not recorded"
-msgstr "Bu parça kaydedilmemiş"
+msgid "This track is currently not being recorded"
+msgstr "Bu parça şu anda kaydedilmiyor"
 
 #: src/app.rs:261
 msgid "Playing “{}”"
 msgstr "“{}” Oynatılıyor"
 
-#: src/app.rs:361
+#: src/app.rs:360
 msgid "Active Playback"
 msgstr "Etkin Kayıttan Yürütme"
 
-#: src/audio/player.rs:452
+#: src/audio/player.rs:459
 msgid "Don't Record"
 msgstr "Kaydetme"
 
@@ -700,11 +701,11 @@ msgid "{} sec"
 msgid_plural "{} sec"
 msgstr[0] "{} sn"
 
-#: src/ui/station_dialog.rs:205
+#: src/ui/station_dialog.rs:207
 msgid "{} kbit/s"
 msgstr "{} kbit/s"
 
-#: src/ui/station_dialog.rs:290
+#: src/ui/station_dialog.rs:292
 msgid "Copied"
 msgstr "Kopyalandı"
 
@@ -736,11 +737,10 @@ msgid "{} minute"
 msgid_plural "{} minutes"
 msgstr[0] "{} dakika"
 
-#: src/utils.rs:63
+#: src/utils.rs:62
 msgid "{} second"
 msgid_plural "{} seconds"
 msgstr[0] "{} saniye"
 
-#: src/utils.rs:75
-msgid "0 seconds"
-msgstr "0 saniye"
+#~ msgid "0 seconds"
+#~ msgstr "0 saniye"
