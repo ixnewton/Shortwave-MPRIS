@@ -16,8 +16,9 @@
 
 use adw::prelude::*;
 use adw::subclass::prelude::*;
-use glib::{clone, subclass};
+use glib::clone;
 use gtk::{gio, glib, CompositeTemplate};
+use glib::subclass::InitializingObject;
 
 use crate::app::SwApplication;
 use crate::audio::SwPlaybackState;
@@ -140,7 +141,7 @@ mod imp {
             });
         }
 
-        fn instance_init(obj: &subclass::InitializingObject<Self>) {
+        fn instance_init(obj: &InitializingObject<Self>) {
             obj.init_template();
         }
     }
@@ -159,6 +160,22 @@ mod imp {
             let width = settings_manager::integer(Key::WindowWidth);
             let height = settings_manager::integer(Key::WindowHeight);
             obj.set_default_size(width, height);
+
+            // Monitor window size changes for auto gadget mode
+            let window_weak = obj.downgrade();
+            obj.connect_default_height_notify(move |_window| {
+                if let Some(window) = window_weak.upgrade() {
+                    let height = window.default_height();
+                    let gadget_visible = window.imp().player_gadget.is_visible();
+                    
+                    // Auto-switch to gadget mode if height is less than threshold
+                    if height < 150 && !gadget_visible {
+                        window.enable_gadget_player(true);
+                    } else if height >= 150 && gadget_visible {
+                        window.enable_gadget_player(false);
+                    }
+                }
+            });
         }
     }
 
@@ -262,9 +279,19 @@ impl SwApplicationWindow {
 
     pub fn enable_gadget_player(&self, enable: bool) {
         if enable {
+            // Save current window size before entering gadget mode
+            let (width, height) = self.default_size();
+            settings_manager::set_integer(Key::WindowPreviousWidth, width);
+            settings_manager::set_integer(Key::WindowPreviousHeight, height);
+
             self.imp().player_gadget.set_visible(true);
             self.imp().player_toolbar.set_visible(false);
         } else {
+            // Restore initial window size from window manager settings
+            let width = settings_manager::integer(Key::WindowWidth);
+            let height = settings_manager::integer(Key::WindowHeight);
+            self.set_default_size(width, height);
+
             self.imp().player_gadget.set_visible(false);
             self.imp().player_toolbar.set_visible(true);
         }
