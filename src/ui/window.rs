@@ -167,12 +167,14 @@ mod imp {
                 if let Some(window) = window_weak.upgrade() {
                     let height = window.default_height();
                     let gadget_visible = window.imp().player_gadget.is_visible();
-
+                    
                     // Auto-switch to gadget mode if height is less than threshold
                     if height < 150 && !gadget_visible {
-                        window.enable_gadget_player(true);
+                        window.imp().player_gadget.set_visible(true);
+                        window.imp().player_toolbar.set_visible(false);
                     } else if height >= 150 && gadget_visible {
-                        window.enable_gadget_player(false);
+                        window.imp().player_gadget.set_visible(false);
+                        window.imp().player_toolbar.set_visible(true);
                     }
                 }
             });
@@ -284,16 +286,13 @@ impl SwApplicationWindow {
             settings_manager::set_integer(Key::WindowPreviousWidth, width);
             settings_manager::set_integer(Key::WindowPreviousHeight, height);
 
-            self.imp().player_gadget.set_visible(true);
-            self.imp().player_toolbar.set_visible(false);
+            // Set window height to 100px
+            self.set_default_size(width, 100);
         } else {
-            // Restore initial window size from window manager settings
-            let width = settings_manager::integer(Key::WindowWidth);
-            let height = settings_manager::integer(Key::WindowHeight);
+            // Restore previous window size
+            let width = settings_manager::integer(Key::WindowPreviousWidth);
+            let height = settings_manager::integer(Key::WindowPreviousHeight);
             self.set_default_size(width, height);
-
-            self.imp().player_gadget.set_visible(false);
-            self.imp().player_toolbar.set_visible(true);
         }
     }
 
