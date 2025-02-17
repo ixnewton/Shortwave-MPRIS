@@ -167,7 +167,7 @@ mod imp {
                 if let Some(window) = window_weak.upgrade() {
                     let height = window.default_height();
                     let gadget_visible = window.imp().player_gadget.is_visible();
-                    
+
                     // Auto-switch to gadget mode if height is less than threshold
                     if height < 150 && !gadget_visible {
                         window.imp().player_gadget.set_visible(true);
