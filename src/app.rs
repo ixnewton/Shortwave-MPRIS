@@ -105,7 +105,8 @@ mod imp {
                             }
                         }
 
-                        window.show_notification(&i18n("This track is currently not being recorded"));
+                        window
+                            .show_notification(&i18n("This track is currently not being recorded"));
                     })
                     .build(),
                 // app.cancel-recording
@@ -127,7 +128,8 @@ mod imp {
                             }
                         }
 
-                        window.show_notification(&i18n("This track is currently not being recorded"));
+                        window
+                            .show_notification(&i18n("This track is currently not being recorded"));
                     })
                     .build(),
                 // app.quit
