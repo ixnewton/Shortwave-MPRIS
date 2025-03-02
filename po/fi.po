@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2025-01-26 21:21+0000\n"
-"PO-Revision-Date: 2025-02-07 16:26+0200\n"
+"POT-Creation-Date: 2025-02-13 05:11+0000\n"
+"PO-Revision-Date: 2025-03-02 14:21+0200\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
 "Language-Team: Finnish <lokalisointi-lista@googlegroups.com>\n"
 "Language: fi\n"
@@ -339,6 +339,7 @@ msgstr "_Ilmoitukset"
 msgid "Show desktop notifications when a new track gets played"
 msgstr "Näytä työpöytäilmoitus kun uusi kappale alkaa soida"
 
+#. Translators: This is a noun / preferences group title
 #: data/gtk/preferences_dialog.ui:43
 msgid "Recording"
 msgstr "Nauhoitus"
@@ -493,44 +494,44 @@ msgstr ""
 msgid "Information"
 msgstr "Tiedot"
 
-#: data/gtk/station_dialog.ui:157
+#: data/gtk/station_dialog.ui:158
 msgid "Language"
 msgstr "Kieli"
 
-#: data/gtk/station_dialog.ui:167
+#: data/gtk/station_dialog.ui:168
 msgid "Tags"
 msgstr "Tunnisteet"
 
-#: data/gtk/station_dialog.ui:179
+#: data/gtk/station_dialog.ui:180
 msgid "Location"
 msgstr "Sijainti"
 
-#: data/gtk/station_dialog.ui:183
+#: data/gtk/station_dialog.ui:184
 msgid "Country"
 msgstr "Maa"
 
-#: data/gtk/station_dialog.ui:193
+#: data/gtk/station_dialog.ui:194
 msgid "State"
 msgstr "Tila"
 
-#: data/gtk/station_dialog.ui:227
+#: data/gtk/station_dialog.ui:228
 msgid "Audio"
 msgstr "Ääni"
 
-#: data/gtk/station_dialog.ui:230
+#: data/gtk/station_dialog.ui:231
 msgid "Bitrate"
 msgstr "Bittinopeus"
 
-#: data/gtk/station_dialog.ui:240
+#: data/gtk/station_dialog.ui:241
 msgid "Codec"
 msgstr "Koodekki"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:250
+#: data/gtk/station_dialog.ui:251
 msgid "Stream"
 msgstr "Suoratoisto"
 
-#: data/gtk/station_dialog.ui:256
+#: data/gtk/station_dialog.ui:257
 msgid "Copy"
 msgstr "Kopioi"
 
@@ -543,7 +544,7 @@ msgid "The recorded track has been saved"
 msgstr "Nauhoitettu kappale on tallennettu"
 
 #: data/gtk/track_dialog.ui:137 data/gtk/track_dialog.ui:208
-#: data/gtk/track_row.ui:9 src/audio/player.rs:442
+#: data/gtk/track_row.ui:9 src/audio/player.rs:449
 msgid "Save Track"
 msgstr "Tallenna kappale"
 
@@ -580,18 +581,18 @@ msgid "Track no longer available"
 msgstr "Kappale ei ole enää saatavilla"
 
 #: src/app.rs:108 src/app.rs:130
-msgid "This track is currently not recorded"
-msgstr "Tätä kappaletta ei nauhoiteta"
+msgid "This track is currently not being recorded"
+msgstr "Tätä kappaletta ei nauhoiteta tällä hetkellä"
 
 #: src/app.rs:261
 msgid "Playing “{}”"
 msgstr "Toistetaan “{}”"
 
-#: src/app.rs:361
+#: src/app.rs:360
 msgid "Active Playback"
 msgstr "Aktiivinen toisto"
 
-#: src/audio/player.rs:452
+#: src/audio/player.rs:459
 msgid "Don't Record"
 msgstr "Älä nauhoita"
 
@@ -703,11 +704,11 @@ msgid_plural "{} sec"
 msgstr[0] "{} s"
 msgstr[1] "{} s"
 
-#: src/ui/station_dialog.rs:205
+#: src/ui/station_dialog.rs:207
 msgid "{} kbit/s"
 msgstr "{} kbit/s"
 
-#: src/ui/station_dialog.rs:290
+#: src/ui/station_dialog.rs:292
 msgid "Copied"
 msgstr "Kopioitu"
 
@@ -741,15 +742,14 @@ msgid_plural "{} minutes"
 msgstr[0] "{} minuutti"
 msgstr[1] "{} minuuttia"
 
-#: src/utils.rs:63
+#: src/utils.rs:62
 msgid "{} second"
 msgid_plural "{} seconds"
 msgstr[0] "{} sekunti"
 msgstr[1] "{} sekuntia"
 
-#: src/utils.rs:75
-msgid "0 seconds"
-msgstr "0 sekuntia"
+#~ msgid "0 seconds"
+#~ msgstr "0 sekuntia"
 
 #~ msgid "No Songs"
 #~ msgstr "Ei kappaleita"
