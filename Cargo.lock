@@ -3428,12 +3428,10 @@ dependencies = [
 
 [[package]]
 name = "smol-timeout"
-version = "0.6.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7859830574b98cb971aa80d150d8920d28a75df5ed7b0c0d6bd4b50fa0b0cf1f"
+version = "0.6.0"
 dependencies = [
  "async-io",
- "pin-project-lite",
+ "futures-lite",
 ]
 
 [[package]]
@@ -4774,7 +4772,3 @@ dependencies = [
  "syn",
  "winnow",
 ]
-
-[[patch.unused]]
-name = "smol-timeout"
-version = "0.6.0"
