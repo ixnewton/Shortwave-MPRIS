@@ -158,7 +158,7 @@ impl MprisServer {
                 let player = app.player();
 
                 if app.background_playback()
-                    && app.active_window().map_or(true, |w| !w.is_visible())
+                    && utils::OptionExt::is_none_or(&app.active_window(), |w| !w.is_visible())
                     && !utils::background_portal_permissions().await
                 {
                     debug!("No background portal permissions for next command");
@@ -179,7 +179,7 @@ impl MprisServer {
                 let player = app.player();
 
                 if app.background_playback()
-                    && app.active_window().map_or(true, |w| !w.is_visible())
+                    && utils::OptionExt::is_none_or(&app.active_window(), |w| !w.is_visible())
                     && !utils::background_portal_permissions().await
                 {
                     debug!("No background portal permissions for previous command");

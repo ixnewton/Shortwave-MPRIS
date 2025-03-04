@@ -19,6 +19,26 @@ use gtk::glib;
 
 use crate::i18n::{gettext_f, ni18n_f};
 
+/// Extension trait for Option that adds the is_none_or method
+pub trait OptionExt<T> {
+    /// Returns true if the option is None, or if the predicate returns true for the contained value
+    fn is_none_or<F>(&self, f: F) -> bool
+    where
+        F: FnOnce(&T) -> bool;
+}
+
+impl<T> OptionExt<T> for Option<T> {
+    fn is_none_or<F>(&self, f: F) -> bool
+    where
+        F: FnOnce(&T) -> bool,
+    {
+        match self {
+            None => true,
+            Some(x) => f(x),
+        }
+    }
+}
+
 pub fn send<T: 'static>(sender: &async_channel::Sender<T>, message: T) {
     let fut = glib::clone!(
         #[strong]
