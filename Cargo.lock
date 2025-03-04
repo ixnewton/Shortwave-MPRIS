@@ -80,6 +80,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "assert_matches"
+version = "1.5.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9b34d609dfbaf33d6889b2b7106d3ca345eacad44200913df5ba02bfd31d2ba9"
+
+[[package]]
 name = "async-broadcast"
 version = "0.7.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2275,9 +2281,9 @@ dependencies = [
 
 [[package]]
 name = "libsqlite3-sys"
-version = "0.31.0"
+version = "0.25.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ad8935b44e7c13394a179a438e0cebba0fe08fe01b54f152e29a93b5cf993fd4"
+checksum = "29f835d03d717946d28b1d1ed632eb6f0e24a299388ee623d0c23118d3e8a7fa"
 dependencies = [
  "pkg-config",
  "vcpkg",
@@ -3335,6 +3341,7 @@ dependencies = [
  "Inflector",
  "anyhow",
  "ashpd",
+ "assert_matches",
  "async-channel 2.3.1",
  "async-compat",
  "async-io",
@@ -3343,6 +3350,7 @@ dependencies = [
  "cast-sender",
  "diesel",
  "diesel_migrations",
+ "futures-lite",
  "futures-util",
  "gettext-rs",
  "glycin",
@@ -3353,9 +3361,13 @@ dependencies = [
  "language-tags",
  "libadwaita",
  "libshumate",
+ "libsqlite3-sys",
  "log",
  "mdns-sd",
  "mpris-server",
+ "native-tls",
+ "once_cell",
+ "openssl",
  "pretty_env_logger",
  "rand",
  "regex",
@@ -4762,3 +4774,7 @@ dependencies = [
  "syn",
  "winnow",
 ]
+
+[[patch.unused]]
+name = "smol-timeout"
+version = "0.6.0"
