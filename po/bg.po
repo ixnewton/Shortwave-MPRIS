@@ -1,5 +1,5 @@
 # Bulgarian translation of shortwave po-file.
-# Copyright (C) 2024, 2025 shortwave's COPYRIGHT HOLDER
+# Copyright (C) 2024, 2025 twlvnn kraftwerk <kraft_werk@tutanota.com>
 # This file is distributed under the same license as the shortwave package.
 # twlvnn kraftwerk <kraft_werk@tutanota.com>, 2024, 2025.
 #
@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2025-01-26 21:21+0000\n"
-"PO-Revision-Date: 2025-01-30 21:19+0100\n"
+"POT-Creation-Date: 2025-02-13 05:11+0000\n"
+"PO-Revision-Date: 2025-02-15 09:59+0100\n"
 "Last-Translator: twlvnn kraftwerk <kraft_werk@tutanota.com>\n"
 "Language-Team: Bulgarian <dict-notifications@fsa-bg.org>\n"
 "Language: bg\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Gtranslator 47.1\n"
 
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:3
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
@@ -339,6 +339,7 @@ msgstr "_Известия"
 msgid "Show desktop notifications when a new track gets played"
 msgstr "Извеждане на известие на работния плот при пускане на нова песен"
 
+#. Translators: This is a noun / preferences group title
 #: data/gtk/preferences_dialog.ui:43
 msgid "Recording"
 msgstr "Записване"
@@ -494,44 +495,44 @@ msgstr ""
 msgid "Information"
 msgstr "Информация"
 
-#: data/gtk/station_dialog.ui:157
+#: data/gtk/station_dialog.ui:158
 msgid "Language"
 msgstr "Език"
 
-#: data/gtk/station_dialog.ui:167
+#: data/gtk/station_dialog.ui:168
 msgid "Tags"
 msgstr "Етикети"
 
-#: data/gtk/station_dialog.ui:179
+#: data/gtk/station_dialog.ui:180
 msgid "Location"
 msgstr "Местоположение"
 
-#: data/gtk/station_dialog.ui:183
+#: data/gtk/station_dialog.ui:184
 msgid "Country"
 msgstr "Държава"
 
-#: data/gtk/station_dialog.ui:193
+#: data/gtk/station_dialog.ui:194
 msgid "State"
 msgstr "Област"
 
-#: data/gtk/station_dialog.ui:227
+#: data/gtk/station_dialog.ui:228
 msgid "Audio"
 msgstr "Звук"
 
-#: data/gtk/station_dialog.ui:230
+#: data/gtk/station_dialog.ui:231
 msgid "Bitrate"
 msgstr "Побитова скорост"
 
-#: data/gtk/station_dialog.ui:240
+#: data/gtk/station_dialog.ui:241
 msgid "Codec"
 msgstr "Кодер"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:250
+#: data/gtk/station_dialog.ui:251
 msgid "Stream"
 msgstr "Поток"
 
-#: data/gtk/station_dialog.ui:256
+#: data/gtk/station_dialog.ui:257
 msgid "Copy"
 msgstr "Копиране"
 
@@ -544,7 +545,7 @@ msgid "The recorded track has been saved"
 msgstr "Записаната песен е запазена"
 
 #: data/gtk/track_dialog.ui:137 data/gtk/track_dialog.ui:208
-#: data/gtk/track_row.ui:9 src/audio/player.rs:442
+#: data/gtk/track_row.ui:9 src/audio/player.rs:449
 msgid "Save Track"
 msgstr "Запазване на песента"
 
@@ -582,18 +583,18 @@ msgid "Track no longer available"
 msgstr "Песента вече не е налична"
 
 #: src/app.rs:108 src/app.rs:130
-msgid "This track is currently not recorded"
-msgstr "Тази песен в момента не е записана"
+msgid "This track is currently not being recorded"
+msgstr "Тази песен в момента не се записва"
 
 #: src/app.rs:261
 msgid "Playing “{}”"
 msgstr "В момента слушате „{}“"
 
-#: src/app.rs:361
+#: src/app.rs:360
 msgid "Active Playback"
 msgstr "Възпроизвеждане"
 
-#: src/audio/player.rs:452
+#: src/audio/player.rs:459
 msgid "Don't Record"
 msgstr "Без записване"
 
@@ -714,11 +715,11 @@ msgid_plural "{} sec"
 msgstr[0] "{} сек"
 msgstr[1] "{} сек"
 
-#: src/ui/station_dialog.rs:205
+#: src/ui/station_dialog.rs:207
 msgid "{} kbit/s"
 msgstr "{} kbit/s"
 
-#: src/ui/station_dialog.rs:290
+#: src/ui/station_dialog.rs:292
 msgid "Copied"
 msgstr "Копирано"
 
@@ -752,12 +753,11 @@ msgid_plural "{} minutes"
 msgstr[0] "{} минута"
 msgstr[1] "{} минути"
 
-#: src/utils.rs:63
+#: src/utils.rs:62
 msgid "{} second"
 msgid_plural "{} seconds"
 msgstr[0] "{} секунда"
 msgstr[1] "{} секунди"
 
-#: src/utils.rs:75
-msgid "0 seconds"
-msgstr "0 секунди"
+#~ msgid "0 seconds"
+#~ msgstr "0 секунди"

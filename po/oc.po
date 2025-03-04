@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2024-10-12 20:19+0000\n"
-"PO-Revision-Date: 2024-10-14 11:49+0200\n"
+"POT-Creation-Date: 2025-02-13 05:11+0000\n"
+"PO-Revision-Date: 2025-03-04 10:50+1100\n"
 "Last-Translator: Quentin PAGÈS\n"
 "Language-Team: Occitan <totenoc@gmail.com>\n"
 "Language: oc\n"
@@ -16,22 +16,27 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:3
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
 msgid "@NAME@"
 msgstr "@NAME@"
 
-#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: data/de.haeckerfelix.Shortwave.desktop.in.in:12
-msgid "Gradio;Radio;Stream;Wave;"
-msgstr "Gradio;Radio;Stream;Wave;ràdio;flux;onda;"
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:4
+msgid "Internet Radio Player"
+msgstr "Lector de ràdios Internet"
 
 #. General
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:5
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:10
 msgid "Listen to internet radio"
 msgstr "Escotar la ràdio Internet"
+
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:14
+msgid "Gradio;Radio;Stream;Wave;"
+msgstr "Gradio;Radio;Stream;Wave;ràdio;flux;onda;"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:12
 msgid ""
@@ -59,10 +64,10 @@ msgstr "Cercatz e descobrissètz aisidament de novèlas estacions de ràdio"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:19
 msgid ""
-"Automatic recognition of songs, with the possibility to save them "
+"Automatic recognition of tracks, with the possibility to save them "
 "individually"
 msgstr ""
-"Reconeissença automatica de las cançons, amb la possibilitat de las "
+"Reconeissença automatica de las pistas, amb la possibilitat de las "
 "enregistrar individualament"
 
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:20
@@ -116,7 +121,7 @@ msgstr "URL del flux"
 msgid "Add Station"
 msgstr "Apondre una estacion"
 
-#: data/gtk/device_dialog.ui:7 data/gtk/player_view.ui:124
+#: data/gtk/device_dialog.ui:7 data/gtk/player_view.ui:132
 msgid "Connect Device"
 msgstr "Connectar un aparelh"
 
@@ -140,7 +145,7 @@ msgstr "Cap d’aparelh Google Cast pres en carga pas trobat"
 msgid "Disconnect From Device"
 msgstr "Se desconnectar de l’aparelh"
 
-#: data/gtk/help_overlay.ui:11 data/gtk/settings_dialog.ui:9
+#: data/gtk/help_overlay.ui:11 data/gtk/preferences_dialog.ui:9
 msgid "General"
 msgstr "General"
 
@@ -169,7 +174,7 @@ msgctxt "shortcut window"
 msgid "Quit the application"
 msgstr "Quitar l’aplicacion"
 
-#: data/gtk/help_overlay.ui:46
+#: data/gtk/help_overlay.ui:46 data/gtk/preferences_dialog.ui:12
 msgid "Playback"
 msgstr "Lectura"
 
@@ -177,6 +182,25 @@ msgstr "Lectura"
 msgctxt "shortcut window"
 msgid "Toggle playback"
 msgstr "Alternar lectura e pausa"
+
+#: data/gtk/help_overlay.ui:57 data/gtk/volume_control.ui:21
+msgid "Volume"
+msgstr "Volum"
+
+#: data/gtk/help_overlay.ui:60
+msgctxt "shortcut window"
+msgid "Toggle mute"
+msgstr "Activar / Desactivar lo mòde mut"
+
+#: data/gtk/help_overlay.ui:66
+msgctxt "shortcut window"
+msgid "Increase volume"
+msgstr "Aumentar lo volum"
+
+#: data/gtk/help_overlay.ui:72
+msgctxt "shortcut window"
+msgid "Decrease volume"
+msgstr "Redusir lo volum"
 
 #: data/gtk/library_page.ui:4
 msgid "Shortwave"
@@ -242,22 +266,26 @@ msgstr "Acorchis de _clavièr"
 msgid "_About Shortwave"
 msgstr "_A prepaus de Shortwave"
 
-#: data/gtk/library_page.ui:182
+#: data/gtk/library_page.ui:178
+msgid "_Quit"
+msgstr "_Quitar"
+
+#: data/gtk/library_page.ui:186
 msgid "Add _Local Station"
 msgstr "Apondre una estacion _locala"
 
 #: data/gtk/player_gadget.ui:40 data/gtk/player_toolbar.ui:92
-#: data/gtk/player_view.ui:148 data/gtk/station_row.ui:86
+#: data/gtk/player_view.ui:156 data/gtk/station_row.ui:86
 msgid "Play"
 msgstr "Lectura"
 
 #: data/gtk/player_gadget.ui:55 data/gtk/player_toolbar.ui:106
-#: data/gtk/player_view.ui:162
+#: data/gtk/player_view.ui:170
 msgid "Stop"
 msgstr "Arrèst"
 
 #: data/gtk/player_gadget.ui:71 data/gtk/player_toolbar.ui:121
-#: data/gtk/player_view.ui:177
+#: data/gtk/player_view.ui:185
 msgid "Buffering…"
 msgstr "Mesa en tampon…"
 
@@ -266,7 +294,7 @@ msgid "SHORTWAVE INTERNET RADIO"
 msgstr "SHORTWAVE INTERNET RADIO"
 
 #: data/gtk/player_gadget.ui:140 data/gtk/player_toolbar.ui:29
-#: data/gtk/player_view.ui:58
+#: data/gtk/player_view.ui:58 src/app.rs:257
 msgid "No Playback"
 msgstr "Cap de lectura"
 
@@ -282,25 +310,92 @@ msgstr "Restablir la fenèstra"
 msgid "Enable Gadget Mode"
 msgstr "Activar lo mòde Gadget"
 
-#: data/gtk/player_view.ui:207
+#: data/gtk/player_view.ui:215
 msgid "Show Station Details"
 msgstr "Afichar los detalhs de l’estacion"
 
-#: data/gtk/player_view.ui:258
-msgid "No Songs"
-msgstr "Cap de cançons"
+#: data/gtk/player_view.ui:266
+msgid "No Tracks"
+msgstr "Cap de pista"
 
-#: data/gtk/player_view.ui:269
-msgid ""
-"Songs that have been identified and recorded using the stream metadata will "
-"appear here."
+#: data/gtk/player_view.ui:277
+msgid "Played tracks will appear here"
 msgstr ""
-"Las cançons qu'an estada identificadas e enregistradas en utilizant las "
-"metadonadas del flux apareisseràn aicí."
 
-#: data/gtk/player_view.ui:303 data/gtk/recording_indicator.ui:38
+#: data/gtk/player_view.ui:311
 msgid "An error occurred"
 msgstr "Una error s'es producha"
+
+#: data/gtk/preferences_dialog.ui:15
+msgid "_Background Playback"
+msgstr "_Lectura en rèireplan"
+
+#: data/gtk/preferences_dialog.ui:16
+msgid "Playback continues when window is closed"
+msgstr ""
+
+#: data/gtk/preferences_dialog.ui:28
+msgid "_Notifications"
+msgstr "_Notificacions"
+
+#: data/gtk/preferences_dialog.ui:29
+msgid "Show desktop notifications when a new track gets played"
+msgstr "Afichar una notificacion de burèu quand una pista novèla comença"
+
+#. Translators: This is a noun / preferences group title
+#: data/gtk/preferences_dialog.ui:43
+msgid "Recording"
+msgstr "Enregistrament"
+
+#: data/gtk/preferences_dialog.ui:44
+msgid ""
+"Tracks are automatically recognised based on the station stream metadata and "
+"can be saved."
+msgstr ""
+
+#: data/gtk/preferences_dialog.ui:47
+msgid "Track _Directory"
+msgstr ""
+
+#: data/gtk/preferences_dialog.ui:69
+msgid "Save _All Tracks"
+msgstr ""
+
+#: data/gtk/preferences_dialog.ui:70
+msgid "All recorded tracks are automatically saved in the track directory"
+msgstr ""
+
+#: data/gtk/preferences_dialog.ui:84
+msgid "Decide for Each _Track"
+msgstr ""
+
+#: data/gtk/preferences_dialog.ui:85
+msgid "Tracks are temporarily recorded and can be saved if desired"
+msgstr ""
+
+#: data/gtk/preferences_dialog.ui:100
+msgid "Record N_othing"
+msgstr "Enregistrar p_as res"
+
+#: data/gtk/preferences_dialog.ui:101
+msgid "Stations are played without recording"
+msgstr ""
+
+#: data/gtk/preferences_dialog.ui:120
+msgid "M_inimum Duration"
+msgstr ""
+
+#: data/gtk/preferences_dialog.ui:121
+msgid "Tracks shorter than the minimum duration will be ignored"
+msgstr ""
+
+#: data/gtk/preferences_dialog.ui:136
+msgid "M_aximum Duration"
+msgstr ""
+
+#: data/gtk/preferences_dialog.ui:137
+msgid "Recording ends when the maximum duration is reached"
+msgstr ""
 
 #: data/gtk/search_page.ui:23
 msgid "Search"
@@ -360,39 +455,23 @@ msgstr "Recuperacion impossibla de las donadas de l’estacion"
 msgid "Try Again"
 msgstr "Tornar ensajar"
 
-#: data/gtk/settings_dialog.ui:12
-msgid "Features"
-msgstr "Foncionalitats"
-
-#: data/gtk/settings_dialog.ui:15
-msgid "_Notifications"
-msgstr "_Notificacions"
-
-#: data/gtk/settings_dialog.ui:17
-msgid "Show desktop notifications when a new song gets played"
-msgstr "Afichar una notificacion de burèu quand una cançon novèla comença"
-
-#: data/gtk/song_row.ui:16
-msgid "Save recorded song"
-msgstr "Salvar la cançon enregistrada"
-
-#: data/gtk/station_dialog.ui:73
+#: data/gtk/station_dialog.ui:75
 msgid "_Play"
 msgstr "_Lectura"
 
-#: data/gtk/station_dialog.ui:89
+#: data/gtk/station_dialog.ui:91
 msgid "_Add to Library"
 msgstr "_Apondre a la bibliotèca"
 
-#: data/gtk/station_dialog.ui:106
+#: data/gtk/station_dialog.ui:108
 msgid "_Remove From Library"
 msgstr "_Suprimir de la bibliotèca"
 
-#: data/gtk/station_dialog.ui:125 data/gtk/station_row.ui:57
+#: data/gtk/station_dialog.ui:127 data/gtk/station_row.ui:57
 msgid "Local Station"
 msgstr "Estacion locala"
 
-#: data/gtk/station_dialog.ui:126
+#: data/gtk/station_dialog.ui:128
 msgid ""
 "This station exists only in your library, and is not part of the public "
 "database"
@@ -400,11 +479,11 @@ msgstr ""
 "Aquesta estacion existís sonque dins vòstra bibliotèca, e fa pas partida de "
 "la basa de donadas publica"
 
-#: data/gtk/station_dialog.ui:140 data/gtk/station_row.ui:69
+#: data/gtk/station_dialog.ui:142 data/gtk/station_row.ui:69
 msgid "Orphaned Station"
 msgstr "Estacion orfanèla"
 
-#: data/gtk/station_dialog.ui:141
+#: data/gtk/station_dialog.ui:143
 msgid ""
 "The information could not be updated, probably this station was removed from "
 "the public database"
@@ -412,44 +491,44 @@ msgstr ""
 "Es pas estat possible d’actualizar las informacion, probablament aquesta "
 "estacion es estada suprimida de la basa de donadas publica"
 
-#: data/gtk/station_dialog.ui:152
+#: data/gtk/station_dialog.ui:154
 msgid "Information"
 msgstr "Informacions"
 
-#: data/gtk/station_dialog.ui:155
+#: data/gtk/station_dialog.ui:158
 msgid "Language"
 msgstr "Lenga"
 
-#: data/gtk/station_dialog.ui:165
+#: data/gtk/station_dialog.ui:168
 msgid "Tags"
 msgstr "Etiquetas"
 
-#: data/gtk/station_dialog.ui:177
+#: data/gtk/station_dialog.ui:180
 msgid "Location"
 msgstr "Localizacion"
 
-#: data/gtk/station_dialog.ui:181
+#: data/gtk/station_dialog.ui:184
 msgid "Country"
 msgstr "País"
 
-#: data/gtk/station_dialog.ui:191
+#: data/gtk/station_dialog.ui:194
 msgid "State"
 msgstr "Estat"
 
-#: data/gtk/station_dialog.ui:225
+#: data/gtk/station_dialog.ui:228
 msgid "Audio"
 msgstr "Àudio"
 
-#: data/gtk/station_dialog.ui:228
+#: data/gtk/station_dialog.ui:231
 msgid "Bitrate"
 msgstr "Debit"
 
-#: data/gtk/station_dialog.ui:238
+#: data/gtk/station_dialog.ui:241
 msgid "Codec"
 msgstr "Codèc"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:248
+#: data/gtk/station_dialog.ui:251
 msgid "Stream"
 msgstr "Flux continú"
 
@@ -457,21 +536,132 @@ msgstr "Flux continú"
 msgid "Copy"
 msgstr "Copiar"
 
+#: data/gtk/track_dialog.ui:74
+msgid "Edit"
+msgstr "Modificar"
+
+#: data/gtk/track_dialog.ui:121
+msgid "The recorded track has been saved"
+msgstr ""
+
+#: data/gtk/track_dialog.ui:137 data/gtk/track_dialog.ui:208
+#: data/gtk/track_row.ui:9 src/audio/player.rs:449
+msgid "Save Track"
+msgstr "Enregistrar la pista"
+
+#: data/gtk/track_dialog.ui:148
+msgid "Play Track"
+msgstr "Legir la pista"
+
+#: data/gtk/track_dialog.ui:159
+msgid "Cancel Recording"
+msgstr "Anullar l'enregistrament"
+
+#: data/gtk/track_dialog.ui:175
+msgid "Station"
+msgstr "Estacion"
+
+#: data/gtk/track_dialog.ui:209
+msgid "Save this track when recording is complete"
+msgstr ""
+
+#: data/gtk/track_dialog.ui:223
+msgid "Recording behaviour can be changed in <a href=\"\">preferences</a>"
+msgstr ""
+
+#: data/gtk/track_row.ui:20
+msgid "Saved"
+msgstr "Enregistrada"
+
 #: data/gtk/volume_control.ui:9
 msgid "Toggle Mute"
 msgstr "Activar / Desactivar lo mòde mut"
 
-#: data/gtk/volume_control.ui:21
-msgid "Volume"
-msgstr "Volum"
+#: src/app.rs:85
+msgid "Track no longer available"
+msgstr ""
 
-#: src/audio/player.rs:220
+#: src/app.rs:108 src/app.rs:130
+msgid "This track is currently not being recorded"
+msgstr ""
+
+#: src/app.rs:261
+msgid "Playing “{}”"
+msgstr "Lectura de « {} »"
+
+#: src/app.rs:360
 msgid "Active Playback"
 msgstr "Lectura"
 
-#: src/audio/player.rs:382
-msgid "Station cannot be streamed. URL is not valid."
-msgstr "Se pòt pas difusar l’estacion. L’URL es pas valida."
+#: src/audio/player.rs:459
+msgid "Don't Record"
+msgstr "Enregistrar pas"
+
+#: src/audio/recording_state.rs:54 src/audio/recording_state.rs:56
+msgid "Not Recorded"
+msgstr "Non enregistrada"
+
+#: src/audio/recording_state.rs:55
+msgid "Ignored Track"
+msgstr "Pista ignorada"
+
+#: src/audio/recording_state.rs:58
+msgid "Recording…"
+msgstr "Enregistrament…"
+
+#: src/audio/recording_state.rs:59 src/audio/recording_state.rs:60
+msgid "Recorded"
+msgstr "Enregistrada"
+
+#: src/audio/recording_state.rs:62
+msgid "Below Threshold"
+msgstr ""
+
+#: src/audio/recording_state.rs:63
+msgid "Cancelled"
+msgstr "Anullat"
+
+#: src/audio/recording_state.rs:69
+msgid "Recording is deactivated in preferences"
+msgstr ""
+
+#: src/audio/recording_state.rs:71
+#, fuzzy
+#| msgid ""
+#| "No recording because the song title contains a word on the ignore list."
+msgid "The track contains a word that is on the ignore list"
+msgstr ""
+"Pas d'enregistrament perque lo títol de la cançon conten un mot sus la lista "
+"d'ignorar."
+
+#: src/audio/recording_state.rs:74
+msgid ""
+"The track wasn't played from the beginning, so it can't be fully recorded"
+msgstr ""
+
+#: src/audio/recording_state.rs:77
+#, fuzzy
+#| msgid "The current song will be recorded until a new song is detected."
+msgid "The track will be recorded until a new track gets played"
+msgstr ""
+"La cançon actuala s’enregistrarà fins qu’una cançon novèla siá detectada."
+
+#: src/audio/recording_state.rs:79
+msgid "The track has been temporarily recorded"
+msgstr ""
+
+#: src/audio/recording_state.rs:81
+msgid "The maximum recording duration has been reached"
+msgstr ""
+
+#: src/audio/recording_state.rs:84
+msgid ""
+"The track has been discarded as the duration was below the set threshold"
+msgstr ""
+
+#: src/audio/recording_state.rs:86
+msgid "Recording has been cancelled"
+msgstr ""
 
 #: src/device/device_discovery.rs:83
 msgid "Google Cast Device"
@@ -481,15 +671,19 @@ msgstr "Aparelh Google Cast"
 msgid "Unknown Model"
 msgstr "Modèl desconegut"
 
-#: src/ui/about_dialog.rs:44
+#: src/ui/about_dialog.rs:41
 msgid "translator-credits"
 msgstr "Quentin PAGÈS"
+
+#: src/ui/about_dialog.rs:42
+msgid "Donate"
+msgstr "Far un don"
 
 #: src/ui/add_station_dialog.rs:94
 msgid "Select Station Cover"
 msgstr "Seleccionar una cobertura d’estacion"
 
-#: src/ui/display_error.rs:46
+#: src/ui/display_error.rs:50
 msgid "Show Details"
 msgstr "Afichar los detalhs"
 
@@ -497,37 +691,94 @@ msgstr "Afichar los detalhs"
 msgid "Welcome to {}"
 msgstr "La benvenguda a {}"
 
-#: src/ui/recording_indicator.rs:111
-msgid "Recording in Progress"
-msgstr "Enregistrament en cors"
+#: src/ui/preferences_dialog.rs:139
+msgid "Select Save Directory"
+msgstr "Seleccionar lo repertòri d’enregistrament"
 
-#: src/ui/recording_indicator.rs:112
-msgid "Ignored"
-msgstr "Ignorat"
+#: src/ui/preferences_dialog.rs:140
+msgid "_Select"
+msgstr "_Seleccionar"
 
-#: src/ui/recording_indicator.rs:113
-msgid "No Recording"
-msgstr "Cap d’enregistrament"
+#: src/ui/preferences_dialog.rs:163
+msgid "{} min"
+msgid_plural "{} min"
+msgstr[0] "{} min."
+msgstr[1] "{} min."
 
-#: src/ui/recording_indicator.rs:120
-msgid "The current song will be recorded until a new song is detected."
-msgstr ""
-"La cançon actuala s’enregistrarà fins qu’una cançon novèla siá detectada."
+#: src/ui/preferences_dialog.rs:172
+msgid "{} sec"
+msgid_plural "{} sec"
+msgstr[0] "{} seg."
+msgstr[1] "{} seg."
 
-#: src/ui/recording_indicator.rs:123
-msgid "No recording because the song title contains a word on the ignore list."
-msgstr ""
-"Pas d'enregistrament perque lo títol de la cançon conten un mot sus la lista "
-"d'ignorar."
-
-#: src/ui/recording_indicator.rs:126
-msgid ""
-"The current song cannot be fully recorded. The beginning has been missed."
-msgstr "Se pòt pas enregistrar la cançon actuala. La debuta es estada mancada."
-
-#: src/ui/station_dialog.rs:203
+#: src/ui/station_dialog.rs:207
 msgid "{} kbit/s"
 msgstr "{} kbit/s"
+
+#: src/ui/station_dialog.rs:292
+msgid "Copied"
+msgstr "Copiat"
+
+#: src/ui/window.rs:221
+msgid "No Permission for Background Playback"
+msgstr ""
+
+#: src/ui/window.rs:223
+msgid "“Run in Background” must be allowed for this app in system settings."
+msgstr ""
+
+#: src/ui/window.rs:227
+msgid "Try Anyway"
+msgstr "Tornar ensajar malgrat tot"
+
+#: src/ui/window.rs:228
+msgid "Disable Background Playback"
+msgstr "Desactivar la lectura en rèireplan"
+
+#: src/utils.rs:51
+msgid "{} hour"
+msgid_plural "{} hours"
+msgstr[0] "{} ora"
+msgstr[1] "{} oras"
+
+#: src/utils.rs:57
+msgid "{} minute"
+msgid_plural "{} minutes"
+msgstr[0] "{} minuta"
+msgstr[1] "{} minutas"
+
+#: src/utils.rs:62
+msgid "{} second"
+msgid_plural "{} seconds"
+msgstr[0] "{} segonda"
+msgstr[1] "{} segondas"
+
+#~ msgid "No Songs"
+#~ msgstr "Cap de cançons"
+
+#~ msgid ""
+#~ "Songs that have been identified and recorded using the stream metadata "
+#~ "will appear here."
+#~ msgstr ""
+#~ "Las cançons qu'an estada identificadas e enregistradas en utilizant las "
+#~ "metadonadas del flux apareisseràn aicí."
+
+#~ msgid "Features"
+#~ msgstr "Foncionalitats"
+
+#~ msgid "Save recorded song"
+#~ msgstr "Salvar la cançon enregistrada"
+
+#~ msgid "Station cannot be streamed. URL is not valid."
+#~ msgstr "Se pòt pas difusar l’estacion. L’URL es pas valida."
+
+#~ msgid "Recording in Progress"
+#~ msgstr "Enregistrament en cors"
+
+#~ msgid ""
+#~ "The current song cannot be fully recorded. The beginning has been missed."
+#~ msgstr ""
+#~ "Se pòt pas enregistrar la cançon actuala. La debuta es estada mancada."
 
 #~ msgid "Trending"
 #~ msgstr "Tendéncias"

@@ -141,7 +141,7 @@
                 <property name="adjustment">
                   <object class="GtkAdjustment">
                     <property name="step_increment">60</property>
-                    <property name="upper">1800</property>
+                    <property name="upper">3600</property>
                     <property name="lower">60</property>
                   </object>
                 </property>

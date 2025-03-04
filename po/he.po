@@ -1,24 +1,25 @@
 # Hebrew translation for shortwave.
 # Copyright (C) 2022 shortwave's COPYRIGHT HOLDER
 # This file is distributed under the same license as the shortwave package.
-# Yosef Or Boczko <yoseforb@gmail.com>, 2022-2024.
 #
 # SPDX-FileCopyrightText: 2025 Yaron Shahrabani <sh.yaron@gmail.com>
+# Yosef Or Boczko <yoseforb@gmail.com>, 2022-2025.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2025-01-26 21:21+0000\n"
-"PO-Revision-Date: 2025-01-27 10:13+0200\n"
-"Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
-"Language-Team: צוות התרגום של KDE ישראל\n"
+"POT-Creation-Date: 2025-02-13 05:11+0000\n"
+"PO-Revision-Date: 2025-02-24 17:54+0200\n"
+"Last-Translator: Yosef Or Boczko <yoseforb@gmail.com>\n"
+"Language-Team: Hebrew <yoseforb@gmail.com>\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n==2 ? 1 : n>10 && n%10==0 ? 2 : "
-"3);\n"
-"X-Generator: Lokalize 24.12.1\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : n==2 ? 1 : n>10 && n%10==0 ? "
+"2 : 3)\n"
+"X-Generator: Gtranslator 47.1\n"
 
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:3
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
@@ -336,6 +337,7 @@ msgstr "ה_תרעות"
 msgid "Show desktop notifications when a new track gets played"
 msgstr "הצגת התראות בשולחן העבודה כשרצועה חדשה מתנגנת"
 
+#. Translators: This is a noun / preferences group title
 #: data/gtk/preferences_dialog.ui:43
 msgid "Recording"
 msgstr "הקלטה"
@@ -486,44 +488,44 @@ msgstr ""
 msgid "Information"
 msgstr "מידע"
 
-#: data/gtk/station_dialog.ui:157
+#: data/gtk/station_dialog.ui:158
 msgid "Language"
 msgstr "שפה"
 
-#: data/gtk/station_dialog.ui:167
+#: data/gtk/station_dialog.ui:168
 msgid "Tags"
 msgstr "תגיות"
 
-#: data/gtk/station_dialog.ui:179
+#: data/gtk/station_dialog.ui:180
 msgid "Location"
 msgstr "מיקום"
 
-#: data/gtk/station_dialog.ui:183
+#: data/gtk/station_dialog.ui:184
 msgid "Country"
 msgstr "ארץ"
 
-#: data/gtk/station_dialog.ui:193
+#: data/gtk/station_dialog.ui:194
 msgid "State"
 msgstr "מדינה"
 
-#: data/gtk/station_dialog.ui:227
+#: data/gtk/station_dialog.ui:228
 msgid "Audio"
 msgstr "שמע"
 
-#: data/gtk/station_dialog.ui:230
+#: data/gtk/station_dialog.ui:231
 msgid "Bitrate"
 msgstr "קצב סיביות"
 
-#: data/gtk/station_dialog.ui:240
+#: data/gtk/station_dialog.ui:241
 msgid "Codec"
 msgstr "מקודד"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:250
+#: data/gtk/station_dialog.ui:251
 msgid "Stream"
 msgstr "הזרמה"
 
-#: data/gtk/station_dialog.ui:256
+#: data/gtk/station_dialog.ui:257
 msgid "Copy"
 msgstr "העתקה"
 
@@ -536,7 +538,7 @@ msgid "The recorded track has been saved"
 msgstr "הרצועה המוקלטת נשמרה"
 
 #: data/gtk/track_dialog.ui:137 data/gtk/track_dialog.ui:208
-#: data/gtk/track_row.ui:9 src/audio/player.rs:442
+#: data/gtk/track_row.ui:9 src/audio/player.rs:449
 msgid "Save Track"
 msgstr "שמירת רצועה"
 
@@ -573,18 +575,18 @@ msgid "Track no longer available"
 msgstr "הרצועה אינה זמינה עוד"
 
 #: src/app.rs:108 src/app.rs:130
-msgid "This track is currently not recorded"
+msgid "This track is currently not being recorded"
 msgstr "הרצועה הזאת לא מוקלטת כרגע"
 
 #: src/app.rs:261
 msgid "Playing “{}”"
 msgstr "„{}” מתגנן"
 
-#: src/app.rs:361
+#: src/app.rs:360
 msgid "Active Playback"
 msgstr "נגינה פעילה"
 
-#: src/audio/player.rs:452
+#: src/audio/player.rs:459
 msgid "Don't Record"
 msgstr "לא להקליט"
 
@@ -634,7 +636,6 @@ msgid "The track has been temporarily recorded"
 msgstr "הרצועה הזאת הוקלטה באופן זמני"
 
 #: src/audio/recording_state.rs:81
-#| msgid "The recorded track has been saved"
 msgid "The maximum recording duration has been reached"
 msgstr "הגעת לתקורת משך ההקלטה האפשרי"
 
@@ -701,11 +702,11 @@ msgstr[1] "2 שנ׳"
 msgstr[2] "{} שנ׳"
 msgstr[3] "{} שנ׳"
 
-#: src/ui/station_dialog.rs:205
+#: src/ui/station_dialog.rs:207
 msgid "{} kbit/s"
 msgstr "{} ק״ב/שנייה"
 
-#: src/ui/station_dialog.rs:290
+#: src/ui/station_dialog.rs:292
 msgid "Copied"
 msgstr "הועתק"
 
@@ -741,7 +742,7 @@ msgstr[1] "שתי דקות"
 msgstr[2] "{} דקות"
 msgstr[3] "{} דקות"
 
-#: src/utils.rs:63
+#: src/utils.rs:62
 msgid "{} second"
 msgid_plural "{} seconds"
 msgstr[0] "שנייה"
@@ -749,9 +750,8 @@ msgstr[1] "שתי שניות"
 msgstr[2] "{} שניות"
 msgstr[3] "{} שניות"
 
-#: src/utils.rs:75
-msgid "0 seconds"
-msgstr "0 שניות"
+#~ msgid "0 seconds"
+#~ msgstr "0 שניות"
 
 #~ msgid "No Songs"
 #~ msgstr "אין שירים"

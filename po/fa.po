@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2025-01-26 21:21+0000\n"
-"PO-Revision-Date: 2025-01-27 01:16+0330\n"
+"POT-Creation-Date: 2025-02-13 05:11+0000\n"
+"PO-Revision-Date: 2025-02-15 11:34+0330\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
 "Language: fa\n"
@@ -334,6 +334,7 @@ msgstr "_آگاهی‌ها"
 msgid "Show desktop notifications when a new track gets played"
 msgstr "نمایش آگاهی‌های میزکار هنگام آغاز به پخش قطعه‌ای جدید"
 
+#. Translators: This is a noun / preferences group title
 #: data/gtk/preferences_dialog.ui:43
 msgid "Recording"
 msgstr "ضبط کردن"
@@ -485,44 +486,44 @@ msgstr ""
 msgid "Information"
 msgstr "اطّلاعات"
 
-#: data/gtk/station_dialog.ui:157
+#: data/gtk/station_dialog.ui:158
 msgid "Language"
 msgstr "زبان"
 
-#: data/gtk/station_dialog.ui:167
+#: data/gtk/station_dialog.ui:168
 msgid "Tags"
 msgstr "برچسب‌ها"
 
-#: data/gtk/station_dialog.ui:179
+#: data/gtk/station_dialog.ui:180
 msgid "Location"
 msgstr "مکان"
 
-#: data/gtk/station_dialog.ui:183
+#: data/gtk/station_dialog.ui:184
 msgid "Country"
 msgstr "کشور"
 
-#: data/gtk/station_dialog.ui:193
+#: data/gtk/station_dialog.ui:194
 msgid "State"
 msgstr "ایالت"
 
-#: data/gtk/station_dialog.ui:227
+#: data/gtk/station_dialog.ui:228
 msgid "Audio"
 msgstr "صدا"
 
-#: data/gtk/station_dialog.ui:230
+#: data/gtk/station_dialog.ui:231
 msgid "Bitrate"
 msgstr "نرخ بیت"
 
-#: data/gtk/station_dialog.ui:240
+#: data/gtk/station_dialog.ui:241
 msgid "Codec"
 msgstr "رمزینه"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:250
+#: data/gtk/station_dialog.ui:251
 msgid "Stream"
 msgstr "جریان"
 
-#: data/gtk/station_dialog.ui:256
+#: data/gtk/station_dialog.ui:257
 msgid "Copy"
 msgstr "رونوشت"
 
@@ -535,7 +536,7 @@ msgid "The recorded track has been saved"
 msgstr "قطعهٔ ضبط شده ذخیره شد"
 
 #: data/gtk/track_dialog.ui:137 data/gtk/track_dialog.ui:208
-#: data/gtk/track_row.ui:9 src/audio/player.rs:442
+#: data/gtk/track_row.ui:9 src/audio/player.rs:449
 msgid "Save Track"
 msgstr "ذخیرهٔ قطعه"
 
@@ -572,18 +573,18 @@ msgid "Track no longer available"
 msgstr "قطعه دیگر موجود نیست"
 
 #: src/app.rs:108 src/app.rs:130
-msgid "This track is currently not recorded"
-msgstr "قطعه در حال حاضر ضبط نشده"
+msgid "This track is currently not being recorded"
+msgstr "در حال حاضر قطعه ضبط نمی‌شود"
 
 #: src/app.rs:261
 msgid "Playing “{}”"
 msgstr "پخش کردن «{}»"
 
-#: src/app.rs:361
+#: src/app.rs:360
 msgid "Active Playback"
 msgstr "فعّال کردن پخش"
 
-#: src/audio/player.rs:452
+#: src/audio/player.rs:459
 msgid "Don't Record"
 msgstr "ضبط نکردن"
 
@@ -691,11 +692,11 @@ msgid_plural "{} sec"
 msgstr[0] "{} ثانیه"
 msgstr[1] "{} ثانیه"
 
-#: src/ui/station_dialog.rs:205
+#: src/ui/station_dialog.rs:207
 msgid "{} kbit/s"
 msgstr "{} ک‌بی/ث"
 
-#: src/ui/station_dialog.rs:290
+#: src/ui/station_dialog.rs:292
 msgid "Copied"
 msgstr "رونوشت شد"
 
@@ -727,15 +728,14 @@ msgid_plural "{} minutes"
 msgstr[0] "{} دقیقه"
 msgstr[1] "{} دقیقه"
 
-#: src/utils.rs:63
+#: src/utils.rs:62
 msgid "{} second"
 msgid_plural "{} seconds"
 msgstr[0] "{} ثانیه"
 msgstr[1] "{} ثانیه"
 
-#: src/utils.rs:75
-msgid "0 seconds"
-msgstr "۰ ثانیه"
+#~ msgid "0 seconds"
+#~ msgstr "۰ ثانیه"
 
 #~ msgid "No Songs"
 #~ msgstr "بدون آواز"

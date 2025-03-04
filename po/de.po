@@ -7,23 +7,23 @@
 # Mario Blättermann <mario.blaettermann@gmail.com>, 2020.
 # Christian Kirbach <christian.kirbach@gmail.com>, 2020-2021.
 # Philipp Kiemle <l10n@prly.mozmail.com>, 2021-2022, 2025.
-# Jürgen Benvenuti <gastoris@posteo.org>, 2022-2024.
+# Jürgen Benvenuti <gastoris@posteo.org>, 2022-2025.
 # Tim Sabsch <tim@sabsch.com>, 2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2025-01-26 21:21+0000\n"
-"PO-Revision-Date: 2025-02-02 23:34+0100\n"
-"Last-Translator: Philipp Kiemle <l10n@prly.mozmail.com>\n"
+"POT-Creation-Date: 2025-02-13 05:11+0000\n"
+"PO-Revision-Date: 2025-02-20 20:30+0100\n"
+"Last-Translator: Jürgen Benvenuti <gastornis@posteo.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.4.4\n"
 
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:3
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
@@ -112,8 +112,9 @@ msgid ""
 "browser.info/add\">public database</a>."
 msgstr ""
 "Dieser Sender wird nur zu Ihrer eigenen Bibliothek hinzugefügt. Wenn Sie "
-"möchten, dass er für alle verfügbar ist, sollten Sie ihn zur <a href="
-"\"https://www.radio-browser.info/add\">öffentliche Datenbank</a> hinzufügen."
+"möchten, dass er für alle verfügbar ist, sollten Sie ihn zur <a "
+"href=\"https://www.radio-browser.info/add\">öffentliche Datenbank</a> "
+"hinzufügen."
 
 #: data/gtk/add_station_dialog.ui:107
 msgid "Name"
@@ -350,6 +351,7 @@ msgstr "Be_nachrichtigungen"
 msgid "Show desktop notifications when a new track gets played"
 msgstr "Desktop-Benachrichtigungen anzeigen, wenn ein neuer Titel beginnt"
 
+#. Translators: This is a noun / preferences group title
 #: data/gtk/preferences_dialog.ui:43
 msgid "Recording"
 msgstr "Aufnahme"
@@ -507,44 +509,44 @@ msgstr ""
 msgid "Information"
 msgstr "Information"
 
-#: data/gtk/station_dialog.ui:157
+#: data/gtk/station_dialog.ui:158
 msgid "Language"
 msgstr "Sprache"
 
-#: data/gtk/station_dialog.ui:167
+#: data/gtk/station_dialog.ui:168
 msgid "Tags"
 msgstr "Stichworte"
 
-#: data/gtk/station_dialog.ui:179
+#: data/gtk/station_dialog.ui:180
 msgid "Location"
 msgstr "Ort"
 
-#: data/gtk/station_dialog.ui:183
+#: data/gtk/station_dialog.ui:184
 msgid "Country"
 msgstr "Land"
 
-#: data/gtk/station_dialog.ui:193
+#: data/gtk/station_dialog.ui:194
 msgid "State"
 msgstr "Bundesstaat"
 
-#: data/gtk/station_dialog.ui:227
+#: data/gtk/station_dialog.ui:228
 msgid "Audio"
 msgstr "Ton"
 
-#: data/gtk/station_dialog.ui:230
+#: data/gtk/station_dialog.ui:231
 msgid "Bitrate"
 msgstr "Bitrate"
 
-#: data/gtk/station_dialog.ui:240
+#: data/gtk/station_dialog.ui:241
 msgid "Codec"
 msgstr "Codec"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:250
+#: data/gtk/station_dialog.ui:251
 msgid "Stream"
 msgstr "Stream"
 
-#: data/gtk/station_dialog.ui:256
+#: data/gtk/station_dialog.ui:257
 msgid "Copy"
 msgstr "Kopieren"
 
@@ -557,7 +559,7 @@ msgid "The recorded track has been saved"
 msgstr "Der aufgenommene Titel wurde gespeichert"
 
 #: data/gtk/track_dialog.ui:137 data/gtk/track_dialog.ui:208
-#: data/gtk/track_row.ui:9 src/audio/player.rs:442
+#: data/gtk/track_row.ui:9 src/audio/player.rs:449
 msgid "Save Track"
 msgstr "Titel speichern"
 
@@ -597,18 +599,18 @@ msgstr "Titel nicht mehr verfügbar"
 
 # https://gitlab.gnome.org/World/Shortwave/-/issues/762 - pk
 #: src/app.rs:108 src/app.rs:130
-msgid "This track is currently not recorded"
+msgid "This track is currently not being recorded"
 msgstr "Dieser Titel wird aktuell nicht aufgezeichnet"
 
 #: src/app.rs:261
 msgid "Playing “{}”"
 msgstr "Wiedergabe von »{}«"
 
-#: src/app.rs:361
+#: src/app.rs:360
 msgid "Active Playback"
 msgstr "Aktive Wiedergabe"
 
-#: src/audio/player.rs:452
+#: src/audio/player.rs:459
 msgid "Don't Record"
 msgstr "Nicht aufnehmen"
 
@@ -728,11 +730,11 @@ msgid_plural "{} sec"
 msgstr[0] "{} s"
 msgstr[1] "{} s"
 
-#: src/ui/station_dialog.rs:205
+#: src/ui/station_dialog.rs:207
 msgid "{} kbit/s"
 msgstr "{} kbit/s"
 
-#: src/ui/station_dialog.rs:290
+#: src/ui/station_dialog.rs:292
 msgid "Copied"
 msgstr "Kopiert"
 
@@ -766,15 +768,14 @@ msgid_plural "{} minutes"
 msgstr[0] "{} Minute"
 msgstr[1] "{} Minuten"
 
-#: src/utils.rs:63
+#: src/utils.rs:62
 msgid "{} second"
 msgid_plural "{} seconds"
 msgstr[0] "{} Sekunde"
 msgstr[1] "{} Sekunden"
 
-#: src/utils.rs:75
-msgid "0 seconds"
-msgstr "0 Sekunden"
+#~ msgid "0 seconds"
+#~ msgstr "0 Sekunden"
 
 #~ msgid "No Songs"
 #~ msgstr "Keine Lieder"
