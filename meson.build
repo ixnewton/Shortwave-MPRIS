@@ -15,7 +15,7 @@ dependency('dbus-1')
 dependency('glib-2.0', version: '>= 2.66')
 dependency('gio-2.0', version: '>= 2.66')
 dependency('gtk4', version: '>= 4.16')
-dependency('libadwaita-1', version: '>= 1.6')
+dependency('libadwaita-1', version: '>= 1.7')
 dependency('shumate-1.0', version: '>= 1.3')
 
 # Required by glycin crate
