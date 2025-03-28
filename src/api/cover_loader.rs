@@ -23,7 +23,7 @@ use async_compat::CompatExt;
 use futures_util::StreamExt;
 use gdk::RGBA;
 use glycin::Loader;
-use gtk::gio::{Cancelled, File};
+use gtk::gio::File;
 use gtk::graphene::Rect;
 use gtk::prelude::TextureExt;
 use gtk::prelude::*;
@@ -53,7 +53,7 @@ impl CoverRequest {
         let res = gio::CancellableFuture::new(self.cover_texture(), self.cancellable.clone()).await;
         let msg = match res {
             Ok(res) => res,
-            Err(Cancelled) => Err(Error::msg("cancelled")),
+            Err(_) => Err(Error::msg("cancelled")),
         };
 
         let _ = self.delete_tmp_file().await;
@@ -80,7 +80,8 @@ impl CoverRequest {
         let (cover_texture, cover_bytes) = self.cover_bytes().await?;
 
         let key = format!("{}@{}", self.favicon_url, self.size);
-        cacache::write(&*path::CACHE, key, &cover_bytes).await?;
+        cacache::write_with_algo(cacache::Algorithm::Xxh3, &*path::CACHE, key, &cover_bytes)
+            .await?;
 
         Ok(cover_texture)
     }
@@ -152,7 +153,7 @@ impl CoverLoader {
         Self { request_sender }
     }
 
-    pub async fn prune_cache(&self) {
+    pub fn prune_cache(&self) {
         // Remove old Shortwave pre v4.0 cache
         let mut path = path::CACHE.clone();
         path.push("favicons");

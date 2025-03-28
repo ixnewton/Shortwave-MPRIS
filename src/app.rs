@@ -185,12 +185,7 @@ mod imp {
             self.parent_shutdown();
             debug!("gio::Application -> shutdown()");
 
-            glib::spawn_future_local(async {
-                super::SwApplication::default()
-                    .cover_loader()
-                    .prune_cache()
-                    .await;
-            });
+            super::SwApplication::default().cover_loader().prune_cache();
         }
     }
 
