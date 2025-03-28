@@ -38,7 +38,7 @@
                                     <property name="hexpand">True</property>
                                     <property name="pixel_size">64</property>
                                     <style>
-                                      <class name="dim-label" />
+                                      <class name="dimmed" />
                                     </style>
                                   </object>
                                 </child>
@@ -112,7 +112,7 @@
                                 <property name="margin_bottom">6</property>
                                 <property name="visible" bind-source="saved_label" bind-property="visible" bind-flags="sync-create|invert-boolean" />
                                 <style>
-                                  <class name="dim-label" />
+                                  <class name="dimmed" />
                                 </style>
                               </object>
                             </child>
@@ -128,7 +128,7 @@
                                   </lookup>
                                 </binding>
                                 <style>
-                                  <class name="dim-label" />
+                                  <class name="dimmed" />
                                 </style>
                               </object>
                             </child>
@@ -226,7 +226,7 @@
                                 <property name="justify">center</property>
                                 <property name="margin_bottom">18</property>
                                 <style>
-                                  <class name="dim-label" />
+                                  <class name="dimmed" />
                                   <class name="caption" />
                                 </style>
                               </object>

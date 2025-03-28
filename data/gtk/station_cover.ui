@@ -12,7 +12,7 @@
               <object class="GtkImage" id="placeholder_image">
                 <property name="accessible_role">presentation</property>
                 <style>
-                  <class name="dim-label"/>
+                  <class name="dimmed"/>
                 </style>
               </object>
             </property>

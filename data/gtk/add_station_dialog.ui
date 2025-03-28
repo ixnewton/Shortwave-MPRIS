@@ -94,7 +94,7 @@
                         <property name="xalign">0</property>
                         <property name="label" translatable="yes">This station will only be added to your library. If you want it to be available to everyone, you should add it to the &lt;a href="https://www.radio-browser.info/add"&gt;public database&lt;/a&gt;.</property>
                         <style>
-                          <class name="dim-label" />
+                          <class name="dimmed" />
                         </style>
                       </object>
                     </child>

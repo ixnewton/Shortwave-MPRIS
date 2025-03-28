@@ -268,7 +268,7 @@
                                     <property name="ellipsize">end</property>
                                     <style>
                                       <class name="title-2"/>
-                                      <class name="dim-label"/>
+                                      <class name="dimmed"/>
                                     </style>
                                   </object>
                                 </child>
@@ -278,7 +278,7 @@
                                     <property name="justify">center</property>
                                     <property name="wrap">True</property>
                                     <style>
-                                      <class name="dim-label"/>
+                                      <class name="dimmed"/>
                                     </style>
                                   </object>
                                 </child>

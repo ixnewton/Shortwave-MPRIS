@@ -121,7 +121,7 @@
                       <attribute name="style" value="italic" />
                     </attributes>
                     <style>
-                      <class name="dim-label" />
+                      <class name="dimmed" />
                     </style>
                   </object>
                 </child>
