@@ -243,10 +243,7 @@ mod imp {
 
                     self.update_background_portal_status();
                 }
-                Err(err) => warn!(
-                    "Unable to setup background portal proxy: {}",
-                    err.to_string()
-                ),
+                Err(err) => warn!("Unable to setup background portal proxy: {}", err),
             };
         }
 
@@ -275,10 +272,7 @@ mod imp {
             let message = utils::ellipsize_end(message, 96);
             if let Some(proxy) = self.background_proxy.get() {
                 if let Err(err) = proxy.set_status(&message).await {
-                    warn!(
-                        "Unable to update background portal status message: {}",
-                        err.to_string()
-                    );
+                    warn!("Unable to update background portal status message: {}", err);
                 }
             }
         }

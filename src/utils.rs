@@ -111,7 +111,7 @@ pub async fn background_portal_permissions() -> bool {
         match res.response() {
             Ok(response) => response.run_in_background(),
             Err(err) => {
-                warn!("{}", err.to_string());
+                warn!("{}", err);
                 false
             }
         }

@@ -428,7 +428,7 @@ mod imp {
             if discard_data {
                 debug!("Discard recorded data: {}", track.file().parse_name());
                 if let Err(err) = track.file().delete(gio::Cancellable::NONE) {
-                    warn!("Unable to discard recorded data: {}", err.to_string());
+                    warn!("Unable to discard recorded data: {}", err);
                 }
             }
         }
@@ -488,7 +488,7 @@ impl SwPlayer {
         self.stop_playback().await;
 
         if let Some(url) = station.stream_url() {
-            debug!("Set new playback URI: {}", url.to_string());
+            debug!("Set new playback URI: {}", url);
             settings_manager::set_string(
                 Key::PlaybackLastStation,
                 serde_json::to_string(&station.metadata()).unwrap_or_default(),
@@ -611,7 +611,7 @@ impl SwPlayer {
                     }
                 ));
             }
-            Err(e) => warn!("Unable to restore last played station: {}", e.to_string()),
+            Err(e) => warn!("Unable to restore last played station: {}", e),
         }
     }
 

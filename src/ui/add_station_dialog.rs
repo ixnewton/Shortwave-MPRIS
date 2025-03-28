@@ -115,7 +115,7 @@ mod imp {
                                     imp.remove_cover_button.set_visible(true);
                                 }
                                 Err(err) => {
-                                    error!("Unable to open cover file: {}", err.to_string());
+                                    error!("Unable to open cover file: {}", err);
                                 }
                             },
                             Err(err) => error!("Could not get file {err}"),

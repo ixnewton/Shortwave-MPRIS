@@ -267,7 +267,7 @@ mod imp {
                                     "Unable to load cover for station {:?} ({:?}): {}",
                                     station.title(),
                                     station.metadata().favicon.map(|f| f.to_string()),
-                                    e.root_cause().to_string()
+                                    e.root_cause()
                                 )
                             }
                         }

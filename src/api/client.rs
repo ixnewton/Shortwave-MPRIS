@@ -122,19 +122,16 @@ pub async fn lookup_rb_server() -> Option<String> {
 
         // Check if the server is online / returns data
         // If not, try using the next one in the list
-        debug!("Trying to connect to {} ({})", hostname, ip.to_string());
+        debug!("Trying to connect to {} ({})", hostname, ip);
         match server_stats(hostname).await {
             Ok(stats) => {
                 debug!(
                     "Successfully connected to {} ({}), server version {}, {} stations",
-                    hostname,
-                    ip.to_string(),
-                    stats.software_version,
-                    stats.stations
+                    hostname, ip, stats.software_version, stats.stations
                 );
                 return Some(format!("https://{hostname}/"));
             }
-            Err(err) => warn!("Unable to connect to {hostname}: {}", err.to_string()),
+            Err(err) => warn!("Unable to connect to {hostname}: {}", err),
         }
     }
 
@@ -177,7 +174,7 @@ async fn send_request<T: de::DeserializeOwned>(request: Request) -> Result<T, Er
     match deserialized {
         Ok(d) => Ok(d),
         Err(err) => {
-            error!("Unable to deserialize data: {}", err.to_string());
+            error!("Unable to deserialize data: {}", err);
             error!("Raw unserialized data: {}", json);
             Err(Error::Deserializer(err.into()))
         }

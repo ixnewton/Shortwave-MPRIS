@@ -69,8 +69,7 @@ mod imp {
                             Err(err) => {
                                 error!(
                                     "Unable to deserialize metadata for local station {}: {}",
-                                    entry.uuid,
-                                    err.to_string()
+                                    entry.uuid, err
                                 );
                                 continue;
                             }
