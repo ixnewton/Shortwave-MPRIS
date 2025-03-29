@@ -64,10 +64,9 @@ information on how to join a language team, or even to create one, please see
 
 ## Building
 ### Building with Flatpak + GNOME Builder
-Shortwave can be built and run with [GNOME Builder](https://wiki.gnome.org/Apps/Builder).
-Just clone the repo and hit the run button!
-
-You can get Builder from [here](https://wiki.gnome.org/Apps/Builder/Downloads).
+To build the development version of Shortwave and hack on the code see the
+[general guide](https://welcome.gnome.org/app/Shortwave/#getting-the-app-to-build) for
+building GNOME apps with Flatpak and GNOME Builder.
 
 ### Building it manually
 1. `git clone https://gitlab.gnome.org/World/Shortwave.git`
