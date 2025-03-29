@@ -79,5 +79,5 @@ You can get Builder from [here](https://wiki.gnome.org/Apps/Builder/Downloads).
 To learn more about the required dependencies, please check the [Flatpak manifest](build-aux/de.haeckerfelix.Shortwave.Devel.json).
 
 ## Code Of Conduct
-We follow the [GNOME Code of Conduct](/CODE_OF_CONDUCT.md).
-All communications in project spaces are expected to follow it.
+We follow the [GNOME Code of Conduct](https://conduct.gnome.org/). All
+communications in project spaces are expected to follow it.
