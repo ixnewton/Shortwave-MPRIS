@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2025-02-13 05:11+0000\n"
-"PO-Revision-Date: 2025-03-04 10:50+1100\n"
+"POT-Creation-Date: 2025-03-11 02:18+0000\n"
+"PO-Revision-Date: 2025-04-10 15:13+1000\n"
 "Last-Translator: Quentin PAGÈS\n"
 "Language-Team: Occitan <totenoc@gmail.com>\n"
 "Language: oc\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:3
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
@@ -294,7 +294,7 @@ msgid "SHORTWAVE INTERNET RADIO"
 msgstr "SHORTWAVE INTERNET RADIO"
 
 #: data/gtk/player_gadget.ui:140 data/gtk/player_toolbar.ui:29
-#: data/gtk/player_view.ui:58 src/app.rs:257
+#: data/gtk/player_view.ui:58 src/app.rs:259
 msgid "No Playback"
 msgstr "Cap de lectura"
 
@@ -320,7 +320,7 @@ msgstr "Cap de pista"
 
 #: data/gtk/player_view.ui:277
 msgid "Played tracks will appear here"
-msgstr ""
+msgstr "Las pistas jogadas apareisseràn aicí"
 
 #: data/gtk/player_view.ui:311
 msgid "An error occurred"
@@ -332,7 +332,7 @@ msgstr "_Lectura en rèireplan"
 
 #: data/gtk/preferences_dialog.ui:16
 msgid "Playback continues when window is closed"
-msgstr ""
+msgstr "La lectura contunha quand la fenèstra es tampada"
 
 #: data/gtk/preferences_dialog.ui:28
 msgid "_Notifications"
@@ -352,26 +352,31 @@ msgid ""
 "Tracks are automatically recognised based on the station stream metadata and "
 "can be saved."
 msgstr ""
+"Las pistas son automaticament reconegudas en utilizant las metadonadas del "
+"fus de difusion de l’estacion e se pòdon enregistrar."
 
 #: data/gtk/preferences_dialog.ui:47
 msgid "Track _Directory"
-msgstr ""
+msgstr "_Repertòri de las pistas"
 
 #: data/gtk/preferences_dialog.ui:69
 msgid "Save _All Tracks"
-msgstr ""
+msgstr "Salvar totas _las pistas"
 
 #: data/gtk/preferences_dialog.ui:70
 msgid "All recorded tracks are automatically saved in the track directory"
 msgstr ""
+"Totas las pistas enregistradas son automaticament salvadas dins lo repertòri "
+"de las pistas"
 
 #: data/gtk/preferences_dialog.ui:84
 msgid "Decide for Each _Track"
-msgstr ""
+msgstr "Causir per cada _pista"
 
 #: data/gtk/preferences_dialog.ui:85
 msgid "Tracks are temporarily recorded and can be saved if desired"
 msgstr ""
+"Las pistas son temporàriament enregistradas e se pòdon salvar se volgut"
 
 #: data/gtk/preferences_dialog.ui:100
 msgid "Record N_othing"
@@ -379,23 +384,23 @@ msgstr "Enregistrar p_as res"
 
 #: data/gtk/preferences_dialog.ui:101
 msgid "Stations are played without recording"
-msgstr ""
+msgstr "S’escota las estacions sens las enregistrar"
 
 #: data/gtk/preferences_dialog.ui:120
 msgid "M_inimum Duration"
-msgstr ""
+msgstr "Durada m_inimala"
 
 #: data/gtk/preferences_dialog.ui:121
 msgid "Tracks shorter than the minimum duration will be ignored"
-msgstr ""
+msgstr "Las pistas mai corta que la durada minimala seràn ignoradas"
 
 #: data/gtk/preferences_dialog.ui:136
 msgid "M_aximum Duration"
-msgstr ""
+msgstr "Durada m_aximala"
 
 #: data/gtk/preferences_dialog.ui:137
 msgid "Recording ends when the maximum duration is reached"
-msgstr ""
+msgstr "L’enregistrament s’acaba quand la durada maximala es atenguda"
 
 #: data/gtk/search_page.ui:23
 msgid "Search"
@@ -499,40 +504,40 @@ msgstr "Informacions"
 msgid "Language"
 msgstr "Lenga"
 
-#: data/gtk/station_dialog.ui:168
+#: data/gtk/station_dialog.ui:169
 msgid "Tags"
 msgstr "Etiquetas"
 
-#: data/gtk/station_dialog.ui:180
+#: data/gtk/station_dialog.ui:182
 msgid "Location"
 msgstr "Localizacion"
 
-#: data/gtk/station_dialog.ui:184
+#: data/gtk/station_dialog.ui:186
 msgid "Country"
 msgstr "País"
 
-#: data/gtk/station_dialog.ui:194
+#: data/gtk/station_dialog.ui:197
 msgid "State"
 msgstr "Estat"
 
-#: data/gtk/station_dialog.ui:228
+#: data/gtk/station_dialog.ui:232
 msgid "Audio"
 msgstr "Àudio"
 
-#: data/gtk/station_dialog.ui:231
+#: data/gtk/station_dialog.ui:235
 msgid "Bitrate"
 msgstr "Debit"
 
-#: data/gtk/station_dialog.ui:241
+#: data/gtk/station_dialog.ui:246
 msgid "Codec"
 msgstr "Codèc"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:251
+#: data/gtk/station_dialog.ui:257
 msgid "Stream"
 msgstr "Flux continú"
 
-#: data/gtk/station_dialog.ui:257
+#: data/gtk/station_dialog.ui:263
 msgid "Copy"
 msgstr "Copiar"
 
@@ -542,7 +547,7 @@ msgstr "Modificar"
 
 #: data/gtk/track_dialog.ui:121
 msgid "The recorded track has been saved"
-msgstr ""
+msgstr "La pista enregistrada es estada salvada"
 
 #: data/gtk/track_dialog.ui:137 data/gtk/track_dialog.ui:208
 #: data/gtk/track_row.ui:9 src/audio/player.rs:449
@@ -563,11 +568,13 @@ msgstr "Estacion"
 
 #: data/gtk/track_dialog.ui:209
 msgid "Save this track when recording is complete"
-msgstr ""
+msgstr "Enregistrar aquesta pista quand l’enregistrament s’acaba"
 
 #: data/gtk/track_dialog.ui:223
 msgid "Recording behaviour can be changed in <a href=\"\">preferences</a>"
 msgstr ""
+"Se pòt cambiar lo compòrtament d’enregistrament dins las <a "
+"href=\"\">preferéncias</a>"
 
 #: data/gtk/track_row.ui:20
 msgid "Saved"
@@ -579,17 +586,17 @@ msgstr "Activar / Desactivar lo mòde mut"
 
 #: src/app.rs:85
 msgid "Track no longer available"
-msgstr ""
+msgstr "Pista pas mai disponibla"
 
-#: src/app.rs:108 src/app.rs:130
+#: src/app.rs:109 src/app.rs:132
 msgid "This track is currently not being recorded"
-msgstr ""
+msgstr "Aquesta pista es en cors d’enregistrament"
 
-#: src/app.rs:261
+#: src/app.rs:263
 msgid "Playing “{}”"
 msgstr "Lectura de « {} »"
 
-#: src/app.rs:360
+#: src/app.rs:362
 msgid "Active Playback"
 msgstr "Lectura"
 
@@ -615,7 +622,7 @@ msgstr "Enregistrada"
 
 #: src/audio/recording_state.rs:62
 msgid "Below Threshold"
-msgstr ""
+msgstr "En dejós del sulhet"
 
 #: src/audio/recording_state.rs:63
 msgid "Cancelled"
@@ -623,45 +630,40 @@ msgstr "Anullat"
 
 #: src/audio/recording_state.rs:69
 msgid "Recording is deactivated in preferences"
-msgstr ""
+msgstr "L’enregistrament es desactivat dins las preferéncias"
 
 #: src/audio/recording_state.rs:71
-#, fuzzy
-#| msgid ""
-#| "No recording because the song title contains a word on the ignore list."
 msgid "The track contains a word that is on the ignore list"
-msgstr ""
-"Pas d'enregistrament perque lo títol de la cançon conten un mot sus la lista "
-"d'ignorar."
+msgstr "La pista conten un mot sus la lista d'ignorar"
 
 #: src/audio/recording_state.rs:74
 msgid ""
 "The track wasn't played from the beginning, so it can't be fully recorded"
 msgstr ""
+"La pista es pas estada jogada de la debuta, alara se pòt pas enregistrar "
+"complètament"
 
 #: src/audio/recording_state.rs:77
-#, fuzzy
-#| msgid "The current song will be recorded until a new song is detected."
 msgid "The track will be recorded until a new track gets played"
-msgstr ""
-"La cançon actuala s’enregistrarà fins qu’una cançon novèla siá detectada."
+msgstr "La pista actuala s’enregistrarà fins qu’una pista novèla siá detectada"
 
 #: src/audio/recording_state.rs:79
 msgid "The track has been temporarily recorded"
-msgstr ""
+msgstr "La pista es estada temporàriament enregistrada"
 
 #: src/audio/recording_state.rs:81
 msgid "The maximum recording duration has been reached"
-msgstr ""
+msgstr "La durada maximala d’enregistrament es estada atenguda"
 
 #: src/audio/recording_state.rs:84
 msgid ""
 "The track has been discarded as the duration was below the set threshold"
 msgstr ""
+"La pista es estada ignorada perque la durada es en dessús del sulhet definit"
 
 #: src/audio/recording_state.rs:86
 msgid "Recording has been cancelled"
-msgstr ""
+msgstr "L’enregistrament es estat anullat"
 
 #: src/device/device_discovery.rs:83
 msgid "Google Cast Device"
@@ -721,11 +723,13 @@ msgstr "Copiat"
 
 #: src/ui/window.rs:221
 msgid "No Permission for Background Playback"
-msgstr ""
+msgstr "Cap d’autorizacion per la lectura en rèireplan"
 
 #: src/ui/window.rs:223
 msgid "“Run in Background” must be allowed for this app in system settings."
 msgstr ""
+"« Executar en rèireplan » deu èsser permés per aquesta aplicacion als "
+"paramètres sistèma."
 
 #: src/ui/window.rs:227
 msgid "Try Anyway"
