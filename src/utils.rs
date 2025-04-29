@@ -117,6 +117,15 @@ pub fn ellipsize_end<S: std::fmt::Display>(x: S, max_len: usize) -> String {
     }
 }
 
+
+/// Detect if we're running under KDE Plasma
+pub fn is_kde_plasma() -> bool {
+    if let Ok(desktop) = std::env::var("XDG_CURRENT_DESKTOP") {
+        return desktop.to_lowercase().contains("kde");
+    }
+    false
+}
+
 pub async fn background_portal_permissions() -> bool {
     if !ashpd::is_sandboxed().await {
         debug!("App is not sandboxed, background playback is allowed.");
