@@ -31,12 +31,12 @@ use crate::config;
 use crate::database::SwLibrary;
 use crate::i18n::{i18n, i18n_f};
 use crate::settings::*;
-use crate::utils;
 use crate::ui::{SwApplicationWindow, SwTrackDialog};
+use crate::utils::is_kde_plasma;
 
 mod imp {
-    use crate::utils;
     use super::*;
+    use crate::utils;
 
     #[derive(Default, Properties)]
     #[properties(wrapper_type = super::SwApplication)]
@@ -353,11 +353,11 @@ impl SwApplication {
     pub fn set_inhibit(&self, inhibit: bool) {
         // Skip power inhibition entirely when running under KDE Plasma
         // as per user preference
-        if crate::utils::is_kde_plasma() {
+        if is_kde_plasma() {
             debug!("Skipping power inhibition on KDE Plasma");
             return;
         }
-        
+
         let imp = self.imp();
 
         // Only use GTK's built-in inhibition mechanism for GNOME

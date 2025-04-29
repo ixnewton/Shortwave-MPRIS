@@ -53,13 +53,18 @@ gtk = { version = "0.9", package = "gtk4", features = ["gnome_46"] }
 smol-timeout = { path = "patches/smol-timeout" }
 
 [dependencies.openssl]
-version = "0.10.70"
+version = "0.10.72"
+features = ["vendored"]
 
 [dependencies.libsqlite3-sys]
 version = "=0.25.2"
 
 [dependencies.native-tls]
 version = "0.2.13"
+
+[dependencies.tokio]
+version = "1.44.2"
+features = ["full"]
 
 [dev-dependencies]
 assert_matches = "1.5"
