@@ -1,0 +1,3 @@
+# Minimal working configuration
+[advisories]
+ignore = ["RUSTSEC-2024-0436"]

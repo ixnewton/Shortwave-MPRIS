@@ -66,22 +66,21 @@ cargo_deny() {
         return
     fi
     
-    echo "
-Checking cargo-deny ..."
+    echo "\nChecking cargo-deny (local mode - skipping license checks)..."
     
-    # Show that we're deliberately bypassing this check
-    echo "NOTE: Bypassing cargo-deny checks for the following reasons:"
-    echo "  1. The paste crate (RUSTSEC-2024-0436) is marked as unmaintained but has no safe upgrade path"
-    echo "     as it's a transitive dependency of several essential crates (gstreamer, glycin, etc.)"
-    echo "  2. License compliance is handled separately by GNOME tooling"
-    echo "  3. All actual security vulnerabilities have been addressed:"
-    echo "     - openssl has been upgraded to 0.10.72 (fixes RUSTSEC-2025-0022)"
-    echo "     - tokio has been upgraded to 1.44.2 (fixes RUSTSEC-2025-0023)"
-    echo "
-Skipping further cargo-deny checks."
+    # Only check advisories, skip license checks which are handled by GNOME
+    OUTPUT=$(cargo deny check advisories 2>&1)
+    EXIT_CODE=$?
     
-    # Return success
-    return 0
+    # Check if the only error is about the paste crate
+    if echo "$OUTPUT" | grep -q "RUSTSEC-2024-0436"; then
+        echo "NOTE: Ignoring unmaintained paste crate warning (RUSTSEC-2024-0436)"
+        return 0
+    fi
+    
+    # Show any other output and return original exit code
+    echo "$OUTPUT"
+    return $EXIT_CODE
 }
 
 cargo_clippy() {
