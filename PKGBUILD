@@ -1,52 +1,48 @@
 # Maintainer: Your Name <your.email@example.com>
 pkgname=shortwave-mpris-git
-pkgver=5.0.0.r0.g$(git describe --long --tags | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g')
+pkgver=5.0.0.r0.g1ff632d
 pkgrel=1
 pkgdesc="Internet radio player with access to over 50,000 stations (with MPRIS support)"
 arch=('x86_64' 'aarch64')
-url="https://gitlab.gnome.org/World/Shortwave"
+url="https://gitlab.gnome.org/cxorg/Shortwave"
 license=('GPL3')
 depends=(
     'gtk4>=4.16.0'
     'libadwaita>=1.6.0'
-    'shumate>=1.3.0'
+    'libshumate>=1.3.0'
     'gstreamer>=1.16.0'
     'gst-plugins-base-libs>=1.16.0'
     'gst-plugins-bad>=1.16.0'
     'gst-plugins-good'
     'gst-libav'
-    'sqlite3>=3.20.0'
+    'sqlite>=3.20.0'
     'openssl>=1.0.0'
     'dbus'
     'glib2>=2.66.0'
     'lcms2>=2.12.0'
     'libseccomp>=2.5.0'
-    'rust'
-    'meson'
-    'desktop-file-utils'
-    'appstream-glib'
 )
-makedepends=('git' 'rustup' 'cargo' 'pkgconf' 'meson' 'ninja' 'blueprint-compiler')
+makedepends=('git' 'rust' 'cargo' 'pkgconf' 'meson' 'ninja' 'blueprint-compiler' 'desktop-file-utils' 'appstream-glib')
 provides=('shortwave' 'shortwave-mpris')
 conflicts=('shortwave' 'shortwave-mpris')
 options=('!lto')
-source=("git+$url.git")
+source=("git+$url.git#branch=aur_kde_plasma6")
 sha256sums=('SKIP')
 
 pkgver() {
-  cd "${pkgname%-git}"
+  cd "Shortwave"
   git describe --long --tags | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
 }
 
 prepare() {
-  cd "${pkgname%-git}"
+  cd "Shortwave"
   # Set up Rust toolchain
   export RUSTUP_TOOLCHAIN=stable
   cargo fetch --locked --target "$CARCH-unknown-linux-gnu"
 }
 
 build() {
-  cd "${pkgname%-git}"
+  cd "Shortwave"
   
   # Set up Rust environment
   export RUSTUP_TOOLCHAIN=stable
@@ -63,13 +59,13 @@ build() {
 }
 
 check() {
-  cd "${pkgname%-git}"
+  cd "Shortwave"
   # Run tests if needed
   # meson test -C build --print-errorlogs
 }
 
 package() {
-  cd "${pkgname%-git}"
+  cd "Shortwave"
   DESTDIR="$pkgdir" meson install -C build
   
   # Install license
