@@ -1,6 +1,6 @@
 # Maintainer: Your Name <your.email@example.com>
 pkgname=shortwave-mpris-git
-pkgver=5.0.0.r0.g1ff632d
+pkgver=4.0.1.r181.g45bdd3a
 pkgrel=1
 pkgdesc="Internet radio player with access to over 50,000 stations (with MPRIS support)"
 arch=('x86_64' 'aarch64')
@@ -51,9 +51,7 @@ build() {
   # Build with release profile
   arch-meson . build \
     --buildtype=release \
-    -Dprofile=default \
-    -Doffline=false \
-    -Dtests=false
+    -Dprofile=default
   
   ninja -C build
 }
@@ -69,17 +67,5 @@ package() {
   DESTDIR="$pkgdir" meson install -C build
   
   # Install license
-  install -Dm644 COPYING "$pkgdir/usr/share/licenses/$pkgname/COPYING"
-  
-  # Install desktop file with MPRIS suffix
-  install -Dm644 data/de.haeckerfelix.Shortwave.desktop \
-    "$pkgdir/usr/share/applications/de.haeckerfelix.Shortwave.mpris.desktop"
-  
-  # Install appstream file with MPRIS suffix
-  install -Dm644 data/de.haeckerfelix.Shortwave.metainfo.xml \
-    "$pkgdir/usr/share/metainfo/de.haeckerfelix.Shortwave.mpris.metainfo.xml"
-  
-  # Update desktop file to use MPRIS variant
-  sed -i 's/Name=Shortwave/Name=Shortwave (MPRIS)/' \
-    "$pkgdir/usr/share/applications/de.haeckerfelix.Shortwave.mpris.desktop"
+  install -Dm644 COPYING.md "$pkgdir/usr/share/licenses/$pkgname/COPYING"
 }
