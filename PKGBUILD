@@ -1,7 +1,7 @@
 # Maintainer: Your Name <your.email@example.com>
 pkgname=shortwave-mpris-git
 pkgver=4.0.1.r181.g45bdd3a
-pkgrel=1
+pkgrel=2
 pkgdesc="Internet radio player with access to over 50,000 stations (with MPRIS support)"
 arch=('x86_64' 'aarch64')
 url="https://gitlab.gnome.org/cxorg/Shortwave"
