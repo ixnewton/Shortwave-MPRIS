@@ -237,6 +237,9 @@ mod imp {
                 // First check whether we have some custom cover for that station
                 // Usually only for local added stations
                 if let Some(texture) = station.custom_cover() {
+                    // Scale the texture to match the widget size
+                    let size = self.obj().size();
+                    self.image.set_pixel_size(size);
                     self.image.set_paintable(Some(&texture));
                     self.stack.set_visible_child_name("image");
 
@@ -255,6 +258,9 @@ mod imp {
 
                     match res {
                         Ok(texture) => {
+                            // Scale the texture to match the widget size
+                            let size = self.obj().size();
+                            self.image.set_pixel_size(size);
                             self.image.set_paintable(Some(&texture));
                             self.stack.set_visible_child_name("image");
 

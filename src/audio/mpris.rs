@@ -19,7 +19,7 @@ use std::rc::Rc;
 use glib::clone;
 use gtk::{
     glib,
-    prelude::{ApplicationExt, GtkApplicationExt, WidgetExt},
+    prelude::{ApplicationExt, GtkApplicationExt, ObjectExt, WidgetExt},
 };
 use mpris_server::{zbus::Result, Metadata, PlaybackStatus, Player};
 
@@ -66,6 +66,7 @@ impl MprisServer {
                     server,
                     async move {
                         server.update_mpris_plaback_status().await;
+                        server.update_mpris_capabilities().await;
                     }
                 ));
             }
@@ -80,6 +81,23 @@ impl MprisServer {
                     server,
                     async move {
                         server.update_mpris_metadata().await;
+                        server.update_mpris_capabilities().await;
+                    }
+                ));
+            }
+        ));
+
+        // Connect to library changes for MPRIS capability updates
+        let library = SwApplication::default().library();
+        library.connect_notify_local(Some("status"), clone!(
+            #[strong]
+            server,
+            move |_, _| {
+                glib::spawn_future_local(clone!(
+                    #[strong]
+                    server,
+                    async move {
+                        server.update_mpris_capabilities().await;
                     }
                 ));
             }
@@ -197,6 +215,7 @@ impl MprisServer {
         server.update_mpris_plaback_status().await;
         server.update_mpris_metadata().await;
         server.update_mpris_volume().await;
+        server.update_mpris_capabilities().await;
 
         Ok(server)
     }
@@ -255,5 +274,21 @@ impl MprisServer {
         if let Err(err) = self.player.set_volume(player.volume()).await {
             error!("Unable to update mpris volume: {:?}", err.to_string())
         }
+    }
+
+    async fn update_mpris_capabilities(&self) {
+        let library = SwApplication::default().library();
+        
+        let can_go_next = library.get_next_favorite().is_some();
+        if let Err(err) = self.player.set_can_go_next(can_go_next).await {
+            error!("Unable to update mpris can-go-next: {:?}", err.to_string())
+        }
+
+        let can_go_previous = library.get_previous_favorite().is_some();
+        if let Err(err) = self.player.set_can_go_previous(can_go_previous).await {
+            error!("Unable to update mpris can-go-previous: {:?}", err.to_string())
+        }
+
+        debug!("Updated MPRIS capabilities - can_go_next: {}, can_go_previous: {}", can_go_next, can_go_previous);
     }
 }
