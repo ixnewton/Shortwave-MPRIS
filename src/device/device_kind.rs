@@ -24,4 +24,5 @@ use gtk::glib::Enum;
 pub enum SwDeviceKind {
     #[default]
     Cast,
+    Dlna,
 }

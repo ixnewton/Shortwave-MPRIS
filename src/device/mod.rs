@@ -15,6 +15,7 @@
 // along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 mod cast_sender;
+mod dlna_sender;
 #[allow(clippy::module_inception)]
 mod device;
 mod device_discovery;
@@ -26,3 +27,4 @@ pub use device::SwDevice;
 pub use device_discovery::SwDeviceDiscovery;
 pub use device_kind::SwDeviceKind;
 pub use device_model::SwDeviceModel;
+pub use dlna_sender::SwDlnaSender;

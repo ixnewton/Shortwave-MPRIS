@@ -27,7 +27,7 @@ use crate::api::{StationMetadata, SwStation};
 use crate::app::SwApplication;
 use crate::audio::*;
 use crate::config;
-use crate::device::{SwCastSender, SwDevice, SwDeviceDiscovery, SwDeviceKind};
+use crate::device::{SwCastSender, SwDevice, SwDeviceDiscovery, SwDeviceKind, SwDlnaSender};
 use crate::i18n::*;
 use crate::path;
 use crate::settings::{settings_manager, Key};
@@ -78,9 +78,10 @@ mod imp {
         #[property(name="has-device", get=Self::has_device, type=bool)]
         pub device: RefCell<Option<SwDevice>>,
         #[property(get)]
-        device_discovery: SwDeviceDiscovery,
+        pub device_discovery: SwDeviceDiscovery,
         #[property(get)]
-        cast_sender: SwCastSender,
+        pub cast_sender: SwCastSender,
+        pub dlna_sender: OnceCell<SwDlnaSender>,
 
         pub backend: OnceCell<RefCell<GstreamerBackend>>,
         pub mpris_server: OnceCell<MprisServer>,
@@ -135,6 +136,9 @@ mod imp {
                 .sync_create()
                 .bidirectional()
                 .build();
+
+            // Sync volume with DLNA device (lazy initialization)
+            // Note: DLNA sender is created lazily to avoid Tokio runtime issues
 
             // MPRIS controls
             glib::spawn_future_local(async move {
@@ -477,6 +481,10 @@ impl SwPlayer {
         glib::Object::new()
     }
 
+    fn dlna_sender(&self) -> &SwDlnaSender {
+        self.imp().dlna_sender.get_or_init(|| SwDlnaSender::new())
+    }
+
     pub async fn set_station(&self, station: SwStation) {
         debug!("Set station: {}", station.title());
         let imp = self.imp();
@@ -512,6 +520,18 @@ impl SwPlayer {
                 )
                 .await
                 .handle_error("Unable to load Google Cast media");
+
+            self.dlna_sender()
+                .load_media(
+                    url.as_ref(),
+                    &station
+                        .metadata()
+                        .favicon
+                        .map(|u| u.to_string())
+                        .unwrap_or_default(),
+                    &station.title(),
+                )
+                .handle_error("Unable to load DLNA media");
         } else {
             error!("Station cannot be streamed. URL is not valid.");
         }
@@ -615,9 +635,18 @@ impl SwPlayer {
         }
     }
 
-    pub async fn connect_device(&self, device: &SwDevice) -> Result<(), cast_sender::Error> {
+    pub async fn connect_device(&self, device: &SwDevice) -> Result<(), Box<dyn std::error::Error>> {
         let result = match device.kind() {
-            SwDeviceKind::Cast => self.cast_sender().connect(&device.address()).await,
+            SwDeviceKind::Cast => {
+                self.cast_sender()
+                    .connect(&device.address())
+                    .await
+                    .map_err(|e| Box::new(e) as Box<dyn std::error::Error>)
+            }
+            SwDeviceKind::Dlna => {
+                self.dlna_sender()
+                    .connect(&device.address())
+            }
         };
 
         if result.is_ok() {
@@ -627,7 +656,14 @@ impl SwPlayer {
 
             if self.state() == SwPlaybackState::Playing || self.state() == SwPlaybackState::Loading
             {
-                self.cast_sender().start_playback().await?;
+                match device.kind() {
+                    SwDeviceKind::Cast => {
+                        self.cast_sender().start_playback().await?;
+                    }
+                    SwDeviceKind::Dlna => {
+                        self.dlna_sender().start_playback()?;
+                    }
+                }
 
                 // Mute local gstreamer audio
                 self.imp()
@@ -646,6 +682,7 @@ impl SwPlayer {
         if let Some(device) = self.device() {
             match device.kind() {
                 SwDeviceKind::Cast => self.cast_sender().disconnect().await,
+                SwDeviceKind::Dlna => self.dlna_sender().disconnect(),
             };
 
             *self.imp().device.borrow_mut() = None;
