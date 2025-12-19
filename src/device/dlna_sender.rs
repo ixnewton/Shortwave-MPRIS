@@ -16,14 +16,19 @@
 
 use std::cell::{Cell, RefCell};
 use std::error::Error;
+use std::net::SocketAddr;
+use std::sync::atomic::{AtomicBool, Ordering};
+use std::sync::Arc;
+use std::thread::{self, JoinHandle};
 use std::time::Duration;
-
 use adw::prelude::*;
 use glib::clone;
 use glib::subclass::prelude::*;
 use glib::Properties;
 use gtk::glib;
-use reqwest;
+use log::{debug, error, info, warn};
+use reqwest::blocking::Client;
+use tiny_http::{Method, Response, Server, StatusCode};
 use url::Url;
 
 // Helper function to send SOAP actions to DLNA devices
@@ -80,41 +85,82 @@ fn fetch_device_services(device_url: &str) -> Result<(String, String), Box<dyn E
     let response = client.get(device_url).send()?;
     let xml_content = response.text()?;
     
-    // Extract service control URLs
+    debug!("DLNA: Device description XML: {}", xml_content);
+    
+    // Extract service control URLs by searching entire XML
     let mut av_transport_url = None;
     let mut rendering_control_url = None;
     
-    // Find AVTransport service
-    if let Some(start) = xml_content.find("<service>") {
-        let services_section = &xml_content[start..];
-        for service in services_section.split("<service>") {
-            if service.contains("urn:upnp-org:serviceId:AVTransport") {
-                if let Some(url_start) = service.find("<controlURL>") {
-                    if let Some(url_end) = service.find("</controlURL>") {
-                        let url = &service[url_start + 13..url_end];
-                        let base_url = Url::parse(device_url)?;
-                        let full_url = base_url.join(url.trim())?;
-                        av_transport_url = Some(full_url.to_string());
-                    }
-                }
+    // Find AVTransport service anywhere in XML (handle line breaks)
+    if let Some(service_start) = xml_content.find("urn:schemas-upnp-org:service:AVTransport:1") {
+        debug!("DLNA: Found AVTransport serviceType in XML");
+        
+        // Search backwards from serviceType to find <service> start
+        let service_block_start = xml_content[0..service_start].rfind("<service>")
+            .unwrap_or(0);
+        
+        // Search forwards to find </service> end
+        let service_block_end = xml_content[service_start..].find("</service>")
+            .map(|pos| service_start + pos + 9)
+            .unwrap_or(xml_content.len());
+        
+        let service_block = &xml_content[service_block_start..service_block_end];
+        debug!("DLNA: AVTransport service block: {}", service_block);
+        
+        // Extract controlURL (handle whitespace and line breaks)
+        if let Some(url_start) = service_block.find("<controlURL>") {
+            if let Some(url_end) = service_block.find("</controlURL>") {
+                let url = &service_block[url_start + 13..url_end];
+                let url = url.trim(); // Remove whitespace
+                let base_url = Url::parse(device_url)?;
+                let full_url = base_url.join(url)?;
+                av_transport_url = Some(full_url.to_string());
+                debug!("DLNA: Found AVTransport service at: {}", full_url);
             }
-            
-            if service.contains("urn:upnp-org:serviceId:RenderingControl") {
-                if let Some(url_start) = service.find("<controlURL>") {
-                    if let Some(url_end) = service.find("</controlURL>") {
-                        let url = &service[url_start + 13..url_end];
-                        let base_url = Url::parse(device_url)?;
-                        let full_url = base_url.join(url.trim())?;
-                        rendering_control_url = Some(full_url.to_string());
-                    }
-                }
+        }
+    }
+    
+    // Find RenderingControl service anywhere in XML (handle line breaks)
+    if let Some(service_start) = xml_content.find("urn:schemas-upnp-org:service:RenderingControl:1") {
+        debug!("DLNA: Found RenderingControl serviceType in XML");
+        
+        // Search backwards from serviceType to find <service> start
+        let service_block_start = xml_content[0..service_start].rfind("<service>")
+            .unwrap_or(0);
+        
+        // Search forwards to find </service> end
+        let service_block_end = xml_content[service_start..].find("</service>")
+            .map(|pos| service_start + pos + 9)
+            .unwrap_or(xml_content.len());
+        
+        let service_block = &xml_content[service_block_start..service_block_end];
+        debug!("DLNA: RenderingControl service block: {}", service_block);
+        
+        // Extract controlURL (handle whitespace and line breaks)
+        if let Some(url_start) = service_block.find("<controlURL>") {
+            if let Some(url_end) = service_block.find("</controlURL>") {
+                let url = &service_block[url_start + 13..url_end];
+                let url = url.trim(); // Remove whitespace
+                let base_url = Url::parse(device_url)?;
+                let full_url = base_url.join(url)?;
+                rendering_control_url = Some(full_url.to_string());
+                debug!("DLNA: Found RenderingControl service at: {}", full_url);
             }
         }
     }
     
     match (av_transport_url, rendering_control_url) {
         (Some(av), Some(rc)) => Ok((av, rc)),
-        _ => Err("Required services not found".into()),
+        (Some(av), None) => {
+            warn!("DLNA: RenderingControl service not found, using only AVTransport");
+            Ok((av, String::new()))
+        }
+        _ => {
+            error!("DLNA: Required services not found in device description");
+            error!("DLNA: Available services in XML: {:?}", 
+                xml_content.matches("serviceType>").count());
+            Err("Required services not found".into())
+        }
     }
 }
 
@@ -138,6 +184,13 @@ mod imp {
         pub device: RefCell<Option<String>>,  // Store device URL instead of Device object
         pub av_transport_url: RefCell<Option<String>>,  // Store AVTransport control URL
         pub rendering_control_url: RefCell<Option<String>>,  // Store RenderingControl control URL
+        
+        // Proxy server components
+        pub proxy_thread: RefCell<Option<JoinHandle<()>>>,
+        pub proxy_shutdown: Arc<AtomicBool>,
+        pub proxy_port: Cell<u16>,
+        pub local_ip: RefCell<String>,
+        pub original_stream_url: RefCell<String>,
     }
 
     #[glib::object_subclass]
@@ -192,6 +245,115 @@ impl SwDlnaSender {
         glib::Object::new()
     }
 
+    // Start HTTP proxy server for streaming
+    fn start_proxy_server(&self) -> Result<(), Box<dyn Error>> {
+        let imp = self.imp();
+        
+        // Find an available port
+        let port = 8080u16; // Could make this configurable
+        imp.proxy_port.set(port);
+        
+        // Extract local IP from device URL
+        let device_url = imp.device.borrow().as_ref().unwrap().clone();
+        let parsed_url = Url::parse(&device_url)?;
+        let local_ip = parsed_url.host_str().unwrap_or("127.0.0.1").to_string();
+        imp.local_ip.borrow_mut().clone_from(&local_ip);
+        
+        // Setup shutdown signal
+        let shutdown = imp.proxy_shutdown.clone();
+        shutdown.store(false, Ordering::SeqCst);
+        
+        // Store original stream URL for proxy
+        let original_url = imp.stream_url.borrow().clone();
+        imp.original_stream_url.borrow_mut().clone_from(&original_url);
+        
+        // Start proxy server in background thread
+        let shutdown_clone = shutdown.clone();
+        let stream_url_clone = original_url.clone();
+        
+        let thread = thread::spawn(move || {
+            let addr = SocketAddr::from(([0, 0, 0, 0], port));
+            
+            match Server::http(addr) {
+                Ok(server) => {
+                    info!("DLNA: Proxy server started on port {}", port);
+                    
+                    for request in server.incoming_requests() {
+                        // Check for shutdown signal
+                        if shutdown_clone.load(Ordering::SeqCst) {
+                            break;
+                        }
+                        
+                        // Handle stream requests
+                        if request.url() == "/stream" {
+                            match Self::handle_stream_request(&request, &stream_url_clone) {
+                                Ok(response) => {
+                                    let _ = request.respond(response);
+                                }
+                                Err(e) => {
+                                    error!("DLNA: Proxy request failed: {}", e);
+                                    let _ = request.respond(Response::from_string(
+                                        format!("Proxy error: {}", e)
+                                    ).with_status_code(StatusCode(500)));
+                                }
+                            }
+                        }
+                    }
+                }
+                Err(e) => {
+                    error!("DLNA: Failed to start proxy server: {}", e);
+                }
+            }
+            
+            info!("DLNA: Proxy server stopped");
+        });
+        
+        imp.proxy_thread.borrow_mut().replace(thread);
+        Ok(())
+    }
+
+    // Stop HTTP proxy server
+    fn stop_proxy_server(&self) {
+        let imp = self.imp();
+        
+        // Signal shutdown
+        imp.proxy_shutdown.store(true, Ordering::SeqCst);
+        
+        // Join thread
+        if let Some(thread) = imp.proxy_thread.borrow_mut().take() {
+            let _ = thread.join();
+        }
+        
+        info!("DLNA: Proxy server stopped");
+    }
+
+    // Handle proxy stream requests
+    fn handle_stream_request(request: &tiny_http::Request, stream_url: &str) -> Result<Response<std::io::Cursor<Vec<u8>>>, Box<dyn Error>> {
+        if request.method() != &Method::Get {
+            return Err("Only GET requests supported".into());
+        }
+
+        // Fetch the original stream
+        let client = Client::builder()
+            .timeout(Duration::from_secs(10))
+            .build()?;
+        
+        let response = client.get(stream_url).send()?;
+        
+        // Get the content as bytes
+        let content = response.bytes()?;
+        
+        // Create proxy response with proper headers
+        let mut proxy_response = Response::from_data(content);
+        
+        // Set content type for audio streams
+        proxy_response = proxy_response.with_header(
+            tiny_http::Header::from_bytes(&b"Content-Type"[..], &b"audio/mpeg"[..]).unwrap()
+        );
+        
+        Ok(proxy_response)
+    }
+
     pub fn connect(&self, address: &str) -> Result<(), Box<dyn Error>> {
         if self.is_connected() {
             self.disconnect();
@@ -237,6 +399,9 @@ impl SwDlnaSender {
             return;
         }
 
+        // Stop proxy server
+        self.stop_proxy_server();
+
         *self.imp().device.borrow_mut() = None;
         *self.imp().av_transport_url.borrow_mut() = None;
         *self.imp().rendering_control_url.borrow_mut() = None;
@@ -254,25 +419,58 @@ impl SwDlnaSender {
         self.notify_cover_url();
         self.notify_title();
 
-        if let Some(ref av_url) = *self.imp().av_transport_url.borrow() {
-            let metadata = format!(
-                r#"<DIDL-Lite xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/" xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/">
+        // Start proxy server for external stream
+        if stream_url.starts_with("http") && !stream_url.contains("192.168.2.101") {
+            self.start_proxy_server()?;
+            
+            // Use proxy URL instead of external URL
+            let imp = self.imp();
+            let local_ip = imp.local_ip.borrow();
+            let port = imp.proxy_port.get();
+            let proxy_url = format!("http://{}:{}/stream", local_ip, port);
+            
+            if let Some(ref av_url) = *imp.av_transport_url.borrow() {
+                let metadata = format!(
+                    r#"<DIDL-Lite xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/" xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/">
 <item id="0" parentID="-1" restricted="0">
 <dc:title>{}</dc:title>
 <upnp:class>object.item.audioItem.musicTrack</upnp:class>
 <res protocolInfo="http-get:*:audio/mpeg:*">{}</res>
 </item>
 </DIDL-Lite>"#,
-                title, stream_url
-            );
+                    title, proxy_url
+                );
 
-            let body = format!(
-                "<InstanceID>0</InstanceID><CurrentURI>{}</CurrentURI><CurrentURIMetaData>{}</CurrentURIMetaData>",
-                stream_url,
-                metadata
-            );
+                let body = format!(
+                    "<InstanceID>0</InstanceID><CurrentURI>{}</CurrentURI><CurrentURIMetaData>{}</CurrentURIMetaData>",
+                    proxy_url,
+                    metadata
+                );
 
-            soap_action(av_url, "urn:schemas-upnp-org:service:AVTransport:1", "SetAVTransportURI", &body)?;
+                soap_action(av_url, "urn:schemas-upnp-org:service:AVTransport:1", "SetAVTransportURI", &body)?;
+            }
+        } else {
+            // Use original URL for local streams
+            if let Some(ref av_url) = *self.imp().av_transport_url.borrow() {
+                let metadata = format!(
+                    r#"<DIDL-Lite xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/" xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/">
+<item id="0" parentID="-1" restricted="0">
+<dc:title>{}</dc:title>
+<upnp:class>object.item.audioItem.musicTrack</upnp:class>
+<res protocolInfo="http-get:*:audio/mpeg:*">{}</res>
+</item>
+</DIDL-Lite>"#,
+                    title, stream_url
+                );
+
+                let body = format!(
+                    "<InstanceID>0</InstanceID><CurrentURI>{}</CurrentURI><CurrentURIMetaData>{}</CurrentURIMetaData>",
+                    stream_url,
+                    metadata
+                );
+
+                soap_action(av_url, "urn:schemas-upnp-org:service:AVTransport:1", "SetAVTransportURI", &body)?;
+            }
         }
 
         Ok(())

@@ -57,18 +57,18 @@ fn parse_ssdp_response(response: &str) -> Option<(String, String, String, String
     let location = location?;
     let host = host.unwrap_or_else(|| "unknown".to_string());
     
-    // Fetch device description XML to get proper friendlyName
-    let friendly_name = fetch_device_friendly_name(&location).unwrap_or_else(|_| {
+    // Fetch device description XML to get proper friendlyName and device type
+    let (friendly_name, device_type) = fetch_device_info(&location).unwrap_or_else(|_| {
         // Fallback to a generic name with IP if fetch fails
-        format!("DLNA Device ({})", host)
+        (format!("DLNA Device ({})", host), "unknown".to_string())
     });
     
-    debug!("DLNA: Parsed device - Location: {}, Name: {}, Host: {}", location, friendly_name, host);
+    debug!("DLNA: Parsed device - Location: {}, Name: {}, Type: {}, Host: {}", location, friendly_name, device_type, host);
     
-    Some((location, friendly_name, "urn:schemas-upnp-org:device:MediaRenderer:1".to_string(), host))
+    Some((location, friendly_name, device_type, host))
 }
 
-fn fetch_device_friendly_name(location: &str) -> Result<String, Box<dyn std::error::Error>> {
+fn fetch_device_info(location: &str) -> Result<(String, String), Box<dyn std::error::Error>> {
     debug!("DLNA: Fetching device description from {}", location);
     
     // Use blocking HTTP client in the background thread
@@ -82,24 +82,32 @@ fn fetch_device_friendly_name(location: &str) -> Result<String, Box<dyn std::err
     debug!("DLNA: Got device description XML ({} bytes)", xml_content.len());
     
     // Parse XML to extract friendlyName
-    if let Some(start) = xml_content.find("<friendlyName>") {
+    let friendly_name = if let Some(start) = xml_content.find("<friendlyName>") {
         if let Some(end) = xml_content.find("</friendlyName>") {
-            let friendly_name = xml_content[start + 13..end].trim().to_string();
-            debug!("DLNA: Extracted friendlyName: {}", friendly_name);
-            return Ok(friendly_name);
+            let name = xml_content[start + 13..end].trim().to_string();
+            debug!("DLNA: Extracted friendlyName: {}", name);
+            name
+        } else {
+            "Unknown Device".to_string()
         }
-    }
+    } else {
+        "Unknown Device".to_string()
+    };
     
-    // Try alternative: extract from device name if friendlyName not found
-    if let Some(start) = xml_content.find("<modelName>") {
-        if let Some(end) = xml_content.find("</modelName>") {
-            let model_name = xml_content[start + 11..end].trim().to_string();
-            debug!("DLNA: Using modelName as fallback: {}", model_name);
-            return Ok(model_name);
+    // Parse XML to extract deviceType
+    let device_type = if let Some(start) = xml_content.find("<deviceType>") {
+        if let Some(end) = xml_content.find("</deviceType>") {
+            let dev_type = xml_content[start + 12..end].trim().to_string();
+            debug!("DLNA: Extracted deviceType: {}", dev_type);
+            dev_type
+        } else {
+            "unknown".to_string()
         }
-    }
+    } else {
+        "unknown".to_string()
+    };
     
-    Err("No device name found in XML".into())
+    Ok((friendly_name, device_type))
 }
 
 mod imp {
@@ -266,15 +274,23 @@ mod imp {
                     debug!("DLNA: Discovery completed successfully");
                     // Add devices to glib model on main thread
                     for (url, name, device_type, host) in device_infos {
-                        // Use the proper device name from XML without IP address
-                        let device = SwDevice::new(
-                            &url,
-                            SwDeviceKind::Dlna,
-                            &name,
-                            device_type.split(":").nth(3).unwrap_or(&i18n("Unknown Model")),
-                            &host,
-                        );
-                        self.devices.add_device(&device);
+                        // Filter for only media renderer devices
+                        if device_type.contains("MediaRenderer") {
+                            // Extract device type name for model field
+                            let device_type_name = device_type.split(':').nth(3).unwrap_or("MediaRenderer");
+                            let device_name = name.trim_start_matches('>');
+                            debug!("DLNA: Adding media renderer device: {} ({})", device_name, device_type);
+                            let device = SwDevice::new(
+                                &url,  // Use the full discovery URL as address
+                                SwDeviceKind::Dlna,
+                                device_name,  // Device name only
+                                &format!("DLNA {}", device_type_name),  // Model as subtitle to match Cast styling
+                                &url,  // Use the full discovery URL as address
+                            );
+                            self.devices.add_device(&device);
+                        } else {
+                            debug!("DLNA: Skipping non-renderer device: {} ({})", name, device_type);
+                        }
                     }
                 }
                 Either::Left((Ok(Err(e)), _)) => {

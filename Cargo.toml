@@ -40,6 +40,7 @@ strum = "0.26"
 strum_macros = "0.26"
 sys-locale = "0.3"
 thiserror = "1.0"
+tiny_http = "0.12"
 url = "2.5"
 uuid = { version = "1.11", features = ["v4"] }
 
