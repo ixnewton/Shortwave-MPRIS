@@ -3657,6 +3657,7 @@ dependencies = [
  "indexmap 2.7.1",
  "language-tags",
  "libadwaita",
+ "libc",
  "libshumate",
  "libsqlite3-sys",
  "log",

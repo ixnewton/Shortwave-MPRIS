@@ -48,6 +48,7 @@ gstreamer-audio = { version = "0.23" }
 gstreamer = { version = "0.23"}
 shumate = { version = "0.6", package = "libshumate"}
 gettext-rs = { version = "0.7", features = ["gettext-system"] }
+libc = "0.2"
 adw = { version = "0.7", package = "libadwaita", features = ["v1_6"] }
 gtk = { version = "0.9", package = "gtk4", features = ["gnome_46"] }
 

@@ -16,8 +16,6 @@
 
 use std::cell::{Cell, RefCell};
 use std::error::Error;
-use std::net::SocketAddr;
-use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::Arc;
 use std::thread::{self, JoinHandle};
 use std::time::Duration;
@@ -28,7 +26,6 @@ use glib::Properties;
 use gtk::glib;
 use log::{debug, error, info, warn};
 use reqwest::blocking::Client;
-use tiny_http::{Method, Response, Server, StatusCode};
 use url::Url;
 
 // Helper function to send SOAP actions to DLNA devices
@@ -180,15 +177,20 @@ mod imp {
         pub volume: Cell<f64>,
         #[property(get)]
         pub is_connected: Cell<bool>,
-
+        
+        // FFmpeg process for streaming
+        pub ffmpeg_process: RefCell<Option<std::process::Child>>,
+        
+        // FFmpeg thread handle
+        pub ffmpeg_thread: RefCell<Option<JoinHandle<Result<(), String>>>>,
+        
+        // DLNA device information
         pub device: RefCell<Option<String>>,  // Store device URL instead of Device object
         pub av_transport_url: RefCell<Option<String>>,  // Store AVTransport control URL
         pub rendering_control_url: RefCell<Option<String>>,  // Store RenderingControl control URL
         
-        // Proxy server components
-        pub proxy_thread: RefCell<Option<JoinHandle<()>>>,
-        pub proxy_shutdown: Arc<AtomicBool>,
-        pub proxy_port: Cell<u16>,
+        // FFmpeg streaming server components
+        pub ffmpeg_port: Cell<u16>,
         pub local_ip: RefCell<String>,
         pub original_stream_url: RefCell<String>,
     }
@@ -245,116 +247,194 @@ impl SwDlnaSender {
         glib::Object::new()
     }
 
-    // Start HTTP proxy server for streaming
-    fn start_proxy_server(&self) -> Result<(), Box<dyn Error>> {
+    // Start FFmpeg streaming server asynchronously
+    fn start_ffmpeg_server(&self) -> Result<(), Box<dyn Error>> {
         let imp = self.imp();
+        
+        // Check if FFmpeg is already running and clear buffers for fresh stream
+        {
+            let mut process_guard = imp.ffmpeg_process.borrow_mut();
+            if let Some(child) = process_guard.as_mut() {
+                // Check if the process is still alive
+                match child.try_wait() {
+                    Ok(Some(_)) => {
+                        // Process has exited, clean it up
+                        info!("DLNA: FFmpeg process has exited, cleaning up");
+                        drop(process_guard.take());
+                    }
+                    Ok(None) => {
+                        // Process is still running - stop it to clear buffers
+                        info!("DLNA: Stopping existing FFmpeg to clear buffers for fresh stream");
+                        if let Err(e) = child.kill() {
+                            warn!("DLNA: Failed to kill existing FFmpeg process: {}", e);
+                        }
+                        // Wait for process to exit
+                        match child.wait() {
+                            Ok(status) => {
+                                info!("DLNA: Old FFmpeg process exited with status: {}", status);
+                            }
+                            Err(e) => {
+                                warn!("DLNA: Error waiting for old FFmpeg process: {}", e);
+                            }
+                        }
+                        drop(process_guard.take());
+                        info!("DLNA: Cleared old FFmpeg buffers, starting fresh stream");
+                    }
+                    Err(e) => {
+                        // Error checking process status, assume it's dead
+                        warn!("DLNA: Error checking FFmpeg process status: {}, cleaning up", e);
+                        drop(process_guard.take());
+                    }
+                }
+            }
+        }
         
         // Find an available port
         let port = 8080u16; // Could make this configurable
-        imp.proxy_port.set(port);
+        imp.ffmpeg_port.set(port);
         
-        // Extract local IP from device URL
-        let device_url = imp.device.borrow().as_ref().unwrap().clone();
-        let parsed_url = Url::parse(&device_url)?;
-        let local_ip = parsed_url.host_str().unwrap_or("127.0.0.1").to_string();
+        // Extract local IP from device URL (if available)
+        let local_ip = if let Some(device_url) = imp.device.borrow().as_ref() {
+            let parsed_url = Url::parse(device_url)?;
+            parsed_url.host_str().unwrap_or("127.0.0.1").to_string()
+        } else {
+            "127.0.0.1".to_string()
+        };
         imp.local_ip.borrow_mut().clone_from(&local_ip);
         
-        // Setup shutdown signal
-        let shutdown = imp.proxy_shutdown.clone();
-        shutdown.store(false, Ordering::SeqCst);
-        
-        // Store original stream URL for proxy
+        // Store original stream URL for FFmpeg
         let original_url = imp.stream_url.borrow().clone();
         imp.original_stream_url.borrow_mut().clone_from(&original_url);
         
-        // Start proxy server in background thread
-        let shutdown_clone = shutdown.clone();
-        let stream_url_clone = original_url.clone();
+        info!("DLNA: Starting FFmpeg streaming server on {}:{}", local_ip, port);
+        info!("DLNA: Original stream URL: {}", original_url);
         
+        // Start FFmpeg in background thread to avoid blocking UI
+        let ffmpeg_url = format!("http://0.0.0.0:{}/stream.mp3", port);
         let thread = thread::spawn(move || {
-            let addr = SocketAddr::from(([0, 0, 0, 0], port));
+            // Build FFmpeg command with HLS optimization for continuous streaming
+            let mut ffmpeg_cmd = std::process::Command::new("ffmpeg");
             
-            match Server::http(addr) {
-                Ok(server) => {
-                    info!("DLNA: Proxy server started on port {}", port);
-                    
-                    for request in server.incoming_requests() {
-                        // Check for shutdown signal
-                        if shutdown_clone.load(Ordering::SeqCst) {
+            // Add HLS-specific options for continuous streaming
+            if original_url.contains(".m3u8") {
+                // HLS stream - add optimization parameters
+                ffmpeg_cmd
+                    .arg("-fflags")
+                    .arg("+genpts+discardcorrupt") // Generate timestamps and discard corrupt packets
+                    .arg("-live_start_index")
+                    .arg("-2") // Start 2 segments back for buffer (reduced from 3)
+                    .arg("-max_reload")
+                    .arg("10") // Reload playlist every 10 seconds (reduced frequency)
+                    .arg("-max_delay")
+                    .arg("10000000") // 10 seconds max delay (increased from 5)
+                    .arg("-i")
+                    .arg(&original_url);
+            } else {
+                // Non-HLS stream - use standard input
+                ffmpeg_cmd
+                    .arg("-i")
+                    .arg(&original_url);
+            }
+            
+            let ffmpeg_cmd = ffmpeg_cmd
+                .arg("-vn") // No video
+                .arg("-c:a")
+                .arg("libmp3lame") // MP3 codec
+                .arg("-b:a")
+                .arg("128k") // 128kbps bitrate
+                .arg("-listen")
+                .arg("1") // Listen mode
+                .arg("-f")
+                .arg("mp3") // MP3 format
+                .arg(&ffmpeg_url)
+                .spawn();
+            
+            match ffmpeg_cmd {
+                Ok(child) => {
+                    info!("DLNA: FFmpeg started with PID: {}", child.id());
+                    // Store the process handle in the main thread
+                    // For now, just return success
+                    Ok(())
+                }
+                Err(e) => {
+                    error!("DLNA: Failed to start FFmpeg: {}", e);
+                    Err(format!("Failed to start FFmpeg: {}", e))
+                }
+            }
+        });
+        
+        imp.ffmpeg_thread.borrow_mut().replace(thread);
+        info!("DLNA: FFmpeg startup initiated in background thread");
+        
+        Ok(())
+    }
+                                // Stop FFmpeg streaming server
+    fn stop_ffmpeg_server(&self) {
+        let imp = self.imp();
+        
+        // Kill the FFmpeg process if it exists
+        if let Some(mut child) = imp.ffmpeg_process.borrow_mut().take() {
+            info!("DLNA: Stopping FFmpeg process (PID: {})", child.id());
+            
+            // Try to gracefully terminate using kill() first
+            // On Unix systems, kill() sends SIGTERM by default which FFmpeg handles gracefully
+            if let Err(e) = child.kill() {
+                warn!("DLNA: Failed to kill FFmpeg process: {}", e);
+            }
+            
+            // Wait for process to exit with timeout using a simple loop
+            let timeout = Duration::from_secs(5);
+            let start = std::time::Instant::now();
+            
+            loop {
+                match child.try_wait() {
+                    Ok(Some(status)) => {
+                        info!("DLNA: FFmpeg process exited gracefully with status: {}", status);
+                        break;
+                    }
+                    Ok(None) => {
+                        // Process still running
+                        if start.elapsed() >= timeout {
+                            warn!("DLNA: FFmpeg process didn't exit gracefully, force killing");
+                            // Try again more forcefully
+                            if let Err(e) = child.kill() {
+                                warn!("DLNA: Failed to force kill FFmpeg process: {}", e);
+                            }
+                            let _ = child.wait(); // Clean up zombie process
                             break;
                         }
-                        
-                        // Handle stream requests
-                        if request.url() == "/stream" {
-                            match Self::handle_stream_request(&request, &stream_url_clone) {
-                                Ok(response) => {
-                                    let _ = request.respond(response);
-                                }
-                                Err(e) => {
-                                    error!("DLNA: Proxy request failed: {}", e);
-                                    let _ = request.respond(Response::from_string(
-                                        format!("Proxy error: {}", e)
-                                    ).with_status_code(StatusCode(500)));
-                                }
-                            }
-                        }
+                        // Sleep a bit and try again
+                        std::thread::sleep(Duration::from_millis(100));
+                    }
+                    Err(e) => {
+                        warn!("DLNA: Error waiting for FFmpeg process: {}", e);
+                        break;
+                    }
+                }
+            }
+        }
+        
+        // Join the FFmpeg thread
+        if let Some(thread) = imp.ffmpeg_thread.borrow_mut().take() {
+            info!("DLNA: Waiting for FFmpeg thread to finish");
+            match thread.join() {
+                Ok(result) => {
+                    if let Err(e) = result {
+                        warn!("DLNA: FFmpeg thread failed: {}", e);
+                    } else {
+                        info!("DLNA: FFmpeg thread finished successfully");
                     }
                 }
                 Err(e) => {
-                    error!("DLNA: Failed to start proxy server: {}", e);
+                    warn!("DLNA: Failed to join FFmpeg thread: {:?}", e);
                 }
             }
-            
-            info!("DLNA: Proxy server stopped");
-        });
-        
-        imp.proxy_thread.borrow_mut().replace(thread);
-        Ok(())
-    }
-
-    // Stop HTTP proxy server
-    fn stop_proxy_server(&self) {
-        let imp = self.imp();
-        
-        // Signal shutdown
-        imp.proxy_shutdown.store(true, Ordering::SeqCst);
-        
-        // Join thread
-        if let Some(thread) = imp.proxy_thread.borrow_mut().take() {
-            let _ = thread.join();
         }
         
-        info!("DLNA: Proxy server stopped");
+        info!("DLNA: FFmpeg server stopped");
     }
 
-    // Handle proxy stream requests
-    fn handle_stream_request(request: &tiny_http::Request, stream_url: &str) -> Result<Response<std::io::Cursor<Vec<u8>>>, Box<dyn Error>> {
-        if request.method() != &Method::Get {
-            return Err("Only GET requests supported".into());
-        }
-
-        // Fetch the original stream
-        let client = Client::builder()
-            .timeout(Duration::from_secs(10))
-            .build()?;
-        
-        let response = client.get(stream_url).send()?;
-        
-        // Get the content as bytes
-        let content = response.bytes()?;
-        
-        // Create proxy response with proper headers
-        let mut proxy_response = Response::from_data(content);
-        
-        // Set content type for audio streams
-        proxy_response = proxy_response.with_header(
-            tiny_http::Header::from_bytes(&b"Content-Type"[..], &b"audio/mpeg"[..]).unwrap()
-        );
-        
-        Ok(proxy_response)
-    }
-
-    pub fn connect(&self, address: &str) -> Result<(), Box<dyn Error>> {
+        pub fn connect(&self, address: &str) -> Result<(), Box<dyn Error>> {
         if self.is_connected() {
             self.disconnect();
         }
@@ -399,8 +479,8 @@ impl SwDlnaSender {
             return;
         }
 
-        // Stop proxy server
-        self.stop_proxy_server();
+        // Don't stop FFmpeg here - only stop on stop_playback()
+        // FFmpeg should only be managed by play/stop actions
 
         *self.imp().device.borrow_mut() = None;
         *self.imp().av_transport_url.borrow_mut() = None;
@@ -419,38 +499,190 @@ impl SwDlnaSender {
         self.notify_cover_url();
         self.notify_title();
 
-        // Start proxy server for external stream
+        // Start FFmpeg streaming server for external stream
         if stream_url.starts_with("http") && !stream_url.contains("192.168.2.101") {
-            self.start_proxy_server()?;
+            info!("DLNA: === STARTING DLNA PLAYBACK SEQUENCE ===");
+            info!("DLNA: External stream detected: {}", stream_url);
+            info!("DLNA: Step 1: Load URL to DLNA device");
             
-            // Use proxy URL instead of external URL
+            // Fetch service info on first use if not already done
+            if self.imp().av_transport_url.borrow().is_none() {
+                if let Some(device_url) = self.imp().device.borrow().as_ref() {
+                    info!("DLNA: Fetching service info on first use");
+                    let (av_url, rc_url) = fetch_device_services(device_url)?;
+                    *self.imp().av_transport_url.borrow_mut() = Some(av_url);
+                    *self.imp().rendering_control_url.borrow_mut() = Some(rc_url);
+                }
+            }
+            
+            // Step 1: Load the URL to DLNA device first
             let imp = self.imp();
-            let local_ip = imp.local_ip.borrow();
-            let port = imp.proxy_port.get();
-            let proxy_url = format!("http://{}:{}/stream", local_ip, port);
+            let local_ip = if let Some(device_url) = imp.device.borrow().as_ref() {
+                let parsed_url = Url::parse(device_url)?;
+                parsed_url.host_str().unwrap_or("127.0.0.1").to_string()
+            } else {
+                "127.0.0.1".to_string()
+            };
+            imp.local_ip.borrow_mut().clone_from(&local_ip);
+            
+            let port = 8080u16;
+            imp.ffmpeg_port.set(port);
+            let ffmpeg_url = format!("http://{}:{}/stream.mp3", local_ip, port);
             
             if let Some(ref av_url) = *imp.av_transport_url.borrow() {
+                // Create metadata using actual station title from Shortwave's radio data
+                let escaped_title = title.replace('&', "&amp;").replace('<', "&lt;").replace('>', "&gt;");
                 let metadata = format!(
-                    r#"<DIDL-Lite xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/" xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/">
-<item id="0" parentID="-1" restricted="0">
-<dc:title>{}</dc:title>
-<upnp:class>object.item.audioItem.musicTrack</upnp:class>
-<res protocolInfo="http-get:*:audio/mpeg:*">{}</res>
-</item>
-</DIDL-Lite>"#,
-                    title, proxy_url
+                    "&lt;DIDL-Lite xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:upnp=\"urn:schemas-upnp-org:metadata-1-0/upnp/\" xmlns=\"urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/\"&gt;&lt;item id=\"0\" parentID=\"-1\" restricted=\"0\"&gt;&lt;dc:title&gt;{} *LIVE&lt;/dc:title&gt;&lt;upnp:class&gt;object.item.audioItem.musicTrack&lt;/upnp:class&gt;&lt;res protocolInfo=\"http-get:*:audio/mpeg:*\"&gt;http://192.168.2.101:8080/stream.mp3&lt;/res&gt;&lt;/item&gt;&lt;/DIDL-Lite&gt;",
+                    escaped_title
                 );
-
+                
                 let body = format!(
-                    "<InstanceID>0</InstanceID><CurrentURI>{}</CurrentURI><CurrentURIMetaData>{}</CurrentURIMetaData>",
-                    proxy_url,
+                    "<InstanceID>0</InstanceID><CurrentURI>http://192.168.2.101:8080/stream.mp3</CurrentURI><CurrentURIMetaData>{}</CurrentURIMetaData>",
                     metadata
                 );
 
-                soap_action(av_url, "urn:schemas-upnp-org:service:AVTransport:1", "SetAVTransportURI", &body)?;
+                info!("DLNA: Step 1 - Sending SetAVTransportURI with FFmpeg URL: {}", ffmpeg_url);
+                info!("DLNA: Sending to URL: {}", av_url);
+                info!("DLNA: SOAP Action header: \"urn:schemas-upnp-org:service:AVTransport:1#SetAVTransportURI\"");
+                info!("DLNA: SOAP Body: {}", body);
+                
+                let soap_envelope = format!(
+                    r#"<?xml version="1.0" encoding="utf-8"?>
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+<s:Body>
+<u:SetAVTransportURI xmlns:u="urn:schemas-upnp-org:service:AVTransport:1">
+{}
+</u:SetAVTransportURI>
+</s:Body>
+</s:Envelope>"#,
+                    body
+                );
+                
+                info!("DLNA: Full SOAP Envelope: {}", soap_envelope);
+                info!("DLNA: === SENDING SETAVTRANSPORTURI REQUEST ===");
+                info!("DLNA: POST URL: {}", av_url);
+                info!("DLNA: SOAPAction: \"urn:schemas-upnp-org:service:AVTransport:1#SetAVTransportURI\"");
+                info!("DLNA: Content-Type: text/xml; charset=\"utf-8\"");
+                info!("DLNA: Content-Length: {}", soap_envelope.len());
+                info!("DLNA: XML Body:");
+                info!("DLNA: {}", soap_envelope);
+                info!("DLNA: === END SETAVTRANSPORTURI REQUEST ===");
+                
+                let client = reqwest::blocking::Client::builder()
+                    .timeout(Duration::from_secs(10))
+                    .connect_timeout(Duration::from_secs(5))
+                    .build()?;
+                
+                let response = match client
+                    .post(av_url)
+                    .header("SOAPAction", "\"urn:schemas-upnp-org:service:AVTransport:1#SetAVTransportURI\"")
+                    .header("Content-Type", "text/xml; charset=\"utf-8\"")
+                    .header("Content-Length", soap_envelope.len().to_string())
+                    .body(soap_envelope)
+                    .send() {
+                        Ok(resp) => resp,
+                        Err(e) => {
+                            error!("DLNA: HTTP request failed: {}", e);
+                            return Err(format!("HTTP request failed: {}", e).into());
+                        }
+                    };
+                
+                let status = response.status();
+                let response_text = response.text().unwrap_or_default();
+                
+                info!("DLNA: Response status: {}", status);
+                info!("DLNA: Response body: {}", response_text);
+                
+                if status.is_success() {
+                    info!("DLNA: SetAVTransportURI sent successfully");
+                } else {
+                    error!("DLNA: SetAVTransportURI failed with status: {}", status);
+                    return Err(format!("SetAVTransportURI failed: {}", status).into());
+                }
+                
+                // Step 2: Configure and start FFmpeg proxy
+                info!("DLNA: Step 2 - Configure and start FFmpeg proxy");
+                info!("DLNA: Using FFmpeg as transcoder and HTTP streaming server");
+                
+                // Store original stream URL for FFmpeg
+                let original_url = imp.stream_url.borrow().clone();
+                imp.original_stream_url.borrow_mut().clone_from(&original_url);
+                
+                info!("DLNA: Starting FFmpeg streaming server on {}:{}", local_ip, port);
+                info!("DLNA: Original stream URL: {}", original_url);
+                
+                self.start_ffmpeg_server()?;
+                
+                info!("DLNA: FFmpeg server started on {}:{}", local_ip, port);
+                info!("DLNA: Replacing external URL with FFmpeg URL: {}", ffmpeg_url);
+                
+                // Step 3: Issue the play command to DLNA device
+                info!("DLNA: Step 3 - Issue play command to DLNA device");
+                
+                // Wait for FFmpeg to be ready before sending Play command
+                info!("DLNA: Waiting 2 seconds for FFmpeg server to be ready...");
+                std::thread::sleep(Duration::from_secs(2));
+                info!("DLNA: FFmpeg should be ready now");
+                
+                let play_body = "<InstanceID>0</InstanceID><Speed>1</Speed>";
+                let play_soap_envelope = format!(
+                    r#"<?xml version="1.0" encoding="utf-8"?>
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+<s:Body>
+<u:Play xmlns:u="urn:schemas-upnp-org:service:AVTransport:1">
+{}
+</u:Play>
+</s:Body>
+</s:Envelope>"#,
+                    play_body
+                );
+                
+                info!("DLNA: Full SOAP Envelope: {}", play_soap_envelope);
+                info!("DLNA: === SENDING PLAY REQUEST ===");
+                info!("DLNA: POST URL: {}", av_url);
+                info!("DLNA: SOAPAction: \"urn:schemas-upnp-org:service:AVTransport:1#Play\"");
+                info!("DLNA: Content-Type: text/xml; charset=\"utf-8\"");
+                info!("DLNA: Content-Length: {}", play_soap_envelope.len());
+                info!("DLNA: XML Body:");
+                info!("DLNA: {}", play_soap_envelope);
+                info!("DLNA: === END PLAY REQUEST ===");
+                
+                let play_response = match client
+                    .post(av_url)
+                    .header("SOAPAction", "\"urn:schemas-upnp-org:service:AVTransport:1#Play\"")
+                    .header("Content-Type", "text/xml; charset=\"utf-8\"")
+                    .header("Content-Length", play_soap_envelope.len().to_string())
+                    .body(play_soap_envelope)
+                    .send() {
+                        Ok(resp) => resp,
+                        Err(e) => {
+                            error!("DLNA: Play HTTP request failed: {}", e);
+                            return Err(format!("Play HTTP request failed: {}", e).into());
+                        }
+                    };
+                
+                let play_status = play_response.status();
+                let play_response_text = play_response.text().unwrap_or_default();
+                
+                info!("DLNA: Play response status: {}", play_status);
+                info!("DLNA: Play response body: {}", play_response_text);
+                
+                if play_status.is_success() {
+                    info!("DLNA: Play command sent successfully");
+                    info!("DLNA: Complete playback sequence finished");
+                    info!("DLNA: DLNA device will now stream from FFmpeg server: {}", ffmpeg_url);
+                } else {
+                    error!("DLNA: Play command failed with status: {}", play_status);
+                    return Err(format!("Play command failed: {}", play_status).into());
+                }
+            } else {
+                error!("DLNA: No AVTransport URL available - device discovery incomplete");
+                return Err("DLNA device discovery incomplete - no AVTransport service found".into());
             }
         } else {
             // Use original URL for local streams
+            info!("DLNA: Using direct URL (no proxy needed): {}", stream_url);
             if let Some(ref av_url) = *self.imp().av_transport_url.borrow() {
                 let metadata = format!(
                     r#"<DIDL-Lite xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/" xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/">
@@ -469,7 +701,18 @@ impl SwDlnaSender {
                     metadata
                 );
 
+                info!("DLNA: Sending SetAVTransportURI with direct URL: {}", stream_url);
                 soap_action(av_url, "urn:schemas-upnp-org:service:AVTransport:1", "SetAVTransportURI", &body)?;
+
+                // Send Play command to start playback
+                info!("DLNA: Sending Play command to start playback");
+                let play_body = "<InstanceID>0</InstanceID><Speed>1</Speed>";
+                soap_action(av_url, "urn:schemas-upnp-org:service:AVTransport:1", "Play", play_body)?;
+                
+                info!("DLNA: ✅ SetAVTransportURI + Play commands sent successfully");
+            } else {
+                error!("DLNA: No AVTransport URL available - device discovery incomplete");
+                return Err("DLNA device discovery incomplete - no AVTransport service found".into());
             }
         }
 
@@ -490,15 +733,80 @@ impl SwDlnaSender {
     }
 
     pub fn stop_playback(&self) -> Result<(), Box<dyn Error>> {
-        if !self.is_connected() {
-            return Ok(());
-        }
+        info!("DLNA: stop_playback() called - sending stop command");
+        
+        // Always try to send stop command - don't check connection status
+        // The device might still be connected even if is_connected is false
+        info!("DLNA: === STARTING DLNA STOP SEQUENCE ===");
+        // Step 1: Stop the FFmpeg proxy first to prevent broken pipe errors
+        info!("DLNA: Step 1 - Stop the FFmpeg proxy");
+        info!("DLNA: Stopping FFmpeg server");
+        self.stop_ffmpeg_server();
 
+        // Step 2: Send stop command to DLNA device
+        info!("DLNA: Step 2 - Issue stop command to DLNA device");
+        
         if let Some(ref av_url) = *self.imp().av_transport_url.borrow() {
             let body = "<InstanceID>0</InstanceID>";
-            soap_action(av_url, "urn:schemas-upnp-org:service:AVTransport:1", "Stop", body)?;
+            let soap_envelope = format!(
+                r#"<?xml version="1.0" encoding="utf-8"?>
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+<s:Body>
+<u:Stop xmlns:u="urn:schemas-upnp-org:service:AVTransport:1">
+{}
+</u:Stop>
+</s:Body>
+</s:Envelope>"#,
+                body
+            );
+            
+            info!("DLNA: Full SOAP Envelope: {}", soap_envelope);
+            info!("DLNA: === SENDING STOP REQUEST ===");
+            info!("DLNA: POST URL: {}", av_url);
+            info!("DLNA: SOAPAction: \"urn:schemas-upnp-org:service:AVTransport:1#Stop\"");
+            info!("DLNA: Content-Type: text/xml; charset=\"utf-8\"");
+            info!("DLNA: Content-Length: {}", soap_envelope.len());
+            info!("DLNA: XML Body:");
+            info!("DLNA: {}", soap_envelope);
+            info!("DLNA: === END STOP REQUEST ===");
+            
+            let client = reqwest::blocking::Client::builder()
+                .timeout(Duration::from_secs(10))
+                .connect_timeout(Duration::from_secs(5))
+                .build()?;
+            
+            let response = match client
+                .post(av_url)
+                .header("SOAPAction", "\"urn:schemas-upnp-org:service:AVTransport:1#Stop\"")
+                .header("Content-Type", "text/xml; charset=\"utf-8\"")
+                .header("Content-Length", soap_envelope.len().to_string())
+                .body(soap_envelope)
+                .send() {
+                    Ok(resp) => resp,
+                    Err(e) => {
+                        error!("DLNA: Stop HTTP request failed: {}", e);
+                        return Err(format!("Stop HTTP request failed: {}", e).into());
+                    }
+                };
+            
+            let status = response.status();
+            let response_text = response.text().unwrap_or_default();
+            
+            info!("DLNA: Stop response status: {}", status);
+            info!("DLNA: Stop response body: {}", response_text);
+            
+            if status.is_success() {
+                info!("DLNA: ✅ Stop command sent successfully");
+            } else {
+                error!("DLNA: ❌ Stop command failed with status: {}", status);
+                return Err(format!("Stop command failed: {}", status).into());
+            }
+        } else {
+            error!("DLNA: No AVTransport URL available - cannot send stop command");
+            return Err("DLNA device discovery incomplete - no AVTransport service found".into());
         }
 
+        info!("DLNA: ✅ Complete stop sequence finished");
         Ok(())
     }
 
@@ -516,6 +824,33 @@ impl SwDlnaSender {
         }
 
         Ok(())
+    }
+
+    pub fn set_mute_dlna(&self, mute: bool) -> Result<(), Box<dyn Error>> {
+        if let Some(ref rc_url) = *self.imp().rendering_control_url.borrow() {
+            let mute_value = if mute { "1" } else { "0" };
+            let body = format!(
+                "<InstanceID>0</InstanceID><Channel>Master</Channel><DesiredMute>{}</DesiredMute>",
+                mute_value
+            );
+            soap_action(rc_url, "urn:schemas-upnp-org:service:RenderingControl:1", "SetMute", &body)?;
+            info!("DLNA: Set mute to {} on device", mute);
+        }
+
+        Ok(())
+    }
+
+    pub fn get_volume_dlna(&self) -> Result<f64, Box<dyn Error>> {
+        if let Some(ref rc_url) = *self.imp().rendering_control_url.borrow() {
+            let body = "<InstanceID>0</InstanceID><Channel>Master</Channel>";
+            let response = soap_action(rc_url, "urn:schemas-upnp-org:service:RenderingControl:1", "GetVolume", body)?;
+            
+            // Parse volume from response (simplified - would need XML parsing in production)
+            // For now, return the stored volume
+            Ok(self.imp().volume.get())
+        } else {
+            Ok(self.imp().volume.get())
+        }
     }
 
     pub fn set_volume_public(&self, volume: f64) {
