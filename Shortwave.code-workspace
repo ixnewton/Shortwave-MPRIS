@@ -4,9 +4,6 @@
 			"path": "."
 		},
 		{
-			"path": "../pa-dlna"
-		},
-		{
 			"path": "../radio_proxy_fs22"
 		}
 	],

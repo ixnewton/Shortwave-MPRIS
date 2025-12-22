@@ -15,6 +15,7 @@ depends=(
     'gst-plugins-bad>=1.16.0'
     'gst-plugins-good'
     'gst-libav'
+    'ffmpeg>=4.0.0'
     'sqlite>=3.20.0'
     'openssl>=1.0.0'
     'dbus'
