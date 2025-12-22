@@ -85,6 +85,7 @@ mod imp {
 
         pub backend: OnceCell<RefCell<GstreamerBackend>>,
         pub mpris_server: OnceCell<MprisServer>,
+        pub gst_sender: OnceCell<async_channel::Sender<GstreamerChange>>,
     }
 
     #[glib::object_subclass]
@@ -100,6 +101,7 @@ mod imp {
 
             // Setup Gstreamer backend
             let (sender, receiver) = async_channel::bounded(10);
+            self.gst_sender.set(sender.clone()).unwrap();
             self.backend
                 .set(RefCell::new(GstreamerBackend::new(sender)))
                 .unwrap();
@@ -587,6 +589,22 @@ impl SwPlayer {
             .await
             .handle_error("Unable to start Google Cast playback");
 
+        // Handle remote device state transitions
+        if let Some(device) = self.device() {
+            if let Some(sender) = self.imp().gst_sender.get() {
+                match device.kind() {
+                    SwDeviceKind::Cast => {
+                        info!("PLAYER: Setting Chromecast playback state to Playing");
+                        let _ = sender.send_blocking(GstreamerChange::PlaybackState(SwPlaybackState::Playing));
+                    }
+                    SwDeviceKind::Dlna => {
+                        // DLNA is handled below with media loading
+                    }
+                    _ => {}
+                }
+            }
+        }
+
         // Start DLNA playback if DLNA device is available
         if self.device().is_some() && self.device().unwrap().kind() == SwDeviceKind::Dlna {
             info!("PLAYER: Starting DLNA playback");
@@ -605,6 +623,17 @@ impl SwPlayer {
                             &station.title(),
                         )
                         .handle_error("Unable to load DLNA media");
+                        
+                    // Start DLNA playback and set state to Playing
+                    self.dlna_sender()
+                        .start_playback()
+                        .handle_error("Unable to start DLNA playback");
+                    
+                    // Manually set player state to Playing since we skip GStreamer
+                    info!("PLAYER: Setting DLNA playback state to Playing");
+                    if let Some(sender) = self.imp().gst_sender.get() {
+                        let _ = sender.send_blocking(GstreamerChange::PlaybackState(SwPlaybackState::Playing));
+                    }
                 }
             }
         }

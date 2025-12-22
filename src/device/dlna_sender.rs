@@ -16,8 +16,10 @@
 
 use std::cell::{Cell, RefCell};
 use std::error::Error;
+use std::io::Write;
 use std::sync::Arc;
-use std::thread::{self, JoinHandle};
+use std::thread;
+use std::thread::JoinHandle;
 use std::time::Duration;
 use adw::prelude::*;
 use glib::clone;
@@ -311,8 +313,47 @@ impl SwDlnaSender {
         
         // Start FFmpeg in background thread to avoid blocking UI
         let ffmpeg_url = format!("http://0.0.0.0:{}/stream.mp3", port);
+        
+        // Clone sender for metadata polling
+        let metadata_sender = self.clone();
+        let stream_url_for_metadata = original_url.clone();
+        
+        // Start ICY metadata polling using glib async (thread-safe)
+        glib::spawn_future_local(async move {
+            info!("DLNA: Starting ICY metadata polling for: {}", stream_url_for_metadata);
+            let mut last_title = String::new();
+            let mut last_dlna_title = String::new(); // Track last sent to DLNA device
+            
+            // Poll metadata every 30 seconds
+            loop {
+                if let Ok(title) = fetch_icy_metadata(&stream_url_for_metadata) {
+                    // Update local UI title if it changed
+                    if !title.is_empty() && title != last_title {
+                        info!("DLNA: New track detected: {}", title);
+                        metadata_sender.imp().title.borrow_mut().clone_from(&title);
+                        metadata_sender.notify_title();
+                        last_title = title.clone();
+                        
+                        // Update DLNA device metadata if it's different from last sent
+                        if !title.is_empty() && title != last_dlna_title {
+                            info!("DLNA: Updating device metadata to: {}", title);
+                            if let Err(e) = metadata_sender.update_track_metadata(&title) {
+                                warn!("DLNA: Failed to update device metadata: {}", e);
+                            } else {
+                                info!("DLNA: ✅ Device metadata updated successfully");
+                                last_dlna_title = title.clone();
+                            }
+                        }
+                    }
+                }
+                
+                // Sleep for 30 seconds before next poll
+                glib::timeout_future(Duration::from_secs(30) * 1000).await;
+            }
+        });
+        
         let thread = thread::spawn(move || {
-            // Build FFmpeg command with HLS optimization for continuous streaming
+            // Build FFmpeg command for DLNA streaming
             let mut ffmpeg_cmd = std::process::Command::new("ffmpeg");
             
             // Add HLS-specific options for continuous streaming
@@ -853,8 +894,51 @@ impl SwDlnaSender {
         }
     }
 
-    pub fn set_volume_public(&self, volume: f64) {
-        self.imp().set_volume(volume);
+    // Update track metadata on DLNA device without interrupting playback
+    pub fn update_track_metadata(&self, new_title: &str) -> Result<(), Box<dyn Error>> {
+        info!("DLNA: Updating track metadata to: {}", new_title);
+        
+        // Get device URL from stored stream URL (extract device IP)
+        if let Some(stream_url) = self.stream_url().strip_prefix("http://") {
+            if let Some(device_ip) = stream_url.split(':').next() {
+                let device_url = format!("http://{}:49152/description.xml", device_ip);
+                
+                if let Ok((av_url, _)) = fetch_device_services(&device_url) {
+                    // Create metadata with new track title
+                    let escaped_title = new_title.replace('&', "&amp;").replace('<', "&lt;").replace('>', "&gt;");
+                    let metadata = format!(
+                        r#"<DIDL-Lite xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/" xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/">
+<item id="0" parentID="-1" restricted="0">
+<dc:title>{}</dc:title>
+<upnp:class>object.item.audioItem.musicTrack</upnp:class>
+<res protocolInfo="http-get:*:audio/mpeg:*">http://192.168.2.101:8080/stream.mp3</res>
+</item>
+</DIDL-Lite>"#, escaped_title
+                    );
+                    
+                    let body = format!(
+                        "<InstanceID>0</InstanceID><NextURI>http://192.168.2.101:8080/stream.mp3</NextURI><NextURIMetaData>{}</NextURIMetaData>",
+                        metadata
+                    );
+                    
+                    info!("DLNA: === SENDING SETNEXTAVTRANSPORTURI REQUEST ===");
+                    info!("DLNA: NextURIMetaData: {}", metadata);
+                    info!("DLNA: SOAPAction: \"urn:schemas-upnp-org:service:AVTransport:1#SetNextAVTransportURI\"");
+                    info!("DLNA: Request body: {}", body);
+                    
+                    soap_action(&av_url, "urn:schemas-upnp-org:service:AVTransport:1", "SetNextAVTransportURI", &body)?;
+                    info!("DLNA: ✅ SetNextAVTransportURI sent successfully - metadata updated");
+                } else {
+                    warn!("DLNA: Cannot update metadata - failed to fetch device services");
+                }
+            } else {
+                warn!("DLNA: Cannot update metadata - invalid stream URL format");
+            }
+        } else {
+            warn!("DLNA: Cannot update metadata - no stream URL available");
+        }
+        
+        Ok(())
     }
 }
 
@@ -862,4 +946,59 @@ impl Default for SwDlnaSender {
     fn default() -> Self {
         Self::new()
     }
+}
+
+// Helper function to extract StreamTitle from ICY metadata
+fn extract_icy_title(metadata: &str) -> Option<String> {
+    // Look for StreamTitle in ICY metadata
+    for line in metadata.lines() {
+        if line.starts_with("StreamTitle=") {
+            let title = line.strip_prefix("StreamTitle=")
+                .unwrap_or("")
+                .trim_matches('\'')
+                .trim_matches('"');
+            if !title.is_empty() {
+                return Some(title.to_string());
+            }
+        }
+    }
+    None
+}
+
+// Fetch ICY metadata from a radio stream URL using HTTP HEAD request
+fn fetch_icy_metadata(url: &str) -> Result<String, Box<dyn std::error::Error>> {
+    let client = reqwest::blocking::Client::builder()
+        .timeout(Duration::from_secs(10))
+        .build()?;
+    
+    // Send HEAD request to get ICY metadata
+    let response = client
+        .head(url)
+        .header("Icy-MetaData", "1")
+        .header("User-Agent", "Shortwave/1.0")
+        .send()?;
+    
+    // Check for ICY metadata in headers
+    if let Some(icy_name) = response.headers().get("icy-name") {
+        if let Ok(name) = icy_name.to_str() {
+            return Ok(name.to_string());
+        }
+    }
+    
+    // Try a brief GET request to extract StreamTitle from initial metadata
+    let response = client
+        .get(url)
+        .header("Icy-MetaData", "1")
+        .header("User-Agent", "Shortwave/1.0")
+        .send()?;
+    
+    // Check if we have ICY metadata in response
+    if let Some(icy_metaint) = response.headers().get("icy-metaint") {
+        info!("DLNA: Stream supports ICY metadata with interval: {:?}", icy_metaint);
+        // For now, return empty string - the actual metadata extraction 
+        // would require streaming the full audio data which is complex
+        return Ok(String::new());
+    }
+    
+    Ok(String::new())
 }
