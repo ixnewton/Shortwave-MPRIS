@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/de/haeckerfelix/Shortwave">
+    <file compressed="true" preprocess="xml-stripblanks" alias="metainfo.xml">de.haeckerfelix.Shortwave.metainfo.xml</file>
+    <file compressed="true" preprocess="xml-stripblanks">gtk/add_station_dialog.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">gtk/device_dialog.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">gtk/device_indicator.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">gtk/device_row.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks" alias="gtk/help-overlay.ui">gtk/help_overlay.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">gtk/library_page.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">gtk/player_gadget.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">gtk/player_toolbar.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">gtk/player_view.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">gtk/player.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">gtk/preferences_dialog.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">gtk/recording_indicator.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">gtk/search_page.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">gtk/track_row.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">gtk/station_cover.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">gtk/station_dialog.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">gtk/station_row.ui</file>
+    <file compressed="true" alias="style.css">gtk/style.css</file>
+    <file compressed="true" alias="style-dark.css">gtk/style-dark.css</file>
+    <file compressed="true" preprocess="xml-stripblanks">gtk/track_dialog.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">gtk/volume_control.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">gtk/window.ui</file>
+  </gresource>
+  <gresource prefix="/de/haeckerfelix/Shortwave/icons/16x16/status/">
+    <file preprocess="xml-stripblanks" alias="cloud-disabled-symbolic.svg">icons/hicolor/scalable/status/cloud-disabled-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="check-plain-symbolic.svg">icons/hicolor/scalable/status/check-plain-symbolic.svg</file>
+  </gresource>
+  <gresource prefix="/de/haeckerfelix/Shortwave/icons/16x16/actions/">
+    <file preprocess="xml-stripblanks" alias="details-symbolic.svg">icons/hicolor/scalable/actions/details-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="remove-custom-cover-symbolic.svg">icons/hicolor/scalable/actions/remove-custom-cover-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="streaming-symbolic.svg">icons/hicolor/scalable/actions/streaming-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="window-grow-symbolic.svg">icons/hicolor/scalable/actions/window-grow-symbolic.svg</file>
+    <file preprocess="xml-stripblanks" alias="window-shrink-symbolic.svg">icons/hicolor/scalable/actions/window-shrink-symbolic.svg</file>
+  </gresource>
+  <gresource prefix="/de/haeckerfelix/Shortwave/assets/">
+    <file compressed="true">images/metal.png</file>
+    <file compressed="true">images/wood.png</file>
+  </gresource>
+</gresources>

@@ -83,6 +83,17 @@ mod imp {
                         async move {
                             if let Some(station) = obj.station() {
                                 let player = SwApplication::default().player();
+                                let current_station = player.station();
+                                
+                                // If the same station is selected, just toggle playback
+                                if let Some(ref current_station) = current_station {
+                                    if current_station.uuid() == station.uuid() {
+                                        player.toggle_playback().await;
+                                        return;
+                                    }
+                                }
+                                
+                                // Different station or no station currently selected
                                 player.set_station(station).await;
                                 player.start_playback().await;
                             }

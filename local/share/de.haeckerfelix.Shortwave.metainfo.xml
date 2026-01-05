@@ -1,0 +1,963 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <!-- Meson Build -->
+  <id>de.haeckerfelix.Shortwave</id>
+  <name>Shortwave</name>
+  <name xml:lang="zh-Hant-TW">Shortwave</name>
+  <name xml:lang="zh-Hans-CN">短波</name>
+  <name xml:lang="vi">Sóng ngắn</name>
+  <name xml:lang="uk">Коротка хвиля</name>
+  <name xml:lang="tr">Shortwave</name>
+  <name xml:lang="sv">Shortwave</name>
+  <name xml:lang="sl">Kratki valovi</name>
+  <name xml:lang="sk">Shortwave</name>
+  <name xml:lang="ru">Shortwave</name>
+  <name xml:lang="ro">Shortwave</name>
+  <name xml:lang="pt-BR">Shortwave</name>
+  <name xml:lang="pt">Shortwave</name>
+  <name xml:lang="pl">Shortwave</name>
+  <name xml:lang="oc">Shortwave</name>
+  <name xml:lang="ka">Shortwave</name>
+  <name xml:lang="it">Shortwave</name>
+  <name xml:lang="is">Shortwave</name>
+  <name xml:lang="id">Shortwave</name>
+  <name xml:lang="ia">Shortwave</name>
+  <name xml:lang="hu">Rövidhullám</name>
+  <name xml:lang="hi">शॉर्टवेव</name>
+  <name xml:lang="he">Shortwave</name>
+  <name xml:lang="gl">Shortwave</name>
+  <name xml:lang="fur">Shortwave</name>
+  <name xml:lang="fr">Shortwave</name>
+  <name xml:lang="fi">Shortwave</name>
+  <name xml:lang="fa">موج کوتاه</name>
+  <name xml:lang="eu">Shortwave</name>
+  <name xml:lang="es">Shortwave</name>
+  <name xml:lang="en-GB">Shortwave</name>
+  <name xml:lang="de">Shortwave</name>
+  <name xml:lang="da">Shortwave</name>
+  <name xml:lang="cs">Shortwave</name>
+  <name xml:lang="bg">Shortwave</name>
+  <name xml:lang="be-Cyrl">Shortwave</name>
+  <translation type="gettext">shortwave</translation>
+  <launchable type="desktop-id">de.haeckerfelix.Shortwave.desktop</launchable>
+  <!-- General -->
+  <summary>Listen to internet radio</summary>
+  <summary xml:lang="zh-Hant-TW">收聽網路電臺</summary>
+  <summary xml:lang="zh-Hans-CN">收听互联网广播</summary>
+  <summary xml:lang="vi">Nghe đài phát qua mạng internet</summary>
+  <summary xml:lang="uk">Прослуховування інтернет-радіо</summary>
+  <summary xml:lang="tr">İnternet radyolarını dinle</summary>
+  <summary xml:lang="sv">Lyssna på internetradio</summary>
+  <summary xml:lang="sr-Cyrl">Слушајте радио преко Интернета</summary>
+  <summary xml:lang="sl">Poslušanje spletnih radijskih postaj</summary>
+  <summary xml:lang="sk">Počúvajte internetové rádiá</summary>
+  <summary xml:lang="ru">Слушайте интернет-радио</summary>
+  <summary xml:lang="ro">Ascultați la stația de radio prin internet</summary>
+  <summary xml:lang="pt-BR">Ouça a rádios da Internet</summary>
+  <summary xml:lang="pt">Ouça rádio na Internet</summary>
+  <summary xml:lang="pl">Słuchanie radia internetowego</summary>
+  <summary xml:lang="oc">Escotar la ràdio Internet</summary>
+  <summary xml:lang="nl">Beluister internetradio</summary>
+  <summary xml:lang="ka">ინტერნეტ რადიოს მოსმენა</summary>
+  <summary xml:lang="it">Ascoltare radio su Internet</summary>
+  <summary xml:lang="is">Hlusta á internet-útvarp</summary>
+  <summary xml:lang="id">Dengarkan radio internet</summary>
+  <summary xml:lang="ia">Ascolta le radio per internet</summary>
+  <summary xml:lang="hu">Internetes rádió hallgatása</summary>
+  <summary xml:lang="hr">Slušajte internetski radio</summary>
+  <summary xml:lang="hi">इंटरनेट रेडियो सुनें</summary>
+  <summary xml:lang="he">האזנה לתחנת רדיו</summary>
+  <summary xml:lang="gl">Escoitar radio por internet</summary>
+  <summary xml:lang="fur">Scolte la internet-radio</summary>
+  <summary xml:lang="fr">Écouter une radio internet</summary>
+  <summary xml:lang="fi">Kuuntele internetradiota</summary>
+  <summary xml:lang="fa">شنیدن رادیوهای اینترنتی</summary>
+  <summary xml:lang="eu">Entzun interneteko irrratiak</summary>
+  <summary xml:lang="es">Escuchar la radio por Internet</summary>
+  <summary xml:lang="en-GB">Listen to internet radio</summary>
+  <summary xml:lang="el">Ακρόαση ιντερνετικού ραδιοφώνου</summary>
+  <summary xml:lang="de">Internetradio hören</summary>
+  <summary xml:lang="da">Lyt til internetradio</summary>
+  <summary xml:lang="cs">Poslouchejte internetové rádio</summary>
+  <summary xml:lang="ca">Escolta la ràdio per internet</summary>
+  <summary xml:lang="bg">Радио по Интернет</summary>
+  <summary xml:lang="be-Cyrl">Слухайце інтэрнэт-радыё</summary>
+  <description>
+    <p>
+      Shortwave is an internet radio player that provides access to a station database with over 50,000 stations.
+    </p>
+    <p xml:lang="zh-Hans-CN">短波是个提供对具有超过 50000 个电台的电台数据库访问的互联网广播播放器。</p>
+    <p xml:lang="uk">«Коротка хвиля» — програвач інтернет-радіостанцій, який надає доступ до бази з понад 50000 станцій.</p>
+    <p xml:lang="tr">Shortwave, 50.000’i aşkın istasyon barındıran veri tabanına erişmenizi sağlayan internet radyo oynatıcısıdır.</p>
+    <p xml:lang="sv">Shortwave är en internetradiospelare som ger tillgång till en stationsdatabas med över 50000 stationer.</p>
+    <p xml:lang="sl">Program Kratki valovi je internetni radijski predvajalnik, ki omogoča dostop do podatkovne zbirke več kot 50.000 postaj.</p>
+    <p xml:lang="ru">Shortwave - это интернет-радиоплеер, который предоставляет доступ к базе данных станций, насчитывающей более 50 000 станций.</p>
+    <p xml:lang="pt-BR">Shortwave é um reprodutor de rádio na Internet que fornece acesso a um banco de dados de estações com mais de 50.000 estações.</p>
+    <p xml:lang="oc">Shortwave es un lector de ràdio internet que provesís accès a una basa de donadas d'estacions amb mai de 50 000 estacions.</p>
+    <p xml:lang="ka">Shortwave ინტერნეტ-რადიოს დამკვრელია, რომელიც საშუალებას გაძლევთ 50, 000-ზე მეტ სადგურს მოუსმინოთ.</p>
+    <p xml:lang="it">Shortwave è un riproduttore di radio su Internet che fornisce l'accesso a un database con oltre 50.000 stazioni.</p>
+    <p xml:lang="ia">Shortwave es un reproductor de radio per internet que forni accesso a un base de datos con plus de 30.000 stationes.</p>
+    <p xml:lang="he">Shortwave הוא נגן רדיו אינטרנט המספק גישה למסד נתונים עם למעלה מ־50,000 תחנות.</p>
+    <p xml:lang="fr">Shortwave est un lecteur de radios internet qui permet d’accéder à une base de données de plus de 50 000 stations.</p>
+    <p xml:lang="fi">Shortwave on internetradioasemien toistamiseen tarkoitettu sovellus, joka tarjoaa yli 50 000 aseman tietokannan.</p>
+    <p xml:lang="fa">موج کوتاه پخش‌کنندهٔ رادیو اینترنتی‌ای است که دسترسی به پایگاه داده‌ای با بیش از ۵۰٫۰۰۰ ایستگاه را فراهم می‌کند.</p>
+    <p xml:lang="eu">Shortwave interneteko irrati-estazioen erreproduzigailua da, 50.000 estazio baino gehiago dituen datu-base baterako sarbidea ematen duena.</p>
+    <p xml:lang="es">Shortwave es un reproductor de radio por Internet que proporciona acceso a una base de datos con más de 50.000 emisoras.</p>
+    <p xml:lang="de">Shortwave ist eine Internetradio-Wiedergabe, die Zugang zu einer Senderdatenbank mit über 50.000 Sendern bietet.</p>
+    <p xml:lang="da">Shortwave er en internetradioafspiller, som giver adgang til en database med over 50.000 stationer.</p>
+    <p xml:lang="bg">Shortwave е интернет радио плеър с база от данни от над 50 000 станции.</p>
+    <p xml:lang="be-Cyrl">Shortwave — гэта прайгравальнік інтэрнэт-радыё з доступам да базы даных, якая змяшчае больш за 50 000 станцый.</p>
+    <p>Features:</p>
+    <p xml:lang="zh-Hant-TW">特色：</p>
+    <p xml:lang="zh-Hans-CN">特性：</p>
+    <p xml:lang="vi">Các tính năng:</p>
+    <p xml:lang="uk">Можливості:</p>
+    <p xml:lang="tr">Özellikler:</p>
+    <p xml:lang="sv">Funktioner:</p>
+    <p xml:lang="sr-Cyrl">Могућности:</p>
+    <p xml:lang="sl">Zmožnosti:</p>
+    <p xml:lang="sk">Funkcie:</p>
+    <p xml:lang="ru">Возможности:</p>
+    <p xml:lang="ro">Funcționalități:</p>
+    <p xml:lang="pt-BR">Recursos:</p>
+    <p xml:lang="pt">Funcionalidades:</p>
+    <p xml:lang="pl">Funkcje:</p>
+    <p xml:lang="oc">Foncionalitats :</p>
+    <p xml:lang="nl">Functies:</p>
+    <p xml:lang="ka">თვისებები:</p>
+    <p xml:lang="it">Funzionalità:</p>
+    <p xml:lang="is">Eiginleikar:</p>
+    <p xml:lang="id">Fitur:</p>
+    <p xml:lang="ia">Functionalitates:</p>
+    <p xml:lang="hu">Funkciók:</p>
+    <p xml:lang="hr">Značajke:</p>
+    <p xml:lang="hi">विशेषताएं:</p>
+    <p xml:lang="he">תכונות:</p>
+    <p xml:lang="gl">Características:</p>
+    <p xml:lang="fur">Funzionalitâts:</p>
+    <p xml:lang="fr">Fonctionnalités :</p>
+    <p xml:lang="fi">Ominaisuudet:</p>
+    <p xml:lang="fa">ویژگی‌ها:</p>
+    <p xml:lang="eu">Eginbideak:</p>
+    <p xml:lang="es">Características:</p>
+    <p xml:lang="en-GB">Features:</p>
+    <p xml:lang="el">Χαρακτηριστικά:</p>
+    <p xml:lang="de">Funktionen:</p>
+    <p xml:lang="da">Funktioner:</p>
+    <p xml:lang="cs">Vlastnosti:</p>
+    <p xml:lang="ca">Característiques:</p>
+    <p xml:lang="bg">Функции:</p>
+    <p xml:lang="be-Cyrl">Магчымасці:</p>
+    <ul>
+      <li>Create your own library where you can add your favorite stations</li>
+      <li xml:lang="zh-Hant-TW">將您喜愛的電臺加入您的專屬電臺庫</li>
+      <li xml:lang="zh-Hans-CN">创建您自己的媒体库，可以在其中添加最喜欢的电台</li>
+      <li xml:lang="vi">Tạo thư viện của riêng bạn, nơi bạn có thể thêm các đài yêu thích của mình</li>
+      <li xml:lang="uk">Створіть власну бібліотеку, до якої ви зможете додавати улюблені станції</li>
+      <li xml:lang="tr">Beğendiğiniz istasyonları ekleyerek kendi kitaplığınızı oluşturun</li>
+      <li xml:lang="sv">Skapa ditt eget bibliotek där du kan lägga till dina favoritstationer</li>
+      <li xml:lang="sr-Cyrl">Направите сопствену библиотеку у коју можете додати ваше омиљене станице</li>
+      <li xml:lang="sl">Ustvarite svojo zbirko, v katero lahko dodate vse priljubljene postaje</li>
+      <li xml:lang="sk">Vytvorte svoju vlastnú knižnicu, do ktorej si môžete pridať obľúbené stanice</li>
+      <li xml:lang="ru">Создайте собственную библиотеку, в которую можно добавлять любимые станции</li>
+      <li xml:lang="ro">Creați-vă propria bibliotecă unde puteți adăuga stațiile favorite</li>
+      <li xml:lang="pt-BR">Crie sua própria biblioteca à qual você pode adicionar suas estações favoritas</li>
+      <li xml:lang="pt">Criar sua própria coleção onde pode adicionar suas estações favoritas</li>
+      <li xml:lang="pl">Tworzenie własnej kolekcji, do której można dodawać ulubione stacje</li>
+      <li xml:lang="oc">Creatz vòstra pròpria bibliotèca ont podètz apondre vòstras estacions favoritas</li>
+      <li xml:lang="nl">Maak uw eigen collectie aan en voeg uw favoriete radiostations eraan toe</li>
+      <li xml:lang="ka">შექმენით თქვენი საკუთარი ბიბლიოთეკა, სადაც შეგიძლიათ თქვენი საყვარელი სადგურები დაამატოთ</li>
+      <li xml:lang="it">Creare una propria raccolta dove poter aggiungere le stazioni preferite</li>
+      <li xml:lang="is">Búðu til eigin lista sem þú getur bætt í uppáhalds-stöðvunum þínum</li>
+      <li xml:lang="id">Buat perpustakaan Anda sendiri di mana Anda dapat menambahkan stasiun favorit Anda</li>
+      <li xml:lang="ia">Crea tu proprie bibliotheca ubi tu pote adder tu stationes favorite</li>
+      <li xml:lang="hu">Saját könyvtár létrehozása, ahol hozzáadhatja a kedvenc állomásait</li>
+      <li xml:lang="hr">Stvorite svoju vlastitu radioteku gdje možete dodati svoje omiljene stanice</li>
+      <li xml:lang="hi">अपनी खुद की लाइब्रेरी बनाएं जहां आप अपने पसंदीदा स्टेशन जोड़ सकें</li>
+      <li xml:lang="he">יצירת ספרייה משלך אליה ניתן להוסיף את התחנות המועדפות עליך</li>
+      <li xml:lang="gl">Cree a súa propia biblioteca onde engadir as súas emisoras favoritas</li>
+      <li xml:lang="fur">Creâ la tô librarie personâl, dulà che tu puedis zontâ lis tôs stazions preferidis</li>
+      <li xml:lang="fr">Créez votre propre bibliothèque où ajouter vos stations préférées</li>
+      <li xml:lang="fi">Luo oma kirjasto, johon voit lisätä omat suosikkiasemasi</li>
+      <li xml:lang="fa">ایجاد کتاب‌خانهٔ خودتان با توانایی افزودن ایستگاه‌های محبوبتان</li>
+      <li xml:lang="eu">Sortu zure liburutegi propioa zure gogoko estazioak gehitzeko</li>
+      <li xml:lang="es">Crear su propia biblioteca donde puede añadir sus emisoras favoritas</li>
+      <li xml:lang="en-GB">Create your own library where you can add your favourite stations</li>
+      <li xml:lang="el">Δημιουργήστε τη δική σας βιβλιοθήκη όπου μπορείτε να προσθέσετε τους αγαπημένους σας σταθμούς</li>
+      <li xml:lang="de">Erstellen Sie Ihre eigene Bibliothek, zu der Sie Ihre Lieblingssender hinzufügen</li>
+      <li xml:lang="da">Opret dit eget bibliotek hvor du kan tilføje dine favoritstationer</li>
+      <li xml:lang="cs">Vytvoření vlastní knihovny, kam si můžete přidat oblíbené stanice</li>
+      <li xml:lang="ca">Crea la teva pròpia biblioteca on pots afegir les teves emissores preferides</li>
+      <li xml:lang="bg">Може да създадете собствена библиотека, в която да добавите любимите си станции</li>
+      <li xml:lang="be-Cyrl">Стварыце ўласную бібліятэку, куды будзеце дадаваць свае ўлюбёныя станцыі</li>
+      <li>Easily search and discover new radio stations</li>
+      <li xml:lang="zh-Hant-TW">輕而易舉便能搜尋與探索新電臺</li>
+      <li xml:lang="zh-Hans-CN">轻松搜索并发现新电台</li>
+      <li xml:lang="vi">Dễ dàng tìm kiếm và khám phá các đài phát thanh mới</li>
+      <li xml:lang="uk">Простий пошук і виявлення нових радіостанцій</li>
+      <li xml:lang="tr">Yeni radyo istasyonlarını kolayca arayın ve keşfedin</li>
+      <li xml:lang="sv">Sök och upptäck enkelt nya radiostationer</li>
+      <li xml:lang="sr-Cyrl">Једноставна претрага и откривање нових радио станица</li>
+      <li xml:lang="sl">Enostavno iskanje in odkrivanje novih radijskih postaj</li>
+      <li xml:lang="sk">Jednoducho vyhľadávajte a objavujte nové rádiové stanice</li>
+      <li xml:lang="ru">Легкий поиск и открытие новых радиостанций</li>
+      <li xml:lang="ro">Căutați și descoperiți stații noi radio cu ușurință</li>
+      <li xml:lang="pt-BR">Pesquise e descubra facilmente novas estações de rádio</li>
+      <li xml:lang="pt">Procurar facilmente e descobrir novas estações de rádio</li>
+      <li xml:lang="pl">Łatwe wyszukiwanie i odkrywanie nowych stacji radiowych</li>
+      <li xml:lang="oc">Cercatz e descobrissètz aisidament de novèlas estacions de ràdio</li>
+      <li xml:lang="nl">Zoek en ontdek eenvoudig nieuwe radiostations</li>
+      <li xml:lang="ka">მარტივად მოძებნეთ და აღმოაჩინეთ ახალი რადიოსადგურები</li>
+      <li xml:lang="it">Cercare e scoprire facilmente nuove stazioni radio</li>
+      <li xml:lang="is">Uppgötvaðu og leitaðu á auðveldan máta að nýjum útvarpsstöðvum</li>
+      <li xml:lang="id">Mudah mencari dan menemukan stasiun radio baru</li>
+      <li xml:lang="ia">Cerca e discoperi nove stationes de radio facilemente</li>
+      <li xml:lang="hu">Új rádióállomások egyszerű keresése és felfedezése</li>
+      <li xml:lang="hr">Jednostavno pretražujte i otkrijte nove radio stanice</li>
+      <li xml:lang="hi">नए रेडियो स्टेशन आसानी से खोजें और ढूंढें</li>
+      <li xml:lang="he">חיפוש קל לגילוי תחנות רדיו חדשות</li>
+      <li xml:lang="gl">Busque e descubra facilmente novas emisoras de radio</li>
+      <li xml:lang="fur">Cirî e scuvierzi cun facilitât lis gnovis stazions radio</li>
+      <li xml:lang="fr">Cherchez et découvrez de nouvelles stations de radio</li>
+      <li xml:lang="fi">Etsi ja löydä vaivatta uusia radioasemia</li>
+      <li xml:lang="fa">جست‌وجو و کشف آسان ایستگاه‌های رادیویی جدید</li>
+      <li xml:lang="eu">Bilatu eta aurkitu irrati-estazio berriak modu errazean</li>
+      <li xml:lang="es">Buscar y descubrir nuevas emisoras de radio fácilmente</li>
+      <li xml:lang="en-GB">Easily search and discover new radio stations</li>
+      <li xml:lang="el">Εύκολη αναζήτηση και ανακάλυψη νέων ραδιοφωνικών σταθμών</li>
+      <li xml:lang="de">Einfaches Suchen und Entdecken neuer Radiosender</li>
+      <li xml:lang="da">Det er let at søge efter og opdage nye radiostationer</li>
+      <li xml:lang="cs">Snadné vyhledávání a objevování nových rádiových stanic</li>
+      <li xml:lang="ca">Cerca fàcilment i descobreix emissores de ràdio noves</li>
+      <li xml:lang="bg">Лесно търсене и откриване на нови радиостанции</li>
+      <li xml:lang="be-Cyrl">Просты пошук і агляд новых радыёстанцый</li>
+      <li>Automatic recognition of tracks, with the possibility to save them individually</li>
+      <li xml:lang="zh-Hans-CN">自动识别音轨，并可以将其分别保存</li>
+      <li xml:lang="uk">Автоматичне виявлення пісень із можливістю їхнього збереження окремо</li>
+      <li xml:lang="tr">Parçaları kendiliğinden tanıma, ayrı ayrı kaydetme özelliği</li>
+      <li xml:lang="sv">Automatisk igenkänning av spår, med möjligheten att spara dem individuellt</li>
+      <li xml:lang="sl">Samodejno prepoznavanje skladb z možnostjo posamičnega shranjevanja</li>
+      <li xml:lang="pt-BR">Reconhecimento automático de faixas, com a possibilidade de salvá-las individualmente</li>
+      <li xml:lang="oc">Reconeissença automatica de las pistas, amb la possibilitat de las enregistrar individualament</li>
+      <li xml:lang="ka">სიმღერების ავტომატური ამოცნობა, მათი ინდივიდუალურად შენახვის შესაძლებლობით</li>
+      <li xml:lang="it">Riconoscere automaticamente i brani con la possibilità di salvarli individualmente</li>
+      <li xml:lang="ia">Recognoscentia automatic de cantos, con le possibilitate de salvar los individualmente</li>
+      <li xml:lang="he">זיהוי אוטומטי של רצועות, עם אפשרות לשמור אותן בנפרד</li>
+      <li xml:lang="fr">Reconnaissance automatique des pistes, avec possibilité de les enregistrer individuellement</li>
+      <li xml:lang="fi">Kappaleiden automaattinen tunnistaminen ja mahdollisuus tallentaa yksittäisiä kappaleita</li>
+      <li xml:lang="fa">بازشناسی خودکار قطعه‌ها با امکان ذخیرهٔ جداگانه‌شان</li>
+      <li xml:lang="eu">Pisten ezagutze automatikoa, haiek banaka gordetzeko aukerarekin.</li>
+      <li xml:lang="es">Reconocimiento automático de las canciones, con la posibilidad de guardarlas individualmente</li>
+      <li xml:lang="de">Automatische Erkennung von Titeln, mit der Möglichkeit, sie einzeln zu speichern</li>
+      <li xml:lang="da">Automatisk genkendelse af lydspor med mulighed for at gemme dem enkeltvis</li>
+      <li xml:lang="bg">Автоматично разпознаване на песните с възможност да ги запазите индивидуално</li>
+      <li>Responsive application layout, compatible for small and large screens</li>
+      <li xml:lang="zh-Hant-TW">響應式程式佈局，不論熒幕尺寸大小皆可相容</li>
+      <li xml:lang="zh-Hans-CN">响应式应用程序布局，兼容小型屏幕和大型屏幕</li>
+      <li xml:lang="vi">Bố cục ứng dụng thích ứng, tương thích với cả màn hình nhỏ và lớn</li>
+      <li xml:lang="uk">Якісне компонування вікна програми, яке сумісне із малими і великими екранами</li>
+      <li xml:lang="tr">Küçük ve büyük ekranlarla uyumlu, duyarlı uygulama düzeni</li>
+      <li xml:lang="sv">Kvickt reagerande programlayout, kompatibel med små och stora skärmar</li>
+      <li xml:lang="sr-Cyrl">Изглед програма прилагодљив величини екрана, усклађен са малим и великим екранима</li>
+      <li xml:lang="sl">Odzivno prilagajanje programa je skladno z velikimi in majhnimi zasloni</li>
+      <li xml:lang="sk">Dobre reagujúce rozloženie aplikácie, kompatibilné s malými aj veľkými obrazovkami</li>
+      <li xml:lang="ru">Отзывчивый интерфейс приложения, совместимый с маленькими и большими экранами</li>
+      <li xml:lang="ro">Aspect de aplicație responsiv, compatibil cu ecrane mici și mari</li>
+      <li xml:lang="pt-BR">Leiaute de aplicativo responsivo, compatível com telas pequenas e grandes</li>
+      <li xml:lang="pt">Modelo de aplicação responsivo, compatível com ecrãs pequenos ou grandes</li>
+      <li xml:lang="pl">Interfejs zgodny z małymi i wielkimi ekranami</li>
+      <li xml:lang="oc">Disposicion d'aplicacion responsiva, compatibla amb d'ecrans pichons e grands</li>
+      <li xml:lang="nl">Responsieve indeling, geschikt voor zowel kleine als grote schermen</li>
+      <li xml:lang="ka">აპლიკაციის მოხერხებული განლაგება, თავსებადი მცირე და დიდ ეკრანებთან</li>
+      <li xml:lang="it">Una reattiva disposizione dell'applicazione, compatibile per schermi piccoli e grandi</li>
+      <li xml:lang="is">Aðlaganlegt viðmót , samræmanlegt fyrir litla og stóra skjái</li>
+      <li xml:lang="id">Tata letak aplikasi responsif, kompatibel untuk layar kecil dan besar</li>
+      <li xml:lang="ia">Disposition responsive de application, compatibile con schermos parve e grande</li>
+      <li xml:lang="hu">Alkalmazkodó alkalmazáselrendezés, kis és nagy képernyők támogatása</li>
+      <li xml:lang="hr">Odgovarajući izgled aplikacije, kompatibilan za male i velike zaslone</li>
+      <li xml:lang="hi">उत्तरदायी अनुप्रयोग अभिन्यास, छोटी और बड़ी स्क्रीन के लिए संगत</li>
+      <li xml:lang="he">פריסת היישום משתנה ומגיבה, מתאימה למסכים קטנים וגדולים כאחד</li>
+      <li xml:lang="gl">Disposición de aplicación responsiva, compatíbel con pantallas pequenas e grandes</li>
+      <li xml:lang="fur">Struture dal program adatabil, compatibil cui schermis piçui e grancj</li>
+      <li xml:lang="fr">Interface adaptative, compatible avec les petits et grands écrans</li>
+      <li xml:lang="fi">Mukautuva sovelluksen asettelu, yhteensopiva pienien ja suurien näyttöjen kanssa</li>
+      <li xml:lang="fa">چینش واکنشگرای برنامه،‌سازگار با صفحه‌های بزرگ و کوچک</li>
+      <li xml:lang="eu">Aplikazio-diseinu moldagarria, pantaila txiki zein handiekin bateragarria dena</li>
+      <li xml:lang="es">Diseño adaptativo, compatible con pantallas grandes y pequeñas</li>
+      <li xml:lang="en-GB">Responsive application layout, compatible for small and large screens</li>
+      <li xml:lang="de">Dynamisches Anwendungslayout, kompatibel mit kleinen und großen Bildschirmen</li>
+      <li xml:lang="da">Programlayoutet tilpasser sig automatisk på både små og store skærme</li>
+      <li xml:lang="cs">Responzivní rozvržení aplikace kompatibilní s malými a velkými obrazovkami</li>
+      <li xml:lang="ca">Disposició d'aplicació responsiva, compatible amb pantalles grans i petites</li>
+      <li xml:lang="bg">Потребителски интерфейс съвместим с малки и големи екрани</li>
+      <li xml:lang="be-Cyrl">Адаптыўны інтэрфейс праграмы, сумяшчальны з малымі і вялікімі экранамі</li>
+      <li>Play audio on supported network devices (e.g. Google Chromecasts)</li>
+      <li xml:lang="zh-Hant-TW">在支援的網路裝置上播放音訊（譬如 Google Chromecasts）</li>
+      <li xml:lang="zh-Hans-CN">在受支持的网络设备（例如 Google Chromecasts）上播放音频</li>
+      <li xml:lang="vi">Phát âm thanh trên các thiết bị mạng được hỗ trợ (ví dụ: Google Chromecasts)</li>
+      <li xml:lang="uk">Відтворення звукових даних на підтримуваних пристроях у мережі (наприклад, Google Chromecast)</li>
+      <li xml:lang="tr">Desteklenen ağ aygıtlarında ses çalma (ör. Google Chromecast)</li>
+      <li xml:lang="sv">Spela ljud på nätverksenheter som stöds (t.ex. Google Chromecast)</li>
+      <li xml:lang="sr-Cyrl">Пуштање звука на подржаним мрежним уређајима (нпр.: Гугл Хромкастови)</li>
+      <li xml:lang="sl">Predvajanje glasbe na podprtih napravah (npr. Google Chromecast)</li>
+      <li xml:lang="sk">Prehrávajte zvuk na podporovaných sieťových zariadeniach (napr. Google Chromecast)</li>
+      <li xml:lang="ru">Воспроизведение аудио на поддерживаемых сетевых устройствах (например, Google Chromecasts)</li>
+      <li xml:lang="ro">Redă audio pe dispozitive de rețea suportate (de ex. Google Chromecasturi)</li>
+      <li xml:lang="pt-BR">Reprodução de áudio em dispositivos de rede compatíveis (por exemplo, Google Chromecasts)</li>
+      <li xml:lang="pt">Reproduz som em dispositivos de rede com suporte (ex.: Google Chromecasts)</li>
+      <li xml:lang="pl">Odtwarzanie dźwięku na obsługiwanych urządzeniach sieciowych (np. Google Chromecast)</li>
+      <li xml:lang="oc">Legir l'àudio sus de periferics de ret preses en carga (per exemple Google Chromecasts)</li>
+      <li xml:lang="nl">Audio afspelen op ondersteunde netwerkapparaten (zoals Google Chromecasts)</li>
+      <li xml:lang="ka">აუდიოს დაკვრა მხარდაჭერილ ქსელურ მოწყობილობებზე (მაგ. Google Chromecast)</li>
+      <li xml:lang="it">Riprodurre l'audio su dispositivi di rete supportati (esempio: Google Chromecast)</li>
+      <li xml:lang="is">Afspilun í nettengdum tækjum (t.d. Google Chromecasts)</li>
+      <li xml:lang="id">Memutar audio pada perangkat jaringan yang didukung (mis. Google Chromecasts)</li>
+      <li xml:lang="ia">Reproduce audio sur apparatos de rete supportate (p.e. Google Chromecasts)</li>
+      <li xml:lang="hu">Hang lejátszása a támogatott hálózati eszközökön (például Google Chromecasts)</li>
+      <li xml:lang="hr">Reprodukcija zvuka na podržanim mrežnim uređajima (npr. Google Chromecast)</li>
+      <li xml:lang="hi">समर्थित नेटवर्क उपकरणो पर ऑडियो चलाएं (जैसे Google Chromecasts)</li>
+      <li xml:lang="he">ניגון שמע בהתקני רשת נתמכים (למשל Google Chromecasts)</li>
+      <li xml:lang="gl">Reprodución de son en dispositivos de rede compatíbeis (p.ex. Google Chromecasts)</li>
+      <li xml:lang="fur">Riprodusi l'audio sui dispositîfs di rêt supuartâts (p.e. i Google Chromecasts)</li>
+      <li xml:lang="fr">Diffusion audio sur les appareils réseau pris en charge (par exemple les Google Chromecasts)</li>
+      <li xml:lang="fi">Toista ääntä tuetuilla verkkolaitteilla (esim. Google Chromecast)</li>
+      <li xml:lang="fa">پخش صدا روی افزاره‌های شبکه‌ای پشتیبانی شده (مانند پخش کروم‌های گوگل)</li>
+      <li xml:lang="eu">Erreproduzitu audioa onartutako sare-gailuetan (adibidez Google Chromecast)</li>
+      <li xml:lang="es">Reproducir sonido en dispositivos de red soportados (Ej. Google Chromecast)</li>
+      <li xml:lang="en-GB">Play audio on supported network devices (e.g. Google Chromecasts)</li>
+      <li xml:lang="el">Αναπαραγωγή ήχου σε υποστηριζόμενες συσκευές δικτύου (π.χ. Google Chromecasts)</li>
+      <li xml:lang="de">Tonwiedergabe auf unterstützten Netzwerkgeräten (z. B. Google Chromecasts)</li>
+      <li xml:lang="da">Afspil lyd på understøttede netværksenheder (f.eks. Google Chromecasts)</li>
+      <li xml:lang="cs">Přehrávání zvuku na podporovaných síťových zařízeních (např. Google Chromecast)</li>
+      <li xml:lang="ca">Reprodueix àudio en dispositius de xarxa compatibles (p. ex. Google Chromecasts)</li>
+      <li xml:lang="bg">Възпроизвеждане през поддържани мрежови устройства (примерно с Google Chromecast)</li>
+      <li xml:lang="be-Cyrl">Прайграванне аўдыя на сеткавых прыладах, якія падтрымліваюцца (напр. Google Chromecast)</li>
+      <li>Seamless integration into the GNOME desktop environment</li>
+      <li xml:lang="zh-Hant-TW">與 GNOME 桌面環境無縫結合</li>
+      <li xml:lang="zh-Hans-CN">与 GNOME 桌面环境无缝集成</li>
+      <li xml:lang="vi">Tích hợp liên thông vào môi trường máy tính để bàn GNOME</li>
+      <li xml:lang="uk">Безшовна інтеграція до стільничного середовища GNOME</li>
+      <li xml:lang="tr">GNOME masaüstü ortamı ile kusursuz tümleşim</li>
+      <li xml:lang="sv">Sömlös integration med skrivbordsmiljön GNOME</li>
+      <li xml:lang="sr-Cyrl">Ненаметљива усклађеност у Гномово радно окружење</li>
+      <li xml:lang="sl">Popolna vključenost programa v namizno okolje GNOME</li>
+      <li xml:lang="sk">Hladká integrácia do pracovného prostredia GNOME</li>
+      <li xml:lang="ru">Бесшовная интеграция в среду рабочего стола GNOME</li>
+      <li xml:lang="ro">Integrare unitară în mediul desktop GNOME</li>
+      <li xml:lang="pt-BR">Integração perfeita no ambiente GNOME</li>
+      <li xml:lang="pt">Integração transparente com o ambiente de trabalho GNOME</li>
+      <li xml:lang="pl">Integracja ze środowiskiem GNOME</li>
+      <li xml:lang="oc">Integracion transparenta dins l'environament de burèu GNOME</li>
+      <li xml:lang="nl">Naadloze integratie in de GNOME-bureaubladomgeving</li>
+      <li xml:lang="ka">შეუმჩნეველი ინტეგრაცია GNOME-ს გარემოში</li>
+      <li xml:lang="it">Una perfetta integrazione all'interno dell'ambiente desktop GNOME</li>
+      <li xml:lang="is">Fellur smekklega inn í GNOME gluggaumhverfið</li>
+      <li xml:lang="id">Integrasi mulus ke dalam lingkungan destop GNOME</li>
+      <li xml:lang="ia">Integration sin problemas al ambiente de scriptorio GNOME</li>
+      <li xml:lang="hu">Zökkenőmentes integráció a GNOME asztali környezetbe</li>
+      <li xml:lang="hr">Besprijekorna integracija u GNOME radno okruženje</li>
+      <li xml:lang="hi">गनोम डेस्कटॉप वातावरण में सहज एकीकरण</li>
+      <li xml:lang="he">שילוב חלק בסביבת שולחן העבודה GNOME</li>
+      <li xml:lang="gl">Integración sen problemas no ambiente de escritorio de GNOME</li>
+      <li xml:lang="fur">Integrazion perfete cul ambient di scritori GNOME</li>
+      <li xml:lang="fr">Intégration transparente à l’environnement de bureau GNOME</li>
+      <li xml:lang="fi">Saumaton integraatio Gnome-työpöytäympäristöön</li>
+      <li xml:lang="fa">یکپارچگی با محیط میزکار گنوم</li>
+      <li xml:lang="eu">Josturatik gabeko integrazioa GNOME mahaigaineko ingurunearekin</li>
+      <li xml:lang="es">Integración sin fisuras con el entorno de escritorio GNOME</li>
+      <li xml:lang="en-GB">Seamless integration into the GNOME desktop environment</li>
+      <li xml:lang="el">Απρόσκοπτη ενσωμάτωση στο GNOME</li>
+      <li xml:lang="de">Nahtlose Integration in die GNOME-Arbeitsumgebung</li>
+      <li xml:lang="da">Perfekt integration i GNOME-skrivebordsmiljøet</li>
+      <li xml:lang="cs">Dokonale zapadne do uživatelského prostředí GNOME</li>
+      <li xml:lang="ca">Integració a l'entorn d'escriptori GNOME</li>
+      <li xml:lang="bg">Идеална интеграция с GNOME</li>
+      <li xml:lang="be-Cyrl">Поўная інтэграцыя ў працоўнае асяроддзе GNOME</li>
+    </ul>
+  </description>
+  <content_rating type="oars-1.1"/>
+  <!-- Branding -->
+  <developer_name>Felix Häcker</developer_name>
+  <developer_name xml:lang="zh-Hant-TW">Felix Häcker</developer_name>
+  <developer_name xml:lang="zh-Hans-CN">Felix Häcker</developer_name>
+  <developer_name xml:lang="vi">Felix Häcker</developer_name>
+  <developer_name xml:lang="uk">Felix Häcker</developer_name>
+  <developer_name xml:lang="tr">Felix Häcker</developer_name>
+  <developer_name xml:lang="sv">Felix Häcker</developer_name>
+  <developer_name xml:lang="sr-Cyrl">Felix Häcker</developer_name>
+  <developer_name xml:lang="sl">Felix Häcker</developer_name>
+  <developer_name xml:lang="sk">Felix Häcker</developer_name>
+  <developer_name xml:lang="ru">Felix Häcker</developer_name>
+  <developer_name xml:lang="ro">Felix Häcker</developer_name>
+  <developer_name xml:lang="pt-BR">Felix Häcker</developer_name>
+  <developer_name xml:lang="pt">Felix Häcker</developer_name>
+  <developer_name xml:lang="pl">Felix Häcker</developer_name>
+  <developer_name xml:lang="oc">Felix Häcker</developer_name>
+  <developer_name xml:lang="nl">Felix Häcker</developer_name>
+  <developer_name xml:lang="ka">Felix Häcker</developer_name>
+  <developer_name xml:lang="it">Felix Häcker</developer_name>
+  <developer_name xml:lang="is">Felix Häcker</developer_name>
+  <developer_name xml:lang="id">Felix Häcker</developer_name>
+  <developer_name xml:lang="ia">Felix Häcker</developer_name>
+  <developer_name xml:lang="hu">Felix Häcker</developer_name>
+  <developer_name xml:lang="hr">Felix Häcker</developer_name>
+  <developer_name xml:lang="hi">फेलिक्स हैकर</developer_name>
+  <developer_name xml:lang="he">Felix Häcker</developer_name>
+  <developer_name xml:lang="gl">Felix Häcker</developer_name>
+  <developer_name xml:lang="fur">Felix Häcker</developer_name>
+  <developer_name xml:lang="fr">Felix Häcker</developer_name>
+  <developer_name xml:lang="fi">Felix Häcker</developer_name>
+  <developer_name xml:lang="fa">فلیکس هکر</developer_name>
+  <developer_name xml:lang="eu">Felix Häcker</developer_name>
+  <developer_name xml:lang="es">Felix Häcker</developer_name>
+  <developer_name xml:lang="en-GB">Felix Häcker</developer_name>
+  <developer_name xml:lang="el">Felix Häcker</developer_name>
+  <developer_name xml:lang="de">Felix Häcker</developer_name>
+  <developer_name xml:lang="da">Felix Häcker</developer_name>
+  <developer_name xml:lang="cs">Felix Häcker</developer_name>
+  <developer_name xml:lang="ca">Felix Häcker</developer_name>
+  <developer_name xml:lang="bg">Felix Häcker</developer_name>
+  <developer_name xml:lang="be-Cyrl">Фелікс Хекер (Felix Häcker)</developer_name>
+  <developer id="de.haeckerfelix">
+    <name>Felix Häcker</name>
+    <name xml:lang="zh-Hant-TW">Felix Häcker</name>
+    <name xml:lang="zh-Hans-CN">Felix Häcker</name>
+    <name xml:lang="vi">Felix Häcker</name>
+    <name xml:lang="uk">Felix Häcker</name>
+    <name xml:lang="tr">Felix Häcker</name>
+    <name xml:lang="sv">Felix Häcker</name>
+    <name xml:lang="sr-Cyrl">Felix Häcker</name>
+    <name xml:lang="sl">Felix Häcker</name>
+    <name xml:lang="sk">Felix Häcker</name>
+    <name xml:lang="ru">Felix Häcker</name>
+    <name xml:lang="ro">Felix Häcker</name>
+    <name xml:lang="pt-BR">Felix Häcker</name>
+    <name xml:lang="pt">Felix Häcker</name>
+    <name xml:lang="pl">Felix Häcker</name>
+    <name xml:lang="oc">Felix Häcker</name>
+    <name xml:lang="nl">Felix Häcker</name>
+    <name xml:lang="ka">Felix Häcker</name>
+    <name xml:lang="it">Felix Häcker</name>
+    <name xml:lang="is">Felix Häcker</name>
+    <name xml:lang="id">Felix Häcker</name>
+    <name xml:lang="ia">Felix Häcker</name>
+    <name xml:lang="hu">Felix Häcker</name>
+    <name xml:lang="hr">Felix Häcker</name>
+    <name xml:lang="hi">फेलिक्स हैकर</name>
+    <name xml:lang="he">Felix Häcker</name>
+    <name xml:lang="gl">Felix Häcker</name>
+    <name xml:lang="fur">Felix Häcker</name>
+    <name xml:lang="fr">Felix Häcker</name>
+    <name xml:lang="fi">Felix Häcker</name>
+    <name xml:lang="fa">فلیکس هکر</name>
+    <name xml:lang="eu">Felix Häcker</name>
+    <name xml:lang="es">Felix Häcker</name>
+    <name xml:lang="en-GB">Felix Häcker</name>
+    <name xml:lang="el">Felix Häcker</name>
+    <name xml:lang="de">Felix Häcker</name>
+    <name xml:lang="da">Felix Häcker</name>
+    <name xml:lang="cs">Felix Häcker</name>
+    <name xml:lang="ca">Felix Häcker</name>
+    <name xml:lang="bg">Felix Häcker</name>
+    <name xml:lang="be-Cyrl">Фелікс Хекер (Felix Häcker)</name>
+  </developer>
+  <branding>
+    <color type="primary" scheme_preference="light">#fcd85e</color>
+    <color type="primary" scheme_preference="dark">#865e3c</color>
+  </branding>
+  <!-- License -->
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  <!-- URLs -->
+  <url type="homepage">https://apps.gnome.org/Shortwave/</url>
+  <url type="bugtracker">https://gitlab.gnome.org/World/Shortwave/issues</url>
+  <url type="donation">https://liberapay.com/haecker-felix</url>
+  <url type="translate">https://l10n.gnome.org/module/Shortwave/</url>
+  <url type="contact">https://matrix.to/#/#shortwave:gnome.org</url>
+  <url type="vcs-browser">https://gitlab.gnome.org/World/Shortwave</url>
+  <url type="contribute">https://welcome.gnome.org/app/Shortwave/</url>
+  <!-- Supported Hardware -->
+  <requires>
+    <display_length compare="ge">360</display_length>
+  </requires>
+  <supports>
+    <control>keyboard</control>
+    <control>pointing</control>
+    <control>touch</control>
+  </supports>
+  <!-- Screenshots -->
+  <screenshots>
+    <screenshot type="default">
+      <image>https://gitlab.gnome.org/World/Shortwave/raw/main/data/screenshots/1.png</image>
+      <caption>Create your own library where you can add your favorite stations</caption>
+      <caption xml:lang="zh-Hant-TW">將您喜愛的電臺加入您的專屬電臺庫</caption>
+      <caption xml:lang="zh-Hans-CN">创建您自己的媒体库，可以在其中添加最喜欢的电台</caption>
+      <caption xml:lang="vi">Tạo thư viện của riêng bạn, nơi bạn có thể thêm các đài yêu thích của mình</caption>
+      <caption xml:lang="uk">Створіть власну бібліотеку, до якої ви зможете додавати улюблені станції</caption>
+      <caption xml:lang="tr">Beğendiğiniz istasyonları ekleyerek kendi kitaplığınızı oluşturun</caption>
+      <caption xml:lang="sv">Skapa ditt eget bibliotek där du kan lägga till dina favoritstationer</caption>
+      <caption xml:lang="sr-Cyrl">Направите сопствену библиотеку у коју можете додати ваше омиљене станице</caption>
+      <caption xml:lang="sl">Ustvarite svojo zbirko, v katero lahko dodate vse priljubljene postaje</caption>
+      <caption xml:lang="sk">Vytvorte svoju vlastnú knižnicu, do ktorej si môžete pridať obľúbené stanice</caption>
+      <caption xml:lang="ru">Создайте собственную библиотеку, в которую можно добавлять любимые станции</caption>
+      <caption xml:lang="ro">Creați-vă propria bibliotecă unde puteți adăuga stațiile favorite</caption>
+      <caption xml:lang="pt-BR">Crie sua própria biblioteca à qual você pode adicionar suas estações favoritas</caption>
+      <caption xml:lang="pt">Criar sua própria coleção onde pode adicionar suas estações favoritas</caption>
+      <caption xml:lang="pl">Tworzenie własnej kolekcji, do której można dodawać ulubione stacje</caption>
+      <caption xml:lang="oc">Creatz vòstra pròpria bibliotèca ont podètz apondre vòstras estacions favoritas</caption>
+      <caption xml:lang="nl">Maak uw eigen collectie aan en voeg uw favoriete radiostations eraan toe</caption>
+      <caption xml:lang="ka">შექმენით თქვენი საკუთარი ბიბლიოთეკა, სადაც შეგიძლიათ თქვენი საყვარელი სადგურები დაამატოთ</caption>
+      <caption xml:lang="it">Creare una propria raccolta dove poter aggiungere le stazioni preferite</caption>
+      <caption xml:lang="is">Búðu til eigin lista sem þú getur bætt í uppáhalds-stöðvunum þínum</caption>
+      <caption xml:lang="id">Buat perpustakaan Anda sendiri di mana Anda dapat menambahkan stasiun favorit Anda</caption>
+      <caption xml:lang="ia">Crea tu proprie bibliotheca ubi tu pote adder tu stationes favorite</caption>
+      <caption xml:lang="hu">Saját könyvtár létrehozása, ahol hozzáadhatja a kedvenc állomásait</caption>
+      <caption xml:lang="hr">Stvorite svoju vlastitu radioteku gdje možete dodati svoje omiljene stanice</caption>
+      <caption xml:lang="hi">अपनी खुद की लाइब्रेरी बनाएं जहां आप अपने पसंदीदा स्टेशन जोड़ सकें</caption>
+      <caption xml:lang="he">יצירת ספרייה משלך אליה ניתן להוסיף את התחנות המועדפות עליך</caption>
+      <caption xml:lang="gl">Cree a súa propia biblioteca onde engadir as súas emisoras favoritas</caption>
+      <caption xml:lang="fur">Creâ la tô librarie personâl, dulà che tu puedis zontâ lis tôs stazions preferidis</caption>
+      <caption xml:lang="fr">Créez votre propre bibliothèque où ajouter vos stations préférées</caption>
+      <caption xml:lang="fi">Luo oma kirjasto, johon voit lisätä omat suosikkiasemasi</caption>
+      <caption xml:lang="fa">ایجاد کتاب‌خانهٔ خودتان با توانایی افزودن ایستگاه‌های محبوبتان</caption>
+      <caption xml:lang="eu">Sortu zure liburutegi propioa zure gogoko estazioak gehitzeko</caption>
+      <caption xml:lang="es">Crear su propia biblioteca donde puede añadir sus emisoras favoritas</caption>
+      <caption xml:lang="en-GB">Create your own library where you can add your favourite stations</caption>
+      <caption xml:lang="el">Δημιουργήστε τη δική σας βιβλιοθήκη όπου μπορείτε να προσθέσετε τους αγαπημένους σας σταθμούς</caption>
+      <caption xml:lang="de">Erstellen Sie Ihre eigene Bibliothek, zu der Sie Ihre Lieblingssender hinzufügen</caption>
+      <caption xml:lang="da">Opret dit eget bibliotek hvor du kan tilføje dine favoritstationer</caption>
+      <caption xml:lang="cs">Vytvoření vlastní knihovny, kam si můžete přidat oblíbené stanice</caption>
+      <caption xml:lang="ca">Crea la teva pròpia biblioteca on pots afegir les teves emissores preferides</caption>
+      <caption xml:lang="bg">Може да създадете собствена библиотека, в която да добавите любимите си станции</caption>
+      <caption xml:lang="be-Cyrl">Стварыце ўласную бібліятэку, куды будзеце дадаваць свае ўлюбёныя станцыі</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://gitlab.gnome.org/World/Shortwave/raw/main/data/screenshots/2.png</image>
+      <caption>Easily search and discover new radio stations</caption>
+      <caption xml:lang="zh-Hant-TW">輕而易舉便能搜尋與探索新電臺</caption>
+      <caption xml:lang="zh-Hans-CN">轻松搜索并发现新电台</caption>
+      <caption xml:lang="vi">Dễ dàng tìm kiếm và khám phá các đài phát thanh mới</caption>
+      <caption xml:lang="uk">Простий пошук і виявлення нових радіостанцій</caption>
+      <caption xml:lang="tr">Yeni radyo istasyonlarını kolayca arayın ve keşfedin</caption>
+      <caption xml:lang="sv">Sök och upptäck enkelt nya radiostationer</caption>
+      <caption xml:lang="sr-Cyrl">Једноставна претрага и откривање нових радио станица</caption>
+      <caption xml:lang="sl">Enostavno iskanje in odkrivanje novih radijskih postaj</caption>
+      <caption xml:lang="sk">Jednoducho vyhľadávajte a objavujte nové rádiové stanice</caption>
+      <caption xml:lang="ru">Легкий поиск и открытие новых радиостанций</caption>
+      <caption xml:lang="ro">Căutați și descoperiți stații noi radio cu ușurință</caption>
+      <caption xml:lang="pt-BR">Pesquise e descubra facilmente novas estações de rádio</caption>
+      <caption xml:lang="pt">Procurar facilmente e descobrir novas estações de rádio</caption>
+      <caption xml:lang="pl">Łatwe wyszukiwanie i odkrywanie nowych stacji radiowych</caption>
+      <caption xml:lang="oc">Cercatz e descobrissètz aisidament de novèlas estacions de ràdio</caption>
+      <caption xml:lang="nl">Zoek en ontdek eenvoudig nieuwe radiostations</caption>
+      <caption xml:lang="ka">მარტივად მოძებნეთ და აღმოაჩინეთ ახალი რადიოსადგურები</caption>
+      <caption xml:lang="it">Cercare e scoprire facilmente nuove stazioni radio</caption>
+      <caption xml:lang="is">Uppgötvaðu og leitaðu á auðveldan máta að nýjum útvarpsstöðvum</caption>
+      <caption xml:lang="id">Mudah mencari dan menemukan stasiun radio baru</caption>
+      <caption xml:lang="ia">Cerca e discoperi nove stationes de radio facilemente</caption>
+      <caption xml:lang="hu">Új rádióállomások egyszerű keresése és felfedezése</caption>
+      <caption xml:lang="hr">Jednostavno pretražujte i otkrijte nove radio stanice</caption>
+      <caption xml:lang="hi">नए रेडियो स्टेशन आसानी से खोजें और ढूंढें</caption>
+      <caption xml:lang="he">חיפוש קל לגילוי תחנות רדיו חדשות</caption>
+      <caption xml:lang="gl">Busque e descubra facilmente novas emisoras de radio</caption>
+      <caption xml:lang="fur">Cirî e scuvierzi cun facilitât lis gnovis stazions radio</caption>
+      <caption xml:lang="fr">Cherchez et découvrez de nouvelles stations de radio</caption>
+      <caption xml:lang="fi">Etsi ja löydä vaivatta uusia radioasemia</caption>
+      <caption xml:lang="fa">جست‌وجو و کشف آسان ایستگاه‌های رادیویی جدید</caption>
+      <caption xml:lang="eu">Bilatu eta aurkitu irrati-estazio berriak modu errazean</caption>
+      <caption xml:lang="es">Buscar y descubrir nuevas emisoras de radio fácilmente</caption>
+      <caption xml:lang="en-GB">Easily search and discover new radio stations</caption>
+      <caption xml:lang="el">Εύκολη αναζήτηση και ανακάλυψη νέων ραδιοφωνικών σταθμών</caption>
+      <caption xml:lang="de">Einfaches Suchen und Entdecken neuer Radiosender</caption>
+      <caption xml:lang="da">Det er let at søge efter og opdage nye radiostationer</caption>
+      <caption xml:lang="cs">Snadné vyhledávání a objevování nových rádiových stanic</caption>
+      <caption xml:lang="ca">Cerca fàcilment i descobreix emissores de ràdio noves</caption>
+      <caption xml:lang="bg">Лесно търсене и откриване на нови радиостанции</caption>
+      <caption xml:lang="be-Cyrl">Просты пошук і агляд новых радыёстанцый</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://gitlab.gnome.org/World/Shortwave/raw/main/data/screenshots/3.png</image>
+      <caption>Responsive application layout, compatible for small and large screens</caption>
+      <caption xml:lang="zh-Hant-TW">響應式程式佈局，不論熒幕尺寸大小皆可相容</caption>
+      <caption xml:lang="zh-Hans-CN">响应式应用程序布局，兼容小型屏幕和大型屏幕</caption>
+      <caption xml:lang="vi">Bố cục ứng dụng thích ứng, tương thích với cả màn hình nhỏ và lớn</caption>
+      <caption xml:lang="uk">Якісне компонування вікна програми, яке сумісне із малими і великими екранами</caption>
+      <caption xml:lang="tr">Küçük ve büyük ekranlarla uyumlu, duyarlı uygulama düzeni</caption>
+      <caption xml:lang="sv">Kvickt reagerande programlayout, kompatibel med små och stora skärmar</caption>
+      <caption xml:lang="sr-Cyrl">Изглед програма прилагодљив величини екрана, усклађен са малим и великим екранима</caption>
+      <caption xml:lang="sl">Odzivno prilagajanje programa je skladno z velikimi in majhnimi zasloni</caption>
+      <caption xml:lang="sk">Dobre reagujúce rozloženie aplikácie, kompatibilné s malými aj veľkými obrazovkami</caption>
+      <caption xml:lang="ru">Отзывчивый интерфейс приложения, совместимый с маленькими и большими экранами</caption>
+      <caption xml:lang="ro">Aspect de aplicație responsiv, compatibil cu ecrane mici și mari</caption>
+      <caption xml:lang="pt-BR">Leiaute de aplicativo responsivo, compatível com telas pequenas e grandes</caption>
+      <caption xml:lang="pt">Modelo de aplicação responsivo, compatível com ecrãs pequenos ou grandes</caption>
+      <caption xml:lang="pl">Interfejs zgodny z małymi i wielkimi ekranami</caption>
+      <caption xml:lang="oc">Disposicion d'aplicacion responsiva, compatibla amb d'ecrans pichons e grands</caption>
+      <caption xml:lang="nl">Responsieve indeling, geschikt voor zowel kleine als grote schermen</caption>
+      <caption xml:lang="ka">აპლიკაციის მოხერხებული განლაგება, თავსებადი მცირე და დიდ ეკრანებთან</caption>
+      <caption xml:lang="it">Una reattiva disposizione dell'applicazione, compatibile per schermi piccoli e grandi</caption>
+      <caption xml:lang="is">Aðlaganlegt viðmót , samræmanlegt fyrir litla og stóra skjái</caption>
+      <caption xml:lang="id">Tata letak aplikasi responsif, kompatibel untuk layar kecil dan besar</caption>
+      <caption xml:lang="ia">Disposition responsive de application, compatibile con schermos parve e grande</caption>
+      <caption xml:lang="hu">Alkalmazkodó alkalmazáselrendezés, kis és nagy képernyők támogatása</caption>
+      <caption xml:lang="hr">Odgovarajući izgled aplikacije, kompatibilan za male i velike zaslone</caption>
+      <caption xml:lang="hi">उत्तरदायी अनुप्रयोग अभिन्यास, छोटी और बड़ी स्क्रीन के लिए संगत</caption>
+      <caption xml:lang="he">פריסת היישום משתנה ומגיבה, מתאימה למסכים קטנים וגדולים כאחד</caption>
+      <caption xml:lang="gl">Disposición de aplicación responsiva, compatíbel con pantallas pequenas e grandes</caption>
+      <caption xml:lang="fur">Struture dal program adatabil, compatibil cui schermis piçui e grancj</caption>
+      <caption xml:lang="fr">Interface adaptative, compatible avec les petits et grands écrans</caption>
+      <caption xml:lang="fi">Mukautuva sovelluksen asettelu, yhteensopiva pienien ja suurien näyttöjen kanssa</caption>
+      <caption xml:lang="fa">چینش واکنشگرای برنامه،‌سازگار با صفحه‌های بزرگ و کوچک</caption>
+      <caption xml:lang="eu">Aplikazio-diseinu moldagarria, pantaila txiki zein handiekin bateragarria dena</caption>
+      <caption xml:lang="es">Diseño adaptativo, compatible con pantallas grandes y pequeñas</caption>
+      <caption xml:lang="en-GB">Responsive application layout, compatible for small and large screens</caption>
+      <caption xml:lang="de">Dynamisches Anwendungslayout, kompatibel mit kleinen und großen Bildschirmen</caption>
+      <caption xml:lang="da">Programlayoutet tilpasser sig automatisk på både små og store skærme</caption>
+      <caption xml:lang="cs">Responzivní rozvržení aplikace kompatibilní s malými a velkými obrazovkami</caption>
+      <caption xml:lang="ca">Disposició d'aplicació responsiva, compatible amb pantalles grans i petites</caption>
+      <caption xml:lang="bg">Потребителски интерфейс съвместим с малки и големи екрани</caption>
+      <caption xml:lang="be-Cyrl">Адаптыўны інтэрфейс праграмы, сумяшчальны з малымі і вялікімі экранамі</caption>
+    </screenshot>
+  </screenshots>
+  <!-- Releases -->
+  <releases>
+    <release version="5.0.0" date="2025-02-05">
+      <description>
+        <p>
+          Shortwave now supports background playback, allowing the playback to continue when you close the window. If desired, the old behaviour can be restored in the preferences.
+        </p>
+        <p>
+          The recording feature has also been completely overhauled. You can now choose from three different modes:
+        </p>
+        <ul>
+          <li>Save All Tracks: Automatically save all recorded tracks</li>
+          <li>Decide for Each Track: Temporarily record tracks and save only the ones you want</li>
+          <li>Record Nothing: Stations are played without recording</li>
+        </ul>
+        <p>
+          Additional Recording Enhancements:
+        </p>
+        <ul>
+          <li>Directory in which recorded tracks are saved can be changed</li>
+          <li>Minimum and maximum duration of recorded tracks can be configured</li>
+          <li>Tracks can already be marked to be saved during recording</li>
+          <li>Ongoing recordings can be cancelled</li>
+          <li>Improved desktop notifications, with the direct option to mark tracks to be saved</li>
+          <li>New dialog window for tracks with detailed information</li>
+        </ul>
+        <p>
+          Other Improvements:
+        </p>
+        <ul>
+          <li>Volume can now be changed via keyboard shortcuts</li>
+          <li>Fixed an issue which prevented station covers from loading in certain desktop environments</li>
+        </ul>
+      </description>
+    </release>
+    <release version="4.0.1" date="2024-10-18">
+      <description>
+        <p>
+          App metadata / branding improvements
+        </p>
+      </description>
+    </release>
+    <release version="4.0.0" date="2024-10-17">
+      <description>
+        <p>
+          General
+        </p>
+        <p xml:lang="zh-Hant-TW">一般</p>
+        <p xml:lang="zh-Hans-CN">常规</p>
+        <p xml:lang="vi">Chung</p>
+        <p xml:lang="uk">Загальні</p>
+        <p xml:lang="tr">Genel</p>
+        <p xml:lang="sv">Allmänt</p>
+        <p xml:lang="sr-Cyrl">Опште</p>
+        <p xml:lang="sl">Splošno</p>
+        <p xml:lang="sk">Všeobecné</p>
+        <p xml:lang="ru">Общие</p>
+        <p xml:lang="ro">Generale</p>
+        <p xml:lang="pt-BR">Geral</p>
+        <p xml:lang="pt">Geral</p>
+        <p xml:lang="pl">Ogólne</p>
+        <p xml:lang="oc">General</p>
+        <p xml:lang="nl">Algemeen</p>
+        <p xml:lang="ka">მთავარი</p>
+        <p xml:lang="it">Generale</p>
+        <p xml:lang="is">Almennt</p>
+        <p xml:lang="id">Umum</p>
+        <p xml:lang="ia">General</p>
+        <p xml:lang="hu">Általános</p>
+        <p xml:lang="hr">Općenito</p>
+        <p xml:lang="hi">सामान्य</p>
+        <p xml:lang="he">כללי</p>
+        <p xml:lang="gl">Xeral</p>
+        <p xml:lang="fur">Gjenerâl</p>
+        <p xml:lang="fr">Général</p>
+        <p xml:lang="fi">Yleiset</p>
+        <p xml:lang="fa">عمومی</p>
+        <p xml:lang="eu">Orokorra</p>
+        <p xml:lang="es">General</p>
+        <p xml:lang="en-GB">General</p>
+        <p xml:lang="el">Γενικά</p>
+        <p xml:lang="de">Allgemein</p>
+        <p xml:lang="da">Generelt</p>
+        <p xml:lang="cs">Obecné</p>
+        <p xml:lang="ca">General</p>
+        <p xml:lang="bg">Общи</p>
+        <p xml:lang="be-Cyrl">Агульныя</p>
+        <ul>
+          <li>New MPRIS media controls implementation with improved CPU usage</li>
+          <li>Song notifications are disabled by default now</li>
+          <li>Refreshed user interface by making use of new Libadwaita widgets</li>
+          <li>Large parts of the app were reworked, providing a solid foundation for the next upcoming features</li>
+        </ul>
+        <p>
+          Playback
+        </p>
+        <p xml:lang="zh-Hans-CN">回放</p>
+        <p xml:lang="vi">Phát lại</p>
+        <p xml:lang="uk">Відтворення</p>
+        <p xml:lang="tr">Kayıttan Yürüt</p>
+        <p xml:lang="sv">Uppspelning</p>
+        <p xml:lang="sr-Cyrl">Репродукција</p>
+        <p xml:lang="sl">Predvajanje</p>
+        <p xml:lang="ru">Воспроизведение</p>
+        <p xml:lang="ro">Redare</p>
+        <p xml:lang="pt-BR">Reprodução</p>
+        <p xml:lang="pt">Reproduzir</p>
+        <p xml:lang="pl">Odtwarzanie</p>
+        <p xml:lang="oc">Lectura</p>
+        <p xml:lang="nl">Afspelen</p>
+        <p xml:lang="ka">დაკვრა</p>
+        <p xml:lang="it">Riproduzione</p>
+        <p xml:lang="is">Afspilun</p>
+        <p xml:lang="id">Putar</p>
+        <p xml:lang="ia">Reproduction</p>
+        <p xml:lang="hu">Lejátszás</p>
+        <p xml:lang="hr">Reprodukcija</p>
+        <p xml:lang="hi">प्लेबैक</p>
+        <p xml:lang="he">ניגון</p>
+        <p xml:lang="gl">Reprodución</p>
+        <p xml:lang="fur">Riprodûs</p>
+        <p xml:lang="fr">Lecture</p>
+        <p xml:lang="fi">Toisto</p>
+        <p xml:lang="fa">پخش</p>
+        <p xml:lang="eu">Erreproduzitu</p>
+        <p xml:lang="es">Reproducción</p>
+        <p xml:lang="en-GB">Playback</p>
+        <p xml:lang="de">Wiedergabe</p>
+        <p xml:lang="da">Afspilning</p>
+        <p xml:lang="cs">Přehrávání</p>
+        <p xml:lang="ca">Reproducció</p>
+        <p xml:lang="bg">Възпроизвеждане</p>
+        <p xml:lang="be-Cyrl">Прайграванне</p>
+        <ul>
+          <li>Last station now gets restored on app launch</li>
+          <li>Redesigned player sidebar, allowing to control volume more easily</li>
+          <li>New recording indicator showing whether the current playback is being recorded</li>
+          <li>Fixed buffering issue which prevented playing new stations, especially after switching stations too fast</li>
+          <li>Fixed issues which sometimes prevented that a song gets recorded</li>
+          <li>Fixed issue that volume remains muted after unmuting</li>
+        </ul>
+        <p>
+          Library
+        </p>
+        <p xml:lang="vi">Thư viện</p>
+        <p xml:lang="ro">Bibliotecă</p>
+        <p xml:lang="pt">Biblioteca</p>
+        <p xml:lang="pl">Kolekcja</p>
+        <p xml:lang="is">Safn</p>
+        <p xml:lang="id">Pustaka</p>
+        <p xml:lang="hu">Könyvtár</p>
+        <p xml:lang="hi">लाइब्रेरी</p>
+        <p xml:lang="gl">Biblioteca</p>
+        <p xml:lang="fur">Librarie</p>
+        <p xml:lang="cs">Knihovna</p>
+        <ul>
+          <li>No more loading on startup, stations now get directly retrieved from cached data</li>
+          <li>Fixed issue which sometimes prevented loading more than 8 stations from library</li>
+        </ul>
+        <p>
+          Station Covers
+        </p>
+        <ul>
+          <li>More supported image file format for station covers</li>
+          <li>Enhanced security by loading station covers using sandboxed Glycin image library</li>
+          <li>Non square covers automatically get a blurred background</li>
+          <li>New generated fallback for stations without any cover image</li>
+          <li>Improved disk usage by automatically purging no longer needed cached data</li>
+        </ul>
+        <p>
+          Browse / Search
+        </p>
+        <ul>
+          <li>More useful station suggestions by respecting configured system language / region</li>
+          <li>Suggestions now get updated with every start, no longer always showing the same stations</li>
+          <li>More accessible search feature, no longer hidden in a subpage</li>
+          <li>Search results are no longer limited at 250 stations</li>
+          <li>Faster and more efficient search by using new grid widgets</li>
+        </ul>
+        <p>
+          Chromecast
+        </p>
+        <ul>
+          <li>Shortwave is now a registered Google Cast app, no longer relying on the generic media player</li>
+          <li>New backend which greatly improves communication stability with cast devices</li>
+          <li>Improved discovery of cast devices with lower CPU and memory usage</li>
+          <li>Now possible to change the volume of a connected cast device</li>
+        </ul>
+      </description>
+    </release>
+    <release version="3.2.0" date="2023-02-07">
+      <description>
+        <p>
+          This version includes minor improvements and bug fixes.
+        </p>
+        <ul>
+          <li>Small user interface improvements</li>
+          <li>App can now be closed with CTRL+W</li>
+          <li>Updated translations</li>
+        </ul>
+      </description>
+    </release>
+    <release version="3.1.0" date="2022-10-15">
+      <description>
+        <p>
+          This version includes minor improvements and bug fixes.
+        </p>
+        <ul>
+          <li>Small user interface improvements</li>
+          <li>Use new Adwaita about dialog</li>
+          <li>Fixed a crash when the "Music" directory is not available</li>
+          <li>Updated translations</li>
+        </ul>
+      </description>
+    </release>
+    <release version="3.0.0" date="2022-04-23">
+      <description>
+        <p>
+          Version 3.0.0 is a stable release, with the following major
+          improvements since 2.0.1:
+        </p>
+        <ul>
+          <li>Updated user interface that uses the new Adwaita design, with many improvements.</li>
+          <li>Support for the new GNOME 42 dark mode.</li>
+          <li>New option to add private stations to the library, which should not (or cannot) be available on radio-browser.info (e.g. local network or paid streams).</li>
+          <li>Display station bitrate information, which can also be used as a sorting option.</li>
+          <li>Save station data to disk so that it is still available when a station gets removed from the online database.</li>
+          <li>New button on the search page that allows to sort the search results.</li>
+          <li>Overhauled station dialog, with more clearly displayed information.</li>
+          <li>Update desktop notification on song change instead of generating a new separate notification for each song.</li>
+          <li>Shortwave can now be used normally, even if radio-browser.info is offline / unavailable.</li>
+        </ul>
+        <p>
+          Besides these improvements, this version also includes many changes
+          under the hood changes, so many crashes and other bugs have been
+          fixed. It also contains updated translations for 31 different
+          languages.
+        </p>
+      </description>
+    </release>
+    <release version="2.0.1" date="2021-04-23">
+      <description>
+        <p>
+          This version contains minor improvements and bug fixes.
+        </p>
+        <ul>
+          <li>Improve buffering to avoid audio issues for streams with a high bitrate.</li>
+          <li>Fix issue that no connection could be established when a VPN connection was active.</li>
+          <li>Automatically select search entry when the search view gets activated.</li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.0.0" date="2021-03-10">
+      <description>
+        <p>
+          Version 2.0.0 is a stable release, with the following major
+          improvements since 1.1.0:
+        </p>
+        <ul>
+          <li>Get notified about new songs via desktop notifications.</li>
+          <li>New mini player window mode. Control important features with a super compact window widget.</li>
+          <li>Redesigned station information dialog window. Added ability to copy the stream url.</li>
+          <li>Improved keyboard navigation of the user interface.</li>
+          <li>Inhibit sleep/hibernate mode during audio playback.</li>
+        </ul>
+        <p>
+          Besides these improvements, this version contains many under the hood
+          changes. The complete user interface has been updated from GTK3 to
+          GTK4. Many app components have been modernised or completely
+          rewritten. As a result, many crashes or other bugs have been fixed.
+        </p>
+        <p>
+          This version also contains updated translations for 27 different
+          languages.
+        </p>
+      </description>
+    </release>
+    <release version="1.1.1" date="2020-06-07">
+      <description>
+        <p>This version fixes a bug that caused some users not to be able to record songs.</p>
+        <p>This release also updates translations in several languages.</p>
+        <p>
+          This might be the last release with the feature to import Gradio
+          databases. The needed API server will be deactivated / no longer
+          available in August 2020.
+        </p>
+      </description>
+    </release>
+    <release version="1.1.0" date="2020-06-01">
+      <description>
+        <p>
+          Version 1.1.0 is a stable release, with the following major
+          improvements since 1.0.1:
+        </p>
+        <ul>
+          <li>Add CTRL + spacebar as shortcut to start/stop audio playback.</li>
+          <li>Add stream buffering to prevent playback stuttering.</li>
+          <li>Add featured carousel to discover page.</li>
+          <li>Add support for non pulseaudio systems / environments.</li>
+          <li>Add support for additional mouse buttons to switch between views.</li>
+          <li>Improve stability of audio/recording backend.</li>
+          <li>Fixed issue that the volume didn't get calculated correctly (linear/cubic).</li>
+          <li>Fixed issue that broken stations are getting displayed in search results.</li>
+          <li>Fixed issue with random scrolling in search page.</li>
+          <li>Fixed issues which prevented to import Gradio databases.</li>
+        </ul>
+        <p>This release also updates translations in several languages.</p>
+        <p>
+          This might be the last release with the feature to import Gradio
+          databases. The needed API server will be deactivated / no longer
+          available in August 2020.
+        </p>
+      </description>
+    </release>
+    <release version="1.0.1" date="2020-03-15">
+      <description>
+        <p>Fixes a bug that no songs can be saved.</p>
+        <p>Add Finnish translation.</p>
+      </description>
+    </release>
+    <release version="1.0.0" date="2020-03-14">
+      <description>
+        <p>First stable release.</p>
+      </description>
+    </release>
+    <release version="0.0.3" date="2020-03-08">
+      <description>
+        <p>Third beta release.</p>
+      </description>
+    </release>
+    <release version="0.0.2" date="2020-02-17">
+      <description>
+        <p>Second beta release.</p>
+      </description>
+    </release>
+    <release version="0.0.1" date="2019-11-09">
+      <description>
+        <p>First beta release.</p>
+      </description>
+    </release>
+  </releases>
+</component>

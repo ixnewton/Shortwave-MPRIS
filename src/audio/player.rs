@@ -544,10 +544,9 @@ impl SwPlayer {
                 .await
                 .handle_error("Unable to load Google Cast media");
 
-            // Load media on DLNA sender if DLNA device is available (no connection needed)
-            if self.device().is_some() && self.device().unwrap().kind() == SwDeviceKind::Dlna {
-                info!("PLAYER: DLNA device available - loading media");
-                self.dlna_sender()
+            // Handle DLNA device loading
+            if let Some(dlna_sender) = self.imp().dlna_sender.get() {
+                dlna_sender
                     .load_media(
                         url.as_ref(),
                         &station
@@ -563,6 +562,10 @@ impl SwPlayer {
             }
         } else {
             error!("Station cannot be streamed. URL is not valid.");
+            // Set player state to failure when no valid URL is available
+            if let Some(sender) = imp.gst_sender.get() {
+                let _ = sender.send_blocking(GstreamerChange::Failure(i18n("Station cannot be streamed. URL is not valid.")));
+            }
         }
     }
 
