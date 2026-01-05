@@ -28,6 +28,7 @@ use crate::api::StationMetadata;
 use crate::api::SwStation;
 use crate::ui::SwStationCover;
 use crate::SwApplication;
+use crate::i18n::i18n;
 
 mod imp {
     use super::*;
@@ -72,6 +73,20 @@ mod imp {
     impl ObjectImpl for SwStationRow {
         fn constructed(&self) {
             self.parent_constructed();
+
+            // Connect to player state changes to update play button icon
+            let player = SwApplication::default().player();
+            player.connect_state_notify(clone!(
+                #[weak(rename_to = imp)]
+                self,
+                move |_| imp.update_play_button_icon()
+            ));
+            
+            player.connect_station_notify(clone!(
+                #[weak(rename_to = imp)]
+                self,
+                move |_| imp.update_play_button_icon()
+            ));
 
             self.play_button.connect_clicked(clone!(
                 #[weak(rename_to = obj)]
@@ -122,6 +137,9 @@ mod imp {
             }
 
             *self.station.borrow_mut() = station.cloned();
+            
+            // Update play button icon when station changes
+            self.update_play_button_icon();
         }
 
         fn set_metadata(&self, metadata: StationMetadata) {
@@ -136,6 +154,32 @@ mod imp {
 
             self.subtitle_label.set_text(&subtitle);
             self.subtitle_label.set_visible(!subtitle.is_empty());
+        }
+        
+        fn update_play_button_icon(&self) {
+            let player = SwApplication::default().player();
+            let current_station = player.station();
+            let current_state = player.state();
+            
+            if let Some(station) = self.station.borrow().as_ref() {
+                if let Some(ref current_station) = current_station {
+                    // Check if this is the currently playing station
+                    if current_station.uuid() == station.uuid() 
+                        && current_state == crate::audio::SwPlaybackState::Playing {
+                        // Show stop icon for currently playing station
+                        self.play_button.set_icon_name("media-playback-stop-symbolic");
+                        self.play_button.set_tooltip_text(Some(&i18n("Stop")));
+                    } else {
+                        // Show play icon for non-playing stations
+                        self.play_button.set_icon_name("media-playback-start-symbolic");
+                        self.play_button.set_tooltip_text(Some(&i18n("Play")));
+                    }
+                } else {
+                    // No station currently playing, show play icon
+                    self.play_button.set_icon_name("media-playback-start-symbolic");
+                    self.play_button.set_tooltip_text(Some(&i18n("Play")));
+                }
+            }
         }
     }
 }
