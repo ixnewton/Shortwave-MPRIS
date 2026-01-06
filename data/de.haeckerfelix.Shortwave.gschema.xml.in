@@ -17,7 +17,7 @@
       <default>10</default>
     </key>
     <key name="playback-volume" type="d">
-      <default>1.0</default>
+      <default>0.7</default>
     </key>
     <key name="recording-maximum-duration" type="i">
       <default>900</default>

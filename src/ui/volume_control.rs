@@ -39,7 +39,7 @@ mod imp {
         #[template_child]
         volume_high_image: TemplateChild<gtk::Image>,
 
-        #[property(get=Self::volume, set=Self::set_volume, minimum = 0.0, maximum = 1.0, default = 1.0)]
+        #[property(get=Self::volume, set=Self::set_volume, minimum = 0.0, maximum = 1.0)]
         volume: PhantomData<f64>,
         #[property(get, set=Self::set_toggle_mute)]
         toggle_mute: Cell<bool>,
@@ -85,7 +85,6 @@ mod imp {
                 .lower(0.0)
                 .upper(1.0)
                 .step_increment(0.05)
-                .value(1.0)
                 .build();
             self.volume_scale.set_adjustment(&adj);
 

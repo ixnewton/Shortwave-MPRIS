@@ -16,8 +16,7 @@
 
 use std::cell::{Cell, RefCell};
 use std::error::Error;
-use std::io::Write;
-use std::sync::Arc;
+use std::net;
 use std::thread;
 use std::thread::JoinHandle;
 use std::time::Duration;
@@ -27,8 +26,25 @@ use glib::subclass::prelude::*;
 use glib::Properties;
 use gtk::glib;
 use log::{debug, error, info, warn};
-use reqwest::blocking::Client;
 use url::Url;
+
+// Helper function to get local IP address that can reach the DLNA device
+fn get_local_ip_for_device(device_url: &str) -> Result<String, Box<dyn Error>> {
+    // Parse device URL to get device IP
+    let parsed_url = Url::parse(device_url)?;
+    let device_ip = parsed_url.host_str().ok_or("Invalid device URL")?;
+    
+    // Create a UDP socket to determine the best local interface
+    let socket = std::net::UdpSocket::bind("0.0.0.0:0")?;
+    socket.connect(format!("{}:80", device_ip))?;
+    
+    // Get the local address that would be used to connect to the device
+    let local_addr = socket.local_addr()?;
+    let local_ip = local_addr.ip().to_string();
+    
+    info!("DLNA: Detected local IP {} for device at {}", local_ip, device_ip);
+    Ok(local_ip)
+}
 
 // Helper function to send SOAP actions to DLNA devices
 fn soap_action(control_url: &str, service_type: &str, action: &str, body: &str) -> Result<String, Box<dyn Error>> {
@@ -297,8 +313,13 @@ impl SwDlnaSender {
         
         // Extract local IP from device URL (if available)
         let local_ip = if let Some(device_url) = imp.device.borrow().as_ref() {
-            let parsed_url = Url::parse(device_url)?;
-            parsed_url.host_str().unwrap_or("127.0.0.1").to_string()
+            match get_local_ip_for_device(device_url) {
+                Ok(ip) => ip,
+                Err(e) => {
+                    warn!("DLNA: Failed to detect local IP for FFmpeg: {}, using fallback", e);
+                    "127.0.0.1".to_string()
+                }
+            }
         } else {
             "127.0.0.1".to_string()
         };
@@ -541,7 +562,7 @@ impl SwDlnaSender {
         self.notify_title();
 
         // Start FFmpeg streaming server for external stream
-        if stream_url.starts_with("http") && !stream_url.contains("192.168.2.101") {
+        if stream_url.starts_with("http") {
             info!("DLNA: === STARTING DLNA PLAYBACK SEQUENCE ===");
             info!("DLNA: External stream detected: {}", stream_url);
             info!("DLNA: Step 1: Load URL to DLNA device");
@@ -559,8 +580,13 @@ impl SwDlnaSender {
             // Step 1: Load the URL to DLNA device first
             let imp = self.imp();
             let local_ip = if let Some(device_url) = imp.device.borrow().as_ref() {
-                let parsed_url = Url::parse(device_url)?;
-                parsed_url.host_str().unwrap_or("127.0.0.1").to_string()
+                match get_local_ip_for_device(device_url) {
+                    Ok(ip) => ip,
+                    Err(e) => {
+                        warn!("DLNA: Failed to detect local IP: {}, using fallback", e);
+                        "127.0.0.1".to_string()
+                    }
+                }
             } else {
                 "127.0.0.1".to_string()
             };
@@ -574,13 +600,13 @@ impl SwDlnaSender {
                 // Create metadata using actual station title from Shortwave's radio data
                 let escaped_title = title.replace('&', "&amp;").replace('<', "&lt;").replace('>', "&gt;");
                 let metadata = format!(
-                    "&lt;DIDL-Lite xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:upnp=\"urn:schemas-upnp-org:metadata-1-0/upnp/\" xmlns=\"urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/\"&gt;&lt;item id=\"0\" parentID=\"-1\" restricted=\"0\"&gt;&lt;dc:title&gt;{} *LIVE&lt;/dc:title&gt;&lt;upnp:class&gt;object.item.audioItem.musicTrack&lt;/upnp:class&gt;&lt;res protocolInfo=\"http-get:*:audio/mpeg:*\"&gt;http://192.168.2.101:8080/stream.mp3&lt;/res&gt;&lt;/item&gt;&lt;/DIDL-Lite&gt;",
-                    escaped_title
+                    "&lt;DIDL-Lite xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:upnp=\"urn:schemas-upnp-org:metadata-1-0/upnp/\" xmlns=\"urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/\"&gt;&lt;item id=\"0\" parentID=\"-1\" restricted=\"0\"&gt;&lt;dc:title&gt;{} *LIVE&lt;/dc:title&gt;&lt;upnp:class&gt;object.item.audioItem.musicTrack&lt;/upnp:class&gt;&lt;res protocolInfo=\"http-get:*:audio/mpeg:*\"&gt;{}&lt;/res&gt;&lt;/item&gt;&lt;/DIDL-Lite&gt;",
+                    escaped_title, ffmpeg_url
                 );
                 
                 let body = format!(
-                    "<InstanceID>0</InstanceID><CurrentURI>http://192.168.2.101:8080/stream.mp3</CurrentURI><CurrentURIMetaData>{}</CurrentURIMetaData>",
-                    metadata
+                    "<InstanceID>0</InstanceID><CurrentURI>{}</CurrentURI><CurrentURIMetaData>{}</CurrentURIMetaData>",
+                    ffmpeg_url, metadata
                 );
 
                 info!("DLNA: Step 1 - Sending SetAVTransportURI with FFmpeg URL: {}", ffmpeg_url);
@@ -898,28 +924,31 @@ impl SwDlnaSender {
     pub fn update_track_metadata(&self, new_title: &str) -> Result<(), Box<dyn Error>> {
         info!("DLNA: Updating track metadata to: {}", new_title);
         
-        // Get device URL from stored stream URL (extract device IP)
-        if let Some(stream_url) = self.stream_url().strip_prefix("http://") {
-            if let Some(device_ip) = stream_url.split(':').next() {
-                let device_url = format!("http://{}:49152/description.xml", device_ip);
-                
-                if let Ok((av_url, _)) = fetch_device_services(&device_url) {
-                    // Create metadata with new track title
-                    let escaped_title = new_title.replace('&', "&amp;").replace('<', "&lt;").replace('>', "&gt;");
-                    let metadata = format!(
-                        r#"<DIDL-Lite xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/" xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/">
+        // Use the stored local IP and port for the streaming URL
+        let local_ip = self.imp().local_ip.borrow().clone();
+        let port = self.imp().ffmpeg_port.get();
+        let streaming_url = format!("http://{}:{}/stream.mp3", local_ip, port);
+        
+        // Get device URL from stored device information
+        if let Some(device_url) = self.imp().device.borrow().as_ref() {
+            if let Ok((av_url, _)) = fetch_device_services(device_url) {
+                // Create metadata with new track title
+                let escaped_title = new_title.replace('&', "&amp;").replace('<', "&lt;").replace('>', "&gt;");
+                let metadata = format!(
+                    r#"<DIDL-Lite xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/" xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/">
 <item id="0" parentID="-1" restricted="0">
 <dc:title>{}</dc:title>
 <upnp:class>object.item.audioItem.musicTrack</upnp:class>
-<res protocolInfo="http-get:*:audio/mpeg:*">http://192.168.2.101:8080/stream.mp3</res>
+<res protocolInfo="http-get:*:audio/mpeg:*">{}</res>
 </item>
-</DIDL-Lite>"#, escaped_title
-                    );
-                    
-                    let body = format!(
-                        "<InstanceID>0</InstanceID><NextURI>http://192.168.2.101:8080/stream.mp3</NextURI><NextURIMetaData>{}</NextURIMetaData>",
-                        metadata
-                    );
+</DIDL-Lite>"#, 
+                    escaped_title, streaming_url
+                );
+                
+                let body = format!(
+                    "<InstanceID>0</InstanceID><NextURI>{}</NextURI><NextURIMetaData>{}</NextURIMetaData>",
+                    streaming_url, metadata
+                );
                     
                     info!("DLNA: === SENDING SETNEXTAVTRANSPORTURI REQUEST ===");
                     info!("DLNA: NextURIMetaData: {}", metadata);
@@ -928,14 +957,11 @@ impl SwDlnaSender {
                     
                     soap_action(&av_url, "urn:schemas-upnp-org:service:AVTransport:1", "SetNextAVTransportURI", &body)?;
                     info!("DLNA: ✅ SetNextAVTransportURI sent successfully - metadata updated");
-                } else {
-                    warn!("DLNA: Cannot update metadata - failed to fetch device services");
-                }
             } else {
-                warn!("DLNA: Cannot update metadata - invalid stream URL format");
+                warn!("DLNA: Cannot update metadata - failed to fetch device services");
             }
         } else {
-            warn!("DLNA: Cannot update metadata - no stream URL available");
+            warn!("DLNA: Cannot update metadata - no device URL available");
         }
         
         Ok(())

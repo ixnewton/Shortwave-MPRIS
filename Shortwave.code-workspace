@@ -2,6 +2,9 @@
 	"folders": [
 		{
 			"path": "."
+		},
+		{
+			"path": "../radio_proxy_fs22"
 		}
 	],
 	"settings": {}

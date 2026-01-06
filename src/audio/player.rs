@@ -503,7 +503,11 @@ impl SwPlayer {
     }
 
     pub async fn set_station(&self, station: SwStation) {
-        debug!("Set station: {}", station.title());
+        self.set_station_with_playback(station, true).await;
+    }
+
+    pub async fn set_station_with_playback(&self, station: SwStation, start_playback: bool) {
+        debug!("Set station: {} (start_playback: {})", station.title(), start_playback);
         let imp = self.imp();
 
         *imp.station.borrow_mut() = Some(station.clone());
@@ -528,13 +532,22 @@ impl SwPlayer {
                     .borrow_mut()
                     .set_source_uri(url.as_ref());
                 
-                // Start playback immediately after setting the URI
-                info!("PLAYER: Starting playback immediately after setting URI");
-                imp.backend
-                    .get()
-                    .unwrap()
-                    .borrow_mut()
-                    .set_state(gstreamer::State::Playing);
+                // Reapply volume after setting URI to ensure it's properly set in the audio system
+                let current_volume = self.volume();
+                info!("PLAYER: Reapplying volume {} after setting URI", current_volume);
+                imp.backend.get().unwrap().borrow().set_volume(current_volume);
+                
+                // Start playback immediately after setting the URI if requested
+                if start_playback {
+                    info!("PLAYER: Starting playback immediately after setting URI");
+                    imp.backend
+                        .get()
+                        .unwrap()
+                        .borrow_mut()
+                        .set_state(gstreamer::State::Playing);
+                } else {
+                    info!("PLAYER: Not starting playback - only loading station");
+                }
             } else {
                 info!("PLAYER: Remote device selected - disabling local audio to prevent double playback");
             }
@@ -623,7 +636,8 @@ impl SwPlayer {
             // Load media first, then start playback
             if let Some(station) = self.station() {
                 if let Some(url) = station.stream_url() {
-                    self.dlna_sender()
+                    // load_media() handles the complete DLNA sequence: SetAVTransportURI + Play + FFmpeg
+                    if let Err(e) = self.dlna_sender()
                         .load_media(
                             url.as_ref(),
                             &station
@@ -633,12 +647,10 @@ impl SwPlayer {
                                 .unwrap_or_default(),
                             &station.title(),
                         )
-                        .handle_error("Unable to load DLNA media");
-                        
-                    // Start DLNA playback and set state to Playing
-                    self.dlna_sender()
-                        .start_playback()
-                        .handle_error("Unable to start DLNA playback");
+                    {
+                        error!("PLAYER: Failed to load DLNA media: {}", e);
+                        return;
+                    }
                     
                     // Manually set player state to Playing since we skip GStreamer
                     info!("PLAYER: Setting DLNA playback state to Playing");
@@ -718,10 +730,30 @@ impl SwPlayer {
     pub fn restore_state(&self) {
         let imp = self.imp();
 
-        // Restore volume
+        // Restore volume with a small delay to ensure UI bindings are ready
         let volume = settings_manager::double(Key::PlaybackVolume);
+        debug!("PLAYER: Restoring volume from settings: {}", volume);
+        
+        // Apply volume immediately
         imp.set_volume(volume);
+        debug!("PLAYER: Volume set to: {}", self.volume());
         self.notify_volume();
+        
+        // Also ensure volume is applied after UI is ready
+        glib::spawn_future_local(clone!(
+            #[weak(rename_to = obj)]
+            self,
+            #[weak(rename_to = imp)]
+            imp,
+            #[strong]
+            volume,
+            async move {
+                glib::timeout_future(std::time::Duration::from_millis(100)).await;
+                debug!("PLAYER: Reapplying volume after UI delay: {}", volume);
+                imp.set_volume(volume);
+                obj.notify_volume();
+            }
+        ));
 
         // Restore last played station
         let json = settings_manager::string(Key::PlaybackLastStation);
@@ -753,7 +785,7 @@ impl SwPlayer {
                     #[weak]
                     station,
                     async move {
-                        obj.set_station(station).await;
+                        obj.set_station_with_playback(station, false).await;
                     }
                 ));
             }
@@ -770,11 +802,18 @@ impl SwPlayer {
                     .map_err(|e| Box::new(e) as Box<dyn std::error::Error>)
             }
             SwDeviceKind::Dlna => {
-                // For DLNA, NO connection needed at all - just store device
-                info!("PLAYER: Storing DLNA device - no connection required");
-                // Store device URL in DLNA sender for later use
-                self.dlna_sender().imp().device.borrow_mut().replace(device.address().clone());
-                Ok(()) // Always succeed for DLNA
+                // For DLNA, connect to fetch service URLs but don't start playback yet
+                info!("PLAYER: Connecting to DLNA device to fetch service URLs");
+                match self.dlna_sender().connect(&device.address()) {
+                    Ok(_) => {
+                        info!("PLAYER: DLNA device connected successfully - service URLs fetched");
+                        Ok(())
+                    }
+                    Err(e) => {
+                        error!("PLAYER: Failed to connect to DLNA device: {}", e);
+                        Err(e)
+                    }
+                }
             }
         };
 
