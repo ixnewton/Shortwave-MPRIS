@@ -527,6 +527,14 @@ impl SwPlayer {
                     .unwrap()
                     .borrow_mut()
                     .set_source_uri(url.as_ref());
+                
+                // Start playback immediately after setting the URI
+                info!("PLAYER: Starting playback immediately after setting URI");
+                imp.backend
+                    .get()
+                    .unwrap()
+                    .borrow_mut()
+                    .set_state(gstreamer::State::Playing);
             } else {
                 info!("PLAYER: Remote device selected - disabling local audio to prevent double playback");
             }

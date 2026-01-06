@@ -110,7 +110,6 @@ mod imp {
                                 
                                 // Different station or no station currently selected
                                 player.set_station(station).await;
-                                player.start_playback().await;
                             }
                         }
                     ));
