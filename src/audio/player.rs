@@ -510,6 +510,30 @@ impl SwPlayer {
         debug!("Set station: {} (start_playback: {})", station.title(), start_playback);
         let imp = self.imp();
 
+        // Check Chromecast compatibility BEFORE updating station metadata
+        if let Some(url) = station.stream_url() {
+            let url_str = url.to_string();
+            
+            // Check Chromecast compatibility if a cast device is connected
+            if let Some(device) = self.device() {
+                if device.kind() == SwDeviceKind::Cast {
+                    // Check for incompatible formats
+                    if url_str.contains(".m3u8") || url_str.contains("/live/") || url_str.contains("playlist") {
+                        warn!("PLAYER: New station incompatible with Chromecast - showing error but keeping current stream");
+                        
+                        // Show error notification to user but don't change station
+                        if let Some(sender) = imp.gst_sender.get() {
+                            let _ = sender.send_blocking(GstreamerChange::Failure("Radio stream incompatible with cast device!".to_string()));
+                        }
+                        
+                        // Don't update station or stop playback - keep current Chromecast stream playing
+                        return;
+                    }
+                }
+            }
+        }
+
+        // If we get here, the station is compatible or no Chromecast is connected
         *imp.station.borrow_mut() = Some(station.clone());
         self.notify_station();
         self.notify_has_station();
@@ -794,6 +818,30 @@ impl SwPlayer {
     }
 
     pub async fn connect_device(&self, device: &SwDevice) -> Result<(), Box<dyn std::error::Error>> {
+        // Check Chromecast compatibility before connecting
+        if device.kind() == SwDeviceKind::Cast {
+            if let Some(station) = self.station() {
+                if let Some(url) = station.stream_url() {
+                    let url_str = url.to_string();
+                    
+                    // Check for incompatible formats
+                    if url_str.contains(".m3u8") || url_str.contains("/live/") || url_str.contains("playlist") {
+                        let error_msg = "Radio stream incompatible with cast device!";
+                        warn!("PLAYER: Chromecast compatibility check failed: {}", error_msg);
+                        return Err(error_msg.into());
+                    }
+                } else {
+                    let error_msg = "No stream URL available for cast device!";
+                    warn!("PLAYER: Chromecast compatibility check failed: {}", error_msg);
+                    return Err(error_msg.into());
+                }
+            } else {
+                let error_msg = "Please select a radio station before connecting to cast device!";
+                warn!("PLAYER: Chromecast compatibility check failed: {}", error_msg);
+                return Err(error_msg.into());
+            }
+        }
+
         let result = match device.kind() {
             SwDeviceKind::Cast => {
                 self.cast_sender()
@@ -822,15 +870,56 @@ impl SwPlayer {
             self.notify_has_device();
             self.notify_device();
 
+            // If something is already playing locally, start playback on the device immediately
             if self.state() == SwPlaybackState::Playing || self.state() == SwPlaybackState::Loading
             {
+                // Stop local GStreamer audio first to ensure clean transition
+                info!("PLAYER: Stopping local audio playback");
+                self.imp()
+                    .backend
+                    .get()
+                    .unwrap()
+                    .borrow_mut()
+                    .set_state(gstreamer::State::Null);
+
                 match device.kind() {
                     SwDeviceKind::Cast => {
+                        info!("PLAYER: Starting Cast playback - stopping local audio");
                         self.cast_sender().start_playback().await?;
                     }
                     SwDeviceKind::Dlna => {
-                        // For DLNA, don't start playback here - wait for play button
-                        info!("PLAYER: DLNA device stored - playback will start when play button pressed");
+                        info!("PLAYER: Starting DLNA playback - stopping local audio");
+                        // Load media and start playback on DLNA device immediately
+                        if let Some(station) = self.station() {
+                            if let Some(url) = station.stream_url() {
+                                if let Err(e) = self.dlna_sender()
+                                    .load_media(
+                                        url.as_ref(),
+                                        &station
+                                            .metadata()
+                                            .favicon
+                                            .map(|u| u.to_string())
+                                            .unwrap_or_default(),
+                                        &station.title(),
+                                    )
+                                {
+                                    error!("PLAYER: Failed to load DLNA media: {}", e);
+                                    return Err(e);
+                                }
+                                
+                                // Start DLNA playback and set state to Playing
+                                if let Err(e) = self.dlna_sender().start_playback() {
+                                    error!("PLAYER: Failed to start DLNA playback: {}", e);
+                                    return Err(e);
+                                }
+                                
+                                // Manually set player state to Playing since we skip GStreamer
+                                info!("PLAYER: Setting DLNA playback state to Playing");
+                                if let Some(sender) = self.imp().gst_sender.get() {
+                                    let _ = sender.send_blocking(GstreamerChange::PlaybackState(SwPlaybackState::Playing));
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -841,16 +930,43 @@ impl SwPlayer {
 
     pub async fn disconnect_device(&self) {
         if let Some(device) = self.device() {
+            info!("PLAYER: Disconnecting device: {:?}", device.kind());
+            
+            // Stop playback on the device first
             match device.kind() {
-                SwDeviceKind::Cast => self.cast_sender().disconnect().await,
-                SwDeviceKind::Dlna => self.dlna_sender().disconnect(),
+                SwDeviceKind::Cast => {
+                    info!("PLAYER: Stopping Cast playback");
+                    self.cast_sender()
+                        .stop_playback()
+                        .await
+                        .handle_error("Unable to stop Google Cast playback");
+                    
+                    info!("PLAYER: Disconnecting Cast device");
+                    self.cast_sender().disconnect().await;
+                }
+                SwDeviceKind::Dlna => {
+                    info!("PLAYER: Stopping DLNA playback and FFmpeg proxy");
+                    if let Err(e) = self.dlna_sender().stop_playback() {
+                        warn!("PLAYER: Failed to stop DLNA playback: {}", e);
+                    }
+                    
+                    info!("PLAYER: Disconnecting DLNA device");
+                    self.dlna_sender().disconnect();
+                }
             };
 
+            // Clear the device reference
             *self.imp().device.borrow_mut() = None;
             self.notify_has_device();
             self.notify_device();
 
-            // Restore previous gstreamer volume
+            // Reset player state to Stopped to allow local playback
+            info!("PLAYER: Resetting player state for local playback");
+            if let Some(sender) = self.imp().gst_sender.get() {
+                let _ = sender.send_blocking(GstreamerChange::PlaybackState(SwPlaybackState::Stopped));
+            }
+
+            // Restore previous gstreamer volume for local playback
             let volume = {
                 let backend = self.imp().backend.get().unwrap().borrow_mut();
                 backend.set_mute(false);
@@ -858,6 +974,8 @@ impl SwPlayer {
             };
             debug!("Restore previous volume: {}", volume);
             self.set_volume(volume);
+            
+            info!("PLAYER: Device disconnected - ready for local playback");
         }
     }
 
