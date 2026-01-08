@@ -595,103 +595,121 @@ impl SwPlayer {
             return;
         }
 
-        // Check if we have a device connected - if so, play to device, otherwise local audio
-        if let Some(device) = self.device() {
-            match device.kind() {
-                SwDeviceKind::Cast => {
-                    info!("PLAYER: Starting Google Cast playback");
-                    self.cast_sender()
-                        .start_playback()
-                        .await
-                        .handle_error("Unable to start Google Cast playback");
-                    
-                    if let Some(sender) = self.imp().gst_sender.get() {
-                        info!("PLAYER: Setting Chromecast playback state to Playing");
-                        let _ = sender.send_blocking(GstreamerChange::PlaybackState(SwPlaybackState::Playing));
-                    }
-                }
-                SwDeviceKind::Dlna => {
-                    info!("PLAYER: Starting DLNA playback with FFmpeg proxy");
-                    
-                    // Load media first, then start playback
-                    if let Some(station) = self.station() {
-                        if let Some(url) = station.stream_url() {
-                            // load_media() handles the complete DLNA sequence: SetAVTransportURI + Play + FFmpeg
-                            if let Err(e) = self.dlna_sender()
-                                .load_media(
-                                    url.as_ref(),
-                                    &station
-                                        .metadata()
-                                        .favicon
-                                        .map(|u| u.to_string())
-                                        .unwrap_or_default(),
-                                    &station.title(),
-                                )
-                            {
-                                error!("PLAYER: Failed to load DLNA media: {}", e);
-                                return;
-                            }
-                            
-                            // Manually set player state to Playing since we skip GStreamer
-                            info!("PLAYER: Setting DLNA playback state to Playing");
-                            if let Some(sender) = self.imp().gst_sender.get() {
-                                let _ = sender.send_blocking(GstreamerChange::PlaybackState(SwPlaybackState::Playing));
-                            }
-                        }
-                    }
-                }
-            }
-        } else {
-            // No device selected - default to local audio
-            info!("PLAYER: No device selected - using local audio (default)");
+        // Only start local GStreamer playback if no remote device is selected
+        if self.device().is_none() {
+            info!("PLAYER: Starting local GStreamer playback");
             self.imp()
                 .backend
                 .get()
                 .unwrap()
                 .borrow_mut()
                 .set_state(gstreamer::State::Playing);
+        } else {
+            info!("PLAYER: Remote device active - skipping local GStreamer playback");
+        }
+
+        self.cast_sender()
+            .start_playback()
+            .await
+            .handle_error("Unable to start Google Cast playback");
+
+        // Handle remote device state transitions
+        if let Some(device) = self.device() {
+            if let Some(sender) = self.imp().gst_sender.get() {
+                match device.kind() {
+                    SwDeviceKind::Cast => {
+                        info!("PLAYER: Setting Chromecast playback state to Playing");
+                        let _ = sender.send_blocking(GstreamerChange::PlaybackState(SwPlaybackState::Playing));
+                    }
+                    SwDeviceKind::Dlna => {
+                        // DLNA is handled below with media loading
+                    }
+                    _ => {}
+                }
+            }
+        }
+
+        // Start DLNA playback if DLNA device is available
+        if self.device().is_some() && self.device().unwrap().kind() == SwDeviceKind::Dlna {
+            info!("PLAYER: Starting DLNA playback");
+            
+            // Load media first, then start playback
+            if let Some(station) = self.station() {
+                if let Some(url) = station.stream_url() {
+                    // load_media() handles the complete DLNA sequence: SetAVTransportURI + Play + FFmpeg
+                    if let Err(e) = self.dlna_sender()
+                        .load_media(
+                            url.as_ref(),
+                            &station
+                                .metadata()
+                                .favicon
+                                .map(|u| u.to_string())
+                                .unwrap_or_default(),
+                            &station.title(),
+                        )
+                    {
+                        error!("PLAYER: Failed to load DLNA media: {}", e);
+                        return;
+                    }
+                    
+                    // Manually set player state to Playing since we skip GStreamer
+                    info!("PLAYER: Setting DLNA playback state to Playing");
+                    if let Some(sender) = self.imp().gst_sender.get() {
+                        let _ = sender.send_blocking(GstreamerChange::PlaybackState(SwPlaybackState::Playing));
+                    }
+                }
+            }
         }
     }
 
     pub async fn stop_playback(&self) {
-        info!("PLAYER: stop_playback() called - stopping current output");
+        println!("=== STOP BUTTON PRESSED ===");
+        info!("PLAYER: stop_playback() called - checking device type");
         let imp = self.imp();
+
+        // Save device info before stopping to prevent it from being cleared
+        let device_before_stop = self.device().clone();
+        let device_kind_before_stop = device_before_stop.as_ref().map(|d| d.kind());
+        info!("PLAYER: Device before stop: {:?}", device_kind_before_stop);
 
         // Discard recorded data when the stream stops
         imp.stop_recording(imp::RecordingStopReason::StoppedPlayback);
         imp.reset_track();
 
-        // Only stop the output that is currently active
-        if let Some(device) = self.device() {
-            // We have a device connected, so stop device playback
-            match device.kind() {
-                SwDeviceKind::Cast => {
-                    info!("PLAYER: Stopping Google Cast playback");
-                    let _ = self.cast_sender().stop_playback().await;
-                }
-                SwDeviceKind::Dlna => {
-                    info!("PLAYER: Stopping DLNA playback and FFmpeg proxy");
-                    self.dlna_sender()
-                        .stop_playback()
-                        .handle_error("Unable to stop DLNA playback");
-                }
+        imp.backend
+            .get()
+            .unwrap()
+            .borrow_mut()
+            .set_state(gstreamer::State::Null);
+
+        self.cast_sender()
+            .stop_playback()
+            .await
+            .handle_error("Unable to stop Google Cast playback");
+
+        // Stop DLNA playback if DLNA device is available
+        let device_kind = self.device().map(|d| d.kind());
+        info!("PLAYER: Device kind after state change: {:?}", device_kind);
+        
+        // Use the saved device info if device was cleared
+        let final_device = if self.device().is_none() {
+            device_before_stop
+        } else {
+            self.device()
+        };
+        
+        if let Some(device) = final_device {
+            if device.kind() == SwDeviceKind::Dlna {
+                info!("PLAYER: Stopping DLNA playback");
+                self.dlna_sender()
+                    .stop_playback()
+                    .handle_error("Unable to stop DLNA playback");
+            } else {
+                info!("PLAYER: Not stopping DLNA - device is not DLNA kind: {:?}", device.kind());
             }
         } else {
-            // No device connected, so stop local GStreamer playback
-            info!("PLAYER: Stopping local GStreamer playback");
-            imp.backend
-                .get()
-                .unwrap()
-                .borrow_mut()
-                .set_state(gstreamer::State::Null);
+            info!("PLAYER: Not stopping DLNA - no device available");
         }
-
-        // Set player state to stopped
-        if let Some(sender) = imp.gst_sender.get() {
-            let _ = sender.send_blocking(GstreamerChange::PlaybackState(SwPlaybackState::Stopped));
-        }
-        
-        info!("PLAYER: Playback stopped successfully");
     }
 
     pub async fn toggle_playback(&self) {
@@ -776,12 +794,6 @@ impl SwPlayer {
     }
 
     pub async fn connect_device(&self, device: &SwDevice) -> Result<(), Box<dyn std::error::Error>> {
-        // Stop any current playback before connecting to new device
-        if self.state() == SwPlaybackState::Playing || self.state() == SwPlaybackState::Loading {
-            info!("PLAYER: Stopping current playback before connecting to new device");
-            self.stop_playback().await;
-        }
-
         let result = match device.kind() {
             SwDeviceKind::Cast => {
                 self.cast_sender()
@@ -810,12 +822,17 @@ impl SwPlayer {
             self.notify_has_device();
             self.notify_device();
 
-            // If we have a station loaded, start playback on the newly connected device
-            if self.station().is_some() && (self.state() == SwPlaybackState::Stopped || self.state() == SwPlaybackState::Failure) {
-                info!("PLAYER: Device connected - starting playback on device");
-                self.start_playback().await;
-            } else {
-                info!("PLAYER: Device connected - playback will start when station is selected");
+            if self.state() == SwPlaybackState::Playing || self.state() == SwPlaybackState::Loading
+            {
+                match device.kind() {
+                    SwDeviceKind::Cast => {
+                        self.cast_sender().start_playback().await?;
+                    }
+                    SwDeviceKind::Dlna => {
+                        // For DLNA, don't start playback here - wait for play button
+                        info!("PLAYER: DLNA device stored - playback will start when play button pressed");
+                    }
+                }
             }
         }
 
@@ -824,22 +841,6 @@ impl SwPlayer {
 
     pub async fn disconnect_device(&self) {
         if let Some(device) = self.device() {
-            // Stop playback on the device before disconnecting
-            if self.state() == SwPlaybackState::Playing || self.state() == SwPlaybackState::Loading {
-                info!("PLAYER: Stopping playback before disconnecting device");
-                match device.kind() {
-                    SwDeviceKind::Cast => {
-                        let _ = self.cast_sender().stop_playback().await;
-                    }
-                    SwDeviceKind::Dlna => {
-                        // Stop DLNA device and FFmpeg proxy
-                        if let Err(e) = self.dlna_sender().stop_playback() {
-                            warn!("PLAYER: Failed to stop DLNA playback: {}", e);
-                        }
-                    }
-                }
-            }
-
             match device.kind() {
                 SwDeviceKind::Cast => self.cast_sender().disconnect().await,
                 SwDeviceKind::Dlna => self.dlna_sender().disconnect(),
@@ -857,8 +858,6 @@ impl SwPlayer {
             };
             debug!("Restore previous volume: {}", volume);
             self.set_volume(volume);
-            
-            info!("PLAYER: Device disconnected successfully");
         }
     }
 
