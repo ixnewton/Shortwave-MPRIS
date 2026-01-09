@@ -619,9 +619,14 @@ impl SwPlayer {
             return;
         }
 
+        // Ensure saved volume is applied before starting playback
+        let saved_volume = settings_manager::double(Key::PlaybackVolume);
+        info!("PLAYER: Restoring saved volume {} before starting playback", saved_volume);
+        self.set_volume(saved_volume);
+
         // Only start local GStreamer playback if no remote device is selected
         if self.device().is_none() {
-            info!("PLAYER: Starting local GStreamer playback");
+            info!("PLAYER: Starting local GStreamer playback with volume {}", saved_volume);
             self.imp()
                 .backend
                 .get()
@@ -655,7 +660,12 @@ impl SwPlayer {
 
         // Start DLNA playback if DLNA device is available
         if self.device().is_some() && self.device().unwrap().kind() == SwDeviceKind::Dlna {
-            info!("PLAYER: Starting DLNA playback");
+            info!("PLAYER: Starting DLNA playback with volume {}", saved_volume);
+            
+            // Apply saved volume to DLNA device
+            if let Err(e) = self.dlna_sender().set_volume_dlna(saved_volume) {
+                warn!("PLAYER: Failed to set DLNA volume: {}", e);
+            }
             
             // Load media first, then start playback
             if let Some(station) = self.station() {
