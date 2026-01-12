@@ -226,9 +226,21 @@ mod imp {
                 debug!("Set volume: {}", &volume);
                 self.volume.set(volume);
 
+                // Determine which volume key to use based on device type
+                let volume_key = if self.obj().device().is_none() {
+                    Key::PlaybackVolumeLocal
+                } else if let Some(device) = self.obj().device() {
+                    match device.kind() {
+                        SwDeviceKind::Cast => Key::PlaybackVolumeCast,
+                        SwDeviceKind::Dlna => Key::PlaybackVolumeDlna,
+                    }
+                } else {
+                    Key::PlaybackVolumeLocal
+                };
+
                 if self.obj().device().is_none() {
                     self.backend.get().unwrap().borrow().set_volume(volume);
-                    settings_manager::set_double(Key::PlaybackVolume, volume);
+                    settings_manager::set_double(volume_key, volume);
                 } else if let Some(device) = self.obj().device() {
                     // Handle device-specific volume control
                     match device.kind() {
@@ -236,12 +248,20 @@ mod imp {
                             debug!("Setting DLNA device volume: {}", volume);
                             if let Err(e) = self.obj().dlna_sender().set_volume_dlna(volume) {
                                 warn!("Failed to set DLNA volume: {}", e);
+                            } else {
+                                // Only save volume if DLNA device accepted it
+                                settings_manager::set_double(volume_key, volume);
                             }
                         }
-                        _ => {
-                            // Other device types (Chromecast, etc.) can be handled here
+                        SwDeviceKind::Cast => {
+                            debug!("Setting Cast device volume: {}", volume);
                             self.backend.get().unwrap().borrow().set_volume(volume);
-                            settings_manager::set_double(Key::PlaybackVolume, volume);
+                            settings_manager::set_double(volume_key, volume);
+                        }
+                        _ => {
+                            // Fallback for unknown device types
+                            self.backend.get().unwrap().borrow().set_volume(volume);
+                            settings_manager::set_double(volume_key, volume);
                         }
                     }
                 }
@@ -619,9 +639,32 @@ impl SwPlayer {
             return;
         }
 
-        // Ensure saved volume is applied before starting playback
-        let saved_volume = settings_manager::double(Key::PlaybackVolume);
-        info!("PLAYER: Restoring saved volume {} before starting playback", saved_volume);
+        // Set loading state immediately to show spinner
+        if let Some(sender) = self.imp().gst_sender.get() {
+            let _ = sender.send_blocking(GstreamerChange::PlaybackState(SwPlaybackState::Loading));
+        }
+        info!("PLAYER: Set playback state to Loading - showing spinner");
+
+        // Get device kind for volume management
+        let device_kind = self.device().map(|d| d.kind());
+        
+        // Restore saved volume for the specific device type
+        let volume_key = match device_kind {
+            Some(SwDeviceKind::Cast) => Key::PlaybackVolumeCast,
+            Some(SwDeviceKind::Dlna) => Key::PlaybackVolumeDlna,
+            None => Key::PlaybackVolumeLocal,
+        };
+        
+        let saved_volume = settings_manager::double(volume_key);
+        let saved_volume = if saved_volume <= 0.0 {
+            info!("PLAYER: No saved volume found for {:?}, using default 50%", device_kind);
+            0.5
+        } else {
+            info!("PLAYER: Restored saved volume {} for {:?}", saved_volume, device_kind);
+            saved_volume
+        };
+        
+        info!("PLAYER: Restoring saved volume {} for {:?} before starting playback", saved_volume, device_kind);
         self.set_volume(saved_volume);
 
         // Only start local GStreamer playback if no remote device is selected

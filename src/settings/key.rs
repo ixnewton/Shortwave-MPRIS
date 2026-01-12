@@ -28,6 +28,9 @@ pub enum Key {
     PlaybackLastStation,
     PlaybackPastTracksCount,
     PlaybackVolume,
+    PlaybackVolumeLocal,
+    PlaybackVolumeCast,
+    PlaybackVolumeDlna,
 
     // Recording
     RecordingMaximumDuration,
