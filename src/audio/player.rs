@@ -576,10 +576,26 @@ impl SwPlayer {
                     .borrow_mut()
                     .set_source_uri(url.as_ref());
                 
-                // Reapply volume after setting URI to ensure it's properly set in the audio system
-                let current_volume = self.volume();
-                info!("PLAYER: Reapplying volume {} after setting URI", current_volume);
-                imp.backend.get().unwrap().borrow().set_volume(current_volume);
+                // Reapply saved volume after setting URI to ensure it's properly set in the audio system
+                let device_kind = self.device().map(|d| d.kind());
+                let volume_key = match device_kind {
+                    Some(SwDeviceKind::Cast) => Key::PlaybackVolumeCast,
+                    Some(SwDeviceKind::Dlna) => Key::PlaybackVolumeDlna,
+                    None => Key::PlaybackVolumeLocal,
+                };
+                
+                let saved_volume = settings_manager::double(volume_key);
+                let saved_volume = if saved_volume <= 0.0 {
+                    info!("PLAYER: No saved volume found for {:?}, using default 50%", device_kind);
+                    0.5
+                } else {
+                    info!("PLAYER: Restored saved volume {} for {:?} when setting new station", saved_volume, device_kind);
+                    saved_volume
+                };
+                
+                info!("PLAYER: Applying saved volume {} after setting URI", saved_volume);
+                self.set_volume(saved_volume);
+                imp.backend.get().unwrap().borrow().set_volume(saved_volume);
                 
                 // Start playback immediately after setting the URI if requested
                 if start_playback {
@@ -594,6 +610,27 @@ impl SwPlayer {
                 }
             } else {
                 info!("PLAYER: Remote device selected - disabling local audio to prevent double playback");
+                
+                // Restore saved volume for remote devices when setting new station
+                let device_kind = self.device().map(|d| d.kind());
+                if let Some(kind) = device_kind {
+                    let volume_key = match kind {
+                        SwDeviceKind::Cast => Key::PlaybackVolumeCast,
+                        SwDeviceKind::Dlna => Key::PlaybackVolumeDlna,
+                    };
+                    
+                    let saved_volume = settings_manager::double(volume_key);
+                    let saved_volume = if saved_volume <= 0.0 {
+                        info!("PLAYER: No saved volume found for {:?}, using default 50%", kind);
+                        0.5
+                    } else {
+                        info!("PLAYER: Restored saved volume {} for {:?} when setting new station", saved_volume, kind);
+                        saved_volume
+                    };
+                    
+                    info!("PLAYER: Applying saved volume {} for remote device {:?}", saved_volume, kind);
+                    self.set_volume(saved_volume);
+                }
             }
 
             self.cast_sender()
