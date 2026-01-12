@@ -658,40 +658,89 @@ impl SwPlayer {
             }
         }
 
-        // Start DLNA playback if DLNA device is available
-        if self.device().is_some() && self.device().unwrap().kind() == SwDeviceKind::Dlna {
-            info!("PLAYER: Starting DLNA playback with volume {}", saved_volume);
-            
-            // Apply saved volume to DLNA device
-            if let Err(e) = self.dlna_sender().set_volume_dlna(saved_volume) {
-                warn!("PLAYER: Failed to set DLNA volume: {}", e);
-            }
-            
-            // Load media first, then start playback
-            if let Some(station) = self.station() {
-                if let Some(url) = station.stream_url() {
-                    // load_media() handles the complete DLNA sequence: SetAVTransportURI + Play + FFmpeg
-                    if let Err(e) = self.dlna_sender()
-                        .load_media(
-                            url.as_ref(),
-                            &station
-                                .metadata()
-                                .favicon
-                                .map(|u| u.to_string())
-                                .unwrap_or_default(),
-                            &station.title(),
-                        )
-                    {
-                        error!("PLAYER: Failed to load DLNA media: {}", e);
+        // Start DLNA playback if DLNA device is available and proxy is ready
+        if let Some(device) = self.device() {
+            if device.kind() == SwDeviceKind::Dlna {
+                info!("PLAYER: === DLNA PLAYBACK REQUESTED ===");
+                info!("PLAYER: DLNA Device Details:");
+                info!("PLAYER:   - Name: {}", device.name());
+                info!("PLAYER:   - Address: {}", device.address());
+                info!("PLAYER:   - Saved Volume: {}", saved_volume);
+                
+                // Apply saved volume to DLNA device
+                info!("PLAYER: Step 1 - Setting DLNA device volume to {}", saved_volume);
+                if let Err(e) = self.dlna_sender().set_volume_dlna(saved_volume) {
+                    warn!("PLAYER: ⚠️ Failed to set DLNA volume: {}", e);
+                } else {
+                    info!("PLAYER: ✅ Volume set successfully");
+                }
+                
+                // Check if FFmpeg proxy is already running
+                let dlna_sender = self.dlna_sender();
+                let proxy_running = dlna_sender.imp().ffmpeg_process.borrow().is_some();
+                
+                info!("PLAYER: Step 2 - Checking FFmpeg proxy status");
+                info!("PLAYER: FFmpeg proxy running: {}", proxy_running);
+                
+                // Show current proxy configuration
+                info!("PLAYER: Current Proxy Configuration:");
+                info!("PLAYER:   - Local IP: {}", dlna_sender.imp().local_ip.borrow());
+                info!("PLAYER:   - Proxy Port: {}", dlna_sender.imp().ffmpeg_port.get());
+                info!("PLAYER:   - Original URL: {}", dlna_sender.imp().original_stream_url.borrow());
+                
+                if proxy_running {
+                    info!("PLAYER: ✅ FFmpeg proxy already running - sending play command only");
+                    // Only send play command if proxy is already running
+                    info!("PLAYER: Step 3 - Sending Play command to DLNA device");
+                    if let Err(e) = dlna_sender.start_playback() {
+                        error!("PLAYER: ❌ Step 3 FAILED - Failed to start DLNA playback: {}", e);
                         return;
                     }
+                    info!("PLAYER: ✅ Step 3 COMPLETE - Play command sent successfully");
+                } else {
+                    info!("PLAYER: ℹ️ FFmpeg proxy not running - starting full setup");
+                    info!("PLAYER: Step 3 - Starting FFmpeg proxy and sending to device");
                     
-                    // Manually set player state to Playing since we skip GStreamer
-                    info!("PLAYER: Setting DLNA playback state to Playing");
-                    if let Some(sender) = self.imp().gst_sender.get() {
-                        let _ = sender.send_blocking(GstreamerChange::PlaybackState(SwPlaybackState::Playing));
+                    if let Some(station) = self.station() {
+                        info!("PLAYER: Station Details:");
+                        info!("PLAYER:   - Title: {}", station.title());
+                        info!("PLAYER:   - UUID: {}", station.uuid());
+                        
+                        if let Some(url) = station.stream_url() {
+                            info!("PLAYER: Original Stream URL: {}", url);
+                            
+                            if let Err(e) = dlna_sender
+                                .load_media(
+                                    url.as_ref(),
+                                    &station
+                                        .metadata()
+                                        .favicon
+                                        .map(|u| u.to_string())
+                                        .unwrap_or_default(),
+                                    &station.title(),
+                                )
+                            {
+                                error!("PLAYER: ❌ Step 3 FAILED - Failed to load DLNA media: {}", e);
+                                return;
+                            }
+                            info!("PLAYER: ✅ Step 3 COMPLETE - FFmpeg proxy started and URL sent to device");
+                        } else {
+                            error!("PLAYER: ❌ No stream URL available for station");
+                            return;
+                        }
+                    } else {
+                        error!("PLAYER: ❌ No station loaded - cannot start DLNA playback");
+                        return;
                     }
                 }
+                
+                // Set player state to Playing for DLNA
+                info!("PLAYER: Step 4 - Setting player state to Playing");
+                if let Some(sender) = self.imp().gst_sender.get() {
+                    let _ = sender.send_blocking(GstreamerChange::PlaybackState(SwPlaybackState::Playing));
+                }
+                info!("PLAYER: ✅ Step 4 COMPLETE - Player state updated");
+                info!("PLAYER: === DLNA PLAYBACK COMPLETED ===");
             }
         }
     }
@@ -860,15 +909,40 @@ impl SwPlayer {
                     .map_err(|e| Box::new(e) as Box<dyn std::error::Error>)
             }
             SwDeviceKind::Dlna => {
-                // For DLNA, connect to fetch service URLs but don't start playback yet
-                info!("PLAYER: Connecting to DLNA device to fetch service URLs");
+                // For DLNA, just connect to fetch service URLs - don't start FFmpeg yet
+                info!("PLAYER: === DLNA DEVICE SELECTION STARTED ===");
+                info!("PLAYER: DLNA Device Details:");
+                info!("PLAYER:   - Name: {}", device.name());
+                info!("PLAYER:   - Address: {}", device.address());
+                info!("PLAYER:   - Kind: {:?}", device.kind());
+                
+                info!("PLAYER: Step 1 - Connecting to DLNA device to fetch service URLs");
                 match self.dlna_sender().connect(&device.address()) {
                     Ok(_) => {
-                        info!("PLAYER: DLNA device connected successfully - service URLs fetched");
+                        info!("PLAYER: ✅ Step 1 COMPLETE - DLNA device connected successfully");
+                        info!("PLAYER: Service URLs fetched and stored");
+                        
+                        // Show current DLNA sender state
+                        let dlna_sender = self.dlna_sender();
+                        info!("PLAYER: Current DLNA Sender State:");
+                        info!("PLAYER:   - Device URL: {:?}", dlna_sender.imp().device.borrow());
+                        info!("PLAYER:   - AV Transport URL: {:?}", dlna_sender.imp().av_transport_url.borrow());
+                        info!("PLAYER:   - Rendering Control URL: {:?}", dlna_sender.imp().rendering_control_url.borrow());
+                        
+                        // NOTE: FFmpeg proxy will be started when play button is pressed
+                        // This keeps device selection fast and non-blocking
+                        if let Some(station) = self.station() {
+                            info!("PLAYER: ℹ️ Station loaded - FFmpeg proxy will start when play is pressed");
+                            info!("PLAYER: Station: {}", station.title());
+                        } else {
+                            info!("PLAYER: ℹ️ No station loaded - select station and press play to start streaming");
+                        }
+                        
+                        info!("PLAYER: === DLNA DEVICE SELECTION COMPLETED ===");
                         Ok(())
                     }
                     Err(e) => {
-                        error!("PLAYER: Failed to connect to DLNA device: {}", e);
+                        error!("PLAYER: ❌ Step 1 FAILED - Failed to connect to DLNA device: {}", e);
                         Err(e)
                     }
                 }

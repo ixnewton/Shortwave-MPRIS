@@ -29,7 +29,7 @@ use log::{debug, error, info, warn};
 use url::Url;
 
 // Helper function to get local IP address that can reach the DLNA device
-fn get_local_ip_for_device(device_url: &str) -> Result<String, Box<dyn Error>> {
+pub fn get_local_ip_for_device(device_url: &str) -> Result<String, Box<dyn Error>> {
     // Parse device URL to get device IP
     let parsed_url = Url::parse(device_url)?;
     let device_ip = parsed_url.host_str().ok_or("Invalid device URL")?;

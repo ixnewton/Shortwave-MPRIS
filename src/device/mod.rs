@@ -27,4 +27,4 @@ pub use device::SwDevice;
 pub use device_discovery::SwDeviceDiscovery;
 pub use device_kind::SwDeviceKind;
 pub use device_model::SwDeviceModel;
-pub use dlna_sender::SwDlnaSender;
+pub use dlna_sender::{SwDlnaSender, get_local_ip_for_device};
