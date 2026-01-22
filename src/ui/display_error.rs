@@ -48,8 +48,17 @@ impl<E: Display, T> DisplayError<E> for Result<T, E> {
             // Combine title and error message into a single expanded notification
             let full_message = format!("{}\n\n{}", title.as_ref(), err);
 
+            // Create a label that wraps and expands to fit content
+            let label = gtk::Label::builder()
+                .label(&full_message)
+                .wrap(true)
+                .wrap_mode(gtk::pango::WrapMode::WordChar)
+                .max_width_chars(60)
+                .xalign(0.0)
+                .build();
+
             let toast = adw::Toast::builder()
-                .title(&full_message)
+                .custom_title(&label)
                 .timeout(0)  // Don't auto-dismiss to give user time to read
                 .build();
 
