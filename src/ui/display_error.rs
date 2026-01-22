@@ -22,7 +22,7 @@ use std::fmt::Display;
 use adw::prelude::*;
 
 use crate::app::SwApplication;
-use crate::ui::SwApplicationWindow;
+use crate::{i18n::i18n, ui::SwApplicationWindow};
 
 pub trait ToastWindow: IsA<gtk::Widget> {
     fn toast_overlay(&self) -> adw::ToastOverlay;
@@ -45,71 +45,25 @@ impl<E: Display, T> DisplayError<E> for Result<T, E> {
         if let Err(err) = self {
             error!("{}: {err}", title.as_ref());
 
-            // Create a frame with rounded corners as the container
-            let frame = gtk::Frame::builder()
-                .build();
-            
-            // Create horizontal box for header with close button
-            let header_box = gtk::Box::builder()
-                .orientation(gtk::Orientation::Horizontal)
-                .spacing(12)
-                .build();
-            
-            // Create bold title label (same size as content)
-            let title_label = gtk::Label::builder()
-                .label(title.as_ref())
-                .wrap(true)
-                .wrap_mode(gtk::pango::WrapMode::WordChar)
-                .max_width_chars(50)
-                .xalign(0.0)
-                .hexpand(true)
-                .build();
-            title_label.add_css_class("heading");
-
-            // Create close button
-            let close_button = gtk::Button::builder()
-                .icon_name("window-close-symbolic")
-                .valign(gtk::Align::Start)
-                .build();
-            close_button.add_css_class("flat");
-            close_button.add_css_class("circular");
-
-            header_box.append(&title_label);
-            header_box.append(&close_button);
-            
-            // Create a vertical box to hold header and content
-            let vbox = gtk::Box::builder()
-                .orientation(gtk::Orientation::Vertical)
-                .spacing(6)
-                .margin_top(12)
-                .margin_bottom(12)
-                .margin_start(16)
-                .margin_end(16)
-                .build();
-
-            // Create regular content label
-            let content_label = gtk::Label::builder()
-                .label(&err.to_string())
-                .wrap(true)
-                .wrap_mode(gtk::pango::WrapMode::WordChar)
-                .max_width_chars(50)
-                .xalign(0.0)
-                .build();
-
-            vbox.append(&header_box);
-            vbox.append(&content_label);
-            frame.set_child(Some(&vbox));
-
-            // Use Toast just as a container for positioning, with our custom frame
             let toast = adw::Toast::builder()
-                .custom_title(&frame)
-                .timeout(0)
+                .title(title.as_ref())
+                .button_label(i18n("Show Details"))
                 .build();
 
-            // Connect close button to dismiss toast
-            let toast_clone = toast.clone();
-            close_button.connect_clicked(move |_| {
-                toast_clone.dismiss();
+            let heading = title.as_ref().to_string();
+            let body = err.to_string();
+            let transient_for = widget.clone();
+
+            toast.connect_local("button-clicked", false, move |_| {
+                let msg = adw::AlertDialog::builder()
+                    .heading(&heading)
+                    .body(&body)
+                    .build();
+
+                msg.add_response("close", "Close");
+                msg.present(Some(&transient_for));
+
+                None
             });
 
             widget.toast_overlay().add_toast(toast);
