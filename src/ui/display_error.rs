@@ -48,29 +48,29 @@ impl<E: Display, T> DisplayError<E> for Result<T, E> {
             // Create a vertical box to hold title and content
             let vbox = gtk::Box::builder()
                 .orientation(gtk::Orientation::Vertical)
-                .spacing(8)
-                .margin_top(12)
-                .margin_bottom(12)
-                .margin_start(16)
-                .margin_end(16)
+                .spacing(6)
+                .margin_top(8)
+                .margin_bottom(8)
+                .margin_start(12)
+                .margin_end(12)
                 .build();
 
-            // Create bold title label
+            // Create smaller bold title label
             let title_label = gtk::Label::builder()
                 .label(title.as_ref())
                 .wrap(true)
                 .wrap_mode(gtk::pango::WrapMode::WordChar)
-                .max_width_chars(60)
+                .max_width_chars(50)
                 .xalign(0.0)
                 .build();
-            title_label.add_css_class("title-3");
+            title_label.add_css_class("title-4");  // Smaller title
 
             // Create regular content label
             let content_label = gtk::Label::builder()
                 .label(&err.to_string())
                 .wrap(true)
                 .wrap_mode(gtk::pango::WrapMode::WordChar)
-                .max_width_chars(60)
+                .max_width_chars(50)
                 .xalign(0.0)
                 .build();
 
