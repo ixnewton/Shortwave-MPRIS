@@ -996,9 +996,9 @@ impl SwPlayer {
                 info!("PLAYER:   - Address: {}", device.address());
                 info!("PLAYER:   - Kind: {:?}", device.kind());
                 
-                // Kill any existing FFmpeg instances to ensure fresh instance creation
-                info!("PLAYER: Step 1 - Restarting FFmpeg server for fresh instance");
-                self.dlna_sender().restart_ffmpeg_server()?;
+                // Stop any existing FFmpeg instances to ensure clean state
+                info!("PLAYER: Step 1 - Stopping any existing FFmpeg instances");
+                self.dlna_sender().stop_ffmpeg_server();
                 
                 info!("PLAYER: Step 2 - Connecting to DLNA device to fetch service URLs");
                 match self.dlna_sender().connect(&device.address()) {
