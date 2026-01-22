@@ -749,6 +749,11 @@ impl SwPlayer {
         // Start DLNA playback if DLNA device is available and proxy is ready
         if let Some(device) = self.device() {
             if device.kind() == SwDeviceKind::Dlna {
+                println!("🟢 PLAY: === DLNA PLAYBACK REQUESTED ===");
+                println!("🟢 PLAY: DLNA Device Details:");
+                println!("🟢 PLAY:   - Name: {}", device.name());
+                println!("🟢 PLAY:   - Address: {}", device.address());
+                println!("🟢 PLAY:   - Saved Volume: {}", saved_volume);
                 info!("PLAYER: === DLNA PLAYBACK REQUESTED ===");
                 info!("PLAYER: DLNA Device Details:");
                 info!("PLAYER:   - Name: {}", device.name());
@@ -833,64 +838,86 @@ impl SwPlayer {
         }
     }
 
+    pub async fn toggle_playback(&self) {
+        println!("🔵 TOGGLE: toggle_playback() called");
+        println!("🔵 TOGGLE: Current state: {:?}", self.state());
+        
+        if self.state() == SwPlaybackState::Playing || self.state() == SwPlaybackState::Loading {
+            println!("🔵 TOGGLE: State is Playing/Loading - calling stop_playback()");
+            self.stop_playback().await;
+        } else if self.state() == SwPlaybackState::Stopped
+            || self.state() == SwPlaybackState::Failure
+        {
+            println!("🔵 TOGGLE: State is Stopped/Failure - calling start_playback()");
+            self.start_playback().await;
+        }
+        
+        println!("🔵 TOGGLE: toggle_playback() completed");
+    }
+
     pub async fn stop_playback(&self) {
         println!("=== STOP BUTTON PRESSED ===");
-        info!("PLAYER: stop_playback() called - checking device type");
+        println!("🔴 STOP: stop_playback() called");
+        info!("PLAYER: stop_playback() called");
         let imp = self.imp();
 
-        // Save device info before stopping to prevent it from being cleared
-        let device_before_stop = self.device().clone();
-        let device_kind_before_stop = device_before_stop.as_ref().map(|d| d.kind());
-        info!("PLAYER: Device before stop: {:?}", device_kind_before_stop);
+        // Save device info before stopping
+        let device_before_stop = self.device();
+        let device_kind = device_before_stop.as_ref().map(|d| d.kind());
+        println!("🔴 STOP: Device type: {:?}", device_kind);
+        info!("PLAYER: Device before stop: {:?}", device_kind);
 
         // Discard recorded data when the stream stops
+        println!("🔴 STOP: Stopping recording and resetting track");
         imp.stop_recording(imp::RecordingStopReason::StoppedPlayback);
         imp.reset_track();
 
+        // Stop GStreamer backend
+        println!("🔴 STOP: Setting GStreamer to Null state");
         imp.backend
             .get()
             .unwrap()
             .borrow_mut()
             .set_state(gstreamer::State::Null);
 
+        // Stop Cast playback
+        println!("🔴 STOP: Stopping Cast sender");
         self.cast_sender()
             .stop_playback()
             .await
             .handle_error("Unable to stop Google Cast playback");
 
-        // Stop DLNA playback if DLNA device is available
-        let device_kind = self.device().map(|d| d.kind());
-        info!("PLAYER: Device kind after state change: {:?}", device_kind);
-        
-        // Use the saved device info if device was cleared
-        let final_device = if self.device().is_none() {
-            device_before_stop
-        } else {
-            self.device()
-        };
-        
-        if let Some(device) = final_device {
-            if device.kind() == SwDeviceKind::Dlna {
-                info!("PLAYER: Stopping DLNA playback");
-                self.dlna_sender()
-                    .stop_playback()
-                    .handle_error("Unable to stop DLNA playback");
-            } else {
-                info!("PLAYER: Not stopping DLNA - device is not DLNA kind: {:?}", device.kind());
+        // Stop DLNA playback if DLNA device is active
+        if let Some(device) = device_before_stop {
+            match device.kind() {
+                SwDeviceKind::Dlna => {
+                    println!("🔴 STOP: DLNA device detected - stopping DLNA playback");
+                    info!("PLAYER: Stopping DLNA playback");
+                    
+                    println!("🔴 STOP: Calling dlna_sender().stop_playback()");
+                    if let Err(e) = self.dlna_sender().stop_playback() {
+                        println!("🔴 STOP: ❌ Failed to stop DLNA playback: {}", e);
+                        warn!("PLAYER: Failed to stop DLNA playback: {}", e);
+                    } else {
+                        println!("🔴 STOP: ✅ DLNA playback stopped successfully");
+                    }
+                    
+                    println!("🔴 STOP: Calling dlna_sender().stop_ffmpeg_server()");
+                    self.dlna_sender().stop_ffmpeg_server();
+                    println!("🔴 STOP: ✅ FFmpeg server stopped");
+                }
+                SwDeviceKind::Cast => {
+                    println!("🔴 STOP: Cast device - already stopped via cast_sender()");
+                    info!("PLAYER: Cast device stopped");
+                }
             }
         } else {
-            info!("PLAYER: Not stopping DLNA - no device available");
+            println!("🔴 STOP: No device active - local playback stopped");
+            info!("PLAYER: No device active - local playback stopped");
         }
-    }
 
-    pub async fn toggle_playback(&self) {
-        if self.state() == SwPlaybackState::Playing || self.state() == SwPlaybackState::Loading {
-            self.stop_playback().await;
-        } else if self.state() == SwPlaybackState::Stopped
-            || self.state() == SwPlaybackState::Failure
-        {
-            self.start_playback().await;
-        }
+        println!("=== STOP PLAYBACK COMPLETED ===");
+        info!("PLAYER: stop_playback() completed");
     }
 
     pub fn cancel_recording(&self) {
@@ -1106,28 +1133,40 @@ impl SwPlayer {
 
     pub async fn disconnect_device(&self) {
         if let Some(device) = self.device() {
+            println!("🟡 DISCONNECT: === DEVICE DISCONNECT REQUESTED ===");
+            println!("🟡 DISCONNECT: Device type: {:?}", device.kind());
             info!("PLAYER: Disconnecting device: {:?}", device.kind());
             
             // Stop playback on the device first
             match device.kind() {
                 SwDeviceKind::Cast => {
+                    println!("🟡 DISCONNECT: Stopping Cast playback");
                     info!("PLAYER: Stopping Cast playback");
                     self.cast_sender()
                         .stop_playback()
                         .await
                         .handle_error("Unable to stop Google Cast playback");
                     
+                    println!("🟡 DISCONNECT: Disconnecting Cast device");
                     info!("PLAYER: Disconnecting Cast device");
                     self.cast_sender().disconnect().await;
                 }
                 SwDeviceKind::Dlna => {
+                    println!("🟡 DISCONNECT: DLNA device - stopping playback and FFmpeg");
                     info!("PLAYER: Stopping DLNA playback and FFmpeg proxy");
+                    
+                    println!("🟡 DISCONNECT: Calling dlna_sender().stop_playback()");
                     if let Err(e) = self.dlna_sender().stop_playback() {
+                        println!("🟡 DISCONNECT: ❌ Failed to stop DLNA playback: {}", e);
                         warn!("PLAYER: Failed to stop DLNA playback: {}", e);
+                    } else {
+                        println!("🟡 DISCONNECT: ✅ DLNA playback stopped");
                     }
                     
+                    println!("🟡 DISCONNECT: Calling dlna_sender().disconnect()");
                     info!("PLAYER: Disconnecting DLNA device");
                     self.dlna_sender().disconnect();
+                    println!("🟡 DISCONNECT: ✅ DLNA device disconnected");
                 }
             };
 
