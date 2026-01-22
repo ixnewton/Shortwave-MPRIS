@@ -71,3 +71,7 @@ features = ["full"]
 
 [dev-dependencies]
 assert_matches = "1.5"
+
+[features]
+default = []
+dlna-debug = []
