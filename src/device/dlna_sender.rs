@@ -17,6 +17,7 @@
 use std::cell::{Cell, RefCell};
 use std::error::Error;
 use std::net;
+use std::sync::mpsc;
 use std::thread;
 use std::thread::JoinHandle;
 use std::time::Duration;
@@ -269,7 +270,11 @@ impl SwDlnaSender {
     fn start_ffmpeg_server(&self) -> Result<(), Box<dyn Error>> {
         let imp = self.imp();
         
-        // Check if FFmpeg is already running and clear buffers for fresh stream
+        // Get the current stream URL
+        let current_url = imp.stream_url.borrow().clone();
+        let previous_url = imp.original_stream_url.borrow().clone();
+        
+        // Check if FFmpeg is already running and if we can reuse it
         {
             let mut process_guard = imp.ffmpeg_process.borrow_mut();
             if let Some(child) = process_guard.as_mut() {
@@ -281,22 +286,28 @@ impl SwDlnaSender {
                         drop(process_guard.take());
                     }
                     Ok(None) => {
-                        // Process is still running - stop it to clear buffers
-                        info!("DLNA: Stopping existing FFmpeg to clear buffers for fresh stream");
-                        if let Err(e) = child.kill() {
-                            warn!("DLNA: Failed to kill existing FFmpeg process: {}", e);
-                        }
-                        // Wait for process to exit
-                        match child.wait() {
-                            Ok(status) => {
-                                info!("DLNA: Old FFmpeg process exited with status: {}", status);
+                        // Process is still running - check if we can reuse it
+                        if current_url == previous_url && !current_url.is_empty() {
+                            info!("DLNA: Reusing existing FFmpeg process for same URL: {}", current_url);
+                            return Ok(());
+                        } else {
+                            info!("DLNA: URL changed from {} to {}, restarting FFmpeg", previous_url, current_url);
+                            // Stop existing process for new URL
+                            if let Err(e) = child.kill() {
+                                warn!("DLNA: Failed to kill existing FFmpeg process: {}", e);
                             }
-                            Err(e) => {
-                                warn!("DLNA: Error waiting for old FFmpeg process: {}", e);
+                            // Wait for process to exit
+                            match child.wait() {
+                                Ok(status) => {
+                                    info!("DLNA: Old FFmpeg process exited with status: {}", status);
+                                }
+                                Err(e) => {
+                                    warn!("DLNA: Error waiting for old FFmpeg process: {}", e);
+                                }
                             }
+                            drop(process_guard.take());
+                            info!("DLNA: Cleared old FFmpeg process for new stream");
                         }
-                        drop(process_guard.take());
-                        info!("DLNA: Cleared old FFmpeg buffers, starting fresh stream");
                     }
                     Err(e) => {
                         // Error checking process status, assume it's dead
@@ -307,8 +318,12 @@ impl SwDlnaSender {
             }
         }
         
-        // Find an available port
-        let port = 8080u16; // Could make this configurable
+        // Find an available port (reuse existing if available)
+        let port = if imp.ffmpeg_port.get() == 0 {
+            8080u16 // Default port
+        } else {
+            imp.ffmpeg_port.get()
+        };
         imp.ffmpeg_port.set(port);
         
         // Extract local IP from device URL (if available)
@@ -334,6 +349,9 @@ impl SwDlnaSender {
         
         // Start FFmpeg in background thread to avoid blocking UI
         let ffmpeg_url = format!("http://0.0.0.0:{}/stream.mp3", port);
+        
+        // Create a channel to send the process handle back to main thread
+        let (process_sender, process_receiver) = mpsc::channel::<std::process::Child>();
         
         // Clone sender for metadata polling
         let metadata_sender = self.clone();
@@ -413,9 +431,16 @@ impl SwDlnaSender {
             
             match ffmpeg_cmd {
                 Ok(child) => {
-                    info!("DLNA: FFmpeg started with PID: {}", child.id());
-                    // Store the process handle in the main thread
-                    // For now, just return success
+                    let pid = child.id();
+                    info!("DLNA: FFmpeg started with PID: {}", pid);
+                    
+                    // Send the process handle back to main thread
+                    if let Err(e) = process_sender.send(child) {
+                        error!("DLNA: Failed to send FFmpeg process handle: {}", e);
+                        return Err("Failed to store FFmpeg process handle".into());
+                    }
+                    
+                    info!("DLNA: FFmpeg process handle sent to main thread");
                     Ok(())
                 }
                 Err(e) => {
@@ -428,52 +453,69 @@ impl SwDlnaSender {
         imp.ffmpeg_thread.borrow_mut().replace(thread);
         info!("DLNA: FFmpeg startup initiated in background thread");
         
+        // Wait for the process handle from the background thread
+        match process_receiver.recv() {
+            Ok(child_process) => {
+                info!("DLNA: Received FFmpeg process handle, storing it");
+                imp.ffmpeg_process.borrow_mut().replace(child_process);
+                info!("DLNA: FFmpeg process handle stored successfully");
+            }
+            Err(e) => {
+                error!("DLNA: Failed to receive FFmpeg process handle: {}", e);
+                return Err("Failed to receive FFmpeg process handle".into());
+            }
+        }
+        
         Ok(())
     }
                                 // Stop FFmpeg streaming server
-    fn stop_ffmpeg_server(&self) {
+    pub fn stop_ffmpeg_server(&self) {
         let imp = self.imp();
         
-        // Kill the FFmpeg process if it exists
+        // Kill the stored FFmpeg process if it exists
         if let Some(mut child) = imp.ffmpeg_process.borrow_mut().take() {
             info!("DLNA: Stopping FFmpeg process (PID: {})", child.id());
             
-            // Try to gracefully terminate using kill() first
-            // On Unix systems, kill() sends SIGTERM by default which FFmpeg handles gracefully
+            // Force kill immediately - Rust's child.kill() sends SIGKILL on Unix
+            // This ensures immediate termination and prevents zombie processes
             if let Err(e) = child.kill() {
                 warn!("DLNA: Failed to kill FFmpeg process: {}", e);
             }
             
-            // Wait for process to exit with timeout using a simple loop
-            let timeout = Duration::from_secs(5);
-            let start = std::time::Instant::now();
-            
-            loop {
-                match child.try_wait() {
-                    Ok(Some(status)) => {
-                        info!("DLNA: FFmpeg process exited gracefully with status: {}", status);
-                        break;
-                    }
-                    Ok(None) => {
-                        // Process still running
-                        if start.elapsed() >= timeout {
-                            warn!("DLNA: FFmpeg process didn't exit gracefully, force killing");
-                            // Try again more forcefully
-                            if let Err(e) = child.kill() {
-                                warn!("DLNA: Failed to force kill FFmpeg process: {}", e);
-                            }
-                            let _ = child.wait(); // Clean up zombie process
-                            break;
-                        }
-                        // Sleep a bit and try again
-                        std::thread::sleep(Duration::from_millis(100));
-                    }
-                    Err(e) => {
-                        warn!("DLNA: Error waiting for FFmpeg process: {}", e);
-                        break;
-                    }
+            // Immediately wait for the process to clean up zombie
+            match child.wait() {
+                Ok(status) => {
+                    info!("DLNA: FFmpeg process terminated with status: {}", status);
+                }
+                Err(e) => {
+                    warn!("DLNA: Error waiting for FFmpeg process termination: {}", e);
                 }
             }
+        } else {
+            info!("DLNA: No stored FFmpeg process to stop");
+        }
+        
+        // Additional cleanup: Kill any orphaned FFmpeg processes that might have been missed
+        info!("DLNA: Performing additional cleanup of any orphaned FFmpeg processes");
+        if let Ok(output) = std::process::Command::new("pgrep").arg("ffmpeg").output() {
+            if !output.stdout.is_empty() {
+                let ffmpeg_pids = String::from_utf8_lossy(&output.stdout);
+                for pid_str in ffmpeg_pids.lines() {
+                    if let Ok(pid) = pid_str.trim().parse::<u32>() {
+                        info!("DLNA: Found orphaned FFmpeg process PID: {}, force killing with SIGKILL", pid);
+                        // Use kill -9 for force termination
+                        if let Ok(_) = std::process::Command::new("kill").arg("-9").arg(pid.to_string()).output() {
+                            info!("DLNA: Successfully killed orphaned FFmpeg process PID: {}", pid);
+                        } else {
+                            warn!("DLNA: Failed to kill orphaned FFmpeg process PID: {}", pid);
+                        }
+                    }
+                }
+            } else {
+                info!("DLNA: No orphaned FFmpeg processes found");
+            }
+        } else {
+            warn!("DLNA: Failed to check for orphaned FFmpeg processes");
         }
         
         // Join the FFmpeg thread
@@ -493,7 +535,46 @@ impl SwDlnaSender {
             }
         }
         
-        info!("DLNA: FFmpeg server stopped");
+        info!("DLNA: FFmpeg server stopped and all processes cleaned up");
+    }
+
+    // Force restart FFmpeg server (used when device selection changes)
+    pub fn restart_ffmpeg_server(&self) -> Result<(), Box<dyn Error>> {
+        info!("DLNA: Force restarting FFmpeg server for fresh instance");
+        
+        // Stop existing FFmpeg server
+        self.stop_ffmpeg_server();
+        
+        // Start new FFmpeg server
+        self.start_ffmpeg_server()
+    }
+
+    // Check if FFmpeg process is running and can be reused
+    pub fn can_reuse_ffmpeg_process(&self, new_url: &str) -> bool {
+        let imp = self.imp();
+        
+        // Check if we have a running process
+        let mut process_guard = imp.ffmpeg_process.borrow_mut();
+        if let Some(child) = process_guard.as_mut() {
+            // Check if process is still alive
+            match child.try_wait() {
+                Ok(Some(_)) => {
+                    // Process has exited
+                    false
+                }
+                Ok(None) => {
+                    // Process is still running - check if URL is the same
+                    let previous_url = imp.original_stream_url.borrow();
+                    new_url == previous_url.as_str() && !new_url.is_empty()
+                }
+                Err(_) => {
+                    // Error checking process status
+                    false
+                }
+            }
+        } else {
+            false
+        }
     }
 
         pub fn connect(&self, address: &str) -> Result<(), Box<dyn Error>> {
@@ -541,15 +622,21 @@ impl SwDlnaSender {
             return;
         }
 
-        // Don't stop FFmpeg here - only stop on stop_playback()
-        // FFmpeg should only be managed by play/stop actions
+        info!("DLNA: Disconnecting device - performing full cleanup");
 
+        // Perform the same thorough cleanup as stop_ffmpeg_server()
+        // This ensures no FFmpeg processes are left running when disconnecting
+        self.stop_ffmpeg_server();
+
+        // Clear device connection info
         *self.imp().device.borrow_mut() = None;
         *self.imp().av_transport_url.borrow_mut() = None;
         *self.imp().rendering_control_url.borrow_mut() = None;
 
         self.imp().is_connected.set(false);
         self.notify_is_connected();
+        
+        info!("DLNA: Device disconnected and all processes cleaned up");
     }
 
     pub fn load_media(&self, stream_url: &str, cover_url: &str, title: &str) -> Result<(), Box<dyn Error>> {
