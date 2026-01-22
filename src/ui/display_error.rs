@@ -45,14 +45,19 @@ impl<E: Display, T> DisplayError<E> for Result<T, E> {
         if let Err(err) = self {
             error!("{}: {err}", title.as_ref());
 
+            // Create a frame with rounded corners as the container
+            let frame = gtk::Frame::builder()
+                .build();
+            frame.add_css_class("osd");  // Dark background style
+            
             // Create a vertical box to hold title and content
             let vbox = gtk::Box::builder()
                 .orientation(gtk::Orientation::Vertical)
                 .spacing(6)
-                .margin_top(8)
-                .margin_bottom(8)
-                .margin_start(12)
-                .margin_end(12)
+                .margin_top(12)
+                .margin_bottom(12)
+                .margin_start(16)
+                .margin_end(16)
                 .build();
 
             // Create smaller bold title label
@@ -63,7 +68,7 @@ impl<E: Display, T> DisplayError<E> for Result<T, E> {
                 .max_width_chars(50)
                 .xalign(0.0)
                 .build();
-            title_label.add_css_class("title-4");  // Smaller title
+            title_label.add_css_class("title-4");
 
             // Create regular content label
             let content_label = gtk::Label::builder()
@@ -76,10 +81,12 @@ impl<E: Display, T> DisplayError<E> for Result<T, E> {
 
             vbox.append(&title_label);
             vbox.append(&content_label);
+            frame.set_child(Some(&vbox));
 
+            // Use Toast just as a container for positioning, with our custom frame
             let toast = adw::Toast::builder()
-                .custom_title(&vbox)
-                .timeout(0)  // Don't auto-dismiss to give user time to read
+                .custom_title(&frame)
+                .timeout(0)
                 .build();
 
             widget.toast_overlay().add_toast(toast);
