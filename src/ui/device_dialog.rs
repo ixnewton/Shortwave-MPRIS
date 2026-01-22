@@ -24,7 +24,7 @@ use gtk::{glib, CompositeTemplate};
 use crate::app::SwApplication;
 use crate::audio::SwPlayer;
 use crate::device::SwDevice;
-use crate::ui::{SwDeviceRow, ToastWindow};
+use crate::ui::SwDeviceRow;
 
 mod imp {
     use super::*;
@@ -150,11 +150,6 @@ impl SwDeviceDialog {
     }
 }
 
-impl ToastWindow for SwDeviceDialog {
-    fn toast_overlay(&self) -> adw::ToastOverlay {
-        self.imp().toast_overlay.clone()
-    }
-}
 
 impl Default for SwDeviceDialog {
     fn default() -> Self {

@@ -29,7 +29,6 @@ use crate::ui::pages::{SwLibraryPage, SwSearchPage};
 use crate::ui::player::{SwPlayerGadget, SwPlayerToolbar, SwPlayerView};
 use crate::ui::{
     about_dialog, SwAddStationDialog, SwDeviceDialog, SwPreferencesDialog, SwStationDialog,
-    ToastWindow,
 };
 use crate::utils;
 
@@ -317,8 +316,3 @@ impl Default for SwApplicationWindow {
     }
 }
 
-impl ToastWindow for SwApplicationWindow {
-    fn toast_overlay(&self) -> adw::ToastOverlay {
-        self.imp().toast_overlay.clone()
-    }
-}

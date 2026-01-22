@@ -26,7 +26,7 @@ use shumate::prelude::*;
 use crate::api::SwStation;
 use crate::app::SwApplication;
 use crate::i18n::{i18n, i18n_f};
-use crate::ui::{SwStationCover, ToastWindow};
+use crate::ui::SwStationCover;
 
 mod imp {
     use super::*;
@@ -319,8 +319,3 @@ impl SwStationDialog {
     }
 }
 
-impl ToastWindow for SwStationDialog {
-    fn toast_overlay(&self) -> adw::ToastOverlay {
-        self.imp().toast_overlay.clone()
-    }
-}

@@ -37,7 +37,7 @@ pub use add_station_dialog::SwAddStationDialog;
 pub use device_dialog::SwDeviceDialog;
 pub use device_indicator::SwDeviceIndicator;
 pub use device_row::SwDeviceRow;
-pub use display_error::{DisplayError, ToastWindow};
+pub use display_error::DisplayError;
 pub use preferences_dialog::SwPreferencesDialog;
 pub use recording_indicator::SwRecordingIndicator;
 pub use station_cover::SwStationCover;

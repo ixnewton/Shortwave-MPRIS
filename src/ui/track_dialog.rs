@@ -21,7 +21,7 @@ use adw::subclass::prelude::*;
 use glib::{subclass, Properties};
 use gtk::{gio, glib, CompositeTemplate};
 
-use super::{SwStationDialog, ToastWindow};
+use super::SwStationDialog;
 use crate::app::SwApplication;
 use crate::audio::{SwRecordingMode, SwRecordingState, SwTrack};
 use crate::utils;
@@ -222,8 +222,3 @@ impl SwTrackDialog {
     }
 }
 
-impl ToastWindow for SwTrackDialog {
-    fn toast_overlay(&self) -> adw::ToastOverlay {
-        self.imp().toast_overlay.clone()
-    }
-}

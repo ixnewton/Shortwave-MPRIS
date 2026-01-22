@@ -95,7 +95,7 @@ mod imp {
                                 .player()
                                 .connect_device(&device)
                                 .await;
-                            res.handle_error_in("Unable to connect with device", &dialog);
+                            res.handle_error("Unable to connect with device");
 
                             if res.is_ok() {
                                 dialog.close();

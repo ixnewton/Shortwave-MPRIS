@@ -22,15 +22,11 @@ use std::fmt::Display;
 use adw::prelude::*;
 
 use crate::app::SwApplication;
-use crate::{i18n::i18n, ui::SwApplicationWindow};
-
-pub trait ToastWindow: IsA<gtk::Widget> {
-    fn toast_overlay(&self) -> adw::ToastOverlay;
-}
+use crate::ui::SwApplicationWindow;
 
 pub trait DisplayError<E> {
     fn handle_error(&self, title: impl AsRef<str>);
-    fn handle_error_in(&self, title: impl AsRef<str>, toast_overlay: &impl ToastWindow);
+    fn handle_error_in(&self, title: impl AsRef<str>, window: &SwApplicationWindow);
 }
 
 impl<E: Display, T> DisplayError<E> for Result<T, E> {
@@ -41,32 +37,22 @@ impl<E: Display, T> DisplayError<E> for Result<T, E> {
         }
     }
 
-    fn handle_error_in(&self, title: impl AsRef<str>, widget: &impl ToastWindow) {
+    fn handle_error_in(&self, title: impl AsRef<str>, window: &SwApplicationWindow) {
         if let Err(err) = self {
             error!("{}: {err}", title.as_ref());
 
-            let toast = adw::Toast::builder()
-                .title(title.as_ref())
-                .button_label(i18n("Show Details"))
-                .build();
-
             let heading = title.as_ref().to_string();
             let body = err.to_string();
-            let transient_for = widget.clone();
+            let transient_for = window.clone();
 
-            toast.connect_local("button-clicked", false, move |_| {
-                let msg = adw::AlertDialog::builder()
-                    .heading(&heading)
-                    .body(&body)
-                    .build();
+            // Show alert dialog directly without toast
+            let msg = adw::AlertDialog::builder()
+                .heading(&heading)
+                .body(&body)
+                .build();
 
-                msg.add_response("close", "Close");
-                msg.present(Some(&transient_for));
-
-                None
-            });
-
-            widget.toast_overlay().add_toast(toast);
+            msg.add_response("close", "Close");
+            msg.present(Some(&transient_for));
         }
     }
 }
