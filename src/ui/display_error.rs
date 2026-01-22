@@ -48,9 +48,36 @@ impl<E: Display, T> DisplayError<E> for Result<T, E> {
             // Create a frame with rounded corners as the container
             let frame = gtk::Frame::builder()
                 .build();
-            frame.add_css_class("osd");  // Dark background style
             
-            // Create a vertical box to hold title and content
+            // Create horizontal box for header with close button
+            let header_box = gtk::Box::builder()
+                .orientation(gtk::Orientation::Horizontal)
+                .spacing(12)
+                .build();
+            
+            // Create bold title label (same size as content)
+            let title_label = gtk::Label::builder()
+                .label(title.as_ref())
+                .wrap(true)
+                .wrap_mode(gtk::pango::WrapMode::WordChar)
+                .max_width_chars(50)
+                .xalign(0.0)
+                .hexpand(true)
+                .build();
+            title_label.add_css_class("heading");
+
+            // Create close button
+            let close_button = gtk::Button::builder()
+                .icon_name("window-close-symbolic")
+                .valign(gtk::Align::Start)
+                .build();
+            close_button.add_css_class("flat");
+            close_button.add_css_class("circular");
+
+            header_box.append(&title_label);
+            header_box.append(&close_button);
+            
+            // Create a vertical box to hold header and content
             let vbox = gtk::Box::builder()
                 .orientation(gtk::Orientation::Vertical)
                 .spacing(6)
@@ -59,16 +86,6 @@ impl<E: Display, T> DisplayError<E> for Result<T, E> {
                 .margin_start(16)
                 .margin_end(16)
                 .build();
-
-            // Create smaller bold title label
-            let title_label = gtk::Label::builder()
-                .label(title.as_ref())
-                .wrap(true)
-                .wrap_mode(gtk::pango::WrapMode::WordChar)
-                .max_width_chars(50)
-                .xalign(0.0)
-                .build();
-            title_label.add_css_class("title-4");
 
             // Create regular content label
             let content_label = gtk::Label::builder()
@@ -79,7 +96,7 @@ impl<E: Display, T> DisplayError<E> for Result<T, E> {
                 .xalign(0.0)
                 .build();
 
-            vbox.append(&title_label);
+            vbox.append(&header_box);
             vbox.append(&content_label);
             frame.set_child(Some(&vbox));
 
@@ -88,6 +105,12 @@ impl<E: Display, T> DisplayError<E> for Result<T, E> {
                 .custom_title(&frame)
                 .timeout(0)
                 .build();
+
+            // Connect close button to dismiss toast
+            let toast_clone = toast.clone();
+            close_button.connect_clicked(move |_| {
+                toast_clone.dismiss();
+            });
 
             widget.toast_overlay().add_toast(toast);
         }
