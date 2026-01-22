@@ -22,7 +22,7 @@ use std::fmt::Display;
 use adw::prelude::*;
 
 use crate::app::SwApplication;
-use crate::{i18n::i18n, ui::SwApplicationWindow};
+use crate::ui::SwApplicationWindow;
 
 pub trait ToastWindow: IsA<gtk::Widget> {
     fn toast_overlay(&self) -> adw::ToastOverlay;
@@ -45,26 +45,13 @@ impl<E: Display, T> DisplayError<E> for Result<T, E> {
         if let Err(err) = self {
             error!("{}: {err}", title.as_ref());
 
+            // Combine title and error message into a single expanded notification
+            let full_message = format!("{}\n\n{}", title.as_ref(), err);
+
             let toast = adw::Toast::builder()
-                .title(title.as_ref())
-                .button_label(i18n("Show Details"))
+                .title(&full_message)
+                .timeout(0)  // Don't auto-dismiss to give user time to read
                 .build();
-
-            let heading = title.as_ref().to_string();
-            let body = err.to_string();
-            let transient_for = widget.clone();
-
-            toast.connect_local("button-clicked", false, move |_| {
-                let msg = adw::AlertDialog::builder()
-                    .heading(&heading)
-                    .body(&body)
-                    .build();
-
-                msg.add_response("close", "Close");
-                msg.present(Some(&transient_for));
-
-                None
-            });
 
             widget.toast_overlay().add_toast(toast);
         }
