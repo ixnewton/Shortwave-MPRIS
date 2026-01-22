@@ -45,20 +45,40 @@ impl<E: Display, T> DisplayError<E> for Result<T, E> {
         if let Err(err) = self {
             error!("{}: {err}", title.as_ref());
 
-            // Combine title and error message into a single expanded notification
-            let full_message = format!("{}\n\n{}", title.as_ref(), err);
+            // Create a vertical box to hold title and content
+            let vbox = gtk::Box::builder()
+                .orientation(gtk::Orientation::Vertical)
+                .spacing(8)
+                .margin_top(12)
+                .margin_bottom(12)
+                .margin_start(16)
+                .margin_end(16)
+                .build();
 
-            // Create a label that wraps and expands to fit content
-            let label = gtk::Label::builder()
-                .label(&full_message)
+            // Create bold title label
+            let title_label = gtk::Label::builder()
+                .label(title.as_ref())
+                .wrap(true)
+                .wrap_mode(gtk::pango::WrapMode::WordChar)
+                .max_width_chars(60)
+                .xalign(0.0)
+                .build();
+            title_label.add_css_class("title-3");
+
+            // Create regular content label
+            let content_label = gtk::Label::builder()
+                .label(&err.to_string())
                 .wrap(true)
                 .wrap_mode(gtk::pango::WrapMode::WordChar)
                 .max_width_chars(60)
                 .xalign(0.0)
                 .build();
 
+            vbox.append(&title_label);
+            vbox.append(&content_label);
+
             let toast = adw::Toast::builder()
-                .custom_title(&label)
+                .custom_title(&vbox)
                 .timeout(0)  // Don't auto-dismiss to give user time to read
                 .build();
 
