@@ -77,14 +77,9 @@ mod imp {
             self.parent_constructed();
             let player = self.obj().player();
 
-            // Set volume control initial value from player's saved volume BEFORE binding
-            let saved_volume = player.volume();
-            self.volume_control.set_volume(saved_volume);
-
-            // Create bidirectional binding WITHOUT sync_create() to prevent automatic syncing
-            // that could override the player's volume with the volume control's default value
             player
                 .bind_property("volume", &*self.volume_control, "volume")
+                .sync_create()
                 .bidirectional()
                 .build();
 

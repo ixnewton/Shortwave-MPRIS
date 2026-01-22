@@ -342,6 +342,13 @@ impl SwDlnaSender {
         
         // Store original stream URL for FFmpeg
         let original_url = imp.stream_url.borrow().clone();
+        
+        // Validate that we have a valid URL before proceeding
+        if original_url.is_empty() {
+            error!("DLNA: Cannot start FFmpeg - stream URL is empty!");
+            return Err("Stream URL is empty".into());
+        }
+        
         imp.original_stream_url.borrow_mut().clone_from(&original_url);
         
         info!("DLNA: Starting FFmpeg streaming server on {}:{}", local_ip, port);

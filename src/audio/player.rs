@@ -223,6 +223,7 @@ mod imp {
 
         pub fn set_volume(&self, volume: f64) {
             if self.volume.get() != volume {
+                debug!("Set volume: {}", &volume);
                 self.volume.set(volume);
 
                 // Determine which volume key to use based on device type
@@ -244,13 +245,22 @@ mod imp {
                     // Handle device-specific volume control
                     match device.kind() {
                         SwDeviceKind::Dlna => {
-                            if let Ok(_) = self.obj().dlna_sender().set_volume_dlna(volume) {
+                            debug!("Setting DLNA device volume: {}", volume);
+                            if let Err(e) = self.obj().dlna_sender().set_volume_dlna(volume) {
+                                warn!("Failed to set DLNA volume: {}", e);
+                            } else {
                                 // Only save volume if DLNA device accepted it
                                 settings_manager::set_double(volume_key, volume);
                             }
                         }
                         SwDeviceKind::Cast => {
-                            self.obj().cast_sender().set_volume(volume);
+                            debug!("Setting Cast device volume: {}", volume);
+                            self.backend.get().unwrap().borrow().set_volume(volume);
+                            settings_manager::set_double(volume_key, volume);
+                        }
+                        _ => {
+                            // Fallback for unknown device types
+                            self.backend.get().unwrap().borrow().set_volume(volume);
                             settings_manager::set_double(volume_key, volume);
                         }
                     }
@@ -682,7 +692,7 @@ impl SwPlayer {
             None => Key::PlaybackVolumeLocal,
         };
         
-        let saved_volume = settings_manager::double(volume_key.clone());
+        let saved_volume = settings_manager::double(volume_key);
         let saved_volume = if saved_volume <= 0.0 {
             info!("PLAYER: No saved volume found for {:?}, using default 50%", device_kind);
             0.5
@@ -691,28 +701,18 @@ impl SwPlayer {
             saved_volume
         };
         
-        // Restore saved volume BEFORE starting playback
+        info!("PLAYER: Restoring saved volume {} for {:?} before starting playback", saved_volume, device_kind);
         self.set_volume(saved_volume);
 
         // Only start local GStreamer playback if no remote device is selected
         if self.device().is_none() {
             info!("PLAYER: Starting local GStreamer playback with volume {}", saved_volume);
-            
             self.imp()
                 .backend
                 .get()
                 .unwrap()
                 .borrow_mut()
                 .set_state(gstreamer::State::Playing);
-            
-            // Set volume AGAIN after state transition to ensure GStreamer doesn't reset it
-            info!("PLAYER: Re-applying volume {} after GStreamer state transition", saved_volume);
-            self.imp()
-                .backend
-                .get()
-                .unwrap()
-                .borrow()
-                .set_volume(saved_volume);
         } else {
             info!("PLAYER: Remote device active - skipping local GStreamer playback");
         }
@@ -747,12 +747,6 @@ impl SwPlayer {
                 info!("PLAYER:   - Address: {}", device.address());
                 info!("PLAYER:   - Saved Volume: {}", saved_volume);
                 
-                // Set UI to Loading state immediately for better user feedback
-                info!("PLAYER: Setting DLNA playback state to Loading");
-                if let Some(sender) = self.imp().gst_sender.get() {
-                    let _ = sender.send_blocking(GstreamerChange::PlaybackState(SwPlaybackState::Loading));
-                }
-                
                 // Apply saved volume to DLNA device
                 info!("PLAYER: Step 1 - Setting DLNA device volume to {}", saved_volume);
                 if let Err(e) = self.dlna_sender().set_volume_dlna(saved_volume) {
@@ -780,10 +774,6 @@ impl SwPlayer {
                     info!("PLAYER: Step 3 - Sending Play command to DLNA device");
                     if let Err(e) = dlna_sender.start_playback() {
                         error!("PLAYER: ❌ Step 3 FAILED - Failed to start DLNA playback: {}", e);
-                        // Set UI state to Failure on error
-                        if let Some(sender) = self.imp().gst_sender.get() {
-                            let _ = sender.send_blocking(GstreamerChange::PlaybackState(SwPlaybackState::Failure));
-                        }
                         return;
                     }
                     info!("PLAYER: ✅ Step 3 COMPLETE - Play command sent successfully");
@@ -811,19 +801,11 @@ impl SwPlayer {
                                 )
                             {
                                 error!("PLAYER: ❌ Step 3 FAILED - Failed to load DLNA media: {}", e);
-                                // Set UI state to Failure on error
-                                if let Some(sender) = self.imp().gst_sender.get() {
-                                    let _ = sender.send_blocking(GstreamerChange::PlaybackState(SwPlaybackState::Failure));
-                                }
                                 return;
                             }
                             info!("PLAYER: ✅ Step 3 COMPLETE - FFmpeg proxy started and URL sent to device");
                         } else {
                             error!("PLAYER: ❌ No stream URL available for station");
-                            // Set UI state to Failure on error
-                            if let Some(sender) = self.imp().gst_sender.get() {
-                                let _ = sender.send_blocking(GstreamerChange::PlaybackState(SwPlaybackState::Failure));
-                            }
                             return;
                         }
                     } else {
@@ -844,30 +826,14 @@ impl SwPlayer {
     }
 
     pub async fn stop_playback(&self) {
-        info!("PLAYER: stop_playback() called");
+        println!("=== STOP BUTTON PRESSED ===");
+        info!("PLAYER: stop_playback() called - checking device type");
         let imp = self.imp();
 
         // Save device info before stopping to prevent it from being cleared
         let device_before_stop = self.device().clone();
-        
-        // Save current volume before stopping playback
-        let current_volume = self.volume();
-        
-        // Use the EXACT same logic as the volume slider (set_volume function)
-        // But use the SAVED device info to prevent it from being cleared
-        let volume_key = if device_before_stop.is_none() {
-            Key::PlaybackVolumeLocal
-        } else if let Some(ref device) = device_before_stop {
-            match device.kind() {
-                SwDeviceKind::Cast => Key::PlaybackVolumeCast,
-                SwDeviceKind::Dlna => Key::PlaybackVolumeDlna,
-            }
-        } else {
-            Key::PlaybackVolumeLocal
-        };
-
-        // Save the current volume to settings using the same method as volume slider
-        settings_manager::set_double(volume_key.clone(), current_volume);
+        let device_kind_before_stop = device_before_stop.as_ref().map(|d| d.kind());
+        info!("PLAYER: Device before stop: {:?}", device_kind_before_stop);
 
         // Discard recorded data when the stream stops
         imp.stop_recording(imp::RecordingStopReason::StoppedPlayback);
@@ -894,27 +860,19 @@ impl SwPlayer {
         } else {
             self.device()
         };
-
+        
         if let Some(device) = final_device {
-            match device.kind() {
-                SwDeviceKind::Dlna => {
-                    info!("PLAYER: Stopping DLNA playback");
-                    self.dlna_sender().stop_ffmpeg_server();
-                }
-                SwDeviceKind::Cast => {
-                    info!("PLAYER: Disconnecting Cast device");
-                    self.cast_sender().disconnect();
-                }
+            if device.kind() == SwDeviceKind::Dlna {
+                info!("PLAYER: Stopping DLNA playback");
+                self.dlna_sender()
+                    .stop_playback()
+                    .handle_error("Unable to stop DLNA playback");
+            } else {
+                info!("PLAYER: Not stopping DLNA - device is not DLNA kind: {:?}", device.kind());
             }
+        } else {
+            info!("PLAYER: Not stopping DLNA - no device available");
         }
-
-        // Clear the device and update UI state
-        imp.device.take();
-        if let Some(sender) = imp.gst_sender.get() {
-            let _ = sender.send_blocking(GstreamerChange::PlaybackState(SwPlaybackState::Stopped));
-        }
-        self.notify_device();
-        self.notify_state();
     }
 
     pub async fn toggle_playback(&self) {
