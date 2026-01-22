@@ -700,21 +700,29 @@ impl SwPlayer {
             info!("PLAYER: Restored saved volume {} for {:?}", saved_volume, device_kind);
             saved_volume
         };
-        
-        info!("PLAYER: Restoring saved volume {} for {:?} before starting playback", saved_volume, device_kind);
-        self.set_volume(saved_volume);
 
         // Only start local GStreamer playback if no remote device is selected
         if self.device().is_none() {
-            info!("PLAYER: Starting local GStreamer playback with volume {}", saved_volume);
+            info!("PLAYER: Starting local GStreamer playback");
             self.imp()
                 .backend
                 .get()
                 .unwrap()
                 .borrow_mut()
                 .set_state(gstreamer::State::Playing);
+            
+            // Set volume AFTER state transition to prevent GStreamer from resetting it
+            info!("PLAYER: Setting volume {} after GStreamer state transition", saved_volume);
+            self.set_volume(saved_volume);
+            self.imp()
+                .backend
+                .get()
+                .unwrap()
+                .borrow()
+                .set_volume(saved_volume);
         } else {
-            info!("PLAYER: Remote device active - skipping local GStreamer playback");
+            info!("PLAYER: Remote device active - setting volume for remote device");
+            self.set_volume(saved_volume);
         }
 
         self.cast_sender()
