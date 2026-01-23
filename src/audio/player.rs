@@ -535,8 +535,12 @@ impl SwPlayer {
             let url_str = url.to_string();
             
             // Check Chromecast compatibility if a cast device is connected
+            // If device was cancelled, it will be None and no check will be performed
             if let Some(device) = self.device() {
                 if device.kind() == SwDeviceKind::Cast {
+                    #[cfg(feature = "dlna-debug")]
+                    println!("🔍 STATION: Cast device connected - checking compatibility");
+                    
                     // Check for incompatible formats
                     if url_str.contains(".m3u8") || url_str.contains("/live/") || url_str.contains("playlist") {
                         warn!("PLAYER: New station incompatible with Chromecast - showing error but keeping current stream");
@@ -1212,6 +1216,8 @@ impl SwPlayer {
             #[cfg(feature = "dlna-debug")]
             println!("🟡 DISCONNECT: Clearing device reference");
             *self.imp().device.borrow_mut() = None;
+            
+            // Force immediate notification to ensure UI updates happen before any other operations
             self.notify_has_device();
             self.notify_device();
 
