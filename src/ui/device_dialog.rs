@@ -103,6 +103,15 @@ mod imp {
 
             self.update_dialog_stack();
             self.update_scan_stack();
+            
+            // Automatically start device scan when dialog is opened
+            glib::spawn_future_local(clone!(
+                #[weak(rename_to = imp)]
+                self,
+                async move {
+                    imp.obj().player().device_discovery().scan().await;
+                }
+            ));
         }
     }
 
