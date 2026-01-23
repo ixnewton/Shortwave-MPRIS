@@ -134,14 +134,8 @@ mod imp {
     impl ObjectImpl for SwDeviceDiscovery {
         fn constructed(&self) {
             self.parent_constructed();
-
-            glib::spawn_future_local(clone!(
-                #[weak(rename_to = imp)]
-                self,
-                async move {
-                    imp.obj().scan().await;
-                }
-            ));
+            // Remove automatic scan to prevent scanning notifications during station selection
+            // Users can manually scan when needed via the device dialog
         }
     }
 
