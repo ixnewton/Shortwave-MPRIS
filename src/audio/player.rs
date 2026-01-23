@@ -1212,6 +1212,12 @@ impl SwPlayer {
                 }
             };
 
+            // Stop any ongoing device discovery to prevent scans in local mode
+            #[cfg(feature = "dlna-debug")]
+            println!("🟡 DISCONNECT: Stopping device discovery");
+            info!("PLAYER: Stopping device discovery scan");
+            self.device_discovery().stop();
+
             // Clear the device reference FIRST to prevent compatibility checks during disconnection
             #[cfg(feature = "dlna-debug")]
             println!("🟡 DISCONNECT: Clearing device reference");

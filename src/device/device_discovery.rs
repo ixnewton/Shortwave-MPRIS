@@ -359,6 +359,16 @@ impl SwDeviceDiscovery {
         self.imp().is_scanning.set(false);
         self.notify_is_scanning();
     }
+
+    pub fn stop(&self) {
+        if self.is_scanning() {
+            debug!("Stopping device discovery scan...");
+            self.imp().is_scanning.set(false);
+            self.notify_is_scanning();
+            self.devices().clear();
+            debug!("Device discovery stopped and cleared");
+        }
+    }
 }
 
 impl Default for SwDeviceDiscovery {
