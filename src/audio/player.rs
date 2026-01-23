@@ -1208,15 +1208,26 @@ impl SwPlayer {
                 }
             };
 
-            // Clear the device reference
+            // Clear the device reference FIRST to prevent compatibility checks during disconnection
+            #[cfg(feature = "dlna-debug")]
+            println!("🟡 DISCONNECT: Clearing device reference");
             *self.imp().device.borrow_mut() = None;
             self.notify_has_device();
             self.notify_device();
 
             // Reset player state to Stopped to allow local playback
+            #[cfg(feature = "dlna-debug")]
+            println!("🟡 DISCONNECT: Resetting player state to Stopped");
             info!("PLAYER: Resetting player state for local playback");
             if let Some(sender) = self.imp().gst_sender.get() {
                 let _ = sender.send_blocking(GstreamerChange::PlaybackState(SwPlaybackState::Stopped));
+            }
+
+            // Clear any failure state that might have been set during device playback
+            #[cfg(feature = "dlna-debug")]
+            println!("🟡 DISCONNECT: Clearing any failure state");
+            if let Some(sender) = self.imp().gst_sender.get() {
+                let _ = sender.send_blocking(GstreamerChange::Failure(String::new()));
             }
 
             // Restore previous gstreamer volume for local playback
@@ -1228,6 +1239,12 @@ impl SwPlayer {
             debug!("Restore previous volume: {}", volume);
             self.set_volume(volume);
             
+            // Ensure UI state is fully reset by notifying all relevant properties
+            self.notify_state();
+            self.notify_has_station();
+            
+            #[cfg(feature = "dlna-debug")]
+            println!("🟡 DISCONNECT: ✅ Device disconnected - UI and state reset to local playback");
             info!("PLAYER: Device disconnected - ready for local playback");
         }
     }
