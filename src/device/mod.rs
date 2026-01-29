@@ -21,6 +21,7 @@ mod device;
 mod device_discovery;
 mod device_kind;
 mod device_model;
+mod ffmpeg_wrapper;
 
 pub use cast_sender::SwCastSender;
 pub use device::SwDevice;
@@ -28,3 +29,4 @@ pub use device_discovery::SwDeviceDiscovery;
 pub use device_kind::SwDeviceKind;
 pub use device_model::SwDeviceModel;
 pub use dlna_sender::{SwDlnaSender, get_local_ip_for_device};
+pub use ffmpeg_wrapper::{FfmpegWrapper, FfmpegCommand, FfmpegStatus, OutputFormat, StreamStartParams};

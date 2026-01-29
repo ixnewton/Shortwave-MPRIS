@@ -28,6 +28,8 @@ use glib::Properties;
 use gtk::glib;
 use log::{debug, error, info, warn};
 use url::Url;
+use uuid::Uuid;
+use super::{FfmpegWrapper, FfmpegCommand};
 
 // Helper function to get local IP address that can reach the DLNA device
 pub fn get_local_ip_for_device(device_url: &str) -> Result<String, Box<dyn Error>> {
@@ -180,7 +182,7 @@ fn fetch_device_services(device_url: &str) -> Result<(String, String), Box<dyn E
     }
 }
 
-mod imp {
+pub mod imp {
     use super::*;
 
     #[derive(Debug, Default, Properties)]
@@ -212,6 +214,9 @@ mod imp {
         pub ffmpeg_port: Cell<u16>,
         pub local_ip: RefCell<String>,
         pub original_stream_url: RefCell<String>,
+        
+        // FFmpeg wrapper for session management
+        pub ffmpeg_wrapper: RefCell<Option<FfmpegWrapper>>,
     }
 
     #[glib::object_subclass]
@@ -266,8 +271,56 @@ impl SwDlnaSender {
         glib::Object::new()
     }
 
+    /// Initialize the FFmpeg wrapper thread
+    fn init_ffmpeg_wrapper(&self) -> Result<(), Box<dyn Error>> {
+        let mut wrapper_ref = self.imp().ffmpeg_wrapper.borrow_mut();
+        if wrapper_ref.is_none() {
+            info!("DLNA: Initializing FFmpeg wrapper");
+            let mut wrapper = FfmpegWrapper::new();
+            wrapper.start()?;
+            *wrapper_ref = Some(wrapper);
+            info!("DLNA: FFmpeg wrapper initialized successfully");
+        }
+        Ok(())
+    }
+
+    /// Start FFmpeg streaming using the wrapper thread
+    fn start_ffmpeg_with_wrapper(&self, stream_url: &str, title: &str) -> Result<String, Box<dyn Error>> {
+        info!("DLNA: === STARTING FFMPEG WITH WRAPPER ===");
+        info!("DLNA: Starting FFmpeg with wrapper for URL: {}", stream_url);
+        
+        // Ensure wrapper is initialized
+        self.init_ffmpeg_wrapper()?;
+        
+        let imp = self.imp();
+        let local_ip = imp.local_ip.borrow().clone();
+        let port = imp.ffmpeg_port.get();
+        
+        // Get wrapper reference
+        let wrapper_ref = imp.ffmpeg_wrapper.borrow();
+        let wrapper = wrapper_ref.as_ref()
+            .ok_or("FFmpeg wrapper not initialized")?;
+        
+        // Generate stream ID
+        let stream_id = Uuid::new_v4().to_string();
+        
+        // Send start command
+        wrapper.send_command(FfmpegCommand::StartStream {
+            stream_url: stream_url.to_string(),
+            stream_id: stream_id.clone(),
+            force_restart: false,
+        })?;
+        
+        // Return the proxy URL
+        let proxy_url = format!("http://{}:{}/stream", local_ip, port);
+        info!("DLNA: FFmpeg wrapper started, proxy URL: {}", proxy_url);
+        
+        Ok(proxy_url)
+    }
+
     // Start FFmpeg streaming server asynchronously
     fn start_ffmpeg_server(&self) -> Result<(), Box<dyn Error>> {
+        warn!("DLNA: *** OLD FFMPEG START METHOD CALLED ***");
         let imp = self.imp();
         
         // Get the current stream URL
@@ -479,27 +532,37 @@ impl SwDlnaSender {
     pub fn stop_ffmpeg_server(&self) {
         let imp = self.imp();
         
-        // Kill the stored FFmpeg process if it exists
-        if let Some(mut child) = imp.ffmpeg_process.borrow_mut().take() {
-            info!("DLNA: Stopping FFmpeg process (PID: {})", child.id());
-            
-            // Force kill immediately - Rust's child.kill() sends SIGKILL on Unix
-            // This ensures immediate termination and prevents zombie processes
-            if let Err(e) = child.kill() {
-                warn!("DLNA: Failed to kill FFmpeg process: {}", e);
-            }
-            
-            // Immediately wait for the process to clean up zombie
-            match child.wait() {
-                Ok(status) => {
-                    info!("DLNA: FFmpeg process terminated with status: {}", status);
-                }
-                Err(e) => {
-                    warn!("DLNA: Error waiting for FFmpeg process termination: {}", e);
-                }
+        // First try to stop using the wrapper
+        if let Some(ref wrapper) = *imp.ffmpeg_wrapper.borrow() {
+            info!("DLNA: Stopping FFmpeg using wrapper");
+            if let Err(e) = wrapper.send_command(FfmpegCommand::StopStream) {
+                warn!("DLNA: Failed to send stop command to wrapper: {}", e);
             }
         } else {
-            info!("DLNA: No stored FFmpeg process to stop");
+            info!("DLNA: FFmpeg wrapper not initialized, using legacy cleanup");
+            
+            // Legacy cleanup for any remaining direct processes
+            if let Some(mut child) = imp.ffmpeg_process.borrow_mut().take() {
+                info!("DLNA: Stopping legacy FFmpeg process (PID: {})", child.id());
+                
+                // Force kill immediately - Rust's child.kill() sends SIGKILL on Unix
+                // This ensures immediate termination and prevents zombie processes
+                if let Err(e) = child.kill() {
+                    warn!("DLNA: Failed to kill FFmpeg process: {}", e);
+                }
+                
+                // Immediately wait for the process to clean up zombie
+                match child.wait() {
+                    Ok(status) => {
+                        info!("DLNA: FFmpeg process terminated with status: {}", status);
+                    }
+                    Err(e) => {
+                        warn!("DLNA: Error waiting for FFmpeg process termination: {}", e);
+                    }
+                }
+            } else {
+                info!("DLNA: No legacy FFmpeg process to stop");
+            }
         }
         
         // Additional cleanup: Kill any orphaned FFmpeg processes that might have been missed
@@ -762,21 +825,22 @@ impl SwDlnaSender {
                     return Err(format!("SetAVTransportURI failed: {}", status).into());
                 }
                 
-                // Step 2: Configure and start FFmpeg proxy
-                info!("DLNA: Step 2 - Configure and start FFmpeg proxy");
-                info!("DLNA: Using FFmpeg as transcoder and HTTP streaming server");
+                // Step 2: Configure and start FFmpeg proxy using wrapper
+                info!("DLNA: Step 2 - Configure and start FFmpeg proxy using wrapper");
+                info!("DLNA: Using FFmpeg wrapper for transcode and HTTP streaming server");
                 
                 // Store original stream URL for FFmpeg
                 let original_url = imp.stream_url.borrow().clone();
                 imp.original_stream_url.borrow_mut().clone_from(&original_url);
                 
-                info!("DLNA: Starting FFmpeg streaming server on {}:{}", local_ip, port);
+                info!("DLNA: Starting FFmpeg wrapper on {}:{}", local_ip, port);
                 info!("DLNA: Original stream URL: {}", original_url);
                 
-                self.start_ffmpeg_server()?;
+                // Start FFmpeg using wrapper
+                let proxy_url = self.start_ffmpeg_with_wrapper(&original_url, title)?;
                 
                 info!("DLNA: FFmpeg server started on {}:{}", local_ip, port);
-                info!("DLNA: Replacing external URL with FFmpeg URL: {}", ffmpeg_url);
+                info!("DLNA: Replacing external URL with FFmpeg URL: {}", proxy_url);
                 
                 // Step 3: Issue the play command to DLNA device
                 info!("DLNA: Step 3 - Issue play command to DLNA device");

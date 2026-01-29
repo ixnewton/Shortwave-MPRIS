@@ -523,13 +523,9 @@ impl SwPlayer {
     }
 
     pub async fn set_station(&self, station: SwStation) {
-        // For DLNA, don't auto-start playback - let user press play explicitly
-        // For local and Cast, maintain current behavior
-        let start_playback = if let Some(device) = self.device() {
-            !matches!(device.kind(), SwDeviceKind::Dlna)
-        } else {
-            true  // No device = local playback, auto-start
-        };
+        // Auto-start playback for all devices including DLNA
+        // This ensures selecting a new station immediately starts playing
+        let start_playback = true;
         
         self.set_station_with_playback(station, start_playback).await;
     }
@@ -542,32 +538,13 @@ impl SwPlayer {
         if let Some(url) = station.stream_url() {
             let url_str = url.to_string();
             
-            // Check Chromecast compatibility if a cast device is connected
-            // If device was cancelled, it will be None and no check will be performed
-            if let Some(device) = self.device() {
-                if device.kind() == SwDeviceKind::Cast {
-                    #[cfg(feature = "dlna-debug")]
-                    println!("🔍 STATION: Cast device connected - checking compatibility");
-                    
-                    // Check for incompatible formats
-                    if url_str.contains(".m3u8") || url_str.contains("/live/") || url_str.contains("playlist") {
-                        warn!("PLAYER: New station incompatible with Chromecast - showing error but keeping current stream");
-                        
-                        // Show error notification to user but don't change station
-                        if let Some(sender) = imp.gst_sender.get() {
-                            let _ = sender.send_blocking(GstreamerChange::Failure("Radio stream incompatible with cast device!".to_string()));
-                        }
-                        
-                        // Don't update station or stop playback - keep current Chromecast stream playing
-                        return;
-                    }
-                }
-            }
+            // Note: Cast compatibility is checked when starting playback, not when loading stations
+            // This allows users to select any station but shows compatibility error on play
         }
 
         // If we get here, the station is compatible or no Chromecast is connected
         // Sequence for play-new: stop current playback -> update station UI -> load/start output.
-        self.stop_playback().await;
+        self.stop_playback_for_station_change().await;
 
         *imp.station.borrow_mut() = Some(station.clone());
         self.notify_station();
@@ -624,25 +601,72 @@ impl SwPlayer {
             } else {
                 info!("PLAYER: Remote device selected - disabling local audio to prevent double playback");
                 
-                // Restore saved volume for remote devices when setting new station
+                // Handle remote device station changes
                 let device_kind = self.device().map(|d| d.kind());
                 if let Some(kind) = device_kind {
-                    let volume_key = match kind {
-                        SwDeviceKind::Cast => Key::PlaybackVolumeCast,
-                        SwDeviceKind::Dlna => Key::PlaybackVolumeDlna,
-                    };
-                    
-                    let saved_volume = settings_manager::double(volume_key);
-                    let saved_volume = if saved_volume <= 0.0 {
-                        info!("PLAYER: No saved volume found for {:?}, using default 50%", kind);
-                        0.5
-                    } else {
-                        info!("PLAYER: Restored saved volume {} for {:?} when setting new station", saved_volume, kind);
-                        saved_volume
-                    };
-                    
-                    info!("PLAYER: Applying saved volume {} for remote device {:?}", saved_volume, kind);
-                    self.set_volume(saved_volume);
+                    match kind {
+                        SwDeviceKind::Cast => {
+                            // Load new station on Cast device
+                            if let Some(url) = station.stream_url() {
+                                let title = station.title();
+                                let cover_url = station.custom_cover().map(|_| "".to_string()).unwrap_or_default();
+                                
+                                info!("PLAYER: Loading new station on Cast device: {}", title);
+                                if let Err(e) = self.cast_sender()
+                                    .load_media(&url.to_string(), &cover_url, &title)
+                                    .await
+                                {
+                                    // Check if this is a compatibility issue
+                                    let error_str = e.to_string();
+                                    let is_compatibility_error = error_str.contains("Load Failed") 
+                                        || error_str.contains("Invalid Request")
+                                        || error_str.contains("Media Channel Error");
+                                    
+                                    if is_compatibility_error {
+                                        let error_msg = format!("\"{}\" is not compatible with Cast device operation. Try Bluetooth connection?", title);
+                                        warn!("PLAYER: Cast device rejected media: {}", error_msg);
+                                        
+                                        // Send compatibility notification to UI
+                                        if let Some(sender) = self.imp().gst_sender.get() {
+                                            let _ = sender.send_blocking(GstreamerChange::Failure(error_msg));
+                                        }
+                                    } else {
+                                        error!("PLAYER: Failed to load media on Cast device: {}", e);
+                                    }
+                                } else {
+                                    info!("PLAYER: ✅ New station loaded on Cast device");
+                                }
+                            }
+                            
+                            // Restore saved volume
+                            let saved_volume = settings_manager::double(Key::PlaybackVolumeCast);
+                            let saved_volume = if saved_volume <= 0.0 {
+                                info!("PLAYER: No saved volume found for Cast, using default 50%");
+                                0.5
+                            } else {
+                                info!("PLAYER: Restored saved volume {} for Cast when setting new station", saved_volume);
+                                saved_volume
+                            };
+                            
+                            info!("PLAYER: Applying saved volume {} for Cast device", saved_volume);
+                            self.set_volume(saved_volume);
+                        }
+                        SwDeviceKind::Dlna => {
+                            // For DLNA, the station will be loaded when playback starts
+                            // Restore saved volume
+                            let saved_volume = settings_manager::double(Key::PlaybackVolumeDlna);
+                            let saved_volume = if saved_volume <= 0.0 {
+                                info!("PLAYER: No saved volume found for DLNA, using default 50%");
+                                0.5
+                            } else {
+                                info!("PLAYER: Restored saved volume {} for DLNA when setting new station", saved_volume);
+                                saved_volume
+                            };
+                            
+                            info!("PLAYER: Applying saved volume {} for DLNA device", saved_volume);
+                            self.set_volume(saved_volume);
+                        }
+                    }
                 }
             }
 
@@ -721,10 +745,38 @@ impl SwPlayer {
         if let Some(device) = self.device() {
             match device.kind() {
                 SwDeviceKind::Cast => {
-                    self.cast_sender()
-                        .start_playback()
-                        .await
-                        .handle_error("Unable to start Google Cast playback");
+                    if let Err(e) = self.cast_sender().start_playback().await {
+                        // Check if this is a compatibility issue
+                        let error_str = e.to_string();
+                        let is_compatibility_error = error_str.contains("Invalid Request")
+                            || error_str.contains("Media Channel Error")
+                            || error_str.contains("Did not receive request response");
+                        
+                        if is_compatibility_error {
+                            let station_name = self.station()
+                                .map(|s| s.title())
+                                .unwrap_or("Unknown station".to_string());
+                            let error_msg = format!("\"{}\" is not compatible with Cast devices. Try Bluetooth connection.", station_name);
+                            warn!("PLAYER: Cast playback failed: {}", error_msg);
+                            
+                            // Send compatibility notification to UI
+                            if let Some(sender) = self.imp().gst_sender.get() {
+                                let _ = sender.send_blocking(GstreamerChange::Failure(error_msg));
+                            }
+                        } else {
+                            error!("PLAYER: Failed to start Cast playback: {}", e);
+                            // Send generic error to UI
+                            if let Some(sender) = self.imp().gst_sender.get() {
+                                let _ = sender.send_blocking(GstreamerChange::Failure(format!("Unable to start Google Cast playback: {}", e)));
+                            }
+                        }
+                        
+                        // Set Stopped state since playback failed
+                        if let Some(sender) = self.imp().gst_sender.get() {
+                            let _ = sender.send_blocking(GstreamerChange::PlaybackState(SwPlaybackState::Stopped));
+                        }
+                        return;
+                    }
                     
                     // Set Playing state after Cast command completes
                     info!("PLAYER: Setting Chromecast playback state to Playing");
@@ -990,6 +1042,75 @@ impl SwPlayer {
         println!("🔵 TOGGLE: toggle_playback() completed");
     }
 
+    pub async fn stop_playback_for_station_change(&self) {
+        #[cfg(feature = "dlna-debug")]
+        {
+            println!("=== STOP FOR STATION CHANGE ===");
+            println!("🔴 STOP: stop_playback_for_station_change() called");
+        }
+        info!("PLAYER: stop_playback_for_station_change() called");
+        let imp = self.imp();
+
+        // Save device info before stopping
+        let device_before_stop = self.device();
+        let device_kind = device_before_stop.as_ref().map(|d| d.kind());
+        #[cfg(feature = "dlna-debug")]
+        println!("🔴 STOP: Device type: {:?}", device_kind);
+        info!("PLAYER: Device before stop: {:?}", device_kind);
+
+        // Discard recorded data when the stream stops
+        #[cfg(feature = "dlna-debug")]
+        println!("🔴 STOP: Stopping recording and resetting track");
+        imp.stop_recording(imp::RecordingStopReason::StoppedPlayback);
+        imp.reset_track();
+
+        // Stop GStreamer backend
+        #[cfg(feature = "dlna-debug")]
+        println!("🔴 STOP: Setting GStreamer to Null state");
+        imp.backend
+            .get()
+            .unwrap()
+            .borrow_mut()
+            .set_state(gstreamer::State::Null);
+
+        // NOTE: Don't send stop to Cast device when changing stations
+        // This prevents "Invalid Request" errors when nothing is playing
+        #[cfg(feature = "dlna-debug")]
+        println!("🔴 STOP: Skipping Cast stop for station change");
+
+        // Stop DLNA playback if DLNA device is active
+        if let Some(device) = device_before_stop {
+            match device.kind() {
+                SwDeviceKind::Dlna => {
+                    #[cfg(feature = "dlna-debug")]
+                    {
+                        println!("🔴 STOP: DLNA device detected - stopping DLNA playback");
+                        println!("🔴 STOP: Calling dlna_sender().stop_playback()");
+                    }
+                    info!("PLAYER: Stopping DLNA playback");
+                    self.dlna_sender().stop_ffmpeg_server();
+                    #[cfg(feature = "dlna-debug")]
+                    println!("🔴 STOP: ✅ FFmpeg server stopped");
+                }
+                SwDeviceKind::Cast => {
+                    #[cfg(feature = "dlna-debug")]
+                    println!("🔴 STOP: Cast device - NOT stopping (station change)");
+                    info!("PLAYER: Cast device - NOT stopping for station change");
+                }
+            }
+        } else {
+            #[cfg(feature = "dlna-debug")]
+            println!("🔴 STOP: No device active - local playback stopped");
+            info!("PLAYER: No device active - local playback stopped");
+        }
+
+        // Set player state to Stopped
+        if let Some(sender) = imp.gst_sender.get() {
+            let _ = sender.send_blocking(GstreamerChange::PlaybackState(SwPlaybackState::Stopped));
+        }
+        info!("PLAYER: ✅ Playback stopped for station change");
+    }
+
     pub async fn stop_playback(&self) {
         #[cfg(feature = "dlna-debug")]
         {
@@ -1024,10 +1145,10 @@ impl SwPlayer {
         // Stop Cast playback
         #[cfg(feature = "dlna-debug")]
         println!("🔴 STOP: Stopping Cast sender");
-        self.cast_sender()
-            .stop_playback()
-            .await
-            .handle_error("Unable to stop Google Cast playback");
+        if let Err(e) = self.cast_sender().stop_playback().await {
+            // Don't show error to user - Cast devices often reject stop when not playing
+            debug!("PLAYER: Cast stop playback returned (expected): {}", e);
+        }
 
         // Stop DLNA playback if DLNA device is active
         if let Some(device) = device_before_stop {
@@ -1144,36 +1265,60 @@ impl SwPlayer {
     }
 
     pub async fn connect_device(&self, device: &SwDevice) -> Result<(), Box<dyn std::error::Error>> {
-        // Check Chromecast compatibility before connecting
-        if device.kind() == SwDeviceKind::Cast {
-            if let Some(station) = self.station() {
-                if let Some(url) = station.stream_url() {
-                    let url_str = url.to_string();
-                    
-                    // Check for incompatible formats
-                    if url_str.contains(".m3u8") || url_str.contains("/live/") || url_str.contains("playlist") {
-                        let error_msg = "Radio stream incompatible with cast device!";
-                        warn!("PLAYER: Chromecast compatibility check failed: {}", error_msg);
-                        return Err(error_msg.into());
-                    }
-                } else {
-                    let error_msg = "No stream URL available for cast device!";
-                    warn!("PLAYER: Chromecast compatibility check failed: {}", error_msg);
-                    return Err(error_msg.into());
-                }
-            } else {
-                let error_msg = "Please select a radio station before connecting to cast device!";
-                warn!("PLAYER: Chromecast compatibility check failed: {}", error_msg);
-                return Err(error_msg.into());
-            }
-        }
+        // Note: Cast compatibility is determined by device response, not by checking URL
+        // This allows the device itself to determine what formats it supports
 
         let result = match device.kind() {
             SwDeviceKind::Cast => {
                 self.cast_sender()
                     .connect(&device.address())
                     .await
-                    .map_err(|e| Box::new(e) as Box<dyn std::error::Error>)
+                    .map_err(|e| Box::new(e) as Box<dyn std::error::Error>)?;
+                
+                // Stop any existing playback to prevent previous station from auto-playing
+                info!("PLAYER: Stopping any existing Cast playback");
+                if let Err(e) = self.cast_sender().stop_playback().await {
+                    // Don't treat this as an error - the device might not be playing anything
+                    debug!("PLAYER: Cast stop playback returned (expected): {}", e);
+                }
+                
+                // Load media after connecting for Cast devices
+                if let Some(station) = self.station() {
+                    if let Some(url) = station.stream_url() {
+                        let title = station.title();
+                        let cover_url = station.custom_cover().map(|_| "".to_string()).unwrap_or_default();
+                        
+                        info!("PLAYER: Loading media on Cast device: {}", title);
+                        if let Err(e) = self.cast_sender()
+                            .load_media(&url.to_string(), &cover_url, &title)
+                            .await
+                        {
+                            // Check if this is a compatibility issue
+                            let error_str = e.to_string();
+                            let is_compatibility_error = error_str.contains("Load Failed") 
+                                || error_str.contains("Invalid Request")
+                                || error_str.contains("Media Channel Error");
+                            
+                            if is_compatibility_error {
+                                let error_msg = format!("\"{}\" is not compatible with Cast device operation. Try Bluetooth connection?", title);
+                                warn!("PLAYER: Cast device rejected media: {}", error_msg);
+                                
+                                // Send compatibility notification to UI
+                                if let Some(sender) = self.imp().gst_sender.get() {
+                                    let _ = sender.send_blocking(GstreamerChange::Failure(error_msg));
+                                }
+                            } else {
+                                error!("PLAYER: Failed to load media on Cast device: {}", e);
+                            }
+                            
+                            return Err(Box::new(e));
+                        }
+                        
+                        info!("PLAYER: ✅ Media loaded successfully on Cast device");
+                    }
+                }
+                
+                Ok(())
             }
             SwDeviceKind::Dlna => {
                 // For DLNA, just connect to fetch service URLs - don't start FFmpeg yet
@@ -1201,15 +1346,7 @@ impl SwPlayer {
                         info!("PLAYER:   - Rendering Control URL: {:?}", dlna_sender.imp().rendering_control_url.borrow());
                         
                         // NOTE: FFmpeg proxy will be started when play button is pressed
-                        // This keeps device selection fast and non-blocking
-                        if let Some(station) = self.station() {
-                            info!("PLAYER: ℹ️ Station loaded - FFmpeg proxy will start when play is pressed");
-                            info!("PLAYER: Station: {}", station.title());
-                        } else {
-                            info!("PLAYER: ℹ️ No station loaded - select station and press play to start streaming");
-                        }
-                        
-                        info!("PLAYER: === DLNA DEVICE SELECTION COMPLETED ===");
+                        info!("PLAYER: ✅ DLNA device connection complete - ready for playback");
                         Ok(())
                     }
                     Err(e) => {
@@ -1240,7 +1377,38 @@ impl SwPlayer {
                 match device.kind() {
                     SwDeviceKind::Cast => {
                         info!("PLAYER: Starting Cast playback - stopping local audio");
-                        self.cast_sender().start_playback().await?;
+                        if let Err(e) = self.cast_sender().start_playback().await {
+                            // Check if this is a compatibility issue
+                            let error_str = e.to_string();
+                            let is_compatibility_error = error_str.contains("Invalid Request")
+                                || error_str.contains("Media Channel Error")
+                                || error_str.contains("Did not receive request response");
+                            
+                            if is_compatibility_error {
+                                let station_name = self.station()
+                                    .map(|s| s.title())
+                                    .unwrap_or("Unknown station".to_string());
+                                let error_msg = format!("\"{}\" is not compatible with Cast devices. Try Bluetooth connection.", station_name);
+                                warn!("PLAYER: Cast playback failed during connect: {}", error_msg);
+                                
+                                // Send compatibility notification to UI
+                                if let Some(sender) = self.imp().gst_sender.get() {
+                                    let _ = sender.send_blocking(GstreamerChange::Failure(error_msg));
+                                }
+                            } else {
+                                error!("PLAYER: Failed to start Cast playback during connect: {}", e);
+                                // Send generic error to UI
+                                if let Some(sender) = self.imp().gst_sender.get() {
+                                    let _ = sender.send_blocking(GstreamerChange::Failure(format!("Unable to start Google Cast playback: {}", e)));
+                                }
+                            }
+                            
+                            // Set Stopped state since playback failed
+                            if let Some(sender) = self.imp().gst_sender.get() {
+                                let _ = sender.send_blocking(GstreamerChange::PlaybackState(SwPlaybackState::Stopped));
+                            }
+                            return Err(Box::new(e) as Box<dyn std::error::Error>);
+                        }
                     }
                     SwDeviceKind::Dlna => {
                         info!("PLAYER: Starting DLNA playback - stopping local audio");
@@ -1298,10 +1466,10 @@ impl SwPlayer {
                     #[cfg(feature = "dlna-debug")]
                     println!("🟡 DISCONNECT: Stopping Cast playback");
                     info!("PLAYER: Stopping Cast playback");
-                    self.cast_sender()
-                        .stop_playback()
-                        .await
-                        .handle_error("Unable to stop Google Cast playback");
+                    if let Err(e) = self.cast_sender().stop_playback().await {
+                        // Don't show error to user - Cast devices often reject stop when not playing
+                        debug!("PLAYER: Cast stop playback returned during disconnect (expected): {}", e);
+                    }
                     
                     #[cfg(feature = "dlna-debug")]
                     println!("🟡 DISCONNECT: Disconnecting Cast device");

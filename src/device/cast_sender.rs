@@ -95,10 +95,25 @@ mod imp {
                     .unwrap()
                     .into();
 
+                // Determine content type based on stream URL
+                let stream_url = self.obj().stream_url();
+                let content_type = if stream_url.contains(".aac") {
+                    "audio/aac".into()
+                } else if stream_url.contains(".mp3") {
+                    "audio/mpeg".into()
+                } else if stream_url.contains(".m3u8") {
+                    "application/x-mpegURL".into()
+                } else if stream_url.contains(".ogg") || stream_url.contains(".opus") {
+                    "audio/ogg".into()
+                } else {
+                    // Default to generic audio for unknown formats
+                    "audio/*".into()
+                };
+                
                 let media_info = MediaInformation {
-                    content_id: self.obj().stream_url(),
+                    content_id: stream_url,
                     stream_type: StreamType::Live,
-                    content_type: "audio/*".into(),
+                    content_type,
                     metadata: Some(metadata),
                     ..Default::default()
                 };
