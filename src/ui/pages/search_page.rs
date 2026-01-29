@@ -23,7 +23,8 @@ use gtk::{glib, CompositeTemplate};
 use rand::seq::SliceRandom;
 
 use crate::api::{client, Error, StationRequest, SwStation, SwStationModel};
-use crate::ui::{DisplayError, SwStationDialog, SwStationRow};
+use crate::app::SwApplication;
+use crate::ui::{DisplayError, SwStationRow};
 
 mod imp {
     use super::*;
@@ -86,8 +87,11 @@ mod imp {
             let child_activate_func = |flowbox: &gtk::FlowBox, child: &gtk::FlowBoxChild| {
                 let row = child.child().unwrap().downcast::<SwStationRow>().unwrap();
                 if let Some(station) = row.station() {
-                    let station_dialog = SwStationDialog::new(&station);
-                    station_dialog.present(Some(flowbox));
+                    // Play the station directly when activated
+                    glib::spawn_future_local(async move {
+                        let player = SwApplication::default().player();
+                        player.set_station(station).await;
+                    });
                 }
             };
 
@@ -104,8 +108,12 @@ mod imp {
                 .connect_activate(|gv: &gtk::GridView, pos| {
                     let model = gv.model().unwrap();
                     let station = model.item(pos).unwrap().downcast::<SwStation>().unwrap();
-                    let station_dialog = SwStationDialog::new(&station);
-                    station_dialog.present(Some(gv));
+                    
+                    // Play the station directly when activated
+                    glib::spawn_future_local(async move {
+                        let player = SwApplication::default().player();
+                        player.set_station(station).await;
+                    });
                 });
 
             self.stack.set_visible_child_name("spinner");

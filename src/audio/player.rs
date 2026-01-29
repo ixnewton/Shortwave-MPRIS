@@ -746,42 +746,31 @@ impl SwPlayer {
             match device.kind() {
                 SwDeviceKind::Cast => {
                     if let Err(e) = self.cast_sender().start_playback().await {
-                        // Check if this is a compatibility issue
+                        // Check if this is a compatibility issue and show appropriate message
                         let error_str = e.to_string();
                         let is_compatibility_error = error_str.contains("Invalid Request")
                             || error_str.contains("Media Channel Error")
                             || error_str.contains("Did not receive request response");
                         
                         if is_compatibility_error {
-                            let station_name = self.station()
-                                .map(|s| s.title())
-                                .unwrap_or("Unknown station".to_string());
-                            let error_msg = format!("\"{}\" is not compatible with Cast devices. Try Bluetooth connection.", station_name);
-                            warn!("PLAYER: Cast playback failed: {}", error_msg);
-                            
-                            // Send compatibility notification to UI
-                            if let Some(sender) = self.imp().gst_sender.get() {
-                                let _ = sender.send_blocking(GstreamerChange::Failure(error_msg));
+                            if let Some(station) = self.station() {
+                                let station_name = station.title();
+                                let error_msg = format!("\"{}\" is not compatible with Cast devices.\nTry Bluetooth connection.", station_name);
+                                // Create a fake error to use with handle_error
+                                let compat_err = std::io::Error::new(std::io::ErrorKind::Other, error_msg);
+                                Err::<(), std::io::Error>(compat_err).handle_error("");
+                            } else {
+                                Err::<(), cast_sender::Error>(e).handle_error("Unable to start Google Cast playback");
                             }
                         } else {
-                            error!("PLAYER: Failed to start Cast playback: {}", e);
-                            // Send generic error to UI
-                            if let Some(sender) = self.imp().gst_sender.get() {
-                                let _ = sender.send_blocking(GstreamerChange::Failure(format!("Unable to start Google Cast playback: {}", e)));
-                            }
+                            Err::<(), cast_sender::Error>(e).handle_error("Unable to start Google Cast playback");
                         }
-                        
-                        // Set Stopped state since playback failed
+                    } else {
+                        // Set Playing state after Cast command completes
+                        info!("PLAYER: Setting Chromecast playback state to Playing");
                         if let Some(sender) = self.imp().gst_sender.get() {
-                            let _ = sender.send_blocking(GstreamerChange::PlaybackState(SwPlaybackState::Stopped));
+                            let _ = sender.send_blocking(GstreamerChange::PlaybackState(SwPlaybackState::Playing));
                         }
-                        return;
-                    }
-                    
-                    // Set Playing state after Cast command completes
-                    info!("PLAYER: Setting Chromecast playback state to Playing");
-                    if let Some(sender) = self.imp().gst_sender.get() {
-                        let _ = sender.send_blocking(GstreamerChange::PlaybackState(SwPlaybackState::Playing));
                     }
                 }
                 SwDeviceKind::Dlna => {
@@ -1270,10 +1259,25 @@ impl SwPlayer {
 
         let result = match device.kind() {
             SwDeviceKind::Cast => {
-                self.cast_sender()
+                if let Err(e) = self.cast_sender()
                     .connect(&device.address())
                     .await
-                    .map_err(|e| Box::new(e) as Box<dyn std::error::Error>)?;
+                {
+                    // Check if this is a compatibility issue with the current station
+                    let error_str = e.to_string();
+                    let is_compatibility_error = error_str.contains("Invalid Request")
+                        || error_str.contains("Media Channel Error");
+                    
+                    if is_compatibility_error {
+                        if let Some(station) = self.station() {
+                            let station_name = station.title();
+                            let error_msg = format!("\"{}\" is not compatible with Cast device operation. Try Bluetooth connection?", station_name);
+                            return Err(error_msg.into());
+                        }
+                    }
+                    
+                    return Err(Box::new(e) as Box<dyn std::error::Error>);
+                }
                 
                 // Stop any existing playback to prevent previous station from auto-playing
                 info!("PLAYER: Stopping any existing Cast playback");
@@ -1377,38 +1381,7 @@ impl SwPlayer {
                 match device.kind() {
                     SwDeviceKind::Cast => {
                         info!("PLAYER: Starting Cast playback - stopping local audio");
-                        if let Err(e) = self.cast_sender().start_playback().await {
-                            // Check if this is a compatibility issue
-                            let error_str = e.to_string();
-                            let is_compatibility_error = error_str.contains("Invalid Request")
-                                || error_str.contains("Media Channel Error")
-                                || error_str.contains("Did not receive request response");
-                            
-                            if is_compatibility_error {
-                                let station_name = self.station()
-                                    .map(|s| s.title())
-                                    .unwrap_or("Unknown station".to_string());
-                                let error_msg = format!("\"{}\" is not compatible with Cast devices. Try Bluetooth connection.", station_name);
-                                warn!("PLAYER: Cast playback failed during connect: {}", error_msg);
-                                
-                                // Send compatibility notification to UI
-                                if let Some(sender) = self.imp().gst_sender.get() {
-                                    let _ = sender.send_blocking(GstreamerChange::Failure(error_msg));
-                                }
-                            } else {
-                                error!("PLAYER: Failed to start Cast playback during connect: {}", e);
-                                // Send generic error to UI
-                                if let Some(sender) = self.imp().gst_sender.get() {
-                                    let _ = sender.send_blocking(GstreamerChange::Failure(format!("Unable to start Google Cast playback: {}", e)));
-                                }
-                            }
-                            
-                            // Set Stopped state since playback failed
-                            if let Some(sender) = self.imp().gst_sender.get() {
-                                let _ = sender.send_blocking(GstreamerChange::PlaybackState(SwPlaybackState::Stopped));
-                            }
-                            return Err(Box::new(e) as Box<dyn std::error::Error>);
-                        }
+                        self.cast_sender().start_playback().await?;
                     }
                     SwDeviceKind::Dlna => {
                         info!("PLAYER: Starting DLNA playback - stopping local audio");

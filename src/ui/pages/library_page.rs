@@ -27,7 +27,7 @@ use crate::config;
 use crate::database::SwLibraryStatus;
 use crate::i18n::*;
 use crate::settings::{settings_manager, Key};
-use crate::ui::{SwStationDialog, SwStationRow};
+use crate::ui::SwStationRow;
 
 mod imp {
     use super::*;
@@ -98,8 +98,12 @@ mod imp {
             self.gridview.connect_activate(|gridview, pos| {
                 let model = gridview.model().unwrap();
                 let station = model.item(pos).unwrap().downcast::<SwStation>().unwrap();
-                let station_dialog = SwStationDialog::new(&station);
-                station_dialog.present(Some(gridview));
+                
+                // Play the station directly when activated
+                glib::spawn_future_local(async move {
+                    let player = SwApplication::default().player();
+                    player.set_station(station).await;
+                });
             });
 
             // Setup empty state page

@@ -95,7 +95,26 @@ mod imp {
                                 .player()
                                 .connect_device(&device)
                                 .await;
-                            res.handle_error("Unable to connect with device");
+                            
+                            // Check if this is a Cast compatibility error
+                            if let Err(ref e) = res {
+                                let error_str = e.to_string();
+                                let is_compatibility_error = error_str.contains("Invalid Request")
+                                    || error_str.contains("Media Channel Error");
+                                
+                                if is_compatibility_error && device.kind() == crate::device::SwDeviceKind::Cast {
+                                    if let Some(station) = SwApplication::default().player().station() {
+                                        let station_name = station.title();
+                                        let error_msg = format!("\"{}\" is not compatible with Cast device operation. Try Bluetooth connection?", station_name);
+                                        Err::<(), _>(std::io::Error::new(std::io::ErrorKind::Other, error_msg))
+                                            .handle_error("");
+                                    } else {
+                                        res.handle_error("Unable to connect with device");
+                                    }
+                                } else {
+                                    res.handle_error("Unable to connect with device");
+                                }
+                            }
 
                             if res.is_ok() {
                                 dialog.close();
