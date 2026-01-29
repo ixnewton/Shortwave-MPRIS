@@ -745,6 +745,40 @@ impl SwPlayer {
         if let Some(device) = self.device() {
             match device.kind() {
                 SwDeviceKind::Cast => {
+                    // Load media before starting playback (since we removed it from connect_device)
+                    if let Some(station) = self.station() {
+                        if let Some(url) = station.stream_url() {
+                            let title = station.title();
+                            let cover_url = station.custom_cover().map(|_| "".to_string()).unwrap_or_default();
+                            
+                            info!("PLAYER: Loading media on Cast device for playback: {}", title);
+                            if let Err(e) = self.cast_sender()
+                                .load_media(&url.to_string(), &cover_url, &title)
+                                .await
+                            {
+                                // Check if this is a compatibility issue
+                                let error_str = e.to_string();
+                                let is_compatibility_error = error_str.contains("Load Failed") 
+                                    || error_str.contains("Invalid Request")
+                                    || error_str.contains("Media Channel Error");
+                                
+                                if is_compatibility_error {
+                                    let error_msg = format!("\"{}\" is not compatible with Cast device operation. Try Bluetooth connection?", title);
+                                    warn!("PLAYER: Cast device rejected media: {}", error_msg);
+                                    
+                                    // Send compatibility notification to UI
+                                    if let Some(sender) = self.imp().gst_sender.get() {
+                                        let _ = sender.send_blocking(GstreamerChange::Failure(error_msg));
+                                    }
+                                    return;
+                                } else {
+                                    Err::<(), cast_sender::Error>(e).handle_error("Failed to load media on Cast device");
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                    
                     if let Err(e) = self.cast_sender().start_playback().await {
                         // Check if this is a compatibility issue and show appropriate message
                         let error_str = e.to_string();
@@ -1310,41 +1344,9 @@ impl SwPlayer {
                     debug!("PLAYER: Cast stop playback returned (expected): {}", e);
                 }
                 
-                // Load media after connecting for Cast devices
-                if let Some(station) = self.station() {
-                    if let Some(url) = station.stream_url() {
-                        let title = station.title();
-                        let cover_url = station.custom_cover().map(|_| "".to_string()).unwrap_or_default();
-                        
-                        info!("PLAYER: Loading media on Cast device: {}", title);
-                        if let Err(e) = self.cast_sender()
-                            .load_media(&url.to_string(), &cover_url, &title)
-                            .await
-                        {
-                            // Check if this is a compatibility issue
-                            let error_str = e.to_string();
-                            let is_compatibility_error = error_str.contains("Load Failed") 
-                                || error_str.contains("Invalid Request")
-                                || error_str.contains("Media Channel Error");
-                            
-                            if is_compatibility_error {
-                                let error_msg = format!("\"{}\" is not compatible with Cast device operation. Try Bluetooth connection?", title);
-                                warn!("PLAYER: Cast device rejected media: {}", error_msg);
-                                
-                                // Send compatibility notification to UI
-                                if let Some(sender) = self.imp().gst_sender.get() {
-                                    let _ = sender.send_blocking(GstreamerChange::Failure(error_msg));
-                                }
-                            } else {
-                                error!("PLAYER: Failed to load media on Cast device: {}", e);
-                            }
-                            
-                            return Err(Box::new(e));
-                        }
-                        
-                        info!("PLAYER: ✅ Media loaded successfully on Cast device");
-                    }
-                }
+                // Don't load media immediately - wait for user to press play
+                // This prevents auto-play when switching devices
+                info!("PLAYER: Cast device connected - media will be loaded when user presses play");
                 
                 Ok(())
             }
@@ -1386,30 +1388,72 @@ impl SwPlayer {
         };
 
         if result.is_ok() {
+            // Check if we're switching from local to remote device
+            let was_local_playback = self.device().is_none() && 
+                (self.state() == SwPlaybackState::Playing || self.state() == SwPlaybackState::Loading);
+            
             *self.imp().device.borrow_mut() = Some(device.clone());
             self.notify_has_device();
             self.notify_device();
-
-            // If something is already playing locally, start playback on the device immediately
-            if self.state() == SwPlaybackState::Playing || self.state() == SwPlaybackState::Loading
-            {
+            
+            if was_local_playback {
                 // Stop local GStreamer audio first to ensure clean transition
-                info!("PLAYER: Stopping local audio playback");
+                info!("PLAYER: Transitioning from local to remote device - stopping local audio");
                 self.imp()
                     .backend
                     .get()
                     .unwrap()
                     .borrow_mut()
                     .set_state(gstreamer::State::Null);
-
+                
+                // Start playback on the remote device since user was playing locally
+                info!("PLAYER: Auto-starting playback on remote device (was playing locally)");
                 match device.kind() {
                     SwDeviceKind::Cast => {
-                        info!("PLAYER: Starting Cast playback - stopping local audio");
-                        self.cast_sender().start_playback().await?;
+                        // Load media and start playback on Cast device
+                        if let Some(station) = self.station() {
+                            if let Some(url) = station.stream_url() {
+                                let title = station.title();
+                                let cover_url = station.custom_cover().map(|_| "".to_string()).unwrap_or_default();
+                                
+                                info!("PLAYER: Loading media on Cast device: {}", title);
+                                if let Err(e) = self.cast_sender()
+                                    .load_media(&url.to_string(), &cover_url, &title)
+                                    .await
+                                {
+                                    // Check if this is a compatibility issue
+                                    let error_str = e.to_string();
+                                    let is_compatibility_error = error_str.contains("Load Failed") 
+                                        || error_str.contains("Invalid Request")
+                                        || error_str.contains("Media Channel Error");
+                                    
+                                    if is_compatibility_error {
+                                        let error_msg = format!("\"{}\" is not compatible with Cast device operation. Try Bluetooth connection?", title);
+                                        warn!("PLAYER: Cast device rejected media: {}", error_msg);
+                                        
+                                        // Send compatibility notification to UI
+                                        if let Some(sender) = self.imp().gst_sender.get() {
+                                            let _ = sender.send_blocking(GstreamerChange::Failure(error_msg));
+                                        }
+                                    } else {
+                                        error!("PLAYER: Failed to load media on Cast device: {}", e);
+                                    }
+                                } else {
+                                    // Start playback if media loaded successfully
+                                    if let Err(e) = self.cast_sender().start_playback().await {
+                                        error!("PLAYER: Failed to start Cast playback: {}", e);
+                                    } else {
+                                        info!("PLAYER: ✅ Cast playback started");
+                                        if let Some(sender) = self.imp().gst_sender.get() {
+                                            let _ = sender.send_blocking(GstreamerChange::PlaybackState(SwPlaybackState::Playing));
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                     SwDeviceKind::Dlna => {
-                        info!("PLAYER: Starting DLNA playback - stopping local audio");
-                        // Load media and start playback on DLNA device immediately
+                        // Load media and start playback on DLNA device
                         if let Some(station) = self.station() {
                             if let Some(url) = station.stream_url() {
                                 if let Err(e) = self.dlna_sender()
@@ -1424,23 +1468,27 @@ impl SwPlayer {
                                     )
                                 {
                                     error!("PLAYER: Failed to load DLNA media: {}", e);
-                                    return Err(e);
-                                }
-                                
-                                // Start DLNA playback and set state to Playing
-                                if let Err(e) = self.dlna_sender().start_playback() {
-                                    error!("PLAYER: Failed to start DLNA playback: {}", e);
-                                    return Err(e);
-                                }
-                                
-                                // Manually set player state to Playing since we skip GStreamer
-                                info!("PLAYER: Setting DLNA playback state to Playing");
-                                if let Some(sender) = self.imp().gst_sender.get() {
-                                    let _ = sender.send_blocking(GstreamerChange::PlaybackState(SwPlaybackState::Playing));
+                                } else {
+                                    // Start DLNA playback if media loaded successfully
+                                    if let Err(e) = self.dlna_sender().start_playback() {
+                                        error!("PLAYER: Failed to start DLNA playback: {}", e);
+                                    } else {
+                                        info!("PLAYER: ✅ DLNA playback started");
+                                        if let Some(sender) = self.imp().gst_sender.get() {
+                                            let _ = sender.send_blocking(GstreamerChange::PlaybackState(SwPlaybackState::Playing));
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
+                }
+            } else if self.state() == SwPlaybackState::Playing || self.state() == SwPlaybackState::Loading {
+                // Switching between remote devices - don't auto-play
+                info!("PLAYER: Switching between remote devices - not auto-playing");
+                // Set state to Stopped since we're not auto-playing on the new device
+                if let Some(sender) = self.imp().gst_sender.get() {
+                    let _ = sender.send_blocking(GstreamerChange::PlaybackState(SwPlaybackState::Stopped));
                 }
             }
         }
