@@ -1256,6 +1256,30 @@ impl SwPlayer {
     pub async fn connect_device(&self, device: &SwDevice) -> Result<(), Box<dyn std::error::Error>> {
         // Note: Cast compatibility is determined by device response, not by checking URL
         // This allows the device itself to determine what formats it supports
+        
+        // Disconnect from any existing device before connecting to a new one
+        if let Some(current_device) = self.device() {
+            info!("PLAYER: Switching devices - disconnecting from current {:?} device", current_device.kind());
+            match current_device.kind() {
+                SwDeviceKind::Cast => {
+                    // Stop playback and disconnect from Cast device
+                    if let Err(e) = self.cast_sender().stop_playback().await {
+                        debug!("PLAYER: Cast stop playback returned during device switch (expected): {}", e);
+                    }
+                    self.cast_sender().disconnect().await;
+                    info!("PLAYER: ✅ Disconnected from Cast device");
+                }
+                SwDeviceKind::Dlna => {
+                    // Stop FFmpeg and disconnect from DLNA device
+                    self.dlna_sender().stop_ffmpeg_server();
+                    info!("PLAYER: ✅ Stopped FFmpeg server for DLNA device switch");
+                }
+            }
+            // Clear the current device reference
+            *self.imp().device.borrow_mut() = None;
+            self.notify_has_device();
+            self.notify_device();
+        }
 
         let result = match device.kind() {
             SwDeviceKind::Cast => {
