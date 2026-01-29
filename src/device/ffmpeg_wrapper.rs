@@ -363,10 +363,11 @@ impl FfmpegWrapper {
         }
         
         // Add HTTP server options (use default port 8080)
+        // Use .mp3 extension so Cast devices recognize the content type
         args.extend_from_slice(&[
             "-listen".to_string(),
             "1".to_string(),
-            "http://0.0.0.0:8080/stream".to_string(),
+            "http://0.0.0.0:8080/stream.mp3".to_string(),
         ]);
         
         info!("FFMPEG-WRAPPER: Starting FFmpeg with args: {:?}", args);
@@ -393,7 +394,7 @@ impl FfmpegWrapper {
         let session = FfmpegSession {
             stream_id: stream_id.to_string(),
             stream_url: stream_url.to_string(),
-            proxy_url: "http://localhost:8080/stream".to_string(),
+            proxy_url: "http://localhost:8080/stream.mp3".to_string(),
             process,
             start_time: Instant::now(),
             bytes_sent: Arc::new(AtomicU64::new(0)),

@@ -285,7 +285,7 @@ impl SwDlnaSender {
     }
 
     /// Start FFmpeg streaming using the wrapper thread
-    fn start_ffmpeg_with_wrapper(&self, stream_url: &str, title: &str) -> Result<String, Box<dyn Error>> {
+    pub fn start_ffmpeg_with_wrapper(&self, stream_url: &str, title: &str) -> Result<String, Box<dyn Error>> {
         info!("DLNA: === STARTING FFMPEG WITH WRAPPER ===");
         info!("DLNA: Starting FFmpeg with wrapper for URL: {}", stream_url);
         
@@ -293,8 +293,42 @@ impl SwDlnaSender {
         self.init_ffmpeg_wrapper()?;
         
         let imp = self.imp();
-        let local_ip = imp.local_ip.borrow().clone();
-        let port = imp.ffmpeg_port.get();
+        
+        // Get or detect local IP
+        let local_ip = {
+            let current_ip = imp.local_ip.borrow().clone();
+            if current_ip.is_empty() {
+                // No IP set yet - detect it (this happens when using Cast without DLNA)
+                info!("DLNA: No local IP set, detecting...");
+                match get_local_ip_for_device("http://8.8.8.8:80") {
+                    Ok(ip) => {
+                        info!("DLNA: Detected local IP: {}", ip);
+                        *imp.local_ip.borrow_mut() = ip.clone();
+                        ip
+                    }
+                    Err(e) => {
+                        warn!("DLNA: Failed to detect local IP: {}, using 127.0.0.1", e);
+                        let fallback = "127.0.0.1".to_string();
+                        *imp.local_ip.borrow_mut() = fallback.clone();
+                        fallback
+                    }
+                }
+            } else {
+                current_ip
+            }
+        };
+        
+        // Get or set port
+        let port = {
+            let current_port = imp.ffmpeg_port.get();
+            if current_port == 0 {
+                info!("DLNA: No port set, using default 8080");
+                imp.ffmpeg_port.set(8080);
+                8080
+            } else {
+                current_port
+            }
+        };
         
         // Get wrapper reference
         let wrapper_ref = imp.ffmpeg_wrapper.borrow();
@@ -311,8 +345,8 @@ impl SwDlnaSender {
             force_restart: false,
         })?;
         
-        // Return the proxy URL
-        let proxy_url = format!("http://{}:{}/stream", local_ip, port);
+        // Return the proxy URL with .mp3 extension for better content type recognition
+        let proxy_url = format!("http://{}:{}/stream.mp3", local_ip, port);
         info!("DLNA: FFmpeg wrapper started, proxy URL: {}", proxy_url);
         
         Ok(proxy_url)
