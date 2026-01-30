@@ -121,21 +121,14 @@ Shortwave-MPRIS is an enhanced version of the Shortwave internet radio player th
 ```bash
 yay -S shortwave-mpris-git
 ```
-
-### Flatpak
-```bash
-flatpak install https://flathub.org/repo/appstream/de.haeckerfelix.Shortwave.flatpakref
-```
-
 ### Source Build
 ```bash
-git clone https://gitlab.gnome.org/World/Shortwave.git
-cd Shortwave
+git clone https://github.com/ixnewton/Shortwave-MPRIS.git
+cd Shortwave-MPRIS
 meson --prefix=/usr build
 ninja -C build
 sudo ninja -C build install
 ```
-
 ## Configuration
 
 ### Environment Variables
@@ -189,5 +182,4 @@ GPL3 - See COPYING.md for details
 Contributions welcome! Please see CODE_OF_CONDUCT.md for guidelines.
 
 ## Support
-- Matrix: #shortwave:gnome.org
-- Issues: https://gitlab.gnome.org/World/Shortwave/-/issues
+- Issues: https://github.com/ixnewton/Shortwave-MPRIS/issues
