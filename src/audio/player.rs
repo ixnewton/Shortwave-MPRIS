@@ -90,6 +90,7 @@ mod imp {
         // Cast FFmpeg proxy state
         pub cast_proxy_active: Cell<bool>,
         pub cast_proxy_url: RefCell<Option<String>>,
+        pub cast_proxy_playback_started: Cell<bool>,
     }
 
     #[glib::object_subclass]
@@ -610,6 +611,15 @@ impl SwPlayer {
                 if let Some(kind) = device_kind {
                     match kind {
                         SwDeviceKind::Cast => {
+                            // Stop any existing FFmpeg proxy before loading new station
+                            if self.imp().cast_proxy_active.get() {
+                                info!("PLAYER: Stopping existing FFmpeg proxy before loading new station");
+                                self.dlna_sender().stop_ffmpeg_server();
+                                self.imp().cast_proxy_active.set(false);
+                                *self.imp().cast_proxy_url.borrow_mut() = None;
+                                self.imp().cast_proxy_playback_started.set(false);
+                            }
+                            
                             // Load new station on Cast device
                             if let Some(url) = station.stream_url() {
                                 let title = station.title();
@@ -646,7 +656,7 @@ impl SwPlayer {
                                                     self.imp().cast_proxy_active.set(false);
                                                     *self.imp().cast_proxy_url.borrow_mut() = None;
                                                     
-                                                    let error_msg = format!("\"{}\" is not compatible with Cast device operation. Try Bluetooth connection?", title);
+                                                    let error_msg = format!("\"{}\" failed to play on Cast device: {}. The stream format could not be transcoded.", title, e2);
                                                     if let Some(sender) = self.imp().gst_sender.get() {
                                                         let _ = sender.send_blocking(GstreamerChange::Failure(error_msg));
                                                     }
@@ -656,7 +666,7 @@ impl SwPlayer {
                                             }
                                             Err(ffmpeg_err) => {
                                                 warn!("PLAYER: Failed to start FFmpeg proxy: {}", ffmpeg_err);
-                                                let error_msg = format!("\"{}\" is not compatible with Cast device operation. Try Bluetooth connection?", title);
+                                                let error_msg = format!("\"{}\" failed to start FFmpeg proxy: {}. The stream may not be supported.", title, ffmpeg_err);
                                                 if let Some(sender) = self.imp().gst_sender.get() {
                                                     let _ = sender.send_blocking(GstreamerChange::Failure(error_msg));
                                                 }
@@ -704,8 +714,22 @@ impl SwPlayer {
 
             // Start playback on remote devices if requested
             if start_playback && self.device().is_some() {
-                // Start playback which will handle state transitions internally
-                self.start_playback().await;
+                // Check if Cast proxy is already active and loaded
+                if let Some(device) = self.device() {
+                    if device.kind() == SwDeviceKind::Cast && self.imp().cast_proxy_active.get() {
+                        info!("PLAYER: Cast proxy already active, skipping redundant start_playback()");
+                        // Set playback state to Playing since media is already loaded
+                        if let Some(sender) = self.imp().gst_sender.get() {
+                            let _ = sender.send_blocking(GstreamerChange::PlaybackState(SwPlaybackState::Playing));
+                        }
+                    } else {
+                        // Start playback which will handle state transitions internally
+                        self.start_playback().await;
+                    }
+                } else {
+                    // Start playback which will handle state transitions internally
+                    self.start_playback().await;
+                }
             }
         } else {
             error!("Station cannot be streamed. URL is not valid.");
@@ -815,7 +839,7 @@ impl SwPlayer {
                                                 self.imp().cast_proxy_active.set(false);
                                                 *self.imp().cast_proxy_url.borrow_mut() = None;
                                                 
-                                                let error_msg = format!("\"{}\" is not compatible with Cast device operation. Try Bluetooth connection?", title);
+                                                let error_msg = format!("\"{}\" failed to play on Cast device: {}. The stream format could not be transcoded.", title, e2);
                                                 if let Some(sender) = self.imp().gst_sender.get() {
                                                     let _ = sender.send_blocking(GstreamerChange::Failure(error_msg));
                                                 }
@@ -826,7 +850,7 @@ impl SwPlayer {
                                         }
                                         Err(ffmpeg_err) => {
                                             warn!("PLAYER: Failed to start FFmpeg proxy: {}", ffmpeg_err);
-                                            let error_msg = format!("\"{}\" is not compatible with Cast device operation. Try Bluetooth connection?", title);
+                                            let error_msg = format!("\"{}\" failed to start FFmpeg proxy: {}. The stream may not be supported.", title, ffmpeg_err);
                                             if let Some(sender) = self.imp().gst_sender.get() {
                                                 let _ = sender.send_blocking(GstreamerChange::Failure(error_msg));
                                             }
@@ -873,7 +897,7 @@ impl SwPlayer {
                                                 self.imp().cast_proxy_active.set(false);
                                                 *self.imp().cast_proxy_url.borrow_mut() = None;
                                                 
-                                                let error_msg = format!("\"{}\" is not compatible with Cast devices.\nTry Bluetooth connection.", title);
+                                                let error_msg = format!("\"{}\" Cast rejected proxy URL during load. 1", title);
                                                 let compat_err = std::io::Error::new(std::io::ErrorKind::Other, error_msg);
                                                 Err::<(), std::io::Error>(compat_err).handle_error("");
                                                 return;
@@ -886,7 +910,7 @@ impl SwPlayer {
                                                 self.imp().cast_proxy_active.set(false);
                                                 *self.imp().cast_proxy_url.borrow_mut() = None;
                                                 
-                                                let error_msg = format!("\"{}\" is not compatible with Cast devices.\nTry Bluetooth connection.", title);
+                                                let error_msg = format!("\"{}\" Cast rejected proxy URL during playback 2.", title);
                                                 let compat_err = std::io::Error::new(std::io::ErrorKind::Other, error_msg);
                                                 Err::<(), std::io::Error>(compat_err).handle_error("");
                                                 return;
@@ -899,7 +923,7 @@ impl SwPlayer {
                                         }
                                         Err(ffmpeg_err) => {
                                             warn!("PLAYER: Failed to start FFmpeg proxy: {}", ffmpeg_err);
-                                            let error_msg = format!("\"{}\" is not compatible with Cast devices.\nTry Bluetooth connection.", title);
+                                            let error_msg = format!("\"{}\" Failed to start FFmpeg proxy 3", title);
                                             let compat_err = std::io::Error::new(std::io::ErrorKind::Other, error_msg);
                                             Err::<(), std::io::Error>(compat_err).handle_error("");
                                         }
@@ -910,7 +934,7 @@ impl SwPlayer {
                             // Already using proxy and still failing
                             if let Some(station) = self.station() {
                                 let station_name = station.title();
-                                let error_msg = format!("\"{}\" is not compatible with Cast devices.\nTry Bluetooth connection.", station_name);
+                                let error_msg = format!("\"{}\" Already using proxy and still failing 4", station_name);
                                 let compat_err = std::io::Error::new(std::io::ErrorKind::Other, error_msg);
                                 Err::<(), std::io::Error>(compat_err).handle_error("");
                             } else {
@@ -1542,6 +1566,14 @@ impl SwPlayer {
                 info!("PLAYER: Auto-starting playback on remote device (was playing locally)");
                 match device.kind() {
                     SwDeviceKind::Cast => {
+                        // Stop any existing FFmpeg proxy before loading new station
+                        if self.imp().cast_proxy_active.get() {
+                            info!("PLAYER: Stopping existing FFmpeg proxy before auto-play");
+                            self.dlna_sender().stop_ffmpeg_server();
+                            self.imp().cast_proxy_active.set(false);
+                            *self.imp().cast_proxy_url.borrow_mut() = None;
+                        }
+                        
                         // Load media and start playback on Cast device
                         if let Some(station) = self.station() {
                             if let Some(url) = station.stream_url() {
@@ -1579,7 +1611,7 @@ impl SwPlayer {
                                                     self.imp().cast_proxy_active.set(false);
                                                     *self.imp().cast_proxy_url.borrow_mut() = None;
                                                     
-                                                    let error_msg = format!("\"{}\" is not compatible with Cast device operation. Try Bluetooth connection?", title);
+                                                    let error_msg = format!("\"{}\" failed to play on Cast device: {}. The stream format could not be transcoded.", title, e2);
                                                     if let Some(sender) = self.imp().gst_sender.get() {
                                                         let _ = sender.send_blocking(GstreamerChange::Failure(error_msg));
                                                     }
@@ -1600,7 +1632,7 @@ impl SwPlayer {
                                             }
                                             Err(ffmpeg_err) => {
                                                 warn!("PLAYER: Failed to start FFmpeg proxy: {}", ffmpeg_err);
-                                                let error_msg = format!("\"{}\" is not compatible with Cast device operation. Try Bluetooth connection?", title);
+                                                let error_msg = format!("\"{}\" failed to start FFmpeg proxy: {}. The stream may not be supported.", title, ffmpeg_err);
                                                 if let Some(sender) = self.imp().gst_sender.get() {
                                                     let _ = sender.send_blocking(GstreamerChange::Failure(error_msg));
                                                 }

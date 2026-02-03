@@ -105,7 +105,7 @@ mod imp {
                                 if is_compatibility_error && device.kind() == crate::device::SwDeviceKind::Cast {
                                     if let Some(station) = SwApplication::default().player().station() {
                                         let station_name = station.title();
-                                        let error_msg = format!("\"{}\" is not compatible with Cast device operation. Try Bluetooth connection?", station_name);
+                                        let error_msg = format!("\"{}\" Check if this is a Cast compatibility error 6", station_name);
                                         Err::<(), _>(std::io::Error::new(std::io::ErrorKind::Other, error_msg))
                                             .handle_error("");
                                     } else {
