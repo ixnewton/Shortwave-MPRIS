@@ -35,7 +35,7 @@ pkgbase = shortwave-mpris-git
 	conflicts = shortwave
 	conflicts = shortwave-mpris
 	options = !lto
-	source = git+https://github.com/ixnewton/Shortwave-MPRIS.git#branch=DLNA-UPnP-ffmpeg-aur
+	source = git+https://github.com/ixnewton/Shortwave-MPRIS.git#branch=DLNA-Cast-FFmpeg-AUR
 	sha256sums = SKIP
 
 pkgname = shortwave-mpris-git

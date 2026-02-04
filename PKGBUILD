@@ -27,7 +27,7 @@ makedepends=('git' 'rust' 'cargo' 'pkgconf' 'meson' 'ninja' 'blueprint-compiler'
 provides=('shortwave' 'shortwave-mpris')
 conflicts=('shortwave' 'shortwave-mpris')
 options=('!lto')
-source=("git+$url.git#branch=DLNA-UPnP-ffmpeg-aur")
+source=("git+$url.git#branch=DLNA-Cast-FFmpeg-AUR")
 sha256sums=('SKIP')
 
 pkgver() {
