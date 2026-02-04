@@ -1,83 +1,205 @@
-# Shortwave
+# Shortwave-MPRIS Feature Set
 
-![screenshot](data/screenshots/1.png)
-![screenshot](data/screenshots/4.png)
+## Overview
+Shortwave-MPRIS is an enhanced version of the Shortwave internet radio player adding to the already existing rich feature set. This version provides more complete MPRIS (Media Player Remote Interfacing Specification) support, adds DLNA/UPnP streaming, improved Google Cast support and advanced FFmpeg proxy capabilities for both DNLA & Cast of incompatible streams to ensure maximum compatibility with devices on the local network. Port 8080 is used for the FFmpeg proxy access which should be allowed by most firewalls.
 
-Shortwave is an internet radio player that provides access to a station database with over 50,000 stations.
+Testing has been limited to devices availble on the author's network.  Devices tested include: Google Home Speaker, Google Chromecast Ultra and Marantz-NR1504 DNLA device. Local play uses Gstreamer and PipeWire Audio. This is a work in progress and may not be compatible with all devices. 
 
-## Getting in Touch
-If you have any questions regarding the use or development of Shortwave,
-want to discuss design or simply hang out, please join us on our [#shortwave:gnome.org](https://matrix.to/#/#shortwave:gnome.org) matrix room.
+Radio streams found to be working are AAC, MP3, FLAC, m3u8/HLS encoded streams. FFmpeg transcoding is used for all DNLA play and as a fallback for Cast device play for m3u8/HLS streams.
 
-## Installation
-The recommended way of installing Shortwave is using the Flatpak package. If you don't have Flatpak installed yet, you can get it from [here](https://flatpak.org/setup/). You can install stable builds of Shortwave from Flathub by using this command:
+## Core Features
 
-`flatpak install https://flathub.org/repo/appstream/de.haeckerfelix.Shortwave.flatpakref`
+### 📻 Radio Streaming
+- **50,000+ Station Database**: Access to community-maintained radio station database via radio-browser.info
+- **Multiple Stream Formats**: Support for MP3, AAC, HLS, and other streaming formats
+- **GStreamer Backend**: Robust audio pipeline with format auto-detection
+- **Stream Metadata**: Real-time display of track titles and station information
+- **Automatic Fallback**: FFmpeg transcoding for incompatible stream formats
 
-Or by clicking this button:
+### 🎵 Playback Control
+- **Play/Pause/Stop**: Full control over radio playback
+- **Volume Control**: Precise volume adjustment with system integration
+- **Station Switching**: Quick switching between stations without stopping playback
+- **Auto-play**: Optional automatic playback when selecting stations
 
-<a href="https://flathub.org/apps/details/de.haeckerfelix.Shortwave"><img src="https://flathub.org/api/badge?svg&locale=en" width="240"/></a>
+### 📚 Library Management
+- **Favorites System**: Save and organize favorite radio stations
+- **Station Sorting**: Sort by name, country, language, genre, and more
+- **Search Functionality**: Full-text search across station database
+- **Popular Stations**: Quick access to trending and popular stations
+- **Random Discovery**: Discover new stations through random selection
+- **Offline Storage**: Local database for saved stations and metadata
 
-#### Nightly Builds
+### 🎮 MPRIS Integration
+- **System-wide Control**: Control playback from system media controls
+- **Desktop Integration**: Integration with GNOME, KDE, and other desktop environments
+- **Media Keys**: Support for keyboard media keys (play/pause, next, previous)
+- **Notification Display**: Track information in system notifications
+- **Background Playback**: Continue playback when application is hidden
+- **Next/Previous Track**: Navigate through favorite stations using MPRIS
 
-Development builds of Shortwave are available from the `gnome-nightly` Flatpak repository: 
+### 📺 Device Streaming
 
+#### DLNA/UPnP Support
+- **Device Discovery**: Automatic discovery of DLNA/UPnP devices on local network
+- **Device Command Discovery**: Discovered service commands are the basis for control of the device.
+- **Direct Streaming**: Stream radio stations to DLNA-compatible devices
+- **FFmpeg Integration**: Automatic transcoding for DLNA compatibility
+- **Volume Control**: Remote volume control on DLNA devices
+- **Multi-device Support**: Switch between multiple DLNA devices
+- **Wake-on-LAN**: PrepareForConnection support for devices in suspend mode
+
+#### Google Cast Support
+- **Chromecast Support**: Stream to Chromecast and Cast-enabled devices
+- **Media Metadata**: Display station and track information on Cast devices
+- **FFmpeg Proxy**: Automatic proxy for incompatible streams (HLS, AAC, etc.)
+- **Seamless Switching**: Switch between local and Cast playback
+- **Auto-proxy Detection**: Automatically detects when Cast devices reject streams
+- **MP3 Transcoding**: Converts streams to MP3 at 128kbps for Cast compatibility
+- **Reconnection Handling**: Automatic reconnection after suspend/resume scenarios
+- **Connection Testing**: Tests Cast device connection before attempting playback
+- **Smart Error Messages**: Specific error messages for different failure scenarios
+
+### 🔧 FFmpeg Proxy Features
+- **Automatic Activation**: Proxy starts only when needed for compatibility
+- **Local IP Detection**: Automatically detects network configuration
+- **Port 8080**: Uses firewall-friendly port for HTTP streaming
+- **Stream Naming**: Uses `.mp3` extension for better device recognition
+- **Clean Shutdown**: Proper cleanup when stopping or switching stations
+- **Error Handling**: Graceful fallback when proxy fails
+- **State Management**: Tracks proxy state to prevent duplicate attempts
+- **Station Change Support**: Handles proxy cleanup when switching stations
+
+### 🎨 User Interface
+- **Libadwaita Design**: Modern GNOME-style adaptive interface
+- **Dark/Light Theme**: Automatic theme switching based on system preferences
+- **Mobile Responsive**: Optimized for mobile devices and Linux phones
+- **Compact View**: Player gadget for mini-player mode
+- **Station Details**: Detailed information about each radio station
+- **Cover Art**: Display station logos and album art when available
+
+### 🔍 Advanced Features
+- **Track Recording**: Record currently playing tracks (where supported)
+- **Track History**: View history of played songs
+- **Station Ratings**: Rate and review radio stations
+- **Export/Import**: Backup and restore favorite stations
+- **Stream Statistics**: Monitor stream quality and connection status
+- **Network Diagnostics**: Tools for troubleshooting streaming issues
+
+### ⚙️ Technical Features
+- **Rust Implementation**: Memory-safe and performant native application
+- **Async/Await**: Non-blocking operations for smooth UI
+- **SQLite Database**: Efficient local storage for stations and metadata
+- **Network Discovery**: mDNS/Bonjour for device discovery
+- **SOAP Protocol**: DLNA/UPnP communication
+- **HTTP Server**: Built-in server for FFmpeg proxy streaming
+
+### 🔐 Privacy & Security
+- **No Telemetry**: No data collection or telemetry
+- **Local Storage**: All data stored locally
+- **Open Source**: Fully auditable codebase
+- **Minimal Permissions**: Only requests necessary permissions
+
+### 🌍 Internationalization
+- **Multi-language**: Translated into 40+ languages via GNOME Translation Project
+- **Unicode Support**: Full support for international station names and metadata
+- **Regional Content**: Easy access to local and regional radio stations
+
+## System Requirements
+
+### Dependencies
+- GTK4 >= 4.16.0
+- libadwaita >= 1.6.0
+- libshumate >= 1.3.0
+- GStreamer >= 1.16.0
+- FFmpeg >= 4.0.0
+- SQLite >= 3.20.0
+- Rust toolchain
+
+### Supported Architectures
+- x86_64 (Intel/AMD)
+- aarch64 (ARM64)
+
+### Supported Platforms
+- Linux distributions
+- Linux phones (PinePhone, Librem 5, etc.)
+- Steam Deck
+
+## Installation Methods
+
+### AUR (Arch Linux)
+```bash
+yay -S shortwave-mpris-git
 ```
-flatpak remote-add --if-not-exists gnome-nightly https://nightly.gnome.org/gnome-nightly.flatpakrepo
-flatpak install gnome-nightly de.haeckerfelix.Shortwave.Devel
+
+### Flatpak (Universal)
+```bash
+flatpak install flathub de.haeckerfelix.Shortwave
 ```
 
-## FAQ
-- **Why is it called 'Shortwave'?**
+### Source Build
+```bash
+git clone https://github.com/ixnewton/Shortwave-MPRIS.git
+cd Shortwave-MPRIS
+git checkout DLNA-Cast-FFmpeg-AUR
+meson --prefix=/usr build
+ninja -C build
+sudo ninja -C build install
+```
+## Configuration
 
-    Shortwave signals have a very long range because of their very good reflection properties. 
-Due to their long range, they can be received almost anywhere in the world. 
-The same applies to Internet radio stations, which can also be received almost anywhere in the world.
-That's why we decided to call the project 'Shortwave', because internet radio stations and shortwave radio stations share many characteristics.
+### Environment Variables
+- `RUST_LOG=shortwave=debug` - Enable debug logging
+- `RUST_BACKTRACE=1` - Enable backtrace on errors
 
-    If you want to know more about the naming process, you should read this [blog post](https://blogs.gnome.org/tbernard/2019/04/26/naming-your-app/)
+### GSettings Keys
+- Background playback toggle
+- Notification preferences
+- Audio device selection
+- Network settings
 
-- **Why I cannot edit stations anymore?**
+## Troubleshooting
 
-    The edit feature is disabled because of vandalism. I cannot change this. [More information here](http://www.radio-browser.info/gui/#/) and [here](https://github.com/segler-alex/radiobrowser-api/issues/39).
+### Debug Information
+Run with debug logging:
+```bash
+RUST_LOG=shortwave=debug RUST_BACKTRACE=1 shortwave
+```
 
-- **Is Shortwave compatible with Linux phones?**
+### Common Issues
+1. **DLNA devices not showing**: Check network firewall settings
+2. **Cast proxy not working**: Ensure port 8080 is open
+3. **Playback failures**: Check GStreamer plugin installation
+4. **MPRIS not working**: Verify D-Bus session is running
+5. **Cast device disconnected after suspend**: Application automatically attempts reconnection
+6. **"Already using proxy" error**: Fixed - proxy state is properly reset when changing stations
+7. **Cast compatibility errors**: FFmpeg proxy automatically attempts to transcode incompatible streams
 
-    Yes! We use the awesome [libadwaita](https://gitlab.gnome.org/GNOME/libadwaita) library to make the interface adaptive. The easiest way to get it on your phone is using the Flatpak package. [Flathub](https://flathub.org/apps/details/de.haeckerfelix.Shortwave) provides aarch64 packages.
+## Development
 
-![Adaptive Screenshot 1](data/screenshots/5.png)
-![Adaptive Screenshot 2](data/screenshots/3.png)
+### Building for Development
+```bash
+cargo build --bin shortwave
+```
 
-- **Which database does Shortwave use?**
+### Building Release
+```bash
+cargo build --release
+sudo meson install -C build
+```
 
-    [radio-browser.info](http://www.radio-browser.info/gui/#/). It's a community database, everybody can contribute information.
-    
-- **How I can get debug information?**
+### Code Structure
+- `src/audio/` - Audio playback and MPRIS implementation
+- `src/device/` - DLNA and Cast device support
+- `src/database/` - Library and station management
+- `src/ui/` - User interface components
+- `src/api/` - Radio station database integration
 
-    Run Shortwave using `RUST_BACKTRACE=1 RUST_LOG=shortwave=debug flatpak run de.haeckerfelix.Shortwave` (`.Devel`).
+## License
+GPL3 - See COPYING.md for details
 
-## Translations
-Translation of this project takes place on the GNOME translation platform,
-[Damned Lies](https://l10n.gnome.org/module/shortwave). For further
-information on how to join a language team, or even to create one, please see
-[GNOME Translation Project wiki page](https://wiki.gnome.org/TranslationProject).
+## Contributing
+Contributions welcome! Please see CODE_OF_CONDUCT.md for guidelines.
 
-## Building
-### Building with Flatpak + GNOME Builder
-Shortwave can be built and run with [GNOME Builder](https://wiki.gnome.org/Apps/Builder).
-Just clone the repo and hit the run button!
-
-You can get Builder from [here](https://wiki.gnome.org/Apps/Builder/Downloads).
-
-### Building it manually
-1. `git clone https://gitlab.gnome.org/World/Shortwave.git`
-2. `cd Shortwave`
-3. `meson --prefix=/usr build`
-4. `ninja -C build`
-5. `sudo ninja -C build install`
-
-To learn more about the required dependencies, please check the [Flatpak manifest](build-aux/de.haeckerfelix.Shortwave.Devel.json).
-
-## Code Of Conduct
-We follow the [GNOME Code of Conduct](/CODE_OF_CONDUCT.md).
-All communications in project spaces are expected to follow it.
+## Support
+- Issues: https://github.com/ixnewton/Shortwave-MPRIS/issues
