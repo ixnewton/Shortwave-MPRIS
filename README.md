@@ -118,23 +118,16 @@ Radio streams found to be working are AAC, MP3, FLAC, m3u8/HLS encoded streams. 
 
 ### Supported Architectures
 - x86_64 (Intel/AMD)
-- aarch64 (ARM64)
+- aarch64 (ARM64) (Not tested)
 
 ### Supported Platforms
 - Linux distributions
-- Linux phones (PinePhone, Librem 5, etc.)
-- Steam Deck
 
 ## Installation Methods
 
 ### AUR (Arch Linux)
 ```bash
 yay -S shortwave-mpris-git
-```
-
-### Flatpak (Universal)
-```bash
-flatpak install flathub de.haeckerfelix.Shortwave
 ```
 
 ### Source Build
