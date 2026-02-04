@@ -1,4 +1,4 @@
-# Maintainer: Your Name <your.email@example.com>
+# Maintainer: CxOrg <clx.org@cloud-org.uk>
 pkgname=shortwave-mpris-git
 pkgver=4.0.1.r181.g45bdd3a
 pkgrel=2
