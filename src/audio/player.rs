@@ -723,6 +723,13 @@ impl SwPlayer {
                             let _ = sender.send_blocking(GstreamerChange::PlaybackState(SwPlaybackState::Playing));
                         }
                     } else {
+                        // Test and reconnect Cast device if needed before starting playback
+                        if device.kind() == SwDeviceKind::Cast {
+                            if let Err(e) = self.test_and_reconnect_cast().await {
+                                warn!("PLAYER: Failed to reconnect to Cast device: {}", e);
+                                // Continue with start_playback which will show connection error
+                            }
+                        }
                         // Start playback which will handle state transitions internally
                         self.start_playback().await;
                     }
@@ -743,6 +750,16 @@ impl SwPlayer {
     pub async fn start_playback(&self) {
         if self.station().is_none() {
             return;
+        }
+        
+        // Test Cast device connection before starting playback (handles suspend/resume)
+        if let Some(device) = self.device() {
+            if device.kind() == SwDeviceKind::Cast {
+                if let Err(e) = self.test_and_reconnect_cast().await {
+                    warn!("PLAYER: Cast reconnection failed in start_playback: {}", e);
+                    // Continue - the error will be handled below when trying to play
+                }
+            }
         }
 
         // Set loading state immediately to show spinner (for local playback)
@@ -1697,6 +1714,43 @@ impl SwPlayer {
         }
 
         result
+    }
+
+    // Test Cast device connection and reconnect if needed (for suspend/resume scenarios)
+    pub async fn test_and_reconnect_cast(&self) -> Result<(), Box<dyn std::error::Error>> {
+        if let Some(device) = self.device() {
+            if device.kind() != SwDeviceKind::Cast {
+                return Ok(());
+            }
+            
+            info!("PLAYER: Testing Cast device connection after potential suspend/resume");
+            
+            // Check if Cast sender is still connected
+            if self.cast_sender().is_connected() {
+                info!("PLAYER: Cast device still connected, no reconnection needed");
+                return Ok(());
+            }
+            
+            // Cast device is not connected, attempt to reconnect
+            info!("PLAYER: Cast device disconnected, attempting to reconnect");
+            
+            // First disconnect to clean up any stale state
+            self.cast_sender().disconnect().await;
+            
+            // Attempt to reconnect
+            match self.cast_sender().connect(&device.address()).await {
+                Ok(_) => {
+                    info!("PLAYER: ✅ Successfully reconnected to Cast device");
+                    return Ok(());
+                }
+                Err(e) => {
+                    error!("PLAYER: Failed to reconnect to Cast device: {}", e);
+                    return Err(format!("Failed to reconnect to Cast device: {}", e).into());
+                }
+            }
+        }
+        
+        Ok(())
     }
 
     pub async fn disconnect_device(&self) {
