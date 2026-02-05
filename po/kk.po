@@ -1,0 +1,757 @@
+# Kazakh translation for shortwave.
+# Copyright (C) 2026 shortwave's COPYRIGHT HOLDER
+# This file is distributed under the same license as the shortwave package.
+# Baurzhan Muftakhidinov <baurthefirst@gmail.com>,  2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: shortwave main\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
+"POT-Creation-Date: 2026-01-12 20:45+0000\n"
+"PO-Revision-Date: 2026-01-25 22:09+0500\n"
+"Last-Translator: Baurzhan Muftakhidinov <baurthefirst@gmail.com>\n"
+"Language-Team: Kazakh <Kazakh>\n"
+"Language: kk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.8\n"
+
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:2
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
+msgid "@NAME@"
+msgstr "@NAME@"
+
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:3
+msgid "Internet Radio Player"
+msgstr "Интернет-радио плеері"
+
+#. General
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:4
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:10
+msgid "Listen to internet radio"
+msgstr "Интернет-радио тыңдаңыз"
+
+#. Translators: Search terms to find this application. Do NOT translate or
+#. localize the semicolons! The list MUST also end with a semicolon!
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:13
+msgid "Gradio;Radio;Stream;Wave;"
+msgstr "Gradio;Радио;Ағын;Толқын;"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:12
+msgid ""
+"Shortwave is an internet radio player that provides access to a station "
+"database with over 50,000 stations."
+msgstr ""
+"Shortwave — бұл 50 000-нан астам станциясы бар станциялар дерекқорына қол "
+"жеткізуді қамтамасыз ететін интернет-радио плеері."
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:15
+msgid "Features:"
+msgstr "Мүмкіндіктері:"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:17
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:64
+msgid "Create your own library where you can add your favorite stations"
+msgstr "Таңдаулы станцияларды қосуға болатын жеке кітапханаңызды жасаңыз"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:18
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:68
+msgid "Easily search and discover new radio stations"
+msgstr "Жаңа радиостанцияларды оңай іздеңіз және табыңыз"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:19
+msgid ""
+"Automatic recognition of tracks, with the possibility to save them "
+"individually"
+msgstr "Жолдарды автоматты түрде тану және оларды жеке-жеке сақтау мүмкіндігі"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:20
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:72
+msgid "Responsive application layout, compatible for small and large screens"
+msgstr "Шағын және үлкен экрандарға сәйкес келетін қолданбаның икемді жаймасы"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:21
+msgid "Play audio on supported network devices (e.g. Google Chromecasts)"
+msgstr ""
+"Қолдау көрсетілетін желілік құрылғыларда аудионы ойнату (мысалы, Google "
+"Chromecast)"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:22
+msgid "Seamless integration into the GNOME desktop environment"
+msgstr "GNOME жұмыс үстелі ортасымен үздіксіз интеграция"
+
+#. Branding
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:28
+msgid "Felix Häcker"
+msgstr "Felix Häcker"
+
+#: data/gtk/add_station_dialog.ui:14
+msgid "Add Local Station"
+msgstr "Жергілікті станцияны қосу"
+
+#: data/gtk/add_station_dialog.ui:64
+msgid "Change Station Cover"
+msgstr "Станция мұқабасын өзгерту"
+
+#: data/gtk/add_station_dialog.ui:95
+msgid ""
+"This station will only be added to your library. If you want it to be "
+"available to everyone, you should add it to the <a href=\"https://www.radio-"
+"browser.info/add\">public database</a>."
+msgstr ""
+"Бұл станция тек сіздің кітапханаңызға қосылады. Егер оның барлығына "
+"қолжетімді болғанын қаласаңыз, оны <a href=\"https://www.radio-browser.info/"
+"add\">жалпы дерекқорға</a> қосуыңыз керек."
+
+#: data/gtk/add_station_dialog.ui:107
+msgid "Name"
+msgstr "Аты"
+
+#: data/gtk/add_station_dialog.ui:115
+msgid "Stream URL"
+msgstr "Ағын URL адресі"
+
+#: data/gtk/add_station_dialog.ui:123
+msgid "Add Station"
+msgstr "Станцияны қосу"
+
+#: data/gtk/device_dialog.ui:7 data/gtk/player_view.ui:134
+msgid "Connect Device"
+msgstr "Құрылғыны қосу"
+
+#: data/gtk/device_dialog.ui:18
+msgid "Searching for Devices…"
+msgstr "Құрылғылар ізделуде…"
+
+#: data/gtk/device_dialog.ui:25
+msgid "Search for Devices"
+msgstr "Құрылғыларды іздеу"
+
+#: data/gtk/device_dialog.ui:41
+msgid "No Devices Available"
+msgstr "Қолжетімді құрылғылар жоқ"
+
+#: data/gtk/device_dialog.ui:42
+msgid "No supported Google Cast device found"
+msgstr "Қолдау көрсетілетін ешбір Google Cast құрылғысы табылмады"
+
+#: data/gtk/device_indicator.ui:7
+msgid "Disconnect From Device"
+msgstr "Құрылғыдан ажырату"
+
+#: data/gtk/library_page.ui:4
+msgid "Shortwave"
+msgstr "Shortwave"
+
+#: data/gtk/library_page.ui:15 data/gtk/search_page.ui:4
+msgid "Browse Stations"
+msgstr "Станцияларды шолу"
+
+#: data/gtk/library_page.ui:23
+msgid "Main Menu"
+msgstr "Негізгі мәзір"
+
+#: data/gtk/library_page.ui:92
+msgid "_Add New Stations"
+msgstr "Жаңа станцияларды қ_осу"
+
+#: data/gtk/library_page.ui:115
+msgid "_Sorting"
+msgstr "_Сұрыптау"
+
+#: data/gtk/library_page.ui:118
+msgid "_Name"
+msgstr "_Аты"
+
+#: data/gtk/library_page.ui:123
+msgid "_Language"
+msgstr "_Тілі"
+
+#: data/gtk/library_page.ui:128
+msgid "_Country"
+msgstr "_Ел"
+
+#: data/gtk/library_page.ui:133
+msgid "S_tate"
+msgstr "_Аймақ"
+
+#: data/gtk/library_page.ui:138
+msgid "_Bitrate"
+msgstr "_Битрейт"
+
+#: data/gtk/library_page.ui:145
+msgid "_Ascending"
+msgstr "Өс_у ретімен"
+
+#: data/gtk/library_page.ui:150
+msgid "_Descending"
+msgstr "К_ему ретімен"
+
+#: data/gtk/library_page.ui:159
+msgid "_Open radio-browser.info <sup>↗</sup>"
+msgstr "radio-browser.info _ашу <sup>↗</sup>"
+
+#: data/gtk/library_page.ui:166
+msgid "_Preferences"
+msgstr "Қ_алаулар"
+
+#: data/gtk/library_page.ui:170
+msgid "_Keyboard Shortcuts"
+msgstr "_Пернетақта жарлықтары"
+
+#: data/gtk/library_page.ui:174
+msgid "_About Shortwave"
+msgstr "Shortwave т_уралы"
+
+#: data/gtk/library_page.ui:178
+msgid "_Quit"
+msgstr "Ш_ығу"
+
+#: data/gtk/library_page.ui:186
+msgid "Add _Local Station"
+msgstr "_Жергілікті станцияны қосу"
+
+#: data/gtk/player_gadget.ui:40 data/gtk/player_toolbar.ui:92
+#: data/gtk/player_view.ui:158 data/gtk/station_row.ui:86
+msgid "Play"
+msgstr "Ойнату"
+
+#: data/gtk/player_gadget.ui:55 data/gtk/player_toolbar.ui:106
+#: data/gtk/player_view.ui:172
+msgid "Stop"
+msgstr "Тоқтату"
+
+#: data/gtk/player_gadget.ui:71 data/gtk/player_toolbar.ui:121
+#: data/gtk/player_view.ui:187
+msgid "Buffering…"
+msgstr "Буферлеу…"
+
+#: data/gtk/player_gadget.ui:118
+msgid "SHORTWAVE INTERNET RADIO"
+msgstr "Shortwave интернет-радиосы"
+
+#: data/gtk/player_gadget.ui:140 data/gtk/player_toolbar.ui:29
+#: data/gtk/player_view.ui:58 src/app.rs:254
+msgid "No Playback"
+msgstr "Ойнату жоқ"
+
+#: data/gtk/player_gadget.ui:199
+msgid "Close"
+msgstr "Жабу"
+
+#: data/gtk/player_gadget.ui:210
+msgid "Restore Window"
+msgstr "Терезені қалпына келтіру"
+
+#: data/gtk/player_view.ui:13
+msgid "Enable Gadget Mode"
+msgstr "Гаджет режимін іске қосу"
+
+#: data/gtk/player_view.ui:217
+msgid "Show Station Details"
+msgstr "Станция мәліметтерін көрсету"
+
+#: data/gtk/player_view.ui:268
+msgid "No Tracks"
+msgstr "Жолдар жоқ"
+
+#: data/gtk/player_view.ui:279
+msgid "Played tracks will appear here"
+msgstr "Ойнатылған жолдар осында пайда болады"
+
+#: data/gtk/player_view.ui:313
+msgid "An error occurred"
+msgstr "Қате орын алды"
+
+#: data/gtk/preferences_dialog.ui:9 data/gtk/shortcuts_dialog.ui:6
+msgid "General"
+msgstr "Жалпы"
+
+#: data/gtk/preferences_dialog.ui:12 data/gtk/shortcuts_dialog.ui:47
+msgid "Playback"
+msgstr "Ойнату"
+
+#: data/gtk/preferences_dialog.ui:15
+msgid "_Background Playback"
+msgstr "_Фондық ойнату"
+
+#: data/gtk/preferences_dialog.ui:16
+msgid "Playback continues when window is closed"
+msgstr "Терезе жабылған кезде ойнату жалғасады"
+
+#: data/gtk/preferences_dialog.ui:28
+msgid "_Notifications"
+msgstr "_Хабарландырулар"
+
+#: data/gtk/preferences_dialog.ui:29
+msgid "Show desktop notifications when a new track gets played"
+msgstr "Жаңа жол ойнатылғанда жұмыс үстелі хабарландыруларын көрсету"
+
+#. Translators: This is a noun / preferences group title
+#: data/gtk/preferences_dialog.ui:43
+msgid "Recording"
+msgstr "Жазу"
+
+#: data/gtk/preferences_dialog.ui:44
+msgid ""
+"Tracks are automatically recognised based on the station stream metadata "
+"and can be saved."
+msgstr ""
+"Жолдар станция ағынының метадеректері негізінде автоматты түрде танылады "
+"және сақталуы мүмкін."
+
+#: data/gtk/preferences_dialog.ui:47
+msgid "Track _Directory"
+msgstr "Жолдар _бумасы"
+
+#: data/gtk/preferences_dialog.ui:69
+msgid "Save _All Tracks"
+msgstr "_Барлық жолдарды сақтау"
+
+#: data/gtk/preferences_dialog.ui:70
+msgid "All recorded tracks are automatically saved in the track directory"
+msgstr "Барлық жазылған жолдар жол бумасында автоматты түрде сақталады"
+
+#: data/gtk/preferences_dialog.ui:84
+msgid "Decide for Each _Track"
+msgstr "Әр _жол үшін шешім қабылдау"
+
+#: data/gtk/preferences_dialog.ui:85
+msgid "Tracks are temporarily recorded and can be saved if desired"
+msgstr "Жолдар уақытша жазылады және қажет болса сақталуы мүмкін"
+
+#: data/gtk/preferences_dialog.ui:100
+msgid "Record N_othing"
+msgstr "_Ештеңе жазбау"
+
+#: data/gtk/preferences_dialog.ui:101
+msgid "Stations are played without recording"
+msgstr "Станциялар жазусыз ойнатылады"
+
+#: data/gtk/preferences_dialog.ui:120
+msgid "M_inimum Duration"
+msgstr "_Минималды ұзақтығы"
+
+#: data/gtk/preferences_dialog.ui:121
+msgid "Tracks shorter than the minimum duration will be ignored"
+msgstr "Минималды ұзақтықтан қысқа жолдар еленбейді"
+
+#: data/gtk/preferences_dialog.ui:136
+msgid "M_aximum Duration"
+msgstr "_Максималды ұзақтығы"
+
+#: data/gtk/preferences_dialog.ui:137
+msgid "Recording ends when the maximum duration is reached"
+msgstr "Максималды ұзақтыққа жеткенде жазу аяқталады"
+
+#: data/gtk/search_filter.ui:21
+msgid "Search"
+msgstr "Іздеу"
+
+#: data/gtk/search_filter.ui:22
+msgid "Search stations"
+msgstr "Станцияларды іздеу"
+
+#: data/gtk/search_filter.ui:32
+msgid "Search Filter"
+msgstr "Іздеу сүзгісі"
+
+#: data/gtk/search_page.ui:55
+msgid "Discover over 50,000 public stations"
+msgstr "50 000-нан астам жалпы станцияны табыңыз"
+
+#: data/gtk/search_page.ui:73
+msgid "Popular Stations"
+msgstr "Танымал станциялар"
+
+#: data/gtk/search_page.ui:95
+msgid "Discover New Stations"
+msgstr "Жаңа станцияларды табу"
+
+#: data/gtk/search_page.ui:118
+msgid ""
+"The displayed information is provided by <a href=\"https://www.radio-"
+"browser.info/\">radio-browser.info</a>.\n"
+"Shortwave has no influence on the listed stations."
+msgstr ""
+"Көрсетілген ақпаратты <a href=\"https://www.radio-browser.info/\">radio-"
+"browser.info</a> ұсынған.\n"
+"Shortwave тізімдегі станцияларға әсер ете алмайды."
+
+#: data/gtk/search_page.ui:184
+msgid "Loading…"
+msgstr "Жүктелуде…"
+
+#: data/gtk/search_page.ui:199
+msgid "No Results"
+msgstr "Нәтижелер жоқ"
+
+#: data/gtk/search_page.ui:200
+msgid ""
+"If the station you are looking for is missing, you can add it to the public "
+"database."
+msgstr "Егер сіз іздеген станция болмаса, оны жалпы дерекқорға қоса аласыз."
+
+#: data/gtk/search_page.ui:204
+msgid "Add Missing Station"
+msgstr "Жетіспейтін станцияны қосу"
+
+#: data/gtk/search_page.ui:222
+msgid "Unable to Retrieve Station Data"
+msgstr "Станция деректерін алу мүмкін емес"
+
+#: data/gtk/search_page.ui:225
+msgid "Try Again"
+msgstr "Қайталап көру"
+
+#: data/gtk/shortcuts_dialog.ui:9
+msgctxt "shortcut window"
+msgid "Search stations"
+msgstr "Станцияларды іздеу"
+
+#: data/gtk/shortcuts_dialog.ui:15
+msgctxt "shortcut window"
+msgid "Open shortcut window"
+msgstr "Жарлықтар терезесін ашу"
+
+#: data/gtk/shortcuts_dialog.ui:22
+msgctxt "shortcut window"
+msgid "Open application menu"
+msgstr "Қолданба мәзірін ашу"
+
+#: data/gtk/shortcuts_dialog.ui:27
+msgctxt "shortcut window"
+msgid "Open preferences"
+msgstr "Қалауларды ашу"
+
+#: data/gtk/shortcuts_dialog.ui:33
+msgctxt "shortcut window"
+msgid "Close the window"
+msgstr "Терезені жабу"
+
+#: data/gtk/shortcuts_dialog.ui:39
+msgctxt "shortcut window"
+msgid "Quit the application"
+msgstr "Қолданбадан шығу"
+
+#: data/gtk/shortcuts_dialog.ui:50
+msgctxt "shortcut window"
+msgid "Toggle playback"
+msgstr "Ойнатуды ауыстыру"
+
+#: data/gtk/shortcuts_dialog.ui:58 data/gtk/volume_control.ui:21
+msgid "Volume"
+msgstr "Дыбыс деңгейі"
+
+#: data/gtk/shortcuts_dialog.ui:61
+msgctxt "shortcut window"
+msgid "Toggle mute"
+msgstr "Дыбысты өшіру/қосу"
+
+#: data/gtk/shortcuts_dialog.ui:67
+msgctxt "shortcut window"
+msgid "Increase volume"
+msgstr "Дыбысты күшейту"
+
+#: data/gtk/shortcuts_dialog.ui:73
+msgctxt "shortcut window"
+msgid "Decrease volume"
+msgstr "Дыбысты азайту"
+
+#: data/gtk/station_dialog.ui:71
+msgid "_Play"
+msgstr "_Ойнату"
+
+#: data/gtk/station_dialog.ui:82
+msgid "_Add to Library"
+msgstr "Кітапханаға қ_осу"
+
+#: data/gtk/station_dialog.ui:94
+msgid "_Remove From Library"
+msgstr "_Кітапханадан өшіру"
+
+#: data/gtk/station_dialog.ui:111 data/gtk/station_row.ui:57
+msgid "Local Station"
+msgstr "Жергілікті станция"
+
+#: data/gtk/station_dialog.ui:112
+msgid ""
+"This station exists only in your library, and is not part of the public "
+"database"
+msgstr ""
+"Бұл станция тек сіздің кітапханаңызда бар және ол ортақ дерекқордың бөлігі "
+"емес"
+
+#: data/gtk/station_dialog.ui:126 data/gtk/station_row.ui:69
+msgid "Orphaned Station"
+msgstr "Иесіз станция"
+
+#: data/gtk/station_dialog.ui:127
+msgid ""
+"The information could not be updated, probably this station was removed "
+"from the public database"
+msgstr ""
+"Ақпаратты жаңарту мүмкін болмады, бұл станция ортақ дерекқордан өшірілген "
+"болуы мүмкін"
+
+#: data/gtk/station_dialog.ui:138
+msgid "Information"
+msgstr "Ақпарат"
+
+#: data/gtk/station_dialog.ui:142
+msgid "Language"
+msgstr "Тіл"
+
+#: data/gtk/station_dialog.ui:153
+msgid "Tags"
+msgstr "Тегтер"
+
+#: data/gtk/station_dialog.ui:166
+msgid "Location"
+msgstr "Орналасуы"
+
+#: data/gtk/station_dialog.ui:170
+msgid "Country"
+msgstr "Ел"
+
+#: data/gtk/station_dialog.ui:181
+msgid "State"
+msgstr "Аймақ"
+
+#: data/gtk/station_dialog.ui:216
+msgid "Audio"
+msgstr "Аудио"
+
+#: data/gtk/station_dialog.ui:219
+msgid "Bitrate"
+msgstr "Битрейт"
+
+#: data/gtk/station_dialog.ui:230
+msgid "Codec"
+msgstr "Кодек"
+
+#. This is a noun/label for the station stream url
+#: data/gtk/station_dialog.ui:241
+msgid "Stream"
+msgstr "Ағын"
+
+#: data/gtk/station_dialog.ui:247
+msgid "Copy"
+msgstr "Көшіру"
+
+#: data/gtk/track_dialog.ui:76
+msgid "Edit"
+msgstr "Түзету"
+
+#: data/gtk/track_dialog.ui:123
+msgid "The recorded track has been saved"
+msgstr "Жазылған трек сақталды"
+
+#: data/gtk/track_dialog.ui:139 data/gtk/track_dialog.ui:210
+#: data/gtk/track_row.ui:10 src/audio/player.rs:448
+msgid "Save Track"
+msgstr "Тректі сақтау"
+
+#: data/gtk/track_dialog.ui:150
+msgid "Play Track"
+msgstr "Тректі ойнату"
+
+#: data/gtk/track_dialog.ui:161
+msgid "Cancel Recording"
+msgstr "Жазудан бас тарту"
+
+#: data/gtk/track_dialog.ui:177
+msgid "Station"
+msgstr "Станция"
+
+#: data/gtk/track_dialog.ui:211
+msgid "Save this track when recording is complete"
+msgstr "Жазу аяқталған кезде бұл тректі сақтау"
+
+#: data/gtk/track_dialog.ui:225
+msgid "Recording behaviour can be changed in <a href=\"\">preferences</a>"
+msgstr "Жазу әрекетін <a href=\"\">қалаулар</a> ішінен өзгертуге болады"
+
+#: data/gtk/track_row.ui:21
+msgid "Saved"
+msgstr "Сақталды"
+
+#: data/gtk/volume_control.ui:9
+msgid "Toggle Mute"
+msgstr "Дыбысты өшіру/қосу"
+
+#: src/app.rs:85
+msgid "Track no longer available"
+msgstr "Трек енді қолжетімді емес"
+
+#: src/app.rs:109 src/app.rs:132
+msgid "This track is currently not being recorded"
+msgstr "Бұл трек қазір жазылып жатқан жоқ"
+
+#: src/app.rs:259
+#, rust-format
+msgid "Playing “{}”"
+msgstr "“{}” ойнатылуда"
+
+#: src/app.rs:354
+msgid "Active Playback"
+msgstr "Белсенді ойнату"
+
+#: src/audio/player.rs:458
+msgid "Don't Record"
+msgstr "Жазбау"
+
+#: src/audio/recording_state.rs:54 src/audio/recording_state.rs:56
+msgid "Not Recorded"
+msgstr "Жазылмаған"
+
+#: src/audio/recording_state.rs:55
+msgid "Ignored Track"
+msgstr "Еленбеген трек"
+
+#: src/audio/recording_state.rs:58
+msgid "Recording…"
+msgstr "Жазылуда…"
+
+#: src/audio/recording_state.rs:59 src/audio/recording_state.rs:60
+msgid "Recorded"
+msgstr "Жазылды"
+
+#: src/audio/recording_state.rs:62
+msgid "Below Threshold"
+msgstr "Табалдырықтан төмен"
+
+#: src/audio/recording_state.rs:63
+msgid "Cancelled"
+msgstr "Бас тартылды"
+
+#: src/audio/recording_state.rs:69
+msgid "Recording is deactivated in preferences"
+msgstr "Жазу қалаулар ішінде сөндірілген"
+
+#: src/audio/recording_state.rs:71
+msgid "The track contains a word that is on the ignore list"
+msgstr "Тректе елемеу тізіміндегі сөз бар"
+
+#: src/audio/recording_state.rs:74
+msgid ""
+"The track wasn't played from the beginning, so it can't be fully recorded"
+msgstr "Трек басынан бастап ойнатылмады, сондықтан оны толық жазу мүмкін емес"
+
+#: src/audio/recording_state.rs:77
+msgid "The track will be recorded until a new track gets played"
+msgstr "Трек жаңа трек ойнатылғанша жазылады"
+
+#: src/audio/recording_state.rs:79
+msgid "The track has been temporarily recorded"
+msgstr "Трек уақытша жазылды"
+
+#: src/audio/recording_state.rs:81
+msgid "The maximum recording duration has been reached"
+msgstr "Жазудың максималды ұзақтығына жетті"
+
+#: src/audio/recording_state.rs:84
+msgid ""
+"The track has been discarded as the duration was below the set threshold"
+msgstr ""
+"Трек ұзақтығы орнатылған табалдырықтан төмен болғандықтан өткізіп жіберілді"
+
+#: src/audio/recording_state.rs:86
+msgid "Recording has been cancelled"
+msgstr "Жазудан бас тартылды"
+
+#: src/device/device_discovery.rs:83
+msgid "Google Cast Device"
+msgstr "Google Cast құрылғысы"
+
+#: src/device/device_discovery.rs:86
+msgid "Unknown Model"
+msgstr "Белгісіз модель"
+
+#: src/ui/about_dialog.rs:45
+msgid "translator-credits"
+msgstr "Baurzhan Muftakhidinov <baurthefirst@gmail.com>"
+
+#: src/ui/about_dialog.rs:46
+msgid "Donate"
+msgstr "Демеушілік ету"
+
+#: src/ui/add_station_dialog.rs:94
+msgid "Select Station Cover"
+msgstr "Станция мұқабасын таңдау"
+
+#: src/ui/display_error.rs:50
+msgid "Show Details"
+msgstr "Мәліметтерді көрсету"
+
+#: src/ui/pages/library_page.rs:111
+#, rust-format
+msgid "Welcome to {}"
+msgstr "{} қош келдіңіз"
+
+#: src/ui/preferences_dialog.rs:139
+msgid "Select Save Directory"
+msgstr "Сақтау бумасын таңдау"
+
+#: src/ui/preferences_dialog.rs:140
+msgid "_Select"
+msgstr "_Таңдау"
+
+#: src/ui/preferences_dialog.rs:163
+#, rust-format
+msgid "{} min"
+msgid_plural "{} min"
+msgstr[0] "{} мин"
+
+#: src/ui/preferences_dialog.rs:172
+#, rust-format
+msgid "{} sec"
+msgid_plural "{} sec"
+msgstr[0] "{} сек"
+
+#: src/ui/station_dialog.rs:207
+#, rust-format
+msgid "{} kbit/s"
+msgstr "{} кбит/с"
+
+#: src/ui/station_dialog.rs:292
+msgid "Copied"
+msgstr "Көшірілді"
+
+#: src/ui/window.rs:226
+msgid "No Permission for Background Playback"
+msgstr "Фонда ойнатуға рұқсат жоқ"
+
+#: src/ui/window.rs:228
+msgid "“Run in Background” must be allowed for this app in system settings."
+msgstr ""
+"Жүйелік параметрлерде бұл қолданба үшін “Фонда орындау” рұқсаты берілуі "
+"керек."
+
+#: src/ui/window.rs:232
+msgid "Try Anyway"
+msgstr "Бәрібір көру"
+
+#: src/ui/window.rs:233
+msgid "Disable Background Playback"
+msgstr "Фонда ойнатуды сөндіру"
+
+#: src/utils.rs:51
+#, rust-format
+msgid "{} hour"
+msgid_plural "{} hours"
+msgstr[0] "{} сағат"
+
+#: src/utils.rs:57
+#, rust-format
+msgid "{} minute"
+msgid_plural "{} minutes"
+msgstr[0] "{} минут"
+
+#: src/utils.rs:62
+#, rust-format
+msgid "{} second"
+msgid_plural "{} seconds"
+msgstr[0] "{} секунд"

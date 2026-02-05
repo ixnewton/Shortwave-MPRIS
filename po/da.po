@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2025-02-13 05:11+0000\n"
-"PO-Revision-Date: 2025-02-17 17:46+0100\n"
+"POT-Creation-Date: 2025-08-11 00:16+0000\n"
+"PO-Revision-Date: 2025-08-18 18:07+0200\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -21,23 +21,23 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.4.2\n"
 
-#: data/de.haeckerfelix.Shortwave.desktop.in.in:3
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:2
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
 msgid "@NAME@"
 msgstr "@NAVN@"
 
-#: data/de.haeckerfelix.Shortwave.desktop.in.in:4
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:3
 msgid "Internet Radio Player"
 msgstr "Internetradioafspiller"
 
 #. General
-#: data/de.haeckerfelix.Shortwave.desktop.in.in:5
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:4
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:10
 msgid "Listen to internet radio"
 msgstr "Lyt til internetradio"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: data/de.haeckerfelix.Shortwave.desktop.in.in:14
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:13
 msgid "Gradio;Radio;Stream;Wave;"
 msgstr "Gradio;Radio;Stream;Strøm;Wave;Bølge;"
 
@@ -143,67 +143,6 @@ msgstr "Der blev ikke fundet nogen understøttet Google Cast-enhed"
 msgid "Disconnect From Device"
 msgstr "Afbryd forbindelse til enhed"
 
-#: data/gtk/help_overlay.ui:11 data/gtk/preferences_dialog.ui:9
-msgid "General"
-msgstr "Generelt"
-
-#: data/gtk/help_overlay.ui:14
-msgctxt "shortcut window"
-msgid "Open shortcut window"
-msgstr "Åbn genvejsvindue"
-
-#: data/gtk/help_overlay.ui:21
-msgctxt "shortcut window"
-msgid "Open application menu"
-msgstr "Åbn programmenu"
-
-#: data/gtk/help_overlay.ui:26
-msgctxt "shortcut window"
-msgid "Open preferences"
-msgstr "Åbn indstillinger"
-
-#: data/gtk/help_overlay.ui:32
-msgctxt "shortcut window"
-msgid "Close the window"
-msgstr "Luk vinduet"
-
-#: data/gtk/help_overlay.ui:38
-msgctxt "shortcut window"
-msgid "Quit the application"
-msgstr "Afslut programmet"
-
-# scootergrisen: fra gennemlæsning: Afspilning forbinder jeg med noget, som er optaget på forhånd. Jeg formoder, der her er tale om live, så "Lyt til" var måske bedre
-#: data/gtk/help_overlay.ui:46 data/gtk/preferences_dialog.ui:12
-msgid "Playback"
-msgstr "Afspilning"
-
-# scootergrisen: fra gennemlæsning: Afspilning forbinder jeg med noget, som er optaget på forhånd. Jeg formoder, der her er tale om live, så "Lyt til" var måske bedre
-# scootergrisen: "Start/stop afspilning"
-# scootergrisen: "Afspilning til/fra"
-#: data/gtk/help_overlay.ui:49
-msgctxt "shortcut window"
-msgid "Toggle playback"
-msgstr "Start/stop afspilning"
-
-#: data/gtk/help_overlay.ui:57 data/gtk/volume_control.ui:21
-msgid "Volume"
-msgstr "Lydstyrke"
-
-#: data/gtk/help_overlay.ui:60
-msgctxt "shortcut window"
-msgid "Toggle mute"
-msgstr "Lydløs til/fra"
-
-#: data/gtk/help_overlay.ui:66
-msgctxt "shortcut window"
-msgid "Increase volume"
-msgstr "Øg lydstyrken"
-
-#: data/gtk/help_overlay.ui:72
-msgctxt "shortcut window"
-msgid "Decrease volume"
-msgstr "Mindsk lydstyrken"
-
 #: data/gtk/library_page.ui:4
 msgid "Shortwave"
 msgstr "Shortwave"
@@ -216,63 +155,63 @@ msgstr "Gennemse stationer"
 msgid "Main Menu"
 msgstr "Hovedmenu"
 
-#: data/gtk/library_page.ui:92
+#: data/gtk/library_page.ui:91
 msgid "_Add New Stations"
 msgstr "_Tilføj nye stationer"
 
-#: data/gtk/library_page.ui:115
+#: data/gtk/library_page.ui:114
 msgid "_Sorting"
 msgstr "_Sortering"
 
-#: data/gtk/library_page.ui:118
+#: data/gtk/library_page.ui:117
 msgid "_Name"
 msgstr "_Navn"
 
-#: data/gtk/library_page.ui:123
+#: data/gtk/library_page.ui:122
 msgid "_Language"
 msgstr "_Sprog"
 
-#: data/gtk/library_page.ui:128
+#: data/gtk/library_page.ui:127
 msgid "_Country"
 msgstr "_Land"
 
-#: data/gtk/library_page.ui:133
+#: data/gtk/library_page.ui:132
 msgid "S_tate"
 msgstr "_Delstat"
 
-#: data/gtk/library_page.ui:138
+#: data/gtk/library_page.ui:137
 msgid "_Bitrate"
 msgstr "_Bithastighed"
 
-#: data/gtk/library_page.ui:145
+#: data/gtk/library_page.ui:144
 msgid "_Ascending"
 msgstr "S_tigende"
 
-#: data/gtk/library_page.ui:150
+#: data/gtk/library_page.ui:149
 msgid "_Descending"
 msgstr "_Faldende"
 
-#: data/gtk/library_page.ui:159
+#: data/gtk/library_page.ui:158
 msgid "_Open radio-browser.info <sup>↗</sup>"
 msgstr "_Åbn radio-browser.info <sup>↗</sup>"
 
-#: data/gtk/library_page.ui:166
+#: data/gtk/library_page.ui:165
 msgid "_Preferences"
 msgstr "_Indstillinger"
 
-#: data/gtk/library_page.ui:170
+#: data/gtk/library_page.ui:169
 msgid "_Keyboard Shortcuts"
 msgstr "_Tastaturgenveje"
 
-#: data/gtk/library_page.ui:174
+#: data/gtk/library_page.ui:173
 msgid "_About Shortwave"
 msgstr "_Om Shortwave"
 
-#: data/gtk/library_page.ui:178
+#: data/gtk/library_page.ui:177
 msgid "_Quit"
 msgstr "_Afslut"
 
-#: data/gtk/library_page.ui:186
+#: data/gtk/library_page.ui:185
 msgid "Add _Local Station"
 msgstr "Tilføj _lokal station"
 
@@ -297,7 +236,7 @@ msgid "SHORTWAVE INTERNET RADIO"
 msgstr "SHORTWAVE INTERNETRADIO"
 
 #: data/gtk/player_gadget.ui:140 data/gtk/player_toolbar.ui:29
-#: data/gtk/player_view.ui:58 src/app.rs:257
+#: data/gtk/player_view.ui:58 src/app.rs:251
 msgid "No Playback"
 msgstr "Ingen afspilning"
 
@@ -329,6 +268,15 @@ msgstr "Afspillede lydspor vises her"
 msgid "An error occurred"
 msgstr "Der opstod en fejl"
 
+#: data/gtk/preferences_dialog.ui:9 data/gtk/shortcuts_dialog.ui:6
+msgid "General"
+msgstr "Generelt"
+
+# scootergrisen: fra gennemlæsning: Afspilning forbinder jeg med noget, som er optaget på forhånd. Jeg formoder, der her er tale om live, så "Lyt til" var måske bedre
+#: data/gtk/preferences_dialog.ui:12 data/gtk/shortcuts_dialog.ui:41
+msgid "Playback"
+msgstr "Afspilning"
+
 #: data/gtk/preferences_dialog.ui:15
 msgid "_Background Playback"
 msgstr "_Afspilning i baggrunden"
@@ -355,8 +303,8 @@ msgid ""
 "Tracks are automatically recognised based on the station stream metadata and "
 "can be saved."
 msgstr ""
-"Lydsporene genkendes automatisk baseret på stationsstrømmens metadata og "
-"kan gemmes."
+"Lydsporene genkendes automatisk baseret på stationsstrømmens metadata og kan "
+"gemmes."
 
 #: data/gtk/preferences_dialog.ui:47
 msgid "Track _Directory"
@@ -426,7 +374,7 @@ msgstr "Opdag nye stationer"
 #: data/gtk/search_page.ui:135
 msgid ""
 "The displayed information is provided by <a href=\"https://www.radio-browser."
-"info/\">radio-browser.info</a>. \n"
+"info/\">radio-browser.info</a>.\n"
 "Shortwave has no influence on the listed stations."
 msgstr ""
 "De viste oplysninger leveres af <a href=\"https://www.radio-browser.info/"
@@ -460,6 +408,58 @@ msgstr "Kunne ikke hente stationsdata"
 #: data/gtk/search_page.ui:242
 msgid "Try Again"
 msgstr "Prøv igen"
+
+#: data/gtk/shortcuts_dialog.ui:9
+msgctxt "shortcut window"
+msgid "Open shortcut window"
+msgstr "Åbn genvejsvindue"
+
+#: data/gtk/shortcuts_dialog.ui:16
+msgctxt "shortcut window"
+msgid "Open application menu"
+msgstr "Åbn programmenu"
+
+#: data/gtk/shortcuts_dialog.ui:21
+msgctxt "shortcut window"
+msgid "Open preferences"
+msgstr "Åbn indstillinger"
+
+#: data/gtk/shortcuts_dialog.ui:27
+msgctxt "shortcut window"
+msgid "Close the window"
+msgstr "Luk vinduet"
+
+#: data/gtk/shortcuts_dialog.ui:33
+msgctxt "shortcut window"
+msgid "Quit the application"
+msgstr "Afslut programmet"
+
+# scootergrisen: fra gennemlæsning: Afspilning forbinder jeg med noget, som er optaget på forhånd. Jeg formoder, der her er tale om live, så "Lyt til" var måske bedre
+# scootergrisen: "Start/stop afspilning"
+# scootergrisen: "Afspilning til/fra"
+#: data/gtk/shortcuts_dialog.ui:44
+msgctxt "shortcut window"
+msgid "Toggle playback"
+msgstr "Start/stop afspilning"
+
+#: data/gtk/shortcuts_dialog.ui:52 data/gtk/volume_control.ui:21
+msgid "Volume"
+msgstr "Lydstyrke"
+
+#: data/gtk/shortcuts_dialog.ui:55
+msgctxt "shortcut window"
+msgid "Toggle mute"
+msgstr "Lydløs til/fra"
+
+#: data/gtk/shortcuts_dialog.ui:61
+msgctxt "shortcut window"
+msgid "Increase volume"
+msgstr "Øg lydstyrken"
+
+#: data/gtk/shortcuts_dialog.ui:67
+msgctxt "shortcut window"
+msgid "Decrease volume"
+msgstr "Mindsk lydstyrken"
 
 # scootergrisen: fra gennemlæsning: Afspilning forbinder jeg med noget, som er optaget på forhånd. Jeg formoder, der her er tale om live, så "Lyt til" var måske bedre
 #: data/gtk/station_dialog.ui:75
@@ -506,40 +506,40 @@ msgstr "Information"
 msgid "Language"
 msgstr "Sprog"
 
-#: data/gtk/station_dialog.ui:168
+#: data/gtk/station_dialog.ui:169
 msgid "Tags"
 msgstr "Mærkater"
 
-#: data/gtk/station_dialog.ui:180
+#: data/gtk/station_dialog.ui:182
 msgid "Location"
 msgstr "Lokalitet"
 
-#: data/gtk/station_dialog.ui:184
+#: data/gtk/station_dialog.ui:186
 msgid "Country"
 msgstr "Land"
 
-#: data/gtk/station_dialog.ui:194
+#: data/gtk/station_dialog.ui:197
 msgid "State"
 msgstr "Delstat"
 
-#: data/gtk/station_dialog.ui:228
+#: data/gtk/station_dialog.ui:232
 msgid "Audio"
 msgstr "Lyd"
 
-#: data/gtk/station_dialog.ui:231
+#: data/gtk/station_dialog.ui:235
 msgid "Bitrate"
 msgstr "Bithastighed"
 
-#: data/gtk/station_dialog.ui:241
+#: data/gtk/station_dialog.ui:246
 msgid "Codec"
 msgstr "Codec"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:251
+#: data/gtk/station_dialog.ui:257
 msgid "Stream"
 msgstr "Stream"
 
-#: data/gtk/station_dialog.ui:257
+#: data/gtk/station_dialog.ui:263
 msgid "Copy"
 msgstr "Kopiér"
 
@@ -552,7 +552,7 @@ msgid "The recorded track has been saved"
 msgstr "Det optagne lydspor er blevet gemt"
 
 #: data/gtk/track_dialog.ui:137 data/gtk/track_dialog.ui:208
-#: data/gtk/track_row.ui:9 src/audio/player.rs:449
+#: data/gtk/track_row.ui:9 src/audio/player.rs:447
 msgid "Save Track"
 msgstr "Gem lydspor"
 
@@ -566,7 +566,6 @@ msgid "Cancel Recording"
 msgstr "Afbryd optagelse"
 
 #: data/gtk/track_dialog.ui:175
-#| msgid "Add Stations"
 msgid "Station"
 msgstr "Station"
 
@@ -595,15 +594,15 @@ msgstr "Lydsporet er ikke længere tilgængeligt"
 msgid "This track is currently not being recorded"
 msgstr "Dette lydspor optages ikke lige nu"
 
-#: src/app.rs:261
+#: src/app.rs:255
 msgid "Playing “{}”"
 msgstr "Afspiller “{}”"
 
-#: src/app.rs:360
+#: src/app.rs:349
 msgid "Active Playback"
 msgstr "Aktiv afspilning"
 
-#: src/audio/player.rs:459
+#: src/audio/player.rs:457
 msgid "Don't Record"
 msgstr "Optag ikke"
 

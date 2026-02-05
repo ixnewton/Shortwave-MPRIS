@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2025-02-13 05:11+0000\n"
-"PO-Revision-Date: 2025-02-15 12:10+0100\n"
+"POT-Creation-Date: 2025-09-10 23:09+0000\n"
+"PO-Revision-Date: 2025-09-18 14:20+0200\n"
 "Last-Translator: Julián Villodre <jvillodrede@gmail.com>\n"
 "Language-Team: es_ES\n"
 "Language: es_ES\n"
@@ -18,25 +18,25 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Gtranslator 47.1\n"
+"X-Generator: Gtranslator 49.0\n"
 
-#: data/de.haeckerfelix.Shortwave.desktop.in.in:3
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:2
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
 msgid "@NAME@"
 msgstr "@NAME@"
 
-#: data/de.haeckerfelix.Shortwave.desktop.in.in:4
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:3
 msgid "Internet Radio Player"
 msgstr "Reproductor de radio por internet"
 
 #. General
-#: data/de.haeckerfelix.Shortwave.desktop.in.in:5
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:4
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:10
 msgid "Listen to internet radio"
 msgstr "Escuchar la radio por Internet"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: data/de.haeckerfelix.Shortwave.desktop.in.in:14
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:13
 msgid "Gradio;Radio;Stream;Wave;"
 msgstr "Gradio;Radio;Flujo;onda;"
 
@@ -143,63 +143,6 @@ msgstr "No se encontró ningún dispositivo compatible con Google Cast"
 msgid "Disconnect From Device"
 msgstr "Desconectarse del dispositivo"
 
-#: data/gtk/help_overlay.ui:11 data/gtk/preferences_dialog.ui:9
-msgid "General"
-msgstr "General"
-
-#: data/gtk/help_overlay.ui:14
-msgctxt "shortcut window"
-msgid "Open shortcut window"
-msgstr "Abrir la ventana de atajos"
-
-#: data/gtk/help_overlay.ui:21
-msgctxt "shortcut window"
-msgid "Open application menu"
-msgstr "Abrir el menú de la aplicación"
-
-#: data/gtk/help_overlay.ui:26
-msgctxt "shortcut window"
-msgid "Open preferences"
-msgstr "Abrir preferencias"
-
-#: data/gtk/help_overlay.ui:32
-msgctxt "shortcut window"
-msgid "Close the window"
-msgstr "Cerrar la ventana"
-
-#: data/gtk/help_overlay.ui:38
-msgctxt "shortcut window"
-msgid "Quit the application"
-msgstr "Sale de la aplicación"
-
-#: data/gtk/help_overlay.ui:46 data/gtk/preferences_dialog.ui:12
-msgid "Playback"
-msgstr "Reproducción"
-
-#: data/gtk/help_overlay.ui:49
-msgctxt "shortcut window"
-msgid "Toggle playback"
-msgstr "Conmutar la reproducción"
-
-#: data/gtk/help_overlay.ui:57 data/gtk/volume_control.ui:21
-msgid "Volume"
-msgstr "Volumen"
-
-#: data/gtk/help_overlay.ui:60
-msgctxt "shortcut window"
-msgid "Toggle mute"
-msgstr "Conmutar silencio"
-
-#: data/gtk/help_overlay.ui:66
-msgctxt "shortcut window"
-msgid "Increase volume"
-msgstr "Subir volumen"
-
-#: data/gtk/help_overlay.ui:72
-msgctxt "shortcut window"
-msgid "Decrease volume"
-msgstr "Bajar volumen"
-
 #: data/gtk/library_page.ui:4
 msgid "Shortwave"
 msgstr "Shortwave"
@@ -212,63 +155,63 @@ msgstr "Explorar emisoras"
 msgid "Main Menu"
 msgstr "Menú principal"
 
-#: data/gtk/library_page.ui:92
+#: data/gtk/library_page.ui:91
 msgid "_Add New Stations"
 msgstr "_Añadir nuevas emisoras"
 
-#: data/gtk/library_page.ui:115
+#: data/gtk/library_page.ui:114
 msgid "_Sorting"
 msgstr "_Ordenación"
 
-#: data/gtk/library_page.ui:118
+#: data/gtk/library_page.ui:117
 msgid "_Name"
 msgstr "_Nombre"
 
-#: data/gtk/library_page.ui:123
+#: data/gtk/library_page.ui:122
 msgid "_Language"
 msgstr "_Idioma"
 
-#: data/gtk/library_page.ui:128
+#: data/gtk/library_page.ui:127
 msgid "_Country"
 msgstr "_País"
 
-#: data/gtk/library_page.ui:133
+#: data/gtk/library_page.ui:132
 msgid "S_tate"
 msgstr "Es_tado"
 
-#: data/gtk/library_page.ui:138
+#: data/gtk/library_page.ui:137
 msgid "_Bitrate"
 msgstr "_Tasa de bits"
 
-#: data/gtk/library_page.ui:145
+#: data/gtk/library_page.ui:144
 msgid "_Ascending"
 msgstr "_Ascendente"
 
-#: data/gtk/library_page.ui:150
+#: data/gtk/library_page.ui:149
 msgid "_Descending"
 msgstr "_Descendente"
 
-#: data/gtk/library_page.ui:159
+#: data/gtk/library_page.ui:158
 msgid "_Open radio-browser.info <sup>↗</sup>"
 msgstr "A_brir radio-browser.info <sup>↗</sup>"
 
-#: data/gtk/library_page.ui:166
+#: data/gtk/library_page.ui:165
 msgid "_Preferences"
 msgstr "_Preferencias"
 
-#: data/gtk/library_page.ui:170
+#: data/gtk/library_page.ui:169
 msgid "_Keyboard Shortcuts"
 msgstr "Ata_jos de teclado"
 
-#: data/gtk/library_page.ui:174
+#: data/gtk/library_page.ui:173
 msgid "_About Shortwave"
 msgstr "_Acerca de Shortwave"
 
-#: data/gtk/library_page.ui:178
+#: data/gtk/library_page.ui:177
 msgid "_Quit"
 msgstr "_Salir"
 
-#: data/gtk/library_page.ui:186
+#: data/gtk/library_page.ui:185
 msgid "Add _Local Station"
 msgstr "Añadir emisora _local"
 
@@ -292,7 +235,7 @@ msgid "SHORTWAVE INTERNET RADIO"
 msgstr "RADIO POR INTERNET SHORTWAVE"
 
 #: data/gtk/player_gadget.ui:140 data/gtk/player_toolbar.ui:29
-#: data/gtk/player_view.ui:58 src/app.rs:257
+#: data/gtk/player_view.ui:58 src/app.rs:253
 msgid "No Playback"
 msgstr "Sin reproducción"
 
@@ -323,6 +266,14 @@ msgstr "Las canciones reproducidas aparecerán aquí"
 #: data/gtk/player_view.ui:311
 msgid "An error occurred"
 msgstr "Ocurrió un error"
+
+#: data/gtk/preferences_dialog.ui:9 data/gtk/shortcuts_dialog.ui:6
+msgid "General"
+msgstr "General"
+
+#: data/gtk/preferences_dialog.ui:12 data/gtk/shortcuts_dialog.ui:41
+msgid "Playback"
+msgstr "Reproducción"
 
 #: data/gtk/preferences_dialog.ui:15
 msgid "_Background Playback"
@@ -400,45 +351,47 @@ msgstr "Dur_ación máxima"
 msgid "Recording ends when the maximum duration is reached"
 msgstr "La grabación finaliza cuando se llega a la duración máxima"
 
-#: data/gtk/search_page.ui:23
+#: data/gtk/search_filter.ui:15
 msgid "Search"
 msgstr "Buscar"
 
-#: data/gtk/search_page.ui:24
+#: data/gtk/search_filter.ui:16
 msgid "Search stations"
 msgstr "Buscar emisoras"
 
-#: data/gtk/search_page.ui:72
+#: data/gtk/search_page.ui:55
 msgid "Discover over 50,000 public stations"
 msgstr "Descubra más de 50.000 emisoras"
 
-#: data/gtk/search_page.ui:90
+#: data/gtk/search_page.ui:73
 msgid "Popular Stations"
 msgstr "Emisoras populares"
 
-#: data/gtk/search_page.ui:112
+#: data/gtk/search_page.ui:95
 msgid "Discover New Stations"
 msgstr "Descubrir emisoras nuevas"
 
-#: data/gtk/search_page.ui:135
+#: data/gtk/search_page.ui:118
 msgid ""
-"The displayed information is provided by <a href=\"https://www.radio-browser."
-"info/\">radio-browser.info</a>. \n"
-"Shortwave has no influence on the listed stations."
+"The displayed information is provided by <a href=\"https://www.radio-"
+"browser.info/\">radio-browser.info</a>.\n"
+"                                  Shortwave has no influence on the listed "
+"stations."
 msgstr ""
 "La información mostrada se proporciona desde <a href=\"https://www.radio-"
 "browser.info/\">radio-browser.info</a>.\n"
-"Shortwave no tiene relación con las emisoras listadas."
+"                                  Shortwave no tiene relación con las "
+"emisoras listadas."
 
-#: data/gtk/search_page.ui:201
+#: data/gtk/search_page.ui:184
 msgid "Loading…"
 msgstr "Cargando…"
 
-#: data/gtk/search_page.ui:216
+#: data/gtk/search_page.ui:199
 msgid "No Results"
 msgstr "No hay resultados"
 
-#: data/gtk/search_page.ui:217
+#: data/gtk/search_page.ui:200
 msgid ""
 "If the station you are looking for is missing, you can add it to the public "
 "database."
@@ -446,17 +399,66 @@ msgstr ""
 "Si no encuentra la emisora que está buscando, puede añadirla a la base de "
 "datos pública."
 
-#: data/gtk/search_page.ui:221
+#: data/gtk/search_page.ui:204
 msgid "Add Missing Station"
 msgstr "Añadir emisora no encontrada"
 
-#: data/gtk/search_page.ui:239
+#: data/gtk/search_page.ui:222
 msgid "Unable to Retrieve Station Data"
 msgstr "No se pueden recuperar los datos de la emisora"
 
-#: data/gtk/search_page.ui:242
+#: data/gtk/search_page.ui:225
 msgid "Try Again"
 msgstr "Intentar de nuevo"
+
+#: data/gtk/shortcuts_dialog.ui:9
+msgctxt "shortcut window"
+msgid "Open shortcut window"
+msgstr "Abrir la ventana de atajos"
+
+#: data/gtk/shortcuts_dialog.ui:16
+msgctxt "shortcut window"
+msgid "Open application menu"
+msgstr "Abrir el menú de la aplicación"
+
+#: data/gtk/shortcuts_dialog.ui:21
+msgctxt "shortcut window"
+msgid "Open preferences"
+msgstr "Abrir preferencias"
+
+#: data/gtk/shortcuts_dialog.ui:27
+msgctxt "shortcut window"
+msgid "Close the window"
+msgstr "Cerrar la ventana"
+
+#: data/gtk/shortcuts_dialog.ui:33
+msgctxt "shortcut window"
+msgid "Quit the application"
+msgstr "Sale de la aplicación"
+
+#: data/gtk/shortcuts_dialog.ui:44
+msgctxt "shortcut window"
+msgid "Toggle playback"
+msgstr "Conmutar la reproducción"
+
+#: data/gtk/shortcuts_dialog.ui:52 data/gtk/volume_control.ui:21
+msgid "Volume"
+msgstr "Volumen"
+
+#: data/gtk/shortcuts_dialog.ui:55
+msgctxt "shortcut window"
+msgid "Toggle mute"
+msgstr "Conmutar silencio"
+
+#: data/gtk/shortcuts_dialog.ui:61
+msgctxt "shortcut window"
+msgid "Increase volume"
+msgstr "Subir volumen"
+
+#: data/gtk/shortcuts_dialog.ui:67
+msgctxt "shortcut window"
+msgid "Decrease volume"
+msgstr "Bajar volumen"
 
 #: data/gtk/station_dialog.ui:75
 msgid "_Play"
@@ -502,40 +504,40 @@ msgstr "Información"
 msgid "Language"
 msgstr "Idioma"
 
-#: data/gtk/station_dialog.ui:168
+#: data/gtk/station_dialog.ui:169
 msgid "Tags"
 msgstr "Etiquetas"
 
-#: data/gtk/station_dialog.ui:180
+#: data/gtk/station_dialog.ui:182
 msgid "Location"
 msgstr "Ubicación"
 
-#: data/gtk/station_dialog.ui:184
+#: data/gtk/station_dialog.ui:186
 msgid "Country"
 msgstr "País"
 
-#: data/gtk/station_dialog.ui:194
+#: data/gtk/station_dialog.ui:197
 msgid "State"
 msgstr "Estado"
 
-#: data/gtk/station_dialog.ui:228
+#: data/gtk/station_dialog.ui:232
 msgid "Audio"
 msgstr "Sonido"
 
-#: data/gtk/station_dialog.ui:231
+#: data/gtk/station_dialog.ui:235
 msgid "Bitrate"
 msgstr "Tasa de bits"
 
-#: data/gtk/station_dialog.ui:241
+#: data/gtk/station_dialog.ui:246
 msgid "Codec"
 msgstr "Códec"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:251
+#: data/gtk/station_dialog.ui:257
 msgid "Stream"
 msgstr "Flujo"
 
-#: data/gtk/station_dialog.ui:257
+#: data/gtk/station_dialog.ui:263
 msgid "Copy"
 msgstr "Copiar"
 
@@ -548,7 +550,7 @@ msgid "The recorded track has been saved"
 msgstr "Se guardó la canción grabada"
 
 #: data/gtk/track_dialog.ui:137 data/gtk/track_dialog.ui:208
-#: data/gtk/track_row.ui:9 src/audio/player.rs:449
+#: data/gtk/track_row.ui:9 src/audio/player.rs:448
 msgid "Save Track"
 msgstr "Guardar canción"
 
@@ -586,19 +588,19 @@ msgstr "Conmutar silencio"
 msgid "Track no longer available"
 msgstr "La canción ya no se encuentra disponible"
 
-#: src/app.rs:108 src/app.rs:130
+#: src/app.rs:109 src/app.rs:132
 msgid "This track is currently not being recorded"
 msgstr "Esta canción no se está grabando"
 
-#: src/app.rs:261
+#: src/app.rs:258
 msgid "Playing “{}”"
 msgstr "Reproduciendo «{}»"
 
-#: src/app.rs:360
+#: src/app.rs:353
 msgid "Active Playback"
 msgstr "Reproducción activa"
 
-#: src/audio/player.rs:459
+#: src/audio/player.rs:458
 msgid "Don't Record"
 msgstr "No grabar"
 

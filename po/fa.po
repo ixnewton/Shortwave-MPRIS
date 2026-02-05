@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2025-02-13 05:11+0000\n"
-"PO-Revision-Date: 2025-02-15 11:34+0330\n"
+"POT-Creation-Date: 2025-09-10 23:09+0000\n"
+"PO-Revision-Date: 2025-09-13 01:21+0330\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
 "Language: fa\n"
@@ -16,25 +16,25 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.7\n"
 
-#: data/de.haeckerfelix.Shortwave.desktop.in.in:3
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:2
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
 msgid "@NAME@"
 msgstr "موج کوتاه"
 
-#: data/de.haeckerfelix.Shortwave.desktop.in.in:4
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:3
 msgid "Internet Radio Player"
 msgstr "پخش کنندهٔ رادیوی اینترنتی"
 
 #. General
-#: data/de.haeckerfelix.Shortwave.desktop.in.in:5
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:4
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:10
 msgid "Listen to internet radio"
 msgstr "شنیدن رادیوهای اینترنتی"
 
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: data/de.haeckerfelix.Shortwave.desktop.in.in:14
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:13
 msgid "Gradio;Radio;Stream;Wave;"
 msgstr "Gradio;Radio;Stream;Wave;رادیو;پخش;جریان;موج;"
 
@@ -137,63 +137,6 @@ msgstr "هیچ افزاره‌ای با پشتیبانی از پخش گوگل پ
 msgid "Disconnect From Device"
 msgstr "جدا کردن از افزاره"
 
-#: data/gtk/help_overlay.ui:11 data/gtk/preferences_dialog.ui:9
-msgid "General"
-msgstr "عمومی"
-
-#: data/gtk/help_overlay.ui:14
-msgctxt "shortcut window"
-msgid "Open shortcut window"
-msgstr "گشودن پنجرهٔ میان‌برها"
-
-#: data/gtk/help_overlay.ui:21
-msgctxt "shortcut window"
-msgid "Open application menu"
-msgstr "گشودن فهرست برنامه"
-
-#: data/gtk/help_overlay.ui:26
-msgctxt "shortcut window"
-msgid "Open preferences"
-msgstr "گشودن ترجیحات"
-
-#: data/gtk/help_overlay.ui:32
-msgctxt "shortcut window"
-msgid "Close the window"
-msgstr "بستن پنجره"
-
-#: data/gtk/help_overlay.ui:38
-msgctxt "shortcut window"
-msgid "Quit the application"
-msgstr "ترک برنامه"
-
-#: data/gtk/help_overlay.ui:46 data/gtk/preferences_dialog.ui:12
-msgid "Playback"
-msgstr "پخش"
-
-#: data/gtk/help_overlay.ui:49
-msgctxt "shortcut window"
-msgid "Toggle playback"
-msgstr "تغییر وضعیت پخش"
-
-#: data/gtk/help_overlay.ui:57 data/gtk/volume_control.ui:21
-msgid "Volume"
-msgstr "حجم صدا"
-
-#: data/gtk/help_overlay.ui:60
-msgctxt "shortcut window"
-msgid "Toggle mute"
-msgstr "تغییر حالت خموشی"
-
-#: data/gtk/help_overlay.ui:66
-msgctxt "shortcut window"
-msgid "Increase volume"
-msgstr "افزایش حجم صدا"
-
-#: data/gtk/help_overlay.ui:72
-msgctxt "shortcut window"
-msgid "Decrease volume"
-msgstr "کاهش حجم صدا"
-
 #: data/gtk/library_page.ui:4
 msgid "Shortwave"
 msgstr "موج کوتاه"
@@ -206,63 +149,63 @@ msgstr "مرور ایستگاه‌ها"
 msgid "Main Menu"
 msgstr "فهرست اصلی"
 
-#: data/gtk/library_page.ui:92
+#: data/gtk/library_page.ui:91
 msgid "_Add New Stations"
 msgstr "_افزودن ایستگاه جدید"
 
-#: data/gtk/library_page.ui:115
+#: data/gtk/library_page.ui:114
 msgid "_Sorting"
 msgstr "_چینش"
 
-#: data/gtk/library_page.ui:118
+#: data/gtk/library_page.ui:117
 msgid "_Name"
 msgstr "_نام"
 
-#: data/gtk/library_page.ui:123
+#: data/gtk/library_page.ui:122
 msgid "_Language"
 msgstr "_زبان"
 
-#: data/gtk/library_page.ui:128
+#: data/gtk/library_page.ui:127
 msgid "_Country"
 msgstr "_کشور"
 
-#: data/gtk/library_page.ui:133
+#: data/gtk/library_page.ui:132
 msgid "S_tate"
 msgstr "ا_یالت"
 
-#: data/gtk/library_page.ui:138
+#: data/gtk/library_page.ui:137
 msgid "_Bitrate"
 msgstr "_نرخ بیت"
 
-#: data/gtk/library_page.ui:145
+#: data/gtk/library_page.ui:144
 msgid "_Ascending"
 msgstr "پیش‌رونده"
 
-#: data/gtk/library_page.ui:150
+#: data/gtk/library_page.ui:149
 msgid "_Descending"
 msgstr "پس‌رونده"
 
-#: data/gtk/library_page.ui:159
+#: data/gtk/library_page.ui:158
 msgid "_Open radio-browser.info <sup>↗</sup>"
 msgstr "_گشودن radio-browser.info ‏<sup>↖</sup>"
 
-#: data/gtk/library_page.ui:166
+#: data/gtk/library_page.ui:165
 msgid "_Preferences"
 msgstr "_ترجیحات"
 
-#: data/gtk/library_page.ui:170
+#: data/gtk/library_page.ui:169
 msgid "_Keyboard Shortcuts"
 msgstr "_میان‌برهای صفحه‌کلید"
 
-#: data/gtk/library_page.ui:174
+#: data/gtk/library_page.ui:173
 msgid "_About Shortwave"
 msgstr "_دربارهٔ موج کوتاه"
 
-#: data/gtk/library_page.ui:178
+#: data/gtk/library_page.ui:177
 msgid "_Quit"
 msgstr "_خروج"
 
-#: data/gtk/library_page.ui:186
+#: data/gtk/library_page.ui:185
 msgid "Add _Local Station"
 msgstr "افزودن ایستگاه _محلّی"
 
@@ -286,7 +229,7 @@ msgid "SHORTWAVE INTERNET RADIO"
 msgstr "رادیوهای اینترنتی موج کوتاه"
 
 #: data/gtk/player_gadget.ui:140 data/gtk/player_toolbar.ui:29
-#: data/gtk/player_view.ui:58 src/app.rs:257
+#: data/gtk/player_view.ui:58 src/app.rs:253
 msgid "No Playback"
 msgstr "بدون پخش"
 
@@ -317,6 +260,14 @@ msgstr "قطعه‌های پخش شده این‌جا ظاهر خواهند ش�
 #: data/gtk/player_view.ui:311
 msgid "An error occurred"
 msgstr "خطایی پیش آمد"
+
+#: data/gtk/preferences_dialog.ui:9 data/gtk/shortcuts_dialog.ui:6
+msgid "General"
+msgstr "عمومی"
+
+#: data/gtk/preferences_dialog.ui:12 data/gtk/shortcuts_dialog.ui:41
+msgid "Playback"
+msgstr "پخش"
 
 #: data/gtk/preferences_dialog.ui:15
 msgid "_Background Playback"
@@ -390,62 +341,113 @@ msgstr "_بیشینهٔ طول"
 msgid "Recording ends when the maximum duration is reached"
 msgstr "ضبط‌ها هنگام رسیدن به بیشینهٔ طول پایان می‌یابند"
 
-#: data/gtk/search_page.ui:23
+#: data/gtk/search_filter.ui:15
 msgid "Search"
 msgstr "جست‌وجو"
 
-#: data/gtk/search_page.ui:24
+#: data/gtk/search_filter.ui:16
 msgid "Search stations"
 msgstr "جست‌وجوی ایستگاه‌ها"
 
-#: data/gtk/search_page.ui:72
+#: data/gtk/search_page.ui:55
 msgid "Discover over 50,000 public stations"
 msgstr "کشف بیش از ۵۰٫۰۰۰ ایستگاه عمومی"
 
-#: data/gtk/search_page.ui:90
+#: data/gtk/search_page.ui:73
 msgid "Popular Stations"
 msgstr "ایستگاه‌های محبوب"
 
-#: data/gtk/search_page.ui:112
+#: data/gtk/search_page.ui:95
 msgid "Discover New Stations"
 msgstr "کشف ایستگاه‌های جدید"
 
-#: data/gtk/search_page.ui:135
+#: data/gtk/search_page.ui:118
 msgid ""
 "The displayed information is provided by <a href=\"https://www.radio-"
-"browser.info/\">radio-browser.info</a>. \n"
-"Shortwave has no influence on the listed stations."
+"browser.info/\">radio-browser.info</a>.\n"
+"                                  Shortwave has no influence on the listed "
+"stations."
 msgstr ""
 "اطّلاعات نمایشی به دست <a href=\"https://www.radio-browser.info/\">radio-"
 "browser.info</a> فراهم شده.\n"
-"موج کوتاه هیچ تأثیری روی ایستگاه‌های سیاهه شده ندارد."
+"                                  موج کوتاه هیچ تأثیری روی ایستگاه‌های سیاهه شده "
+"ندارد."
 
-#: data/gtk/search_page.ui:201
+#: data/gtk/search_page.ui:184
 msgid "Loading…"
 msgstr "بار کردن…"
 
-#: data/gtk/search_page.ui:216
+#: data/gtk/search_page.ui:199
 msgid "No Results"
 msgstr "بدون نتیجه"
 
-#: data/gtk/search_page.ui:217
+#: data/gtk/search_page.ui:200
 msgid ""
 "If the station you are looking for is missing, you can add it to the public "
 "database."
 msgstr ""
 "اگر ایستگاهی که به دنبالشید غایب است، می‌توانید به پایگاه دادهٔ عمومی بیفزایدش."
 
-#: data/gtk/search_page.ui:221
+#: data/gtk/search_page.ui:204
 msgid "Add Missing Station"
 msgstr "افزودن ایستگاه غایب"
 
-#: data/gtk/search_page.ui:239
+#: data/gtk/search_page.ui:222
 msgid "Unable to Retrieve Station Data"
 msgstr "ناتوان در گرفتن داده‌های ایستگاه"
 
-#: data/gtk/search_page.ui:242
+#: data/gtk/search_page.ui:225
 msgid "Try Again"
 msgstr "تلاش دوباره"
+
+#: data/gtk/shortcuts_dialog.ui:9
+msgctxt "shortcut window"
+msgid "Open shortcut window"
+msgstr "گشودن پنجرهٔ میان‌برها"
+
+#: data/gtk/shortcuts_dialog.ui:16
+msgctxt "shortcut window"
+msgid "Open application menu"
+msgstr "گشودن فهرست برنامه"
+
+#: data/gtk/shortcuts_dialog.ui:21
+msgctxt "shortcut window"
+msgid "Open preferences"
+msgstr "گشودن ترجیحات"
+
+#: data/gtk/shortcuts_dialog.ui:27
+msgctxt "shortcut window"
+msgid "Close the window"
+msgstr "بستن پنجره"
+
+#: data/gtk/shortcuts_dialog.ui:33
+msgctxt "shortcut window"
+msgid "Quit the application"
+msgstr "ترک برنامه"
+
+#: data/gtk/shortcuts_dialog.ui:44
+msgctxt "shortcut window"
+msgid "Toggle playback"
+msgstr "تغییر وضعیت پخش"
+
+#: data/gtk/shortcuts_dialog.ui:52 data/gtk/volume_control.ui:21
+msgid "Volume"
+msgstr "حجم صدا"
+
+#: data/gtk/shortcuts_dialog.ui:55
+msgctxt "shortcut window"
+msgid "Toggle mute"
+msgstr "تغییر حالت خموشی"
+
+#: data/gtk/shortcuts_dialog.ui:61
+msgctxt "shortcut window"
+msgid "Increase volume"
+msgstr "افزایش حجم صدا"
+
+#: data/gtk/shortcuts_dialog.ui:67
+msgctxt "shortcut window"
+msgid "Decrease volume"
+msgstr "کاهش حجم صدا"
 
 #: data/gtk/station_dialog.ui:75
 msgid "_Play"
@@ -490,40 +492,40 @@ msgstr "اطّلاعات"
 msgid "Language"
 msgstr "زبان"
 
-#: data/gtk/station_dialog.ui:168
+#: data/gtk/station_dialog.ui:169
 msgid "Tags"
 msgstr "برچسب‌ها"
 
-#: data/gtk/station_dialog.ui:180
+#: data/gtk/station_dialog.ui:182
 msgid "Location"
 msgstr "مکان"
 
-#: data/gtk/station_dialog.ui:184
+#: data/gtk/station_dialog.ui:186
 msgid "Country"
 msgstr "کشور"
 
-#: data/gtk/station_dialog.ui:194
+#: data/gtk/station_dialog.ui:197
 msgid "State"
 msgstr "ایالت"
 
-#: data/gtk/station_dialog.ui:228
+#: data/gtk/station_dialog.ui:232
 msgid "Audio"
 msgstr "صدا"
 
-#: data/gtk/station_dialog.ui:231
+#: data/gtk/station_dialog.ui:235
 msgid "Bitrate"
 msgstr "نرخ بیت"
 
-#: data/gtk/station_dialog.ui:241
+#: data/gtk/station_dialog.ui:246
 msgid "Codec"
 msgstr "رمزینه"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:251
+#: data/gtk/station_dialog.ui:257
 msgid "Stream"
 msgstr "جریان"
 
-#: data/gtk/station_dialog.ui:257
+#: data/gtk/station_dialog.ui:263
 msgid "Copy"
 msgstr "رونوشت"
 
@@ -536,7 +538,7 @@ msgid "The recorded track has been saved"
 msgstr "قطعهٔ ضبط شده ذخیره شد"
 
 #: data/gtk/track_dialog.ui:137 data/gtk/track_dialog.ui:208
-#: data/gtk/track_row.ui:9 src/audio/player.rs:449
+#: data/gtk/track_row.ui:9 src/audio/player.rs:448
 msgid "Save Track"
 msgstr "ذخیرهٔ قطعه"
 
@@ -572,19 +574,19 @@ msgstr "تغییر حالت خموشی"
 msgid "Track no longer available"
 msgstr "قطعه دیگر موجود نیست"
 
-#: src/app.rs:108 src/app.rs:130
+#: src/app.rs:109 src/app.rs:132
 msgid "This track is currently not being recorded"
 msgstr "در حال حاضر قطعه ضبط نمی‌شود"
 
-#: src/app.rs:261
+#: src/app.rs:258
 msgid "Playing “{}”"
 msgstr "پخش کردن «{}»"
 
-#: src/app.rs:360
+#: src/app.rs:353
 msgid "Active Playback"
 msgstr "فعّال کردن پخش"
 
-#: src/audio/player.rs:459
+#: src/audio/player.rs:458
 msgid "Don't Record"
 msgstr "ضبط نکردن"
 

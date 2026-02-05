@@ -1,160 +1,150 @@
 # Indonesian translation for shortwave.
 # Copyright (C) 2020 shortwave's COPYRIGHT HOLDER
 # This file is distributed under the same license as the shortwave package.
-# Andika Triwidada <atriwidada@gnome.org>, 2020-2021.
+# Andika Triwidada <atriwidada@gnome.org>, 2020-2021, 2025.
 # Kukuh Syafat <kukuhsyafaat@gnome.org>, 2020-2023.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: shortwave master\n"
+"Project-Id-Version: shortwave main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2023-09-10 16:26+0000\n"
-"PO-Revision-Date: 2023-09-14 14:06+0700\n"
-"Last-Translator: Kukuh Syafaat <kukuhsyafaat@gnome.org>\n"
+"POT-Creation-Date: 2025-03-11 02:18+0000\n"
+"PO-Revision-Date: 2025-04-05 19:56+0700\n"
+"Last-Translator: Andika Triwidada <andika@gmail.com>\n"
 "Language-Team: Indonesian <gnome-l10n-id@googlegroups.com>\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.3.1\n"
+"X-Generator: Poedit 3.5\n"
 
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:3
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
 msgid "@NAME@"
 msgstr "@NAME@"
 
-#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: data/de.haeckerfelix.Shortwave.desktop.in.in:12
-msgid "Gradio;Radio;Stream;Wave;"
-msgstr "Gradio;Radio;Aliran;Gelombang;"
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:4
+msgid "Internet Radio Player"
+msgstr "Pemutar Radio Internet"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:6
-#: src/ui/about_window.rs:35
+#. General
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:5
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:10
 msgid "Listen to internet radio"
 msgstr "Dengarkan radio internet"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:8
-msgid "Felix Häcker"
-msgstr "Felix Häcker"
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:14
+msgid "Gradio;Radio;Stream;Wave;"
+msgstr "Gradio;Radio;Aliran;Gelombang;"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:16
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:12
 msgid ""
 "Shortwave is an internet radio player that provides access to a station "
-"database with over 30,000 stations."
+"database with over 50,000 stations."
 msgstr ""
 "Shortwave adalah pemutar radio internet yang menyediakan akses ke basis data "
-"stasiun dengan lebih dari 30.000 stasiun."
+"stasiun dengan lebih dari 50.000 stasiun."
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:19
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:15
 msgid "Features:"
 msgstr "Fitur:"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:21
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:17
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:64
 msgid "Create your own library where you can add your favorite stations"
 msgstr ""
 "Buat perpustakaan Anda sendiri di mana Anda dapat menambahkan stasiun "
 "favorit Anda"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:22
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:18
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:68
 msgid "Easily search and discover new radio stations"
 msgstr "Mudah mencari dan menemukan stasiun radio baru"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:23
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:19
 msgid ""
-"Automatic recognition of songs, with the possibility to save them "
+"Automatic recognition of tracks, with the possibility to save them "
 "individually"
 msgstr ""
-"Pengenalan otomatis lagu, dengan kemungkinan untuk menyimpannya secara "
+"Pengenalan otomatis trek, dengan kemungkinan untuk menyimpannya secara "
 "individual"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:24
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:20
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:72
 msgid "Responsive application layout, compatible for small and large screens"
 msgstr "Tata letak aplikasi responsif, kompatibel untuk layar kecil dan besar"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:25
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:21
 msgid "Play audio on supported network devices (e.g. Google Chromecasts)"
 msgstr ""
 "Memutar audio pada perangkat jaringan yang didukung (mis. Google Chromecasts)"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:26
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:22
 msgid "Seamless integration into the GNOME desktop environment"
 msgstr "Integrasi mulus ke dalam lingkungan destop GNOME"
 
-#: data/gtk/create_station_dialog.ui:8
-msgid "Create new station"
-msgstr "Buat stasiun baru"
+#. Branding
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:28
+msgid "Felix Häcker"
+msgstr "Felix Häcker"
 
-#: data/gtk/create_station_dialog.ui:32
-msgid "Create New Station"
-msgstr "Buat Stasiun Baru"
+#: data/gtk/add_station_dialog.ui:14
+msgid "Add Local Station"
+msgstr "Tambahkan Stasiun Lokal"
 
-#: data/gtk/create_station_dialog.ui:33
+#: data/gtk/add_station_dialog.ui:64
+msgid "Change Station Cover"
+msgstr "Ubah Sampul Stasiun"
+
+#: data/gtk/add_station_dialog.ui:95
 msgid ""
-"You can decide if you want the new station to be visible for all users "
-"worldwide or if you want to create a local station."
+"This station will only be added to your library. If you want it to be "
+"available to everyone, you should add it to the <a href=\"https://www.radio-"
+"browser.info/add\">public database</a>."
 msgstr ""
-"Anda dapat memutuskan apakah Anda ingin stasiun baru terlihat untuk semua "
-"pengguna di seluruh dunia atau jika Anda ingin membuat stasiun lokal."
+"Stasiun ini hanya akan ditambahkan ke pustaka Anda. Bila Anda ingin itu "
+"tersedia bagi semua orang, Anda mesti menambahkannya ke <a href=\"https://"
+"www.radio-browser.info/add\">basis data publik</a>."
 
-#: data/gtk/create_station_dialog.ui:43
-msgid "Create _Public Station"
-msgstr "Buat Stasiun _Publik"
-
-#: data/gtk/create_station_dialog.ui:54
-msgid "Create _Local Station"
-msgstr "Buat Stasiun _Lokal"
-
-#: data/gtk/create_station_dialog.ui:80
-msgid "Create Local Station"
-msgstr "Buat Stasiun Lokal"
-
-#: data/gtk/create_station_dialog.ui:113
-msgid "Change station image"
-msgstr "Ubah gambar stasiun"
-
-#: data/gtk/create_station_dialog.ui:137 src/ui/pages/search_page.rs:211
+#: data/gtk/add_station_dialog.ui:107
 msgid "Name"
 msgstr "Nama"
 
-#: data/gtk/create_station_dialog.ui:145
+#: data/gtk/add_station_dialog.ui:115
 msgid "Stream URL"
 msgstr "URL Aliran"
 
-#: data/gtk/create_station_dialog.ui:153
-msgid "Create Station"
-msgstr "Buat Stasiun"
+#: data/gtk/add_station_dialog.ui:123
+msgid "Add Station"
+msgstr "Tambah Stasiun"
 
-#: data/gtk/discover_page.ui:4
-msgid "Discover"
-msgstr "Temukan"
+#: data/gtk/device_dialog.ui:7 data/gtk/player_view.ui:132
+msgid "Connect Device"
+msgstr "Sambungkan Perangkat"
 
-#: data/gtk/discover_page.ui:15 data/gtk/search_page.ui:4
-#: data/gtk/search_page.ui:28
-msgid "Search"
-msgstr "Cari"
+#: data/gtk/device_dialog.ui:18
+msgid "Searching for Devices…"
+msgstr "Mencari Perangkat…"
 
-#: data/gtk/discover_page.ui:44
-msgid "Most Voted Stations"
-msgstr "Stasiun yang Paling Banyak Dipilih"
+#: data/gtk/device_dialog.ui:25
+msgid "Search for Devices"
+msgstr "Mencari Perangkat"
 
-#: data/gtk/discover_page.ui:61
-msgid "Trending"
-msgstr "Tren"
+#: data/gtk/device_dialog.ui:41
+msgid "No Devices Available"
+msgstr "Tidak Ada Perangkat Yang Tersedia"
 
-#: data/gtk/discover_page.ui:78
-msgid "Other Users Are Listening To…"
-msgstr "Pengguna Lain Sedang Mendengarkan…"
+#: data/gtk/device_dialog.ui:42
+msgid "No supported Google Cast device found"
+msgstr "Tidak ditemukan perangkat Google Cast yang didukung"
 
-#: data/gtk/featured_carousel.ui:27
-msgid "Previous"
-msgstr "Sebelumnya"
+#: data/gtk/device_indicator.ui:7
+msgid "Disconnect From Device"
+msgstr "Terputus Dari Perangkat"
 
-#: data/gtk/featured_carousel.ui:40
-msgid "Next"
-msgstr "Selanjutnya"
-
-#: data/gtk/help_overlay.ui:11 data/gtk/settings_window.ui:7
+#: data/gtk/help_overlay.ui:11 data/gtk/preferences_dialog.ui:9
 msgid "General"
 msgstr "Umum"
 
@@ -183,7 +173,7 @@ msgctxt "shortcut window"
 msgid "Quit the application"
 msgstr "Keluar aplikasi"
 
-#: data/gtk/help_overlay.ui:46 data/gtk/player.ui:5
+#: data/gtk/help_overlay.ui:46 data/gtk/preferences_dialog.ui:12
 msgid "Playback"
 msgstr "Putar"
 
@@ -192,257 +182,337 @@ msgctxt "shortcut window"
 msgid "Toggle playback"
 msgstr "Pemutaran beralih"
 
+#: data/gtk/help_overlay.ui:57 data/gtk/volume_control.ui:21
+msgid "Volume"
+msgstr "Volume"
+
+#: data/gtk/help_overlay.ui:60
+msgctxt "shortcut window"
+msgid "Toggle mute"
+msgstr "Jungkitkan bisu"
+
+#: data/gtk/help_overlay.ui:66
+msgctxt "shortcut window"
+msgid "Increase volume"
+msgstr "Naikkan volume"
+
+#: data/gtk/help_overlay.ui:72
+msgctxt "shortcut window"
+msgid "Decrease volume"
+msgstr "Turunkan volume"
+
 #: data/gtk/library_page.ui:4
 msgid "Shortwave"
 msgstr "Shortwave"
 
-#: data/gtk/library_page.ui:15
-msgid "Add Stations"
-msgstr "Tambah Stasiun"
+#: data/gtk/library_page.ui:15 data/gtk/search_page.ui:4
+msgid "Browse Stations"
+msgstr "Ramban Stasiun"
 
-#: data/gtk/library_page.ui:22
+#: data/gtk/library_page.ui:23
 msgid "Main Menu"
 msgstr "Menu Utama"
 
-#: data/gtk/library_page.ui:51
-msgid "Library"
-msgstr "Pustaka"
+#: data/gtk/library_page.ui:92
+msgid "_Add New Stations"
+msgstr "T_ambah Stasiun Baru"
 
-#: data/gtk/library_page.ui:85
-msgid "Receiving Station Data…"
-msgstr "Menerima Data Stasiun…"
-
-#: data/gtk/library_page.ui:112
-msgid "_Discover New Stations"
-msgstr "Temukan Stasiun _Baru"
-
-#: data/gtk/library_page.ui:134
-msgid "_Enable Mini Player"
-msgstr "Aktifkan P_emutar Mini"
-
-#: data/gtk/library_page.ui:138
+#: data/gtk/library_page.ui:115
 msgid "_Sorting"
 msgstr "Meng_urutkan"
 
-#: data/gtk/library_page.ui:141 data/gtk/search_page.ui:158
+#: data/gtk/library_page.ui:118
 msgid "_Name"
 msgstr "_Nama"
 
-#: data/gtk/library_page.ui:146 data/gtk/search_page.ui:163
+#: data/gtk/library_page.ui:123
 msgid "_Language"
 msgstr "_Bahasa"
 
-#: data/gtk/library_page.ui:151 data/gtk/search_page.ui:168
+#: data/gtk/library_page.ui:128
 msgid "_Country"
 msgstr "Ne_gara"
 
-#: data/gtk/library_page.ui:156 data/gtk/search_page.ui:173
+#: data/gtk/library_page.ui:133
 msgid "S_tate"
 msgstr "Negara Ba_gian"
 
-#: data/gtk/library_page.ui:161 data/gtk/search_page.ui:178
-msgid "_Votes"
-msgstr "Sua_ra"
-
-#: data/gtk/library_page.ui:166 data/gtk/search_page.ui:183
+#: data/gtk/library_page.ui:138
 msgid "_Bitrate"
 msgstr "Laju _Bit"
 
-#: data/gtk/library_page.ui:173 data/gtk/search_page.ui:190
+#: data/gtk/library_page.ui:145
 msgid "_Ascending"
 msgstr "N_aik"
 
-#: data/gtk/library_page.ui:178 data/gtk/search_page.ui:195
+#: data/gtk/library_page.ui:150
 msgid "_Descending"
 msgstr "T_urun"
 
-#: data/gtk/library_page.ui:187
+#: data/gtk/library_page.ui:159
 msgid "_Open radio-browser.info <sup>↗</sup>"
 msgstr "Buka radi_o-browser.info <sup>↗</sup>"
 
-#: data/gtk/library_page.ui:192
-msgid "_Create New Station"
-msgstr "Buat Stasiun _Baru"
-
-#: data/gtk/library_page.ui:199
+#: data/gtk/library_page.ui:166
 msgid "_Preferences"
 msgstr "_Preferensi"
 
-#: data/gtk/library_page.ui:203
+#: data/gtk/library_page.ui:170
 msgid "_Keyboard Shortcuts"
 msgstr "Pintasan Papan Ti_k"
 
-#: data/gtk/library_page.ui:207
+#: data/gtk/library_page.ui:174
 msgid "_About Shortwave"
 msgstr "Tent_ang Shortwave"
 
-#: data/gtk/mini_controller.ui:27 data/gtk/sidebar_controller.ui:116
-#: data/gtk/toolbar_controller.ui:79
-msgid "Stop"
-msgstr "Berhenti"
+#: data/gtk/library_page.ui:178
+msgid "_Quit"
+msgstr "_Keluar"
 
-#: data/gtk/mini_controller.ui:42
-msgid "Start"
-msgstr "Mulai"
+#: data/gtk/library_page.ui:186
+msgid "Add _Local Station"
+msgstr "Tambah Stasiun _Lokal"
 
-#: data/gtk/mini_controller.ui:87
-msgid "SHORTWAVE INTERNET RADIO"
-msgstr "RADIO INTERNET SHORTWAVE"
-
-#: data/gtk/mini_controller.ui:109 data/gtk/sidebar_controller.ui:64
-#: data/gtk/toolbar_controller.ui:38
-msgid "No Playback"
-msgstr "Tidak Ada Pemutaran"
-
-#: data/gtk/mini_controller.ui:149
-msgid "Close"
-msgstr "Tutup"
-
-#: data/gtk/mini_controller.ui:160
-msgid "Resize"
-msgstr "Ubah Ukuran"
-
-#: data/gtk/player.ui:19
-msgid "Back"
-msgstr "Kembali"
-
-#: data/gtk/search_page.ui:39 data/gtk/station_dialog.ui:172
-#: src/ui/pages/search_page.rs:215
-msgid "Votes"
-msgstr "Suara"
-
-#: data/gtk/search_page.ui:44
-msgid "Change the sorting of the search results"
-msgstr "Ubah pemilahan hasil pencarian"
-
-#: data/gtk/search_page.ui:71
-msgid "No Results"
-msgstr "Tidak Ada Hasil"
-
-#: data/gtk/search_page.ui:72
-msgid "Try using a different search term"
-msgstr "Coba gunakan istilah pencarian yang berbeda"
-
-#: data/gtk/search_page.ui:99
-msgid "Search Results"
-msgstr "Hasil Pencarian"
-
-#: data/gtk/settings_window.ui:10
-msgid "Features"
-msgstr "Fitur"
-
-#: data/gtk/settings_window.ui:13
-msgid "_Notifications"
-msgstr "_Notifikasi"
-
-#: data/gtk/settings_window.ui:15
-msgid "Show desktop notifications when a new song gets played"
-msgstr "Tampilkan pemberitahuan destop ketika sebuah lagu baru mulai diputar"
-
-#: data/gtk/sidebar_controller.ui:23
-msgid "An error occurred"
-msgstr "Terjadi kesalahan"
-
-#: data/gtk/sidebar_controller.ui:131 data/gtk/station_row.ui:69
-#: data/gtk/toolbar_controller.ui:90
+#: data/gtk/player_gadget.ui:40 data/gtk/player_toolbar.ui:92
+#: data/gtk/player_view.ui:156 data/gtk/station_row.ui:86
 msgid "Play"
 msgstr "Putar"
 
-#: data/gtk/sidebar_controller.ui:177
-msgid "Station Menu"
-msgstr "Menu Stasiun"
+#: data/gtk/player_gadget.ui:55 data/gtk/player_toolbar.ui:106
+#: data/gtk/player_view.ui:170
+msgid "Stop"
+msgstr "Berhenti"
 
-#: data/gtk/sidebar_controller.ui:191
-msgid "_Show Station Details"
-msgstr "Tampilkan Detail _Stasiun"
+#: data/gtk/player_gadget.ui:71 data/gtk/player_toolbar.ui:121
+#: data/gtk/player_view.ui:185
+msgid "Buffering…"
+msgstr "Menyangga…"
 
-#: data/gtk/sidebar_controller.ui:195
-msgid "Stream to a _Device"
-msgstr "Alirkan ke Pe_rangkat"
+#: data/gtk/player_gadget.ui:118
+msgid "SHORTWAVE INTERNET RADIO"
+msgstr "RADIO INTERNET SHORTWAVE"
 
-#: data/gtk/song_listbox.ui:29
-msgid "No Songs Detected"
-msgstr "Tidak Ada Lagu yang Terdeteksi"
+#: data/gtk/player_gadget.ui:140 data/gtk/player_toolbar.ui:29
+#: data/gtk/player_view.ui:58 src/app.rs:259
+msgid "No Playback"
+msgstr "Tidak Ada Pemutaran"
 
-#: data/gtk/song_listbox.ui:40
+#: data/gtk/player_gadget.ui:199
+msgid "Close"
+msgstr "Tutup"
+
+#: data/gtk/player_gadget.ui:210
+msgid "Restore Window"
+msgstr "Pulihkan Jendela"
+
+#: data/gtk/player_view.ui:13
+msgid "Enable Gadget Mode"
+msgstr "Fungsikan Mode Gadget"
+
+#: data/gtk/player_view.ui:215
+msgid "Show Station Details"
+msgstr "Tampilkan Rincian Stasiun"
+
+#: data/gtk/player_view.ui:266
+msgid "No Tracks"
+msgstr "Tidak Ada Trek"
+
+#: data/gtk/player_view.ui:277
+msgid "Played tracks will appear here"
+msgstr "Trek yang diputar akan muncul di sini"
+
+#: data/gtk/player_view.ui:311
+msgid "An error occurred"
+msgstr "Terjadi kesalahan"
+
+#: data/gtk/preferences_dialog.ui:15
+msgid "_Background Playback"
+msgstr "Pemutaran Latar _Belakang"
+
+#: data/gtk/preferences_dialog.ui:16
+msgid "Playback continues when window is closed"
+msgstr "Pemutaran berlanjut ketika jendela ditutup"
+
+#: data/gtk/preferences_dialog.ui:28
+msgid "_Notifications"
+msgstr "_Notifikasi"
+
+#: data/gtk/preferences_dialog.ui:29
+msgid "Show desktop notifications when a new track gets played"
+msgstr "Tampilkan pemberitahuan destop ketika suatu trek baru diputar"
+
+#. Translators: This is a noun / preferences group title
+#: data/gtk/preferences_dialog.ui:43
+msgid "Recording"
+msgstr "Perekaman"
+
+#: data/gtk/preferences_dialog.ui:44
 msgid ""
-"Songs are automatically recognized using the stream metadata.\n"
-"\n"
-"If the station does not send any metadata, no songs can be recognized."
+"Tracks are automatically recognised based on the station stream metadata and "
+"can be saved."
 msgstr ""
-"Lagu secara otomatis dikenali menggunakan metadata aliran.\n"
-"\n"
-"Jika stasiun tidak mengirim metadata, tidak ada lagu yang dapat dikenali."
+"Trek secara otomatis dikenali berbasis pada metadata aliran stasiun dan "
+"dapat disimpan."
 
-#: data/gtk/song_listbox.ui:76
-msgid "Saved songs are located in your Music folder."
-msgstr "Lagu tersimpan berada di folder Musik Anda."
+#: data/gtk/preferences_dialog.ui:47
+msgid "Track _Directory"
+msgstr "_Direktori Trek"
 
-#: data/gtk/song_listbox.ui:86
-msgid "_Open"
-msgstr "Bu_ka"
+#: data/gtk/preferences_dialog.ui:69
+msgid "Save _All Tracks"
+msgstr "Simpan Semu_a Trek"
 
-#: data/gtk/song_row.ui:16
-msgid "Save recorded song"
-msgstr "Menyimpan lagu yang direkam"
+#: data/gtk/preferences_dialog.ui:70
+msgid "All recorded tracks are automatically saved in the track directory"
+msgstr "Semua trek yang direkam otomatis disimpan dalam direktori trek"
 
-#: data/gtk/station_dialog.ui:71
-msgid "_Play Station"
-msgstr "_Putar Stasiun Ini"
+#: data/gtk/preferences_dialog.ui:84
+msgid "Decide for Each _Track"
+msgstr "Putuskan bagi Setiap _Trek"
 
-#: data/gtk/station_dialog.ui:86
+#: data/gtk/preferences_dialog.ui:85
+msgid "Tracks are temporarily recorded and can be saved if desired"
+msgstr "Trek direkam sementara dan dapat disimpan bila dikehendaki"
+
+#: data/gtk/preferences_dialog.ui:100
+msgid "Record N_othing"
+msgstr "Jangan Reka_m Apa Pun"
+
+#: data/gtk/preferences_dialog.ui:101
+msgid "Stations are played without recording"
+msgstr "Stasiun diputar tanpa perekaman"
+
+#: data/gtk/preferences_dialog.ui:120
+msgid "M_inimum Duration"
+msgstr "Durasi M_inimum"
+
+#: data/gtk/preferences_dialog.ui:121
+msgid "Tracks shorter than the minimum duration will be ignored"
+msgstr "Trek yang lebih pendek dari pada durasi minimum akan diabaikan"
+
+#: data/gtk/preferences_dialog.ui:136
+msgid "M_aximum Duration"
+msgstr "Durasi M_aksimum"
+
+#: data/gtk/preferences_dialog.ui:137
+msgid "Recording ends when the maximum duration is reached"
+msgstr "Perekaman berakhir ketika durasi maksimum tercapai"
+
+#: data/gtk/search_page.ui:23
+msgid "Search"
+msgstr "Cari"
+
+#: data/gtk/search_page.ui:24
+msgid "Search stations"
+msgstr "Mencari stasiun"
+
+#: data/gtk/search_page.ui:72
+msgid "Discover over 50,000 public stations"
+msgstr "Temukan lebih dari 50.000 stasiun publik"
+
+#: data/gtk/search_page.ui:90
+msgid "Popular Stations"
+msgstr "Stasiun Populer"
+
+#: data/gtk/search_page.ui:112
+msgid "Discover New Stations"
+msgstr "Temukan Stasiun Baru"
+
+#: data/gtk/search_page.ui:135
+msgid ""
+"The displayed information is provided by <a href=\"https://www.radio-browser."
+"info/\">radio-browser.info</a>. \n"
+"Shortwave has no influence on the listed stations."
+msgstr ""
+"Informasi yang ditampilkan disediakan oleh <a href=\"https://www.radio-"
+"browser.info/\">radio-browser.info</a>. \n"
+"Shortwave tidak punya pengaruh ke stasiun yang tercantum."
+
+#: data/gtk/search_page.ui:201
+msgid "Loading…"
+msgstr "Memuat…"
+
+#: data/gtk/search_page.ui:216
+msgid "No Results"
+msgstr "Tidak Ada Hasil"
+
+#: data/gtk/search_page.ui:217
+msgid ""
+"If the station you are looking for is missing, you can add it to the public "
+"database."
+msgstr ""
+"Bila stasiun yang Anda cari kurang, Anda dapat menambahkannya ke basis data "
+"publik."
+
+#: data/gtk/search_page.ui:221
+msgid "Add Missing Station"
+msgstr "Tambah Stasiun Yang Kurang"
+
+#: data/gtk/search_page.ui:239
+msgid "Unable to Retrieve Station Data"
+msgstr "Tidak Bisa Mengambil Data Stasiun"
+
+#: data/gtk/search_page.ui:242
+msgid "Try Again"
+msgstr "Coba Lagi"
+
+#: data/gtk/station_dialog.ui:75
+msgid "_Play"
+msgstr "_Putar"
+
+#: data/gtk/station_dialog.ui:91
 msgid "_Add to Library"
 msgstr "T_ambah ke Pustaka"
 
-#: data/gtk/station_dialog.ui:102
+#: data/gtk/station_dialog.ui:108
 msgid "_Remove From Library"
 msgstr "Hapus Da_ri Pustaka"
 
-#: data/gtk/station_dialog.ui:120
+#: data/gtk/station_dialog.ui:127 data/gtk/station_row.ui:57
 msgid "Local Station"
 msgstr "Stasiun Lokal"
 
-#: data/gtk/station_dialog.ui:121
+#: data/gtk/station_dialog.ui:128
 msgid ""
 "This station exists only in your library, and is not part of the public "
-"online station database."
+"database"
 msgstr ""
 "Stasiun ini hanya ada di pustaka Anda, dan bukan bagian dari basis data "
-"stasiun daring publik."
+"stasiun publik"
 
-#: data/gtk/station_dialog.ui:136
+#: data/gtk/station_dialog.ui:142 data/gtk/station_row.ui:69
 msgid "Orphaned Station"
 msgstr "Stasiun Orphaned"
 
-#: data/gtk/station_dialog.ui:137
+#: data/gtk/station_dialog.ui:143
 msgid ""
 "The information could not be updated, probably this station was removed from "
-"the public online station database."
+"the public database"
 msgstr ""
 "Informasi tidak dapat dimutakhirkan, mungkin stasiun ini telah dihapus dari "
-"basis data stasiun daring publik."
+"basis data stasiun publik"
 
-#: data/gtk/station_dialog.ui:149
+#: data/gtk/station_dialog.ui:154
 msgid "Information"
 msgstr "Informasi"
 
-#: data/gtk/station_dialog.ui:152 src/ui/pages/search_page.rs:212
+#: data/gtk/station_dialog.ui:158
 msgid "Language"
 msgstr "Bahasa"
 
-#: data/gtk/station_dialog.ui:162
+#: data/gtk/station_dialog.ui:169
 msgid "Tags"
 msgstr "Tanda"
 
-#: data/gtk/station_dialog.ui:183
+#: data/gtk/station_dialog.ui:182
 msgid "Location"
 msgstr "Lokasi"
 
-#: data/gtk/station_dialog.ui:188 src/ui/pages/search_page.rs:213
+#: data/gtk/station_dialog.ui:186
 msgid "Country"
 msgstr "Negara"
 
-#: data/gtk/station_dialog.ui:198 src/ui/pages/search_page.rs:214
+#: data/gtk/station_dialog.ui:197
 msgid "State"
 msgstr "Negara Bagian"
 
@@ -450,7 +520,7 @@ msgstr "Negara Bagian"
 msgid "Audio"
 msgstr "Audio"
 
-#: data/gtk/station_dialog.ui:236 src/ui/pages/search_page.rs:216
+#: data/gtk/station_dialog.ui:235
 msgid "Bitrate"
 msgstr "Laju Bit"
 
@@ -459,259 +529,218 @@ msgid "Codec"
 msgstr "Kodek"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:256
+#: data/gtk/station_dialog.ui:257
 msgid "Stream"
 msgstr "Aliran"
 
-#: data/gtk/station_dialog.ui:265
+#: data/gtk/station_dialog.ui:263
 msgid "Copy"
 msgstr "Salin"
 
-#: data/gtk/streaming_dialog.ui:10
-msgid "Stream to a Device"
-msgstr "Alirkan ke Perangkat"
+#: data/gtk/track_dialog.ui:74
+msgid "Edit"
+msgstr "Sunting"
 
-#: data/gtk/streaming_dialog.ui:26
+#: data/gtk/track_dialog.ui:121
+msgid "The recorded track has been saved"
+msgstr "Trek yang direkam telah disimpan"
+
+#: data/gtk/track_dialog.ui:137 data/gtk/track_dialog.ui:208
+#: data/gtk/track_row.ui:9 src/audio/player.rs:449
+msgid "Save Track"
+msgstr "Simpan Trek"
+
+#: data/gtk/track_dialog.ui:148
+msgid "Play Track"
+msgstr "Putar Trek"
+
+#: data/gtk/track_dialog.ui:159
+msgid "Cancel Recording"
+msgstr "Batalkan Perekaman"
+
+#: data/gtk/track_dialog.ui:175
+msgid "Station"
+msgstr "Stasiun"
+
+#: data/gtk/track_dialog.ui:209
+msgid "Save this track when recording is complete"
+msgstr "Simpan trek ini ketika perekaman selesai"
+
+#: data/gtk/track_dialog.ui:223
+msgid "Recording behaviour can be changed in <a href=\"\">preferences</a>"
+msgstr "Perilaku perekaman dapat diubah dalam <a href=\"\">preferensi</a>"
+
+#: data/gtk/track_row.ui:20
+msgid "Saved"
+msgstr "Disimpan"
+
+#: data/gtk/volume_control.ui:9
+msgid "Toggle Mute"
+msgstr "Jungkitkan Bisu"
+
+#: src/app.rs:85
+msgid "Track no longer available"
+msgstr "Trek tidak lagi tersedia"
+
+#: src/app.rs:109 src/app.rs:132
+msgid "This track is currently not being recorded"
+msgstr "Trek ini kini tidak sedang direkam"
+
+#: src/app.rs:263
+msgid "Playing “{}”"
+msgstr "Memutar \"{}\""
+
+#: src/app.rs:362
+msgid "Active Playback"
+msgstr "Putar Ulang Aktif"
+
+#: src/audio/player.rs:459
+msgid "Don't Record"
+msgstr "Jangan Rekam"
+
+#: src/audio/recording_state.rs:54 src/audio/recording_state.rs:56
+msgid "Not Recorded"
+msgstr "Tidak Direkam"
+
+#: src/audio/recording_state.rs:55
+msgid "Ignored Track"
+msgstr "Trek Yang Diabaikan"
+
+#: src/audio/recording_state.rs:58
+msgid "Recording…"
+msgstr "Merekam…"
+
+#: src/audio/recording_state.rs:59 src/audio/recording_state.rs:60
+msgid "Recorded"
+msgstr "Direkam"
+
+#: src/audio/recording_state.rs:62
+msgid "Below Threshold"
+msgstr "Di Bawah Ambang"
+
+#: src/audio/recording_state.rs:63
+msgid "Cancelled"
+msgstr "Dibatalkan"
+
+#: src/audio/recording_state.rs:69
+msgid "Recording is deactivated in preferences"
+msgstr "Perekaman dinonaktifkan dalam preferensi"
+
+#: src/audio/recording_state.rs:71
+msgid "The track contains a word that is on the ignore list"
+msgstr "Trek mengandung kata yang ada pada daftar abai"
+
+#: src/audio/recording_state.rs:74
 msgid ""
-"Audio playback can be streamed to a network device (requires Google Cast "
-"support)."
-msgstr ""
-"Pemutaran audio dapat dialirkan ke perangkat jaringan (memerlukan dukungan "
-"Google Cast)."
+"The track wasn't played from the beginning, so it can't be fully recorded"
+msgstr "Trek tak dimainkan dari awal, sehingga tak bisa direkam sepenuhnya"
 
-#: data/gtk/streaming_dialog.ui:41
-msgid "No Devices Found"
-msgstr "Tidak Ditemukan Perangkat"
+#: src/audio/recording_state.rs:77
+msgid "The track will be recorded until a new track gets played"
+msgstr "Trek akan direkam sampai trek baru diputar"
 
-#: data/gtk/streaming_dialog.ui:47 data/gtk/streaming_dialog.ui:70
-msgid "Search again"
-msgstr "Cari lagi"
+#: src/audio/recording_state.rs:79
+msgid "The track has been temporarily recorded"
+msgstr "Trek telah direkam sementara"
 
-#: data/gtk/streaming_dialog.ui:64
-msgid "Search Completed"
-msgstr "Pencarian Selesai"
+#: src/audio/recording_state.rs:81
+msgid "The maximum recording duration has been reached"
+msgstr "Durasi perekaman maksimum telah tercapai"
 
-#: data/gtk/streaming_dialog.ui:87
-msgid "Searching for Devices…"
-msgstr "Mencari Perangkat…"
+#: src/audio/recording_state.rs:84
+msgid ""
+"The track has been discarded as the duration was below the set threshold"
+msgstr "Trek telah dibuang karena durasi di bawah ambang yang ditata"
 
-#: data/gtk/window.ui:40
-msgid "Main View"
-msgstr "Tampilan Utama"
+#: src/audio/recording_state.rs:86
+msgid "Recording has been cancelled"
+msgstr "Perekaman telah dibatalkan"
 
-#. Fallback to xdg-home when xdg-music is not available
-#: src/audio/backend/song_backend.rs:97
-msgid "Unable to access music directory. Saving song in home directory."
-msgstr ""
-"Tidak dapat mengakses direktori musik. Menyimpan lagu di direktori rumah."
+#: src/device/device_discovery.rs:83
+msgid "Google Cast Device"
+msgstr "Perangkat Google Cast"
 
-#: src/audio/player.rs:190
-msgid "Station cannot be streamed. URL is not valid."
-msgstr "Stasiun tidak dapat dialirkan. URL tidak valid."
+#: src/device/device_discovery.rs:86
+msgid "Unknown Model"
+msgstr "Model Tak Dikenal"
 
-#: src/audio/player.rs:241
-msgid "Cannot save song."
-msgstr "Tidak bisa menyimpan lagu."
-
-#: src/ui/about_window.rs:46
+#: src/ui/about_dialog.rs:41
 msgid "translator-credits"
 msgstr ""
-"Andika Triwidada <andika@gmail.com>, 2020, 2021.\n"
+"Andika Triwidada <andika@gmail.com>, 2020, 2021, 2025.\n"
 "Kukuh Syafat <kukuhsyafaat@gnome.org>, 2020-2023."
 
-#: src/ui/create_station_dialog.rs:103
-msgid "Select station image"
-msgstr "Pilih gambar stasiun"
+#: src/ui/about_dialog.rs:42
+msgid "Donate"
+msgstr "Donasi"
 
-#. TODO: Implement show-server-stats action
-#: src/ui/pages/discover_page.rs:134
-msgid "Show statistics"
-msgstr "Tampilkan statistik"
+#: src/ui/add_station_dialog.rs:94
+msgid "Select Station Cover"
+msgstr "Pilih Sampul Stasiun"
 
-#: src/ui/pages/discover_page.rs:136
-msgid "Browse over 30,000 stations"
-msgstr "Jelajahi lebih dari 30.000 stasiun"
+#: src/ui/display_error.rs:50
+msgid "Show Details"
+msgstr "Tampilkan Rincian"
 
-#: src/ui/pages/discover_page.rs:138
-msgid "Add new station"
-msgstr "Tambah stasiun baru"
-
-#: src/ui/pages/discover_page.rs:140
-msgid "Your favorite station is missing?"
-msgstr "Stasiun favorit Anda hilang?"
-
-#: src/ui/pages/discover_page.rs:145
-msgid "Open website"
-msgstr "Buka situs web"
-
-#: src/ui/pages/discover_page.rs:147
-msgid "Powered by radio-browser.info"
-msgstr "Didukung oleh radio-browser.info"
-
-#: src/ui/pages/discover_page.rs:158 src/ui/pages/search_page.rs:191
-msgid "Station data could not be received."
-msgstr "Data stasiun tidak dapat diterima."
-
-#: src/ui/pages/library_page.rs:121
+#: src/ui/pages/library_page.rs:111
 msgid "Welcome to {}"
 msgstr "Selamat datang di {}"
 
-#: src/ui/pages/search_page.rs:104
-msgid ""
-"The number of results is limited to {} item. Try using a more specific "
-"search term."
-msgid_plural ""
-"The number of results is limited to {} items. Try using a more specific "
-"search term."
-msgstr[0] ""
-"Jumlah hasil terbatas pada {}. Coba gunakan istilah pencarian yang lebih "
-"spesifik."
+#: src/ui/preferences_dialog.rs:139
+msgid "Select Save Directory"
+msgstr "Pilih Direktori Simpan"
 
-#: src/ui/station_dialog.rs:221
+#: src/ui/preferences_dialog.rs:140
+msgid "_Select"
+msgstr "_Pilih"
+
+#: src/ui/preferences_dialog.rs:163
+msgid "{} min"
+msgid_plural "{} min"
+msgstr[0] "{} mnt"
+
+#: src/ui/preferences_dialog.rs:172
+msgid "{} sec"
+msgid_plural "{} sec"
+msgstr[0] "{} dtk"
+
+#: src/ui/station_dialog.rs:207
 msgid "{} kbit/s"
 msgstr "{} kbit/s"
 
-#~ msgid "Appearance"
-#~ msgstr "Penampilan"
+#: src/ui/station_dialog.rs:292
+msgid "Copied"
+msgstr "Disalin"
 
-#~ msgid "_Dark Mode"
-#~ msgstr "Mo_de Gelap"
+#: src/ui/window.rs:221
+msgid "No Permission for Background Playback"
+msgstr "Tidak Ada Izin untuk Putar Ulang Latar Belakang"
 
-#~ msgid "Whether the application should use a dark theme"
-#~ msgstr "Apakah aplikasi mesti menggunakan tema gelap"
+#: src/ui/window.rs:223
+msgid "“Run in Background” must be allowed for this app in system settings."
+msgstr ""
+"\"Jalankan di Latar Belakang\" mesti diizinkan bagi app ini dalam pengaturan "
+"sistem."
 
-#~ msgid "Window"
-#~ msgstr "Jendela"
+#: src/ui/window.rs:227
+msgid "Try Anyway"
+msgstr "Coba Saja"
 
-#~ msgctxt "shortcut window"
-#~ msgid "Open library view"
-#~ msgstr "Buka tampilan pustaka"
+#: src/ui/window.rs:228
+msgid "Disable Background Playback"
+msgstr "Nonaktifkan Putar Ulang Latar Belakang"
 
-#~ msgctxt "shortcut window"
-#~ msgid "Open discover view"
-#~ msgstr "Buka tampilan temuan"
+#: src/utils.rs:51
+msgid "{} hour"
+msgid_plural "{} hours"
+msgstr[0] "{} jam"
 
-#~ msgctxt "shortcut window"
-#~ msgid "Open search view"
-#~ msgstr "Buka tampilan pencarian"
+#: src/utils.rs:57
+msgid "{} minute"
+msgid_plural "{} minutes"
+msgstr[0] "{} menit"
 
-#~ msgctxt "shortcut window"
-#~ msgid "Go back"
-#~ msgstr "Kembali"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Refresh station data"
-#~ msgstr "Segarkan data stasiun"
-
-#~ msgid "Station details"
-#~ msgstr "Rincian stasiun"
-
-#~ msgid "Unable to connect to radio-browser.info"
-#~ msgstr "Tidak dapat terhubung ke radio-browser.info"
-
-#~ msgid ""
-#~ "Access to the public online station database is not available. Ensure "
-#~ "that you are connected to the internet."
-#~ msgstr ""
-#~ "Akses ke basis data stasiun daring publik tidak tersedia. Pastikan Anda "
-#~ "terhubung ke internet."
-
-#~ msgid "Try again"
-#~ msgstr "Coba lagi"
-
-#~ msgid "_Refresh Station Data"
-#~ msgstr "Sega_rkan Data Stasiun"
-
-#~ msgid "Open Application Menu"
-#~ msgstr "Buka Menu Aplikasi"
-
-#~ msgid "Detected songs will appear here."
-#~ msgstr "Lagu yang terdeteksi akan muncul di sini."
-
-#~ msgid "_How does this work?"
-#~ msgstr "Bagaimana cara ker_janya?"
-
-#~ msgid "Error details"
-#~ msgstr "Rincian kesalahan"
-
-#~ msgid "Connected with"
-#~ msgstr "Terhubung dengan"
-
-#~ msgid "This is a local private station."
-#~ msgstr "Ini adalah stasiun pribadi lokal."
-
-#~ msgid ""
-#~ "This station is visible only to you. If you remove this station from your "
-#~ "library, you have to create it again."
-#~ msgstr ""
-#~ "Stasiun ini hanya terlihat oleh Anda. Jika Anda menghapus stasiun ini "
-#~ "dari pustaka Anda, Anda harus membuatnya lagi."
-
-#~ msgid "_Cancel"
-#~ msgstr "Bata_l"
-
-#~ msgid "_Connect"
-#~ msgstr "_Sambung"
-
-#~ msgid "Devices which implement the Google Cast protocol are supported."
-#~ msgstr "Perangkat yang menerapkan protokol Google Cast didukung."
-
-#~ msgid "_Retry search"
-#~ msgstr "Coba ca_ri lagi"
-
-#~ msgid "This station cannot be played because the stream is offline."
-#~ msgstr "Stasiun ini tidak dapat diputar karena aliran sedang luring."
-
-#~ msgid "URL is not valid."
-#~ msgstr "URL tidak valid."
-
-#~ msgid "An invalid station was removed from the library."
-#~ msgstr "Stasiun yang tidak valid telah dihapus dari pustaka."
-
-#~ msgid "Homepage"
-#~ msgstr "Beranda"
-
-#~ msgid "{} Vote"
-#~ msgid_plural "{} Votes"
-#~ msgstr[0] "{} Suara"
-#~ msgstr[1] "{} Suara"
-
-#~ msgid "{} · {} Vote"
-#~ msgid_plural "{} · {} Votes"
-#~ msgstr[0] "{} · {} Suara"
-#~ msgstr[1] "{} · {} Suara"
-
-#~ msgctxt "shortcut window"
-#~ msgid "Search for stations"
-#~ msgstr "Mencari stasiun"
-
-#~ msgid "Languages"
-#~ msgstr "Bahasa"
-
-#~ msgid "Enable dark mode"
-#~ msgstr "Fungsikan mode gelap"
-
-#~ msgid "Import from Gradio"
-#~ msgstr "Impor dari Gradio"
-
-#~ msgid "Import stations from Gradio"
-#~ msgstr "Impor stasiun dari Gradio"
-
-#~ msgid "Select database to import"
-#~ msgstr "Pilih basis data untuk diimpor"
-
-#~ msgid "Import"
-#~ msgstr "Impor"
-
-#~ msgid "Converting data…"
-#~ msgstr "Mengonversi data…"
-
-#~ msgid "Importing {} station…"
-#~ msgid_plural "Importing {} stations…"
-#~ msgstr[0] "Mengimpor {} stasiun…"
-#~ msgstr[1] "Mengimpor {} stasiun…"
-
-#~ msgid "Imported {} station!"
-#~ msgid_plural "Imported {} stations!"
-#~ msgstr[0] "Diimpor {} stasiun!"
-#~ msgstr[1] "Diimpor {} stasiun!"
+#: src/utils.rs:62
+msgid "{} second"
+msgid_plural "{} seconds"
+msgstr[0] "{} detik"

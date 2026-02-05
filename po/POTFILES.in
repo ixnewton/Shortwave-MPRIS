@@ -5,7 +5,6 @@ data/gtk/add_station_dialog.ui
 data/gtk/device_dialog.ui
 data/gtk/device_indicator.ui
 data/gtk/device_row.ui
-data/gtk/help_overlay.ui
 data/gtk/library_page.ui
 data/gtk/player.ui
 data/gtk/player_gadget.ui
@@ -13,7 +12,9 @@ data/gtk/player_toolbar.ui
 data/gtk/player_view.ui
 data/gtk/preferences_dialog.ui
 data/gtk/recording_indicator.ui
+data/gtk/search_filter.ui
 data/gtk/search_page.ui
+data/gtk/shortcuts_dialog.ui
 data/gtk/station_cover.ui
 data/gtk/station_dialog.ui
 data/gtk/station_row.ui
@@ -24,6 +25,7 @@ data/gtk/window.ui
 src/api/client.rs
 src/api/cover_loader.rs
 src/api/error.rs
+src/api/http.rs
 src/api/mod.rs
 src/api/station.rs
 src/api/station_metadata.rs
@@ -41,6 +43,7 @@ src/audio/recording_mode.rs
 src/audio/recording_state.rs
 src/audio/track.rs
 src/audio/track_model.rs
+src/config.rs
 src/database/connection.rs
 src/database/library.rs
 src/database/library_status.rs
@@ -76,6 +79,10 @@ src/ui/player/player_toolbar.rs
 src/ui/player/player_view.rs
 src/ui/preferences_dialog.rs
 src/ui/recording_indicator.rs
+src/ui/scalable_image.rs
+src/ui/search/mod.rs
+src/ui/search/search_filter.rs
+src/ui/search/search_filter_item.rs
 src/ui/station_cover.rs
 src/ui/station_dialog.rs
 src/ui/station_row.rs

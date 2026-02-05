@@ -7,303 +7,707 @@ msgid ""
 msgstr ""
 "Project-Id-Version: shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2020-09-23 16:15+0000\n"
+"POT-Creation-Date: 2025-10-11 02:43+0000\n"
 "PO-Revision-Date: 2020-10-01 14:05+0300\n"
+"Last-Translator: Efstathios Iosifidis <eiosifidis@gnome.org>\n"
 "Language-Team: Greek <gnome-el-list@gnome.org>\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Last-Translator: Efstathios Iosifidis <eiosifidis@gnome.org>\n"
 "X-Generator: Poedit 2.3\n"
 
-#: data/gtk/station_dialog.ui:10
-msgid "Station details"
-msgstr "Λεπτομέρειες σταθμού"
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:2
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
+msgid "@NAME@"
+msgstr "@NAME@"
 
-#: data/gtk/station_dialog.ui:172 data/gtk/menu/app_menu.ui:169
-msgid "Language"
-msgstr "Γλώσσα"
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:3
+msgid "Internet Radio Player"
+msgstr "Αναπαραγωγέας Διαδικτυακού Ραδιοφώνου"
 
-#: data/gtk/station_dialog.ui:205 data/gtk/storefront.ui:175
-msgid "Tags"
-msgstr "Ετικέτες"
+#. General
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:4
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:10
+msgid "Listen to internet radio"
+msgstr "Ακρόαση ιντερνετικού ραδιοφώνου"
 
-#: data/gtk/station_dialog.ui:220
-msgid "Codec"
-msgstr "Κωδικοποίηση"
+#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+#: data/de.haeckerfelix.Shortwave.desktop.in.in:13
+msgid "Gradio;Radio;Stream;Wave;"
+msgstr "Gradio;Radio;Stream;Wave;Ραδιόφωνο;Ροή;"
 
-#: data/gtk/station_dialog.ui:235
-msgid "Homepage"
-msgstr "Αρχική σελίδα"
-
-#: data/gtk/discover.ui:54
-msgid "Most voted stations"
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:12
+msgid ""
+"Shortwave is an internet radio player that provides access to a station "
+"database with over 50,000 stations."
 msgstr ""
+"Το Shortwave είναι ένας αναπαραγωγέας διαδικτυακού ραδιοφώνου που παρέχει "
+"πρόσβαση σε μια βάση δεδομένων με πάνω από 50.000 σταθμούς."
 
-#: data/gtk/discover.ui:88
-msgid "Trending"
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:15
+msgid "Features:"
+msgstr "Χαρακτηριστικά:"
+
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:17
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:64
+msgid "Create your own library where you can add your favorite stations"
 msgstr ""
+"Δημιουργήστε τη δική σας βιβλιοθήκη όπου μπορείτε να προσθέσετε τους "
+"αγαπημένους σας σταθμούς"
 
-#: data/gtk/discover.ui:122
-msgid "Other users are listening to…"
-msgstr "Άλλοι χρήστες ακούν…"
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:18
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:68
+msgid "Easily search and discover new radio stations"
+msgstr "Εύκολη αναζήτηση και ανακάλυψη νέων ραδιοφωνικών σταθμών"
 
-#: data/gtk/song_row.ui:18
-msgid "Save recorded song"
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:19
+msgid ""
+"Automatic recognition of tracks, with the possibility to save them "
+"individually"
 msgstr ""
+"Αυτόματη αναγνώριση κομματιών, με τη δυνατότητα να τα αποθηκεύσετε μεμονωμένα"
 
-#: data/gtk/streaming_dialog.ui:75 data/gtk/menu/player_menu.ui:33
-msgid "Stream to a device"
-msgstr "Μετάδοση σε συσκευή"
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:20
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:72
+msgid "Responsive application layout, compatible for small and large screens"
+msgstr "Προσαρμοστική διάταξη εφαρμογής, συμβατή για μικρές και μεγάλες οθόνες"
 
-#: data/gtk/streaming_dialog.ui:154
-msgid "Devices which implement the Google Cast protocol are supported."
-msgstr "Υποστηρίζονται συσκευές που εφαρμόζουν το πρωτόκολλο Google Cast."
-
-#: data/gtk/streaming_dialog.ui:209
-msgid "No devices found"
-msgstr "Δεν βρέθηκαν συσκευές"
-
-#: data/gtk/streaming_dialog.ui:224
-msgid "Retry search"
-msgstr "Επανάληψη αναζήτησης"
-
-#: data/gtk/streaming_dialog.ui:302 data/gtk/streaming_dialog.ui:353
-msgid "Searching for devices…"
-msgstr "Αναζήτηση για συσκευές…"
-
-#: data/gtk/notification.ui:142
-msgid "Error details"
-msgstr "Λεπτομέρειες σφάλματος"
-
-#: data/gtk/sidebar_controller.ui:33
-msgid "An error occurred"
-msgstr "Παρουσιάστηκε ένα σφάλμα"
-
-#: data/gtk/sidebar_controller.ui:96 data/gtk/mini_controller.ui:174
-#: data/gtk/toolbar_controller.ui:74
-msgid "No playback"
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:21
+msgid "Play audio on supported network devices (e.g. Google Chromecasts)"
 msgstr ""
+"Αναπαραγωγή ήχου σε υποστηριζόμενες συσκευές δικτύου (π.χ. Google "
+"Chromecasts)"
 
-#: data/gtk/menu/app_menu.ui:17 data/gtk/menu/app_menu.ui:136
-msgid "Sorting"
-msgstr "Ταξινόμηση"
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:22
+msgid "Seamless integration into the GNOME desktop environment"
+msgstr "Απρόσκοπτη ενσωμάτωση στο περιβάλλον εργασίας GNOME"
 
-#: data/gtk/menu/app_menu.ui:43
-msgid "Open radio-browser.info <sup>↗</sup>"
-msgstr "Άνοιγμα radio-browser.info <sup>↗</sup>"
+#. Branding
+#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:28
+msgid "Felix Häcker"
+msgstr "Felix Häcker"
 
-#: data/gtk/menu/app_menu.ui:58
-msgid "Create new station"
-msgstr "Δημιουργία νέου σταθμού"
+#: data/gtk/add_station_dialog.ui:14
+#| msgid "Add new station"
+msgid "Add Local Station"
+msgstr "Προσθήκη Τοπικού Σταθμού"
 
-#: data/gtk/menu/app_menu.ui:83
-msgid "Preferences"
-msgstr "Προτιμήσεις"
+#: data/gtk/add_station_dialog.ui:64
+msgid "Change Station Cover"
+msgstr "Αλλαγή Εξωφύλλου Σταθμού"
 
-#: data/gtk/menu/app_menu.ui:97
-msgid "Keyboard Shortcuts"
-msgstr "Συντομεύσεις Πληκτρολογίου"
-
-#: data/gtk/menu/app_menu.ui:111
-msgid "About Shortwave"
+#: data/gtk/add_station_dialog.ui:95
+msgid ""
+"This station will only be added to your library. If you want it to be "
+"available to everyone, you should add it to the <a href=\"https://www.radio-"
+"browser.info/add\">public database</a>."
 msgstr ""
+"Αυτός ο σταθμός θα προστεθεί μόνο στη βιβλιοθήκη σας. Αν θέλετε να είναι "
+"διαθέσιμος σε όλους, θα πρέπει να τον προσθέσετε στη <a href=\"https://www."
+"radio-browser.info/add\">δημόσια βάση δεδομένων</a>."
 
-#: data/gtk/menu/app_menu.ui:154
+#: data/gtk/add_station_dialog.ui:107
 msgid "Name"
 msgstr "Όνομα"
 
-#: data/gtk/menu/app_menu.ui:184
-msgid "Country"
-msgstr "Χώρα"
+#: data/gtk/add_station_dialog.ui:115
+msgid "Stream URL"
+msgstr "Διεύθυνση URL Ροής"
 
-#: data/gtk/menu/app_menu.ui:199
-msgid "State"
-msgstr "Πολιτεία"
+#: data/gtk/add_station_dialog.ui:123
+#| msgid "Add new station"
+msgid "Add Station"
+msgstr "Προσθήκη Σταθμού"
 
-#: data/gtk/menu/app_menu.ui:214
-msgid "Votes"
-msgstr "Ψήφοι"
+#: data/gtk/device_dialog.ui:7 data/gtk/player_view.ui:132
+#| msgid "Connected with"
+msgid "Connect Device"
+msgstr "Σύνδεση Συσκευής"
 
-#: data/gtk/menu/app_menu.ui:240
-msgid "Ascending"
-msgstr "Αύξουσα"
+#: data/gtk/device_dialog.ui:18
+#| msgid "Searching for devices…"
+msgid "Searching for Devices…"
+msgstr "Αναζήτηση Συσκευών…"
 
-#: data/gtk/menu/app_menu.ui:255
-msgid "Descending"
-msgstr "Φθίνουσα"
+#: data/gtk/device_dialog.ui:25
+#| msgid "Searching for devices…"
+msgid "Search for Devices"
+msgstr "Αναζήτηση Συσκευών"
 
-#: data/gtk/menu/player_menu.ui:19
-msgid "Show station details"
-msgstr "Εμφάνιση λεπτομερειών σταθμού"
+#: data/gtk/device_dialog.ui:41
+msgid "No Devices Available"
+msgstr "Δεν υπάρχουν Διαθέσιμες Συσκευές"
 
-#: data/gtk/menu/player_menu.ui:58
-msgid "Enable mini player"
-msgstr ""
+#: data/gtk/device_dialog.ui:42
+msgid "No supported Google Cast device found"
+msgstr "Δεν βρέθηκε υποστηριζόμενη συσκευή Google Cast"
 
-#: data/gtk/settings_window.ui:15
-msgid "Appearance"
-msgstr "Εμφάνιση"
+#: data/gtk/device_indicator.ui:7
+msgid "Disconnect From Device"
+msgstr "Αποσύνδεση από τη Συσκευή"
 
-#: data/gtk/settings_window.ui:19
-msgid "Dark Mode"
-msgstr "Σκούρο θέμα"
+#: data/gtk/library_page.ui:4
+msgid "Shortwave"
+msgstr "Shortwave"
 
-#: data/gtk/settings_window.ui:20
-msgid "Whether the application should use a dark theme"
-msgstr "Εάν η εφαρμογή θα χρησιμοποιεί το σκούρο θέμα"
+#: data/gtk/library_page.ui:15 data/gtk/search_page.ui:4
+#| msgid "Browse over 25,500 stations"
+msgid "Browse Stations"
+msgstr "Περιήγηση Σταθμών"
 
-#: data/gtk/settings_window.ui:36
-msgid "Features"
-msgstr "Χαρακτηριστικά"
+#: data/gtk/library_page.ui:23
+msgid "Main Menu"
+msgstr "Κύριο Μενού"
 
-#: data/gtk/settings_window.ui:40
-msgid "Notifications"
-msgstr "Ειδοποιήσεις"
+#: data/gtk/library_page.ui:91
+#| msgid "Add new station"
+msgid "_Add New Stations"
+msgstr "_Προσθήκη Νέων Σταθμών"
 
-#: data/gtk/settings_window.ui:41
-msgid "Show desktop notifications when a new song gets played"
-msgstr ""
-"Εμφάνιση ειδοποιήσεων επιφάνειας εργασίας όταν αναπαράγεται ένα νέο "
-"τραγούδι"
+#: data/gtk/library_page.ui:114
+#| msgid "Sorting"
+msgid "_Sorting"
+msgstr "_Ταξινόμηση"
 
-#: data/gtk/shortcuts.ui:12
+#: data/gtk/library_page.ui:117
+#| msgid "Name"
+msgid "_Name"
+msgstr "_Όνομα"
+
+#: data/gtk/library_page.ui:122
+#| msgid "Language"
+msgid "_Language"
+msgstr "_Γλώσσα"
+
+#: data/gtk/library_page.ui:127
+#| msgid "Country"
+msgid "_Country"
+msgstr "_Χώρα"
+
+#: data/gtk/library_page.ui:132
+#| msgid "State"
+msgid "S_tate"
+msgstr "_Πολιτεία"
+
+#: data/gtk/library_page.ui:137
+msgid "_Bitrate"
+msgstr "_Ρυθμός μετάδοσης bit"
+
+#: data/gtk/library_page.ui:144
+#| msgid "Ascending"
+msgid "_Ascending"
+msgstr "_Αύξουσα"
+
+#: data/gtk/library_page.ui:149
+#| msgid "Descending"
+msgid "_Descending"
+msgstr "_Φθίνουσα"
+
+#: data/gtk/library_page.ui:158
+#| msgid "Open radio-browser.info <sup>↗</sup>"
+msgid "_Open radio-browser.info <sup>↗</sup>"
+msgstr "_Άνοιγμα του radio-browser.info <sup>↗</sup>"
+
+#: data/gtk/library_page.ui:165
+#| msgid "Preferences"
+msgid "_Preferences"
+msgstr "_Προτιμήσεις"
+
+#: data/gtk/library_page.ui:169
+#| msgid "Keyboard Shortcuts"
+msgid "_Keyboard Shortcuts"
+msgstr "_Συντομεύσεις Πληκτρολογίου"
+
+#: data/gtk/library_page.ui:173
+msgid "_About Shortwave"
+msgstr "_Σχετικά με το Shortwave"
+
+#: data/gtk/library_page.ui:177
+msgid "_Quit"
+msgstr "_Έξοδος"
+
+#: data/gtk/library_page.ui:185
+#| msgid "Add new station"
+msgid "Add _Local Station"
+msgstr "Προσθήκη _Τοπικού Σταθμού"
+
+#: data/gtk/player_gadget.ui:40 data/gtk/player_toolbar.ui:92
+#: data/gtk/player_view.ui:156 data/gtk/station_row.ui:86
+msgid "Play"
+msgstr "Αναπαραγωγή"
+
+#: data/gtk/player_gadget.ui:55 data/gtk/player_toolbar.ui:106
+#: data/gtk/player_view.ui:170
+msgid "Stop"
+msgstr "Διακοπή"
+
+#: data/gtk/player_gadget.ui:71 data/gtk/player_toolbar.ui:121
+#: data/gtk/player_view.ui:185
+msgid "Buffering…"
+msgstr "Φόρτωση σε προσωρινή μνήμη…"
+
+#: data/gtk/player_gadget.ui:118
+msgid "SHORTWAVE INTERNET RADIO"
+msgstr "ΔΙΑΔΙΚΤΥΑΚΟ ΡΑΔΙΟΦΩΝΟ SHORTWAVE"
+
+#: data/gtk/player_gadget.ui:140 data/gtk/player_toolbar.ui:29
+#: data/gtk/player_view.ui:58 src/app.rs:253
+msgid "No Playback"
+msgstr "Καμία Αναπαραγωγή"
+
+#: data/gtk/player_gadget.ui:199
+msgid "Close"
+msgstr "Κλείσιμο"
+
+#: data/gtk/player_gadget.ui:210
+msgid "Restore Window"
+msgstr "Επαναφορά Παραθύρου"
+
+#: data/gtk/player_view.ui:13
+msgid "Enable Gadget Mode"
+msgstr "Ενεργοποίηση Λειτουργίας Gadget"
+
+#: data/gtk/player_view.ui:215
+#| msgid "Show station details"
+msgid "Show Station Details"
+msgstr "Εμφάνιση Λεπτομερειών Σταθμού"
+
+#: data/gtk/player_view.ui:266
+msgid "No Tracks"
+msgstr "Κανένα Κομμάτι"
+
+#: data/gtk/player_view.ui:277
+#| msgid "Detected songs will appear here."
+msgid "Played tracks will appear here"
+msgstr "Τα αναπαραγμένα κομμάτια θα εμφανιστούν εδώ"
+
+#: data/gtk/player_view.ui:311
+msgid "An error occurred"
+msgstr "Παρουσιάστηκε ένα σφάλμα"
+
+#: data/gtk/preferences_dialog.ui:9 data/gtk/shortcuts_dialog.ui:6
 msgid "General"
 msgstr "Γενικά"
 
-#: data/gtk/shortcuts.ui:18
+#: data/gtk/preferences_dialog.ui:12 data/gtk/shortcuts_dialog.ui:41
+msgid "Playback"
+msgstr "Αναπαραγωγή"
+
+#: data/gtk/preferences_dialog.ui:15
+msgid "_Background Playback"
+msgstr "Αναπαραγωγή στο _Παρασκήνιο"
+
+#: data/gtk/preferences_dialog.ui:16
+msgid "Playback continues when window is closed"
+msgstr "Η αναπαραγωγή συνεχίζεται όταν το παράθυρο κλείσει"
+
+#: data/gtk/preferences_dialog.ui:28
+#| msgid "Notifications"
+msgid "_Notifications"
+msgstr "_Ειδοποιήσεις"
+
+#: data/gtk/preferences_dialog.ui:29
+#| msgid "Show desktop notifications when a new song gets played"
+msgid "Show desktop notifications when a new track gets played"
+msgstr "Εμφάνιση ειδοποιήσεων επιφάνειας εργασίας όταν αναπαράγεται ένα νέο κομμάτι"
+
+#. Translators: This is a noun / preferences group title
+#: data/gtk/preferences_dialog.ui:43
+#| msgid "Descending"
+msgid "Recording"
+msgstr "Εγγραφή"
+
+#: data/gtk/preferences_dialog.ui:44
+#| msgid ""
+#| "Songs are automatically recognized using the stream metadata.\n"
+#| "\n"
+#| "If the station does not send any metadata, no songs can be recognized."
+msgid ""
+"Tracks are automatically recognised based on the station stream metadata and "
+"can be saved."
+msgstr ""
+"Τα κομμάτια αναγνωρίζονται αυτόματα με βάση τα μεταδεδομένα της ροής του "
+"σταθμού και μπορούν να αποθηκευτούν."
+
+#: data/gtk/preferences_dialog.ui:47
+msgid "Track _Directory"
+msgstr "Κατάλογος _Κομματιών"
+
+#: data/gtk/preferences_dialog.ui:69
+msgid "Save _All Tracks"
+msgstr "Αποθήκευση _Όλων των Κομματιών"
+
+#: data/gtk/preferences_dialog.ui:70
+msgid "All recorded tracks are automatically saved in the track directory"
+msgstr "Όλα τα εγγεγραμμένα κομμάτια αποθηκεύονται αυτόματα στον κατάλογο κομματιών"
+
+#: data/gtk/preferences_dialog.ui:84
+msgid "Decide for Each _Track"
+msgstr "Απόφαση για Κάθε _Κομμάτι"
+
+#: data/gtk/preferences_dialog.ui:85
+msgid "Tracks are temporarily recorded and can be saved if desired"
+msgstr "Τα κομμάτια εγγράφονται προσωρινά και μπορούν να αποθηκευτούν εάν το επιθυμείτε"
+
+#: data/gtk/preferences_dialog.ui:100
+msgid "Record N_othing"
+msgstr "Καμία _Εγγραφή"
+
+#: data/gtk/preferences_dialog.ui:101
+msgid "Stations are played without recording"
+msgstr "Οι σταθμοί αναπαράγονται χωρίς εγγραφή"
+
+#: data/gtk/preferences_dialog.ui:120
+msgid "M_inimum Duration"
+msgstr "Ε_λάχιστη Διάρκεια"
+
+#: data/gtk/preferences_dialog.ui:121
+msgid "Tracks shorter than the minimum duration will be ignored"
+msgstr "Κομμάτια μικρότερα από την ελάχιστη διάρκεια θα αγνοούνται"
+
+#: data/gtk/preferences_dialog.ui:136
+msgid "M_aximum Duration"
+msgstr "Μ_έγιστη Διάρκεια"
+
+#: data/gtk/preferences_dialog.ui:137
+msgid "Recording ends when the maximum duration is reached"
+msgstr "Η εγγραφή τελειώνει όταν επιτευχθεί η μέγιστη διάρκεια"
+
+#: data/gtk/search_filter.ui:15
+msgid "Search"
+msgstr "Αναζήτηση"
+
+#: data/gtk/search_filter.ui:16
+#| msgctxt "shortcut window"
+#| msgid "Search for stations"
+msgid "Search stations"
+msgstr "Αναζήτηση σταθμών"
+
+#: data/gtk/search_page.ui:55
+#| msgid "Discover new stations"
+msgid "Discover over 50,000 public stations"
+msgstr "Ανακαλύψτε πάνω από 50.000 δημόσιους σταθμούς"
+
+#: data/gtk/search_page.ui:73
+msgid "Popular Stations"
+msgstr "Δημοφιλείς Σταθμοί"
+
+#: data/gtk/search_page.ui:95
+#| msgid "Discover new stations"
+msgid "Discover New Stations"
+msgstr "Ανακαλύψτε Νέους Σταθμούς"
+
+#: data/gtk/search_page.ui:118
+msgid ""
+"The displayed information is provided by <a href=\"https://www.radio-"
+"browser.info/\">radio-browser.info</a>.\n"
+"                                  Shortwave has no influence on the listed "
+"stations."
+msgstr ""
+"Οι πληροφορίες που εμφανίζονται παρέχονται από το <a href=\"https://www."
+"radio-browser.info/\">radio-browser.info</a>.\n"
+"Το Shortwave δεν έχει καμία επιρροή στους αναφερόμενους σταθμούς."
+
+#: data/gtk/search_page.ui:184
+msgid "Loading…"
+msgstr "Φόρτωση…"
+
+#: data/gtk/search_page.ui:199
+msgid "No Results"
+msgstr "Κανένα Αποτέλεσμα"
+
+#: data/gtk/search_page.ui:200
+msgid ""
+"If the station you are looking for is missing, you can add it to the public "
+"database."
+msgstr ""
+"Αν ο σταθμός που ψάχνετε λείπει, μπορείτε να τον προσθέσετε στη δημόσια βάση "
+"δεδομένων."
+
+#: data/gtk/search_page.ui:204
+#| msgid "Add new station"
+msgid "Add Missing Station"
+msgstr "Προσθήκη Σταθμού που Λείπει"
+
+#: data/gtk/search_page.ui:222
+msgid "Unable to Retrieve Station Data"
+msgstr "Αδυναμία Ανάκτησης Δεδομένων Σταθμού"
+
+#: data/gtk/search_page.ui:225
+msgid "Try Again"
+msgstr "Προσπαθήστε ξανά"
+
+#: data/gtk/shortcuts_dialog.ui:9
+msgctxt "shortcut window"
+msgid "Open shortcut window"
+msgstr "Άνοιγμα παραθύρου συντομεύσεων"
+
+#: data/gtk/shortcuts_dialog.ui:16
+#| msgctxt "shortcut window"
+#| msgid "Quit the application"
+msgctxt "shortcut window"
+msgid "Open application menu"
+msgstr "Άνοιγμα μενού εφαρμογής"
+
+#: data/gtk/shortcuts_dialog.ui:21
+#| msgid "Preferences"
+msgctxt "shortcut window"
+msgid "Open preferences"
+msgstr "Άνοιγμα προτιμήσεων"
+
+#: data/gtk/shortcuts_dialog.ui:27
+msgctxt "shortcut window"
+msgid "Close the window"
+msgstr "Κλείσιμο του παραθύρου"
+
+#: data/gtk/shortcuts_dialog.ui:33
 msgctxt "shortcut window"
 msgid "Quit the application"
 msgstr "Τερματισμός εφαρμογής"
 
-#: data/gtk/shortcuts.ui:25
+#: data/gtk/shortcuts_dialog.ui:44
 msgctxt "shortcut window"
-msgid "Search for stations"
-msgstr "Αναζήτηση για σταθμούς"
+msgid "Toggle playback"
+msgstr "Εναλλαγή αναπαραγωγής"
 
-#: data/gtk/storefront.ui:21 data/gtk/library.ui:21
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
-#: data/de.haeckerfelix.Shortwave.desktop.in.in:3
-msgid "Shortwave"
-msgstr ""
+#: data/gtk/shortcuts_dialog.ui:52 data/gtk/volume_control.ui:21
+msgid "Volume"
+msgstr "Ένταση"
 
-#: data/gtk/storefront.ui:85
-msgid "Discover"
-msgstr "Εντοπισμός"
+#: data/gtk/shortcuts_dialog.ui:55
+msgctxt "shortcut window"
+msgid "Toggle mute"
+msgstr "Εναλλαγή σίγασης"
 
-#: data/gtk/storefront.ui:100
-msgid "Search"
-msgstr "Αναζήτηση"
+#: data/gtk/shortcuts_dialog.ui:61
+msgctxt "shortcut window"
+msgid "Increase volume"
+msgstr "Αύξηση έντασης"
 
-#: data/gtk/storefront.ui:125
-msgid "Locations"
-msgstr "Τοποθεσίες"
+#: data/gtk/shortcuts_dialog.ui:67
+msgctxt "shortcut window"
+msgid "Decrease volume"
+msgstr "Μείωση έντασης"
 
-#: data/gtk/storefront.ui:150
-msgid "Languages"
-msgstr "Γλώσσες"
+#: data/gtk/station_dialog.ui:75
+msgid "_Play"
+msgstr "_Αναπαραγωγή"
 
-#: data/gtk/library.ui:121
-msgid "Receiving station data…"
-msgstr "Λήψη δεδομένων σταθμού…"
+#: data/gtk/station_dialog.ui:91
+msgid "_Add to Library"
+msgstr "_Προσθήκη στη Βιβλιοθήκη"
 
-#: data/gtk/library.ui:217
-msgid "Discover new stations"
-msgstr "Εντοπισμός νέων σταθμών"
+#: data/gtk/station_dialog.ui:108
+msgid "_Remove From Library"
+msgstr "_Αφαίρεση από τη Βιβλιοθήκη"
 
-#: data/gtk/song_listbox.ui:34
+#: data/gtk/station_dialog.ui:127 data/gtk/station_row.ui:57
+#| msgid "Locations"
+msgid "Local Station"
+msgstr "Τοπικός Σταθμός"
+
+#: data/gtk/station_dialog.ui:128
 msgid ""
-"Songs are automatically recognized using the stream metadata.\n"
-"\n"
-"If the station does not send any metadata, no songs can be recognized."
+"This station exists only in your library, and is not part of the public "
+"database"
 msgstr ""
-"Τα τραγούδια αναγνωρίζονται αυτόματα χρησιμοποιώντας τα μεταδεδομένα "
-"ροής.\n"
-"\n"
-"Εάν ο σταθμός δεν στέλνει μεταδεδομένα, δεν αναγνωρίζονται τραγούδια."
+"Αυτός ο σταθμός υπάρχει μόνο στη βιβλιοθήκη σας και δεν αποτελεί μέρος της "
+"δημόσιας βάσης δεδομένων"
 
-#: data/gtk/song_listbox.ui:93
-msgid "No songs detected"
-msgstr "Δεν εντοπίστηκαν τραγούδια"
+#: data/gtk/station_dialog.ui:142 data/gtk/station_row.ui:69
+#| msgid "Create new station"
+msgid "Orphaned Station"
+msgstr "Ορφανός Σταθμός"
 
-#: data/gtk/song_listbox.ui:110
-msgid "Detected songs will appear here."
-msgstr "Τα τραγούδια που εντοπίστηκαν θα εμφανιστούν εδώ."
-
-#: data/gtk/song_listbox.ui:131
-msgid "How does this work?"
-msgstr "Πως δουλεύει αυτό;"
-
-#: data/gtk/song_listbox.ui:197
-msgid "Saved songs are located in your Music folder."
-msgstr "Τα αποθηκευμένα τραγούδια βρίσκονται στο φάκελο Μουσική."
-
-#: data/gtk/song_listbox.ui:215
-msgid "Open"
-msgstr "Άνοιγμα"
-
-#: data/gtk/player.ui:135
-msgid "Connected with"
-msgstr "Συνδεδεμένο μέ"
-
-#: src/audio/player.rs:167
-msgid "This station cannot be played because the stream is offline."
+#: data/gtk/station_dialog.ui:143
+msgid ""
+"The information could not be updated, probably this station was removed from "
+"the public database"
 msgstr ""
+"Οι πληροφορίες δεν ήταν δυνατό να ενημερωθούν, πιθανότατα αυτός ο σταθμός "
+"αφαιρέθηκε από τη δημόσια βάση δεδομένων"
 
-#: src/audio/player.rs:185
-msgid "Station cannot be streamed."
+#: data/gtk/station_dialog.ui:154
+#| msgid "Locations"
+msgid "Information"
+msgstr "Πληροφορίες"
+
+#: data/gtk/station_dialog.ui:158
+msgid "Language"
+msgstr "Γλώσσα"
+
+#: data/gtk/station_dialog.ui:169
+msgid "Tags"
+msgstr "Ετικέτες"
+
+#: data/gtk/station_dialog.ui:182
+#| msgid "Locations"
+msgid "Location"
+msgstr "Τοποθεσία"
+
+#: data/gtk/station_dialog.ui:186
+msgid "Country"
+msgstr "Χώρα"
+
+#: data/gtk/station_dialog.ui:197
+msgid "State"
+msgstr "Πολιτεία"
+
+#: data/gtk/station_dialog.ui:232
+msgid "Audio"
+msgstr "Ήχος"
+
+#: data/gtk/station_dialog.ui:235
+msgid "Bitrate"
+msgstr "Ρυθμός μετάδοσης bit"
+
+#: data/gtk/station_dialog.ui:246
+msgid "Codec"
+msgstr "Κωδικοποιητής"
+
+#. This is a noun/label for the station stream url
+#: data/gtk/station_dialog.ui:257
+msgid "Stream"
+msgstr "Ροή"
+
+#: data/gtk/station_dialog.ui:263
+msgid "Copy"
+msgstr "Αντιγραφή"
+
+#: data/gtk/track_dialog.ui:74
+msgid "Edit"
+msgstr "Επεξεργασία"
+
+#: data/gtk/track_dialog.ui:121
+msgid "The recorded track has been saved"
+msgstr "Το εγγεγραμμένο κομμάτι έχει αποθηκευτεί"
+
+#: data/gtk/track_dialog.ui:137 data/gtk/track_dialog.ui:208
+#: data/gtk/track_row.ui:9 src/audio/player.rs:448
+msgid "Save Track"
+msgstr "Αποθήκευση Κομματιού"
+
+#: data/gtk/track_dialog.ui:148
+msgid "Play Track"
+msgstr "Αναπαραγωγή Κομματιού"
+
+#: data/gtk/track_dialog.ui:159
+msgid "Cancel Recording"
+msgstr "Ακύρωση Εγγραφής"
+
+#: data/gtk/track_dialog.ui:175
+#| msgid "State"
+msgid "Station"
+msgstr "Σταθμός"
+
+#: data/gtk/track_dialog.ui:209
+msgid "Save this track when recording is complete"
+msgstr "Αποθήκευση αυτού του κομματιού όταν ολοκληρωθεί η εγγραφή"
+
+#: data/gtk/track_dialog.ui:223
+msgid "Recording behaviour can be changed in <a href=\"\">preferences</a>"
 msgstr ""
+"Η συμπεριφορά εγγραφής μπορεί να αλλάξει στις <a href=\"\">προτιμήσεις</a>"
 
-#: src/audio/player.rs:185
-msgid "URL is not valid."
-msgstr "Η URL δεν είναι έγκυρη."
+#: data/gtk/track_row.ui:20
+msgid "Saved"
+msgstr "Αποθηκεύτηκε"
 
-#. Welcome text which gets displayed when the library is empty. "{}" is the application name.
-#: src/database/library.rs:60
-msgid "Welcome to {}"
-msgstr "Καλώς ήρθατε στο {}"
+#: data/gtk/volume_control.ui:9
+msgid "Toggle Mute"
+msgstr "Εναλλαγή Σίγασης"
 
-#: src/database/library.rs:156
-msgid "No longer existing station removed from library."
+#: src/app.rs:85
+msgid "Track no longer available"
+msgstr "Το κομμάτι δεν είναι πλέον διαθέσιμο"
+
+#: src/app.rs:109 src/app.rs:132
+msgid "This track is currently not being recorded"
+msgstr "Αυτό το κομμάτι δεν εγγράφεται αυτήν τη στιγμή"
+
+#: src/app.rs:258
+msgid "Playing “{}”"
+msgstr "Αναπαραγωγή «{}»"
+
+#: src/app.rs:353
+msgid "Active Playback"
+msgstr "Ενεργή Αναπαραγωγή"
+
+#: src/audio/player.rs:458
+msgid "Don't Record"
+msgstr "Να μην γίνει Εγγραφή"
+
+#: src/audio/recording_state.rs:54 src/audio/recording_state.rs:56
+msgid "Not Recorded"
+msgstr "Δεν Έχει Εγγραφεί"
+
+#: src/audio/recording_state.rs:55
+msgid "Ignored Track"
+msgstr "Κομμάτι που Αγνοήθηκε"
+
+#: src/audio/recording_state.rs:58
+msgid "Recording…"
+msgstr "Γίνεται Εγγραφή…"
+
+#: src/audio/recording_state.rs:59 src/audio/recording_state.rs:60
+msgid "Recorded"
+msgstr "Εγγράφηκε"
+
+#: src/audio/recording_state.rs:62
+msgid "Below Threshold"
+msgstr "Κάτω από το Όριο"
+
+#: src/audio/recording_state.rs:63
+msgid "Cancelled"
+msgstr "Ακυρώθηκε"
+
+#: src/audio/recording_state.rs:69
+msgid "Recording is deactivated in preferences"
+msgstr "Η εγγραφή είναι απενεργοποιημένη στις προτιμήσεις"
+
+#: src/audio/recording_state.rs:71
+msgid "The track contains a word that is on the ignore list"
+msgstr "Το κομμάτι περιέχει μια λέξη που βρίσκεται στη λίστα αγνόησης"
+
+#: src/audio/recording_state.rs:74
+msgid ""
+"The track wasn't played from the beginning, so it can't be fully recorded"
 msgstr ""
+"Το κομμάτι δεν αναπαράχθηκε από την αρχή, επομένως δεν μπορεί να εγγραφεί "
+"πλήρως"
 
-#: src/database/library.rs:160 src/discover/pages/discover.rs:127
-#: src/discover/pages/search.rs:95
-msgid "Station data could not be received."
-msgstr "Αδυναμία λήψης δεδομένων σταθμού."
+#: src/audio/recording_state.rs:77
+msgid "The track will be recorded until a new track gets played"
+msgstr "Το κομμάτι θα εγγραφεί μέχρι να αναπαραχθεί ένα νέο κομμάτι"
 
-#: src/discover/pages/discover.rs:57
-msgid "Show statistics"
-msgstr "Εμφάνιση στατιστικών"
+#: src/audio/recording_state.rs:79
+msgid "The track has been temporarily recorded"
+msgstr "Το κομμάτι έχει εγγραφεί προσωρινά"
 
-#: src/discover/pages/discover.rs:58
-msgid "Browse over 25,500 stations"
-msgstr "Περιηγηθείτε σε περισσότερους από 25.500 σταθμούς"
+#: src/audio/recording_state.rs:81
+msgid "The maximum recording duration has been reached"
+msgstr "Έχει συμπληρωθεί η μέγιστη διάρκεια εγγραφής"
 
-#: src/discover/pages/discover.rs:60
-msgid "Add new station"
-msgstr "Προσθήκη νέου σταθμού"
+#: src/audio/recording_state.rs:84
+msgid ""
+"The track has been discarded as the duration was below the set threshold"
+msgstr "Το κομμάτι απορρίφθηκε καθώς η διάρκεια ήταν κάτω από το καθορισμένο όριο"
 
-#: src/discover/pages/discover.rs:61
-msgid "Your favorite station is missing?"
-msgstr "Λείπει ο αγαπημένος σας σταθμός;"
+#: src/audio/recording_state.rs:86
+msgid "Recording has been cancelled"
+msgstr "Η εγγραφή έχει ακυρωθεί"
 
-#: src/discover/pages/discover.rs:63
-msgid "Open website"
-msgstr "Άνοιγμα ιστοτόπου"
+#: src/device/device_discovery.rs:83
+msgid "Google Cast Device"
+msgstr "Συσκευή Google Cast"
 
-#: src/discover/pages/discover.rs:64
-msgid "Powered by radio-browser.info"
-msgstr "Με την υποστήριξη του radio-browser.info"
+#: src/device/device_discovery.rs:86
+msgid "Unknown Model"
+msgstr "Άγνωστο Μοντέλο"
 
-#: src/ui/about_dialog.rs:32
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:6
-msgid "Listen to internet radio"
-msgstr "Ακρόαση ιντερνετικού ραδιοφώνου"
-
-#: src/ui/about_dialog.rs:34
+#: src/ui/about_dialog.rs:41
 msgid "translator-credits"
 msgstr ""
 "Ελληνική μεταφραστική ομάδα GNOME\n"
@@ -312,63 +716,171 @@ msgstr ""
 "Για περισσότερες πληροφορίες, επισκεφθείτε τη σελίδα\n"
 "http://gnome.gr/"
 
-#: src/utils.rs:110
-msgid "{} Vote"
-msgid_plural "{} Votes"
-msgstr[0] "{} Ψήφος"
-msgstr[1] "{} Ψήφοι"
+#: src/ui/about_dialog.rs:42
+msgid "Donate"
+msgstr "Δωρεά"
 
-#: src/utils.rs:112
-msgid "{} · {} Vote"
-msgid_plural "{} · {} Votes"
-msgstr[0] "{} · {} Ψήφος"
-msgstr[1] "{} · {} Ψήφοι"
+#: src/ui/add_station_dialog.rs:94
+msgid "Select Station Cover"
+msgstr "Επιλογή Εξωφύλλου Σταθμού"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:8
-msgid "Felix Häcker"
-msgstr "Felix Häcker"
+#: src/ui/display_error.rs:50
+#| msgid "Show station details"
+msgid "Show Details"
+msgstr "Εμφάνιση Λεπτομερειών"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:16
-msgid ""
-"Shortwave is an internet radio player that provides access to a station "
-"database with over 25,000 stations."
+#: src/ui/pages/library_page.rs:111
+msgid "Welcome to {}"
+msgstr "Καλώς ήρθατε στο {}"
+
+#: src/ui/preferences_dialog.rs:139
+msgid "Select Save Directory"
+msgstr "Επιλογή Καταλόγου Αποθήκευσης"
+
+#: src/ui/preferences_dialog.rs:140
+msgid "_Select"
+msgstr "_Επιλογή"
+
+#: src/ui/preferences_dialog.rs:163
+msgid "{} min"
+msgid_plural "{} min"
+msgstr[0] "{} λεπτό"
+msgstr[1] "{} λεπτά"
+
+#: src/ui/preferences_dialog.rs:172
+msgid "{} sec"
+msgid_plural "{} sec"
+msgstr[0] "{} δευτ."
+msgstr[1] "{} δευτ."
+
+#: src/ui/station_dialog.rs:207
+msgid "{} kbit/s"
+msgstr "{} kbit/s"
+
+#: src/ui/station_dialog.rs:292
+msgid "Copied"
+msgstr "Αντιγράφηκε"
+
+#: src/ui/window.rs:221
+msgid "No Permission for Background Playback"
+msgstr "Δεν υπάρχει Άδεια για Αναπαραγωγή στο Παρασκήνιο"
+
+#: src/ui/window.rs:223
+msgid "“Run in Background” must be allowed for this app in system settings."
 msgstr ""
+"Η «Εκτέλεση στο παρασκήνιο» πρέπει να επιτρέπεται για αυτήν την εφαρμογή "
+"στις ρυθμίσεις του συστήματος."
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:19
-msgid "Features:"
-msgstr "Χαρακτηριστικά:"
+#: src/ui/window.rs:227
+msgid "Try Anyway"
+msgstr "Δοκιμή ούτως ή άλλως"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:21
-msgid "Create your own library where you can add your favorite stations"
-msgstr ""
-"Δημιουργήστε τη δική σας βιβλιοθήκη όπου μπορείτε να προσθέσετε τους "
-"αγαπημένους σας σταθμούς"
+#: src/ui/window.rs:228
+msgid "Disable Background Playback"
+msgstr "Απενεργοποίηση Αναπαραγωγής στο Παρασκήνιο"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:22
-msgid "Easily search and discover new radio stations"
-msgstr "Εύκολη αναζήτηση και ανακάλυψη νέων ραδιοφωνικών σταθμών"
+#: src/utils.rs:51
+msgid "{} hour"
+msgid_plural "{} hours"
+msgstr[0] "{} ώρα"
+msgstr[1] "{} ώρες"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:23
-msgid ""
-"Automatic recognition of songs, with the possibility to save them "
-"individually"
-msgstr ""
+#: src/utils.rs:57
+msgid "{} minute"
+msgid_plural "{} minutes"
+msgstr[0] "{} λεπτό"
+msgstr[1] "{} λεπτά"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:24
-msgid "Responsive application layout, compatible for small and large screens"
-msgstr ""
+#: src/utils.rs:62
+msgid "{} second"
+msgid_plural "{} seconds"
+msgstr[0] "{} δευτερόλεπτο"
+msgstr[1] "{} δευτερόλεπτα"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:25
-msgid "Play audio on supported network devices (e.g. Google Chromecasts)"
-msgstr ""
-"Αναπαραγωγή ήχου σε υποστηριζόμενες συσκευές δικτύου (π.χ. Google "
-"Chromecasts)"
+#~ msgid "Station details"
+#~ msgstr "Λεπτομέρειες σταθμού"
 
-#: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:26
-msgid "Seamless integration into the GNOME desktop environment"
-msgstr "Απρόσκοπτη ενσωμάτωση στο GNOME"
+#~ msgid "Homepage"
+#~ msgstr "Αρχική σελίδα"
 
-#. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
-#: data/de.haeckerfelix.Shortwave.desktop.in.in:12
-msgid "Gradio;Radio;Stream;Wave;"
-msgstr ""
+#~ msgid "Other users are listening to…"
+#~ msgstr "Άλλοι χρήστες ακούν…"
+
+#~ msgid "Stream to a device"
+#~ msgstr "Μετάδοση σε συσκευή"
+
+#~ msgid "Devices which implement the Google Cast protocol are supported."
+#~ msgstr "Υποστηρίζονται συσκευές που εφαρμόζουν το πρωτόκολλο Google Cast."
+
+#~ msgid "No devices found"
+#~ msgstr "Δεν βρέθηκαν συσκευές"
+
+#~ msgid "Retry search"
+#~ msgstr "Επανάληψη αναζήτησης"
+
+#~ msgid "Error details"
+#~ msgstr "Λεπτομέρειες σφάλματος"
+
+#~ msgid "Votes"
+#~ msgstr "Ψήφοι"
+
+#~ msgid "Appearance"
+#~ msgstr "Εμφάνιση"
+
+#~ msgid "Dark Mode"
+#~ msgstr "Σκούρο θέμα"
+
+#~ msgid "Whether the application should use a dark theme"
+#~ msgstr "Εάν η εφαρμογή θα χρησιμοποιεί το σκούρο θέμα"
+
+#~ msgid "Features"
+#~ msgstr "Χαρακτηριστικά"
+
+#~ msgid "Discover"
+#~ msgstr "Εντοπισμός"
+
+#~ msgid "Languages"
+#~ msgstr "Γλώσσες"
+
+#~ msgid "Receiving station data…"
+#~ msgstr "Λήψη δεδομένων σταθμού…"
+
+#~ msgid "No songs detected"
+#~ msgstr "Δεν εντοπίστηκαν τραγούδια"
+
+#~ msgid "How does this work?"
+#~ msgstr "Πως δουλεύει αυτό;"
+
+#~ msgid "Saved songs are located in your Music folder."
+#~ msgstr "Τα αποθηκευμένα τραγούδια βρίσκονται στο φάκελο Μουσική."
+
+#~ msgid "Open"
+#~ msgstr "Άνοιγμα"
+
+#~ msgid "URL is not valid."
+#~ msgstr "Η URL δεν είναι έγκυρη."
+
+#~ msgid "Station data could not be received."
+#~ msgstr "Αδυναμία λήψης δεδομένων σταθμού."
+
+#~ msgid "Show statistics"
+#~ msgstr "Εμφάνιση στατιστικών"
+
+#~ msgid "Your favorite station is missing?"
+#~ msgstr "Λείπει ο αγαπημένος σας σταθμός;"
+
+#~ msgid "Open website"
+#~ msgstr "Άνοιγμα ιστοτόπου"
+
+#~ msgid "Powered by radio-browser.info"
+#~ msgstr "Με την υποστήριξη του radio-browser.info"
+
+#~ msgid "{} Vote"
+#~ msgid_plural "{} Votes"
+#~ msgstr[0] "{} Ψήφος"
+#~ msgstr[1] "{} Ψήφοι"
+
+#~ msgid "{} · {} Vote"
+#~ msgid_plural "{} · {} Votes"
+#~ msgstr[0] "{} · {} Ψήφος"
+#~ msgstr[1] "{} · {} Ψήφοι"
