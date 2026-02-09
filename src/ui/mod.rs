@@ -16,6 +16,7 @@
 
 pub mod pages;
 pub mod player;
+pub mod search;
 
 pub mod about_dialog;
 mod add_station_dialog;
@@ -25,6 +26,7 @@ mod device_row;
 mod display_error;
 mod preferences_dialog;
 mod recording_indicator;
+mod scalable_image;
 mod station_cover;
 mod station_dialog;
 mod station_row;
@@ -40,6 +42,7 @@ pub use device_row::SwDeviceRow;
 pub use display_error::DisplayError;
 pub use preferences_dialog::SwPreferencesDialog;
 pub use recording_indicator::SwRecordingIndicator;
+pub use scalable_image::SwScalableImage;
 pub use station_cover::SwStationCover;
 pub use station_dialog::SwStationDialog;
 pub use station_row::SwStationRow;

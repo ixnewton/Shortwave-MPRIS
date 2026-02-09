@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shortwave master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/Shortwave/issues\n"
-"POT-Creation-Date: 2026-01-12 20:45+0000\n"
-"PO-Revision-Date: 2026-01-18 20:56+0300\n"
+"POT-Creation-Date: 2025-09-10 23:09+0000\n"
+"PO-Revision-Date: 2025-09-17 23:44+0300\n"
 "Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
 "Language-Team: Turkish <takim@gnome.org.tr>\n"
 "Language: tr\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.7\n"
 
 #: data/de.haeckerfelix.Shortwave.desktop.in.in:2
 #: data/de.haeckerfelix.Shortwave.metainfo.xml.in.in:5
@@ -119,7 +119,7 @@ msgstr "Akış Bağlantısı"
 msgid "Add Station"
 msgstr "İstasyon Ekle"
 
-#: data/gtk/device_dialog.ui:7 data/gtk/player_view.ui:134
+#: data/gtk/device_dialog.ui:7 data/gtk/player_view.ui:132
 msgid "Connect Device"
 msgstr "Aygıt Bağla"
 
@@ -155,78 +155,78 @@ msgstr "İstasyonlara Göz At"
 msgid "Main Menu"
 msgstr "Ana Menü"
 
-#: data/gtk/library_page.ui:92
+#: data/gtk/library_page.ui:91
 msgid "_Add New Stations"
 msgstr "Yeni İstasyon _Ekle"
 
-#: data/gtk/library_page.ui:115
+#: data/gtk/library_page.ui:114
 msgid "_Sorting"
 msgstr "_Sıralama"
 
-#: data/gtk/library_page.ui:118
+#: data/gtk/library_page.ui:117
 msgid "_Name"
 msgstr "_Ad"
 
-#: data/gtk/library_page.ui:123
+#: data/gtk/library_page.ui:122
 msgid "_Language"
 msgstr "_Dil"
 
-#: data/gtk/library_page.ui:128
+#: data/gtk/library_page.ui:127
 msgid "_Country"
 msgstr "_Ülke"
 
-#: data/gtk/library_page.ui:133
+#: data/gtk/library_page.ui:132
 msgid "S_tate"
 msgstr "_Eyalet"
 
-#: data/gtk/library_page.ui:138
+#: data/gtk/library_page.ui:137
 msgid "_Bitrate"
 msgstr "_Bit oranı"
 
-#: data/gtk/library_page.ui:145
+#: data/gtk/library_page.ui:144
 msgid "_Ascending"
 msgstr "_Artan"
 
-#: data/gtk/library_page.ui:150
+#: data/gtk/library_page.ui:149
 msgid "_Descending"
 msgstr "_Azalan"
 
-#: data/gtk/library_page.ui:159
+#: data/gtk/library_page.ui:158
 msgid "_Open radio-browser.info <sup>↗</sup>"
 msgstr "radio-browser.info’yu _aç <sup>↗</sup>"
 
-#: data/gtk/library_page.ui:166
+#: data/gtk/library_page.ui:165
 msgid "_Preferences"
 msgstr "_Tercihler"
 
-#: data/gtk/library_page.ui:170
+#: data/gtk/library_page.ui:169
 msgid "_Keyboard Shortcuts"
 msgstr "_Klavye Kısayolları"
 
-#: data/gtk/library_page.ui:174
+#: data/gtk/library_page.ui:173
 msgid "_About Shortwave"
 msgstr "Shortwave _Hakkında"
 
-#: data/gtk/library_page.ui:178
+#: data/gtk/library_page.ui:177
 msgid "_Quit"
 msgstr "_Çık"
 
-#: data/gtk/library_page.ui:186
+#: data/gtk/library_page.ui:185
 msgid "Add _Local Station"
 msgstr "_Yerel İstasyon Ekle"
 
 #: data/gtk/player_gadget.ui:40 data/gtk/player_toolbar.ui:92
-#: data/gtk/player_view.ui:158 data/gtk/station_row.ui:86
+#: data/gtk/player_view.ui:156 data/gtk/station_row.ui:86
 msgid "Play"
 msgstr "Oynat"
 
 #: data/gtk/player_gadget.ui:55 data/gtk/player_toolbar.ui:106
-#: data/gtk/player_view.ui:172
+#: data/gtk/player_view.ui:170
 msgid "Stop"
 msgstr "Durdur"
 
 #: data/gtk/player_gadget.ui:71 data/gtk/player_toolbar.ui:121
-#: data/gtk/player_view.ui:187
+#: data/gtk/player_view.ui:185
 msgid "Buffering…"
 msgstr "Tamponlanıyor…"
 
@@ -235,7 +235,7 @@ msgid "SHORTWAVE INTERNET RADIO"
 msgstr "SHORTWAVE İNTERNET RADYOSU"
 
 #: data/gtk/player_gadget.ui:140 data/gtk/player_toolbar.ui:29
-#: data/gtk/player_view.ui:58 src/app.rs:254
+#: data/gtk/player_view.ui:58 src/app.rs:253
 msgid "No Playback"
 msgstr "Kayıttan Yürütme Yok"
 
@@ -251,19 +251,19 @@ msgstr "Pencereyi Geri Yükle"
 msgid "Enable Gadget Mode"
 msgstr "Aygıt Çalıcıyı Etkinleştir"
 
-#: data/gtk/player_view.ui:217
+#: data/gtk/player_view.ui:215
 msgid "Show Station Details"
 msgstr "İstasyon Ayrıntılarını Göster"
 
-#: data/gtk/player_view.ui:268
+#: data/gtk/player_view.ui:266
 msgid "No Tracks"
 msgstr "Parça Yok"
 
-#: data/gtk/player_view.ui:279
+#: data/gtk/player_view.ui:277
 msgid "Played tracks will appear here"
 msgstr "Çalınan parçalar burada görünecek"
 
-#: data/gtk/player_view.ui:313
+#: data/gtk/player_view.ui:311
 msgid "An error occurred"
 msgstr "Hata oluştu"
 
@@ -271,7 +271,7 @@ msgstr "Hata oluştu"
 msgid "General"
 msgstr "Genel"
 
-#: data/gtk/preferences_dialog.ui:12 data/gtk/shortcuts_dialog.ui:47
+#: data/gtk/preferences_dialog.ui:12 data/gtk/shortcuts_dialog.ui:41
 msgid "Playback"
 msgstr "Kayıttan Yürüt"
 
@@ -348,17 +348,13 @@ msgstr "_Azami Süre"
 msgid "Recording ends when the maximum duration is reached"
 msgstr "Azami süreye ulaşıldığında kayıt biter"
 
-#: data/gtk/search_filter.ui:21
+#: data/gtk/search_filter.ui:15
 msgid "Search"
 msgstr "Ara"
 
-#: data/gtk/search_filter.ui:22
+#: data/gtk/search_filter.ui:16
 msgid "Search stations"
 msgstr "İstasyonları ara"
-
-#: data/gtk/search_filter.ui:32
-msgid "Search Filter"
-msgstr "Arama Süzgeci"
 
 #: data/gtk/search_page.ui:55
 msgid "Discover over 50,000 public stations"
@@ -376,11 +372,13 @@ msgstr "Yeni İstasyonları Keşfet"
 msgid ""
 "The displayed information is provided by <a href=\"https://www.radio-"
 "browser.info/\">radio-browser.info</a>.\n"
-"Shortwave has no influence on the listed stations."
+"                                  Shortwave has no influence on the listed "
+"stations."
 msgstr ""
 "Görüntülenen bilgileri <a href=\"https://www.radio-browser.info/\">radio-"
 "browser.info</a> sağlamaktadır.\n"
-"Shortwaveʼin listelenen istasyonlarda etkisi yoktur."
+"                                  Shortwaveʼin listelenen istasyonlarda "
+"etkisi yoktur."
 
 #: data/gtk/search_page.ui:184
 msgid "Loading…"
@@ -410,75 +408,70 @@ msgstr "Tekrar Dene"
 
 #: data/gtk/shortcuts_dialog.ui:9
 msgctxt "shortcut window"
-msgid "Search stations"
-msgstr "İstasyonları ara"
-
-#: data/gtk/shortcuts_dialog.ui:15
-msgctxt "shortcut window"
 msgid "Open shortcut window"
 msgstr "Kısayollar penceresini aç"
 
-#: data/gtk/shortcuts_dialog.ui:22
+#: data/gtk/shortcuts_dialog.ui:16
 msgctxt "shortcut window"
 msgid "Open application menu"
 msgstr "Uygulama menüsünü aç"
 
-#: data/gtk/shortcuts_dialog.ui:27
+#: data/gtk/shortcuts_dialog.ui:21
 msgctxt "shortcut window"
 msgid "Open preferences"
 msgstr "Tercihleri aç"
 
-#: data/gtk/shortcuts_dialog.ui:33
+#: data/gtk/shortcuts_dialog.ui:27
 msgctxt "shortcut window"
 msgid "Close the window"
 msgstr "Pencereyi kapat"
 
-#: data/gtk/shortcuts_dialog.ui:39
+#: data/gtk/shortcuts_dialog.ui:33
 msgctxt "shortcut window"
 msgid "Quit the application"
 msgstr "Uygulamadan çık"
 
-#: data/gtk/shortcuts_dialog.ui:50
+#: data/gtk/shortcuts_dialog.ui:44
 msgctxt "shortcut window"
 msgid "Toggle playback"
 msgstr "Kayıttan yürütmeyi aç/kapat"
 
-#: data/gtk/shortcuts_dialog.ui:58 data/gtk/volume_control.ui:21
+#: data/gtk/shortcuts_dialog.ui:52 data/gtk/volume_control.ui:21
 msgid "Volume"
 msgstr "Ses"
 
-#: data/gtk/shortcuts_dialog.ui:61
+#: data/gtk/shortcuts_dialog.ui:55
 msgctxt "shortcut window"
 msgid "Toggle mute"
 msgstr "Sesi aç/kapat"
 
-#: data/gtk/shortcuts_dialog.ui:67
+#: data/gtk/shortcuts_dialog.ui:61
 msgctxt "shortcut window"
 msgid "Increase volume"
 msgstr "Sesi artır"
 
-#: data/gtk/shortcuts_dialog.ui:73
+#: data/gtk/shortcuts_dialog.ui:67
 msgctxt "shortcut window"
 msgid "Decrease volume"
 msgstr "Sesi azalt"
 
-#: data/gtk/station_dialog.ui:71
+#: data/gtk/station_dialog.ui:75
 msgid "_Play"
 msgstr "_Oynat"
 
-#: data/gtk/station_dialog.ui:82
+#: data/gtk/station_dialog.ui:91
 msgid "_Add to Library"
 msgstr "Kitaplığa _Ekle"
 
-#: data/gtk/station_dialog.ui:94
+#: data/gtk/station_dialog.ui:108
 msgid "_Remove From Library"
 msgstr "Kitaplıktan _Kaldır"
 
-#: data/gtk/station_dialog.ui:111 data/gtk/station_row.ui:57
+#: data/gtk/station_dialog.ui:127 data/gtk/station_row.ui:57
 msgid "Local Station"
 msgstr "Yerel İstasyon"
 
-#: data/gtk/station_dialog.ui:112
+#: data/gtk/station_dialog.ui:128
 msgid ""
 "This station exists only in your library, and is not part of the public "
 "database"
@@ -486,11 +479,11 @@ msgstr ""
 "Bu istasyon yalnızca kitaplığınızda bulunur ve halka açık çevrim içi "
 "istasyon veri tabanının parçası değildir"
 
-#: data/gtk/station_dialog.ui:126 data/gtk/station_row.ui:69
+#: data/gtk/station_dialog.ui:142 data/gtk/station_row.ui:69
 msgid "Orphaned Station"
 msgstr "Yetim İstasyonlar"
 
-#: data/gtk/station_dialog.ui:127
+#: data/gtk/station_dialog.ui:143
 msgid ""
 "The information could not be updated, probably this station was removed from "
 "the public database"
@@ -498,85 +491,85 @@ msgstr ""
 "Bilgiler güncellenemedi, büyük olasılıkla bu istasyon genel veri tabanından "
 "kaldırıldı"
 
-#: data/gtk/station_dialog.ui:138
+#: data/gtk/station_dialog.ui:154
 msgid "Information"
 msgstr "Bilgi"
 
-#: data/gtk/station_dialog.ui:142
+#: data/gtk/station_dialog.ui:158
 msgid "Language"
 msgstr "Dil"
 
-#: data/gtk/station_dialog.ui:153
+#: data/gtk/station_dialog.ui:169
 msgid "Tags"
 msgstr "Etiketler"
 
-#: data/gtk/station_dialog.ui:166
+#: data/gtk/station_dialog.ui:182
 msgid "Location"
 msgstr "Konum"
 
-#: data/gtk/station_dialog.ui:170
+#: data/gtk/station_dialog.ui:186
 msgid "Country"
 msgstr "Ülke"
 
-#: data/gtk/station_dialog.ui:181
+#: data/gtk/station_dialog.ui:197
 msgid "State"
 msgstr "Eyalet"
 
-#: data/gtk/station_dialog.ui:216
+#: data/gtk/station_dialog.ui:232
 msgid "Audio"
 msgstr "Ses"
 
-#: data/gtk/station_dialog.ui:219
+#: data/gtk/station_dialog.ui:235
 msgid "Bitrate"
 msgstr "Bit oranı"
 
-#: data/gtk/station_dialog.ui:230
+#: data/gtk/station_dialog.ui:246
 msgid "Codec"
 msgstr "Kodlayıcı"
 
 #. This is a noun/label for the station stream url
-#: data/gtk/station_dialog.ui:241
+#: data/gtk/station_dialog.ui:257
 msgid "Stream"
 msgstr "Akış"
 
-#: data/gtk/station_dialog.ui:247
+#: data/gtk/station_dialog.ui:263
 msgid "Copy"
 msgstr "Kopyala"
 
-#: data/gtk/track_dialog.ui:76
+#: data/gtk/track_dialog.ui:74
 msgid "Edit"
 msgstr "Düzenle"
 
-#: data/gtk/track_dialog.ui:123
+#: data/gtk/track_dialog.ui:121
 msgid "The recorded track has been saved"
 msgstr "Kayıttaki parça kaydedildi"
 
-#: data/gtk/track_dialog.ui:139 data/gtk/track_dialog.ui:210
-#: data/gtk/track_row.ui:10 src/audio/player.rs:448
+#: data/gtk/track_dialog.ui:137 data/gtk/track_dialog.ui:208
+#: data/gtk/track_row.ui:9 src/audio/player.rs:448
 msgid "Save Track"
 msgstr "Parçayı Kaydet"
 
-#: data/gtk/track_dialog.ui:150
+#: data/gtk/track_dialog.ui:148
 msgid "Play Track"
 msgstr "Parçayı Çal"
 
-#: data/gtk/track_dialog.ui:161
+#: data/gtk/track_dialog.ui:159
 msgid "Cancel Recording"
 msgstr "Kaydı İptal Et"
 
-#: data/gtk/track_dialog.ui:177
+#: data/gtk/track_dialog.ui:175
 msgid "Station"
 msgstr "İstasyon"
 
-#: data/gtk/track_dialog.ui:211
+#: data/gtk/track_dialog.ui:209
 msgid "Save this track when recording is complete"
 msgstr "Kayıt tamamlandığında bu parçayı kaydet"
 
-#: data/gtk/track_dialog.ui:225
+#: data/gtk/track_dialog.ui:223
 msgid "Recording behaviour can be changed in <a href=\"\">preferences</a>"
 msgstr "Kayıt davranışı <a href=\"\">tercihlerden</a> değiştirilebilir"
 
-#: data/gtk/track_row.ui:21
+#: data/gtk/track_row.ui:20
 msgid "Saved"
 msgstr "Kaydedildi"
 
@@ -592,12 +585,11 @@ msgstr "Parça artık kullanılabilir değil"
 msgid "This track is currently not being recorded"
 msgstr "Bu parça şu anda kaydedilmiyor"
 
-#: src/app.rs:259
-#, rust-format
+#: src/app.rs:258
 msgid "Playing “{}”"
 msgstr "“{}” Oynatılıyor"
 
-#: src/app.rs:354
+#: src/app.rs:353
 msgid "Active Playback"
 msgstr "Etkin Kayıttan Yürütme"
 
@@ -671,13 +663,13 @@ msgstr "Google Cast Aygıtı"
 msgid "Unknown Model"
 msgstr "Bilinmeyen Model"
 
-#: src/ui/about_dialog.rs:45
+#: src/ui/about_dialog.rs:41
 msgid "translator-credits"
 msgstr ""
 "Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Sabri Ünal <yakushabb@gmail.com>"
 
-#: src/ui/about_dialog.rs:46
+#: src/ui/about_dialog.rs:42
 msgid "Donate"
 msgstr "Bağış Yap"
 
@@ -690,7 +682,6 @@ msgid "Show Details"
 msgstr "Ayrıntıları Göster"
 
 #: src/ui/pages/library_page.rs:111
-#, rust-format
 msgid "Welcome to {}"
 msgstr "{} uygulamasına hoş geldiniz"
 
@@ -703,19 +694,16 @@ msgid "_Select"
 msgstr "_Seç"
 
 #: src/ui/preferences_dialog.rs:163
-#, rust-format
 msgid "{} min"
 msgid_plural "{} min"
 msgstr[0] "{} dk"
 
 #: src/ui/preferences_dialog.rs:172
-#, rust-format
 msgid "{} sec"
 msgid_plural "{} sec"
 msgstr[0] "{} sn"
 
 #: src/ui/station_dialog.rs:207
-#, rust-format
 msgid "{} kbit/s"
 msgstr "{} kbit/s"
 
@@ -723,38 +711,35 @@ msgstr "{} kbit/s"
 msgid "Copied"
 msgstr "Kopyalandı"
 
-#: src/ui/window.rs:226
+#: src/ui/window.rs:221
 msgid "No Permission for Background Playback"
 msgstr "Arka Planda Oynatım İzni Yok"
 
-#: src/ui/window.rs:228
+#: src/ui/window.rs:223
 msgid "“Run in Background” must be allowed for this app in system settings."
 msgstr ""
 "Sistem ayarlarında bu uygulama için “Arka Planda Çalış” seçeneğine izin "
 "verilmelidir."
 
-#: src/ui/window.rs:232
+#: src/ui/window.rs:227
 msgid "Try Anyway"
 msgstr "Yine De Dene"
 
-#: src/ui/window.rs:233
+#: src/ui/window.rs:228
 msgid "Disable Background Playback"
 msgstr "Arka Planda Oynatmayı Devre Dışı Bırak"
 
 #: src/utils.rs:51
-#, rust-format
 msgid "{} hour"
 msgid_plural "{} hours"
 msgstr[0] "{} saat"
 
 #: src/utils.rs:57
-#, rust-format
 msgid "{} minute"
 msgid_plural "{} minutes"
 msgstr[0] "{} dakika"
 
 #: src/utils.rs:62
-#, rust-format
 msgid "{} second"
 msgid_plural "{} seconds"
 msgstr[0] "{} saniye"
