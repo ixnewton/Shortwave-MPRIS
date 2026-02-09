@@ -213,7 +213,8 @@ mod imp {
 
 glib::wrapper! {
     pub struct SwTrackDialog(ObjectSubclass<imp::SwTrackDialog>)
-        @extends gtk::Widget, adw::Dialog;
+        @extends gtk::Widget, adw::Dialog,
+        @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget;
 }
 
 impl SwTrackDialog {

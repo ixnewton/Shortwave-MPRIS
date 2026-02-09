@@ -23,12 +23,20 @@ use async_compat::CompatExt;
 use futures_util::StreamExt;
 use gdk::RGBA;
 use glycin::Loader;
+use glycin_gtk4;
+use glib::clone;
 use gtk::gio::{Cancelled, File};
 use gtk::graphene::Rect;
 use gtk::prelude::TextureExt;
 use gtk::prelude::*;
 use gtk::{gdk, gio, glib, gsk};
 use url::Url;
+
+use crate::{config, path};
+
+struct RenderNodeSend(pub gsk::RenderNode);
+
+unsafe impl Send for RenderNodeSend {}
 
 static HTTP_CLIENT: LazyLock<reqwest::Client> = LazyLock::new(|| {
     reqwest::ClientBuilder::new()
@@ -37,7 +45,6 @@ static HTTP_CLIENT: LazyLock<reqwest::Client> = LazyLock::new(|| {
         .unwrap()
 });
 
-use crate::{config, path};
 #[derive(Debug, Clone)]
 struct CoverRequest {
     favicon_url: Url,
@@ -88,20 +95,38 @@ impl CoverRequest {
     async fn cover_bytes(&self) -> Result<(gdk::Texture, Vec<u8>)> {
         self.download_tmp_file().compat().await?;
 
-        let loader = Loader::new(self.tmp_file.clone());
-        let image = loader.load().await?;
-        let texture = image.next_frame().await?.texture();
+        let loader = Loader::new(&self.tmp_file);
+        let image = loader.load()?;
+        let frame = image.next_frame_future().await?;
+        let texture = glycin_gtk4::frame_get_texture(&frame);
 
         let snapshot = gtk::Snapshot::new();
         snapshot_thumbnail(&snapshot, texture, self.size as f32);
+        let node = RenderNodeSend(snapshot.to_node().unwrap());
 
-        let node = snapshot.to_node().unwrap();
+        let handle = gio::spawn_blocking(clone!(
+            #[strong(rename_to = size)]
+            self.size,
+            move || Self::render(size, node)
+        ));
+        let (cover_texture, cover_bytes) = handle.await.unwrap()?;
+
+        let key = format!("{}@{}", self.favicon_url, self.size);
+        cacache::write_with_algo(cacache::Algorithm::Xxh3, &*path::CACHE, key, &cover_bytes)
+            .await?;
+
+        Ok((cover_texture, cover_bytes))
+    }
+
+    fn render(size: i32, node: RenderNodeSend) -> Result<(gdk::Texture, Vec<u8>)> {
         let renderer = gsk::CairoRenderer::new();
         let display = gdk::Display::default().expect("No default display available");
-        renderer.realize_for_display(&display)?;
+        renderer
+            .realize_for_display(&display)
+            .expect("Unable to realize renderer for default display");
 
-        let rect = Rect::new(0.0, 0.0, self.size as f32, self.size as f32);
-        let texture = renderer.render_texture(node, Some(&rect));
+        let rect = Rect::new(0.0, 0.0, size as f32, size as f32);
+        let texture = renderer.render_texture(node.0, Some(&rect));
         renderer.unrealize();
 
         let png_bytes = texture.save_to_png_bytes().to_vec();

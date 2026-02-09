@@ -70,7 +70,8 @@ mod imp {
 
 glib::wrapper! {
     pub struct SwPlayerToolbar(ObjectSubclass<imp::SwPlayerToolbar>)
-        @extends gtk::Widget, adw::Bin;
+        @extends gtk::Widget, adw::Bin,
+        @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget;
 }
 
 #[gtk::template_callbacks]

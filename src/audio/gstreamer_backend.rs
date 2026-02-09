@@ -481,8 +481,7 @@ impl GstreamerBackend {
         let clock_time = pipeline
             .clock()
             .expect("Could not get pipeline clock")
-            .time()
-            .unwrap();
+            .time();
         let base_time = pipeline
             .base_time()
             .expect("Could not get pipeline base time");

@@ -129,7 +129,8 @@ mod imp {
 
 glib::wrapper! {
     pub struct SwPlayerView(ObjectSubclass<imp::SwPlayerView>)
-        @extends gtk::Widget, adw::Bin;
+        @extends gtk::Widget, adw::Bin,
+        @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget;
 }
 
 impl SwPlayerView {

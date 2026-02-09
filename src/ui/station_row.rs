@@ -185,7 +185,8 @@ mod imp {
 
 glib::wrapper! {
     pub struct SwStationRow(ObjectSubclass<imp::SwStationRow>)
-        @extends gtk::Widget, adw::Bin;
+        @extends gtk::Widget, adw::Bin,
+        @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget;
 }
 
 impl SwStationRow {

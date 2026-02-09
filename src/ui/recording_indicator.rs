@@ -100,7 +100,8 @@ mod imp {
 
 glib::wrapper! {
     pub struct SwRecordingIndicator(ObjectSubclass<imp::SwRecordingIndicator>)
-        @extends gtk::Widget, gtk::Button;
+        @extends gtk::Widget, gtk::Button,
+        @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget, gtk::Actionable;
 }
 
 impl SwRecordingIndicator {

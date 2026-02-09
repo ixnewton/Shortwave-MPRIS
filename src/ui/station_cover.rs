@@ -298,5 +298,6 @@ mod imp {
 
 glib::wrapper! {
     pub struct SwStationCover(ObjectSubclass<imp::SwStationCover>)
-        @extends gtk::Widget, adw::Bin;
+        @extends gtk::Widget, adw::Bin,
+        @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget;
 }

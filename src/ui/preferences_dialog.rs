@@ -179,7 +179,8 @@ mod imp {
 
 glib::wrapper! {
     pub struct SwPreferencesDialog(ObjectSubclass<imp::SwPreferencesDialog>)
-        @extends gtk::Widget, adw::Dialog, adw::PreferencesDialog;
+        @extends gtk::Widget, adw::Dialog, adw::PreferencesDialog,
+        @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget;
 }
 
 impl SwPreferencesDialog {

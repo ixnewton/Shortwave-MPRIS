@@ -246,7 +246,7 @@ mod imp {
                 dialog.add_response("disable", &i18n("Disable Background Playback"));
                 dialog.set_close_response("try-anyway");
 
-                let res = dialog.choose_future(&*self.obj()).await;
+                let res = dialog.choose_future(Some(&*self.obj())).await;
                 if res == "disable" {
                     SwApplication::default().set_background_playback(false);
                 } else {
@@ -266,7 +266,8 @@ glib::wrapper! {
     pub struct SwApplicationWindow(
         ObjectSubclass<imp::SwApplicationWindow>)
         @extends gtk::Widget, gtk::Window, gtk::ApplicationWindow, adw::ApplicationWindow,
-        @implements gio::ActionMap, gio::ActionGroup;
+        @implements gio::ActionMap, gio::ActionGroup, gtk::Accessible, gtk::Buildable, 
+                  gtk::ConstraintTarget, gtk::Native, gtk::Root, gtk::ShortcutManager;
 }
 
 impl SwApplicationWindow {

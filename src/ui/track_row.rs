@@ -133,7 +133,8 @@ mod imp {
 
 glib::wrapper! {
     pub struct SwTrackRow(ObjectSubclass<imp::SwTrackRow>)
-        @extends gtk::Widget, gtk::ListBoxRow, adw::PreferencesRow, adw::ActionRow;
+        @extends gtk::Widget, gtk::ListBoxRow, adw::PreferencesRow, adw::ActionRow,
+        @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget, gtk::Actionable;
 }
 
 impl SwTrackRow {

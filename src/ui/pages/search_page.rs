@@ -21,6 +21,7 @@ use adw::subclass::prelude::*;
 use glib::{clone, subclass};
 use gtk::{glib, CompositeTemplate};
 use rand::seq::SliceRandom;
+use rand::prelude::IndexedRandom;
 
 use crate::api::{client, Error, StationRequest, SwStation, SwStationModel};
 use crate::app::SwApplication;
@@ -178,7 +179,7 @@ mod imp {
 
             // Randomize the selection to avoid that always the same stations are visible
             let stations = stations
-                .choose_multiple(&mut rand::thread_rng(), 12)
+                .choose_multiple(&mut rand::rng(), 12)
                 .cloned()
                 .collect::<Vec<SwStation>>();
 
@@ -244,5 +245,6 @@ mod imp {
 
 glib::wrapper! {
     pub struct SwSearchPage(ObjectSubclass<imp::SwSearchPage>)
-        @extends gtk::Widget, adw::NavigationPage;
+        @extends gtk::Widget, adw::NavigationPage,
+        @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget;
 }

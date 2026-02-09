@@ -169,7 +169,8 @@ mod imp {
 
 glib::wrapper! {
     pub struct SwAddStationDialog(ObjectSubclass<imp::SwAddStationDialog>)
-        @extends gtk::Widget, adw::Dialog;
+        @extends gtk::Widget, adw::Dialog,
+        @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget;
 }
 
 impl SwAddStationDialog {

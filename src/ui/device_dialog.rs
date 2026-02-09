@@ -150,7 +150,8 @@ mod imp {
 
 glib::wrapper! {
     pub struct SwDeviceDialog(ObjectSubclass<imp::SwDeviceDialog>)
-        @extends gtk::Widget, adw::Dialog;
+        @extends gtk::Widget, adw::Dialog,
+        @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget;
 }
 
 impl SwDeviceDialog {
