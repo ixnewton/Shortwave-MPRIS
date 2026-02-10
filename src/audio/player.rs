@@ -1825,6 +1825,19 @@ impl SwPlayer {
             println!("🟡 DISCONNECT: Clearing device reference");
             *self.imp().device.borrow_mut() = None;
             
+            // Set current station URI for local playback
+            if let Some(station) = self.station() {
+                if let Some(url) = station.stream_url() {
+                    info!("PLAYER: Setting current station URI for local playback: {}", station.title());
+                    self.imp()
+                        .backend
+                        .get()
+                        .unwrap()
+                        .borrow_mut()
+                        .set_source_uri(url.as_ref());
+                }
+            }
+            
             // Force immediate notification to ensure UI updates happen before any other operations
             self.notify_has_device();
             self.notify_device();
