@@ -829,13 +829,36 @@ impl SwPlayer {
                                 .load_media(&url.to_string(), &cover_url, &title)
                                 .await
                             {
-                                // Check if this is a compatibility issue
+                                // Check if this is a compatibility issue or connection issue
                                 let error_str = e.to_string();
                                 let is_compatibility_error = error_str.contains("Load Failed") 
                                     || error_str.contains("Invalid Request")
                                     || error_str.contains("Media Channel Error");
+                                let is_connection_error = error_str.contains("Connection failed") 
+                                    || error_str.contains("Not connected")
+                                    || error_str.contains("Channel closed")
+                                    || error_str.contains("Failed to connect");
                                 
-                                if is_compatibility_error {
+                                if is_connection_error {
+                                    info!("PLAYER: Cast device connection lost - attempting to reconnect");
+                                    if let Err(reconnect_err) = self.test_and_reconnect_cast().await {
+                                        warn!("PLAYER: Failed to reconnect to Cast device: {}", reconnect_err);
+                                        Err::<(), cast_sender::Error>(e).handle_error("Failed to reconnect to Cast device");
+                                        return;
+                                    }
+                                    
+                                    // Retry loading media after successful reconnection
+                                    info!("PLAYER: Retrying media load after reconnection");
+                                    if let Err(e2) = self.cast_sender()
+                                        .load_media(&url.to_string(), &cover_url, &title)
+                                        .await
+                                    {
+                                        warn!("PLAYER: Media load failed even after reconnection: {}", e2);
+                                        Err::<(), cast_sender::Error>(e2).handle_error("Failed to load media on Cast device after reconnection");
+                                        return;
+                                    }
+                                    info!("PLAYER: ✅ Media loaded successfully after reconnection");
+                                } else if is_compatibility_error {
                                     info!("PLAYER: Cast device rejected stream - attempting FFmpeg proxy transcoding");
                                     
                                     // Try to start FFmpeg proxy to transcode to MP3
