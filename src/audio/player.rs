@@ -920,8 +920,8 @@ impl SwPlayer {
                                                 return;
                                             }
                                             
-                                            // Try starting playback with proxy
-                                            if let Err(e3) = self.cast_sender().start_playback().await {
+                                            // Start playback with proxy (without loading again)
+                                            if let Err(e3) = self.cast_sender().resume_playback().await {
                                                 warn!("PLAYER: Cast rejected proxy URL during playback: {}", e3);
                                                 self.dlna_sender().stop_ffmpeg_server();
                                                 self.imp().cast_proxy_active.set(false);

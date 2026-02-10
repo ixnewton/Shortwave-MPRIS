@@ -212,6 +212,18 @@ impl SwCastSender {
         Ok(())
     }
 
+    pub async fn resume_playback(&self) -> Result<(), cast_sender::Error> {
+        if !self.is_connected() {
+            return Ok(());
+        }
+
+        if let Some(media_controller) = self.imp().media_controller() {
+            media_controller.start().await?;
+        }
+
+        Ok(())
+    }
+
     pub async fn stop_playback(&self) -> Result<(), cast_sender::Error> {
         if !self.is_connected() {
             return Ok(());
