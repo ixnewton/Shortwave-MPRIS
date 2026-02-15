@@ -42,3 +42,6 @@ shortwave.pot
 .flatpak
 .vscode
 *.syscap
+shortwave-mpris_*_linux-*
+shortwave-current
+shortwave-fixed
