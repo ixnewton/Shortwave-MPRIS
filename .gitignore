@@ -4,7 +4,7 @@ target/
 target
 **/*.rs.bk
 _build
-build
+build/
 dist
 .buildconfig
 de.haeckerfelix.gradio.json~
@@ -42,6 +42,6 @@ shortwave.pot
 .flatpak
 .vscode
 *.syscap
-shortwave-mpris_*_linux-*
+shortwave-mpris-*-release/
 shortwave-current
 shortwave-fixed
