@@ -4,8 +4,11 @@
 			"path": "."
 		},
 		{
-			"path": "../ShortwaveAUR/pkgbase"
+			"path": "../CxOrg-AUR/Shortwave-bin/"
+		},
+		{
+			"path": "../CxOrg-AUR/Shortwave-git/"
 		}
 	],
 	"settings": {}
-}``
+}
