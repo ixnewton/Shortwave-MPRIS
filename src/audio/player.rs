@@ -1430,8 +1430,10 @@ impl SwPlayer {
     pub fn restore_state(&self) {
         let imp = self.imp();
 
-        // Restore volume with a small delay to ensure UI bindings are ready
-        let volume = settings_manager::double(Key::PlaybackVolume);
+        // Restore volume with a small delay to ensure UI bindings are ready.
+        // No device is connected at startup, so restore the local playback
+        // volume (defaults to 50% when nothing was saved yet)
+        let volume = settings_manager::double(Key::PlaybackVolumeLocal);
         debug!("PLAYER: Restoring volume from settings: {}", volume);
         
         // Apply volume immediately
