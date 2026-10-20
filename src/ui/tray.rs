@@ -85,7 +85,7 @@ impl ksni::Tray for SwTray {
             .into(),
             ksni::MenuItem::Separator,
             StandardItem {
-                label: i18n("Exit Application"),
+                label: i18n("Quit"),
                 activate: Box::new(|_tray: &mut Self| Self::exit_application()),
                 ..Default::default()
             }
