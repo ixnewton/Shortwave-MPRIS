@@ -5,10 +5,10 @@ install_data(
   install_dir: join_paths(datadir, 'icons', scalable_dir),
 )
 
-symbolic_dir = join_paths('hicolor', 'symbolic', 'apps')
+status_dir = join_paths('hicolor', 'scalable', 'status')
 
 install_data(
-  join_paths(symbolic_dir, '@0@-symbolic.svg'.format(base_id)),
-  install_dir: join_paths(datadir, 'icons', symbolic_dir),
+  join_paths(status_dir, '@0@-symbolic.svg'.format(base_id)),
+  install_dir: join_paths(datadir, 'icons', status_dir),
   rename: '@0@-symbolic.svg'.format(app_id)
 )

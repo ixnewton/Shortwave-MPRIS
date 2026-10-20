@@ -47,7 +47,9 @@ impl ksni::Tray for SwTray {
     }
 
     fn icon_name(&self) -> String {
-        config::APP_ID.to_string()
+        // Use the symbolic icon variant so the tray icon is line-drawn and
+        // follows the system theme / panel foreground color
+        format!("{}-symbolic", config::APP_ID)
     }
 
     fn tool_tip(&self) -> ksni::ToolTip {
