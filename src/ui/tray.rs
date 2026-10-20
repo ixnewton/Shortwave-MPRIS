@@ -106,6 +106,7 @@ impl SwTray {
 
         let handle = SwTray::default()
             .disable_dbus_name(sandboxed)
+            .assume_sni_available(true)
             .spawn()?;
 
         let handle = SwTrayHandle(handle);

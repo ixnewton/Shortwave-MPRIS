@@ -217,8 +217,12 @@ mod imp {
             let obj = self.obj();
 
             if obj.active_window().is_none() && obj.player().state() != SwPlaybackState::Playing {
-                debug!("All windows closed, no active playback -> quit application, no need to run in background.");
-                obj.quit();
+                // With a working tray icon the application stays available in
+                // the tray instead of quitting, so it can be restored from there
+                if !obj.show_tray_icon() || obj.tray_handle().is_none() {
+                    debug!("All windows closed, no active playback -> quit application, no need to run in background.");
+                    obj.quit();
+                }
             }
         }
     }
