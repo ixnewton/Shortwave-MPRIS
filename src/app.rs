@@ -29,10 +29,11 @@ use crate::api::CoverLoader;
 use crate::audio::{SwPlaybackState, SwPlayer, SwRecordingState, SwTrack};
 use crate::config;
 use crate::database::SwLibrary;
-use crate::i18n::{i18n, i18n_f};
+use crate::i18n::i18n;
 use crate::settings::*;
+use crate::ui::tray::{SwTray, SwTrayHandle};
 use crate::ui::{SwApplicationWindow, SwTrackDialog};
-use crate::utils::is_kde_plasma;
+use crate::utils::{is_kde_plasma, playback_status_message};
 
 mod imp {
     use super::*;
@@ -49,11 +50,15 @@ mod imp {
         rb_server: RefCell<Option<String>>,
         #[property(get, set = Self::set_background_playback)]
         background_playback: Cell<bool>,
+        #[property(get, set = Self::set_show_tray_icon)]
+        show_tray_icon: Cell<bool>,
 
         pub cover_loader: CoverLoader,
         pub inhibit_cookie: Cell<u32>,
         pub background_hold: RefCell<Option<gio::ApplicationHoldGuard>>,
         pub background_proxy: OnceCell<BackgroundProxy<'static>>,
+        pub tray_handle: RefCell<Option<SwTrayHandle>>,
+        pub tray_starting: Cell<bool>,
     }
 
     #[glib::object_subclass]
@@ -172,6 +177,10 @@ mod imp {
                 &*self.obj(),
                 "background-playback",
             );
+            settings_manager::bind_property(Key::ShowTrayIcon, &*self.obj(), "show-tray-icon");
+
+            // Keep tray state in sync with playback and window visibility
+            SwTray::connect_signals(&self.obj());
         }
 
         fn activate(&self) {
@@ -184,6 +193,14 @@ mod imp {
         fn shutdown(&self) {
             self.parent_shutdown();
             debug!("gio::Application -> shutdown()");
+
+            // Stop tracked ffmpeg proxy processes so they don't outlive the app
+            self.obj().player().stop_ffmpeg_proxy();
+
+            // Unregister the system tray icon
+            if let Some(handle) = self.tray_handle.borrow_mut().take() {
+                handle.shutdown();
+            }
 
             glib::spawn_future_local(async {
                 super::SwApplication::default()
@@ -220,6 +237,59 @@ mod imp {
             }
         }
 
+        fn set_show_tray_icon(&self, enabled: bool) {
+            debug!("Show tray icon: {}", enabled);
+            self.show_tray_icon.set(enabled);
+
+            if enabled {
+                self.start_tray();
+            } else if let Some(handle) = self.tray_handle.borrow_mut().take() {
+                handle.shutdown();
+            }
+        }
+
+        fn start_tray(&self) {
+            if self.tray_handle.borrow().is_some() || self.tray_starting.get() {
+                return;
+            }
+            self.tray_starting.set(true);
+
+            let fut = clone!(
+                #[weak(rename_to = imp)]
+                self,
+                async move {
+                    match crate::ui::tray::SwTray::start().await {
+                        Ok(handle) => {
+                            if imp.show_tray_icon.get() {
+                                info!("System tray icon started");
+                                imp.tray_handle.replace(Some(handle));
+                            } else {
+                                handle.shutdown();
+                            }
+                        }
+                        Err(err) => warn!("Unable to start system tray icon: {:?}", err),
+                    }
+                    imp.tray_starting.set(false);
+                }
+            );
+            glib::spawn_future_local(fut);
+        }
+
+        fn update_background_portal_status(&self) {
+            let message = playback_status_message(&self.obj().player());
+
+            let fut = clone!(
+                #[weak(rename_to = imp)]
+                self,
+                #[strong]
+                message,
+                async move {
+                    imp.set_background_portal_status(&message).await;
+                }
+            );
+            glib::spawn_future_local(fut);
+        }
+
         async fn setup_background_portal_proxy(&self) {
             if !ashpd::is_sandboxed().await {
                 debug!("Not sandboxed, not setting up background portal proxy.");
@@ -253,27 +323,6 @@ mod imp {
                     err.to_string()
                 ),
             };
-        }
-
-        fn update_background_portal_status(&self) {
-            let mut message = i18n("No Playback");
-
-            if let Some(station) = self.obj().player().station() {
-                if self.obj().player().state() == SwPlaybackState::Playing {
-                    message = i18n_f("Playing “{}”", &[&station.title()]);
-                }
-            }
-
-            let fut = clone!(
-                #[weak(rename_to = imp)]
-                self,
-                #[strong]
-                message,
-                async move {
-                    imp.set_background_portal_status(&message).await;
-                }
-            );
-            glib::spawn_future_local(fut);
         }
 
         async fn set_background_portal_status(&self, message: &str) {
@@ -348,6 +397,10 @@ impl SwApplication {
 
     pub fn cover_loader(&self) -> CoverLoader {
         self.imp().cover_loader.clone()
+    }
+
+    pub fn tray_handle(&self) -> Option<SwTrayHandle> {
+        self.imp().tray_handle.borrow().clone()
     }
 
     pub fn set_inhibit(&self, inhibit: bool) {

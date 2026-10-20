@@ -55,6 +55,9 @@
     <key name="background-playback" type="b">
       <default>true</default>
     </key>
+    <key name="show-tray-icon" type="b">
+      <default>true</default>
+    </key>
     <key name="notifications" type="b">
       <default>false</default>
     </key>

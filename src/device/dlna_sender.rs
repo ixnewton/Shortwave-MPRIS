@@ -562,6 +562,48 @@ impl SwDlnaSender {
         
         Ok(())
     }
+    // Stop tracked FFmpeg processes without the system-wide pgrep sweep;
+    // used on application exit
+    pub fn stop_ffmpeg_proxy(&self) {
+        let imp = self.imp();
+
+        // Shut down the wrapper, this also kills its child process
+        if let Some(ref wrapper) = *imp.ffmpeg_wrapper.borrow() {
+            info!("DLNA: Sending shutdown command to FFmpeg wrapper");
+            if let Err(e) = wrapper.send_command(FfmpegCommand::Shutdown) {
+                warn!("DLNA: Failed to send shutdown command to wrapper: {}", e);
+            }
+        }
+
+        // Kill any directly spawned FFmpeg process
+        if let Some(mut child) = imp.ffmpeg_process.borrow_mut().take() {
+            info!("DLNA: Stopping FFmpeg process (PID: {})", child.id());
+
+            if let Err(e) = child.kill() {
+                warn!("DLNA: Failed to kill FFmpeg process: {}", e);
+            }
+
+            match child.wait() {
+                Ok(status) => {
+                    info!("DLNA: FFmpeg process terminated with status: {}", status);
+                }
+                Err(e) => {
+                    warn!("DLNA: Error waiting for FFmpeg process termination: {}", e);
+                }
+            }
+        }
+
+        // Join the FFmpeg thread
+        if let Some(thread) = imp.ffmpeg_thread.borrow_mut().take() {
+            info!("DLNA: Waiting for FFmpeg thread to finish");
+            if let Err(e) = thread.join() {
+                warn!("DLNA: Failed to join FFmpeg thread: {:?}", e);
+            }
+        }
+
+        info!("DLNA: FFmpeg proxy stopped");
+    }
+
                                 // Stop FFmpeg streaming server
     pub fn stop_ffmpeg_server(&self) {
         let imp = self.imp();

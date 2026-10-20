@@ -32,6 +32,8 @@ mod imp {
         #[template_child]
         background_playback_switch: TemplateChild<gtk::Switch>,
         #[template_child]
+        show_tray_icon_switch: TemplateChild<gtk::Switch>,
+        #[template_child]
         notifications_switch: TemplateChild<gtk::Switch>,
 
         // Recording
@@ -65,6 +67,12 @@ mod imp {
             settings_manager::bind_property(
                 Key::BackgroundPlayback,
                 &*self.background_playback_switch,
+                "active",
+            );
+
+            settings_manager::bind_property(
+                Key::ShowTrayIcon,
+                &*self.show_tray_icon_switch,
                 "active",
             );
 

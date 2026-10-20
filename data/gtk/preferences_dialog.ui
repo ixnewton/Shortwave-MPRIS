@@ -25,6 +25,19 @@
             </child>
             <child>
               <object class="AdwActionRow">
+                <property name="title" translatable="yes">_Show Tray Icon</property>
+                <property name="subtitle" translatable="yes">Show a system tray icon while the app is running</property>
+                <property name="use_underline">True</property>
+                <property name="activatable_widget">show_tray_icon_switch</property>
+                <child>
+                  <object class="GtkSwitch" id="show_tray_icon_switch">
+                    <property name="valign">center</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="AdwActionRow">
                 <property name="title" translatable="yes">_Notifications</property>
                 <property name="subtitle" translatable="yes">Show desktop notifications when a new track gets played</property>
                 <property name="use_underline">True</property>

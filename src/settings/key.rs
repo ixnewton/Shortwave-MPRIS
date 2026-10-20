@@ -45,5 +45,6 @@ pub enum Key {
     WindowPreviousHeight,
 
     BackgroundPlayback,
+    ShowTrayIcon,
     Notifications,
 }

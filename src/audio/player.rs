@@ -1416,6 +1416,12 @@ impl SwPlayer {
         info!("PLAYER: stop_playback() completed");
     }
 
+    // Stop tracked ffmpeg proxy processes without the system-wide pgrep sweep;
+    // used on application exit
+    pub fn stop_ffmpeg_proxy(&self) {
+        self.dlna_sender().stop_ffmpeg_proxy();
+    }
+
     pub fn cancel_recording(&self) {
         let imp = self.imp();
         imp.stop_recording(imp::RecordingStopReason::Cancelled);

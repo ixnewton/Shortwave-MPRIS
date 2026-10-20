@@ -22,6 +22,7 @@ glycin = { package = "libglycin-rebind", version = "0.0.1" }
 glycin-gtk4 = { package = "libglycin-gtk4-rebind", version = "0.0.1" }
 indexmap = "2.7"
 Inflector = "0.11"
+ksni = { version = "0.3", default-features = false, features = ["blocking", "async-io"] }
 language-tags = "0.3"
 log = "0.4"
 mdns-sd = "0.17"

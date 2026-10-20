@@ -35,6 +35,8 @@ mod track_row;
 mod volume_control;
 mod window;
 
+pub mod tray;
+
 pub use add_station_dialog::SwAddStationDialog;
 pub use device_dialog::SwDeviceDialog;
 pub use device_indicator::SwDeviceIndicator;

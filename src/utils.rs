@@ -17,7 +17,21 @@
 use ashpd::desktop::background::Background;
 use gtk::glib;
 
-use crate::i18n::{gettext_f, ni18n_f};
+use crate::audio::{SwPlaybackState, SwPlayer};
+use crate::i18n::{gettext_f, i18n, i18n_f, ni18n_f};
+
+/// Human readable playback status message, e.g. used for the tray tooltip
+pub fn playback_status_message(player: &SwPlayer) -> String {
+    let mut message = i18n("No Playback");
+
+    if let Some(station) = player.station() {
+        if player.state() == SwPlaybackState::Playing {
+            message = i18n_f("Playing “{}”", &[&station.title()]);
+        }
+    }
+
+    message
+}
 
 /// Extension trait for Option that adds the is_none_or method
 pub trait OptionExt<T> {
