@@ -1,5 +1,5 @@
 project('shortwave', 'rust',
-          version: '5.2.0',
+          version: '5.2.1',
     meson_version: '>= 0.59.0',
           license: 'GPL-3.0-or-later',
 )
