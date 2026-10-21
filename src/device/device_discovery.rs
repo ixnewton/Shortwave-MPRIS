@@ -146,7 +146,22 @@ mod imp {
 
             while let Ok(event) = receiver.recv_async().await {
                 if let ServiceEvent::ServiceResolved(info) = event {
-                    let host = info.get_addresses().iter().next().unwrap().to_string();
+                    // Prefer an IPv4 address: Cast devices announce both A and
+                    // AAAA records, and the scoped IPv6 link-local form
+                    // (fe80::x%iface) cannot be parsed as a plain IP address
+                    // by the Cast connection
+                    let host = info
+                        .get_addresses_v4()
+                        .iter()
+                        .next()
+                        .map(|ip| ip.to_string())
+                        .or_else(|| {
+                            info.get_addresses()
+                                .iter()
+                                .next()
+                                .map(|ip| ip.to_ip_addr().to_string())
+                        })
+                        .unwrap_or_default();
 
                     let device = SwDevice::new(
                         info.get_property("id")
